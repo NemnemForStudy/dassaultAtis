@@ -1,0 +1,1 @@
+define("DS/IPClassifyUtil/IPClassifyUtil_ru",{});define("DS/IPClassifyUtil/assets/nls/IPClassifyUtil",{msg_InfoAction_Timeout:"Ответ от запущенного действия не получен в течение периода ожидания. Это может занять больше времени. Результат может отобразиться через несколько секунд после обновления вручную."});

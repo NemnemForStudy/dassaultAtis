@@ -1,0 +1,1 @@
+define("DS/CommonReportingPanel/CommonReportingPanel_ru",{});define("DS/CommonReportingPanel/assets/nls/CommonCommandDialog",{okButton:"ОК",cancelButton:"Отмена"});define("DS/CommonReportingPanel/assets/nls/CommonReportingPanelNls",{TotalRecords:"Всего записей: ",ReportTitle:"Отчет"});

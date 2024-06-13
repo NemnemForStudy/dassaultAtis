@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<!-- ENOVIA DICTIONARY FOR DFTResultView                    -->
+<!-- COPYRIGHT DASSAULT SYSTEMES 2019, All rights reserved -->
+<Package xmlns="PLMDictionaryUnified"
+         ModelerType="Top"
+         Name="DFTResultView"
+         Uuid="3B02D3F8-75B3-4FC6-A73E-B839A811F5F9"
+         UseProcedures="DIFpe_Procedures"
+         UseNames="DIFModelerAbstractView"
+         BelongsToModeler="CATDraftingDiscipline"
+         CustomerExposition="Programmer">
+
+  <CAAComment>
+    <ShortRole>DFT Model</ShortRole>
+    <Role>This package describes the DFT model built on top of DIF and PLMCore</Role>
+  </CAAComment>
+
+  <Comment>last update 2012-03-27-14.00.00</Comment>
+
+  <!-- DFTResultView provides :                   -->
+  <!-- DFTResultView               PLMCoreReference    -->
+  <!-- DFTResultViewInst           PLMCoreInstance     -->
+
+  <!-- ******************************************* -->
+  <!-- *  DIFView (PLMCoreReference)             * -->
+  <!-- ******************************************* -->
+  <Class Name="DFTResultView"
+         Uuid="C1B695C5-BFEA-4B53-8A0A-804ECBC4A759"
+         Abstract="No"
+         SuperName="DIFAbstractView"
+         Abbreviation="dvw"
+         CreateInstName="DFTResultViewInstance"
+         CustomerExposition="Programmer"
+         Specializable="Yes"
+         DeleteAvailability="Yes">
+
+    <CAAComment>
+      <ShortRole>DFT View Object</ShortRole>
+      <Role>DFT View Object</Role>
+    </CAAComment>
+
+    <!-- PLM New UI/KWE Scripts New -->
+    <Property Name="KweNew_InstanciationMethod" Value="CATDftKBEDelegateInstanciation"/>
+
+    <!-- Icon and 3D Icon -->
+    <Property Name="IconName" Value=""/>
+
+    <!-- Collaborative Space Applicability -->
+    <Property Name="ShareBetweenProjectsAvailability" Value="Yes"/>
+
+    <!-- Advanced search -->
+    <Property Name="Searchable" Value="Yes"/>
+
+    <!-- Export -->
+    <Method ImplementationType="Self">
+      <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+      <ProcedureForUsage>
+        <Usage href="ExportScope.meth#Remove"/>
+        <UsedProcedure href="DIFpe_Procedures.proc#DIFModeler_ExportCompletion_Myself"/>
+      </ProcedureForUsage>
+
+      <ProcedureForUsage>
+        <Usage href="ExportScope.meth#TransferSiteOwnership"/>
+        <UsedProcedure href="DIFpe_Procedures.proc#DIFModeler_ExportCompletion_Myself"/>
+      </ProcedureForUsage>
+    </Method>
+
+  </Class>
+
+  <!-- ********************************************** -->
+  <!-- * DIFViewInstance (PLMCoreInstance)          * -->
+  <!-- ********************************************** -->
+  <RelationClass Name="DFTResultViewInstance"
+         Uuid="D2AFBF22-041C-4F65-B38D-477082E1DF9E"
+         Abstract="No"
+         SuperName="DIFAbstractViewInstance"
+         CustomerExposition="Programmer"
+         Specializable="Yes">
+
+    <CAAComment>
+      <ShortRole>DFT  View Instance Object</ShortRole>
+      <Role>DFT View Instance Object</Role>
+    </CAAComment>
+
+    <!-- Configuration -->
+    <Property Name="Filtrable" Value="Yes"/>
+
+    <!-- PLM New UI/KWE Scripts New -->
+    <Property Name="KweNew_InstanciationMethod" Value="CATDftKBEDelegateInstanciation"/>
+
+    <!-- Icon and 3D Icon -->
+    <Property Name="IconName" Value="I_VPMNavDifView"/>
+    
+    <!-- Advanced search -->
+    <Property Name="Searchable" Value="No"/>
+
+    <!-- Export -->
+    <Method ImplementationType="None">
+      <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+    </Method>
+
+    <SubClause Name="from"   TargetName="DIFSheet"/>
+    <SubClause Name="to"   TargetName="DFTResultView"/>
+
+  </RelationClass>
+
+  
+</Package>

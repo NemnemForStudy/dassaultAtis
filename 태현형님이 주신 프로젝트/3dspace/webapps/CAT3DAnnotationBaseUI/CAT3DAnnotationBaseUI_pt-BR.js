@@ -1,0 +1,1 @@
+define("DS/CAT3DAnnotationBaseUI/CAT3DAnnotationBaseUI_pt-BR",{});define("DS/CAT3DAnnotationBaseUI/assets/nls/CAT3DAnnotationBaseUI",{ValueLbl:"Tolerância",SelectAllLbl:"Selecionar tudo",ApplyLbl:"Aplicar",MinLbl:"Mín.",MaxLbl:"Máx.",FailureModes:{"0":"Menos importante","1":"Baixa","2":"Média","3":"Alta","4":"Muito alta"}});

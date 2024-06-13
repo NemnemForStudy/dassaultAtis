@@ -1,0 +1,1 @@
+define("DS/CAT3DAnnotationBaseUI/CAT3DAnnotationBaseUI_zh-TW",{});define("DS/CAT3DAnnotationBaseUI/assets/nls/CAT3DAnnotationBaseUI",{ValueLbl:"公差",SelectAllLbl:"選擇全部",ApplyLbl:"套用",MinLbl:"最小",MaxLbl:"最大",FailureModes:{"0":"最不重要","1":"低","2":"中","3":"高","4":"極高"}});

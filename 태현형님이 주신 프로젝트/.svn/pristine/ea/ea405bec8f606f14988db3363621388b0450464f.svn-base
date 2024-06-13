@@ -1,0 +1,20 @@
+{
+  "version": "1.0.0",
+  "summary": "Crée un nouveau tableau rempli avec les résultats de l'appel d'un graphique fourni sur chaque élément du tableau d'appel.",
+  "description": "Ce bloc est capable de mapper tout type de tableau <doc-idp-name translate=no>Entrée</doc-idp-name> sur n'importe quel type de tableau de sortie. <br>Le graphique interne doit être modifié pour fournir le processus de mappage.",
+  "dataPorts": {
+    "Input": "Le tableau d'entrée à mapper. <br>Ce port de données gère tous les types de tableau.",
+    "SharedData": "Les données à partager sur chaque instance de graphique interne. <br>Ce port de données prend en charge tous les types. <br>Si plusieurs données de types différents doivent être partagées, il est recommandé de créer un type d'utilisateur.",
+    "Success": "Le tableau de sortie réussie. <br>Ce port de données gère tous les types de tableaux. <br>La taille de ce tableau sera toujours égale à la taille du tableau <doc-idp-name translate=no>Entrée</doc-idp-name>.",
+    "State": "Tableau d'<doc-valuetype translate=no>EtatMappeTableau</doc-valuetype> donnant l'<doc-valuetype translate=no>EtatExecutionE</doc-valuetype> à chaque index du tableau de sortie <doc-odp-name translate=no>Réussite</doc-odp-name>. <br>La taille de ce tableau sera toujours égale à celle du tableau <doc-idp-name translate=no>Entrée</doc-idp-name>.",
+    "Progress": "Tableau de <doc-valuetype translate=no>ProgressionMappeTableau</doc-valuetype> donnant l'<doc-valuetype translate=no>EtatExecutionE</doc-valuetype> à chaque index du tableau d'entrée <doc-odp-name translate=no>Entrée</doc-odp-name>. <br>Ce tableau peut être rempli par plusieurs données au cours d'une progression, car cela dépend du processus de distribution derrière le bloc. <br>Mais la taille de ce tableau ne dépassera pas celle du tableau <doc-idp-name translate=no>Entrée</doc-idp-name>.",
+    "Error": "Tableau d'<doc-valuetype translate=no>ErreurMappeTableau</doc-valuetype> donnant un objet d'erreur pour l'index du tableau d'entrée <doc-odp-name translate=no>Entrée</doc-odp-name>. <br>La taille de ce tableau ne dépassera pas celle du tableau <doc-idp-name translate=no>Entrée</doc-idp-name>."
+  },
+  "controlPorts": {
+    "In": "déclenche l'exécution du bloc.",
+    "Success": "est bien activé lorsque le processus est terminé.",
+    "Progress": "est activé chaque fois qu'une progression s'est produite.",
+    "Error": "est activé lorsqu'une erreur s'est produite."
+  },
+  "example": null
+}

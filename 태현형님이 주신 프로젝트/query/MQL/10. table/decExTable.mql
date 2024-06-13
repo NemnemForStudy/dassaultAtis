@@ -1,0 +1,107 @@
+###230418 Created By CMG
+
+#delete table decExTable system;
+
+add table decExTable system
+column 
+ name 'decCode'
+ bus '$<attribute[decCode]>'
+ label 'emxFramework.Common.decName'
+ setting 'Registered Suite' 'Framework'
+ setting 'Update Function' 'codeDetailNameVal'
+ setting 'Update Program' 'decCodeMaster'
+ setting 'Editable' true
+column
+ name 'Description'
+ bus '$<description>'
+ label 'emxFramework.Common.decDescription'
+ setting 'Registered Suite' 'Framework'
+ setting 'Editable' true
+ setting 'Field Type' 'basic'
+ setting 'Admin Type' 'attribute'
+column
+ name 'Sequence Order'
+ label 'emxFramework.Common.SequenceOrder'
+ setting "Column Type" "program"
+ setting 'Registered Suite' 'Framework'
+ setting 'program' 'decCodeMaster'
+ setting 'function' 'getSequenceOrder'
+ setting 'Update Function' 'updatedecCodeDetailSequenceOrder'
+ setting 'Update Program' 'decCodeMaster'
+column
+ name State
+ label 'emxFramework.Common.decState'
+ bus '$<current>'
+ setting 'Admin Type' 'State'
+ setting "Input Type" "combobox"
+ setting "Field Type" "policy"
+ setting 'Registered Suite' 'Framework'
+ setting 'Type Icon Function' 'getIcon'
+ setting 'Editable' true
+ setting 'Range Program' 'decCodeMaster'
+ setting 'Range Function' 'getStateRange'
+ setting 'Update Function' 'updateDetailState'
+ setting 'Update Program' 'decCodeMaster'
+column
+ name decCodeDetailAtt1
+ label 'emxFramework.Common.decCodeDetailAtt1'
+ bus '$<attribute[decCodeDetailAtt1]>'
+ setting 'Field Type' 'attribute'
+ setting 'Admin Type' 'attribute'
+ setting 'Registered Suite' 'Framework'
+ setting 'Type Icon Function' 'getIcon'
+ setting 'Editable' true
+column
+ name decCodeDetailAtt2
+ label 'emxFramework.Common.decCodeDetailAtt2'
+ bus '$<attribute[decCodeDetailAtt2]>'
+ setting 'Field Type' 'attribute'
+ setting 'Admin Type' 'attribute'
+ setting 'Registered Suite' 'Framework'
+ setting 'Type Icon Function' 'getIcon'
+ setting 'Editable' true
+column
+ name decCodeDetailAtt3
+ label 'emxFramework.Common.decCodeDetailAtt3'
+ bus '$<attribute[decCodeDetailAtt3]>'
+ setting 'Field Type' 'attribute'
+ setting 'Admin Type' 'attribute'
+ setting 'Registered Suite' 'Framework'
+ setting 'Type Icon Function' 'getIcon'
+ setting 'Editable' true
+column
+ name decCodeDetailAtt4
+ label 'emxFramework.Common.decCodeDetailAtt4'
+ bus '$<attribute[decCodeDetailAtt4]>'
+ setting 'Field Type' 'attribute'
+ setting 'Admin Type' 'attribute'
+ setting 'Registered Suite' 'Framework'
+ setting 'Type Icon Function' 'getIcon'
+ setting 'Editable' true
+column
+ name decCodeDetailAtt5
+ label 'emxFramework.Common.decCodeDetailAtt5'
+ bus '$<attribute[decCodeDetailAtt5]>'
+ setting 'Field Type' 'attribute'
+ setting 'Admin Type' 'attribute'
+ setting 'Registered Suite' 'Framework'
+ setting 'Type Icon Function' 'getIcon'
+ setting 'Editable' true;
+ 
+mod table decExTable system column delete 5;
+mod table decExTable system column delete 5;
+
+mod table decExTable system 
+column
+ name decCodeDetailAtt12
+ label 'emxFramework.Common.decCodeDetailAtt6'
+ bus '$<attribute[decCodeDetailAtt5]>'
+ setting 'Field Type' 'attribute'
+ setting 'Admin Type' 'attribute'
+ setting 'Registered Suite' 'Framework'
+ setting 'Type Icon Function' 'getIcon'
+ setting 'Editable' true
+ setting "Group Header" "emxFramework.Common.decCodeDetailTable";
+ 
+mod table decExTable system 
+column mod 3 add setting "Group Header" "emxFramework.Common.decCodeDetailTable";

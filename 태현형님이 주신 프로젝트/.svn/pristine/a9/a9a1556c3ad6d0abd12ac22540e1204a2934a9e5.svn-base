@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<!-- ENOVIA DICTIONARY  -->
+<!-- COPYRIGHT DASSAULT SYSTEMES 2008, All rights reserved -->
+<Package xmlns="PLMDictionaryUnified" 
+         ModelerType="Top" 
+         CustomerExposition="Programmer"
+         Name="PLMInsulation_EngSpecification"
+         Uuid="00D42188-6A00-449E-821D-2AE83A70C53F"
+         UseNames="PLMEnsEngSpecification PLMEnsSpecSpecification" 
+         BelongsToModeler="PLMInsulation_EngSpecification">
+  <CAAComment>
+    <ShortRole>Insulation Specification Package</ShortRole>
+    <Role>This package describes the Engineering Specification objects for Insulation Design Applications.</Role>
+  </CAAComment>
+  <Comment>Initial creation: HS7 USV AUG 2021</Comment>
+  <Comment>[3DEXPERIENCER2023x] 2022-05-09 HS7 Added 2 new types InsSpaceBoundaryTypeTable and InsSpaceMappingTable</Comment>
+  
+  <Class Name="InsTypeTable" Uuid="F6CA1025-D7E1-45B3-BFF4-5B27020C9A9F" Abbreviation="instt" CustomerExposition="Programmer" Abstract="No"
+       SuperName="Ens_TechnoTable2" Discipline="Yes" CustomerExtensible="Yes" CreateInstName="EnsTechnologicalTableInstance">
+    <Property Name="IconName"                    Value="I_Ins_TypeTable"/>
+    <Property Name="Searchable"                  Value="Yes"/>
+    <Property Name="Newable"                     Value="All"/>
+    <Property Name="KweNew_InstanciationMethod"  Value="CATEnsCompanyStdsInstanciation"/>
+    <Property Name="KweNew_ReturnedType"         Value="EnsTechnologicalTableInstance"/>
+    <Property Name="ProposedInDataSetup"         Value="Yes"/>
+    <CAAComment>
+      <ShortRole>Insulation Type Table</ShortRole>
+      <Role>Insulation Type Table</Role>
+    </CAAComment>
+  </Class>
+
+  <Class Name="InsSpecification" Uuid="30FD3908-B1BE-47E7-A5EB-F391DB6F57CC" Abbreviation="inspec" CustomerExposition="Programmer" Abstract="No"
+        SuperName="Ens_AbstractSpec" Discipline="Yes" CustomerExtensible="Yes">
+    <Property Name="IconName"                    Value="I_Insulation_Spec"/>
+    <Property Name="Searchable"                  Value="Yes"/>
+    <Property Name="Newable"                     Value="New"/>
+    <Property Name="KweNew_InstanciationMethod"  Value="CATEnsCompanyStdsInstanciation"/>
+    <Property Name="ProposedInDataSetup"         Value="Yes"/>
+    <CAAComment>
+      <ShortRole>Insulation Specification</ShortRole>
+      <Role>Insulation Specification</Role>
+    </CAAComment>
+  </Class>
+
+  <Class Name="InsCustomerAdditionalSpec" Uuid="AC953162-CD48-40E8-B87C-33568B8423F2" Abbreviation="incustspec" CustomerExposition="Programmer" Abstract="No"
+         SuperName="CustomerAdditionalSpec" Discipline="Yes" Specializable="Yes" CustomerExtensible="Yes">
+    <Property Name="IconName"                    Value="I_Ins_InsulationCustomerAdditionalSpec"/>
+    <Property Name="Searchable"                  Value="Yes"/>
+    <Property Name="Newable"                     Value="New"/>
+    <Property Name="KweNew_InstanciationMethod"  Value="CATEnsCompanyStdsInstanciation"/>
+    <Property Name="ProposedInDataSetup"         Value="Yes"/>
+    <CAAComment>
+      <ShortRole>Insulation Customer Additional Spec</ShortRole>
+      <Role>Insulation Customer Additional Spec</Role>
+    </CAAComment>
+  </Class>
+
+  <Class Name="InsDimensionTable" Uuid="A91170CF-EEB0-4F4F-BCB7-A2F8EFF1738B" Abbreviation="insdit" CustomerExposition="Programmer" Abstract="No"
+          SuperName="Ens_TechnoTable2" Discipline="Yes" CustomerExtensible="Yes" CreateInstName="EnsTechnologicalTableInstance">
+    <Property Name="IconName"                    Value="I_Ins_DimensionTable"/>
+    <Property Name="Searchable"                  Value="Yes"/>
+    <Property Name="Newable"                     Value="All"/>
+    <Property Name="KweNew_InstanciationMethod"  Value="CATEnsCompanyStdsInstanciation"/>
+    <Property Name="KweNew_ReturnedType"         Value="EnsTechnologicalTableInstance"/>
+    <Simple Name="V_RealizationType"             Uuid="60F6A17E-C1EC-4A27-9EC0-9C8596783E70" Type="String"  MaxLength="80"  Protection="Free"  CAAExposition="L0" MultiValuated="No">
+      <Property Name="Controller" Value="CATInsPLMAttController"/>
+    </Simple>
+    <CAAComment>
+      <ShortRole>Insulation Dimension Table</ShortRole>
+      <Role>Insulation Dimension Table</Role>
+    </CAAComment>
+  </Class>
+
+  <Class Name="InsPartFilter" Uuid="1A2FB8DF-F4A8-45A3-9C8D-079080EF5CDE" Abbreviation="inspf" CustomerExposition="Programmer" Abstract="No"
+    SuperName="Ens_AbstractFilter" Discipline="Yes" CustomerExtensible="Yes" CreateInstName="EnsFilterInstance">
+    <Property Name="IconName"                    Value="I_Ins_PartFilter"/>
+    <Property Name="Searchable"                  Value="Yes"/>
+    <Property Name="Newable"                     Value="All"/>
+    <Property Name="KweNew_InstanciationMethod"  Value="CATEnsCompanyStdsInstanciation"/>
+    <Property Name="KweNew_ReturnedType"         Value="EnsFilterInstance"/>
+    <CAAComment>
+      <ShortRole>Insulation part filter</ShortRole>
+      <Role>Insulation part filter</Role>
+    </CAAComment>
+  </Class>
+
+  <Class Name="InsSpaceMappingTable" Uuid="027DCBA1-8444-4A3D-A9F1-1D0107A26960" Abbreviation="insspacet" CustomerExposition="Programmer" Abstract="No"
+           SuperName="Ens_TechnoTable2" Discipline="Yes" CustomerExtensible="Yes" CreateInstName="EnsTechnologicalTableInstance">
+    <Property Name="IconName"                    Value="I_Ins_SpaceMappingTable"/>
+    <Property Name="Searchable"                  Value="Yes"/>
+    <Property Name="Newable"                     Value="All"/>
+    <Property Name="KweNew_InstanciationMethod"  Value="CATEnsCompanyStdsInstanciation"/>
+    <Property Name="KweNew_ReturnedType"         Value="EnsTechnologicalTableInstance"/>    
+    <CAAComment>
+      <ShortRole>Insulation Space Mapping Table</ShortRole>
+      <Role>Insulation Space Mapping Table</Role>
+    </CAAComment>
+  </Class>
+
+  <Class Name="InsSpaceBoundaryTypeTable" Uuid="9D49E4CD-FC94-4950-9930-0343ACA66609" Abbreviation="insspbndt" CustomerExposition="Programmer" Abstract="No"
+           SuperName="Ens_TechnoTable2" Discipline="Yes" CustomerExtensible="Yes" CreateInstName="EnsTechnologicalTableInstance">
+    <Property Name="IconName"                    Value="I_Ins_SpaceBoundaryMappingTable"/>
+    <Property Name="Searchable"                  Value="Yes"/>
+    <Property Name="Newable"                     Value="All"/>
+    <Property Name="KweNew_InstanciationMethod"  Value="CATEnsCompanyStdsInstanciation"/>
+    <Property Name="KweNew_ReturnedType"         Value="EnsTechnologicalTableInstance"/>
+    <CAAComment>
+      <ShortRole>Insulation Space Mapping Table</ShortRole>
+      <Role>Insulation Space Mapping Table</Role>
+    </CAAComment>
+  </Class>
+  
+</Package>

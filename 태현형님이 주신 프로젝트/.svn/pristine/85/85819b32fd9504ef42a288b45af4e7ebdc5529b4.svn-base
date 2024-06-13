@@ -1,0 +1,1 @@
+define("DS/CATW3DConstraints/CATW3DConstraints_cs",{});define("DS/CATW3DConstraints/assets/nls/CATW3DConstraintsView",{cstCoincidence:"Sjednocení",cstContact:"Kontakt",plane:"Rovina",sidePanel:"Alternativy úchopu"});

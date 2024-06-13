@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:widget="http://www.netvibes.com/ns/">
+  <!-- Copyright 2014 , Dassault Systemes. All rights reserved. -->
+  <head>
+      <title>Stripe - Payment</title>
+      <meta name="description" content="Stripe Payment Page" />
+      <meta name="keywords" content="Marketplace Enterprise PSP Stripe" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+      <link rel="stylesheet" type="text/css" href="../UIKIT/UIKIT.css" />
+
+      <script type="text/javascript" src="../AmdLoader/AmdLoader.js"></script>
+      <script type="text/javascript" src="../c/UWA/js/UWA_W3C_Alone.js"></script>
+      <script src="https://checkout.stripe.com/checkout.js"></script>
+      <script src="https://js.stripe.com/v3/"></script>
+
+  </head>
+
+  <body>
+
+    <script type="text/javascript">
+      require([
+          'UWA/Utils',
+          'UWA/Promise',
+          'DS/UIKIT/Mask',
+          'DS/MPFStripeComponent/StripePaymentPage',
+          'DS/MPFUrl/UrlUtils',
+          'DS/MPFDataProxy/MarketplaceConnector',
+          'DS/MPFServices/MarketplaceServices',
+          'DS/MPFModelFactory/MPFFactoriesV2',
+          'DS/MPFCartModel/CartFactory',
+          'DS/MPFPersonModel/PersonFactory',
+          'DS/MPFCartPaymentModel/WaitForPaymentFactory',
+          'DS/MPFCartModel/CartModel',
+          'DS/MPFModalConfiguratorComponent/ThanksPurchasingPage',
+          'css!DS/MPFStripeComponent/MPFStripeComponent'
+        ], function (
+          UwaUtils,
+          UwaPromise,
+          UikitMask,
+          StripePaymentPage,
+          UrlUtils,
+          MarketplaceConnector,
+          MarketplaceServices,
+          MPFFactoriesV2,
+          CartFactory,
+          PersonFactory,
+          WaitForPaymentFactory,
+          CartModel,
+          ThanksPurchasingPage
+        ) {
+          var cartModel;
+          var me;
+          var creditCardTokenMultiUse;
+          var service;
+          var isScaEnabled;
+          var waitForPaymentModel;
+          var url= new UrlUtils(window.location.href);
+
+          service = url.getValueParameter('service');
+
+          function getConnector() {
+            var promise;
+            var connectorUrl;
+            var connectorPlatformId;
+
+            connectorUrl = url.getValueParameter('connectorUrl');
+            connectorPlatformId = url.getValueParameter('connectorPlatformId');
+            if (connectorUrl && connectorPlatformId) {
+              promise = UwaPromise.resolve(new MarketplaceConnector(
+                decodeURIComponent(connectorUrl),
+                decodeURIComponent(connectorPlatformId),
+                { service: service }
+              ));
+            } else {
+              promise = MarketplaceConnector.fetchPromise({ service: service });
+            }
+            return promise;
+          }
+
+          UikitMask.mask(document.body);
+          getConnector()
+            .then((connector) => {
+              const factories = MPFFactoriesV2.getInstance(connector)
+              return UwaPromise.all([
+                factories.getFactory(MPFFactoriesV2.Types.CART),
+                factories.getFactory(MPFFactoriesV2.Types.PERSON),
+                factories.getFactory(MPFFactoriesV2.Types.WAIT_FOR_PAYMENT)
+              ]);
+            })
+            .then((factories) => {
+              const cartId = url.getValueParameter('idCart');
+
+              cartModel = factories[0].createModel(CartFactory.Types.CART, {
+                id: cartId
+              });
+              me = factories[1].createModel(PersonFactory.Types.ME);
+              waitForPaymentModel = factories[2].createModel(WaitForPaymentFactory.Types.CART, null, {
+                parentResourceId: cartId
+              });
+
+              return UwaPromise.all([
+                cartModel.fetchPromise({ expand: [CartModel.Expands.CART_ITEMS ]}),
+                me.fetchPromise()
+              ]);
+            })
+            .then(() => {
+              const attributes = {};
+
+              isScaEnabled = url.getValueParameter('isScaEnabled', false) === 'true';
+              creditCardTokenMultiUse = url.getValueParameter('CreditCardTokenMultiUse');
+              const coupon = url.getValueParameter('coupon');
+              const firstTryPayment = cartModel.getState() !== CartModel.States.PAYMENT_INITIATED &&
+                cartModel.getState() !== CartModel.States.PAYMENT_REFUSED
+
+              if (creditCardTokenMultiUse === '1') {
+                attributes.CreditCardTokenMultiUse = '1';
+              }
+
+              if (coupon) {
+                attributes.coupon = coupon;
+              }
+
+              if ((isScaEnabled && firstTryPayment) || coupon) {
+                attributes[CartModel.Fields.STATE] = CartModel.States.PENDING_PAYMENT;
+                return cartModel.savePromise(attributes, {
+                  patch: true
+                });
+              } else {
+                return UwaPromise.resolve();
+              }
+            })
+            .then(() => {
+              const stripeAPIKey = url.getValueParameter('stripeKey');
+              const isClicknbuyEduOrMakers = url.getValueParameter('isClicknbuyEduOrMakers');
+              const firstNameUser = url.getValueParameter('firstNameUser');
+
+              const stripePaymentPage = new StripePaymentPage({
+                service: service,
+                locale: UwaUtils.Client.Locale.lang || 'fr-FR',
+                apiKey: stripeAPIKey,
+                creditCardTokenMultiUse: creditCardTokenMultiUse,
+                cart: cartModel,
+                me: me,
+                isScaEnabled: isScaEnabled,
+                waitForPaymentModel: waitForPaymentModel,
+                isClicknbuyEduOrMakers: isClicknbuyEduOrMakers === 'true',
+                firstNameUser: firstNameUser
+              });
+              UikitMask.unmask(document.body);
+              stripePaymentPage.render().inject(document.body);
+              stripePaymentPage.mountCardInputs();
+            })
+            .catch((error) => {
+              const errorPage = new ThanksPurchasingPage({ service: service });
+              errorPage.setPayment(false);
+              UikitMask.unmask(document.body);
+              errorPage.render().inject(document.body);
+            });
+      });
+    </script>
+
+  </body>
+
+</html>

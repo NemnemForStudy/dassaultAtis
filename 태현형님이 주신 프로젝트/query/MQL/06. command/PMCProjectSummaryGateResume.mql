@@ -1,0 +1,13 @@
+################################################################################################
+# Modified By thok : 2023. 05. 15
+# Admin Type : command
+# Name : PMCProjectSummaryGateResume
+################################################################################################
+copy command PMCProjectSummaryGateResume PMCProjectSummaryGateResume_ootb;
+mod command PMCProjectSummaryGateResume href '${SUITE_DIR}/decemxProgramCentralProjectHoldCancel.jsp?program=emxProjectHoldAndCancel:projectHoldCancelResume&switch=Resume&invokedFrom=StructureBrowser' add setting 'Confirm Message' emxProgramCentral.ProjectHoldCancel.resume.notice
+;
+
+# Modified By thok : 2023. 09. 18
+mod command PMCProjectSummaryGateResume 
+	add setting 'Access Expression' 'false'
+;

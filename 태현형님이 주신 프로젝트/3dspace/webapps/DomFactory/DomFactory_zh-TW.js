@@ -1,0 +1,1 @@
+define("DS/DomFactory/DomFactory_zh-TW",{});define("DS/DomFactory/assets/nls/translation",{close:"關閉",maximize:"最大化",restore:"還原"});

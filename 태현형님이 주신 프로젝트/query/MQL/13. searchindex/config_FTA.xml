@@ -1,0 +1,16 @@
+<BOTYPEFIELDS name="FTAAttribute">
+<FIELD name="FTAIDENTIFIER" select="attribute[FTAIdentifier]" type="STRING" sixw="ds6wg:FTAIdentifier" />
+</BOTYPEFIELDS>
+<!-- Begin of FTARequirement indexation Attributes -->
+<BOTYPEFIELDS name="PlmFTARequirementAttributes">
+  <FIELD name="reqfta.itf" key="FTARequirementModel" select="interface[FTARequirementModel].name" type="STRING"/>
+  <FIELD name="reqfta.ParamName" key="ParamName" select="attribute[ParamName]" type="STRING" multiValued="TRUE"/>
+  <FIELD name="reqfta.ParamType" key="ParamType" select="attribute[ParamType]" type="NUM" multiValued="TRUE"/>
+  <FIELD name="reqfta.ParamString" key="ParamString" select="attribute[ParamString]" type="STRING" multiValued="TRUE"/>
+  <FIELD name="reqfta.ParamDouble" key="ParamDouble" select="attribute[ParamDouble]" type="DOUBLE" multiValued="TRUE"/>
+  <FIELD name="reqfta.ParamInt" key="ParamInt" select="attribute[ParamInt]" type="NUM" multiValued="TRUE"/>
+  <FIELD name="reqfta.ParamPrecision" key="ParamPrecision" select="attribute[ParamPrecision]" type="DOUBLE" multiValued="TRUE"/>
+  <FIELD name="reqfta.ParamUnit" key="ParamUnit" select="attribute[ParamUnit]" type="NUM" multiValued="TRUE"/>
+  <FIELD name="reqfta.FTAVisu" key="FTAVisu" select="attribute[FTAVisu]" type="STRING" multiValued="FALSE"/>
+</BOTYPEFIELDS>
+<BOTYPE.EXTFIELDS includes="PlmFTARequirementAttributes" name="Requirement"/>

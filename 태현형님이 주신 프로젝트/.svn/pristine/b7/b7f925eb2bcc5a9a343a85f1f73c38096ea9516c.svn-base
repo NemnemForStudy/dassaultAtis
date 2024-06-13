@@ -1,0 +1,32 @@
+<!-- numeric.js & num_util test example. Author: qif  -->
+<html>
+<head>
+<script src="../../../../../../numeric.js-1.2.6/numeric-1.2.6.js"></script>
+<script src="../../num_util.js"></script>
+<script>
+
+</script>
+</head>
+<body> 
+<div id="out"></div>
+<script> var s = document.getElementById("out");
+s.innerHTML += 
+"This example shows how library <em>numeric</em> handles matrix. When making a matrix using arrays, <em>numeric</em> insert each array as an <b>row</b> of the matrix. "+
+"    A * x   =   b,<br/>"+
+" where <br/>";
+  var A = [[1,2],[3,4]];
+  s.innerHTML += "A="+M2DtoTable(A);
+  var xtrans = [[5,6],[7,8]]; 
+  var x = numeric.transpose(xtrans);
+  s.innerHTML += "x="+M2DtoTable(x);
+  
+  var b = numeric.dot(A, x);
+  s.innerHTML += "A*x=b="+M2DtoTable(b);  
+  s.innerHTML +="<br/>However, when one dimensional array is used for vector that can be seen as a <b>column</b> vector. <br> "
+  s.innerHTML += "<br/> If x="+VectortoStr([5,6]);
+  s.innerHTML += "<br/> A*x=b="+VectortoStr(numeric.dot(A, [5,6]));
+  s.innerHTML += "<br/><a href='SolveAfromx_b.html'>Click for how to solve A of A*x=b.</a>";
+</script>
+ 
+</body>
+</html>

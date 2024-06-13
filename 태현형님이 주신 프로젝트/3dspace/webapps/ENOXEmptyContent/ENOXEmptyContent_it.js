@@ -1,0 +1,1 @@
+define("DS/ENOXEmptyContent/ENOXEmptyContent_it",{});define("DS/ENOXEmptyContent/assets/nls/ENOXEmptyContent",{defaultBottomSentence:"Segui le indicazioni qui sopra",defaultSearchText:"Cerca nel contenuto",defaultDropText:"Rilascia il contenuto qui",or:"oppure",emptyPage:"Questa pagina è vuota."});

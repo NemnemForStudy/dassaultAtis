@@ -1,0 +1,1 @@
+define("DS/VCXWebVolatileGhosting/VCXWebVolatileGhosting_ru",{});define("DS/VCXWebVolatileGhosting/assets/nls/VCXWebVolatileGhosting",{VCXVolatileGhostingCmd:"Двоение"});

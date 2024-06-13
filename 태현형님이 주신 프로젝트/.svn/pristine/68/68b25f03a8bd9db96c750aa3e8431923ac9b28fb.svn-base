@@ -1,0 +1,32 @@
+<div>
+  <div id="im-call-alert-container">
+    <vu-message 
+      v-for="(item, index) in bodyAlerts"
+      :key="index"
+      :show.sync="item.visible"
+      :timeout="item.timeout"
+      :color="item.type"
+      :closable="item.closable"
+    >
+      {{ item.text }}
+    </vu-message>
+  </div>
+
+  <!--<keep-alive>
+    <component 
+      :is="currentBaseComponent"
+      :room_id="this.$store.getters.accepted_room && this.$store.getters.accepted_room.room_id"
+    ></component>
+  </keep-alive>-->
+  <im-call-base-invite
+    v-show="currentBaseComponent=='im-call-base-invite' && showInvite"
+    :rooms_id="$store.getters.invitations"
+  />
+  <im-call-base-lightbox
+    v-show="currentBaseComponent=='im-call-base-lightbox'"
+  />
+  <im-call-base-invite
+    v-if="currentBaseComponent=='im-call-base-minimized'"
+    :rooms_id="[$store.getters.accepted_room.room_id]"
+  />
+</div>

@@ -1,0 +1,16 @@
+m|StudioModelRTWeb\CXPTypings.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.1.22326|3.2
+r|G:\R425\BSF\.
+t|win_b64\typings\CXPTypings\CXPEP.d.ts|1664523250|37177
+s|StudioModelRTWeb\CXPTypings.mweb\src\CXPEP.d.ts|1664523250|37177
+t|win_b64\typings\CXPTypings\CXPEPEventServices.d.ts|1658521644|2641
+s|StudioModelRTWeb\CXPTypings.mweb\src\CXPEPEventServices.d.ts|1658521644|2641
+t|win_b64\typings\CXPTypings\CXP_SDK_Generated.d.ts|1666658968|238207
+s|StudioModelRTWeb\CXPTypings.mweb\src\CXP_SDK_Generated.d.ts|1666658968|238207
+t|win_b64\webapps\CXPTypings\CXPTypings.js|1658952496|195
+s|StudioModelRTWeb\CXPTypings.mweb\src\CXPEP.js|1658521632|103
+u|StudioModelRTWeb\CXPTypings.mweb\src\CXPEPEventServices.js|1658521632|168
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

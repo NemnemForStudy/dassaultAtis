@@ -1,0 +1,10 @@
+m|WebIV\WebViewInterfaceRsc.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.1.22295|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\WebViewInterfaceRsc\WebViewInterfaceRsc.js|1666424780|2262
+s|WebIV\WebViewInterfaceRsc.mweb\src\nativescript-webview-interface.js|1657714787|6887
+u|WebIV\WebViewInterfaceRsc.mweb\src\WebViewInterfaceRsc.js|1658236962|462
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

@@ -1,0 +1,237 @@
+<OOTBParameterization>
+<Domain id="ObjectIdentification" regSuite="VPLMAdministration">	
+	<Family id="ObjectIdentifier" icon="iconParameterizationIdentification.gif">
+		<Parameter id="CANaming" implementation="com.dassault_systemes.ootbConfiguration.deployment.impl.ObjectAutonamingFormat" regSuite="EnterpriseChangeMgt">
+			<Argument id="PrefixArg" type="string" default="CA"/>
+			<Argument id="SuffixArg" type="string" default=""/>
+			<Constant id="type" value="Change Action"/> 
+			<Constant id="appType" value="VPM"/>
+			<Constant id="sogName" value="type_ChangeAction"/> 
+			<Constant id="sogRevision" value=""/>
+		</Parameter>		
+	</Family>
+</Domain>
+
+<Domain id="AttributeDef" regSuite="EnterpriseChangeMgt">	
+	<Family id="ChangeAction" regSuite="EnterpriseChangeMgt" nlsKey="EnterpriseChangeMgt.Label.ChangeAction">
+		<Constant id="appType" value="CBP"/>
+		<Constant id="package" value="ChangeManagement"/>
+		<Constant id="type" value="Change Action"/>
+	</Family>
+</Domain>
+
+<Domain id="LifecycleTopology" regSuite="EnterpriseChangeMgt">
+    <Family id="ChangeAction">
+		<Constant id="policyID" value="Change Action"/>
+		<Constant id="appType" value="CBP"/>
+		<Constant id="modifyTopology" value="false"/>
+		<Constant id="renameStates" value="true"/>
+		<Constant id="NLSStateFileName" value="emxFrameworkStringResource.properties"/>
+		<Constant id="lang" value="en,fr"/>
+		<State id="Prepare">
+			<Constant id="sysName" value="Prepare"/>
+			<Constant id="isRemovable" value="false"/>
+			<Constant id="NLSKey" value="emxFramework.State.Change_Action.Prepare"/>
+		</State>
+		<State id="In Work">
+			<Constant id="sysName" value="In Work"/>
+			<Constant id="isRemovable" value="false"/>
+			<Constant id="NLSKey" value="emxFramework.State.Change_Action.In_Work"/>
+		</State>
+		<State id="In Approval">
+			<Constant id="sysName" value="In Approval"/>
+			<Constant id="isRemovable" value="false"/>
+			<Constant id="NLSKey" value="emxFramework.State.Change_Action.In_Approval"/>
+		</State>
+		<State id="Approved">
+			<Constant id="sysName" value="Approved"/>
+			<Constant id="isRemovable" value="false"/>
+			<Constant id="NLSKey" value="emxFramework.State.Change_Action.Approved"/>
+		</State>
+		<State id="Complete">
+			<Constant id="sysName" value="Complete"/>
+			<Constant id="isRemovable" value="false"/>
+			<Constant id="NLSKey" value="emxFramework.State.Change_Action.Complete"/>
+		</State>
+		<Transition id="PrepareToInWork">
+			<Constant id="transName" value=""/>
+			<Constant id="sourceState" value="Prepare"/>
+			<Constant id="targetState" value="In Work"/>
+			<Constant id="removal" value="false"/>
+		</Transition>
+		<Transition id="InWorkToInApproval">
+			<Constant id="transName" value=""/>
+			<Constant id="sourceState" value="In Work"/>
+			<Constant id="targetState" value="In Approval"/>
+			<Constant id="removal" value="false"/>
+		</Transition>
+		<Transition id="InApprovalToApproved">
+			<Constant id="transName" value=""/>
+			<Constant id="sourceState" value="In Approval"/>
+			<Constant id="targetState" value="Approved"/>
+			<Constant id="removal" value="false"/>
+		</Transition>
+		<Transition id="ApprovedToComplete">
+			<Constant id="transName" value=""/>
+			<Constant id="sourceState" value="Approved"/>
+			<Constant id="targetState" value="Complete"/>
+			<Constant id="removal" value="false"/>
+		</Transition>
+	</Family>
+</Domain>
+
+<Domain id="ChangeParameterization" regSuite="EnterpriseChangeMgt">	
+	<Family id="StandaloneChange" icon="iconParameterizationIdentification.gif">
+		<Parameter id="DisableStandalone" implementation="com.dassault_systemes.ootbConfiguration.deployment.impl.ParameterizationExpressionImpl" regSuite="EnterpriseChangeMgt">
+			<Argument id="Argument" type="boolean" input="checkbox" default="Disabled"/>
+			<Constant id="expression" value="DisableStandaloneCA" />
+			<Constant id="valueChecked" value="true"/>
+			<Constant id="valueUnchecked" value="false"/>
+		</Parameter>	
+		
+		<Parameter id="MandateCR" implementation="com.dassault_systemes.ootbConfiguration.deployment.impl.ParameterizationExpressionImpl" regSuite="EnterpriseChangeMgt">
+			<Argument id="Argument" type="boolean" input="checkbox" default="Disabled"/>
+			<Constant id="expression" value="ECM_MandateChangeRequestOnChangeAction" />
+			<Constant id="valueChecked" value="true"/>
+			<Constant id="valueUnchecked" value="false"/>
+		</Parameter>						
+	</Family>
+	<Family id="ChangeBaselineRoles" icon="iconParameterizationIdentification.gif">
+		<Parameter id="ChangeOwnerBaseline" implementation="com.dassault_systemes.ootbConfiguration.deployment.impl.ParameterizationExpressionImpl" regSuite="EnterpriseChangeMgt">
+			<Argument id="Argument" type="string" input="combobox" default="All">
+				<Value id = "Leader"/>
+				<Value id = "All"/>
+			</Argument>
+			<Constant id="expression" value="ChangeOwnerBaseline" />
+		</Parameter>
+		<Parameter id="ChangeReviewerBaseline" implementation="com.dassault_systemes.ootbConfiguration.deployment.impl.ParameterizationExpressionImpl" regSuite="EnterpriseChangeMgt">
+			<Argument id="Argument" type="string" input="combobox" default="OneLeader">
+				<Value id = "AllLeader"/>
+				<Value id = "OneLeader"/>
+				<Value id = "All"/>
+				<Value id = "Baseline"/>
+			</Argument>
+			<Constant id="expression" value="ChangeReviewerBaseline" />
+		</Parameter>
+		<Parameter id="ChangeReviewerIgnoreOwner" implementation="com.dassault_systemes.ootbConfiguration.deployment.impl.ParameterizationExpressionImpl" regSuite="EnterpriseChangeMgt">
+			<Argument id="Argument" type="boolean" input="checkbox" default="Disabled"/>
+			<Constant id="expression" value="ChangeReviewerIgnoreOwner" />
+			<Constant id="valueChecked" value="true"/>
+			<Constant id="valueUnchecked" value="false"/>
+		</Parameter>
+		<Parameter id="ChangeReviewerIgnoreContributors" implementation="com.dassault_systemes.ootbConfiguration.deployment.impl.ParameterizationExpressionImpl" regSuite="EnterpriseChangeMgt">
+			<Argument id="Argument" type="boolean" input="checkbox" default="Disabled"/>
+			<Constant id="expression" value="ChangeReviewerIgnoreContributors" />
+			<Constant id="valueChecked" value="true"/>
+			<Constant id="valueUnchecked" value="false"/>
+		</Parameter>
+		<Parameter id="ChangeReviewerIgnoreCoordinator" implementation="com.dassault_systemes.ootbConfiguration.deployment.impl.ParameterizationExpressionImpl" regSuite="EnterpriseChangeMgt">
+			<Argument id="Argument" type="boolean" input="checkbox" default="Disabled"/>
+			<Constant id="expression" value="ChangeReviewerIgnoreCoordinator" />
+			<Constant id="valueChecked" value="true"/>
+			<Constant id="valueUnchecked" value="false"/>
+		</Parameter>	
+		
+		<Parameter id="EnforceRouteTemplateOnCA" implementation="com.dassault_systemes.ootbConfiguration.deployment.impl.ParameterizationExpressionImpl" regSuite="EnterpriseChangeMgt">
+			<Argument id="Argument" type="boolean" input="checkbox" default="Disabled"/>
+			<Constant id="expression" value="ECM_EnableRouteTemplateEnforcementForCA" />
+			<Constant id="valueChecked" value="true"/>
+			<Constant id="valueUnchecked" value="false"/>
+		</Parameter>
+			
+	</Family>
+	<Family id="InstanceFreezeChange" icon="iconParameterizationIdentification.gif">
+		<Parameter id="EnableInstanceFreezeChange" implementation="com.dassault_systemes.ootbConfiguration.deployment.impl.ParameterizationExpressionImpl" regSuite="EnterpriseChangeMgt">
+			<Argument id="Argument" type="boolean" input="checkbox" default="Disabled"/>
+			<Constant id="expression" value="ChangeCheckInstanceFrozen" />
+			<Constant id="valueChecked" value="true"/>
+			<Constant id="valueUnchecked" value="false"/>
+		</Parameter>		
+	</Family>
+	<Family id="reviseChangeControlCheck" icon="iconParameterizationIdentification.gif">
+	
+		<Parameter id="EnableReviseChangeControlCheck" implementation="com.dassault_systemes.ootbConfiguration.deployment.impl.ParameterizationExpressionImpl" regSuite="EnterpriseChangeMgt">
+			<Argument id="Argument" type="boolean" input="checkbox" default="Enabled"/>
+			<Constant id="expression" value="EnableReviseChangeControlCheck" />
+			<Constant id="valueChecked" value="true"/>
+			<Constant id="valueUnchecked" value="false"/>
+		</Parameter>
+		
+		<Parameter id="EnableChangeControlGranularity" implementation="com.dassault_systemes.ootbConfiguration.deployment.impl.ParameterizationExpressionImpl" regSuite="EnterpriseChangeMgt">
+			<Argument id="Argument" type="boolean" input="checkbox" default="Disabled"/>
+			<Constant id="expression" value="ECM_EnableChangeControlGranularity" />
+			<Constant id="valueChecked" value="true"/>
+			<Constant id="valueUnchecked" value="false"/>
+		</Parameter>	
+		
+		<Parameter id="ChangeControlRemovalLevel" implementation="com.dassault_systemes.ootbConfiguration.deployment.impl.ParameterizationExpressionImpl" regSuite="EnterpriseChangeMgt">
+			<Argument id="Argument" type="string" input="combobox" default="Admin">
+				<Value id = "Admin"/>
+				<Value id = "Owner"/>
+				<Value id = "RestrictedOwner"/>
+				<Value id = "Leader"/>
+				<Value id = "RestrictedLeader"/>
+				<Value id = "Access"/>
+			</Argument>
+			<Constant id="expression" value="ChangeControlRemovalLevel" />
+		</Parameter>
+		
+		<Parameter id="EnableFullChangeControlRemoval" implementation="com.dassault_systemes.ootbConfiguration.deployment.impl.ParameterizationExpressionImpl" regSuite="EnterpriseChangeMgt">
+			<Argument id="Argument" type="boolean" input="checkbox" default="Enabled"/>
+			<Constant id="expression" value="EnableFullChangeControlRemoval" />
+			<Constant id="valueChecked" value="true"/>
+			<Constant id="valueUnchecked" value="false"/>
+		</Parameter>	
+				
+	</Family>
+	
+	<Family id="proposedChangeAttachment" icon="iconParameterizationIdentification.gif">
+		<Parameter id="EnableProposedChangeDefaultAsModify" implementation="com.dassault_systemes.ootbConfiguration.deployment.impl.ParameterizationExpressionImpl" regSuite="EnterpriseChangeMgt">
+			<Argument id="Argument" type="boolean" input="checkbox" default="Disabled"/>
+			<Constant id="expression" value="EnableProposedChangeDefaultAsModify" />
+			<Constant id="valueChecked" value="true"/>
+			<Constant id="valueUnchecked" value="false"/>
+		</Parameter>		
+	</Family>
+	<Family id="ChangeActionGroup" icon="iconParameterizationIdentification.gif">
+		<Parameter id="EnableChangeActionGroup" implementation="com.dassault_systemes.ootbConfiguration.deployment.impl.ParameterizationExpressionImpl" regSuite="EnterpriseChangeMgt">
+			<Argument id="Argument" type="boolean" input="checkbox" default="Disabled"/>
+			<Constant id="expression" value="CHG_CHANGE_GROUP" />
+			<Constant id="valueChecked" value="true"/>
+			<Constant id="valueUnchecked" value="false"/>
+		</Parameter>		
+	</Family>
+	<Family id="ChangeActionAutoFreeze" icon="iconParameterizationIdentification.gif">
+		<Parameter id="EnableChangeActionAutoFreeze" implementation="com.dassault_systemes.ootbConfiguration.deployment.impl.ParameterizationExpressionImpl" regSuite="EnterpriseChangeMgt">
+			<Argument id="Argument" type="boolean" input="checkbox" default="Disabled"/>
+			<Constant id="expression" value="ECM_AUTO_FREEZE_FOR_APPROVAL" />
+			<Constant id="valueChecked" value="true"/>
+			<Constant id="valueUnchecked" value="false"/>
+		</Parameter>		
+	</Family>
+	<Family id="ChangeDemoteOnRejection" icon="iconParameterizationIdentification.gif">
+		<Parameter id="ChangeActionDemoteOnRejection" implementation="com.dassault_systemes.ootbConfiguration.deployment.impl.ParameterizationExpressionImpl" regSuite="EnterpriseChangeMgt">
+			<Argument id="Argument" type="boolean" input="checkbox" default="Disabled"/>
+			<Constant id="expression" value="EnableChangeActionDemoteOnRejection" />
+			<Constant id="valueChecked" value="true"/>
+			<Constant id="valueUnchecked" value="false"/>
+		</Parameter>		
+	</Family>
+	<Family id="ChangeActionCheckEffectivities" icon="iconParameterizationIdentification.gif">
+		<Parameter id="ChangeActionCheckFalseEffectivitiesAtApproval" implementation="com.dassault_systemes.ootbConfiguration.deployment.impl.ParameterizationExpressionImpl" regSuite="EnterpriseChangeMgt">
+			<Argument id="Argument" type="boolean" input="checkbox" default="Disabled"/>
+			<Constant id="expression" value="ChangeActionCheckFalseEffectivitiesAtApproval" />
+			<Constant id="valueChecked" value="true"/>
+			<Constant id="valueUnchecked" value="false"/>
+		</Parameter>
+		<Parameter id="ChangeActionOfficializeMultiModelControl" implementation="com.dassault_systemes.ootbConfiguration.deployment.impl.ParameterizationExpressionImpl" regSuite="EnterpriseChangeMgt">
+			<Argument id="Argument" type="boolean" input="checkbox" default="Disabled"/>
+			<Constant id="expression" value="ChangeMultiModelStructureControl" />
+			<Constant id="valueChecked" value="true"/>
+			<Constant id="valueUnchecked" value="false"/>
+		</Parameter>		
+	</Family>
+</Domain>
+
+
+</OOTBParameterization>

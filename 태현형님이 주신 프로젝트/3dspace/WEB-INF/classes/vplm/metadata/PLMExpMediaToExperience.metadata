@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- COPYRIGHT DASSAULT SYSTEMES 2015, All rights reserved -->
+<Package
+	xmlns="PLMDictionaryUnified"
+	Name="PLMExpMediaToExperience"
+	Uuid="176FCF9C-FF0B-41ED-9F4F-558A876B06BD"
+	UseNames="ERCoreModeler"
+	BelongsToModeler="PLMExpMedia3DExperience"
+	CustomerExposition="Programmer"
+	ModelerType="Top"
+	Architecture="All">
+  <RelationClass
+    Name="MediaToExperience"
+    Uuid="778CDB65-769A-4339-9522-DE78FC6AF500"
+    CustomerExposition="Programmer"
+    SuperName="RelationType"
+  >
+    <SubClause Name="from" TargetName="Media3DExperience" propagatemodify="No" propagateconnection="No"/>
+    <SubClause Name="to" TargetName="3DExperience"/>
+    <Method ImplementationType="None">
+      <RealizeMethodType href="ExportScope.meth#ExportScope" />
+    </Method>
+  </RelationClass>
+</Package>

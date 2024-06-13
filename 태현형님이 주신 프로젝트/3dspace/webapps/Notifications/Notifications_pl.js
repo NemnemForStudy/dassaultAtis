@@ -1,0 +1,1 @@
+define("DS/Notifications/Notifications_pl",{});define("DS/Notifications/assets/nls/translation",{closeAll:"Zamknij wszystkie",close:"Zamknij",closeAllTooltip:"Zamknij wszystkie powiadomienia",closeTooltip:"Zamknij powiadomienie"});

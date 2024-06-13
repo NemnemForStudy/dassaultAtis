@@ -1,0 +1,10 @@
+m|WebApplication\Web3DApplication.mweb
+b|j|c,m
+b|c|n,m
+v|6.425.0.22078|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\Web3DApplication\Web3DApplication.js|1647692319|217
+s|WebApplication\Web3DApplication.mweb\src\Web3DApplication.js|1510747591|530
+u|WebApplication\Web3DApplication.mweb\src\Web3DFrameWindow.js|1510924217|475
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

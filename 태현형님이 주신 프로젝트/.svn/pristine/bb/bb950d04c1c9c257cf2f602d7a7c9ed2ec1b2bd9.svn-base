@@ -1,0 +1,9 @@
+m|DMU3DPlayAPIWeb\DMU3DPlayAPIWeb.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.3.23042|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\DMU3DPlayAPIWeb\DMU3DPlayAPIWeb.js|1676090430|1046
+s|DMU3DPlayAPIWeb\DMU3DPlayAPIWeb.mweb\src\DMUMeasureSectionExportImportAPI.js|1673964510|2789
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

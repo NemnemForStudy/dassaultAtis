@@ -1,0 +1,193 @@
+{
+	"properties": {
+		"expandDepth": {
+			"type": "integer",
+			"default": 1,
+			"example": -1,
+			"description": "Number of levels to be expanded. By default only first level is expanded"
+		},
+		"withPath": {
+			"type": "boolean",
+			"example": true,
+			"default": true,
+			"description": "If set return the occurence path of its children"
+		},
+		"filter": {
+			"properties": {
+				"combinationOfSpecification": {
+					"type": "string",
+					"example": "union",
+					"default": "union",
+					"description": "By default its union"
+				},
+				"keepChildren": {
+					"type": "boolean",
+					"example": true,
+					"default": true,
+					"description": "By default its true"
+				},
+				"filterSpecifications": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"filterCriteria": {
+								"type": "array",
+								"items": {
+									"type": "object",
+									"properties": {
+										"criteriaType": {
+											"type": "string",
+											"example": "config",
+											"description": "Type of filter criteria"
+										},
+										"configurationFilterDefinition": {
+											"type": "object",
+											"properties": {
+												"volatileFilter": {
+													"type": "object",
+													"properties": {
+														"filterType": {
+															"type": "string",
+															"example": "Configuration Volatile Filter",
+															"description": "Configuration Volatile Filter"
+														},
+														"filteringView": {
+															"type": "string",
+															"example": "Current",
+															"default": "Current",
+															"description": "Default value is 'Current'",
+															"enum": [
+																"Current",
+																"Projected"
+															]
+														},
+														"filteringMode": {
+															"type": "string",
+															"example": "Strict",
+															"default": "Strict",
+															"description": "Default value is 'Strict'",
+															"enum": [
+																"Strict",
+																"150%"
+															]
+														},
+														"filterSelection": {
+															"type": "object",
+															"description": "To define the configuration criteria (or criterion) of the filter",
+															"properties": {
+																"model": {
+																	"type": "object",
+																	"description": "To define the Model attributes.",
+																	"properties": {
+																		"name": {
+																			"type": "string",
+																			"example": "My Test Model",
+																			"description": "The name of the model (context)"
+																		}
+																	}
+																},
+																"criteria": {
+																	"type": "array",
+																	"description": "The list of configuration criteria to put in the filter. For Version '0.1' this list can only contain one element for the criteria Date.",
+																	"items": {
+																		"type": "object",
+																		"properties": {
+																			"date": {
+																				"type": "object",
+																				"description": "Only possible criteria type",
+																				"properties": {
+																					"selections": {
+																						"type": "array",
+																						"description": "To define the intervals for the date.Different ways to define date range/single",
+																						"items": {
+																							"type": "object",
+																							"properties": {
+																								"from": {
+																									"type": "object",
+																									"properties": {
+																										"value": {
+																											"type": "string",
+																											"example": "2021-07-13T00:00:00",
+																											"description": "The Value of 'from' tag must have this format 'yyyy-mm-ddT00:00:00'."
+																										}
+																									}
+																								},
+																								"to": {
+																									"type": "object",
+																									"properties": {
+																										"value": {
+																											"type": "string",
+																											"example": "2021-07-13T23:59:59",
+																											"description": "The Value of 'to' tag must have this format 'yyyy-mm-ddT23:59:59'."
+																										}
+																									}
+																								}
+																							}
+																						}
+																					}
+																				}
+																			}
+																		}
+																	}
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"type_filter_bo": {
+			"type": "array",
+			"items": {
+				"type": "string",
+				"description": "Filter by List of BO Types"
+			},
+			"example": [
+				"DELLmiPPRSystemReference",
+				"DELLmiOperationPPRReference"
+			]
+		},
+		"type_filter_rel": {
+			"type": "array",
+			"items": {
+				"type": "string",
+				"description": "Filter by List of RO Types"
+			},
+			"example": [
+				"DELLmiPPRSystemInstance",
+				"DELLmiOperationPPRInstance"
+			]
+		},
+		"select_bo": {
+			"type": "array",
+			"items": {
+				"type": "string",
+				"description": "List of BO attributes to be fetched."
+			},
+			"example": [
+				"ds6w:label",
+				"ds6w:identifier"
+			]
+		},
+		"select_rel": {
+			"type": "array",
+			"items": {
+				"type": "string",
+				"description": "List of RO attributes to be fetched."
+			},
+			"example": [
+				"ds6w:label",
+				"ds6w:identifier"
+			]
+		}
+	}
+}

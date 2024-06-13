@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Styles xmlns:syp="http://www.3ds.com/xsd/SYP">
+
+  <Template syp:name="3DPlayDocumentAfrWorkshopInterface" Target="CATCmdInterface">
+    <CATCmdInterface  WkbInterface= "CATI3DPlayProAfrWorkshopConfiguration"/>
+  </Template>
+
+  <Template syp:name="3DPlayDocumentAfrWorkshopHeaders" Target="CATCmdHeadersList">
+    <CATCmdHeadersList>
+      <CATCommandHeader ID="Search" ClassName="DS/3DPlay2DExperience/Commands/CmdSearch" HelpResourceFile = "3DPlayCommands/3DPlayHelpForCommands2D" ResourceFile="3DPlay2DExperience/3DPlay2DExperience" />
+    </CATCmdHeadersList>
+  </Template>
+  <Template syp:name="3DPlayDocumentAfrWorkshopAccess" Target="CATCmdWorkbench">
+    <CATCmdWorkbench Name="3DPlayDocumentWorkbench">
+      <CATCmdContainer Name="SectionViews" Visibility="1" RepresentationType="AfrActionBarSection">
+        <CATCmdStarter Name = "Search" Command = "Search"/>
+      </CATCmdContainer>
+    </CATCmdWorkbench>
+  </Template>
+</Styles>

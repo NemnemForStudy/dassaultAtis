@@ -1,0 +1,1 @@
+define("DS/WebNoteWdg/WebNoteWdg_pt-BR",{});define("DS/WebNoteWdg/assets/nls/webNote",{Title_html:"Título",typeText:"Digite o texto aqui",Font_html:"Fonte",FontSize_html:"Tamanho da fonte",Small_html:"Pequeno",Medium_html:"Médio",Big_html:"Grande"});

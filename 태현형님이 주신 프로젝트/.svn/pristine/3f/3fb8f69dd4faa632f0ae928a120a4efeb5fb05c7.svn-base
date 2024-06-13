@@ -1,0 +1,111 @@
+#
+#   ExpressionStringResource.properties -- Properties file.
+#
+#   Copyright (c) 1992-2015 Dassault Systemes.
+#   All Rights Reserved.
+#   This program contains proprietary and trade secret information of MatrixOne,
+#   Inc.  Copyright notice is precautionary only
+#   and does  not evidence any actual or intended publication of such program
+
+#   static const char RCSID[]="$Id: ExpressionStringResource.properties.rca  $"
+#
+
+# --- General
+
+General.Model=Model
+General.ModelVersion=Wersja modelu
+
+# Criteria
+Criteria.Date=Data
+Criteria.Products=Produkty
+Criteria.ManufacturingPlans=Plany produkcyjne
+Criteria.Unit=Jednostka
+Criteria.Milestone=Kamień milowy
+Criteria.FeatureOption=Warianty i opcje
+
+
+# --- Success
+
+# Effectivity
+Effectivity.Success.SetEvolutionOperationSuccess=Operacja ustawienia skuteczności ewolucji została pomyślnie wykonana.
+
+
+# --- Errors
+
+Error.InternalServerError=błąd wewnętrzny
+
+# General
+General.Error.InvalidCategoryTypeSetting=Typ kategorii jest nieprawidłowy. Sprawdź, jakie ustawienia ma prawidłowy typ kategorii.
+General.Range.Error.SequenceValues=Polecenie Wstaw jako zakres wymaga jednej lub dwóch wartości sekwencji. Liczba znalezionych wartości sekwencji: 
+General.Range.Error.DatesValues=Polecenie Wstaw jako zakres wymaga jednej lub dwóch dat. Liczba znalezionych wartości daty: 
+General.Error.UnsupportedDateWithRelational=Nie można używać daty w połączeniu z relacyjnym typem skuteczności. Usuń jeden typ skuteczności z właściwości administracyjnej tej relacji lub typu.
+General.Error.UnsupportedGlobalWithMultipleContexts=W jednym wyrażeniu nie można połączyć globalnego kontekstu konfiguracji z innym kontekstem konfiguracji. Usuń globalny kontekst konfiguracji lub wszystkie pozostałe konteksty konfiguracji.
+
+
+# Criteria
+Criteria.Error.UnsupportedCriteriaType=Typ kryteriów jest nieobsługiwany. Określ obsługiwany typ kryteriów.
+Criteria.Error.TypeNotAModel=nie jest typem modelu
+Criteria.Error.TypeNotAModelVersion=nie jest typem wersji modelu
+
+# Effectivity
+Effectivity.Error.MismatchEffectivityTypesAndExpression_bus=Wyrażenie skuteczności zawiera pewne typy skuteczności, które nie zostały zastosowane w tym obiekcie.
+Effectivity.Error.NoEffectivityTypeFound=Nie znaleziono typu skuteczności. Użyj prawidłowego typu skuteczności określonego w schemacie.
+Effectivity.Error.EffectivityUsageCannotDelete=Obiekt jest używany w wyrażeniu skuteczności, dlatego nie można go usunąć. Jeżeli chcesz usunąć obiekt, najpierw wykasuj go ze wszystkich wyrażeń skuteczności.
+Effectivity.FalseExpression.Display=Nieprawidłowy
+Effectivity.TrueExpression.Display=Prawidłowe
+Effectivity.Error.OnlyEvolutionEffectivity=To wystąpienie ma ustawioną tylko skuteczność w domenie Ewolucja.
+Effectivity.Error.EffectivityUsageCannotRemoveObject=Obiekt <object_type> <object_name> jest używany w skonfigurowanym wyrażeniu (Filtr, Skuteczność itp.), dlatego nie można go usunąć. Aby usunąć obiekt, najpierw usuń kryteria ze wszystkich skonfigurowanych wyrażeń.
+Effectivity.Error.EffectivityUsageCannotModifyObject=Obiekt <object_type> <object_name> jest używany w skonfigurowanym wyrażeniu (Filtr, Skuteczność itp.), dlatego nie można go zmodyfikować. Jeżeli chcesz zmodyfikować obiekt, najpierw wykasuj kryteria ze wszystkich skonfigurowanych wyrażeń.
+Effectivity.Error.ChangeApplicabilityAndEffectivitieDoNotIntersect=Nie można zmodyfikować skuteczności, ponieważ wyrażenie nie ma części wspólnej ze stosowalnością. W celu zmodyfikowania skuteczności wariantu użyj zmodernizowanego wystąpienia.
+Effectivity.Error.ChangeApplicabilityAndEffectivitieAreEqual=Wyrażenie skuteczności pokrywa się ze stosowalnością: nie można wykonać tej operacji.
+Effectivity.Error.Unset.NoEffectivity=To wystąpienie nie ma skuteczności, wyłączenie nic nie zmieni
+
+# Expression
+Expression.Error.MissingAttachedModels=Nie wszystkie niezbędne modele są dołączone do nadrzędnego elementu referencyjnego.  
+Effectivity.Error.ParentNotAttachedAllModelsFromAC=Odwołanie do obiektu nadrzędnego nie ma dołączonych niektórych modeli z kontekstu tworzenia.
+Effectivity.Error.ParentNotEnabledAllCriteriaFromAC=Odwołanie do obiektu nadrzędnego nie ma włączonych niektórych kryteriów z kontekstu tworzenia.
+Expression.Error.InvalidExpression=Faktyczne wyrażenie jest nieprawidłowe.
+Expression.Error.ParentPartIsNotConfigured=Nadrzędna część podanej relacji nie ma kontekstu konfiguracji.
+
+# Reference
+Expression.Error.AttachContextDeniedSinceReferenceIsRevised=Załączanie Kontekstu konfiguracji nie jest obsługiwane w poprawionym obiekcie. Załączanie <modelType> nie powiodło się
+Expression.Error.CriteriaNotEnabled=Wejściowy plik zawiera kryterium <critType>, ale nie zostało ono włączone w odniesieniu <name>.
+Expression.Error.CriteriaNotDisabled=Nie udało się wyłączyć kryteriów w obiektach, ponieważ zdefiniowano skuteczność <critType> dla jednego lub więcej wystąpień
+Expression.Error.LastCriteriaCannotBeDisabled=Nie udało się wyłączyć kryteriów w obiektach, ponieważ włączenie większej liczby byłoby niemożliwe, a co najmniej jeden model jest nadal przypisany
+Expression.Error.EvolCriteriaCannotBeDisabled.FrozenInstance=Nie można wyłączyć kryterium ewolucji, ponieważ jedno wystąpienie ma zamrożoną skuteczność
+Expression.Error.EvolCriteriaCannotBeDisabled.FrozenConfiguredInstance=Nie można wyłączyć kryterium ewolucji, ponieważ jedno wystąpienie nie ma zamrożonej ewolucji
+Expression.Error.EvolCriteriaCannotBeEnabled.FrozenInstance=Nie można włączyć kryterium ewolucji, ponieważ jedno wystąpienie nie ma zamrożonej skuteczności
+Expression.Error.EvolCriteriaCannotBeEnabled.FrozenConfiguredInstance=Nie można włączyć kryterium ewolucji, ponieważ jedno wystąpienie nie ma zamrożonej ewolucji
+Expression.Error.DetachNotPossible.ConfigurationUsage=Nie można odłączyć modelu, ponieważ jest on używany w konfiguracji
+Expression.Error.DetachNotPossible.EffectivityUsage=Nie można odłączyć modelu, ponieważ jest on używany w wyrażeniu skuteczności
+Expression.Error.DetachNotPossible.ConfigurationRevision=Odłączenie modelu nie jest możliwe, ponieważ odniesienie zawiera poprawki konfiguracji
+Expression.Error.DetachNotPossible.FrozenInstancesDefinedWithModel=Nie można odłączyć modelu <name>, ponieważ zawiera kryterium zamrożonej ewolucji i co najmniej jedno wystąpienie w strukturze jest z tego powodu zamrożone
+Expression.Error.AttachNotPossible.InstanceBecomesValidForFrozenCriteria=Nie można powiązać modelu <name>, ponieważ zawiera kryterium zamrożonej ewolucji i co najmniej jedno wystąpienie w strukturze stałoby się prawidziwe dla tych kryterów zamrożenia w przypadku powiązania
+
+# Immutability
+Expression.Error.FrozenCriteriaInEffs=Nie można fizycznie zmienić wystąpień, ponieważ skuteczności zawierają przynajmniej jedno zamrożone kryterium. Użyj polecenia'Praca pochodna'.
+Expression.Error.FrozenCfgRevImpacted=Brak możliwości przeprowadzenia operacji: wpłynie ona na co najmniej jedną poprawkę konfiguracji
+Expression.Error.FrozenRangeOfEffImpactedBySetExpression=Ustawienie wyrażeń jest niemożliwe, ponieważ spowodowałoby to dodanie lub usunięcie co najmniej jednego zamrożonego kryterium ewolucji do skuteczności
+Expression.Error.ExpressionContainsFrozen=Nie można użyć tego wyrażenia, ponieważ zawiera ono co najmniej jedno zamrożone kryterium ewolucji
+Expression.Error.FailedToRetrieveFrozenFilterOfModels=Nie można wykonać tej operacji. Prawdopodobnie niektóre modele używane do sprawdzania poprawności operacji nie istnieją
+Expression.Error.FailedToDetermineWhetherToDoImmutabilityChecks=Nie można określić, czy należy przestrzegać reguł niezmienności, ponieważ niektóre obiekty nie znajdują się w tych samych obszarach współpracy 
+Expression.Error.DeniedModelFilters=Wykonanie operacji niemożliwe. Przynajmniej jeden dołączony model jest niedostępny, ponieważ należy do ograniczonego obszaru współpracy
+
+# Granular reject
+Expression.Error.CANotRejectableForEffectivities=Akcji zmiany <name>​ nie można odrzucić dla co najmniej jednego z tych wystąpień
+
+# Configured Operations
+Expression.Error.SplitUnderCACannotBeDoneOnVarOnlyStructure=Nie można przeprowadzić operacji rozdziału w ramach akcji zmiany dla struktury zawierającej jedynie warianty;
+CfgOperation.Error.EffectivityCannotBeExtended=Operacja rozszerzania ma zastosowanie tylko do skuteczności z wyrażeniem ewolucji.
+CfgOperation.Error.Extend.InstanceWithoutEffectivity=Nie można wykonać operacji rozszerzania w przypadku wystąpień bez skuteczności
+CfgOperation.Error.Extend.ExpressionTrue=Nie można wykonać operacji rozszerzania w przypadku zawsze prawidłowych wystąpień
+CfgOperation.Error.Extend.VariantOnlyEffectivity=Nie można wykonać operacji rozszerzania w przypadku wystąpień, które mają jedynie część wariantu w zakresie swojej skuteczności, ponieważ są one zawsze prawidłowe
+CfgOperation.Error.Extend.UselessExtension=Nie można rozszerzyć wystąpień o zakres ważności, który mieści się w pełni w istniejącym zakresie ważności
+CfgOperation.Error.Reparent.CriterionNotEnabledOnParentRefOfDuplicate=Kryterium <critType> nie jest włączone w nowym odniesieniu nadrzędnym <name>, ale kryterium to jest używane w skuteczności
+
+# Work Under
+Change.Error.ParentPartIsNotCompliantWithChange=Zmiana określona w ustawieniu "Trwają prace" używa trybów, które są niedostępne w kontekście konfiguracji nadrzędnej części.
+Change.Error.ChangeApplicabilityIsEmptyAtFinalize=Wyrażenie stosowalności jest puste, ale istnieją objęte elementy wymagające aktualizacji.
+Change.Error.ApplicabilityRead=Błąd podczas odczytywania informacji o stosowalności
+Change.Error.Applicability.Finalization.Models=Nie można sfinalizować Akcji zmiany — nie wszystkie jej modele są dołączone w odniesieniu.
+AuthContext.Error.ModelVersionIsAttached=„Nie można użyć kontekstu tworzenia w strukturze z załączoną wersją modelu”

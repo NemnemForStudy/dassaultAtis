@@ -1,0 +1,38 @@
+################################################################################################
+# Created By thok : 2023. 07. 26
+# Admin Type : command
+# Name : decProjectOngoingComplete
+################################################################################################
+#delete command decProjectOngoingComplete;
+add command 'decProjectOngoingComplete' 
+	description 'Command to Complete Ongoing Project'
+	alt 'emxProgramCentral.ProjectSpace.Complete.Ongoing' 
+	label 'emxProgramCentral.ProjectSpace.Complete.Ongoing' 
+	href '${COMMON_DIR}/decProjectStatusControl.jsp?projectStatus=Completed' 
+	setting 'Confirm Message' 'emxProgramCentral.ProjectSpace.Complete.alert.Ongoing' 
+	setting 'Image' '${COMMON_DIR}/images/iconActionApprove.png'
+	setting 'Registered Suite' 'ProgramCentral'
+	setting 'Target Location' 'hiddenFrame'
+	setting 'Submit' true
+	setting 'Access Expression' '(attribute[decProjectStatus]==Ongoing) && (context.user.isassigned[decSystemAdmin] || owner==context.user)'
+;
+add property command_decProjectOngoingComplete on program eServiceSchemaVariableMapping.tcl to command 'decProjectOngoingComplete'
+;
+
+# Modified By thok : 2023. 07. 27
+mod command 'decProjectOngoingComplete'
+	add setting 'Access Expression' '(attribute[decProjectType]==ongoing) && (attribute[decProjectStatus]=="In-Progress") && (context.user.isassigned[decSystemAdmin] || owner==context.user)'
+;
+
+# Modified By thok : 2023. 09. 09
+mod command 'decProjectOngoingComplete'
+	add setting 'Access Expression' '(attribute[decProjectType]==ongoing) && (attribute[decProjectStatus]=="In-Progress") && (owner==context.user)'
+	add setting 'hasAccess' 'PIM'
+	add setting 'Access Program' 'decAccess' 
+	add setting 'Access Function' 'hasAccess'
+;
+
+# Modified By thok : 2023. 09. 11
+mod command 'decProjectOngoingComplete'
+	add setting 'Access Expression' '(attribute[decProjectType]==ongoing) && (attribute[decProjectStatus]=="In-Progress")'
+;

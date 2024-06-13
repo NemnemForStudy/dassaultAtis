@@ -1,0 +1,1 @@
+define("DS/DMUCompareVisu/DMUCompareVisu_cs",{});define("DS/DMUCompareVisu/assets/nls/DMUCompareVisu",{compareNotify_onemodel:"Nelze porovnat pouze jeden model",compareNotify_nomodel:"Žádný produkt k porovnání"});

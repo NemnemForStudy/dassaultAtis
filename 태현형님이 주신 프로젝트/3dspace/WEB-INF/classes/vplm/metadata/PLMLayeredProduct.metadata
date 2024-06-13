@@ -1,0 +1,193 @@
+<?xml version="1.0"?>
+<!-- COPYRIGHT DASSAULT SYSTEMES 2020, All rights reserved -->
+<!-- This defines the data model for IRPC types extended for -->
+<!-- XSoftwarePhysical system -->
+<Package xmlns="PLMDictionaryUnified" Name="PLMLayeredProduct"
+    ModelerType="Top" Uuid="0EF0E73F-8674-4686-A5C8-643F220E6F90"
+    CustomerExposition="Programmer" UseNames="PRODUCTCFG RawMaterialSpecification" 
+
+    Architecture="All" BelongsToModeler="PLMLayeredProduct">
+
+  <Extension Name="MLP_LayersStructure" Uuid="CBB9C32D-1DC5-48B7-A594-A58E444678DF" 
+             ScopeNames="VPMReference" CustomerExposition="Programmer" 
+             CAAExposition="L0">
+  
+      <Simple Name="V_MLP_Layers" Uuid="197FCB6A-5B23-4B30-B2A1-15E8C05B413A"  
+              Type="Clob"  Protection="Internal"  MultiValuated="No"/>
+ 
+  </Extension>
+
+  <!-- *************************************** -->
+  <!-- *******MLP RAW MATERIAL EXTENSION****** -->
+  <!-- *************************************** -->
+  
+  <!-- Stranded  -->
+  <Class Name="MLP_Raw_Material_Stranded"
+		Uuid="043B478B-FFD9-4403-9EBD-E6BE25C6A134"
+		SuperName="Raw_Material"
+		Discipline="Yes"
+		Specializable="No"
+		Searchable="Yes"
+		Newable="New"
+    CustomerExposition="Programmer">
+   
+    <Property Name = "IconName" Value = "I_MLP_RawMaterial_Stranded"/>
+    <Property Name = "3DIconName" Value = "I_MLP_RawMaterial_Stranded"/>
+	<Property Name="KweNew_InstanciationMethod" Value="CATEPLMLayeredProductDelegateInstanciation"/> 
+
+    <Simple Name="V_MLP_RM_LinearDensity" Uuid="2B0D96C6-AE49-4121-86F0-E86109976008"  PLMImpacting="Yes" Type="Double" MultiValuated="No" Magnitude="LINEMASS" Protection="Free" DefaultValue="0.5">
+      <Property Name="CustoUserAccess" Value="ReadWrite"/>
+    </Simple>
+
+    <Simple Name="V_MLP_RM_Thickness" Uuid="4FC42FAB-74D5-4AFC-AD78-D85B175C73B5" PLMImpacting="Yes" Type="Double" MultiValuated="No" Magnitude="LENGTH" Protection="Free" DefaultValue="0.0001">
+      <Property Name="CustoUserAccess" Value="ReadWrite"/>
+    </Simple>
+  </Class>
+  
+
+  <!-- Glue Lotion  -->
+  <Class Name="MLP_Raw_Material_GlueLotion"
+   Uuid="22D44247-9D56-4F03-A999-4BC0668D7E85"
+   SuperName="Raw_Material"
+   Discipline="Yes"
+   Specializable="No"
+   Searchable="Yes"
+   Newable="New"
+   CustomerExposition="Programmer">
+    
+    <Property Name = "IconName" Value = "I_MLP_RawMaterial_GlueLotion"/>
+    <Property Name = "3DIconName" Value = "I_MLP_RawMaterial_GlueLotion"/>
+	<Property Name="KweNew_InstanciationMethod" Value="CATEPLMLayeredProductDelegateInstanciation"/>
+	  
+  </Class>
+  
+  
+  <!-- Roll Good  -->
+  <Class Name="MLP_Raw_Material_RollGood"
+   Uuid="10AEE48E-A9F5-4E1D-9A8A-38D6D4332C8B"
+   SuperName="Raw_Material"
+   Discipline="Yes"
+   Specializable="No"
+   Searchable="Yes"
+   Newable="New"
+   CustomerExposition="Programmer">
+
+    <Property Name = "IconName" Value = "I_MLP_RawMaterial_RollGood"/>
+    <Property Name = "3DIconName" Value = "I_MLP_RawMaterial_RollGood"/>
+	<Property Name="KweNew_InstanciationMethod" Value="CATEPLMLayeredProductDelegateInstanciation"/>
+
+	  <Simple Name="V_MLP_RM_Width" Uuid="97413FF6-726A-41C8-A1B4-75EEB952015E" PLMImpacting="Yes" Type="Double" MultiValuated="No" Magnitude="LENGTH" Protection="Free" DefaultValue="20.0">
+      <Property Name="CustoUserAccess" Value="ReadWrite"/>
+    </Simple>
+
+    <Simple Name="V_MLP_RM_AreaDensity" Uuid="8D4E246C-C073-4EF7-9BA5-B73F78CEC7D9" PLMImpacting="Yes" Type="Double" MultiValuated="No" Magnitude="SURFACICMASS" Protection="Free" DefaultValue="0.005">
+      <Property Name="CustoUserAccess" Value="ReadWrite"/>
+    </Simple>
+
+    <Simple Name="V_MLP_RM_Thickness" Uuid="19030D11-3631-4DBB-9E49-A2D116438502" PLMImpacting="Yes" Type="Double" MultiValuated="No" Magnitude="LENGTH" Protection="Free" DefaultValue="0.0001">
+      <Property Name="CustoUserAccess" Value="ReadWrite"/>
+    </Simple>
+
+    <Simple Name="V_MLP_RM_RepeatedLength" Uuid="60503A5A-D34C-49B8-B3B5-9F41285B6A11" PLMImpacting="Yes" Type="Double" MultiValuated="No" Magnitude="LENGTH" Protection="Free" DefaultValue="50.0">
+      <Property Name="CustoUserAccess" Value="ReadWrite"/>
+    </Simple>
+
+  
+  </Class>
+
+  <!-- Liquid  -->
+  <Class Name="MLP_Raw_Material_Liquid"
+   Uuid="DC2B738C-851E-4CE0-8374-AEACBAA84842"
+   SuperName="Raw_Material"
+   Discipline="Yes"
+   Specializable="No"
+   Searchable="Yes"
+   Newable="New"
+   CustomerExposition="Programmer">
+    
+    <Property Name = "IconName" Value = "I_MLP_RawMaterial_VolumicMass"/>
+    <Property Name = "3DIconName" Value = "I_MLP_RawMaterial_VolumicMass"/>
+	<Property Name="KweNew_InstanciationMethod" Value="CATEPLMLayeredProductDelegateInstanciation"/>
+	  
+	  <Simple Name="V_MLP_RM_VolumicMass" Uuid="61683C0D-41A8-4E8A-A856-C5F25A5BDA59" PLMImpacting="Yes" Type="Double" MultiValuated="No" Magnitude="DENSITY" Protection="Free" DefaultValue="0.003">
+      <Property Name="CustoUserAccess" Value="ReadWrite"/>
+    </Simple>  
+  </Class>
+
+  <!-- Others  -->
+  <Class Name="MLP_Raw_Material_Others"
+   Uuid="592F064D-C88D-4398-A7EB-8F3ED0E99EA6"
+   SuperName="Raw_Material"
+   Discipline="Yes"
+   Specializable="No"
+   Searchable="Yes"
+   Newable="New"
+   CustomerExposition="Programmer">
+
+    <Property Name = "IconName" Value = "I_MLP_RawMaterial_Others"/>
+    <Property Name = "3DIconName" Value = "I_MLP_RawMaterial_Others"/>
+	<Property Name="KweNew_InstanciationMethod" Value="CATEPLMLayeredProductDelegateInstanciation"/>
+	  
+	  <Simple Name="V_MLP_RM_VolumicMass" Uuid="8DB66483-1DA8-4810-BE4C-C30FC39E70E5" PLMImpacting="Yes" Type="Double" MultiValuated="No" Magnitude="DENSITY" Protection="Free" DefaultValue="0.003">
+      <Property Name="CustoUserAccess" Value="ReadWrite"/>
+    </Simple>
+  
+  </Class>
+
+
+	<!-- Laminate  -->
+	<Class Name="MLP_Raw_Material_Laminate"
+	 Uuid="C154BD07-B46E-4FAB-97B6-8AC1E78EF4C9"
+	 SuperName="Raw_Material"
+	 Discipline="Yes"
+	 Specializable="No"
+	 Searchable="Yes"
+	 Newable="New"
+	 CustomerExposition="Programmer">
+
+		<Property Name = "IconName" Value = "I_MLP_RawMaterial_Laminate"/>
+		<Property Name = "3DIconName" Value = "I_MLP_RawMaterial_Laminate"/>
+		<Property Name="KweNew_InstanciationMethod" Value="CATEPLMLayeredProductDelegateInstanciation"/>
+
+	</Class>
+
+  <!-- **************************************************************************************** -->
+  <!-- *******MLP MustBeMadeFrom EXTENSION*****************************************************-->
+  <!-- **************************************************************************************** -->
+
+  <!--  CustomerExposition="Programmer" UseNames="PRODUCTCFG MustBeMadeFromSpecification RawMaterialSpecification" -->
+  
+  <!-- NetWeight directly set in the att Quantity of MBMF relation  -->
+  <!--
+  <Extension Name="MLP_MustBeMadeFrom"
+   Uuid="9BD1B27F-AB31-4F70-B954-75689FF66D76"
+   ScopeNames="MustBeMadeFrom"
+   CustomerExposition="ProgrammerOnly"
+   Abstract="No"
+   Specializable="No">
+    
+   
+
+    <Simple Name="V_MLP_MBMF_GrossWeight"  Uuid="ED90AC8A-27C8-44E4-8B5F-87E69FFE177B"  Magnitude="MASS" Type = "Double" MultiValuated="No" Protection="External"	 DefaultValue="0.0" >
+      <Property Name="CustoUserAccess" Value="ReadWrite"/>
+    </Simple>
+
+    <Simple Name="V_MLP_MBMF_TrimWeight"  Uuid="079146E0-7A5D-445C-ACC3-AC1D72E44A6D"  Magnitude="MASS" Type = "Double" MultiValuated="No" Protection="External"	DefaultValue="0.0" >
+      <Property Name="CustoUserAccess" Value="ReadWrite"/>
+    </Simple>
+
+    <Simple Name="V_MLP_MBMF_NetArea"  Uuid="5BA11542-031B-48E8-9575-BAF1BE73025F"  Magnitude="AREA" Type = "Double" MultiValuated="No" Protection="External"	  DefaultValue="0.0" >
+      <Property Name="CustoUserAccess" Value="ReadWrite"/>
+    </Simple>
+
+    <Simple Name="V_MLP_MBMF_GrossArea"  Uuid="8F329B16-873C-4AAA-AF50-9509DE1BFC7E"  Magnitude="AREA" Type = "Double" MultiValuated="No" Protection="External" DefaultValue="0.0" >
+      <Property Name="CustoUserAccess" Value="ReadWrite"/>
+    </Simple>
+
+    <Simple Name="V_MLP_MBMF_TrimArea"  Uuid="34B145FB-91F7-428B-9E11-7AE0E4B6239E"  Magnitude="AREA" Type = "Double" MultiValuated="No" Protection="External"	ResetOnCloning="No"  DefaultValue="0.0"  ResetOnNewVersion="No">
+      <Property Name="CustoUserAccess" Value="ReadWrite"/>
+    </Simple>
+
+  </Extension>  -->
+</Package>
+

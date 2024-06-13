@@ -1,0 +1,1 @@
+define("DS/WebDocumentVisualizationUI/WebDocumentVisualizationUI_en",{});define("DS/WebDocumentVisualizationUI/assets/nls/WebDocumentVisualizationUI",{bookmarksPanel:{title:"Bookmarks",expandOrCollapseAll:"Toggle Expand and Collapse All"}});

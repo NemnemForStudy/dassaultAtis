@@ -1,0 +1,1 @@
+define("DS/CAT3DWRichLinksUI/CAT3DWRichLinksUI_zh-TW",{});define("DS/CAT3DWRichLinksUI/assets/nls/CAT3DWLinkFullHtmlView",{authorPrep:"由：",communityPrep:"在"});define("DS/CAT3DWRichLinksUI/assets/nls/CAT3DWLinkPlaceholderHtmlView",{processingMsg:"正在載入內容..."});define("DS/CAT3DWRichLinksUI/assets/nls/CAT3DWRichLinkHtmlView",{authorPrep:"：",communityPrep:"："});

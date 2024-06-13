@@ -1,0 +1,105 @@
+
+<html>
+	<head>
+		<meta charset="ISO-8859-1">
+
+		<title>DS Social Globe demo 2D</title>
+
+
+
+<!-- WebGLV6 -->
+        <!-- DS Frameworks -->
+ <!-- UWA bypass to use the RequireJS AMD loader  -->
+
+         <!--[if IE]>
+        <script type="text/javascript">window.location.href = "SocialGlobe-no-webgl.html";</script>
+        <![endif]-->
+
+        <script type="text/javascript" src="../RequireJS/require.js"></script>
+        <script type="text/javascript">
+        //<![CDATA[
+            // Any script tag contains a "var UWA" declaration will be executed
+            // only in standalone mode
+            var UWA = {},
+                // Give another name to define/require for the curl AMD loader.
+                curl = {
+                    defineName: 'curl_define',
+                    requireName: 'curl_require'
+                },
+                isRunningStandalone = true;
+        //]]>
+        </script>
+
+        <!-- Application Standalone emulation files -->
+        <link rel="stylesheet" type="text/css" href="https://uwa.netvibes.com/lib/c/UWA/assets/css/standalone.css" />
+        <script type="text/javascript" src="https://uwa.netvibes.com/lib/c/UWA/js/UWA_Standalone_Alone.js"></script>
+
+        <script type="text/javascript" src="../SocialGlobe/SocialGlobe.js"></script>
+        <script type="text/javascript" src="../WebappsUtils/WebappsUtils.js"></script>
+
+<!-- End of WebGLV6 -->
+
+
+<link rel="stylesheet" type="text/css" href="style.css" />
+
+		<script type="text/javascript">
+/* blkop  */
+			'use strict';
+			var editor;
+            var globe;
+            var geoJSONObject;
+            var startColors;
+			function winHeight() {
+			  return window.innerHeight || (document.documentElement || document.body).clientHeight;
+			}
+
+            var projectionState = false;
+            function onProj(state) {
+                projectionState = state;
+               // alert("projection " + projectionState);
+            }
+
+
+            require({},
+                ['UWA/Drivers/Alone', 'widget', 'DS/SocialGlobe/GlobeItf','DS/SocialGlobe/Globals'],
+                function(Alone, widget, GlobeItf, Globals) {
+
+                    var onLoad = function() {
+
+        				var div = document.getElementById('canvas-div');
+
+                        UWA.extendElement(widget.body);
+
+                        if (!Globals.isBrowserSupported()) {
+                            console.log("BROWSER NOT SUPPORTED");
+                        } else {
+                            console.log("BROWSER SUPPORTED");
+                        }
+        				globe = GlobeItf.create(div, true, true);
+
+                        console.log("globe created");
+
+        				globe.go();
+                    };
+
+                    if (widget.launched)
+                        onLoad();
+                    else
+                        widget.onLoad = onLoad;
+                });
+
+		</script>
+	</head>
+<body>
+    <a href="javascript: if(startColors) { startColors();}; startColors = null;">Color show</a> /
+    <a href="javascript:globe.switchToProjection(!projectionState);">Switch projection mode</a> /
+    <a href="javascript:globe.turnGlobeToLatLon(48.856578,2.351828);">Paris</a> /
+    <a href="javascript:globe.turnGlobeToLatLon(45.523056,-122.640278);">Portland</a> /
+    <a href="javascript:globe.turnGlobeToLatLon(-34.93,138.59972);">Adelaide</a> /
+    <a href="javascript:globe.autoTurn(1);">AutoTurn ON</a> /
+    <a href="javascript:globe.autoTurn(0);">AutoTurn OFF</a> /
+    <a href="javascript:globe.showGeoJSONObject(geoJSONObject);">GeoJSON ON</a>
+    <div id="canvas-div" width=1000 height=800>
+    </div>
+</body>
+</html>

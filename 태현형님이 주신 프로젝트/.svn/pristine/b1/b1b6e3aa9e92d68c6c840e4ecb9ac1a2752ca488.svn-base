@@ -1,0 +1,87 @@
+
+<%@page import="com.dec.util.DecStringUtil"%>
+<%@page import="com.dec.util.DecConstants"%>
+<%@page import="com.matrixone.apps.domain.DomainObject"%>
+<%@page import="com.matrixone.apps.domain.util.FrameworkUtil"%>
+<%@include file = "../emxRequestWrapperMethods.inc"%>
+<script language="JavaScript" src="scripts/emxUICore.js" type="text/javascript"></script>
+<%
+
+String sArrSelectedCwpTaskId[] = FrameworkUtil.getSplitTableRowIds(emxGetParameterValues(request, "emxTableRowId"));
+Context context = Framework.getFrameContext(session);
+DomainObject doCWPTask = DomainObject.newInstance(context);
+MapList mlIWP = null;
+MapList mlEWP = null;
+Map<String, String> mEWP = null;
+StringList slDelId = new StringList();
+String sType = DecConstants.EMPTY_STRING;
+String sStatus = DecConstants.EMPTY_STRING;
+String sAlert = DecConstants.EMPTY_STRING;
+Locale locale = context.getLocale();
+for(String sId : sArrSelectedCwpTaskId){
+	doCWPTask.setId(sId);
+	sType = doCWPTask.getTypeName(context);
+	sStatus = doCWPTask.getInfo(context, DecConstants.SELECT_CURRENT);
+	
+	if(DecStringUtil.equals(sType, DecConstants.TYPE_DECCWPTASK)){
+		mlIWP = doCWPTask.getRelatedObjects(context,
+				DecConstants.RELATIONSHIP_SUBTASK, //pattern to match relationships
+				DecConstants.TYPE_DECIWPTASK, //pattern to match types
+				null, //the eMatrix StringList object that holds the list of select statement pertaining to Business Obejcts.
+				null, //the eMatrix StringList object that holds the list of select statement pertaining to Relationships.
+				false, //get To relationships
+				true, //get From relationships
+				(short)0, //the number of levels to expand, 0 equals expand all.
+				DecConstants.EMPTY_STRING, //where clause to apply to objects, can be empty ""
+				DecConstants.EMPTY_STRING,
+				0); //where clause to apply to relationship, can be empty ""
+		// IWP Task가 하위에 있거나 CWP Status 상태가 To Be Started 가 아니면 삭제 불가
+		if(!mlIWP.isEmpty()){
+			sAlert = EnoviaResourceBundle.getProperty(context, "emxProgramCentralStringResource", locale, "ProgramCentral.Alert.IsNotDeleteCWP1");
+			break;
+		}
+		mlEWP = doCWPTask.getRelatedObjects(context,
+				DecConstants.RELATIONSHIP_DECEWPREL, //pattern to match relationships
+				DecConstants.TYPE_DECEWP, //pattern to match types
+				new StringList(DecConstants.SELECT_ID), //the eMatrix StringList object that holds the list of select statement pertaining to Business Obejcts.
+				null, //the eMatrix StringList object that holds the list of select statement pertaining to Relationships.
+				false, //get To relationships
+				true, //get From relationships
+				(short)0, //the number of levels to expand, 0 equals expand all.
+				DecConstants.EMPTY_STRING, //where clause to apply to objects, can be empty ""
+				DecConstants.EMPTY_STRING,
+				0); //where clause to apply to relationship, can be empty ""
+		for(Object o : mlEWP){
+			mEWP = (Map)o;
+			slDelId.add(mEWP.get(DecConstants.SELECT_ID));
+		}
+	}
+	if(!DecStringUtil.equalsIgnoreCase(sStatus, DecConstants.STATE_PROJECT_TASK_CREATE)){
+		sAlert = EnoviaResourceBundle.getProperty(context, "emxProgramCentralStringResource", locale, "ProgramCentral.Alert.IsNotDeleteCWP2");
+		break;
+	}
+}
+if(DecStringUtil.isEmpty(sAlert)){
+	try{
+		ContextUtil.startTransaction(context, true);
+		DomainObject.deleteObjects(context, slDelId.toArray(new String[slDelId.size()]));
+		DomainObject.deleteObjects(context, sArrSelectedCwpTaskId);
+		ContextUtil.commitTransaction(context);
+	} catch (Exception e) {
+		ContextUtil.abortTransaction(context);
+		e.printStackTrace();
+		throw e;
+	}
+	%>
+	<script>
+		getTopWindow().refreshTablePage();
+	</script>
+	<%
+}else{
+	%>
+	<script>
+		alert('<%=sAlert%>');
+	</script>
+	<%
+}
+%>

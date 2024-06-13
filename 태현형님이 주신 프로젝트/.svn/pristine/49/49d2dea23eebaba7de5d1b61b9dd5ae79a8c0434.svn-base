@@ -1,0 +1,158 @@
+#%RAML 0.8
+
+title: CATIA System Synthesis HTTP API
+version: 1
+baseUri: ../../syc
+
+/rest/resource{resourceId}:
+  uriParameters:
+    resourceId:
+      description: Internal System Cockpit id of the resource
+      required: false
+  get:
+      description: Return the RDF description of a resource.
+      queryParameters:
+        selector:
+          description: selector flags
+          required: false
+          example: parents,children,previews,details,nls
+      headers:
+        Accept:
+          required: false
+          enum: [application/ld+json, application/json, text/plain, text/html]
+      responses:
+        200:
+            body:
+                text/plain:
+                    example: |
+                        <> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.3ds.com/vocabularies/syc/type/Root> .
+                        <> <http://purl.org/dc/terms/title> "/" .
+                application/json:
+                    schema: |
+                        {
+                            "$schema": "http://json-schema.org/schema",
+                            "type": "array",
+                            "title": "Statements",
+                            "items": {
+                              "type": "object",
+                              "title": "Statement",
+                              "properties": {
+                                "subjectId":  { "type": "string" },
+                                "predicate": { "type": "string" },
+                                "objectId": { "type": "string" },
+                                "objectValue": { "type": "string" },
+                                "objectType": { "type": "string" }
+                              },
+                              "required": [ "subject", "predicate" ]
+                            }
+                        }
+                    example: |
+                        [
+                          {
+                            "subjectId": "",
+                            "predicate": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+                            "objectId": "http://www.3ds.com/vocabularies/syc/type/Root"
+                          },
+                          {
+                            "subjectId": "",
+                            "predicate": "http://purl.org/dc/terms/title",
+                            "objectValue": "/",
+                            "objectType": "http://www.w3.org/2001/XMLSchema#string"
+                          }
+                        ]
+                application/ld+json:
+                    example: |
+                        {
+                            "@context": {
+                                "@base": "http://localhost/",
+                                "dc": "http://purl.org/dc/terms/",
+                                "syc": "http://www.3ds.com/vocabularies/syc/",
+                                "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+                                "syct": "http://www.3ds.com/vocabularies/syc/type/"
+                            },
+                            "@graph": [
+                                {
+                                    "@id": "",
+                                    "@type": "syct:Root",
+                                    "dc:title": "/"
+                                }
+                            ]
+                        }
+                text/html:
+
+/rest/data{resourceId}:
+  uriParameters:
+    resourceId:
+      description: Internal System Cockpit id of the resource
+      required: false
+  get:
+      description: Return the binary content of a resource file entry.
+      queryParameters:
+        entry:
+          description: name of the file entry
+  put:
+      description: Send a binary content to a resource file entry.
+      body:
+        text/plain: !!null
+        application/json: !!null
+        application/octet-stream: !!null
+      queryParameters:
+        entry:
+          description: name of the file entry
+           
+/rest/preview{resourceId}:
+  uriParameters:
+    resourceId:
+      description: Internal System Cockpit id of the resource
+      required: false
+  get:
+      description: Return a preview.
+      queryParameters:
+        pvwTypes:
+          required: false
+          type: string
+          enum: [1d-html, 2d-canvas, 2d-svg, 2d-vg]
+          example: 1d-html,2d-canvas
+        o:
+          type: string
+      headers:
+        Accept:
+          required: false
+          enum: [application/json, text/html]
+
+/service/core:
+  post:
+      description: Post a service command in JSON.
+      body:
+        application/json:
+          example: |
+            {"name": "service-name", "args": ["arg1", "arg2"] }
+
+/service/action:
+  post:
+      description: Post an action command in JSON.
+      body:
+        application/json:
+          example: |
+            {"subjectId": "/V6-098/50688.55679.61952.6526", "actionId": "syc_action://com.dassault_systemes.system_cockpit.connector.enovia.action.Test1Action" }
+
+/service/event:
+  post:
+      description: Post an event in JSON.
+      body:
+        application/json:
+          example: |
+            { "x": 2.1, "y": 2.2, "sourceResource": "sourceId", "targetResource": "targetId", "preview": "previewId"}
+
+/service/globalsettings:
+  get:
+      description: Return global settings as a JSON objet
+
+/icon/type/{shortSycType}:
+  uriParameters:
+    shortSycType:
+      description: Short System Cockpit type of the fetched icon
+      example: FileSystem.Folder
+  get:
+      description: Return the icon for a given type.
+

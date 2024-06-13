@@ -1,0 +1,41 @@
+.menu-view {
+    position: absolute;
+    top: 5px;
+    right: 0;
+    width: 44px;
+    height: 44px;
+    overflow: visible;
+    z-index: 10000;
+    opacity: 0;
+    transition: .3s opacity;
+}
+.medialinks:hover .menu-view {
+    opacity: 1;
+}
+.touch .medialinks .menu-view {
+    opacity: 1;
+}
+
+.menu-view .menu-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    cursor: pointer;
+    font-size: 25px;
+    opacity: .4;
+    background-color: rgba(255, 255, 255, .2);
+    transition: .3s;
+    border-radius: 10px;
+    margin: 0;
+}
+.menu-view .menu-btn:hover,
+.menu-view .menu-btn.active {
+    opacity: 1;
+    background-color: rgba(255, 255, 255, .5);
+}
+.ios .menu-view .menu-btn,
+.ipados .menu-view .menu-btn {
+    padding-top: 6px;
+}

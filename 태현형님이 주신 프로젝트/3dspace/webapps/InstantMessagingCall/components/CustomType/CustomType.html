@@ -1,0 +1,39 @@
+<div
+  id="im-call-custom-type"
+  :class="{ 
+    'one-picture-view': users.length == 1,
+    'two-picture-view': users.length == 2,
+    'many-picture-view': users.length > 2
+  }"
+>
+  <vu-rtuserpresence
+    v-for="(login, index) in users"
+    :key="`custom-type-user-${index}`"
+    class="noPresence bgInherit"
+    :class="{
+      'medium': isVideoMinimizeView,
+      'smedium': !isVideoMinimizeView && users.length == 1,
+      'tiny': users.length > 1
+    }"
+    :login="login"
+    :tenantId="$store.getters.tenant"
+  />
+  <div
+    v-if="notDisplayed > 0"
+    class="number-of-items"
+    :class="{
+      'small-text': notDisplayed >= 10 && notDisplayed < 100
+    }"
+  >
+    <span
+      v-if="notDisplayed < 100"
+    >
+      +{{ notDisplayed }}
+    </span>
+    <span
+      v-if="notDisplayed >= 100"
+    >
+      ...
+    </span>
+  </div>
+</div>

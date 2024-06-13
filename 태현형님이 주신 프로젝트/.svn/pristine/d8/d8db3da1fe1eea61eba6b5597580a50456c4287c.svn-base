@@ -1,0 +1,3306 @@
+/*
+ *  emxDnD_mxJPO.java
+ *
+ * Copyright (c) 1992-2020 Dassault Systemes.
+ *
+ * All Rights Reserved.
+ * This program contains proprietary and trade secret information of
+ * MatrixOne, Inc.  Copyright notice is precautionary only and does
+ * not evidence any actual or intended publication of such program.
+ *
+ */
+import java.io.File;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.ibatis.session.SqlSession;
+
+import com.daewooenc.compare.CompareRule;
+import com.daewooenc.compare.util.CompareUtil;
+import com.daewooenc.mybatis.main.decSQLSessionFactory;
+import com.dassault_systemes.enovia.e6wv2.foundation.jaxb.Dataobject;
+import com.dassault_systemes.enovia.tskv2.ProjectSequence;
+import com.dec.util.DecConstants;
+import com.dec.util.DecDateUtil;
+import com.dec.util.DecExcelUtil;
+import com.dec.util.DecStringUtil;
+import com.matrixone.apps.common.CommonImageConverterRemoteExec;
+import com.matrixone.apps.common.util.ImageManagerUtil;
+import com.matrixone.apps.domain.DomainConstants;
+import com.matrixone.apps.domain.DomainObject;
+import com.matrixone.apps.domain.DomainRelationship;
+import com.matrixone.apps.domain.DomainSymbolicConstants;
+import com.matrixone.apps.domain.util.ContextUtil;
+import com.matrixone.apps.domain.util.EnoviaResourceBundle;
+import com.matrixone.apps.domain.util.FrameworkException;
+import com.matrixone.apps.domain.util.MapList;
+import com.matrixone.apps.domain.util.MqlUtil;
+import com.matrixone.apps.domain.util.PropertyUtil;
+import com.matrixone.apps.domain.util.eMatrixDateFormat;
+import com.matrixone.apps.program.ProgramCentralConstants;
+import com.matrixone.apps.program.ProgramCentralUtil;
+
+import matrix.db.BusinessObjectWithSelect;
+import matrix.db.BusinessObjectWithSelectList;
+import matrix.db.Context;
+import matrix.db.JPO;
+import matrix.db.RelationshipType;
+import matrix.util.StringList;
+
+
+public class emxDnD_mxJPO extends emxDnDBase_mxJPO{
+
+	private final String TASK_PROJECT_ID = "to[" + DecConstants.RELATIONSHIP_PROJECT_ACCESS_KEY + "].from.from[" + DecConstants.RELATIONSHIP_PROJECT_ACCESS_LIST +"].to.id";
+    /**
+     * @param context
+     * @param args
+     * @throws Exception
+     */
+    public emxDnD_mxJPO(Context context, String[] args) throws Exception {
+    	super(context, args);
+    }
+    
+    /**
+     * 복사한 엑셀파일 정보를 뽑은뒤 복사한 엑셀파일 삭제
+     * @param context
+     * @param args
+     * @return
+     * @throws Exception
+     */
+    public MapList getExcelData(Context context,String[] args) throws Exception{
+		File outfile = null;
+		
+		try {
+	    	MapList mlReturn = new MapList();
+	    	Map paramMap = (Map)JPO.unpackArgs(args);
+	    	
+	    	String sFolder = (String) paramMap.get("folder");
+	    	String sFilename = (String) paramMap.get("fileName");
+	    	String type = (String) paramMap.get("type"); // Added by hslee on 2023.06.23
+			if(DecStringUtil.isNotNullString(sFilename)) {
+		        outfile = new File(sFolder + sFilename);
+		        mlReturn = DecExcelUtil.getExcelDataToList(outfile.getPath());
+			}
+			/*
+			 * 
+			 * 이 안에 비교하는 로직이 들어가야함
+			 * 
+			 * 
+			 */
+			switch (type) {
+			case "KeyQty":
+				decKeyQty_mxJPO keyQtyJPO = new decKeyQty_mxJPO();
+				mlReturn = keyQtyJPO.compareExcelData( context, mlReturn, paramMap );
+				break;
+			case "CodeMasterCreate":
+				decCodeMaster_mxJPO codeJPO = new decCodeMaster_mxJPO();
+				mlReturn = codeJPO.compareExcelData2Create( context, mlReturn, paramMap );
+				break;
+			case "CodeMasterAdd":
+				codeJPO = new decCodeMaster_mxJPO();
+				mlReturn = codeJPO.compareExcelData2Add( context, mlReturn, paramMap );
+				break;
+			case "KPI":
+				mlReturn = compareExcelKPIData(context, mlReturn, paramMap );
+				break;
+			case "CWP":
+				mlReturn = compareExcelCWPMasterData(context, mlReturn, paramMap );
+				break;
+			case "CWPPlan":
+				mlReturn = compareExcelCWPPlanData(context, mlReturn, paramMap );
+				break;
+			case "IWP":
+				mlReturn = compareExcelIWPExcutionData(context, mlReturn, paramMap );
+				break;
+			case "CWPNo":
+				mlReturn = compareExcelCWPNoData(context, mlReturn, paramMap );
+				break;
+			case "BMTracking":
+				decMaterial_mxJPO materialJPO = new decMaterial_mxJPO();
+				mlReturn = materialJPO.compareExcelBMTrackingData(context, mlReturn, paramMap );
+				break;
+			default:
+				break;
+			}
+	    	return mlReturn;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			// 파일 삭제안되는경우를 방지하기 위한 메소드
+			System.gc();
+			System.runFinalization();
+			if(!outfile.delete()) {
+				outfile.deleteOnExit();
+			}
+		}
+    }
+   
+    private MapList compareExcelCWPNoData(Context context, MapList mlObject, Map paramMap) throws Exception {
+    	String sParentOID = (String)paramMap.get("parentOID");
+    	try ( SqlSession sqlSession = decSQLSessionFactory.getSession() ) {
+		    DomainObject doProject = DomainObject.newInstance(context, sParentOID);
+		    doProject.open(context);
+	    	if(!doProject.getTypeName().equals(DecConstants.TYPE_PROJECT_SPACE)) {
+	    		sParentOID = doProject.getInfo(context, TASK_PROJECT_ID);
+	    		doProject.setId(sParentOID);
+		    	doProject.open(context);
+	    	}
+	    	String sTypePattern = DecConstants.TYPE_PHASE + "," + DecConstants.TYPE_TASK + "," + DecConstants.TYPE_DECCWPTASK;
+	    	StringList slBusSelect = new StringList();
+	    	slBusSelect.add(DecConstants.SELECT_ID);
+	    	slBusSelect.add(DecConstants.SELECT_NAME);
+	    	slBusSelect.add(DecConstants.SELECT_TYPE);
+	    	slBusSelect.add(DecConstants.SELECT_CURRENT);
+	    	
+	    	// 프로젝트에 연결된 데이터를 가져옴
+	    	MapList mlSubTask = doProject.getRelatedObjects(context,
+	    				DecConstants.RELATIONSHIP_SUBTASK, //pattern to match relationships
+	    				sTypePattern, //pattern to match types
+	    				slBusSelect, //the eMatrix StringList object that holds the list of select statement pertaining to Business Obejcts.
+	    				null, //the eMatrix StringList object that holds the list of select statement pertaining to Relationships.
+	    				false, //get To relationships
+	    				true, //get From relationships
+	    				(short)0, //the number of levels to expand, 0 equals expand all.
+	    				DecConstants.EMPTY_STRING, //where clause to apply to objects, can be empty ""
+	    				DecConstants.EMPTY_STRING,
+	    				0); //where clause to apply to relationship, can be empty ""
+	    	
+	    	Map<String, String> mSubTask = null;
+	    	Map<String, String> mCWPTaskOIDKeyName = new HashMap();
+	    	Map<String, String> mCWPTaskCurrentKeyName = new HashMap();
+	    	for(Object o : mlSubTask) {
+	    		mSubTask = (Map)o;
+	    		String sType = mSubTask.get(DecConstants.SELECT_TYPE);
+	    		String sName = mSubTask.get(DecConstants.SELECT_NAME);
+	    		String sOID = mSubTask.get(DecConstants.SELECT_ID);
+	    		String sCurrent = mSubTask.get(DecConstants.SELECT_CURRENT);
+	    		if(DecStringUtil.equals(sType, DecConstants.TYPE_DECCWPTASK)) {
+	    			mCWPTaskOIDKeyName.put(sName, sOID);
+	    			mCWPTaskCurrentKeyName.put(sName, sCurrent);
+	    		}
+	    	}
+	    	String strLanguage = context.getSession().getLanguage();
+	    	String sErrorMsg1 = EnoviaResourceBundle.getProperty(context, "ProgramCentral","ProgramCentral.Alert.IsNotHaveCWP", strLanguage) + "<br/>";
+	    	String sErrorMsg2 = EnoviaResourceBundle.getProperty(context, "ProgramCentral","ProgramCentral.Alert.IsRequiredValueEmpty", strLanguage) + "<br/>";
+	    	String sErrorMsg3 = EnoviaResourceBundle.getProperty(context, "ProgramCentral","ProgramCentral.Alert.IsNotModifiedCompleted", strLanguage) + "<br/>";
+	    	for(Object obj : mlObject) {
+	    		Map<String, String> mColumn = (Map)obj;
+	    		String sAction = DecConstants.EMPTY_STRING;
+	    		String sMessage = DecConstants.EMPTY_STRING;
+	    		String sBeforeCWPNo = mColumn.get("Before CWP No");
+	    		String sAfterCWPNo = mColumn.get("After CWP No");
+	    		String sCWPOID = mCWPTaskOIDKeyName.get(sBeforeCWPNo);
+	    		String sCurrent = mCWPTaskCurrentKeyName.get(sBeforeCWPNo);
+	    		if(DecStringUtil.equals(sCurrent, DecConstants.STATE_PROJECT_TASK_COMPLETE)) {
+					mColumn.put("Action", "Error");
+	    			mColumn.put("Message", sErrorMsg3);
+	    			continue;
+	    		}
+	    		if(DecStringUtil.isEmpty(sCWPOID)) {
+	    			sAction = "Error";
+	    			sMessage += sErrorMsg1;
+	    		}else if(DecStringUtil.isAnyEmpty(sBeforeCWPNo, sAfterCWPNo)) {
+	    			sAction = "Error";
+	    			sMessage = "CWP No " + sErrorMsg2;
+	    		}else if(DecStringUtil.equals(sBeforeCWPNo, sAfterCWPNo)){
+	    			sAction = DecConstants.SYMB_NA;
+	    			sMessage = DecConstants.SYMB_NA;
+	    		}else {
+	    			sAction = "Modify";
+	    			sMessage = "CWP No : " + sBeforeCWPNo + " -> " + sAfterCWPNo;
+	    		}
+				mColumn.put("Action", sAction);
+    			mColumn.put("Message", sMessage);
+				mColumn.put("objectId", sCWPOID);
+	    	}
+		}catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		return mlObject;
+	}
+
+	private MapList compareExcelIWPExcutionData(Context context, MapList mlObject, Map paramMap) throws Exception {
+		MapList mlReturn = new MapList();
+    	String sParentOID = (String)paramMap.get("parentOID");
+
+    	try ( SqlSession sqlSession = decSQLSessionFactory.getSession() ) {
+		    DomainObject doProject = DomainObject.newInstance(context, sParentOID);
+		    doProject.open(context);
+	    	if(!doProject.getTypeName().equals(DecConstants.TYPE_PROJECT_SPACE)) {
+	    		sParentOID = doProject.getInfo(context, TASK_PROJECT_ID);
+	    		doProject.setId(sParentOID);
+		    	doProject.open(context);
+	    	}
+	    	String sProjectName = doProject.getName();
+	    	
+	    	String sTypePattern = DecConstants.TYPE_PHASE + "," + DecConstants.TYPE_TASK + "," + DecConstants.TYPE_DECCWPTASK + "," + DecConstants.TYPE_DECIWPTASK;
+	    	StringList slBusSelect = new StringList();
+	    	slBusSelect.add(DecConstants.SELECT_ID);
+	    	slBusSelect.add(DecConstants.SELECT_LEVEL);
+	    	slBusSelect.add(DecConstants.SELECT_PHYSICAL_ID);
+	    	slBusSelect.add(DecConstants.SELECT_NAME);
+	    	slBusSelect.add(DecConstants.SELECT_CURRENT);
+	    	slBusSelect.add(DecConstants.SELECT_DESCRIPTION);
+	    	slBusSelect.add(DecConstants.SELECT_ATTRIBUTE_DECWBSTYPE);
+	    	slBusSelect.add(DecConstants.SELECT_ATTRIBUTE_DECDISCIPLINE);
+	    	slBusSelect.add(DecConstants.SELECT_ATTRIBUTE_TASK_ACTUAL_START_DATE);
+	    	slBusSelect.add(DecConstants.SELECT_ATTRIBUTE_TASK_ACTUAL_FINISH_DATE);
+	    	slBusSelect.add("to[" + DecConstants.RELATIONSHIP_PROJECT_ACCESS_KEY + "].from.id");
+	    	slBusSelect.add("to[" + DecConstants.RELATIONSHIP_PROJECT_ACCESS_KEY + "].from.physicalid");
+	    	slBusSelect.add("to[" + DecConstants.RELATIONSHIP_PROJECT_ACCESS_LIST + "].from.id");
+	    	slBusSelect.add("to[" + DecConstants.RELATIONSHIP_PROJECT_ACCESS_LIST + "].from.physicalid");
+	    	slBusSelect.add("to[" + DecConstants.RELATIONSHIP_SUBTASK + "].from.name");
+	    	slBusSelect.add("to[" + DecConstants.RELATIONSHIP_SUBTASK + "].id");
+
+	    	String sAttrList = MqlUtil.mqlCommand(context, "print type $1 select attribute dump $2;" , DecConstants.TYPE_DECIWPTASK, DecConstants.SYMB_VERTICAL_BAR);
+	    	String[] sAttrArray = sAttrList.split("\\|");
+	    	for(int i=0; i<sAttrArray.length; i++) {
+	    		sAttrArray[i] = DomainObject.getAttributeSelect(sAttrArray[i]);
+	    	}
+	    	slBusSelect.addAll(sAttrArray);
+	    	
+	    	// 엑셀에있는 프로젝트들의 데이터를 가져옴
+	    	MapList mlSubTask = doProject.getRelatedObjects(context,
+	    				DecConstants.RELATIONSHIP_SUBTASK, //pattern to match relationships
+	    				sTypePattern, //pattern to match types
+	    				slBusSelect, //the eMatrix StringList object that holds the list of select statement pertaining to Business Obejcts.
+	    				null, //the eMatrix StringList object that holds the list of select statement pertaining to Relationships.
+	    				false, //get To relationships
+	    				true, //get From relationships
+	    				(short)0, //the number of levels to expand, 0 equals expand all.
+	    				DecConstants.EMPTY_STRING, //where clause to apply to objects, can be empty ""
+	    				DecConstants.EMPTY_STRING,
+	    				0); //where clause to apply to relationship, can be empty ""
+	    	Map<String, String> mSubTask = null;
+	    	Map<String, Map> mSubTaskInfoKeyName = new HashMap();
+	    	for(Object o : mlSubTask) {
+	    		mSubTask = (Map)o;
+	    		if(DecStringUtil.equalsAny(mSubTask.get(DecConstants.SELECT_TYPE), DecConstants.TYPE_DECIWPTASK, DecConstants.TYPE_DECCWPTASK)) {
+	        		// 데이터 구분을위해 Task의 이름으로 키값을 정함
+	        		mSubTaskInfoKeyName.put(mSubTask.get(DecConstants.SELECT_NAME), mSubTask);
+	    		}
+	    	}
+	    	String strLanguage = context.getSession().getLanguage();
+	    	String sErrorMsg1 = EnoviaResourceBundle.getProperty(context, "ProgramCentral","ProgramCentral.Alert.IsNotConnectedDiscipline", strLanguage) + "<br/>";
+    		String sErrorMsg2 = EnoviaResourceBundle.getProperty(context, "ProgramCentral","ProgramCentral.Alert.IsNotConnectedBOQKeyItem", strLanguage) + "<br/>";
+    		String sErrorMsg3 = EnoviaResourceBundle.getProperty(context, "ProgramCentral","ProgramCentral.Alert.IsNotMatchWBSTypeLevel", strLanguage) + "<br/>";
+    		String sErrorMsg4 = EnoviaResourceBundle.getProperty(context, "ProgramCentral","ProgramCentral.Alert.ActualStartAlreadyExists", strLanguage) + "<br/>";
+    		String sErrorMsg5 = EnoviaResourceBundle.getProperty(context, "ProgramCentral","ProgramCentral.Alert.ActualFinishAlreadyExists", strLanguage) + "<br/>";
+    		String sErrorMsg6 = EnoviaResourceBundle.getProperty(context, "ProgramCentral","ProgramCentral.Alert.IsNotModifiedCompleted", strLanguage) + "<br/>";
+    		String sErrorMsg7 = EnoviaResourceBundle.getProperty(context, "ProgramCentral","ProgramCentral.Alert.IsNotHaveCWP", strLanguage) + "<br/>";
+    		
+    		
+		    Map<String, StringList> mDisBOQ = getDisValidateBOQ(context, sProjectName);
+		    Map<String, StringList> mBOQUOM = getBOQValidateUOM(context, sProjectName);
+	    	
+	    	Map mParam = new HashMap();
+	    	StringList slSelectParam = new StringList(DecConstants.SELECT_NAME);
+	    	slSelectParam.add(DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILATT1);
+	    	mParam.put("slSelectParam", slSelectParam);
+			mParam.put("codeMasterName", "WBS Type");
+	        mParam.put("codeMasterRevision", sProjectName);
+	        decCodeMaster_mxJPO codeJPO = new decCodeMaster_mxJPO();
+	    	MapList mlCodeDetail = codeJPO.getCodeDetailList(context, mParam);
+	    	Map<String, String> mLevel = new HashMap();
+	    	if(mlCodeDetail.isEmpty()) {
+	    		Map mError = new HashMap();
+	    		mError.put("Action", "Error");
+	    		mError.put("Message", EnoviaResourceBundle.getProperty(context, "ProgramCentral","ProgramCentral.Alert.IsNotHaveWBSType", strLanguage));
+	    		mlReturn.add(mError);
+	    		return mlReturn;
+	    	}
+	    	for(Object o : mlCodeDetail) {
+	    		Map mDetail = (Map)o;
+	    		String sWBSType = (String)mDetail.get(DecConstants.SELECT_NAME);
+	    		String sLevel = (String)mDetail.get(DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILATT1);
+	    		mLevel.put(sLevel, sWBSType);
+	    	}
+			List<CompareRule> compareRuleList = new ArrayList<CompareRule>();
+			compareRuleList.add(new CompareRule("IWP Type"                            , DecConstants.SELECT_ATTRIBUTE_DECIWPTYPE 			 ));
+			compareRuleList.add(new CompareRule("IWP Sequence"                        , DecConstants.SELECT_ATTRIBUTE_DECIWPSEQUENCE 			 ));
+			compareRuleList.add(new CompareRule("IWP Desc"                            , DecConstants.SELECT_DESCRIPTION				 			 ));
+			compareRuleList.add(new CompareRule("Engineer"                            , DecConstants.SELECT_ATTRIBUTE_DECENGINEER				 			 ));
+			compareRuleList.add(new CompareRule("Planner"                             , DecConstants.SELECT_ATTRIBUTE_DECPLANNER					 			 ));
+			compareRuleList.add(new CompareRule("Superintendent"                      , DecConstants.SELECT_ATTRIBUTE_DECSUPERINTENDENT			 			 ));
+			compareRuleList.add(new CompareRule("Foreman"                             , DecConstants.SELECT_ATTRIBUTE_DECFOREMAN					 			 ));
+			compareRuleList.add(new CompareRule("IWP Key Q'ty Item"                   , DecConstants.SELECT_ATTRIBUTE_DECKEYQUANTITYTYPE			 			 ));
+			compareRuleList.add(new CompareRule("UOM"                                 , DecConstants.SELECT_ATTRIBUTE_DECKEYQUANTITYUOM			 			 ));
+			compareRuleList.add(new CompareRule("IWP Key Total"                       , DecConstants.SELECT_ATTRIBUTE_DECKEYQUANTITYTOTAL		 			 ));
+			compareRuleList.add(new CompareRule("IWP Key Completed"                   , DecConstants.SELECT_ATTRIBUTE_DECKEYQUANTITYCOMPLETED	 			 ));
+			compareRuleList.add(new CompareRule("IWP Release Plan"                    , DecConstants.SELECT_ATTRIBUTE_DECRELEASEPLAN				 			 ));
+			compareRuleList.add(new CompareRule("IWP Release Forecast"                , DecConstants.SELECT_ATTRIBUTE_DECRELEASEFORECAST			 			 ));
+			compareRuleList.add(new CompareRule("IWP Release Actual"                  , DecConstants.SELECT_ATTRIBUTE_DECRELEASEACTUAL			 			 ));
+			compareRuleList.add(new CompareRule("Plan Start"                          , DecConstants.SELECT_ATTRIBUTE_TASK_ESTIMATED_START_DATE	 			 ));
+			compareRuleList.add(new CompareRule("Plan Finish"                         , DecConstants.SELECT_ATTRIBUTE_TASK_ESTIMATED_FINISH_DATE	 			 ));
+			compareRuleList.add(new CompareRule("Forecast Start"                      , DecConstants.SELECT_ATTRIBUTE_DECTASKFORECASTSTARTDATE	 			 ));
+			compareRuleList.add(new CompareRule("Forecast Finish"                     , DecConstants.SELECT_ATTRIBUTE_DECTASKFORECASTFINISHDATE	 			 ));
+			compareRuleList.add(new CompareRule("Actual Start"                        , DecConstants.SELECT_ATTRIBUTE_TASK_ACTUAL_START_DATE 			 ));
+			compareRuleList.add(new CompareRule("Actual Finish"                       , DecConstants.SELECT_ATTRIBUTE_TASK_ACTUAL_FINISH_DATE 			 ));
+			compareRuleList.add(new CompareRule("Man Hours Planned"                   , DecConstants.SELECT_ATTRIBUTE_DECMANHOURSPLAN 			 ));
+			compareRuleList.add(new CompareRule("Man Hours Actual"                    , DecConstants.SELECT_ATTRIBUTE_DECMANHOURSACTUAL 			 ));
+			compareRuleList.add(new CompareRule("Hold Category"                       , DecConstants.SELECT_ATTRIBUTE_DECHOLDCATEGORY 			 ));
+			compareRuleList.add(new CompareRule("Remark"                              , DecConstants.SELECT_ATTRIBUTE_DECREMARK 			 ));
+			compareRuleList.add(new CompareRule("UDF1"                                , DecConstants.SELECT_ATTRIBUTE_DECUPF1 			 ));
+			compareRuleList.add(new CompareRule("UDF2"                                , DecConstants.SELECT_ATTRIBUTE_DECUPF2 			 ));
+			compareRuleList.add(new CompareRule("UDF3"                                , DecConstants.SELECT_ATTRIBUTE_DECUPF3 			 ));
+			compareRuleList.add(new CompareRule("CWP No"                              , "to[" + DecConstants.RELATIONSHIP_SUBTASK + "].from.name"));
+
+			List<CompareRule> validateRuleList = new ArrayList<CompareRule>();
+			validateRuleList.add(new CompareRule("CWP No"				, CompareRule.DATA_TYPE.NOTNULL));
+			validateRuleList.add(new CompareRule("IWP No"				, CompareRule.DATA_TYPE.NOTNULL));
+			validateRuleList.add(new CompareRule("IWP Type"				, CompareRule.DATA_TYPE.NOTNULL));
+			validateRuleList.add(new CompareRule("IWP Sequence"			, CompareRule.DATA_TYPE.NOTNULL));
+			validateRuleList.add(new CompareRule("IWP Desc"				, CompareRule.DATA_TYPE.NOTNULL));
+			validateRuleList.add(new CompareRule("IWP Key Q'ty Item"				, CompareRule.DATA_TYPE.NOTNULL));
+			validateRuleList.add(new CompareRule("UOM"					, CompareRule.DATA_TYPE.NOTNULL));
+			validateRuleList.add(new CompareRule("IWP Key Completed"				, CompareRule.DATA_TYPE.NOTNULL));
+			validateRuleList.add(new CompareRule("IWP Release Plan"				, CompareRule.DATA_TYPE.NOTNULL));
+			validateRuleList.add(new CompareRule("IWP Release Forecast"				, CompareRule.DATA_TYPE.NOTNULL));
+			validateRuleList.add(new CompareRule("IWP Release Actual"				, CompareRule.DATA_TYPE.NOTNULL));
+			validateRuleList.add(new CompareRule("Plan Start"				, CompareRule.DATA_TYPE.NOTNULL));
+			validateRuleList.add(new CompareRule("Plan Finish"				, CompareRule.DATA_TYPE.NOTNULL));
+			
+			SimpleDateFormat ev6FullSdf = new SimpleDateFormat("M/d/yyyy hh:mm:ss");
+			
+	    	for(Object obj : mlObject) {
+	    		Map<String, String> mColumn = (Map)obj;
+		    	
+    			String sPlanStart               = DecDateUtil.changeDateFormat(mColumn.get("Plan Start"), 			ev6FullSdf);
+    			String sPlanFinish              = DecDateUtil.changeDateFormat(mColumn.get("Plan Finish"), 			ev6FullSdf);
+    			String sForecastStart           = DecDateUtil.changeDateFormat(mColumn.get("Forecast Start"), 		ev6FullSdf);
+    			String sForecastFinish          = DecDateUtil.changeDateFormat(mColumn.get("Forecast Finish"), 		ev6FullSdf);
+    			String sActualStart             = DecDateUtil.changeDateFormat(mColumn.get("Actual Start"), 		ev6FullSdf);
+    			String sActualFinish            = DecDateUtil.changeDateFormat(mColumn.get("Actual Finish"), 		ev6FullSdf);
+    			String sIWPReleasePlan          = DecDateUtil.changeDateFormat(mColumn.get("IWP Release Plan"), 	ev6FullSdf);
+    			String sIWPReleaseForecast      = DecDateUtil.changeDateFormat(mColumn.get("IWP Release Forecast"), ev6FullSdf);
+    			String sIWPReleaseActual        = DecDateUtil.changeDateFormat(mColumn.get("IWP Release Actual"),	ev6FullSdf);
+    			
+    			mColumn.put("Plan Start", 			sPlanStart         );
+    			mColumn.put("Plan Finish", 			sPlanFinish        );
+    			mColumn.put("Forecast Start", 		sForecastStart     );
+    			mColumn.put("Forecast Finish", 		sForecastFinish    );
+    			mColumn.put("Actual Start", 		sActualStart       );
+    			mColumn.put("Actual Finish", 		sActualFinish      );
+    			mColumn.put("IWP Release Plan", 	sIWPReleasePlan    );
+    			mColumn.put("IWP Release Forecast", sIWPReleaseForecast);
+    			mColumn.put("IWP Release Actual",	sIWPReleaseActual  );
+    			
+		    	Map<String, String> compareResultMap = CompareUtil.compareElement(mColumn, null, validateRuleList, null);
+		    	String sAction = compareResultMap.get("Action");
+		    	String sMessage = compareResultMap.get("Message");
+    			
+		    	if(!"Error".equals(sAction)) {
+		    		String sCWPNo			     = mColumn.get("CWP No");
+		    		String sIWPNo			     = mColumn.get("IWP No");
+		    		Map<String, String> mIWPSubTask = mSubTaskInfoKeyName.get(sIWPNo);
+			    	Map<String, String> mCWPSubTask = mSubTaskInfoKeyName.get(sCWPNo);
+	    			if(mCWPSubTask == null) {
+						sAction = "Error";
+		    			sMessage = sErrorMsg7;
+	    			}
+		    		if(mIWPSubTask == null) {
+				    	if(!"Error".equals(sAction)) {
+			    			sAction = "Create";
+			    			sMessage = DecConstants.SYMB_NA;
+				    	}
+		    		}else{
+		    			String sCurrent = mIWPSubTask.get(DecConstants.SELECT_CURRENT);
+		    			if(DecStringUtil.equals(sCurrent, DecConstants.STATE_PROJECT_TASK_COMPLETE)) {
+		    				mColumn.put("Action", "Error");
+		    				mColumn.put("Message", sErrorMsg6);
+		    				continue;
+		    			}
+						String sCWPLevel = mCWPSubTask.get(DecConstants.SELECT_LEVEL);
+						String sIWPLevel = String.valueOf(Integer.valueOf(sCWPLevel) + 1);
+						String sType = mLevel.get(sIWPLevel);
+						String sOldActualStart = mIWPSubTask.get(DecConstants.SELECT_ATTRIBUTE_TASK_ACTUAL_START_DATE);
+		    			String sOldActualFinish = mIWPSubTask.get(DecConstants.SELECT_ATTRIBUTE_TASK_ACTUAL_FINISH_DATE);
+		    			if(DecStringUtil.isNotEmpty(sOldActualStart) && DecStringUtil.isEmpty(sActualStart)) {
+			        		sAction = "Error";
+		    				sMessage += sErrorMsg4;
+		    			}
+		    			if(DecStringUtil.isNotEmpty(sOldActualFinish) && DecStringUtil.isEmpty(sActualFinish)) {
+			        		sAction = "Error";
+		    				sMessage += sErrorMsg5;
+		    			}
+						if(!DecStringUtil.equals(sType, "IWP")) {
+							sAction = "Error";
+							sMessage += "IWP " + sErrorMsg3;
+						}else {
+					    	String sDiscipline = mCWPSubTask.get(DecConstants.SELECT_ATTRIBUTE_DECDISCIPLINE);
+					    	String sIWPKeyType = mColumn.get("IWP Key Q'ty Item");
+					    	String sIWPKeyUOM = mColumn.get("UOM");
+				        	StringList slBOQ = mDisBOQ.get(sDiscipline);
+				        	StringList slUOM = mBOQUOM.get(sIWPKeyType);
+		
+				        	if(slBOQ == null || !slBOQ.contains(sIWPKeyType)) {
+								sAction = "Error";
+								sMessage += "IWP Key Q'ty Item" + sErrorMsg1;
+				        	}
+				        	if(slUOM == null || !slUOM.contains(sIWPKeyUOM)) {
+								sAction = "Error";
+								sMessage += "UOM" + sErrorMsg2;
+				        	}
+					    	if("Error".equals(sAction)) {
+					    		sMessage = sMessage.replace(DecConstants.SYMB_NA, DecConstants.EMPTY_STRING);
+					    	}else {
+								compareResultMap = CompareUtil.compareElementToLowerCase(mColumn, mIWPSubTask, compareRuleList, CompareRule.COMPARE_TYPE.COMPARE);
+								sAction = compareResultMap.get("Action");
+								sMessage = compareResultMap.get("Message");
+					    	}
+						}
+		    		}
+		    	}
+				mColumn.put("Action", sAction);
+    			mColumn.put("Message", sMessage);
+	    	}
+    	}catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+    	
+    	mlReturn = mlObject;
+		return mlReturn;
+	}
+
+	private MapList compareExcelCWPPlanData(Context context, MapList mlObject, Map paramMap) throws Exception {
+		MapList mlReturn = new MapList();
+
+    	String sParentOID = (String)paramMap.get("parentOID");
+    	
+	    DomainObject doProject = DomainObject.newInstance(context, sParentOID);
+	    doProject.open(context);
+    	if(!doProject.getTypeName().equals(DecConstants.TYPE_PROJECT_SPACE)) {
+    		sParentOID = doProject.getInfo(context, TASK_PROJECT_ID);
+    		doProject.setId(sParentOID);
+	    	doProject.open(context);
+    	}
+	    String sIWPYN = doProject.getAttributeValue(context, DecConstants.ATTRIBUTE_DECIWP_YN);
+		
+		String sTypePattern = DecConstants.TYPE_PHASE + "," + DecConstants.TYPE_TASK + "," + DecConstants.TYPE_DECCWPTASK + "," + DecConstants.TYPE_DECIWPTASK;
+
+    	StringList slCWPInfoParam = new StringList();
+    	slCWPInfoParam.add(DecConstants.SELECT_NAME);
+    	slCWPInfoParam.add(DecConstants.SELECT_ATTRIBUTE_DECSTAGE);
+    	slCWPInfoParam.add(DecConstants.SELECT_CURRENT);
+    	slCWPInfoParam.add(DecConstants.SELECT_ATTRIBUTE_TASK_ESTIMATED_START_DATE);
+    	slCWPInfoParam.add(DecConstants.SELECT_ATTRIBUTE_DECTASKFORECASTSTARTDATE);
+    	slCWPInfoParam.add(DecConstants.SELECT_ATTRIBUTE_TASK_ACTUAL_START_DATE);
+    	slCWPInfoParam.add(DecConstants.SELECT_ATTRIBUTE_TASK_ACTUAL_FINISH_DATE);
+    	slCWPInfoParam.add("from[" + DecConstants.RELATIONSHIP_DECEWPREL + "]");
+    	slCWPInfoParam.add("from[" + DecConstants.RELATIONSHIP_DECEWPREL + "].to." + DecConstants.SELECT_ID);
+    	slCWPInfoParam.add("from[" + DecConstants.RELATIONSHIP_DECEWPREL + "].to." + DecConstants.SELECT_ATTRIBUTE_DECEWPRELEASEPLAN);
+    	slCWPInfoParam.add("from[" + DecConstants.RELATIONSHIP_DECEWPREL + "].to." + DecConstants.SELECT_ATTRIBUTE_DECEWPRELEASEFORECAST);
+    	slCWPInfoParam.add("from[" + DecConstants.RELATIONSHIP_DECEWPREL + "].to." + DecConstants.SELECT_ATTRIBUTE_DECEWPRELEASEACTUAL);
+    	String sAttrList = MqlUtil.mqlCommand(context, "print type $1 select attribute dump $2;" , DecConstants.TYPE_DECCWPTASK, DecConstants.SYMB_VERTICAL_BAR);
+    	String[] sAttrArray = sAttrList.split("\\|");
+    	for(int i=0; i<sAttrArray.length; i++) {
+    		sAttrArray[i] = DomainObject.getAttributeSelect(sAttrArray[i]);
+    	}
+    	slCWPInfoParam.addAll(sAttrArray);
+
+		List<CompareRule> compareRuleList = new ArrayList<CompareRule>();
+		compareRuleList.add(new CompareRule("Priority Group"                , DecConstants.SELECT_ATTRIBUTE_DECPRIORITYGROUP 			 ));
+		compareRuleList.add(new CompareRule("Priority Number"               , DecConstants.SELECT_ATTRIBUTE_DECPRIORITYNO 			     ));
+		compareRuleList.add(new CompareRule("Sub-Con"                       , DecConstants.SELECT_ATTRIBUTE_DECSUBCONNO 				     ));
+		compareRuleList.add(new CompareRule("Sub-Con2"                      , DecConstants.SELECT_ATTRIBUTE_DECSUBCONNO2 				 ));
+		compareRuleList.add(new CompareRule("Engineer"                      , DecConstants.SELECT_ATTRIBUTE_DECENGINEER 				     ));
+		compareRuleList.add(new CompareRule("Planner"                       , DecConstants.SELECT_ATTRIBUTE_DECPLANNER 				     ));
+		compareRuleList.add(new CompareRule("Superintendent"                , DecConstants.SELECT_ATTRIBUTE_DECSUPERINTENDENT 		     ));
+		compareRuleList.add(new CompareRule("Foreman"                       , DecConstants.SELECT_ATTRIBUTE_DECFOREMAN 				     ));
+		compareRuleList.add(new CompareRule("CWP Release Plan"		        , DecConstants.SELECT_ATTRIBUTE_DECRELEASEPLAN 			 	));
+		compareRuleList.add(new CompareRule("CWP Release Forecast"	        , DecConstants.SELECT_ATTRIBUTE_DECRELEASEFORECAST 		 	));
+		compareRuleList.add(new CompareRule("CWP Release Actual"	        , DecConstants.SELECT_ATTRIBUTE_DECRELEASEACTUAL 			));
+		compareRuleList.add(new CompareRule("Plan Start" 			        , DecConstants.SELECT_ATTRIBUTE_TASK_ESTIMATED_START_DATE   	));
+		compareRuleList.add(new CompareRule("Plan Finish"			        , DecConstants.SELECT_ATTRIBUTE_TASK_ESTIMATED_FINISH_DATE  	));
+		compareRuleList.add(new CompareRule("Forecast Start"		        , DecConstants.SELECT_ATTRIBUTE_DECTASKFORECASTSTARTDATE 	 	));
+		compareRuleList.add(new CompareRule("Forecast Finish"		        , DecConstants.SELECT_ATTRIBUTE_DECTASKFORECASTFINISHDATE   		));
+		compareRuleList.add(new CompareRule("Actual Start"			        , DecConstants.SELECT_ATTRIBUTE_TASK_ACTUAL_START_DATE      	));
+		compareRuleList.add(new CompareRule("Actual Finish"			        , DecConstants.SELECT_ATTRIBUTE_TASK_ACTUAL_FINISH_DATE     	));
+		compareRuleList.add(new CompareRule("RAS"                           , DecConstants.SELECT_ATTRIBUTE_DECMATERIALRAS 	             ));
+		if(DecStringUtil.equalsIgnoreCase(sIWPYN, "N")) {                   
+		compareRuleList.add(new CompareRule("CWP Key Total"                 , DecConstants.SELECT_ATTRIBUTE_DECKEYQUANTITYTOTAL 		     ));
+		compareRuleList.add(new CompareRule("CWP Key Completed"             , DecConstants.SELECT_ATTRIBUTE_DECKEYQUANTITYCOMPLETED         ));
+		}                                                           
+		compareRuleList.add(new CompareRule("CWP Key Action Engineering"	, DecConstants.SELECT_ATTRIBUTE_DECENGINEERINGHELDUPACTION  ));
+		compareRuleList.add(new CompareRule("CWP Key Action Procurement"	, DecConstants.SELECT_ATTRIBUTE_DECPROCUREMENTHELDUPACTION  ));
+		compareRuleList.add(new CompareRule("No of IWPs"            		, DecConstants.SELECT_ATTRIBUTE_DECIWPCOUNTS 				 ));
+		compareRuleList.add(new CompareRule("Crew Composition per IWP" 		, DecConstants.SELECT_ATTRIBUTE_DECIWPCREWCOMPOSITION 	     ));
+		compareRuleList.add(new CompareRule("Remark"                		, DecConstants.SELECT_ATTRIBUTE_DECREMARK 				     ));
+		compareRuleList.add(new CompareRule("UDF1"                  		, DecConstants.SELECT_ATTRIBUTE_DECUPF1 					     ));
+		compareRuleList.add(new CompareRule("UDF2"                  		, DecConstants.SELECT_ATTRIBUTE_DECUPF2 					     ));
+		compareRuleList.add(new CompareRule("UDF3"                  		, DecConstants.SELECT_ATTRIBUTE_DECUPF3 					     ));
+		
+		List<CompareRule> compareRuleAddEWPList = new ArrayList<CompareRule>();
+		compareRuleAddEWPList.addAll(compareRuleList);
+		compareRuleAddEWPList.add(new CompareRule("EWP Release Plan"		, "from[" + DecConstants.RELATIONSHIP_DECEWPREL + "].to." + DecConstants.SELECT_ATTRIBUTE_DECEWPRELEASEPLAN        	   	));
+		compareRuleAddEWPList.add(new CompareRule("EWP Release Forecast"	, "from[" + DecConstants.RELATIONSHIP_DECEWPREL + "].to." + DecConstants.SELECT_ATTRIBUTE_DECEWPRELEASEFORECAST        	));
+		compareRuleAddEWPList.add(new CompareRule("EWP Release Actual"		, "from[" + DecConstants.RELATIONSHIP_DECEWPREL + "].to." + DecConstants.SELECT_ATTRIBUTE_DECEWPRELEASEACTUAL          	));
+    	
+		List<CompareRule> validateRuleList = new ArrayList<CompareRule>();
+		validateRuleList.add(new CompareRule("CWP Release Plan"		, CompareRule.DATA_TYPE.DATE));
+		validateRuleList.add(new CompareRule("CWP Release Forecast"	, CompareRule.DATA_TYPE.DATE));
+		validateRuleList.add(new CompareRule("CWP Release Actual"	, CompareRule.DATA_TYPE.DATE));
+		validateRuleList.add(new CompareRule("Plan Start"			, CompareRule.DATA_TYPE.DATE));
+		validateRuleList.add(new CompareRule("Plan Finish"			, CompareRule.DATA_TYPE.DATE));
+		validateRuleList.add(new CompareRule("Forecast Start"		, CompareRule.DATA_TYPE.DATE));
+		validateRuleList.add(new CompareRule("Forecast Finish"		, CompareRule.DATA_TYPE.DATE));
+		validateRuleList.add(new CompareRule("Actual Start"			, CompareRule.DATA_TYPE.DATE));
+		validateRuleList.add(new CompareRule("Actual Finish"		, CompareRule.DATA_TYPE.DATE));
+		validateRuleList.add(new CompareRule("EWP Release Plan"		, CompareRule.DATA_TYPE.DATE));
+		validateRuleList.add(new CompareRule("EWP Release Forecast"	, CompareRule.DATA_TYPE.DATE));
+		validateRuleList.add(new CompareRule("EWP Release Actual"	, CompareRule.DATA_TYPE.DATE));
+		validateRuleList.add(new CompareRule("RAS"					, CompareRule.DATA_TYPE.DATE));
+		validateRuleList.add(new CompareRule("CWP No"				, CompareRule.DATA_TYPE.NOTNULL));
+		validateRuleList.add(new CompareRule("Priority Group"				, CompareRule.DATA_TYPE.NOTNULL));
+		validateRuleList.add(new CompareRule("Priority Number"				, CompareRule.DATA_TYPE.NOTNULL));
+		validateRuleList.add(new CompareRule("Sub-Con"				, CompareRule.DATA_TYPE.NOTNULL));
+		validateRuleList.add(new CompareRule("Plan Start"				, CompareRule.DATA_TYPE.NOTNULL));
+		validateRuleList.add(new CompareRule("Plan Finish"				, CompareRule.DATA_TYPE.NOTNULL));
+		validateRuleList.add(new CompareRule("RAS"					, CompareRule.DATA_TYPE.NOTNULL));
+		
+		List<CompareRule> validateRuleAddEWPList = new ArrayList<CompareRule>();
+		validateRuleAddEWPList.addAll(validateRuleList);
+		validateRuleAddEWPList.add(new CompareRule("EWP Release Plan"		,  CompareRule.DATA_TYPE.DATE));
+		validateRuleAddEWPList.add(new CompareRule("EWP Release Forecast"	,  CompareRule.DATA_TYPE.DATE));
+		validateRuleAddEWPList.add(new CompareRule("EWP Release Actual"		,  CompareRule.DATA_TYPE.DATE));
+    	
+		
+    	// Key값(레벨별 Code, Type, Desc) 배열
+    	Map<String, String> mColumn = null;
+    	Map<String, String> mSubTask = null;
+    	Map<String, Map> mSubTaskInfoKeyName = new HashMap();
+
+	    MapList mlSubTask = doProject.getRelatedObjects(context,
+					   		DecConstants.RELATIONSHIP_SUBTASK, //pattern to match relationships
+					   		sTypePattern, //pattern to match types
+					   		slCWPInfoParam, //the eMatrix StringList object that holds the list of select statement pertaining to Business Obejcts.
+					   		null, //the eMatrix StringList object that holds the list of select statement pertaining to Relationships.
+					   		false, //get To relationships
+					   		true, //get From relationships
+					   		(short)0, //the number of levels to expand, 0 equals expand all.
+					   		DecConstants.EMPTY_STRING, //where clause to apply to objects, can be empty ""
+					   		DecConstants.EMPTY_STRING,
+					   		0); //where clause to apply to relationship, can be empty ""
+	    for(Object o : mlSubTask) {
+	    	mSubTask = (Map)o;
+	    	// 데이터 구분을위해 프로젝트명, Task/Phase의 이름으로 키값을 정함
+	    	mSubTaskInfoKeyName.put(mSubTask.get(DecConstants.SELECT_NAME), mSubTask);
+	    }
+
+		Map<String,String> compareResultMap = null;
+		SimpleDateFormat ev6FullSdf = new SimpleDateFormat("M/d/yyyy hh:mm:ss");
+
+    	String strLanguage = context.getSession().getLanguage();
+    	String sErrorMsg1 = EnoviaResourceBundle.getProperty(context, "ProgramCentral","ProgramCentral.Alert.IsNotHaveCWP", strLanguage) + "<br/>";
+    	String sErrorMsg2 = EnoviaResourceBundle.getProperty(context, "ProgramCentral","ProgramCentral.Alert.ActualStartAlreadyExists", strLanguage) + "<br/>";
+    	String sErrorMsg3 = EnoviaResourceBundle.getProperty(context, "ProgramCentral","ProgramCentral.Alert.IsNotModifiedCompleted", strLanguage) + "<br/>";
+    	String sErrorMsg4 = EnoviaResourceBundle.getProperty(context, "ProgramCentral","ProgramCentral.Alert.ActualFinishAlreadyExists", strLanguage) + "<br/>";
+    	
+    	try{
+    		for(Object o : mlObject) {
+    			mColumn = (Map)o;
+    			String sCWPNo = mColumn.get("CWP No");
+    			String sAction = DecConstants.EMPTY_STRING;
+    			String sMessage = DecConstants.EMPTY_STRING;
+    			mSubTask = mSubTaskInfoKeyName.get(sCWPNo);
+    			if(mSubTask == null) {
+    				sAction = "Error";
+    				sMessage = sErrorMsg1;
+    			}else {
+	    			String sCurrent = mSubTask.get(DecConstants.SELECT_CURRENT);
+	    			if(DecStringUtil.equals(sCurrent, DecConstants.STATE_PROJECT_TASK_COMPLETE)) {
+	    				mColumn.put("Action", "Error");
+	    				mColumn.put("Message", sErrorMsg3);
+	    				continue;
+	    			}
+	    			String sCWPReleasePlan          = DecDateUtil.changeDateFormat(mColumn.get("CWP Release Plan"), 	ev6FullSdf);
+	    			String sCWPReleaseForecast      = DecDateUtil.changeDateFormat(mColumn.get("CWP Release Forecast"), ev6FullSdf);
+	    			String sCWPReleaseActual        = DecDateUtil.changeDateFormat(mColumn.get("CWP Release Actual"), 	ev6FullSdf);
+	    			String sPlanStart               = DecDateUtil.changeDateFormat(mColumn.get("Plan Start"), 			ev6FullSdf);
+	    			String sPlanFinish              = DecDateUtil.changeDateFormat(mColumn.get("Plan Finish"), 			ev6FullSdf);
+	    			String sForecastStart           = DecDateUtil.changeDateFormat(mColumn.get("Forecast Start"), 		ev6FullSdf);
+	    			String sForecastFinish          = DecDateUtil.changeDateFormat(mColumn.get("Forecast Finish"), 		ev6FullSdf);
+	    			String sActualStart             = DecDateUtil.changeDateFormat(mColumn.get("Actual Start"), 		ev6FullSdf);
+	    			String sActualFinish            = DecDateUtil.changeDateFormat(mColumn.get("Actual Finish"), 		ev6FullSdf);
+	    			String sEWPReleasePlan          = DecDateUtil.changeDateFormat(mColumn.get("EWP Release Plan"), 	ev6FullSdf);
+	    			String sEWPReleaseForecast      = DecDateUtil.changeDateFormat(mColumn.get("EWP Release Forecast"), ev6FullSdf);
+	    			String sEWPReleaseActual        = DecDateUtil.changeDateFormat(mColumn.get("EWP Release Actual"),	ev6FullSdf);
+	    			String sMaterialRAS			 	= DecDateUtil.changeDateFormat(mColumn.get("RAS"), 					ev6FullSdf);
+	    			mColumn.put("CWP Release Plan"		, sCWPReleasePlan     );
+	    			mColumn.put("CWP Release Forecast"	, sCWPReleaseForecast );
+	    			mColumn.put("CWP Release Actual"	, sCWPReleaseActual   );
+	    			mColumn.put("Plan Start"			, sPlanStart          );
+	    			mColumn.put("Plan Finish"			, sPlanFinish         );
+	    			mColumn.put("Forecast Start"		, sForecastStart      );
+	    			mColumn.put("Forecast Finish"		, sForecastFinish     );
+	    			mColumn.put("Actual Start"			, sActualStart        );
+	    			mColumn.put("Actual Finish"			, sActualFinish       );
+	    			mColumn.put("EWP Release Plan"		, sEWPReleasePlan     );
+	    			mColumn.put("EWP Release Forecast"	, sEWPReleaseForecast );
+	    			mColumn.put("EWP Release Actual"	, sEWPReleaseActual   );
+	    			mColumn.put("RAS"					, sMaterialRAS   	  );
+	    			String sEWP = mSubTask.get("from[" + DecConstants.RELATIONSHIP_DECEWPREL + "]");
+	    			String sOldActualStart = mSubTask.get(DecConstants.SELECT_ATTRIBUTE_TASK_ACTUAL_START_DATE);
+	    			String sOldActualFinish = mSubTask.get(DecConstants.SELECT_ATTRIBUTE_TASK_ACTUAL_FINISH_DATE);
+	    			if(DecStringUtil.isNotEmpty(sOldActualStart) && DecStringUtil.isEmpty(sActualStart)) {
+		        		sAction = "Error";
+	    				sMessage += sErrorMsg2;
+	    			}
+	    			if(DecStringUtil.isNotEmpty(sOldActualFinish) && DecStringUtil.isEmpty(sActualFinish)) {
+		        		sAction = "Error";
+	    				sMessage += sErrorMsg4;
+	    			}
+					if(sEWP.equalsIgnoreCase("TRUE")) {
+						compareResultMap = CompareUtil.compareElementToLowerCase(mColumn, null, validateRuleAddEWPList, null);
+						if("Error".equalsIgnoreCase(compareResultMap.get("Action"))) {
+			        		sAction = "Error";
+				            sMessage += compareResultMap.get("Message");
+			            }else {
+			            	compareResultMap = CompareUtil.compareElementToLowerCase(mColumn, mSubTask, compareRuleAddEWPList, CompareRule.COMPARE_TYPE.COMPARE);
+			            	if("Error".equalsIgnoreCase(compareResultMap.get("Action"))) {
+				        		sAction = "Error";
+					            sMessage += compareResultMap.get("Message");
+			            	}else if(!"Error".equalsIgnoreCase(sAction)){
+								sAction = compareResultMap.get("Action");
+								sMessage = compareResultMap.get("Message");
+			            	}
+			            }
+					}else {
+						compareResultMap = CompareUtil.compareElementToLowerCase(mColumn, null, validateRuleList, null);
+						if("Error".equalsIgnoreCase(compareResultMap.get("Action"))) {
+			        		sAction = "Error";
+				            sMessage += compareResultMap.get("Message");
+			            }else {
+			            	compareResultMap = CompareUtil.compareElementToLowerCase(mColumn, mSubTask, compareRuleList, CompareRule.COMPARE_TYPE.COMPARE);
+			            	if("Error".equalsIgnoreCase(compareResultMap.get("Action"))) {
+				        		sAction = "Error";
+					            sMessage += compareResultMap.get("Message");
+			            	}else if(!"Error".equalsIgnoreCase(sAction)){
+								sAction = compareResultMap.get("Action");
+								sMessage = compareResultMap.get("Message");
+			            	}
+			            }
+					}
+    			}
+				mColumn.put("Action", sAction);
+				mColumn.put("Message", sMessage);
+    		}
+		}catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+
+    	mlReturn = mlObject;
+		return mlReturn;
+	}
+
+	private MapList compareExcelCWPMasterData(Context context, MapList mlObject, Map paramMap) throws Exception{
+		MapList mlReturn = new MapList();
+		
+		String sTypePattern = DecConstants.TYPE_PHASE + "," + DecConstants.TYPE_TASK + "," + DecConstants.TYPE_DECCWPTASK;
+    	StringList slBusSelect = new StringList();
+    	slBusSelect.add(DecConstants.SELECT_ID);
+    	slBusSelect.add(DecConstants.SELECT_NAME);
+    	slBusSelect.add(DecConstants.SELECT_DESCRIPTION);
+    	slBusSelect.add(DecConstants.SELECT_CURRENT);
+    	slBusSelect.add(DecConstants.SELECT_ATTRIBUTE_DECWBSTYPE);
+    	slBusSelect.add("to[" + DecConstants.RELATIONSHIP_PROJECT_ACCESS_KEY + "].from.id");
+    	slBusSelect.add("to[" + DecConstants.RELATIONSHIP_PROJECT_ACCESS_KEY + "].from.physicalid");
+    	slBusSelect.add("to[" + DecConstants.RELATIONSHIP_PROJECT_ACCESS_LIST + "].from.id");
+    	slBusSelect.add("to[" + DecConstants.RELATIONSHIP_PROJECT_ACCESS_LIST + "].from.physicalid");
+    	slBusSelect.add("to[" + DecConstants.RELATIONSHIP_SUBTASK + "].from.name");
+    	slBusSelect.add("from[" + DecConstants.RELATIONSHIP_DECEWPREL + "].to");
+    	slBusSelect.add("from[" + DecConstants.RELATIONSHIP_SUBTASK + "].to.name");
+    	slBusSelect.add(DecConstants.SELECT_ATTRIBUTE_DECCWPACTIVITYTYPE);
+    	slBusSelect.add(DecConstants.SELECT_ATTRIBUTE_DECDISCIPLINE     );
+    	slBusSelect.add(DecConstants.SELECT_ATTRIBUTE_DECSEQUENTIALNO   );
+    	slBusSelect.add(DecConstants.SELECT_ATTRIBUTE_DECDESIGNOFFICE   );
+    	slBusSelect.add(DecConstants.SELECT_ATTRIBUTE_DECCONSTOFFICE    );
+    	slBusSelect.add(DecConstants.SELECT_ATTRIBUTE_DECUPF1   		);
+    	slBusSelect.add(DecConstants.SELECT_ATTRIBUTE_DECUPF2      		);
+    	slBusSelect.add(DecConstants.SELECT_ATTRIBUTE_DECUPF3       	);
+    	slBusSelect.add(DecConstants.SELECT_ATTRIBUTE_DECKEYQUANTITYTYPE);
+    	slBusSelect.add(DecConstants.SELECT_ATTRIBUTE_DECKEYQUANTITYUOM );
+
+    	String sParentOID = (String)paramMap.get("parentOID");
+    	String sParentName = null;
+    	String strLanguage = context.getSession().getLanguage();
+    	// Key값(레벨별 Code, Type, Desc) 배열
+    	StringList slCode = new StringList();
+    	StringList slDesc = new StringList();
+    	String sCodeList = "LV1 Code,LV2 Code,LV3 Code,LV4 Code,LV5 Code,LV6 Code,LV7 Code";
+    	String sDescList = "LV1 Desc,LV2 Desc,LV3 Desc,LV4 Desc,LV5 Desc,LV6 Desc,LV7 Desc";
+    	slCode.addAll(sCodeList.split(","));
+    	slDesc.addAll(sDescList.split(","));
+    	Map<String, String> mSubTask = null;
+    	Map<String, Map> mSubTaskInfoKeyName = new HashMap();
+    	try {
+    		String sErrorMsg1 = EnoviaResourceBundle.getProperty(context, "ProgramCentral","ProgramCentral.Alert.IsNotHaveWBSType", strLanguage) + "<br/>"; 
+    		String sErrorMsg2 = EnoviaResourceBundle.getProperty(context, "ProgramCentral","ProgramCentral.Alert.IsNotMatchWBSTypeLevel", strLanguage) + "<br/>";
+    		String sErrorMsg3 = EnoviaResourceBundle.getProperty(context, "ProgramCentral","ProgramCentral.Alert.ImportCWPMasterRequiredValue", strLanguage) + "<br/>";
+    		String sErrorMsg4 = EnoviaResourceBundle.getProperty(context, "ProgramCentral","ProgramCentral.Alert.IsNotConnectedDiscipline", strLanguage) + "<br/>";
+    		String sErrorMsg5 = EnoviaResourceBundle.getProperty(context, "ProgramCentral","ProgramCentral.Alert.IsNotConnectedBOQKeyItem", strLanguage) + "<br/>";
+    		String sErrorMsg6 = EnoviaResourceBundle.getProperty(context, "ProgramCentral","ProgramCentral.Alert.IsParentValueEmpty", strLanguage) + "<br/>";
+    		String sErrorMsg8 = EnoviaResourceBundle.getProperty(context, "ProgramCentral","ProgramCentral.Alert.DisciplineNotConnectedBOQKeyItem", strLanguage) + "<br/>";
+    		String sErrorMsg9 = EnoviaResourceBundle.getProperty(context, "ProgramCentral","ProgramCentral.Alert.BOQKeyItemNotConnectedUOM", strLanguage) + "<br/>";
+    		String sErrorMsg10 = EnoviaResourceBundle.getProperty(context, "ProgramCentral","ProgramCentral.Alert.IsRequiredValueEmpty", strLanguage) + "<br/>";
+    		String sErrorMsg11 = EnoviaResourceBundle.getProperty(context, "ProgramCentral","ProgramCentral.Alert.IsDiffrentHaveParent", strLanguage) + "<br/>";
+    		String sErrorMsg12 = EnoviaResourceBundle.getProperty(context, "ProgramCentral","ProgramCentral.Alert.IsNotModifiedCompleted", strLanguage) + "<br/>";
+    		String sErrorMsg13 = EnoviaResourceBundle.getProperty(context, "ProgramCentral","ProgramCentral.Alert.IsNotModifiedDescCompleted", strLanguage) + "<br/>";
+    		String sErrorMsg14 = EnoviaResourceBundle.getProperty(context, "ProgramCentral","ProgramCentral.Alert.IsNotHaveDisc2", strLanguage) + "<br/>";
+    		String sErrorMsg15 = EnoviaResourceBundle.getProperty(context, "ProgramCentral","ProgramCentral.Alert.IsNotHaveCWPActivityType", strLanguage) + "<br/>";
+    		String sErrorMsg16 = EnoviaResourceBundle.getProperty(context, "ProgramCentral","ProgramCentral.Alert.IsAlreadyExistsUnderCode", strLanguage);
+    		
+		    DomainObject doProject = DomainObject.newInstance(context, sParentOID);
+		    doProject.open(context);
+	    	if(!doProject.getTypeName().equals(DecConstants.TYPE_PROJECT_SPACE)) {
+	    		sParentOID = doProject.getInfo(context, TASK_PROJECT_ID);
+	    		doProject.setId(sParentOID);
+		    	doProject.open(context);
+	    	}
+	    	String sProjectName = doProject.getName();
+		    MapList mlSubTask = doProject.getRelatedObjects(context,
+						   		DecConstants.RELATIONSHIP_SUBTASK, //pattern to match relationships
+						   		sTypePattern, //pattern to match types
+						   		slBusSelect, //the eMatrix StringList object that holds the list of select statement pertaining to Business Obejcts.
+						   		null, //the eMatrix StringList object that holds the list of select statement pertaining to Relationships.
+						   		false, //get To relationships
+						   		true, //get From relationships
+						   		(short)0, //the number of levels to expand, 0 equals expand all.
+						   		DecConstants.EMPTY_STRING, //where clause to apply to objects, can be empty ""
+						   		DecConstants.EMPTY_STRING,
+						   		0); //where clause to apply to relationship, can be empty ""
+		    for(Object o : mlSubTask) {
+		    	mSubTask = (Map)o;
+		    	// 데이터 구분을위해 프로젝트명, Task/Phase의 이름으로 키값을 정함
+		    	mSubTaskInfoKeyName.put(mSubTask.get(DecConstants.SELECT_NAME), mSubTask);
+		    }
+		    mSubTaskInfoKeyName.put(sProjectName, doProject.getInfo(context, slBusSelect));
+		    
+		    Map<String, StringList> mDisBOQ = getDisValidateBOQ(context, sProjectName);
+		    Map<String, StringList> mBOQUOM = getBOQValidateUOM(context, sProjectName);
+		    
+	    	Map mParam = new HashMap();
+	    	StringList slSelectParam = new StringList(DecConstants.SELECT_NAME);
+	    	slSelectParam.add(DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILATT1);
+	    	mParam.put("slSelectParam", slSelectParam);
+			mParam.put("codeMasterName", "WBS Type");
+	        mParam.put("codeMasterRevision", sProjectName);
+	        
+	        decCodeMaster_mxJPO codeJPO = new decCodeMaster_mxJPO();
+	        
+	    	MapList mlWBSType = codeJPO.getCodeDetailList(context, mParam);
+			mParam.put("codeMasterName", "CWP Activity Type");
+		    MapList mlCWPActivityType = codeJPO.getCodeDetailList(context, mParam);
+			mParam.put("codeMasterName", "Discipline");
+			mParam.put("codeDetailType", "Discipline");
+	        MapList mlDiscipline = codeJPO.getCodeDetailList(context, mParam);
+		    
+	    	Map<String, String> mLevel = new HashMap();
+	    	StringList slDiscipline = new StringList();
+	    	StringList slCWPActivityType = new StringList();
+	    	// WBS Type CodeMaster 없을 경우 에러
+	    	if(mlWBSType.isEmpty()) {
+	    		Map mError = new HashMap();
+	    		mError.put("Action", "Error");
+	    		mError.put("Message", sErrorMsg1);
+	    		mlReturn.add(mError);
+	    		return mlReturn;
+	    	}
+	    	for(Object o : mlWBSType) {
+	    		Map mDetail = (Map)o;
+	    		String sWBSType = (String)mDetail.get(DecConstants.SELECT_NAME);
+	    		String sLevel = (String)mDetail.get(DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILATT1);
+	    		mLevel.put(sLevel, sWBSType);
+	    	}
+	    	for(Object o : mlCWPActivityType) {
+	    		Map mDetail = (Map)o;
+	    		slCWPActivityType.add((String)mDetail.get(DecConstants.SELECT_ATTRIBUTE_DECCODE));
+	    	}
+	    	for(Object o : mlDiscipline) {
+	    		Map mDetail = (Map)o;
+	    		slDiscipline.add((String)mDetail.get(DecConstants.SELECT_ATTRIBUTE_DECCODE));
+	    	}
+			List<CompareRule> compareRuleList = new ArrayList<CompareRule>();
+			compareRuleList.add(new CompareRule("Activity type"	    , DecConstants.SELECT_ATTRIBUTE_DECCWPACTIVITYTYPE        	));
+			compareRuleList.add(new CompareRule("Discipline"	    , DecConstants.SELECT_ATTRIBUTE_DECDISCIPLINE           	));
+			compareRuleList.add(new CompareRule("Sequential No"	    , DecConstants.SELECT_ATTRIBUTE_DECSEQUENTIALNO           	));
+			compareRuleList.add(new CompareRule("Design Office"	    , DecConstants.SELECT_ATTRIBUTE_DECDESIGNOFFICE           	));
+			compareRuleList.add(new CompareRule("Const Office"	    , DecConstants.SELECT_ATTRIBUTE_DECCONSTOFFICE           	));
+			compareRuleList.add(new CompareRule("UDF1"			    , DecConstants.SELECT_ATTRIBUTE_DECUPF1   					));
+			compareRuleList.add(new CompareRule("UDF2"			    , DecConstants.SELECT_ATTRIBUTE_DECUPF2      				));
+			compareRuleList.add(new CompareRule("UDF3"			    , DecConstants.SELECT_ATTRIBUTE_DECUPF3       				));
+			compareRuleList.add(new CompareRule("EWP No"			,"from[" + DecConstants.RELATIONSHIP_DECEWPREL + "].to"  	));
+			compareRuleList.add(new CompareRule("CWP Key Q'ty Item" , DecConstants.SELECT_ATTRIBUTE_DECKEYQUANTITYTYPE             ));
+			compareRuleList.add(new CompareRule("UOM"               , DecConstants.SELECT_ATTRIBUTE_DECKEYQUANTITYUOM              ));
+			
+			List<CompareRule> validateRuleList = new ArrayList<CompareRule>();
+			validateRuleList.add(new CompareRule("Sequential No", CompareRule.DATA_TYPE.INTEGER));
+	
+			Map<String, String> compareResultMap = null;
+			Map<String, String> mColumn = null;
+			Map<String, String> mCodeValidation = new HashMap();
+ 			String sDescMessage = null;
+	    	for(Object obj : mlObject) {
+	    		mColumn = (Map)obj;
+				String sAction = DecConstants.EMPTY_STRING;
+				String sMessage = DecConstants.EMPTY_STRING;
+	    		if(DecStringUtil.isAnyBlank(mColumn.get("LV1 Code"), mColumn.get("LV1 Desc"))){
+	    			sAction = "Error";
+	    			sMessage = sErrorMsg3;
+	    		}
+				sDescMessage = DecConstants.EMPTY_STRING;
+	    		for(int i=0; i<slCode.size(); i++) {
+	    			String sCode = mColumn.getOrDefault(slCode.get(i), DecConstants.EMPTY_STRING);
+	    			String sDesc = mColumn.getOrDefault(slDesc.get(i), DecConstants.EMPTY_STRING);
+	    			mSubTask = mSubTaskInfoKeyName.get(sCode);
+	    			String sCurrent = DecConstants.EMPTY_STRING;
+	    			if(mSubTask != null) {
+	    				sCurrent = mSubTask.get(DecConstants.SELECT_CURRENT);
+	    			}
+	    			if(i==0) {
+	    				sParentName = sProjectName;
+	    			}else {
+	    				sParentName = mColumn.get(slCode.get(i-1));
+	    			}
+	    			if(DecStringUtil.isEmpty(sParentName)) {
+		    			sAction = "Error";
+		    			sMessage += slCode.get(i) + " " + sErrorMsg6;
+	    			}else {
+	    				if(mCodeValidation.get(sCode) == null) {
+			    			mCodeValidation.put(sCode, sParentName);
+	    				}
+		    			if(!mCodeValidation.get(sCode).equals(sParentName)) {
+			    			sAction = "Error";
+			    			sMessage += mCodeValidation.get(sCode) + " " + sErrorMsg16 + ". ("+ slCode.get(i) + ")<br/>";
+		    			}
+	    			}
+	    			String sLevel = String.valueOf(i+1);
+	    			String sType = mLevel.get(sLevel);
+	    			if(DecStringUtil.isEmpty(sType)) {
+		    			sAction = "Error";
+		    			sMessage += sErrorMsg2;
+	    			}
+	    			if(!DecStringUtil.isNoneBlank(sCode, sDesc) && !DecStringUtil.isAllBlank(sCode, sDesc)){
+		    			if(DecStringUtil.isEmpty(sCode)) {
+			    			sAction = "Error";
+			    			sMessage += slCode.get(i) + " must not be empty.<br/>";
+		    			}else if(DecStringUtil.isEmpty(sDesc)) {
+			    			sAction = "Error";
+			    			sMessage += slDesc.get(i) + " must not be empty.<br/>";
+		    			}
+	    			}
+	    			if(mSubTask != null && DecStringUtil.isNotEmpty(sParentName) && !DecStringUtil.equals(sParentName, mSubTask.get("to[" + DecConstants.RELATIONSHIP_SUBTASK + "].from.name"))) {
+		    			sAction = "Error";
+		    			sMessage += slCode.get(i) + " " + sErrorMsg11;
+	    			}
+					if(mSubTask != null && !DecStringUtil.equals(sDesc, mSubTask.get(DecConstants.SELECT_DESCRIPTION))) {
+						sDescMessage += slDesc.get(i) + " : " + mSubTask.get(DecConstants.SELECT_DESCRIPTION) + "->" + sDesc + " <br/>";
+	    				if(DecStringUtil.equals(sCurrent, DecConstants.STATE_PROJECT_TASK_COMPLETE) && !DecStringUtil.equalsIgnoreCase(sType, "CWP")) {
+			    			sAction = "Error";
+			    			sMessage += slCode.get(i) + " " + sErrorMsg13;
+	    				}
+					}
+	    			if(DecStringUtil.equalsIgnoreCase(sType, "CWP")){
+	    				String sActivityType = mColumn.get("Activity type");
+	    				String sDiscipline	 = mColumn.get("Discipline");
+	    				String sCWPKeyType	 = mColumn.get("CWP Key Q'ty Item");
+	        			String sCWPKeyUOM	 = mColumn.get("UOM");
+	        			if(DecStringUtil.equals(sCurrent, DecConstants.STATE_PROJECT_TASK_COMPLETE)) {
+			    			sAction = "Error";
+			    			sMessage += slCode.get(i) + " " + sErrorMsg12;
+	    				}
+	        			if(DecStringUtil.isAnyEmpty(sActivityType, sDiscipline, sCWPKeyType, sCWPKeyUOM)) {
+	        				sAction = "Error";
+	        				if(DecStringUtil.isEmpty(sActivityType)) {
+		        				sMessage += "Activity Type " + sErrorMsg10;
+	        				}
+	        				if(DecStringUtil.isEmpty(sDiscipline)) {
+		        				sMessage += "Discipline " + sErrorMsg10;
+	        				}
+	        				if(DecStringUtil.isEmpty(sCWPKeyType)) {
+		        				sMessage += "CWP Key Q'ty Item " + sErrorMsg10;
+	        				}
+	        				if(DecStringUtil.isEmpty(sCWPKeyUOM)) {
+		        				sMessage += "UOM " + sErrorMsg10;
+	        				}
+	        			}else {
+		        			StringList slBOQ = mDisBOQ.get(sDiscipline);
+		        			if(slBOQ == null) {
+		        				sAction = "Error";
+		        				sMessage += sErrorMsg8;
+		        			}else if(!slBOQ.contains(sCWPKeyType)) {
+		        				sAction = "Error";
+		        				sMessage += "CWP Key Q'ty Item" + sErrorMsg4;
+		        			}
+		        			StringList slUOM = mBOQUOM.get(sCWPKeyType);
+		        			if(slUOM == null) {
+		        				sAction = "Error";
+		        				sMessage += sErrorMsg9;
+		        			}else if(!slUOM.contains(sCWPKeyUOM)) {
+		        				sAction = "Error";
+		        				sMessage += "UOM " + sErrorMsg5;
+		        			}
+		        			if(!slCWPActivityType.contains(sActivityType)) {
+		        				sAction = "Error";
+		        				sMessage += sActivityType + " " + sErrorMsg15;
+		        			}
+		        			if(!slDiscipline.contains(sDiscipline)) {
+		        				sAction = "Error";
+		        				sMessage += sDiscipline + " " + sErrorMsg14;
+		        			}
+	        			}
+	                	compareResultMap = CompareUtil.compareElementToLowerCase(mColumn, null, validateRuleList, null);
+	                	if("Error".equalsIgnoreCase(compareResultMap.get("Action"))) {
+	        				sAction = "Error";
+		                	sMessage += compareResultMap.get("Message");
+	                	}
+	                	
+	        			if(!"Error".equalsIgnoreCase(sAction)) {
+				        	if(mSubTask == null) {
+				        		sAction = "Create";
+				        		sMessage = DecConstants.SYMB_NA;
+				        	}else {
+						       	compareResultMap = CompareUtil.compareElementToLowerCase(mColumn, mSubTask, compareRuleList, CompareRule.COMPARE_TYPE.COMPARE);
+						       	sAction = compareResultMap.get("Action");
+						       	sMessage = compareResultMap.get("Message");
+						       	if(sAction.equals("Modify")) {
+						       		sMessage += sDescMessage;
+						       	}else if(sAction.equals(DecConstants.SYMB_NA) && DecStringUtil.isNotEmpty(sDescMessage)){
+						       		sAction = "Modify";
+						       		sMessage = sDescMessage;
+						       	}
+				        	}
+	        			}
+	        			break;
+	    			}
+	    		}
+				mColumn.put("Action", sAction);
+				mColumn.put("Message", sMessage); 
+	    	}
+	    	mlReturn = mlObject;
+    	}catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		return mlReturn;
+	}
+
+	private MapList compareExcelKPIData(Context context, MapList mlObject, Map programMap) throws Exception {
+		MapList mlReturn = new MapList();
+		try ( SqlSession sqlSession = decSQLSessionFactory.getSession() ) {
+	    	String strLanguage = context.getSession().getLanguage();
+	    	
+	    	StringList slBusSelect = new StringList();
+	    	slBusSelect.add(DecConstants.SELECT_ID);
+	    	slBusSelect.add(DecConstants.SELECT_TYPE);
+	    	slBusSelect.add(DecConstants.SELECT_NAME);
+	    	slBusSelect.add(DecConstants.SELECT_ATTRIBUTE_DECWBSTYPE);
+	    	
+	    	String sParentOID = (String)programMap.get("parentOID");
+
+	    	DomainObject doProject = DomainObject.newInstance(context, sParentOID);
+	    	doProject.open(context);
+	    	if(!doProject.getTypeName().equals(DecConstants.TYPE_PROJECT_SPACE)) {
+	    		sParentOID = doProject.getInfo(context, TASK_PROJECT_ID);
+	    		doProject.setId(sParentOID);
+		    	doProject.open(context);
+	    	}
+	    	
+	    	String sProjectName = doProject.getName();
+	    	String sProjectStartDate = doProject.getAttributeValue(context, DecConstants.ATTRIBUTE_DECPROJECTSTARTDATE);
+	    	String sKPIDay = doProject.getAttributeValue(context, DecConstants.ATTRIBUTE_DECKPIDAY);
+	    	if(DecStringUtil.isEmpty(sProjectStartDate)) {
+	    		// W1 Base Date 안정해서 에러라고 띄우기
+	    		throw new FrameworkException("W1 Base Date is Empty.");
+	    	}
+	    	Map<String, Integer> mDayNum = new HashMap();
+	    	mDayNum.put("monday"   , 1);
+	    	mDayNum.put("tuesday"  , 2);
+	    	mDayNum.put("wednesday", 3);
+	    	mDayNum.put("thursday" , 4);
+	    	mDayNum.put("friday"   , 5);
+	    	mDayNum.put("saturday" , 6);
+	    	mDayNum.put("sunday"   , 7);
+	     	LocalDate ldConst = DecDateUtil.autoChangeLocalDate(sProjectStartDate);
+	    	int iConstPlusDay = mDayNum.get(sKPIDay.toLowerCase()) - mDayNum.get(ldConst.getDayOfWeek().name().toLowerCase());
+	    	LocalDate ldConstKPIDayDate = ldConst.plusDays(iConstPlusDay);
+	    	if(iConstPlusDay > 0){
+	    		ldConstKPIDayDate = ldConstKPIDayDate.minusWeeks(1);
+	    	}
+	    	
+	    	MapList mlSubTask = doProject.getRelatedObjects(context,
+					DecConstants.RELATIONSHIP_SUBTASK, //pattern to match relationships
+					DecConstants.TYPE_PHASE, //pattern to match types
+					slBusSelect, //the eMatrix StringList object that holds the list of select statement pertaining to Business Obejcts.
+					null, //the eMatrix StringList object that holds the list of select statement pertaining to Relationships.
+					false, //get To relationships
+					true, //get From relationships
+					(short)0, //the number of levels to expand, 0 equals expand all.
+					DecConstants.EMPTY_STRING, //where clause to apply to objects, can be empty ""
+					DecConstants.EMPTY_STRING,
+					0); //where clause to apply to relationship, can be empty ""
+
+	    	Map<String, String> mUnitNameOID = new HashMap(); // key : name value: id
+	    	Set<String> setUnitName = new HashSet();
+	    	for(Object o : mlSubTask) {
+	    		Map mSubTask = (Map)o;
+	    		String sWBSType = (String)mSubTask.get(DecConstants.SELECT_ATTRIBUTE_DECWBSTYPE);
+	    		if(DecStringUtil.equals("Unit", sWBSType)) {
+	    			setUnitName.add((String)mSubTask.get(DecConstants.SELECT_NAME));
+	    			mUnitNameOID.put((String)mSubTask.get(DecConstants.SELECT_NAME), (String)mSubTask.get(DecConstants.SELECT_ID));
+	    		}
+	    	}
+	    	Map<String, StringList> mDisBOQ = getDisValidateBOQ(context, sProjectName, true);
+	    	
+	    	String sErrorMsg1 = EnoviaResourceBundle.getProperty(context, "ProgramCentral","ProgramCentral.Alert.IsRequiredValueEmpty", strLanguage) + "<br/>";
+	    	String sErrorMsg2 = EnoviaResourceBundle.getProperty(context, "ProgramCentral","ProgramCentral.Alert.IsNotHaveUnit", strLanguage) + "<br/>";
+	    	String sErrorMsg3 = EnoviaResourceBundle.getProperty(context, "ProgramCentral","ProgramCentral.Alert.IsNotVaildRuleWeek", strLanguage) + "<br/>";
+	    	String sErrorMsg4 = EnoviaResourceBundle.getProperty(context, "ProgramCentral","ProgramCentral.Alert.IsNotHaveDisc", strLanguage) + "<br/>";
+	    	String sErrorMsg5 = EnoviaResourceBundle.getProperty(context, "ProgramCentral","ProgramCentral.Alert.IsNotHaveItem", strLanguage) + "<br/>";
+	    	String sSimpleDateFormat = "yyyy-MM-dd";
+	    	String sSimpleDateFormat2 = "yyyy-MM-dd HH:mm:ss";
+	    	Map mWhere = new HashMap();
+    		mWhere.put("SITE_CD", sProjectName);
+	    	List<Map> lSelectKPIData = sqlSession.selectList("Project.selectConstructionKPI", mWhere);
+	    	boolean bAllCreate = false;
+	    	if(lSelectKPIData.isEmpty()) {
+	    		bAllCreate = true;
+	    	}
+	    	Set<String> setValidateValue = new HashSet();
+	    	Map<String, Map> mDBData = new HashMap();
+	    	for(Map mSelectKPIData : lSelectKPIData) {
+	    		String sPSName = (String)mSelectKPIData.get("SITE_CD");
+	    		String sUnitOID = (String)mSelectKPIData.get("UNIT_ID");
+	    		String sDiscipline = (String)mSelectKPIData.get("DISCIPLINE");
+	    		String sCItem = (String)mSelectKPIData.get("CONSTRUCTION_ITEM");
+	    		Timestamp tsKPIDATE = (Timestamp)mSelectKPIData.get("KPIDATE");
+	    		Timestamp tsCUTOFFDATE = (Timestamp)mSelectKPIData.get("CUTOFFDATE");
+	    		Date dKPIDATE = DecDateUtil.autoChangeDate(tsKPIDATE.toString());
+	    		String sKPIDATE = DecDateUtil.changeDateFormat(dKPIDATE, sSimpleDateFormat);
+	    		if(tsCUTOFFDATE != null) {
+		    		Date dCUTOFFDATE = DecDateUtil.autoChangeDate(tsCUTOFFDATE.toString());
+		    		String sCUTOFFDATE = DecDateUtil.changeDateFormat(dCUTOFFDATE, sSimpleDateFormat2);
+		    		mSelectKPIData.put("CUTOFFDATE", sCUTOFFDATE);
+	    		}
+	    		String sKey = sPSName+DecConstants.SYMB_UNDER_BAR+sUnitOID+DecConstants.SYMB_UNDER_BAR+sDiscipline+DecConstants.SYMB_UNDER_BAR+sCItem+DecConstants.SYMB_UNDER_BAR+sKPIDATE;
+	    		setValidateValue.add(sKey);
+	    		mDBData.put(sKey, mSelectKPIData);
+	    	}
+	    	List<CompareRule> compareRuleList = new ArrayList<CompareRule>();
+	    	compareRuleList.add(new CompareRule("Target Weekly", "TARGET"));
+	    	compareRuleList.add(new CompareRule("Actual Weekly", "ACTUAL"));
+	    	compareRuleList.add(new CompareRule("Total Q'ty", "TOTAL"));
+	    	compareRuleList.add(new CompareRule("Cut-off Date", "CUTOFFDATE"));
+	    	
+	    	for(Object obj : mlObject) {
+	    		Map<String, String> mColumn = (Map)obj;
+	    		String sUnit = mColumn.get("Unit");
+	    		String sDisc = mColumn.get("Discipline");
+	    		String sCItem = mColumn.get("Construction Item");
+	    		String sWeek = mColumn.get("Week");
+	    		String sAction = DecConstants.EMPTY_STRING;
+	    		String sMessage = DecConstants.EMPTY_STRING;
+	    		StringList slBOQ = mDisBOQ.getOrDefault(sDisc, new StringList());
+	    		if(DecStringUtil.isAnyBlank(sUnit, sDisc, sCItem, sWeek)) {
+	    			sAction = "Error";
+	    		}
+	    		if(DecStringUtil.isEmpty(sUnit)) {
+	    			sMessage += "Unit " + sErrorMsg1;
+	    		}else if(!setUnitName.contains(sUnit)) {
+	    			sAction = "Error";
+	    			sMessage += sUnit + " " + sErrorMsg2;
+	    		}
+	    		if(DecStringUtil.isEmpty(sDisc)) {
+	    			sMessage += "Discipline " + sErrorMsg1;
+	    		}else if(slBOQ.isEmpty()) {
+	    			sAction = "Error";
+	    			sMessage += sDisc + " " + sErrorMsg4;
+	    		}
+	    		if(DecStringUtil.isEmpty(sCItem)) {
+	    			sMessage += "Construction Item " + sErrorMsg1;
+	    		}else if(!slBOQ.contains(sCItem)) {
+	    			sAction = "Error";
+	    			sMessage += sCItem + " " +  sErrorMsg5;
+	    		}
+	    		if(DecStringUtil.isEmpty(sWeek)) {
+	    			sMessage += "Week " + sErrorMsg1;
+	    		}else {
+		    		sWeek = mColumn.get("Week").replace("W", "");
+		    		if(DecStringUtil.isEmpty(sWeek) || !DecStringUtil.isNumericStr(sWeek, true)) {
+		    			sAction = "Error";
+		    			sMessage += sErrorMsg3;
+		    		}
+	    		}
+	    		
+	    		if(!"Error".equals(sAction)) {
+	    			if(bAllCreate) {
+	    				sAction = "Create";
+            			sMessage = DecConstants.SYMB_NA;
+	    			}else {
+	    	    		int iWeek = Integer.valueOf(sWeek);
+	    	    		LocalDate ldPlusWeekDate = ldConstKPIDayDate.plusWeeks(iWeek);
+	    	    		String sCutoffDate = mColumn.get("Cut-off Date");
+	    	    		sCutoffDate = DecDateUtil.changeDateFormat(sCutoffDate, sSimpleDateFormat2);
+	    	    		mColumn.put("Cut-off Date", sCutoffDate);
+	    	    		String sDate = DecDateUtil.changeLocalDateFormat(ldPlusWeekDate, sSimpleDateFormat);
+	    	    		String sUnitOID = mUnitNameOID.get(sUnit);
+	    	    		String sKey = sProjectName+DecConstants.SYMB_UNDER_BAR+sUnitOID+DecConstants.SYMB_UNDER_BAR+sDisc+DecConstants.SYMB_UNDER_BAR+sCItem+DecConstants.SYMB_UNDER_BAR+sDate;
+	    	    		if(setValidateValue.contains(sKey)) {
+	    	    			Map<String,String> compareResultMap = CompareUtil.compareElement(mColumn, mDBData.get(sKey), compareRuleList, CompareRule.COMPARE_TYPE.COMPARE);
+	    	    			sAction = compareResultMap.get("Action");
+	    					sMessage = compareResultMap.get("Message");
+	    	    		}else {
+		    				sAction = "Create";
+	            			sMessage = DecConstants.SYMB_NA;
+	    	    		}
+	    			}
+	    		}
+	    		
+    			mColumn.put("Action", sAction);
+    			mColumn.put("Message", sMessage);
+	    	}
+	    
+		}catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+    	mlReturn = mlObject;
+		return mlReturn;
+	}
+
+	public MapList getCodeMasterExcelData(Context context,String[] args) throws Exception{
+		File outfile = null;
+			System.out.println("emxDnD_getCodeMAsterExcelDate 실행");
+		try {
+	    	MapList mlReturn = new MapList();
+	    	MapList mlReturn2 = new MapList();
+	    	Map paramMap = (Map)JPO.unpackArgs(args);
+	    	
+	    	String sFolder = (String) paramMap.get("folder");
+	    	String sFilename = (String) paramMap.get("fileName");
+			
+			if(DecStringUtil.isNotNullString(sFilename)) {
+		        outfile = new File(sFolder + sFilename);
+		        mlReturn = DecExcelUtil.getCodeMasterExcelDataToList(outfile.getPath());
+			}
+			Map mReturn = null;
+			for(int i=0; i<mlReturn.size(); i++) {
+				mReturn = (Map)mlReturn.get(i);
+//				mReturn.put("Action","Create");
+//				if(i == mlReturn.size()-1) {
+//					mReturn.put("Action","Error");
+//					mReturn.put("Message","중복되는 코드가 존재합니다.");
+//				}else if(i > 8) {
+//					mReturn.put("Action","Create");
+//				}else if(i > 7) {
+//					mReturn.put("Action","Modify");
+//					mReturn.put("Message","LV6 Code 값이 변경되었습니다.");
+//				}else if(i > 6) {
+//					mReturn.put("Action","Modify");
+//					mReturn.put("Message","LV6 Desc 값이 변경되었습니다.");
+//				}
+				
+			}
+			/*
+			 * 
+			 * 이 안에 비교하는 로직이 들어가야함
+			 * 
+			 * 
+			 */
+			System.out.println("mlReturn : "+ mlReturn);
+	    	return mlReturn;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			// 파일 삭제안되는경우를 방지하기 위한 메소드
+			System.gc();
+			System.runFinalization();
+			if(!outfile.delete()) {
+				outfile.deleteOnExit();
+			}
+		}
+    }
+    /**
+     * jhlee Add 05-25 엑셀정보 비교결과를 띄워줄 Table의 Dynamic Column
+     * @param context
+     * @param args
+     * @return
+     * @throws Exception
+     */
+    public MapList getCwpTaskCompareExcelTableColumn(Context context,String[] args) throws Exception{
+    	MapList mlReturn = new MapList();
+    	StringList slExcelTopRow = new StringList();
+    	Map paramMap = (Map)JPO.unpackArgs(args);
+    	Map requestMap = (Map)paramMap.get("requestMap");
+    	
+    	String sFolder = (String) requestMap.get("folder");
+    	String sFilename = (String) requestMap.get("fileName");
+		
+		File outfile = null;
+		
+		if(DecStringUtil.isNotNullString(sFilename)) {
+			try {
+	        	outfile = new File(sFolder + sFilename);
+	        	// 엑셀 제일 맨위 Row값(필드명) 목록
+	        	slExcelTopRow = DecExcelUtil.getExcelFirstRowData(outfile.getPath());
+			} catch (Exception e) {
+				System.gc();
+				System.runFinalization();
+				if(!outfile.delete()) {
+					outfile.deleteOnExit();
+				}
+				e.printStackTrace();
+				throw e;
+			}
+		}
+		
+		
+		Map mColumn = new HashMap();
+		Map<String, String> mSetting = new HashMap();
+		mSetting.put("Column Type", "programHTMLOutput");
+		mSetting.put("Export", "true");
+		mSetting.put("Style Function","getMsgStyle");
+		mSetting.put("Style Program","emxDnD");
+		mSetting.put("Width", "200");
+		mSetting.put("program", "emxDnD");
+		mSetting.put("function", "getExcelActionCnt");
+		
+		mColumn.put("name", "ActionCnt"); // Action 각각 몇개인지
+		mColumn.put("label", "Action Count");
+		mColumn.put("settings", mSetting);
+		
+		mlReturn.add(mColumn);
+		mColumn = new HashMap();
+		mSetting = new HashMap();
+
+		mSetting.put("Column Type", "program");
+		mSetting.put("program", "emxDnD");
+		mSetting.put("function", "getExcelColumn");
+		mSetting.put("Export", "true");
+		mSetting.put("Style Function","getMsgStyle");
+		mSetting.put("Style Program","emxDnD");
+		mSetting.put("Width", "100");
+		
+		mColumn.put("name", "Row"); // 몇번째 Row인지
+		mColumn.put("label", "Row");
+		mColumn.put("settings", mSetting);
+		
+		mlReturn.add(mColumn);
+		mColumn = new HashMap();
+		mColumn.put("name", "Action"); // create, modify, delete 어떤 액션인지
+		mColumn.put("label", "Action");
+		
+		Map ActionSettingMap = new HashMap(mSetting);
+		ActionSettingMap.put("Width", "100");
+		mColumn.put("settings", ActionSettingMap);
+		mlReturn.add(mColumn);
+		
+		// Added by hslee on 2023.06.24 --- [s]
+		Map<String, String> mProgramHTMLOutputSetting = new HashMap( mSetting );
+		mProgramHTMLOutputSetting.put("Column Type", "programHTMLOutput");
+		mProgramHTMLOutputSetting.put("Width", "200");
+		// Added by hslee on 2023.06.24 --- [e]
+		
+		mColumn = new HashMap();
+		mColumn.put("name", "Message"); // 뭐가 바뀌었는지 메세지
+		mColumn.put("label", "Message");
+//		mColumn.put("settings", mSetting);
+		mColumn.put("settings", mProgramHTMLOutputSetting); // Modified by hslee on 2023.06.24
+		mlReturn.add(mColumn);
+		mColumn = new HashMap();
+		// 필드명 목록 순서대로 테이블 컬럼 생성
+		for(String sColumnName : slExcelTopRow) {
+			mColumn.put("name", sColumnName);
+			mColumn.put("label", sColumnName);
+			mColumn.put("settings", mSetting);
+			mlReturn.add(mColumn);
+			mColumn = new HashMap();
+		}
+		
+    	return mlReturn;
+    }
+    
+    /**
+     * 엑셀값 표시
+     * @param context
+     * @param args
+     * @return
+     * @throws Exception
+     */
+    public List getExcelColumn(Context context,String[] args) throws Exception{
+    	StringList slReturn = new StringList();
+    	Map paramMap = (Map)JPO.unpackArgs(args);
+    	Map columnMap = (Map)paramMap.get("columnMap");
+    	String sColumnName = (String)columnMap.get("name");
+    	MapList mlObject = (MapList)paramMap.get("objectList");
+    	Map<String, String> mColumn = null;
+    	// 필드명 순서대로 테이블에 값 입력
+    	for(Object obj : mlObject) {
+    		mColumn = (Map)obj;
+    		slReturn.add(mColumn.get(sColumnName));
+    	}
+    	return slReturn;
+    }
+    /**
+     * jhlee Add 2023. 10. 06 엑셀 비교 Action Count
+     * @param context
+     * @param args
+     * @return
+     * @throws Exception
+     */
+    public List getExcelActionCnt(Context context,String[] args) throws Exception{
+    	StringList slReturn = new StringList();
+    	Map paramMap = (Map)JPO.unpackArgs(args);
+    	Map columnMap = (Map)paramMap.get("columnMap");
+    	MapList mlObject = (MapList)paramMap.get("objectList");
+    	Map<String, String> mColumn = null;
+    	// 필드명 순서대로 테이블에 값 입력
+    	StringList slActions = new StringList();
+    	String sAction = null;
+    	for(Object obj : mlObject) {
+    		mColumn = (Map)obj;
+    		sAction = (String)mColumn.get("Action");
+    		slReturn.add(DecConstants.EMPTY_STRING);
+    		slActions.add(sAction);
+     	}
+    	int iCreateCnt = Collections.frequency(slActions, "Create");
+    	int iModifyCnt = Collections.frequency(slActions, "Modify");
+    	int iErrorCnt = Collections.frequency(slActions, "Error");
+    	
+    	slReturn.add(0, "Create Count : " + iCreateCnt + "<br/><br/>"
+    				+	"Modify Count : " + iModifyCnt + "<br/><br/>"
+    				+	"Error Count : " + iErrorCnt + "<br/>");
+    	
+    	return slReturn;
+    }
+    
+    /**
+     * jhlee Add 05-25 엑셀의 CWP Task Master Data 정보를 프로젝트에 Import
+     * @param context
+     * @param args
+     * @return
+     * @throws Exception
+     */
+    public String importExcelCWPMasterData(Context context, String[] args)throws Exception{
+    	String sReturn = null;
+    	Map paramMap = (Map)JPO.unpackArgs(args);
+    	
+    	String sTypePattern = DecConstants.TYPE_PHASE + "," + DecConstants.TYPE_TASK + "," + DecConstants.TYPE_DECCWPTASK;
+    	String sDelTypePattern = sTypePattern + "," + DecConstants.TYPE_DECIWPTASK;
+    	StringList slBusSelect = new StringList();
+    	slBusSelect.add(DecConstants.SELECT_ID);
+    	slBusSelect.add(DecConstants.SELECT_PHYSICAL_ID);
+    	slBusSelect.add(DecConstants.SELECT_NAME);
+    	slBusSelect.add(DecConstants.SELECT_DESCRIPTION);
+    	slBusSelect.add(DecConstants.SELECT_CURRENT);
+    	slBusSelect.add(DecConstants.SELECT_ATTRIBUTE_DECWBSTYPE);
+    	slBusSelect.add("to[" + DecConstants.RELATIONSHIP_PROJECT_ACCESS_KEY + "].from.id");
+    	slBusSelect.add("to[" + DecConstants.RELATIONSHIP_PROJECT_ACCESS_KEY + "].from.physicalid");
+    	slBusSelect.add("to[" + DecConstants.RELATIONSHIP_PROJECT_ACCESS_LIST + "].from.id");
+    	slBusSelect.add("to[" + DecConstants.RELATIONSHIP_PROJECT_ACCESS_LIST + "].from.physicalid");
+    	slBusSelect.add("to[" + DecConstants.RELATIONSHIP_SUBTASK + "].from.name");
+    	
+    	StringList slEWPParam = new StringList();
+    	slEWPParam.add(DecConstants.SELECT_NAME);
+    	slEWPParam.add(DecConstants.SELECT_ID);
+
+    	String sParentOID = (String)paramMap.get("parentOID");
+    	MapList mlObject = (MapList)paramMap.get("objectList");
+    	Map<String, String> mColumn = null;
+    	StringList slCode = new StringList();
+    	StringList slDesc = new StringList();
+    	
+    	// Key값(레벨별 Code, Type, Desc) 배열
+    	mColumn = (Map)mlObject.get(0);
+    	Set<String> setTopRow = mColumn.keySet();
+    	for(String sTopRow : setTopRow) {
+    		if(DecStringUtil.contains(sTopRow, "LV") && DecStringUtil.contains(sTopRow, "Code")) {
+    			slCode.add(sTopRow);
+    		}else if(DecStringUtil.contains(sTopRow, "LV") && DecStringUtil.contains(sTopRow, "Desc")) {
+    			slDesc.add(sTopRow);
+    		}
+    	}
+    	slCode.sort();
+    	slDesc.sort();
+    	String strLanguage = context.getSession().getLanguage();
+    	// 중복 실행을 막기위한 Set
+    	Set<String> setCodeValue = new HashSet();
+    	for(Object obj : mlObject) {
+    		mColumn = (Map)obj;
+    		for(String sCode : slCode) {
+    			setCodeValue.add(mColumn.get(sCode));
+    		}
+    	}
+    	setCodeValue.remove(DecStringUtil.EMPTY);
+    	setCodeValue.remove(null);
+
+    	Map<String, String> mSubTask = null;
+    	Map<String, Map> mSubTaskInfoKeyName = new HashMap();
+    	
+	    DomainObject doProject = DomainObject.newInstance(context, sParentOID);
+	    doProject.open(context);
+    	if(!doProject.getTypeName().equals(DecConstants.TYPE_PROJECT_SPACE)) {
+    		sParentOID = doProject.getInfo(context, TASK_PROJECT_ID);
+    		doProject.setId(sParentOID);
+	    	doProject.open(context);
+    	}
+    	String sProjectName = doProject.getName();
+	    MapList mlSubTask = doProject.getRelatedObjects(context,
+					   		DecConstants.RELATIONSHIP_SUBTASK, //pattern to match relationships
+					   		sTypePattern, //pattern to match types
+					   		slBusSelect, //the eMatrix StringList object that holds the list of select statement pertaining to Business Obejcts.
+					   		null, //the eMatrix StringList object that holds the list of select statement pertaining to Relationships.
+					   		false, //get To relationships
+					   		true, //get From relationships
+					   		(short)0, //the number of levels to expand, 0 equals expand all.
+					   		DecConstants.EMPTY_STRING, //where clause to apply to objects, can be empty ""
+					   		DecConstants.EMPTY_STRING,
+					   		0); //where clause to apply to relationship, can be empty ""
+	    for(Object o : mlSubTask) {
+	    	mSubTask = (Map)o;
+	    	// 데이터 구분을위해 프로젝트명, Task/Phase의 이름으로 키값을 정함
+	    	mSubTaskInfoKeyName.put(mSubTask.get(DecConstants.SELECT_NAME), mSubTask);
+	    }
+	    mSubTaskInfoKeyName.put(sProjectName, doProject.getInfo(context, slBusSelect));
+    	
+    	Date date = new Date();
+    	
+    	String sActivityType = DecConstants.EMPTY_STRING;
+    	String sDiscipline = DecConstants.EMPTY_STRING;
+    	String sSequentialNo = DecConstants.EMPTY_STRING;
+    	String sEWPNo = DecConstants.EMPTY_STRING;
+    	String sDesignOffice = DecConstants.EMPTY_STRING;
+    	String sConstOffice = DecConstants.EMPTY_STRING;
+    	String sType = DecConstants.EMPTY_STRING;
+    	String sCode = DecConstants.EMPTY_STRING;
+    	String sDesc = DecConstants.EMPTY_STRING;
+    	String sParentName = DecConstants.EMPTY_STRING;
+    	String sId = DecConstants.EMPTY_STRING;
+    	String sSubTaskId = DecConstants.EMPTY_STRING;
+    	String sObjType = DecConstants.EMPTY_STRING;
+    	String sPALId = DecConstants.EMPTY_STRING;
+    	String sUDF1 = DecConstants.EMPTY_STRING;
+    	String sUDF2 = DecConstants.EMPTY_STRING;
+    	String sUDF3 = DecConstants.EMPTY_STRING;
+    	String sEWPOID = DecConstants.EMPTY_STRING;
+    	String sEWPRELID = DecConstants.EMPTY_STRING;
+    	String sCWPKeyType = DecConstants.EMPTY_STRING;
+    	String sCWPKeyUOM = DecConstants.EMPTY_STRING;
+
+    	String sToday = DecDateUtil.changeDateFormat(date, DecDateUtil.IF_FORMAT);
+    	String sTodayMatrixDate = DecDateUtil.changeDateFormat(date, new SimpleDateFormat(eMatrixDateFormat.getEMatrixDateFormat(), Locale.US));
+
+    	List<Map> lmCWPChangeRegister = new ArrayList();
+    	Map<String, String> mAttr = new HashMap();
+    	Map<String, String> mEWPOID = new HashMap();
+    	Map<String, String> mCWPChangeRegisterBase = new HashMap();
+    	mCWPChangeRegisterBase.put("CHANGE_DATE", sToday);
+    	mCWPChangeRegisterBase.put("CHANGE_USER", context.getUser());
+    	mCWPChangeRegisterBase.put("INPUT_TYPE", "Excel");
+		mCWPChangeRegisterBase.put("SITE_CD", sProjectName);
+    	
+    	DomainObject doSubTask = DomainObject.newInstance(context);
+    	DomainObject doCreateTask = DomainObject.newInstance(context);
+    	DomainObject doPAL = DomainObject.newInstance(context);
+    	DomainObject doParent = DomainObject.newInstance(context);
+    	DomainObject doEWP = DomainObject.newInstance(context);
+    	
+    	MapList mlEWP = DomainObject.findObjects(context, DecConstants.TYPE_DECEWP, DecConstants.SYMB_WILD, "revision == '" + sProjectName + "'", slEWPParam);
+    	for(Object o : mlEWP) {
+    		Map mEWP = (Map)o;
+    		mEWPOID.put((String)mEWP.get(DecConstants.SELECT_NAME), (String)mEWP.get(DecConstants.SELECT_ID));
+    	}
+    	
+    	ProjectSequence pseq = null;
+
+    	StringList slCWPOID = null;
+    	Map mParam = new HashMap();
+    	StringList slSelectParam = new StringList(DecConstants.SELECT_NAME);
+    	slSelectParam.add(DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILATT1);
+    	mParam.put("slSelectParam", slSelectParam);
+		mParam.put("codeMasterName", "WBS Type");
+        mParam.put("codeMasterRevision", sProjectName);
+        decCodeMaster_mxJPO codeJPO = new decCodeMaster_mxJPO();
+    	MapList mlCodeDetail = codeJPO.getCodeDetailList(context, mParam);
+    	Map<String, String> mLevel = new HashMap();
+    	for(Object o : mlCodeDetail) {
+    		Map mDetail = (Map)o;
+    		String sWBSType = (String)mDetail.get(DecConstants.SELECT_NAME);
+    		String sLevel = (String)mDetail.get(DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILATT1);
+    		mLevel.put(sLevel, sWBSType);
+    	}
+    	ContextUtil.startTransaction(context, true);
+    	try ( SqlSession sqlSession = decSQLSessionFactory.getSession() ) {
+	    	for(Object obj : mlObject) {
+	    		mColumn = (Map)obj;
+	    		sActivityType = mColumn.get("Activity type");
+	    		sDiscipline = mColumn.get("Discipline");
+	    		sSequentialNo = mColumn.get("Sequential No");
+	    		sEWPNo = mColumn.get("EWP No");
+	    		sDesignOffice = mColumn.get("Design Office");
+	    		sConstOffice = mColumn.get("Const Office");
+				sCWPKeyType	 = mColumn.get("CWP Key Q'ty Item");
+    			sCWPKeyUOM	 = mColumn.get("UOM");
+	    		sUDF1 = mColumn.get("UDF1");
+	    		sUDF2 = mColumn.get("UDF2");
+	    		sUDF3 = mColumn.get("UDF3");
+	    		for(int i=0; i<slCode.size(); i++) {
+        			sType = mLevel.get(String.valueOf(i+1));
+        			sCode = mColumn.get(slCode.get(i));
+        			sDesc = mColumn.get(slDesc.get(i));
+        			// Set에 들어있는 Code일경우 실행한뒤 code를 Set에서 Remove시켜 한번 로직을 수행한 SubTask는 중복실행하지않게 막음
+        			if(setCodeValue.contains(sCode)) {
+	        			mSubTask = mSubTaskInfoKeyName.get(sCode);
+	        			
+	        			if(i==0) {
+	        				sParentName = sProjectName;
+	        			}else {
+	        				sParentName = mColumn.get(slCode.get(i-1));
+	        			}
+	        			
+	        			if(mSubTask != null) { // 존재할경우 수정
+	        				// 수정일경우 mSubTask에 수정할 오브젝트의 정보를 가져옴
+	        				String sCurrent = mSubTask.get(DecConstants.SELECT_CURRENT);
+	    		    		sSubTaskId = mSubTask.get(DecConstants.SELECT_ID);
+	        				if(DecStringUtil.equals(sCurrent, DecConstants.STATE_PROJECT_TASK_COMPLETE)) {
+	    	        			setCodeValue.remove(sCode);
+	    	        			continue;
+	        				}
+			    	    	doSubTask.setId(sSubTaskId);
+			            	doSubTask.setDescription(context, sDesc);
+			            	if(DecStringUtil.equals(doSubTask.getTypeName(context), DecConstants.TYPE_PHASE) ) {
+			            		doSubTask.setAttributeValue(context, DecConstants.ATTRIBUTE_DECWBSTYPE, sType);
+			            	}else if(DecStringUtil.equals(doSubTask.getTypeName(context), DecConstants.TYPE_DECCWPTASK)){
+			                	/* jhlee Add 06-23 trigger에서 메소드 실행
+			            		modifyCWPTaskAttribute(doSubTask, mCWPChangeRegister, mOldAttr, sqlSession, context, DecConstants.ATTRIBUTE_DECCWPACTIVITYTYPE, sActivityType, "Activity type");
+			            		modifyCWPTaskAttribute(doSubTask, mCWPChangeRegister, mOldAttr, sqlSession, context, DecConstants.ATTRIBUTE_DECDISCIPLINE, sDiscipline, "Discipline");
+			            		modifyCWPTaskAttribute(doSubTask, mCWPChangeRegister, mOldAttr, sqlSession, context, DecConstants.ATTRIBUTE_DECSEQUENTIALNO, sSequentialNo, "Sequential No");
+			            		modifyCWPTaskAttribute(doSubTask, mCWPChangeRegister, mOldAttr, sqlSession, context, DecConstants.ATTRIBUTE_DECCWPACTIVITYTYPE, sActivityType, "Activity type");
+			            		modifyCWPTaskAttribute(doSubTask, mCWPChangeRegister, mOldAttr, sqlSession, context, DecConstants.ATTRIBUTE_DECDESIGNOFFICE, sDesignOffice, "Design Office");
+			            		modifyCWPTaskAttribute(doSubTask, mCWPChangeRegister, mOldAttr, sqlSession, context, DecConstants.ATTRIBUTE_DECCONSTOFFICE, sConstOffice, "Const Office");
+			            		*/
+			                	mAttr.put(DecConstants.ATTRIBUTE_DECCWPACTIVITYTYPE, sActivityType);
+			                	mAttr.put(DecConstants.ATTRIBUTE_DECDISCIPLINE, sDiscipline);
+			                	mAttr.put(DecConstants.ATTRIBUTE_DECSEQUENTIALNO, sSequentialNo);
+			                	mAttr.put(DecConstants.ATTRIBUTE_DECDESIGNOFFICE, sDesignOffice);
+			                	mAttr.put(DecConstants.ATTRIBUTE_DECCONSTOFFICE, sConstOffice);
+			                	mAttr.put(DecConstants.ATTRIBUTE_DECKEYQUANTITYTYPE, sCWPKeyType);
+			                	mAttr.put(DecConstants.ATTRIBUTE_DECKEYQUANTITYUOM, sCWPKeyUOM);
+			                	doSubTask.setAttributeValues(context, mAttr);
+			                	mAttr.clear();
+			                	if(DecStringUtil.isNotEmpty(sEWPNo)) {
+			                		sEWPOID = mEWPOID.get(sEWPNo);
+				            		if(DecStringUtil.isEmpty(sEWPOID)) {
+				            			doEWP.createAndConnect(context, DecConstants.TYPE_DECEWP, sEWPNo, sProjectName, DecConstants.POLICY_DECEXIST, DecConstants.VAULT_ESERVICE_PRODUCTION, DecConstants.RELATIONSHIP_DECEWPREL, doSubTask, true);
+				            			doEWP.setAttributeValue(context, DecConstants.ATTRIBUTE_DECEWPSTAGE, DecConstants.ATTRIBUTE_DECEWPSTAGE_RANGE_TOBESTARTED);
+				            			doEWP.setAttributeValue(context, DecConstants.ATTRIBUTE_DECEWPSTATUS, DecConstants.ATTRIBUTE_DECEWPSTATUS_RANGE_TOBESTARTED);
+				            		}else {
+				            			doEWP.setId(sEWPOID);
+				            			slCWPOID = doEWP.getInfoList(context, "to[" + DecConstants.RELATIONSHIP_DECEWPREL + "].from." + DecConstants.SELECT_ID);
+			            				if(!slCWPOID.contains(sSubTaskId)) {
+			            					sEWPRELID = doSubTask.getInfo(context, "from[" + DecConstants.RELATIONSHIP_DECEWPREL + "].id");
+			            					if(DecStringUtil.isNotEmpty(sEWPRELID)) {
+			                					DomainRelationship.disconnect(context, sEWPRELID);
+			            					}
+			            					DomainRelationship.connect(context, doSubTask, DecConstants.RELATIONSHIP_DECEWPREL, doEWP);
+			            				}
+				            		}
+			                	}
+			            	} 
+	        			}else { // 존재하지않을경우 생성
+	        				// 생성일경우 mSubTask에 상위 오브젝트의 정보를 가져옴 
+	        				if(i==0) { 
+	                			mSubTask = mSubTaskInfoKeyName.get(sProjectName);
+	            				sPALId = mSubTask.get("to[" + DecConstants.RELATIONSHIP_PROJECT_ACCESS_LIST + "].from.id");
+	            				pseq = new ProjectSequence(context, mSubTask.get("to[" + DecConstants.RELATIONSHIP_PROJECT_ACCESS_LIST + "].from.physicalid"));
+	        				}else {
+	                			mSubTask = mSubTaskInfoKeyName.get(mColumn.get(slCode.get(i-1)));
+	            				sPALId = mSubTask.get("to[" + DecConstants.RELATIONSHIP_PROJECT_ACCESS_KEY + "].from.id");
+	            				pseq = new ProjectSequence(context, mSubTask.get("to[" + DecConstants.RELATIONSHIP_PROJECT_ACCESS_KEY + "].from.physicalid"));
+	        				}
+	        				mAttr.put(DecConstants.ATTRIBUTE_TASK_ESTIMATED_START_DATE, sTodayMatrixDate);
+	        				mAttr.put(DecConstants.ATTRIBUTE_TASK_ESTIMATED_FINISH_DATE, sTodayMatrixDate);
+	        				mAttr.put(DecConstants.ATTRIBUTE_TASK_CONSTRAINT_DATE, sTodayMatrixDate);
+		    				if(DecStringUtil.equalsIgnoreCase(sType,"CWP")) {
+		            			sObjType = DecConstants.TYPE_DECCWPTASK;
+		        				mAttr.remove(DecConstants.ATTRIBUTE_DECWBSTYPE);
+		    				} else {
+		            			sObjType = DecConstants.TYPE_PHASE;
+		        				mAttr.put(DecConstants.ATTRIBUTE_DECWBSTYPE, sType);
+		    				}
+	        				doCreateTask.createObject(context, sObjType, sCode, doCreateTask.getUniqueName(""), DecConstants.POLICY_PROJECT_TASK, DecConstants.VAULT_ESERVICE_PRODUCTION);
+	        				doCreateTask.setDescription(context, sDesc);
+	        				sId = mSubTask.get(DecConstants.SELECT_ID);
+	        				doParent.setId(sId);
+	        				doPAL.setId(sPALId);
+	        				DomainRelationship.connect(context, doParent, DecConstants.RELATIONSHIP_SUBTASK, doCreateTask);
+	        				DomainRelationship.connect(context, doPAL, DecConstants.RELATIONSHIP_PROJECT_ACCESS_KEY, doCreateTask);
+	        				pseq.assignSequence(context, mSubTask.get(DecConstants.SELECT_PHYSICAL_ID), doCreateTask.getInfo(context, DecConstants.SELECT_PHYSICAL_ID), (String)null, mSubTask.get(DecConstants.SELECT_PHYSICAL_ID), false);
+	        				if(DecStringUtil.equalsIgnoreCase(sType,"CWP")) {
+	            				mAttr.put(DecConstants.ATTRIBUTE_DECCWPACTIVITYTYPE, sActivityType);
+	            				mAttr.put(DecConstants.ATTRIBUTE_DECDISCIPLINE, sDiscipline);
+	            				mAttr.put(DecConstants.ATTRIBUTE_DECSEQUENTIALNO, sSequentialNo);
+	            				mAttr.put(DecConstants.ATTRIBUTE_DECDESIGNOFFICE, sDesignOffice);
+	            				mAttr.put(DecConstants.ATTRIBUTE_DECCONSTOFFICE, sConstOffice);
+	                			mAttr.put(DecConstants.ATTRIBUTE_DECKEYQUANTITYTYPE, 		sCWPKeyType           );
+	                			mAttr.put(DecConstants.ATTRIBUTE_DECKEYQUANTITYUOM, 		sCWPKeyUOM            );
+	            				mAttr.put(DecConstants.ATTRIBUTE_DECSTAGE, DecConstants.ATTRIBUTE_DECSTAGE_RANGE_TOBESTARTED);
+	            				Map<String, String> mCWPChangeRegister = new HashMap();
+	            				mCWPChangeRegister.putAll(mCWPChangeRegisterBase);
+	            	    		mCWPChangeRegister.put("CWP_NO", sCode);
+	                			mCWPChangeRegister.put("CWP_OID", doCreateTask.getId(context));
+		        	    		mCWPChangeRegister.put("CHANGE_ACTION", "Create");
+		        	    		mCWPChangeRegister.put("CHANGE_ATTRIBUTE", DecConstants.EMPTY_STRING);
+		        	    		mCWPChangeRegister.put("BEFORE_VALUE", DecConstants.EMPTY_STRING);
+		        	    		mCWPChangeRegister.put("AFTER_VALUE", DecConstants.EMPTY_STRING);
+		        	    		lmCWPChangeRegister.add(mCWPChangeRegister);
+	                			if(DecStringUtil.isNotEmpty(sEWPNo)) {
+	                				sEWPOID = mEWPOID.get(sEWPNo);
+		            				if(DecStringUtil.isEmpty(sEWPOID)) {
+		            					doEWP.createAndConnect(context, DecConstants.TYPE_DECEWP, sEWPNo, sProjectName, DecConstants.POLICY_DECEXIST, DecConstants.VAULT_ESERVICE_PRODUCTION, DecConstants.RELATIONSHIP_DECEWPREL, doCreateTask, true);
+		            					doEWP.setAttributeValue(context, DecConstants.ATTRIBUTE_DECEWPSTAGE, DecConstants.ATTRIBUTE_DECEWPSTAGE_RANGE_TOBESTARTED);
+		            					doEWP.setAttributeValue(context, DecConstants.ATTRIBUTE_DECEWPSTATUS, DecConstants.ATTRIBUTE_DECEWPSTATUS_RANGE_TOBESTARTED);
+		            				}else {
+		            					doEWP.setId(sEWPOID);
+	            						DomainRelationship.connect(context, doCreateTask, DecConstants.RELATIONSHIP_DECEWPREL, doEWP);
+		            				}
+	                			}
+	        				}
+	        				doCreateTask.setAttributeValues(context, mAttr);
+	        				mSubTask = doCreateTask.getInfo(context, slBusSelect);
+	        				mSubTaskInfoKeyName.put(mSubTask.get(DecConstants.SELECT_NAME), mSubTask);
+	        			}
+	        			mAttr.clear();
+	        			setCodeValue.remove(sCode);
+        			}
+	    		}
+	    	}
+	    	if(!lmCWPChangeRegister.isEmpty()) {
+	    		sqlSession.insert("Project.insertImportCWPChangeRegisterList", lmCWPChangeRegister);
+	    	}
+	    	sqlSession.commit();
+	    	sReturn = EnoviaResourceBundle.getProperty(context, "ProgramCentral","ProgramCentralStringResource.Common.ImportExcel.CompletionMsg", strLanguage);
+    	} catch (Exception e) {
+    		ContextUtil.abortTransaction(context);
+    		e.printStackTrace();
+    		sReturn = e.getMessage();
+		}
+    	ContextUtil.commitTransaction(context);
+    	return sReturn;
+    }
+    /**
+     * jhlee Add 05-25 CWP Task Plan Data Import
+     * @param context
+     * @param args
+     * @return
+     * @throws Exception
+     */
+    public String importExcelCWPPlanData (Context context, String[] args)throws Exception{
+    	String sReturn = DecConstants.EMPTY_STRING;
+    	Map paramMap = (Map)JPO.unpackArgs(args);
+    	
+    	StringList slBusSelect = new StringList();
+    	slBusSelect.add(DecConstants.SELECT_ID);
+    	slBusSelect.add(DecConstants.SELECT_TYPE);
+    	slBusSelect.add(DecConstants.SELECT_PHYSICAL_ID);
+    	slBusSelect.add(DecConstants.SELECT_NAME);
+    	slBusSelect.add(DecConstants.SELECT_DESCRIPTION);
+    	slBusSelect.add(DecConstants.SELECT_ATTRIBUTE_DECWBSTYPE);
+    	slBusSelect.add("to[" + DecConstants.RELATIONSHIP_PROJECT_ACCESS_KEY + "].from.id");
+    	slBusSelect.add("to[" + DecConstants.RELATIONSHIP_PROJECT_ACCESS_KEY + "].from.physicalid");
+    	slBusSelect.add("to[" + DecConstants.RELATIONSHIP_PROJECT_ACCESS_LIST + "].from.id");
+    	slBusSelect.add("to[" + DecConstants.RELATIONSHIP_PROJECT_ACCESS_LIST + "].from.physicalid");
+    	slBusSelect.add("to[" + DecConstants.RELATIONSHIP_SUBTASK + "].from.id");
+    	slBusSelect.add("from[" + DecConstants.RELATIONSHIP_SUBTASK + "|to.type==" + DecConstants.TYPE_DECCWPTASK + "]");
+    	
+    	StringList slCWPInfoParam = new StringList();
+    	slCWPInfoParam.add(DecConstants.SELECT_ATTRIBUTE_DECSTAGE);
+    	slCWPInfoParam.add(DecConstants.SELECT_CURRENT);
+    	slCWPInfoParam.add(DecConstants.SELECT_ATTRIBUTE_TASK_ESTIMATED_START_DATE);
+    	slCWPInfoParam.add(DecConstants.SELECT_ATTRIBUTE_DECTASKFORECASTSTARTDATE);
+    	slCWPInfoParam.add(DecConstants.SELECT_ATTRIBUTE_TASK_ACTUAL_START_DATE);
+    	slCWPInfoParam.add("from[" + DecConstants.RELATIONSHIP_DECEWPREL + "].to." + DecConstants.SELECT_ID);
+    	
+    	String sParentOID = (String)paramMap.get("parentOID");
+    	MapList mlObject = (MapList)paramMap.get("objectList");
+    	
+    	DomainObject doProject = DomainObject.newInstance(context, sParentOID);
+    	doProject.open(context);
+    	if(!doProject.getTypeName().equals(DecConstants.TYPE_PROJECT_SPACE)) {
+    		sParentOID = doProject.getInfo(context, TASK_PROJECT_ID);
+    		doProject.setId(sParentOID);
+	    	doProject.open(context);
+    	}
+    	String sIWPYN = doProject.getAttributeValue(context, DecConstants.ATTRIBUTE_DECIWP_YN);
+    	MapList mlPhase = doProject.getRelatedObjects(context,
+				DecConstants.RELATIONSHIP_SUBTASK, //pattern to match relationships
+				DecConstants.TYPE_PHASE, //pattern to match types
+				slBusSelect, //the eMatrix StringList object that holds the list of select statement pertaining to Business Obejcts.
+				null, //the eMatrix StringList object that holds the list of select statement pertaining to Relationships.
+				false, //get To relationships
+				true, //get From relationships
+				(short)0, //the number of levels to expand, 0 equals expand all.
+				DecConstants.EMPTY_STRING, //where clause to apply to objects, can be empty ""
+				DecConstants.EMPTY_STRING,
+				0); //where clause to apply to relationship, can be empty ""
+    	Map mPhase = null;
+    	Map<String, MapList> mPhaseCWPList = new HashMap();
+    	Map<String, StringList> mPhaseModDateList = new HashMap();
+    	Map<String, Map> mPhaseModDateAttr = new HashMap();
+    	Set<String> setHaveChildCWPPhaseOID = new HashSet();
+    	String sOID = DecConstants.EMPTY_STRING;
+    	String sIsChildCWP= DecConstants.EMPTY_STRING;
+    	StringList slModDatePhaseOID = null;
+    	DomainObject doPhase = DomainObject.newInstance(context);
+    	MapList mlPhaseParent = null;
+    	for(Object o : mlPhase) {
+    		mPhase = (Map)o;
+    		sOID = (String)mPhase.get(DecConstants.SELECT_ID);
+			mPhaseModDateAttr.put(sOID, new HashMap());
+    		sIsChildCWP = (String)mPhase.get("from[" + DecConstants.RELATIONSHIP_SUBTASK + "]");
+    		if(DecStringUtil.equalsIgnoreCase(sIsChildCWP, "true")) {
+        		doPhase.setId(sOID);
+        		mPhaseCWPList.put(sOID, doPhase.getRelatedObjects(context,
+        				DecConstants.RELATIONSHIP_SUBTASK, //pattern to match relationships
+        				DecConstants.TYPE_DECCWPTASK, //pattern to match types
+        				slBusSelect, //the eMatrix StringList object that holds the list of select statement pertaining to Business Obejcts.
+        				null, //the eMatrix StringList object that holds the list of select statement pertaining to Relationships.
+        				false, //get To relationships
+        				true, //get From relationships
+        				(short)0, //the number of levels to expand, 0 equals expand all.
+        				DecConstants.EMPTY_STRING, //where clause to apply to objects, can be empty ""
+        				DecConstants.EMPTY_STRING, //where clause to apply to relationship, can be empty ""
+        				0));
+        		mlPhaseParent = doPhase.getRelatedObjects(context,
+	                	DecConstants.RELATIONSHIP_SUBTASK, //pattern to match relationships
+	                	DecConstants.TYPE_PHASE, //pattern to match types
+	                	new StringList(DecConstants.SELECT_ID), //the eMatrix StringList object that holds the list of select statement pertaining to Business Obejcts.
+	                	null, //the eMatrix StringList object that holds the list of select statement pertaining to Relationships.
+	                	true, //get To relationships
+	                	false, //get From relationships
+	                	(short)0, //the number of levels to expand, 0 equals expand all.
+	                	DecConstants.EMPTY_STRING, //where clause to apply to objects, can be empty ""
+	                	DecConstants.EMPTY_STRING, //where clause to apply to relationship, can be empty ""
+	                	0);
+        		slModDatePhaseOID = new StringList();
+        		for(Object oParent : mlPhaseParent) {
+        			mPhase = (Map)oParent;
+        			slModDatePhaseOID.add((String)mPhase.get(DecConstants.SELECT_ID));
+        		}
+        		slModDatePhaseOID.add(sOID);
+        		slModDatePhaseOID.add(sParentOID);
+        		mPhaseModDateList.put(sOID, slModDatePhaseOID);
+        		setHaveChildCWPPhaseOID.add(sOID);
+    		}
+    	}
+    	sIsChildCWP = doProject.getInfo(context, "from[" + DecConstants.RELATIONSHIP_SUBTASK + "|to.type==" + DecConstants.TYPE_DECCWPTASK + "]");
+		if(DecStringUtil.equalsIgnoreCase(sIsChildCWP, "true")) {
+			mPhaseCWPList.put(sParentOID, doProject.getRelatedObjects(context,
+					DecConstants.RELATIONSHIP_SUBTASK, //pattern to match relationships
+					DecConstants.TYPE_DECCWPTASK, //pattern to match types
+					slBusSelect, //the eMatrix StringList object that holds the list of select statement pertaining to Business Obejcts.
+					null, //the eMatrix StringList object that holds the list of select statement pertaining to Relationships.
+					false, //get To relationships
+					true, //get From relationships
+					(short)0, //the number of levels to expand, 0 equals expand all.
+					DecConstants.EMPTY_STRING, //where clause to apply to objects, can be empty ""
+					DecConstants.EMPTY_STRING, //where clause to apply to relationship, can be empty ""
+					0));
+			setHaveChildCWPPhaseOID.add(sParentOID);
+		}
+		mPhaseModDateAttr.put(sParentOID, new HashMap());
+    	
+    	Map<String, String> mSubTask = null;
+    	Map<String, String> mColumn = null;
+    	Map<String, String> mOID = new HashMap();
+    	Map<String, String> mCWPParentOID = new HashMap();
+    	Map<String, String> mAttr = new HashMap();
+    	List<DomainObject> listPromoteObj = new ArrayList();
+    	StringList slPromoteCWPTaskOID = new StringList();
+    	StringList slPromoteCompleteCWPTaskOID = new StringList();
+    	String sCWPNo = DecConstants.EMPTY_STRING;
+    	String sEWPOID = DecConstants.EMPTY_STRING;
+    	String sPriorityGroup = DecConstants.EMPTY_STRING;
+    	String sPriorityNo = DecConstants.EMPTY_STRING;
+    	String sSubCon = DecConstants.EMPTY_STRING;
+    	String sSubCon2 = DecConstants.EMPTY_STRING;
+    	String sEngineer = DecConstants.EMPTY_STRING;
+    	String sPlanner = DecConstants.EMPTY_STRING;
+    	String sSuperintendent = DecConstants.EMPTY_STRING;
+    	String sForeman = DecConstants.EMPTY_STRING;
+    	String sCWPReleasePlan = DecConstants.EMPTY_STRING;
+    	String sCWPReleaseForecast = DecConstants.EMPTY_STRING;
+    	String sCWPReleaseActual = DecConstants.EMPTY_STRING;
+    	String sPlanStart = DecConstants.EMPTY_STRING;
+    	String sPlanFinish = DecConstants.EMPTY_STRING;
+    	String sForecastStart = DecConstants.EMPTY_STRING;
+    	String sForecastFinish = DecConstants.EMPTY_STRING;
+    	String sActualStart = DecConstants.EMPTY_STRING;
+    	String sActualFinish = DecConstants.EMPTY_STRING;
+    	String sEWPReleasePlan = DecConstants.EMPTY_STRING;
+    	String sEWPReleaseForecast = DecConstants.EMPTY_STRING;
+    	String sEWPReleaseActual = DecConstants.EMPTY_STRING;
+    	String sMaterialRAS = DecConstants.EMPTY_STRING;
+    	String sCWPKeyTotal = DecConstants.EMPTY_STRING;
+    	String sCWPKeyCompleted = DecConstants.EMPTY_STRING;
+    	String sCWPKeyActionEngineering = DecConstants.EMPTY_STRING;
+    	String sCWPKeyActionProcurement = DecConstants.EMPTY_STRING;
+    	String sNoofIWPs = DecConstants.EMPTY_STRING;
+    	String sCrewCompositionperIWP = DecConstants.EMPTY_STRING;
+    	String sRemark = DecConstants.EMPTY_STRING;
+    	String sUDF1 = DecConstants.EMPTY_STRING;
+    	String sUDF2 = DecConstants.EMPTY_STRING;
+    	String sUDF3 = DecConstants.EMPTY_STRING;
+    	String sEstStartDate = DecConstants.EMPTY_STRING;
+    	String sOldStatus = DecConstants.EMPTY_STRING;
+    	String sOldStage = DecConstants.EMPTY_STRING;
+    	String sNewStatus = DecConstants.EMPTY_STRING;
+    	String sNewStage = DecConstants.EMPTY_STRING;
+    	
+    	MapList mlSubTask = null;
+    	for(String sPhaseID : setHaveChildCWPPhaseOID) {
+    		mlSubTask = mPhaseCWPList.get(sPhaseID);
+        	for(Object o : mlSubTask) {
+        		mSubTask = (Map)o;
+        		sOID = mSubTask.get(DecConstants.SELECT_ID);
+        		sCWPNo = mSubTask.get(DecConstants.SELECT_NAME);
+        		mOID.put(sCWPNo, sOID);
+        		mCWPParentOID.put(sOID, sPhaseID);
+        	}
+    	}
+    	
+		DomainObject doCWPTask = DomainObject.newInstance(context);
+		DomainObject doEWP = DomainObject.newInstance(context);
+		DomainObject doSubCon = DomainObject.newInstance(context);
+		DomainObject doPriority = DomainObject.newInstance(context);
+		DomainObject doParent = DomainObject.newInstance(context);
+		decCodeMaster_mxJPO codeJPO = new decCodeMaster_mxJPO();
+		
+
+		String sPriorityGroupCodeMasterId = codeJPO.getCodeMasterId(context, sParentOID, DecConstants.EMPTY_STRING, "Priority Group", doProject.getName());
+		String sPriorityNumberCodeMasterId = codeJPO.getCodeMasterId(context, sParentOID, DecConstants.EMPTY_STRING, "Priority Number", doProject.getName());
+		String sSubConCodeMasterId = codeJPO.getCodeMasterId(context, sParentOID, DecConstants.EMPTY_STRING, "Sub-Con", doProject.getName()); 
+		if(DecStringUtil.isNotEmpty(sPriorityGroupCodeMasterId)) {
+			doPriority.setId(sPriorityGroupCodeMasterId);
+		}else {
+			doPriority.createObject(context, DecConstants.TYPE_DECCODEMASTER, "Priority Group", doProject.getName(), DecConstants.POLICY_DECCODEMASTER, DecConstants.VAULT_ESERVICE_PRODUCTION);
+			doPriority.setAttributeValue(context, DecConstants.ATTRIBUTE_DECMASTERTYPE, "Code");
+			DomainRelationship.connect(context, doProject, DecConstants.RELATIONSHIP_DECCODEMASTERREL, doPriority);
+			sPriorityGroupCodeMasterId = doPriority.getId(context);
+		}
+		if(DecStringUtil.isNotEmpty(sPriorityNumberCodeMasterId)) {
+			doPriority.setId(sPriorityNumberCodeMasterId);
+		}else {
+			doPriority.createObject(context, DecConstants.TYPE_DECCODEMASTER, "Priority Number", doProject.getName(), DecConstants.POLICY_DECCODEMASTER, DecConstants.VAULT_ESERVICE_PRODUCTION);
+			doPriority.setAttributeValue(context, DecConstants.ATTRIBUTE_DECMASTERTYPE, "Code");
+			DomainRelationship.connect(context, doProject, DecConstants.RELATIONSHIP_DECCODEMASTERREL, doPriority);
+			sPriorityNumberCodeMasterId = doPriority.getId(context);
+		}
+		if(DecStringUtil.isNotEmpty(sSubConCodeMasterId)) {
+			doSubCon.setId(sSubConCodeMasterId);
+		}else {
+			doSubCon.createObject(context, DecConstants.TYPE_DECCODEMASTER, "Sub-Con", doProject.getName(), DecConstants.POLICY_DECCODEMASTER, DecConstants.VAULT_ESERVICE_PRODUCTION);
+			doSubCon.setAttributeValue(context, DecConstants.ATTRIBUTE_DECMASTERTYPE, "Code");
+			DomainRelationship.connect(context, doProject, DecConstants.RELATIONSHIP_DECCODEMASTERREL, doSubCon);
+			sSubConCodeMasterId = doSubCon.getId(context);
+		}
+
+		List<Map> lmCWPChangeRegister = new ArrayList();
+		Map<String, String> mCWPChangeRegisterBase = new HashMap();
+		Map mCodeMasterParam = new HashMap();
+		Map<String, String> mParentDate = null;
+
+    	mCodeMasterParam.put("codeMasterId", sPriorityGroupCodeMasterId);
+    	mCodeMasterParam.put("codeDetailType", "Priority Group");
+    	mCodeMasterParam.put("codeMasterRevision", doProject.getName());
+    	Map<String, Map> mPriorityGroupDetail = new HashMap();
+		MapList mlPriorityGroupDetail = codeJPO.getCodeDetailList(context, mCodeMasterParam);
+		for(Object o : mlPriorityGroupDetail) {
+			Map<String, String> m = (Map)o;
+			String sName = m.get(DecConstants.SELECT_NAME);
+			mPriorityGroupDetail.put(sName, m);
+		}
+
+    	mCodeMasterParam.put("codeMasterId", sPriorityNumberCodeMasterId);
+    	mCodeMasterParam.put("codeDetailType", "Priority Number");
+    	mCodeMasterParam.put("codeMasterRevision", doProject.getName());
+    	Map<String, Map> mPriorityNumberDetail = new HashMap();
+    	MapList mlPriorityNumberDetail = codeJPO.getCodeDetailList(context, mCodeMasterParam);
+		for(Object o : mlPriorityNumberDetail) {
+			Map<String, String> m = (Map)o;
+			String sName = m.get(DecConstants.SELECT_NAME);
+			mPriorityNumberDetail.put(sName, m);
+		}
+
+    	mCodeMasterParam.put("codeMasterId", sSubConCodeMasterId);
+    	mCodeMasterParam.put("codeDetailType", "Sub-Con");
+    	mCodeMasterParam.put("codeMasterRevision", doProject.getName());
+    	Map<String, Map> mSUBCONDetail = new HashMap();
+    	MapList mlSUBCONDetail = codeJPO.getCodeDetailList(context, mCodeMasterParam);
+		for(Object o : mlSUBCONDetail) {
+			Map<String, String> m = (Map)o;
+			String sName = m.get(DecConstants.SELECT_NAME);
+			mSUBCONDetail.put(sName, m);
+		}
+    	
+		Date date = new Date();
+    	String sToday = DecDateUtil.changeDateFormat(date, DecDateUtil.IF_FORMAT);
+		mCWPChangeRegisterBase.put("SITE_CD", doProject.getInfo(context, DecConstants.SELECT_NAME));
+		mCWPChangeRegisterBase.put("CHANGE_DATE", sToday);
+		mCWPChangeRegisterBase.put("CHANGE_USER", context.getUser());
+		mCWPChangeRegisterBase.put("INPUT_TYPE", "Excel");
+		
+		SimpleDateFormat sdf = new SimpleDateFormat(eMatrixDateFormat.getEMatrixDateFormat(), Locale.US);
+		try ( SqlSession sqlSession = decSQLSessionFactory.getSession() ) {
+        	ContextUtil.startTransaction(context, true);
+    		
+    		for(Object o : mlObject) {
+    			mColumn = (Map)o;
+    			sCWPNo = mColumn.get("CWP No");
+    			sOID = mOID.get(sCWPNo);
+    			doCWPTask.setId(sOID);
+    			// 기존 속성값을 불러옴 
+    			// jhlee Add 06-23 trigger에서 메소드 실행하여 불러올필요없어짐
+    		//	mAttr = doCWPTask.getAttributeMap(context);
+    			sPriorityGroup           = mColumn.get("Priority Group");
+    			sPriorityNo              = mColumn.get("Priority Number");
+    			sSubCon                  = mColumn.get("Sub-Con");
+    			sSubCon2				 = mColumn.get("Sub-Con2");
+    			sEngineer                = mColumn.get("Engineer");
+    			sPlanner                 = mColumn.get("Planner");
+    			sSuperintendent          = mColumn.get("Superintendent");
+    			sForeman                 = mColumn.get("Foreman");
+    			sCWPReleasePlan          = DecDateUtil.changeDateFormat(mColumn.get("CWP Release Plan"), sdf);
+    			sCWPReleaseForecast      = DecDateUtil.changeDateFormat(mColumn.get("CWP Release Forecast"), sdf);
+    			sCWPReleaseActual        = DecDateUtil.changeDateFormat(mColumn.get("CWP Release Actual"), sdf);
+    			sPlanStart               = DecDateUtil.changeDateFormat(mColumn.get("Plan Start"), sdf);
+    			sPlanFinish              = DecDateUtil.changeDateFormat(mColumn.get("Plan Finish"), sdf);
+    			sForecastStart           = DecDateUtil.changeDateFormat(mColumn.get("Forecast Start"), sdf);
+    			sForecastFinish          = DecDateUtil.changeDateFormat(mColumn.get("Forecast Finish"), sdf);
+    			sActualStart             = DecDateUtil.changeDateFormat(mColumn.get("Actual Start"), sdf);
+    			sActualFinish            = DecDateUtil.changeDateFormat(mColumn.get("Actual Finish"), sdf);
+    			sEWPReleasePlan          = DecDateUtil.changeDateFormat(mColumn.get("EWP Release Plan"), sdf);
+    			sEWPReleaseForecast      = DecDateUtil.changeDateFormat(mColumn.get("EWP Release Forecast"), sdf);
+    			sEWPReleaseActual        = DecDateUtil.changeDateFormat(mColumn.get("EWP Release Actual"), sdf);
+    			sMaterialRAS			 = DecDateUtil.changeDateFormat(mColumn.get("RAS"), sdf);
+    			sCWPKeyTotal             = mColumn.get("CWP Key Total");
+    			sCWPKeyCompleted         = mColumn.get("CWP Key Completed");
+    			sCWPKeyActionEngineering = mColumn.get("CWP Key Action Engineering");
+    			sCWPKeyActionProcurement = mColumn.get("CWP Key Action Procurement");
+    			sNoofIWPs                = mColumn.get("No of IWPs");
+    			sCrewCompositionperIWP   = mColumn.get("Crew Composition per IWP");
+    			sRemark                  = mColumn.get("Remark");
+    			sUDF1                    = mColumn.get("UDF1");
+    			sUDF2                    = mColumn.get("UDF2");
+    			sUDF3                    = mColumn.get("UDF3");
+
+    			Map<String, String> mCWPChangeRegisterBaseAdd = new HashMap();
+    			mCWPChangeRegisterBaseAdd.putAll(mCWPChangeRegisterBase);
+    			mCWPChangeRegisterBaseAdd.put("CWP_NO", sCWPNo);
+    			mCWPChangeRegisterBaseAdd.put("CWP_OID", sOID);
+    			mAttr = new HashMap();
+    			mAttr.put(DecConstants.ATTRIBUTE_DECPRIORITYGROUP, 			sPriorityGroup     );
+    			mAttr.put(DecConstants.ATTRIBUTE_DECPRIORITYNO, 				sPriorityNo    );
+    			mAttr.put(DecConstants.ATTRIBUTE_DECSUBCONNO, 				sSubCon    );
+    			mAttr.put(DecConstants.ATTRIBUTE_DECSUBCONNO2, 				sSubCon2    );
+    			mAttr.put(DecConstants.ATTRIBUTE_DECENGINEER, 				sEngineer          );
+    			mAttr.put(DecConstants.ATTRIBUTE_DECPLANNER, 				sPlanner           );
+    			mAttr.put(DecConstants.ATTRIBUTE_DECSUPERINTENDENT, 			sSuperintendent);
+    			mAttr.put(DecConstants.ATTRIBUTE_DECFOREMAN, 				sForeman           );
+    			mAttr.put(DecConstants.ATTRIBUTE_DECRELEASEPLAN, 			sCWPReleasePlan    );
+    			mAttr.put(DecConstants.ATTRIBUTE_DECRELEASEFORECAST, 		sCWPReleaseForecast);
+    			mAttr.put(DecConstants.ATTRIBUTE_DECRELEASEACTUAL, 			sCWPReleaseActual  );
+    			mAttr.put(DecConstants.ATTRIBUTE_TASK_ESTIMATED_START_DATE, 	sPlanStart     );
+    			mAttr.put(DecConstants.ATTRIBUTE_TASK_ESTIMATED_FINISH_DATE, sPlanFinish       );
+    			mAttr.put(DecConstants.ATTRIBUTE_DECTASKFORECASTSTARTDATE, 	sForecastStart     );
+    			mAttr.put(DecConstants.ATTRIBUTE_DECTASKFORECASTFINISHDATE, 	sForecastFinish);
+    			if(DecStringUtil.isNotEmpty(sActualStart)) {
+        			mAttr.put(DecConstants.ATTRIBUTE_TASK_ACTUAL_START_DATE, 	sActualStart       );
+    			}
+    			if(DecStringUtil.isNotEmpty(sActualFinish)) {
+        			mAttr.put(DecConstants.ATTRIBUTE_TASK_ACTUAL_FINISH_DATE, 	sActualFinish      );
+    			}
+    			mAttr.put(DecConstants.ATTRIBUTE_DECMATERIALRAS, 			sMaterialRAS	   );
+    			if(DecStringUtil.equalsIgnoreCase(sIWPYN, "N")) {
+        		mAttr.put(DecConstants.ATTRIBUTE_DECKEYQUANTITYTOTAL, 		sCWPKeyTotal              );
+        		mAttr.put(DecConstants.ATTRIBUTE_DECKEYQUANTITYCOMPLETED, 	sCWPKeyCompleted            );
+    			}
+    			mAttr.put(DecConstants.ATTRIBUTE_DECENGINEERINGHELDUPACTION, sCWPKeyActionEngineering );
+    			mAttr.put(DecConstants.ATTRIBUTE_DECPROCUREMENTHELDUPACTION, sCWPKeyActionProcurement );
+    			mAttr.put(DecConstants.ATTRIBUTE_DECIWPCOUNTS, 				sNoofIWPs                );
+    			mAttr.put(DecConstants.ATTRIBUTE_DECIWPCREWCOMPOSITION, 		sCrewCompositionperIWP);
+    			mAttr.put(DecConstants.ATTRIBUTE_DECREMARK, 					sRemark               );
+    			mAttr.put(DecConstants.ATTRIBUTE_DECUPF1, 					sUDF1                    );
+    			mAttr.put(DecConstants.ATTRIBUTE_DECUPF2, 					sUDF2                    );
+    			mAttr.put(DecConstants.ATTRIBUTE_DECUPF3, 					sUDF3                    );
+    			if(DecStringUtil.isNoneBlank(sPlanStart, sPlanFinish)) {
+        			mAttr.put(DecConstants.ATTRIBUTE_TASK_ESTIMATED_DURATION, String.valueOf(DecDateUtil.getDifferenceDay(sPlanStart, sPlanFinish)));
+    			}
+    			if(DecStringUtil.isNoneBlank(sActualStart, sActualFinish)) {
+        			mAttr.put(DecConstants.ATTRIBUTE_TASK_ACTUAL_DURATION, String.valueOf(DecDateUtil.getDifferenceDay(sActualStart, sActualFinish)));
+    			}
+    			doCWPTask.setAttributeValues(context, mAttr);
+    			mAttr.clear();
+    			slModDatePhaseOID = mPhaseModDateList.get(mCWPParentOID.get(sOID));
+    			for(String sParentPhaseOID : slModDatePhaseOID) {
+    				mParentDate = mPhaseModDateAttr.get(sParentPhaseOID);
+        			String sParentPlanStart = mParentDate.get(DecConstants.ATTRIBUTE_TASK_ESTIMATED_START_DATE);
+        			String sParentPlanFinish = mParentDate.get(DecConstants.ATTRIBUTE_TASK_ESTIMATED_FINISH_DATE);
+        			String sParentActualStart = mParentDate.get(DecConstants.ATTRIBUTE_TASK_ACTUAL_START_DATE);
+        			String sParentActualFinish = mParentDate.get(DecConstants.ATTRIBUTE_TASK_ACTUAL_FINISH_DATE);
+        			if(DecDateUtil.getDifferenceDay(sPlanStart, sParentPlanStart) >= 1 || DecStringUtil.isEmpty(sParentPlanStart)) {
+        				sParentPlanStart = sPlanStart;
+        				mParentDate.put(DecConstants.ATTRIBUTE_TASK_ESTIMATED_START_DATE, sParentPlanStart);
+        			}
+        			if(DecDateUtil.getDifferenceDay(sParentPlanFinish, sPlanFinish) >= 1 || DecStringUtil.isEmpty(sParentPlanFinish)) {
+        				sParentPlanFinish = sPlanFinish;
+        				mParentDate.put(DecConstants.ATTRIBUTE_TASK_ESTIMATED_FINISH_DATE, sParentPlanFinish);
+        			}
+        			if(DecDateUtil.getDifferenceDay(sActualStart, sParentActualStart) >= 1 || DecStringUtil.isEmpty(sParentActualStart)) {
+        				sParentActualStart = sActualStart;
+        				mParentDate.put(DecConstants.ATTRIBUTE_TASK_ACTUAL_START_DATE, sParentActualStart);
+        			}
+        			if(DecDateUtil.getDifferenceDay(sParentActualFinish, sActualFinish) >= 1 || DecStringUtil.isEmpty(sParentActualFinish)) {
+        				sParentActualFinish = sActualFinish;
+        				mParentDate.put(DecConstants.ATTRIBUTE_TASK_ACTUAL_FINISH_DATE, sParentActualFinish);
+        			}
+        			if(DecStringUtil.isNoneBlank(sParentPlanStart, sParentPlanFinish)) {
+        				mParentDate.put(DecConstants.ATTRIBUTE_TASK_ESTIMATED_DURATION, String.valueOf(DecDateUtil.getDifferenceDay(sParentPlanStart, sParentPlanFinish)));
+        			}
+        			if(DecStringUtil.isNoneBlank(sParentActualStart, sParentActualFinish)) {
+        				mParentDate.put(DecConstants.ATTRIBUTE_TASK_ACTUAL_DURATION, String.valueOf(DecDateUtil.getDifferenceDay(sParentActualStart, sParentActualFinish)));
+        			}
+        			mPhaseModDateAttr.put(sParentPhaseOID, mParentDate);
+    			}
+    			/* jhlee Add 06-23 trigger에서 메소드 실행
+    			modifyCWPTaskAttribute(doCWPTask, mCWPChangeRegister, mAttr, sqlSession, context, DecConstants.ATTRIBUTE_DECPRIORITYGROUP, 			sPriorityGroup           , "Priority Group");
+    			modifyCWPTaskAttribute(doCWPTask, mCWPChangeRegister, mAttr, sqlSession, context, DecConstants.ATTRIBUTE_DECPRIORITYNO, 				sPriorityNo              , "Priority Number");
+    			modifyCWPTaskAttribute(doCWPTask, mCWPChangeRegister, mAttr, sqlSession, context, DecConstants.ATTRIBUTE_DECENGINEER, 				sEngineer                , "Engineer");
+    			modifyCWPTaskAttribute(doCWPTask, mCWPChangeRegister, mAttr, sqlSession, context, DecConstants.ATTRIBUTE_DECPLANNER, 				sPlanner                 , "Planner");
+    			modifyCWPTaskAttribute(doCWPTask, mCWPChangeRegister, mAttr, sqlSession, context, DecConstants.ATTRIBUTE_DECSUPERINTENDENT, 			sSuperintendent          , "Superintendent");
+    			modifyCWPTaskAttribute(doCWPTask, mCWPChangeRegister, mAttr, sqlSession, context, DecConstants.ATTRIBUTE_DECFOREMAN, 				sForeman                 , "Foreman");
+    			modifyCWPTaskDateAttribute(doCWPTask, mCWPChangeRegister, mAttr, sqlSession, context, DecConstants.ATTRIBUTE_DECRELEASEPLAN, 			sCWPReleasePlan          , "CWP Release Plan");
+    			modifyCWPTaskDateAttribute(doCWPTask, mCWPChangeRegister, mAttr, sqlSession, context, DecConstants.ATTRIBUTE_DECRELEASEFORECAST, 		sCWPReleaseForecast      , "CWP Release Forecast");
+    			modifyCWPTaskDateAttribute(doCWPTask, mCWPChangeRegister, mAttr, sqlSession, context, DecConstants.ATTRIBUTE_DECRELEASEACTUAL, 			sCWPReleaseActual        , "CWP Release Actual");
+    			modifyCWPTaskDateAttribute(doCWPTask, mCWPChangeRegister, mAttr, sqlSession, context, DecConstants.ATTRIBUTE_TASK_ESTIMATED_START_DATE, 	sPlanStart               , "Plan Start");
+    			modifyCWPTaskDateAttribute(doCWPTask, mCWPChangeRegister, mAttr, sqlSession, context, DecConstants.ATTRIBUTE_TASK_ESTIMATED_FINISH_DATE, sPlanFinish              , "Plan Finish");
+    			modifyCWPTaskDateAttribute(doCWPTask, mCWPChangeRegister, mAttr, sqlSession, context, DecConstants.ATTRIBUTE_DECTASKFORECASTSTARTDATE, 	sForecastStart           , "Forecast Start");
+    			modifyCWPTaskDateAttribute(doCWPTask, mCWPChangeRegister, mAttr, sqlSession, context, DecConstants.ATTRIBUTE_DECTASKFORECASTFINISHDATE, 	sForecastFinish          , "Forecast Finish");
+    			modifyCWPTaskDateAttribute(doCWPTask, mCWPChangeRegister, mAttr, sqlSession, context, DecConstants.ATTRIBUTE_TASK_ACTUAL_START_DATE, 	sActualStart             , "Actual Start");
+    			modifyCWPTaskDateAttribute(doCWPTask, mCWPChangeRegister, mAttr, sqlSession, context, DecConstants.ATTRIBUTE_TASK_ACTUAL_FINISH_DATE, 	sActualFinish            , "Actual Finish");
+    			modifyCWPTaskAttribute(doCWPTask, mCWPChangeRegister, mAttr, sqlSession, context, DecConstants.ATTRIBUTE_DECKEYQUANTITYTYPE, 		sCWPKeyType              , "CWP Key Type");
+    			modifyCWPTaskAttribute(doCWPTask, mCWPChangeRegister, mAttr, sqlSession, context, DecConstants.ATTRIBUTE_DECKEYQUANTITYUOM, 			sCWPKeyUOM               , "CWP Key UOM");
+    			modifyCWPTaskAttribute(doCWPTask, mCWPChangeRegister, mAttr, sqlSession, context, DecConstants.ATTRIBUTE_DECENGINEERINGHELDUPACTION, sCWPKeyActionEngineering , "CWP Key Action Engineering");
+    			modifyCWPTaskAttribute(doCWPTask, mCWPChangeRegister, mAttr, sqlSession, context, DecConstants.ATTRIBUTE_DECPROCUREMENTHELDUPACTION, sCWPKeyActionProcurement , "CWP Key Action Procurement");
+    			modifyCWPTaskAttribute(doCWPTask, mCWPChangeRegister, mAttr, sqlSession, context, DecConstants.ATTRIBUTE_DECIWPCOUNTS, 				sNoofIWPs                , "No of IWPs");
+    			modifyCWPTaskAttribute(doCWPTask, mCWPChangeRegister, mAttr, sqlSession, context, DecConstants.ATTRIBUTE_DECIWPCREWCOMPOSITION, 		sCrewCompositionperIWP   , "Crew Composition per IWP");
+    			modifyCWPTaskAttribute(doCWPTask, mCWPChangeRegister, mAttr, sqlSession, context, DecConstants.ATTRIBUTE_DECREMARK, 					sRemark                  , "Remark");
+    			modifyCWPTaskAttribute(doCWPTask, mCWPChangeRegister, mAttr, sqlSession, context, DecConstants.ATTRIBUTE_DECUPF1, 					sUDF1                    , "UDF1");
+    			modifyCWPTaskAttribute(doCWPTask, mCWPChangeRegister, mAttr, sqlSession, context, DecConstants.ATTRIBUTE_DECUPF2, 					sUDF2                    , "UDF2");
+    			modifyCWPTaskAttribute(doCWPTask, mCWPChangeRegister, mAttr, sqlSession, context, DecConstants.ATTRIBUTE_DECUPF3, 					sUDF3                    , "UDF3");
+    			*/
+    			
+    			if(DecStringUtil.isNotEmpty(sPriorityGroup)) {
+    				Map mlValidateDetail = mPriorityGroupDetail.get(sPriorityGroup);
+    				if(mlValidateDetail == null || mlValidateDetail.isEmpty()) {
+    					mCodeMasterParam.clear();
+    					mCodeMasterParam.put("objectId", sPriorityGroupCodeMasterId);
+    					mCodeMasterParam.put(DecConstants.SELECT_REVISION, doProject.getName()+"_Priority Group");
+    					mCodeMasterParam.put(DecConstants.ATTRIBUTE_DECCODE, sPriorityGroup);
+    					mCodeMasterParam.put(DecConstants.SELECT_DESCRIPTION, sPriorityGroup);
+    					mCodeMasterParam.put(DecConstants.ATTRIBUTE_DECCODEDETAILTYPE, "Priority Group");
+    					mPriorityGroupDetail.put(sPriorityGroup, codeJPO.createCodeDetail(context, JPO.packArgs(mCodeMasterParam)));
+    				}
+    			}
+    			if(DecStringUtil.isNotEmpty(sPriorityNo)) {
+    				Map mlValidateDetail = mPriorityNumberDetail.get(sPriorityNo);
+    				if(mlValidateDetail == null || mlValidateDetail.isEmpty()) {
+    					mCodeMasterParam.clear();
+    					mCodeMasterParam.put("objectId", sPriorityNumberCodeMasterId);
+    					mCodeMasterParam.put(DecConstants.SELECT_REVISION, doProject.getName()+"_Priority Number");
+    					mCodeMasterParam.put(DecConstants.ATTRIBUTE_DECCODE, sPriorityNo);
+    					mCodeMasterParam.put(DecConstants.SELECT_DESCRIPTION, sPriorityNo);
+    					mCodeMasterParam.put(DecConstants.ATTRIBUTE_DECCODEDETAILTYPE, "Priority Number");
+    					mPriorityNumberDetail.put(sPriorityNo, codeJPO.createCodeDetail(context, JPO.packArgs(mCodeMasterParam)));
+    				}
+    			}
+    			if(DecStringUtil.isNotEmpty(sSubCon)) {
+    				Map mlValidateDetail = mSUBCONDetail.get(sSubCon);
+    				if(mlValidateDetail == null || mlValidateDetail.isEmpty()) {
+    					mCodeMasterParam.clear();
+    					mCodeMasterParam.put("objectId", sSubConCodeMasterId);
+    					mCodeMasterParam.put(DecConstants.SELECT_REVISION, doProject.getName()+"_Sub-Con");
+    					mCodeMasterParam.put(DecConstants.ATTRIBUTE_DECCODE, sSubCon);
+    					mCodeMasterParam.put(DecConstants.SELECT_DESCRIPTION, sSubCon);
+    					mCodeMasterParam.put(DecConstants.ATTRIBUTE_DECCODEDETAILTYPE, "Sub-Con");
+    					mSUBCONDetail.put(sSubCon, codeJPO.createCodeDetail(context, JPO.packArgs(mCodeMasterParam)));
+    				}
+    			}
+    			if(DecStringUtil.isNotEmpty(sSubCon2)) {
+    				Map mlValidateDetail = mSUBCONDetail.get(sSubCon2);
+    				if(mlValidateDetail == null || mlValidateDetail.isEmpty()) {
+    					mCodeMasterParam.clear();
+    					mCodeMasterParam.put("objectId", sSubConCodeMasterId);
+    					mCodeMasterParam.put(DecConstants.SELECT_REVISION, doProject.getName()+"_Sub-Con");
+    					mCodeMasterParam.put(DecConstants.ATTRIBUTE_DECCODE, sSubCon2);
+    					mCodeMasterParam.put(DecConstants.SELECT_DESCRIPTION, sSubCon2);
+    					mCodeMasterParam.put(DecConstants.ATTRIBUTE_DECCODEDETAILTYPE, "Sub-Con");
+    					mSUBCONDetail.put(sSubCon2, codeJPO.createCodeDetail(context, JPO.packArgs(mCodeMasterParam)));
+    				}
+    			}
+    			// IWP를 사용할시 일단 합산한값을 나타나게 테이블에 세팅되어있어 보류
+    			// Project에서 IWP를 사용할 시 Qty Total, Complete는 IWP값의 합산
+				/*
+    			if(DecStringUtil.equalsIgnoreCase(sIWPYN, "Y")) {
+        			StringList slIWPParam = new StringList();
+        			slIWPParam.add(DecConstants.SELECT_ATTRIBUTE_DECKEYQUANTITYTOTAL);
+        			slIWPParam.add(DecConstants.SELECT_ATTRIBUTE_DECKEYQUANTITYCOMPLETED);
+        			MapList mlIWPCompleted = doCWPTask.getRelatedObjects(context,
+            				DecConstants.RELATIONSHIP_SUBTASK, //pattern to match relationships
+            				DecConstants.TYPE_DECIWPTASK, //pattern to match types
+            				slIWPParam, //the eMatrix StringList object that holds the list of select statement pertaining to Business Obejcts.
+            				null, //the eMatrix StringList object that holds the list of select statement pertaining to Relationships.
+            				false, //get To relationships
+            				true, //get From relationships
+            				(short)0, //the number of levels to expand, 0 equals expand all.
+            				DecConstants.EMPTY_STRING, //where clause to apply to objects, can be empty ""
+            				DecConstants.EMPTY_STRING,
+            				0); //where clause to apply to relationship, can be empty ""
+        			
+        			if(!mlIWPCompleted.isEmpty()) {
+        				int iCWPKeyTotal = 0;
+        				int iCWPKeyCompleted = 0;
+        				for(Object oIWP : mlIWPCompleted) {
+        					Map mIWP = (Map)oIWP;
+        					String sKeyTotal = (String)mIWP.get(DecConstants.SELECT_ATTRIBUTE_DECKEYQUANTITYTOTAL);
+        					String sKeyCompleted = (String)mIWP.get(DecConstants.SELECT_ATTRIBUTE_DECKEYQUANTITYCOMPLETED);
+        					if(DecStringUtil.isNumericStr(sKeyTotal, true)) {
+        						iCWPKeyTotal += Integer.valueOf(sKeyTotal);
+        					}
+        					if(DecStringUtil.isNumericStr(sKeyCompleted, true)) {
+            					iCWPKeyCompleted += Integer.valueOf(sKeyCompleted);
+        					}
+        				}
+        				if(iCWPKeyTotal > 0 && iCWPKeyCompleted > 0) {
+            				sCWPKeyTotal = String.valueOf(iCWPKeyTotal);
+            				sCWPKeyCompleted = String.valueOf(iCWPKeyCompleted);
+        				}else {
+            				sCWPKeyTotal = DecConstants.EMPTY_STRING;
+            				sCWPKeyCompleted = DecConstants.EMPTY_STRING;
+        				}
+        			}else {
+        				sCWPKeyTotal = DecConstants.EMPTY_STRING;
+        				sCWPKeyCompleted = DecConstants.EMPTY_STRING;
+        			}
+        			// jhlee Add 06-23 trigger에서 메소드 실행
+        		///	modifyCWPTaskAttribute(doCWPTask, mCWPChangeRegister, mAttr, sqlSession, context, DecConstants.ATTRIBUTE_DECKEYQUANTITYCOMPLETED, 	sCWPKeyCompleted         , "CWP Key Completed");
+    			}
+        		*/
+    			// 수정이 끝난뒤 다시 속성값을 불러와 상태와 스테이지를 정할때 사용
+    			mAttr = doCWPTask.getInfo(context, slCWPInfoParam);
+    			sOldStage = mAttr.get(DecConstants.SELECT_ATTRIBUTE_DECSTAGE);
+    			sOldStatus = mAttr.get(DecConstants.SELECT_CURRENT);
+    			sPlanStart = mAttr.get(DecConstants.SELECT_ATTRIBUTE_TASK_ESTIMATED_START_DATE);
+    			sForecastStart = mAttr.get(DecConstants.SELECT_ATTRIBUTE_DECTASKFORECASTSTARTDATE);
+    			sActualStart = mAttr.get(DecConstants.SELECT_ATTRIBUTE_TASK_ACTUAL_START_DATE);
+    			// forecast 있을경우 forecast 조건으로 삼고 없을경우 plan을 조건으로 삼음
+    			if(DecStringUtil.isNotEmpty(sForecastStart)) {
+    				sEstStartDate = sForecastStart;
+    			}else {
+    				sEstStartDate = sPlanStart;
+    			}
+    			if(DecStringUtil.isNotEmpty(sActualStart)) {
+    				// Actual 입력했을경우 In-Progress
+    			//	if(DecDateUtil.getDifference(sActualStart, sToday) >= 0) {
+    					if(!DecStringUtil.equalsAny(sOldStatus, DecConstants.STATE_PROJECT_TASK_REVIEW, DecConstants.STATE_PROJECT_TASK_COMPLETE)) {
+        					sNewStatus = DecConstants.STATE_PROJECT_TASK_ACTIVE;
+    					}else {
+    						sNewStatus = DecConstants.EMPTY_STRING;
+    					}
+    			//	}
+        			if(DecStringUtil.isNotEmpty(sEstStartDate) && !DecStringUtil.equals(sOldStage, DecConstants.ATTRIBUTE_DECSTAGE_RANGE_CLOSEOUT)) {
+        				//예정보다 빨리시작할경우 Plan Start 늦을경우 Late Start
+	    				if(DecDateUtil.getDifference(sActualStart, sEstStartDate) >= 0) {
+	    					sNewStage = DecConstants.ATTRIBUTE_DECSTAGE_RANGE_PLANSTART;
+	    				}else {
+	    					sNewStage = DecConstants.ATTRIBUTE_DECSTAGE_RANGE_LATESTART;
+	    				}
+        			}else {
+        				sNewStage = DecConstants.EMPTY_STRING;
+        			}
+    			}else {
+					sNewStatus = DecConstants.EMPTY_STRING;
+    				sNewStage = DecConstants.EMPTY_STRING;
+    			}
+    			if(DecStringUtil.isNotEmpty(sActualFinish)) {
+					sNewStatus = DecConstants.STATE_PROJECT_TASK_COMPLETE;
+    				sNewStage = DecConstants.ATTRIBUTE_DECSTAGE_RANGE_CLOSEOUT;
+    			}
+    			
+    			if(DecStringUtil.isNotEmpty(sNewStatus)) {
+    				if(!DecStringUtil.equals(sOldStatus, sNewStatus)) {
+    				//	doCWPTask.setState(context, sNewStatus);
+    					slPromoteCWPTaskOID.add(sOID);
+    					Map mCWPChangeRegister = new HashMap();
+    					mCWPChangeRegister.putAll(mCWPChangeRegisterBaseAdd);
+    		    		mCWPChangeRegister.put("CHANGE_ACTION", "Modify");
+    		    		mCWPChangeRegister.put("CHANGE_ATTRIBUTE", "Status");
+    		    		mCWPChangeRegister.put("BEFORE_VALUE", sOldStatus);
+    		    		mCWPChangeRegister.put("AFTER_VALUE", sNewStatus);
+    		    		lmCWPChangeRegister.add(mCWPChangeRegister);
+    		    	//	sqlSession.insert("Project.insertImportCWPChangeRegister", mCWPChangeRegister);
+    		    	}
+    				if(DecStringUtil.equals(sNewStatus, DecConstants.STATE_PROJECT_TASK_COMPLETE)) {
+    					slPromoteCompleteCWPTaskOID.add(sOID);
+    				}
+    			}
+    			if(DecStringUtil.isNotEmpty(sNewStage)) {
+        			// jhlee Add 06-23 trigger에서 메소드 실행
+        		//	modifyCWPTaskAttribute(doCWPTask, mCWPChangeRegister, mAttr, sqlSession, context, DecConstants.ATTRIBUTE_DECSTAGE, 	sNewStage, "Stage");
+    				doCWPTask.setAttributeValue(context, DecConstants.ATTRIBUTE_DECSTAGE, sNewStage);
+    			}
+    			// EWP 오브젝트의 Import기능
+    			sEWPOID = mAttr.get("from[" + DecConstants.RELATIONSHIP_DECEWPREL + "].to." + DecConstants.SELECT_ID);
+    			if(DecStringUtil.isNotEmpty(sEWPOID)) {
+    				doEWP.setId(sEWPOID);
+    				mAttr = doEWP.getAttributeMap(context);
+    				lmCWPChangeRegister.add(modifyCWPTaskDateAttribute(doEWP, mCWPChangeRegisterBaseAdd, mAttr, sqlSession, context, DecConstants.ATTRIBUTE_DECEWPRELEASEPLAN, 	sEWPReleasePlan      , "EWP Release Plan"));
+    				lmCWPChangeRegister.add(modifyCWPTaskDateAttribute(doEWP, mCWPChangeRegisterBaseAdd, mAttr, sqlSession, context, DecConstants.ATTRIBUTE_DECEWPRELEASEFORECAST,	sEWPReleaseForecast  , "EWP Release Forecast"));
+    				lmCWPChangeRegister.add(modifyCWPTaskDateAttribute(doEWP, mCWPChangeRegisterBaseAdd, mAttr, sqlSession, context, DecConstants.ATTRIBUTE_DECEWPRELEASEACTUAL, sEWPReleaseActual    , "EWP Release Actual"));
+        			mAttr.put(DecConstants.ATTRIBUTE_DECEWPRELEASEPLAN, sEWPReleasePlan);
+        			mAttr.put(DecConstants.ATTRIBUTE_DECEWPRELEASEFORECAST, sEWPReleaseForecast);
+        			mAttr.put(DecConstants.ATTRIBUTE_DECEWPRELEASEACTUAL, sEWPReleaseActual);
+        			
+        			sOldStage = mAttr.get(DecConstants.ATTRIBUTE_DECEWPSTAGE);
+        			sOldStatus = mAttr.get(DecConstants.ATTRIBUTE_DECEWPSTATUS);
+        			sEWPReleasePlan = mAttr.get(DecConstants.ATTRIBUTE_DECEWPRELEASEPLAN);
+        			sEWPReleaseForecast = mAttr.get(DecConstants.ATTRIBUTE_DECEWPRELEASEFORECAST);
+        			sEWPReleaseActual = mAttr.get(DecConstants.ATTRIBUTE_DECEWPRELEASEACTUAL);
+        			
+        			// forecast 있을경우 forecast 조건으로 삼고 없을경우 plan을 조건으로 삼음
+        			if(DecStringUtil.isNotEmpty(sEWPReleaseForecast)) {
+        				sEstStartDate = sEWPReleaseForecast;
+        			}else {
+        				sEstStartDate = sEWPReleasePlan;
+        			}
+        			if(DecStringUtil.isNotEmpty(sEWPReleaseActual)) {
+        				// Actual 입력했을경우 In-Progress
+        			//	if(DecDateUtil.getDifference(sEWPReleaseActual, sToday) >= 0) {
+        					if(!DecStringUtil.equalsAny(sOldStatus, DecConstants.ATTRIBUTE_DECEWPSTATUS_RANGE_INTROUBLE, DecConstants.ATTRIBUTE_DECEWPSTATUS_RANGE_COMPLETED)) {
+            					sNewStatus = DecConstants.ATTRIBUTE_DECEWPSTATUS_RANGE_INPROGRESS;
+        					}else {
+        						sNewStatus = DecConstants.EMPTY_STRING;
+        					}
+        			//	}
+            			if(DecStringUtil.isNotEmpty(sEstStartDate) && !DecStringUtil.equals(sOldStage, DecConstants.ATTRIBUTE_DECSTAGE_RANGE_CLOSEOUT)) {
+            				//예정보다 빨리시작할경우 Plan Start 늦을경우 Late Start
+    	    				if(DecDateUtil.getDifference(sEWPReleaseActual, sEstStartDate) >= 0) {
+    	    					sNewStage = DecConstants.ATTRIBUTE_DECEWPSTAGE_RANGE_PLANSTART;
+    	    				}else {
+    	    					sNewStage = DecConstants.ATTRIBUTE_DECEWPSTAGE_RANGE_LATESTART;
+    	    				}
+            			}else {
+            				sNewStage = DecConstants.EMPTY_STRING;
+            			}
+        			}else {
+    					sNewStatus = DecConstants.EMPTY_STRING;
+        				sNewStage = DecConstants.EMPTY_STRING;
+        			}
+        			if(DecStringUtil.isNotEmpty(sNewStatus)) {
+        				lmCWPChangeRegister.add(modifyCWPTaskAttribute(doEWP, mCWPChangeRegisterBaseAdd, mAttr, sqlSession, context, DecConstants.ATTRIBUTE_DECEWPSTATUS, 	sNewStatus, "EWP Status"));
+        			}
+
+        			if(DecStringUtil.isNotEmpty(sNewStage)) {
+        				lmCWPChangeRegister.add(modifyCWPTaskAttribute(doEWP, mCWPChangeRegisterBaseAdd, mAttr, sqlSession, context, DecConstants.ATTRIBUTE_DECEWPSTAGE, 	sNewStage, "EWP Stage"));
+        			}
+    			}
+    		}
+    		if(!lmCWPChangeRegister.isEmpty()) {
+    			List<Map> lmInsertCWPChangeRegister = new ArrayList();
+    			for(Map m : lmCWPChangeRegister) {
+    				if(!m.isEmpty()) {
+    					lmInsertCWPChangeRegister.add(m);
+    				}
+    			}
+        		if(!lmInsertCWPChangeRegister.isEmpty()) {
+        			sqlSession.insert("Project.insertImportCWPChangeRegisterList",lmInsertCWPChangeRegister);
+        		}
+    		}
+    		
+    		Set<String> setAllParentOID = mPhaseModDateAttr.keySet();
+    		
+    		for(String sAPOID : setAllParentOID) {
+    			DomainObject doModDate = DomainObject.newInstance(context, sAPOID);
+    			doModDate.setAttributeValues(context, mPhaseModDateAttr.get(sAPOID));
+    		}
+    		
+    		StringList slParam = new StringList();
+    		slParam.add(ProgramCentralConstants.SELECT_ID);
+    		slParam.add(ProgramCentralConstants.SELECT_PHYSICALID);
+    		BusinessObjectWithSelectList objectWithSelectList = 
+    				ProgramCentralUtil.getObjectWithSelectList(context, slPromoteCWPTaskOID.toArray(new String[slPromoteCWPTaskOID.size()]), slParam);
+    		StringList palSeqIdList = new StringList();
+    		Map<String, String> mPalSeqId = new HashMap();
+    		
+            String mqlCmd = "print bus $1 select $2 $3 dump";
+
+            String rootNodePALPhysicalId = MqlUtil.mqlCommand(context,
+                    true,
+                    true,
+                    mqlCmd,
+                    true,
+                    sParentOID,
+                    ProgramCentralConstants.SELECT_PAL_PHYSICALID_FROM_PROJECT,
+                    ProgramCentralConstants.SELECT_PAL_PHYSICALID_FROM_TASK);
+            
+    		ProjectSequence ps = new ProjectSequence(context,rootNodePALPhysicalId);
+    		Map<String, Dataobject> palSeqData = ps.getSequenceData(context);
+    		
+    		for (BusinessObjectWithSelect bws : objectWithSelectList) {
+                String taskPhysicalId = bws.getSelectData(ProgramCentralConstants.SELECT_PHYSICALID);
+                String taskId = bws.getSelectData(ProgramCentralConstants.SELECT_ID);
+                Dataobject taskObj = palSeqData.get(taskPhysicalId);
+                if(taskObj == null) {
+                    palSeqIdList.add("");
+                }else {
+                    String seqId = (String)taskObj.getDataelements().get(ProgramCentralConstants.KEY_SEQ_ID);
+                    palSeqIdList.add(seqId);
+                    mPalSeqId.put(seqId, taskId);
+                }
+            }
+    		palSeqIdList.sort();
+    		for(String sSeqId : palSeqIdList) {
+    			sOID = mPalSeqId.get(sSeqId);
+    			listPromoteObj.add(DomainObject.newInstance(context, sOID));
+    		}
+    		for(DomainObject doProgressCWPTask : listPromoteObj) {
+    			doProgressCWPTask.setState(context, DecConstants.STATE_PROJECT_TASK_ACTIVE);
+    		}
+    		for(String sCompleteOID : slPromoteCompleteCWPTaskOID) {
+    			DomainObject.newInstance(context,sCompleteOID).setState(context, DecConstants.STATE_PROJECT_TASK_COMPLETE);
+    		}
+    		sqlSession.commit();
+
+        	String strLanguage = context.getSession().getLanguage();
+        	sReturn = EnoviaResourceBundle.getProperty(context, "ProgramCentral","ProgramCentralStringResource.Common.ImportExcel.CompletionMsg", strLanguage);
+        	ContextUtil.commitTransaction(context);
+    	}catch (Exception e) {
+    		e.printStackTrace();
+        	ContextUtil.abortTransaction(context);
+			sReturn = e.getMessage();
+		}
+    	return sReturn;
+    }
+    
+    /**
+     * jhlee Add 05-25 엑셀의 IWP Task Excution Data 정보를 프로젝트에 Import
+     * @param context
+     * @param args
+     * @return
+     * @throws Exception
+     */
+    public String importExcelIWPExcutionData(Context context, String[] args)throws Exception{
+    	String sReturn = null;
+    	Map paramMap = (Map)JPO.unpackArgs(args);
+    	String sTypePattern = DecConstants.TYPE_PHASE + "," + DecConstants.TYPE_TASK + "," + DecConstants.TYPE_DECCWPTASK + "," + DecConstants.TYPE_DECIWPTASK;
+    	StringList slBusSelect = new StringList();
+    	slBusSelect.add(DecConstants.SELECT_ID);
+    	slBusSelect.add(DecConstants.SELECT_LEVEL);
+    	slBusSelect.add(DecConstants.SELECT_PHYSICAL_ID);
+    	slBusSelect.add(DecConstants.SELECT_NAME);
+    	slBusSelect.add(DecConstants.SELECT_DESCRIPTION);
+    	slBusSelect.add(DecConstants.SELECT_ATTRIBUTE_DECWBSTYPE);
+    	slBusSelect.add("to[" + DecConstants.RELATIONSHIP_PROJECT_ACCESS_KEY + "].from.id");
+    	slBusSelect.add("to[" + DecConstants.RELATIONSHIP_PROJECT_ACCESS_KEY + "].from.physicalid");
+    	slBusSelect.add("to[" + DecConstants.RELATIONSHIP_PROJECT_ACCESS_LIST + "].from.id");
+    	slBusSelect.add("to[" + DecConstants.RELATIONSHIP_PROJECT_ACCESS_LIST + "].from.physicalid");
+    	slBusSelect.add("to[" + DecConstants.RELATIONSHIP_SUBTASK + "].from.name");
+    	slBusSelect.add("to[" + DecConstants.RELATIONSHIP_SUBTASK + "].id");
+    	
+    	StringList slParentSelect = new StringList();
+    	slBusSelect.add(DecConstants.ATTRIBUTE_TASK_ESTIMATED_START_DATE);
+    	slBusSelect.add(DecConstants.ATTRIBUTE_TASK_ESTIMATED_FINISH_DATE);
+    	slBusSelect.add(DecConstants.ATTRIBUTE_DECTASKFORECASTSTARTDATE);
+    	slBusSelect.add(DecConstants.ATTRIBUTE_DECTASKFORECASTFINISHDATE);
+    	slBusSelect.add(DecConstants.ATTRIBUTE_TASK_ACTUAL_START_DATE);
+    	slBusSelect.add(DecConstants.ATTRIBUTE_TASK_ACTUAL_FINISH_DATE);
+
+    	MapList mlObject = (MapList)paramMap.get("objectList");
+    	String sParentOID = (String)paramMap.get("parentOID");
+    	String sParentCWPNo		 = DecConstants.EMPTY_STRING;
+    	String sCWPNo			 = DecConstants.EMPTY_STRING;
+    	String sIWPNo			 = DecConstants.EMPTY_STRING;
+    	String sIWPType			 = DecConstants.EMPTY_STRING;
+    	String sIWPSequence		 = DecConstants.EMPTY_STRING;
+    	String sIWPDescription	 = DecConstants.EMPTY_STRING;
+    	String sEngineer		 = DecConstants.EMPTY_STRING;
+    	String sPlanner			 = DecConstants.EMPTY_STRING;
+    	String sSuperintendent	 = DecConstants.EMPTY_STRING;
+    	String sForeman			 = DecConstants.EMPTY_STRING;
+    	String sIWPKeyType		 = DecConstants.EMPTY_STRING;
+    	String sIWPKeyUOM		 = DecConstants.EMPTY_STRING;
+    	String sIWPKeyTotal		 = DecConstants.EMPTY_STRING;
+    	String sIWPKeyCompleted	 = DecConstants.EMPTY_STRING;
+    	String sIWPReleasePlan	 = DecConstants.EMPTY_STRING;
+    	String sIWPReleaseForecast = DecConstants.EMPTY_STRING;
+    	String sIWPReleaseActual = DecConstants.EMPTY_STRING;
+    	String sPlanStart		 = DecConstants.EMPTY_STRING;
+    	String sPlanFinish		 = DecConstants.EMPTY_STRING;
+    	String sForecastStart	 = DecConstants.EMPTY_STRING;
+    	String sForecastFinish	 = DecConstants.EMPTY_STRING;
+    	String sActualStart		 = DecConstants.EMPTY_STRING;
+    	String sActualFinish     = DecConstants.EMPTY_STRING;
+    	String sManHoursPlanned	 = DecConstants.EMPTY_STRING;
+    	String sManHoursActual	 = DecConstants.EMPTY_STRING;
+    	String sHoldCategory	 = DecConstants.EMPTY_STRING;
+    	String sRemark			 = DecConstants.EMPTY_STRING;
+    	String sUDF1			 = DecConstants.EMPTY_STRING;
+    	String sUDF2			 = DecConstants.EMPTY_STRING;
+    	String sUDF3			 = DecConstants.EMPTY_STRING;
+    	String sIWPTaskId		 = DecConstants.EMPTY_STRING;
+    	String sPALId			 = DecConstants.EMPTY_STRING;
+    	String sEstStartDate     = DecConstants.EMPTY_STRING;
+    	String sOldStatus = DecConstants.EMPTY_STRING;
+    	String sOldStage = DecConstants.EMPTY_STRING;
+    	String sNewStatus = DecConstants.EMPTY_STRING;
+    	String sNewStage = DecConstants.EMPTY_STRING;
+    	
+    	Map<String, String> mColumn = null;
+    	Map<String, String> mSubTask = null;
+    	Map<String, String> mCWPSubTask = null;
+    	Map<String, Map> mSubTaskInfoKeyName = new HashMap();
+    	Map<String, String> mAttr = new HashMap();
+    	Map<String, String> mIWPChangeRegisterBase = new HashMap();
+    	Map<String, Map> mPhaseModDateAttr = new HashMap();
+    	List<Map> lmIWPChangeRegister = new ArrayList();
+    	mIWPChangeRegisterBase.put("CHANGE_USER", context.getUser());
+    	mIWPChangeRegisterBase.put("INPUT_TYPE", "Excel");
+
+    	Date date = new Date();
+    	DomainObject doProject = DomainObject.newInstance(context, sParentOID);
+    	doProject.open(context);
+    	if(!doProject.getTypeName().equals(DecConstants.TYPE_PROJECT_SPACE)) {
+    		sParentOID = doProject.getInfo(context, TASK_PROJECT_ID);
+    		doProject.setId(sParentOID);
+	    	doProject.open(context);
+    	}
+    	// 엑셀에있는 프로젝트들의 데이터를 가져옴
+    	MapList mlSubTask = doProject.getRelatedObjects(context,
+    				DecConstants.RELATIONSHIP_SUBTASK, //pattern to match relationships
+    				sTypePattern, //pattern to match types
+    				slBusSelect, //the eMatrix StringList object that holds the list of select statement pertaining to Business Obejcts.
+    				null, //the eMatrix StringList object that holds the list of select statement pertaining to Relationships.
+    				false, //get To relationships
+    				true, //get From relationships
+    				(short)0, //the number of levels to expand, 0 equals expand all.
+    				DecConstants.EMPTY_STRING, //where clause to apply to objects, can be empty ""
+    				DecConstants.EMPTY_STRING,
+    				0); //where clause to apply to relationship, can be empty ""
+    	for(Object o : mlSubTask) {
+    		mSubTask = (Map)o;
+    		System.out.println(mSubTask.get(DecConstants.SELECT_TYPE) + " : " + mSubTask.get(DecConstants.SELECT_NAME));
+    		if(DecStringUtil.equalsAny(mSubTask.get(DecConstants.SELECT_TYPE), DecConstants.TYPE_DECIWPTASK, DecConstants.TYPE_DECCWPTASK)) {
+        		// 데이터 구분을위해 Task의 이름으로 키값을 정함
+        		mSubTaskInfoKeyName.put(mSubTask.get(DecConstants.SELECT_NAME), mSubTask);
+    		}
+    	}
+    	String sToday			 = DecDateUtil.changeDateFormat(date, DecDateUtil.IF_FORMAT);
+    	String sSiteCode		 = doProject.getName();
+    	mIWPChangeRegisterBase.put("SITE_CD", sSiteCode);
+    	mIWPChangeRegisterBase.put("CHANGE_DATE", sToday);
+    	
+    	DomainObject doIWPTask = DomainObject.newInstance(context);
+    	DomainObject doPAL = DomainObject.newInstance(context);
+    	DomainObject doParent = DomainObject.newInstance(context);
+    	ProjectSequence pseq = null;
+    	
+    	ContextUtil.startTransaction(context, true);
+    	try ( SqlSession sqlSession = decSQLSessionFactory.getSession() ) {
+	    	for(Object obj : mlObject) {
+	    		mColumn = (Map)obj;
+	    		sCWPNo			     = mColumn.get("CWP No");
+	    		sIWPNo			     = mColumn.get("IWP No"); 
+	    		sIWPType			 = mColumn.get("IWP Type"); 
+	    		sIWPSequence		 = mColumn.get("IWP Sequence");
+	    		sIWPDescription	     = mColumn.get("IWP Desc");
+	    		sEngineer		     = mColumn.get("Engineer");
+	    		sPlanner			 = mColumn.get("Planner"); 
+	    		sSuperintendent	     = mColumn.get("Superintendent");
+	    		sForeman			 = mColumn.get("Foreman"); 
+	    		sIWPKeyType		     = mColumn.get("IWP Key Q'ty Item");
+	    		sIWPKeyUOM		     = mColumn.get("UOM");
+	    		sIWPKeyTotal		 = mColumn.get("IWP Key Total"); 
+	    		sIWPKeyCompleted	 = mColumn.get("IWP Key Completed"); 
+	    		sIWPReleasePlan	     = mColumn.get("IWP Release Plan");
+	    		sIWPReleaseForecast  = mColumn.get("IWP Release Forecast");
+	    		sIWPReleaseActual    = mColumn.get("IWP Release Actual");
+	    		sPlanStart		     = mColumn.get("Plan Start");
+	    		sPlanFinish		     = mColumn.get("Plan Finish");
+	    		sForecastStart	     = mColumn.get("Forecast Start");
+	    		sForecastFinish	     = mColumn.get("Forecast Finish");
+	    		sActualStart		 = mColumn.get("Actual Start");
+	    		sActualFinish        = mColumn.get("Actual Finish");
+	    		sManHoursPlanned	 = mColumn.get("Man Hours Planned"); 
+	    		sManHoursActual	     = mColumn.get("Man Hours Actual");
+	    		sHoldCategory	     = mColumn.get("Hold Category");
+	    		sRemark			     = mColumn.get("Remark");
+	    		sUDF1			     = mColumn.get("UDF1");
+	    		sUDF2			     = mColumn.get("UDF2");
+	    		sUDF3			     = mColumn.get("UDF3");
+	    		mIWPChangeRegisterBase.put("IWP_NO", sIWPNo);
+	    		mSubTask = mSubTaskInfoKeyName.get(sIWPNo);
+	    		mCWPSubTask = mSubTaskInfoKeyName.get(sCWPNo);
+	    		if(mSubTask != null) { // 존재할경우 수정
+	    			// 수정일경우 mSubTask에 수정할 오브젝트의 정보를 가져옴
+	    			sIWPTaskId = mSubTask.get(DecConstants.SELECT_ID);
+					sParentCWPNo = mSubTask.get("to[" + DecConstants.RELATIONSHIP_SUBTASK + "].from.name");
+					doIWPTask.setId(sIWPTaskId);
+	    		}else { // 존재하지않을경우 생성
+	    			doIWPTask.createObject(context, DecConstants.TYPE_DECIWPTASK, sIWPNo, doIWPTask.getUniqueName(""), DecConstants.POLICY_PROJECT_TASK, DecConstants.VAULT_ESERVICE_PRODUCTION);
+	    			sIWPTaskId = doIWPTask.getId(context);
+	    			sParentCWPNo = DecConstants.EMPTY_STRING;
+	    	    	Map<String, String> mIWPChangeRegister = new HashMap();
+	    	    	mIWPChangeRegister.putAll(mIWPChangeRegisterBase);
+				    mIWPChangeRegister.put("IWP_OID", sIWPTaskId);
+					mIWPChangeRegister.put("CHANGE_ACTION", "Create");
+					mIWPChangeRegister.put("CHANGE_ATTRIBUTE", DecConstants.EMPTY_STRING);
+					mIWPChangeRegister.put("BEFORE_VALUE", DecConstants.EMPTY_STRING);
+					mIWPChangeRegister.put("AFTER_VALUE", DecConstants.EMPTY_STRING);
+					lmIWPChangeRegister.add(mIWPChangeRegister);
+	    		}
+				// CWP Task와 연결이 제대로 돼있을경우
+				if(DecStringUtil.equals(sParentCWPNo, sCWPNo)) {
+				// 연결이 다른 CWP Task와 연결되어 있을 경우
+				}else if(DecStringUtil.isNotEmpty(sParentCWPNo)) {
+			//		mCWPSubTask = mSubTaskInfoKeyName.get(sParentCWPNo);
+			//		DomainRelationship.disconnect(context, doIWPTask.getInfo(context, "to[" + DecConstants.RELATIONSHIP_SUBTASK + "|from.id = '" + mCWPSubTask.get(DecConstants.SELECT_ID) + "'].id"));
+				// 연결은 안됐지만 엑셀의 CWP No를 가진 CWP Task는 존재하는경우
+				}else if(mCWPSubTask != null){
+					doParent.setId(mCWPSubTask.get(DecConstants.SELECT_ID));
+					DomainRelationship.connect(context, doParent, DecConstants.RELATIONSHIP_SUBTASK, doIWPTask);
+				    sPALId = mCWPSubTask.get("to[" + DecConstants.RELATIONSHIP_PROJECT_ACCESS_KEY + "].from.id");
+				    pseq = new ProjectSequence(context, mCWPSubTask.get("to[" + DecConstants.RELATIONSHIP_PROJECT_ACCESS_KEY + "].from.physicalid"));
+				   	doPAL = DomainObject.newInstance(context, sPALId);
+				   	DomainRelationship.connect(context, doPAL, DecConstants.RELATIONSHIP_PROJECT_ACCESS_KEY, doIWPTask);
+				   	pseq.assignSequence(context, mCWPSubTask.get(DecConstants.SELECT_PHYSICAL_ID), doIWPTask.getInfo(context, DecConstants.SELECT_PHYSICAL_ID), (String)null, mCWPSubTask.get(DecConstants.SELECT_PHYSICAL_ID), false);
+					doIWPTask.setAttributeValue(context, DecConstants.ATTRIBUTE_DECSTAGE, DecConstants.ATTRIBUTE_DECSTAGE_RANGE_TOBESTARTED);
+				}
+				doIWPTask.setDescription(context, sIWPDescription);
+				mIWPChangeRegisterBase.put("IWP_OID", sIWPTaskId);
+				mAttr.clear();
+				mAttr.put(DecConstants.ATTRIBUTE_DECIWPTYPE						, sIWPType				);
+				mAttr.put(DecConstants.ATTRIBUTE_DECIWPSEQUENCE					, sIWPSequence		);
+				mAttr.put(DecConstants.ATTRIBUTE_DECENGINEER					, sEngineer		    	);
+				mAttr.put(DecConstants.ATTRIBUTE_DECPLANNER						, sPlanner				);
+				mAttr.put(DecConstants.ATTRIBUTE_DECSUPERINTENDENT				, sSuperintendent	);
+				mAttr.put(DecConstants.ATTRIBUTE_DECFOREMAN						, sForeman				);
+				mAttr.put(DecConstants.ATTRIBUTE_DECKEYQUANTITYTYPE				, sIWPKeyType		);
+				mAttr.put(DecConstants.ATTRIBUTE_DECKEYQUANTITYUOM				, sIWPKeyUOM		);
+				mAttr.put(DecConstants.ATTRIBUTE_DECKEYQUANTITYTOTAL				, sIWPKeyTotal	);
+				mAttr.put(DecConstants.ATTRIBUTE_DECKEYQUANTITYCOMPLETED		, sIWPKeyCompleted);
+				mAttr.put(DecConstants.ATTRIBUTE_DECRELEASEPLAN						, sIWPReleasePlan				);
+				mAttr.put(DecConstants.ATTRIBUTE_DECRELEASEFORECAST				, sIWPReleaseForecast		);
+				mAttr.put(DecConstants.ATTRIBUTE_DECRELEASEACTUAL				, sIWPReleaseActual  		);
+				mAttr.put(DecConstants.ATTRIBUTE_TASK_ESTIMATED_START_DATE		, sPlanStart		);
+				mAttr.put(DecConstants.ATTRIBUTE_TASK_ESTIMATED_FINISH_DATE		, sPlanFinish		);
+				mAttr.put(DecConstants.ATTRIBUTE_DECTASKFORECASTSTARTDATE		, sForecastStart	);
+				mAttr.put(DecConstants.ATTRIBUTE_DECTASKFORECASTFINISHDATE		, sForecastFinish	);
+    			if(DecStringUtil.isNotEmpty(sActualStart)) {
+        			mAttr.put(DecConstants.ATTRIBUTE_TASK_ACTUAL_START_DATE, 	sActualStart       );
+    			}
+    			if(DecStringUtil.isNotEmpty(sActualFinish)) {
+        			mAttr.put(DecConstants.ATTRIBUTE_TASK_ACTUAL_FINISH_DATE, 	sActualFinish      );
+    			}
+				mAttr.put(DecConstants.ATTRIBUTE_DECMANHOURSPLAN, sManHoursPlanned	);
+				mAttr.put(DecConstants.ATTRIBUTE_DECMANHOURSACTUAL, sManHoursActual	);
+				mAttr.put(DecConstants.ATTRIBUTE_DECHOLDCATEGORY, sHoldCategory	   	);
+				mAttr.put(DecConstants.ATTRIBUTE_DECREMARK, sRemark					);
+				mAttr.put(DecConstants.ATTRIBUTE_DECUPF1, sUDF1			   			);
+				mAttr.put(DecConstants.ATTRIBUTE_DECUPF2, sUDF2			   			);
+				mAttr.put(DecConstants.ATTRIBUTE_DECUPF3, sUDF3			   			);
+				mAttr.put(DecConstants.ATTRIBUTE_DECSTAGE, DecConstants.ATTRIBUTE_DECSTAGE_RANGE_TOBESTARTED);
+    			if(DecStringUtil.isNoneBlank(sPlanStart, sPlanFinish)) {
+        			mAttr.put(DecConstants.ATTRIBUTE_TASK_ESTIMATED_DURATION, String.valueOf(DecDateUtil.getDifferenceDay(sPlanStart, sPlanFinish)));
+    			}
+    			if(DecStringUtil.isNoneBlank(sActualStart, sActualFinish)) {
+        			mAttr.put(DecConstants.ATTRIBUTE_TASK_ACTUAL_DURATION, String.valueOf(DecDateUtil.getDifferenceDay(sActualStart, sActualFinish)));
+    			}
+				doIWPTask.setAttributeValues(context, mAttr);
+				mAttr.clear();
+				MapList mlParent = doIWPTask.getRelatedObjects(context,
+	                	DecConstants.RELATIONSHIP_SUBTASK, //pattern to match relationships
+	                	sTypePattern, //pattern to match types
+	                	new StringList(DecConstants.SELECT_ID), //the eMatrix StringList object that holds the list of select statement pertaining to Business Obejcts.
+	                	null, //the eMatrix StringList object that holds the list of select statement pertaining to Relationships.
+	                	true, //get To relationships
+	                	false, //get From relationships
+	                	(short)0, //the number of levels to expand, 0 equals expand all.
+	                	DecConstants.EMPTY_STRING, //where clause to apply to objects, can be empty ""
+	                	DecConstants.EMPTY_STRING, //where clause to apply to relationship, can be empty ""
+	                	0);
+				for(Object o : mlParent) {
+					Map<String, String> mParent = (Map)o;
+					String parentOID = mParent.get(DecConstants.SELECT_ID);
+					Map mParentDate = mPhaseModDateAttr.get(parentOID);
+					if(mParentDate == null) {
+						doParent.setId(parentOID);
+	    				mParentDate = doParent.getInfo(context, slParentSelect);
+					}
+    				Map mUpdateDate = new HashMap();
+        			String sParentPlanStart = (String)mParentDate.get(DecConstants.ATTRIBUTE_TASK_ESTIMATED_START_DATE);
+        			String sParentPlanFinish = (String)mParentDate.get(DecConstants.ATTRIBUTE_TASK_ESTIMATED_FINISH_DATE);
+        			String sParentActualStart = (String)mParentDate.get(DecConstants.ATTRIBUTE_TASK_ACTUAL_START_DATE);
+        			String sParentActualFinish = (String)mParentDate.get(DecConstants.ATTRIBUTE_TASK_ACTUAL_FINISH_DATE);
+        			if(DecDateUtil.getDifferenceDay(sPlanStart, sParentPlanStart) >= 1 || DecStringUtil.isEmpty(sParentPlanStart)) {
+        				sParentPlanStart = sPlanStart;
+        			}
+        			if(DecDateUtil.getDifferenceDay(sParentPlanFinish, sPlanFinish) >= 1 || DecStringUtil.isEmpty(sParentPlanFinish)) {
+        				sParentPlanFinish = sPlanFinish;
+        			}
+        			if(DecDateUtil.getDifferenceDay(sActualStart, sParentActualStart) >= 1 || DecStringUtil.isEmpty(sParentActualStart)) {
+        				sParentActualStart = sActualStart;
+        			}
+        			if(DecDateUtil.getDifferenceDay(sParentActualFinish, sActualFinish) >= 1 || DecStringUtil.isEmpty(sParentActualFinish)) {
+        				sParentActualFinish = sActualFinish;
+        			}
+        			if(DecStringUtil.isNoneBlank(sParentPlanStart, sParentPlanFinish)) {
+        				mUpdateDate.put(DecConstants.ATTRIBUTE_TASK_ESTIMATED_DURATION, String.valueOf(DecDateUtil.getDifferenceDay(sParentPlanStart, sParentPlanFinish)));
+        			}
+        			if(DecStringUtil.isNoneBlank(sParentActualStart, sParentActualFinish)) {
+        				mUpdateDate.put(DecConstants.ATTRIBUTE_TASK_ACTUAL_DURATION, String.valueOf(DecDateUtil.getDifferenceDay(sParentActualStart, sParentActualFinish)));
+        			}
+        			mUpdateDate.put(DecConstants.ATTRIBUTE_TASK_ESTIMATED_START_DATE, 	sParentPlanStart     );
+        			mUpdateDate.put(DecConstants.ATTRIBUTE_TASK_ESTIMATED_FINISH_DATE, sParentPlanFinish       );
+        			mUpdateDate.put(DecConstants.ATTRIBUTE_TASK_ACTUAL_START_DATE, 	sParentActualStart       );
+        			mUpdateDate.put(DecConstants.ATTRIBUTE_TASK_ACTUAL_FINISH_DATE, 	sParentActualFinish      );
+        			mPhaseModDateAttr.put(parentOID, mUpdateDate);
+				}
+				// jhlee Add 06-23 trigger에서 메소드 실행
+				/*
+				modifyIWPTaskAttribute(doIWPTask, mIWPChangeRegister, mOldAttr, sqlSession, context, DecConstants.ATTRIBUTE_DECIWPTYPE, sIWPType				, "IWP Type");
+				modifyIWPTaskAttribute(doIWPTask, mIWPChangeRegister, mOldAttr, sqlSession, context, DecConstants.ATTRIBUTE_DECIWPSEQUENCE, sIWPSequence		, "IWP Sequence");
+				modifyIWPTaskAttribute(doIWPTask, mIWPChangeRegister, mOldAttr, sqlSession, context, DecConstants.ATTRIBUTE_DECENGINEER, sEngineer		    	, "Engineer");
+				modifyIWPTaskAttribute(doIWPTask, mIWPChangeRegister, mOldAttr, sqlSession, context, DecConstants.ATTRIBUTE_DECPLANNER, sPlanner				, "Planner");
+				modifyIWPTaskAttribute(doIWPTask, mIWPChangeRegister, mOldAttr, sqlSession, context, DecConstants.ATTRIBUTE_DECSUPERINTENDENT, sSuperintendent	, "Superintendent");
+				modifyIWPTaskAttribute(doIWPTask, mIWPChangeRegister, mOldAttr, sqlSession, context, DecConstants.ATTRIBUTE_DECFOREMAN, sForeman				, "Foreman");
+				modifyIWPTaskAttribute(doIWPTask, mIWPChangeRegister, mOldAttr, sqlSession, context, DecConstants.ATTRIBUTE_DECKEYQUANTITYTYPE, sIWPKeyType		, "IWP Key Type");
+				modifyIWPTaskAttribute(doIWPTask, mIWPChangeRegister, mOldAttr, sqlSession, context, DecConstants.ATTRIBUTE_DECKEYQUANTITYUOM, sIWPKeyUOM		   	, "IWP Key UOM");
+				modifyIWPTaskAttribute(doIWPTask, mIWPChangeRegister, mOldAttr, sqlSession, context, DecConstants.ATTRIBUTE_DECKEYQUANTITYTOTAL, sIWPKeyTotal		, "IWP Key Total");
+				modifyIWPTaskAttribute(doIWPTask, mIWPChangeRegister, mOldAttr, sqlSession, context, DecConstants.ATTRIBUTE_DECKEYQUANTITYCOMPLETED, sIWPKeyCompleted	, "IWP Key Completed");
+				modifyIWPTaskDateAttribute(doIWPTask, mIWPChangeRegister, mOldAttr, sqlSession, context, DecConstants.ATTRIBUTE_DECRELEASEPLAN, sIWPReleasePlan				, "IWP Release Plan");
+				modifyIWPTaskDateAttribute(doIWPTask, mIWPChangeRegister, mOldAttr, sqlSession, context, DecConstants.ATTRIBUTE_DECRELEASEFORECAST, sIWPReleaseForecast		, "IWP Release Forecast");
+				modifyIWPTaskDateAttribute(doIWPTask, mIWPChangeRegister, mOldAttr, sqlSession, context, DecConstants.ATTRIBUTE_DECRELEASEACTUAL, sIWPReleaseActual  		, "IWP Release Actual");
+				modifyIWPTaskDateAttribute(doIWPTask, mIWPChangeRegister, mOldAttr, sqlSession, context, DecConstants.ATTRIBUTE_TASK_ESTIMATED_START_DATE, sPlanStart		    , "Plan Start");
+				modifyIWPTaskDateAttribute(doIWPTask, mIWPChangeRegister, mOldAttr, sqlSession, context, DecConstants.ATTRIBUTE_TASK_ESTIMATED_FINISH_DATE, sPlanFinish		, "Plan Finish");
+				modifyIWPTaskDateAttribute(doIWPTask, mIWPChangeRegister, mOldAttr, sqlSession, context, DecConstants.ATTRIBUTE_DECTASKFORECASTSTARTDATE, sForecastStart	    , "Forecast Start");
+				modifyIWPTaskDateAttribute(doIWPTask, mIWPChangeRegister, mOldAttr, sqlSession, context, DecConstants.ATTRIBUTE_DECTASKFORECASTFINISHDATE, sForecastFinish	, "Forecast Finish");
+				modifyIWPTaskDateAttribute(doIWPTask, mIWPChangeRegister, mOldAttr, sqlSession, context, DecConstants.ATTRIBUTE_TASK_ACTUAL_START_DATE, sActualStart		, "Actual Start"); 
+				modifyIWPTaskAttribute(doIWPTask, mIWPChangeRegister, mOldAttr, sqlSession, context, DecConstants.ATTRIBUTE_DECMANHOURSPLAN, sManHoursPlanned	, "Man Hours Planned");
+				modifyIWPTaskAttribute(doIWPTask, mIWPChangeRegister, mOldAttr, sqlSession, context, DecConstants.ATTRIBUTE_DECMANHOURSACTUAL, sManHoursActual	, "Man Hours Actual");
+				modifyIWPTaskAttribute(doIWPTask, mIWPChangeRegister, mOldAttr, sqlSession, context, DecConstants.ATTRIBUTE_DECHOLDCATEGORY, sHoldCategory	   	, "Hold Category");
+				modifyIWPTaskAttribute(doIWPTask, mIWPChangeRegister, mOldAttr, sqlSession, context, DecConstants.ATTRIBUTE_DECREMARK, sRemark					, "Remark");
+				modifyIWPTaskAttribute(doIWPTask, mIWPChangeRegister, mOldAttr, sqlSession, context, DecConstants.ATTRIBUTE_DECUPF1, sUDF1			   			, "UDF1");
+				modifyIWPTaskAttribute(doIWPTask, mIWPChangeRegister, mOldAttr, sqlSession, context, DecConstants.ATTRIBUTE_DECUPF2, sUDF2			   			, "UDF2");
+				modifyIWPTaskAttribute(doIWPTask, mIWPChangeRegister, mOldAttr, sqlSession, context, DecConstants.ATTRIBUTE_DECUPF3, sUDF3			   			, "UDF3");
+				modifyIWPTaskAttribute(doIWPTask, mIWPChangeRegister, mOldAttr, sqlSession, context, DecConstants.ATTRIBUTE_DECSTAGE, DecConstants.ATTRIBUTE_DECSTAGE_RANGE_TOBESTARTED	, "Stage");
+				*/
+				mAttr = doIWPTask.getAttributeMap(context);
+    			sOldStage = mAttr.get(DecConstants.ATTRIBUTE_DECSTAGE);
+    			sOldStatus = doIWPTask.getInfo(context, DecConstants.SELECT_CURRENT);
+    			sPlanStart = mAttr.get(DecConstants.ATTRIBUTE_TASK_ESTIMATED_START_DATE);
+    			sForecastStart = mAttr.get(DecConstants.ATTRIBUTE_DECTASKFORECASTSTARTDATE);
+    			sActualStart = mAttr.get(DecConstants.ATTRIBUTE_TASK_ACTUAL_START_DATE);
+    			// forecast 있을경우 forecast 조건으로 삼고 없을경우 plan을 조건으로 삼음
+    			if(DecStringUtil.isNotEmpty(sForecastStart)) {
+    				sEstStartDate = sForecastStart;
+    			}else {
+    				sEstStartDate = sPlanStart;
+    			}
+    			if(DecStringUtil.isNotEmpty(sActualStart)) {
+    				// Actual 입력했을경우 In-Progress
+    			//	if(DecDateUtil.getDifference(sActualStart, sToday) >= 0) {
+    					if(!DecStringUtil.equalsAny(sOldStatus, DecConstants.STATE_PROJECT_TASK_REVIEW, DecConstants.STATE_PROJECT_TASK_COMPLETE)) {
+        					sNewStatus = DecConstants.STATE_PROJECT_TASK_ACTIVE;
+    					}else {
+    						sNewStatus = DecConstants.EMPTY_STRING;
+    					}
+    			//	}
+        			if(DecStringUtil.isNotEmpty(sEstStartDate) && !DecStringUtil.equals(sOldStage, DecConstants.ATTRIBUTE_DECSTAGE_RANGE_CLOSEOUT)) {
+        				//예정보다 빨리시작할경우 Plan Start 늦을경우 Late Start
+	    				if(DecDateUtil.getDifference(sActualStart, sEstStartDate) >= 0) {
+	    					sNewStage = DecConstants.ATTRIBUTE_DECSTAGE_RANGE_PLANSTART;
+	    				}else {
+	    					sNewStage = DecConstants.ATTRIBUTE_DECSTAGE_RANGE_LATESTART;
+	    				}
+        			}else {
+        				sNewStage = DecConstants.EMPTY_STRING;
+        			}
+    			}
+    			if(DecStringUtil.isNotEmpty(sActualFinish)) {
+    				sNewStatus = DecConstants.STATE_PROJECT_TASK_COMPLETE;
+    				sNewStage = DecConstants.ATTRIBUTE_DECSTAGE_RANGE_CLOSEOUT;
+    			}
+    			if(DecStringUtil.isNotEmpty(sNewStatus)) {
+    				if(!DecStringUtil.equals(sOldStatus, sNewStatus)) {
+    	    	    	Map<String, String> mIWPChangeRegister = new HashMap();
+    	    	    	mIWPChangeRegister.putAll(mIWPChangeRegisterBase);
+    					mIWPChangeRegister.put("CHANGE_ACTION", "Modify");
+    		    		mIWPChangeRegister.put("CHANGE_ATTRIBUTE", "Status");
+    		    		mIWPChangeRegister.put("BEFORE_VALUE", sOldStatus);
+    		    		mIWPChangeRegister.put("AFTER_VALUE", sNewStatus);
+    					lmIWPChangeRegister.add(mIWPChangeRegister);
+    					doIWPTask.setState(context, sNewStatus);
+    		    	}
+    			}
+
+    			if(DecStringUtil.isNotEmpty(sNewStage)) {
+    				// jhlee Add 06-23 trigger에서 메소드 실행
+        		//	modifyIWPTaskAttribute(doIWPTask, mIWPChangeRegister, mAttr, sqlSession, context, DecConstants.ATTRIBUTE_DECSTAGE, 	sNewStage, "Stage");
+        			doIWPTask.setAttributeValue(context, DecConstants.ATTRIBUTE_DECSTAGE, sNewStage);
+    			}
+			}
+	    	
+	    	if(!lmIWPChangeRegister.isEmpty()) {
+				sqlSession.insert("Project.insertImportIWPChangeRegisterList", lmIWPChangeRegister);
+	    	}
+	    	
+	    	mAttr.clear();
+    		Set<String> setAllParentOID = mPhaseModDateAttr.keySet();
+    		
+    		for(String sAPOID : setAllParentOID) {
+    			DomainObject doModDate = DomainObject.newInstance(context, sAPOID);
+    			doModDate.setAttributeValues(context, mPhaseModDateAttr.get(sAPOID));
+    		}
+	    	sqlSession.commit();
+	    	String strLanguage = context.getSession().getLanguage();
+	    	sReturn = EnoviaResourceBundle.getProperty(context, "ProgramCentral","ProgramCentralStringResource.Common.ImportExcel.CompletionMsg", strLanguage);
+    	} catch (Exception e) {
+    		ContextUtil.abortTransaction(context);
+    		e.printStackTrace();
+    		sReturn = e.getMessage();
+		}
+    	ContextUtil.commitTransaction(context);
+    	return sReturn;
+    }
+    
+    public String importExcelCWPNoData(Context context, String[] args) throws Exception {
+    	String sReturn = null;
+    	try ( SqlSession sqlSession = decSQLSessionFactory.getSession() ) {
+        	Map paramMap = (Map)JPO.unpackArgs(args);
+        	String sParentOID = (String)paramMap.get("parentOID");
+        	MapList mlObject = (MapList)paramMap.get("objectList");
+        	
+		    DomainObject doProject = DomainObject.newInstance(context, sParentOID);
+		    doProject.open(context);
+	    	if(!doProject.getTypeName().equals(DecConstants.TYPE_PROJECT_SPACE)) {
+	    		sParentOID = doProject.getInfo(context, TASK_PROJECT_ID);
+	    		doProject.setId(sParentOID);
+		    	doProject.open(context);
+	    	}
+	    	String sProjectName = doProject.getName();
+	    	
+	    	String sTypePattern = DecConstants.TYPE_PHASE + "," + DecConstants.TYPE_TASK + "," + DecConstants.TYPE_DECCWPTASK;
+	    	StringList slBusSelect = new StringList();
+	    	slBusSelect.add(DecConstants.SELECT_ID);
+	    	slBusSelect.add(DecConstants.SELECT_NAME);
+	    	slBusSelect.add(DecConstants.SELECT_TYPE);
+	    	slBusSelect.add(DecConstants.SELECT_ATTRIBUTE_DECUPF1);
+	    	slBusSelect.add(DecConstants.SELECT_ATTRIBUTE_DECUPF2);
+	    	slBusSelect.add(DecConstants.SELECT_ATTRIBUTE_DECUPF3);
+
+	    	// 프로젝트에 연결된 데이터를 가져옴
+	    	MapList mlSubTask = doProject.getRelatedObjects(context,
+	    				DecConstants.RELATIONSHIP_SUBTASK, //pattern to match relationships
+	    				sTypePattern, //pattern to match types
+	    				slBusSelect, //the eMatrix StringList object that holds the list of select statement pertaining to Business Obejcts.
+	    				null, //the eMatrix StringList object that holds the list of select statement pertaining to Relationships.
+	    				false, //get To relationships
+	    				true, //get From relationships
+	    				(short)0, //the number of levels to expand, 0 equals expand all.
+	    				DecConstants.EMPTY_STRING, //where clause to apply to objects, can be empty ""
+	    				DecConstants.EMPTY_STRING,
+	    				0); //where clause to apply to relationship, can be empty ""
+	    	
+	    	Map<String, String> mSubTask = null;
+	    	Map<String, String> mCWPTaskOIDKeyName = new HashMap();
+	    	for(Object o : mlSubTask) {
+	    		mSubTask = (Map)o;
+	    		String sType = mSubTask.get(DecConstants.SELECT_TYPE);
+	    		String sName = mSubTask.get(DecConstants.SELECT_NAME);
+	    		String sOID = mSubTask.get(DecConstants.SELECT_ID);
+	    		String sUDF = mSubTask.get(DecConstants.SELECT_ATTRIBUTE_DECUPF1) + "_" + mSubTask.get(DecConstants.SELECT_ATTRIBUTE_DECUPF2) + "_" + mSubTask.get(DecConstants.SELECT_ATTRIBUTE_DECUPF3);
+	    		if(DecStringUtil.equals(sType, DecConstants.TYPE_DECCWPTASK)) {
+	    			mCWPTaskOIDKeyName.put(sName, sOID);
+	    		}
+	    	}
+	    	Date date = new Date();
+	    	String sToday = DecDateUtil.changeDateFormat(date, DecDateUtil.IF_FORMAT);
+	    	String sUser = context.getUser();
+	    	List<Map> lmCWPChangeRegister = new ArrayList();
+	    	Map mCWPChangeRegisterBase = new HashMap();
+			mCWPChangeRegisterBase.put("SITE_CD", sProjectName);
+			mCWPChangeRegisterBase.put("CHANGE_DATE", sToday);
+			mCWPChangeRegisterBase.put("CHANGE_USER", sUser);
+			mCWPChangeRegisterBase.put("INPUT_TYPE", "Excel");
+			mCWPChangeRegisterBase.put("CHANGE_ACTION", "Modify");
+    		mCWPChangeRegisterBase.put("CHANGE_ATTRIBUTE", "CWP No");
+			
+	    	DomainObject doCWPTask = DomainObject.newInstance(context);
+	    	for(Object obj : mlObject) {
+	    		Map<String, String> mColumn = (Map)obj;
+	    		String sBeforeCWPNo = mColumn.get("Before CWP No");
+	    		String sAfterCWPNo = mColumn.get("After CWP No");
+	    		String sCWPOID = mCWPTaskOIDKeyName.get(sBeforeCWPNo);
+	    		if(!DecStringUtil.equals(sBeforeCWPNo, sAfterCWPNo)) {
+		    		doCWPTask.setId(sCWPOID);
+		    		doCWPTask.setName(context, sAfterCWPNo);
+		    		
+		    		Map mCWPChangeRegister = new HashMap();
+		    		mCWPChangeRegister.putAll(mCWPChangeRegisterBase);
+					mCWPChangeRegister.put("CWP_NO", sBeforeCWPNo);
+					mCWPChangeRegister.put("CWP_OID", sCWPOID);
+		    		mCWPChangeRegister.put("BEFORE_VALUE", sBeforeCWPNo);
+		    		mCWPChangeRegister.put("AFTER_VALUE", sAfterCWPNo);
+		    		lmCWPChangeRegister.add(mCWPChangeRegister);
+	    		}
+	    	}
+
+	    	if(!lmCWPChangeRegister.isEmpty()) {
+	    		sqlSession.insert("Project.insertImportCWPChangeRegisterList", lmCWPChangeRegister);
+	    	}
+    		sqlSession.commit();
+
+        	String strLanguage = context.getSession().getLanguage();
+        	sReturn = EnoviaResourceBundle.getProperty(context, "ProgramCentral","ProgramCentralStringResource.Common.ImportExcel.CompletionMsg", strLanguage);
+        	ContextUtil.commitTransaction(context);
+    	} catch (Exception e) {
+    		ContextUtil.abortTransaction(context);
+    		e.printStackTrace();
+    		sReturn = e.getMessage();
+		}
+    	return sReturn;
+    }
+    
+    public StringList getMsgStyle(Context context, String[] args) throws Exception {
+        StringList slStyles = new StringList();
+        try{
+            Map programMap =  JPO.unpackArgs(args);
+            MapList mlObject = (MapList) programMap.get("objectList");
+        	Map<String, String> mColumn = null;
+        	String sAction = null;
+        	// Added by hslee on 2023.09.10 --- [s]
+        	Map columnMap = (Map) programMap.get("columnMap");
+        	String columnName = null; 
+        	String errorColumnName = null;
+        	// Added by hslee on 2023.09.10 --- [e]
+        	for(Object obj : mlObject) {
+        		mColumn = (Map)obj;
+        		sAction = mColumn.get("Action");
+        		if(DecStringUtil.equalsIgnoreCase("create", sAction)) {
+					slStyles.add("ResourcePlanningGreenBackGroundColor");
+        		}else if(DecStringUtil.equalsIgnoreCase("modify", sAction)) {
+        			slStyles.add("ResourcePlanningYellowBackGroundColor");
+        		}else if(DecStringUtil.equalsIgnoreCase("delete", sAction)) {
+        			slStyles.add("ResourcePlanningRedBackGroundColor");
+        		}else if(DecStringUtil.equalsIgnoreCase("error", sAction)) { // Added by hslee on 2023.06.24
+        			// Added by hslee on 2023.09.10 --- [s]
+        			// error인 cell만 하이라이트 
+        			columnName = (String) columnMap.get("name");
+        			errorColumnName = (String) mColumn.get("Error Column Name");
+        			if ( StringUtils.isNotEmpty(errorColumnName) && columnName.equals(errorColumnName) )
+        			{
+        				slStyles.add("cwpAllocRed");
+        			}
+        			else
+        			{
+        				slStyles.add("CellBackGroundColorDisabled");
+        			}
+        			// Added by hslee on 2023.09.10 --- [e]
+        		}else {
+        			slStyles.add("");
+        		}
+        	}
+            return slStyles;
+        }catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+    }
+    
+    public String importExcelConstructionKPIData(Context context, String[] args)throws Exception{
+    	String sReturn = DecConstants.EMPTY_STRING;
+    	Map programMap = (Map)JPO.unpackArgs(args);
+    	String strLanguage = context.getSession().getLanguage();
+    	try ( SqlSession sqlSession = decSQLSessionFactory.getSession() ) {
+	    	StringList slBusSelect = new StringList();
+	    	slBusSelect.add(DecConstants.SELECT_ID);
+	    	slBusSelect.add(DecConstants.SELECT_TYPE);
+	    	slBusSelect.add(DecConstants.SELECT_NAME);
+	    	slBusSelect.add(DecConstants.SELECT_ATTRIBUTE_DECWBSTYPE);
+	    	
+	    	String sParentOID = (String)programMap.get("parentOID");
+	    	MapList mlObject = (MapList)programMap.get("objectList");
+	    	
+	    	DomainObject doProject = DomainObject.newInstance(context, sParentOID);
+	    	doProject.open(context);
+	    	if(!doProject.getTypeName().equals(DecConstants.TYPE_PROJECT_SPACE)) {
+	    		sParentOID = doProject.getInfo(context, TASK_PROJECT_ID);
+	    		doProject.setId(sParentOID);
+		    	doProject.open(context);
+	    	}
+	    	String sProjectName = doProject.getName();
+	    	String sProjectStartDate = doProject.getAttributeValue(context, DecConstants.ATTRIBUTE_DECPROJECTSTARTDATE);
+	    	String sKPIDay = doProject.getAttributeValue(context, DecConstants.ATTRIBUTE_DECKPIDAY);
+
+	    	MapList mlSubTask = doProject.getRelatedObjects(context,
+					DecConstants.RELATIONSHIP_SUBTASK, //pattern to match relationships
+					DecConstants.TYPE_PHASE, //pattern to match types
+					slBusSelect, //the eMatrix StringList object that holds the list of select statement pertaining to Business Obejcts.
+					null, //the eMatrix StringList object that holds the list of select statement pertaining to Relationships.
+					false, //get To relationships
+					true, //get From relationships
+					(short)0, //the number of levels to expand, 0 equals expand all.
+					DecConstants.EMPTY_STRING, //where clause to apply to objects, can be empty ""
+					DecConstants.EMPTY_STRING,
+					0); //where clause to apply to relationship, can be empty ""
+	    	Map mSubTask = null;
+	    	Map<String, String> mUnitNameOID = new HashMap(); // key : name value: id
+	    	
+	    	for(Object o : mlSubTask) {
+	    		mSubTask = (Map)o;
+	    		String sWBSType = (String)mSubTask.get(DecConstants.SELECT_ATTRIBUTE_DECWBSTYPE);
+	    		if(DecStringUtil.equals("Unit", sWBSType)) {
+	    			mUnitNameOID.put((String)mSubTask.get(DecConstants.SELECT_NAME), (String)mSubTask.get(DecConstants.SELECT_ID));
+	    		}
+	    	}
+	    	Map<String, String> mColumn = null;
+	    	Map<String, Integer> mDayNum = new HashMap();
+	    	mDayNum.put("monday"   , 1);
+	    	mDayNum.put("tuesday"  , 2);
+	    	mDayNum.put("wednesday", 3);
+	    	mDayNum.put("thursday" , 4);
+	    	mDayNum.put("friday"   , 5);
+	    	mDayNum.put("saturday" , 6);
+	    	mDayNum.put("sunday"   , 7);
+	     	LocalDate ldConst = DecDateUtil.autoChangeLocalDate(sProjectStartDate);
+	    	
+	    	int iConstPlusDay = mDayNum.get(sKPIDay.toLowerCase()) - mDayNum.get(ldConst.getDayOfWeek().name().toLowerCase());
+	    	LocalDate ldConstKPIDayDate = ldConst.plusDays(iConstPlusDay);
+	    	if(iConstPlusDay > 0){
+	    		ldConstKPIDayDate = ldConstKPIDayDate.minusWeeks(1);
+	    	}
+	    	
+	    	String sToday = DecDateUtil.changeDateFormat(new Date(), DecDateUtil.IF_FORMAT);
+	    	String sUnit = null;
+	    	String sDisc = null;
+	    	String sCItem = null;
+	    	String sTarget = null;
+	    	String sActual = null;
+	    	String sTotal = null;
+	    	String sWeek = null;
+	    	String sCutoffDate = null;
+	    	String sDate = null;
+	    	LocalDate ldPlusWeekDate = null;
+	    	int iWeek = 0;
+	    	List lImportData = new ArrayList();
+	    	StringList slNotHaveUnit = new StringList();
+	    	for(Object obj : mlObject) {
+	    		mColumn = (Map)obj;
+	    		sUnit =		mColumn.get("Unit");
+	    		sDisc =     mColumn.get("Discipline");
+	    		sCItem = 	mColumn.get("Construction Item");
+	    		sTarget = 	mColumn.get("Target Weekly");
+	    		sActual = 	mColumn.get("Actual Weekly");
+	    		sTotal = 	mColumn.get("Total Q'ty");
+	    		sWeek = 	mColumn.get("Week");
+	    		sCutoffDate = 	mColumn.get("Cut-off Date");
+	    		sCutoffDate = DecDateUtil.changeDateFormat(sCutoffDate, DecDateUtil.IF_FORMAT);
+	    		iWeek = Integer.valueOf(sWeek.replace("W", ""));
+	    		ldPlusWeekDate = ldConstKPIDayDate.plusWeeks(iWeek);
+	    		sDate = ldPlusWeekDate.toString();
+		    	Map paramMap = new HashMap();
+		    	paramMap.put("SITE_CD", sProjectName);
+				paramMap.put("UNIT_ID", mUnitNameOID.get(sUnit));
+				paramMap.put("DISCIPLINE", sDisc);
+				paramMap.put("CONSTRUCTION_ITEM", sCItem);
+				paramMap.put("TARGET", sTarget);
+				paramMap.put("ACTUAL", sActual);
+				paramMap.put("TOTAL", sTotal);
+				paramMap.put("KPIDATE", sDate);
+				paramMap.put("KPIWEEK", sWeek);
+				paramMap.put("CUTOFFDATE", sCutoffDate);
+				paramMap.put("INPUTDATE", sToday);
+				lImportData.add(paramMap);
+	    	}
+	    	sqlSession.update("Project.mergeImportConstructionKPI", lImportData);
+	    	sqlSession.commit();
+	    	sReturn = EnoviaResourceBundle.getProperty(context, "ProgramCentral","ProgramCentralStringResource.Common.ImportExcel.CompletionMsg", strLanguage);
+	    } catch (Exception e) {
+			ContextUtil.abortTransaction(context);
+			e.printStackTrace();
+			sReturn = e.getMessage();
+		}
+    	return sReturn;
+    }
+    
+    /**
+     * decImageHolder처리부분 추가
+     */
+	@com.matrixone.apps.framework.ui.ProgramCallable
+	public String checkInImage(Context context, String[] args) throws Exception {
+
+		try {
+			Map paramMap = (Map) JPO.unpackArgs(args);
+			String sLanguage = (String) paramMap.get("language");
+			String sOIDParent = (String) paramMap.get("objectId");
+			List files = (List) paramMap.get("files");
+			String sFolder = (String) paramMap.get("folder");
+			String sMCSURL = (String) paramMap.get("MCSURL");
+			String imageRelType = (String) paramMap.get("relationship");
+			String imageType = (String) paramMap.get("imageType");
+			DomainObject imageHolder = new DomainObject();
+			DomainObject doParent = new DomainObject(sOIDParent);
+			String sIsProductLine = doParent.getInfo(context, "type.kindof["+DomainConstants.TYPE_PRODUCTLINE+"]");
+			String sIsModel = doParent.getInfo(context, "type.kindof["+PropertyUtil.getSchemaProperty(context, DomainSymbolicConstants.SYMBOLIC_type_Model)+"]");
+			String sIsProducts = doParent.getInfo(context, "type.kindof["+PropertyUtil.getSchemaProperty(context, DomainSymbolicConstants.SYMBOLIC_type_Products)+"]");
+			String sOIDImageHolder = doParent.getInfo(context, "to["+ PropertyUtil.getSchemaProperty(context, DomainSymbolicConstants.SYMBOLIC_relationship_ImageHolder) +"].from.id");
+			String sOIDDecImageHolder = doParent.getInfo(context, "to["+ DecConstants.RELATIONSHIP_DECIMAGEHOLDER +"|from." + DecConstants.SELECT_ATTRIBUTE_DECIMAGETYPE + " == '" + imageType + "'].from.id", false);
+
+			Iterator iter = files.iterator();
+			int index;
+			String sFilename="";
+			FileItem file = null;
+			File outfile = null;
+			ContextUtil.startTransaction(context, true);
+			while (iter.hasNext())
+			{
+				file = (FileItem) iter.next();
+				if(DecStringUtil.isNotNullString(file.getName())) {
+					sFilename 		= file.getName();
+					if(sFilename.contains("/")) {
+						index = sFilename.lastIndexOf("/");
+						sFilename = sFilename.substring(index);
+					}
+					if(sFilename.contains("\\")) {
+						index = sFilename.lastIndexOf("\\");
+						sFilename = sFilename.substring(index+1);
+					}
+					outfile = new File(sFolder +  sFilename);
+					file.write(outfile);
+	
+					//if(sIsProductLine.equalsIgnoreCase("TRUE") || sIsModel.equalsIgnoreCase("TRUE")|| sIsProducts.equalsIgnoreCase("TRUE")) {
+					if(DomainConstants.RELATIONSHIP_IMAGES.equals(imageRelType)){
+						String sName = DomainObject.getAutoGeneratedName(context, "type_Image", "");
+						imageHolder.createObject(context, DomainConstants.TYPE_IMAGE, sName, "-", DomainConstants.POLICY_IMAGE, context.getVault().getName());
+						imageHolder.addRelatedObject(context, new RelationshipType(DomainConstants.RELATIONSHIP_IMAGES), true, sOIDParent);
+						sOIDImageHolder = imageHolder.getInfo(context, DomainConstants.SELECT_ID);
+						String sHasPrimaryImage = doParent.getInfo(context, "from["+ DomainConstants.RELATIONSHIP_PRIMARY_IMAGE + "]");
+	
+						if(sHasPrimaryImage.equalsIgnoreCase("FALSE")) {
+							imageHolder.addRelatedObject(context, new RelationshipType(DomainConstants.RELATIONSHIP_PRIMARY_IMAGE), true, sOIDParent);
+						}
+					} else if(DecConstants.RELATIONSHIP_DECIMAGEHOLDER.equals(imageRelType)){ // 새로운 Relationship 조건 추가
+						String typeImageHolder = DecConstants.TYPE_DECIMAGEHOLDER;
+						String relImageHolder = DecConstants.RELATIONSHIP_DECIMAGEHOLDER;
+						String attrPrimayImage = PropertyUtil.getSchemaProperty(context, DomainSymbolicConstants.SYMBOLIC_attribute_PrimaryImage);
+	
+						if(sOIDDecImageHolder == null) {
+							imageHolder = DomainObject.newInstance(context, typeImageHolder);
+							imageHolder.createAndConnect(context, typeImageHolder, relImageHolder, doParent, false);
+							imageHolder.setAttributeValue(context, DecConstants.ATTRIBUTE_DECIMAGETYPE, imageType);
+							sOIDDecImageHolder = imageHolder.getInfo(context, DomainConstants.SELECT_ID);
+						} else {
+							imageHolder = new DomainObject(sOIDDecImageHolder);
+						}
+						imageHolder.setAttributeValue(context, attrPrimayImage, ImageManagerUtil.getPrimaryImageFileNameForImageManager(context, sFilename));
+						sOIDImageHolder = sOIDDecImageHolder;
+					} else {
+						String typeImageHolder = PropertyUtil.getSchemaProperty(context, DomainSymbolicConstants.SYMBOLIC_type_ImageHolder);
+						String relImageHolder = PropertyUtil.getSchemaProperty(context, DomainSymbolicConstants.SYMBOLIC_relationship_ImageHolder);
+						String attrPrimayImage = PropertyUtil.getSchemaProperty(context, DomainSymbolicConstants.SYMBOLIC_attribute_PrimaryImage);
+	
+						if(sOIDImageHolder == null) {
+							imageHolder = DomainObject.newInstance(context, typeImageHolder);
+							imageHolder.createAndConnect(context, typeImageHolder, relImageHolder, doParent, false);
+							imageHolder.setAttributeValue(context, attrPrimayImage, ImageManagerUtil.getPrimaryImageFileNameForImageManager(context, sFilename));
+							sOIDImageHolder = imageHolder.getInfo(context, DomainConstants.SELECT_ID);
+						} else {
+							imageHolder = new DomainObject(sOIDImageHolder);
+						}
+					}
+	
+					imageHolder.checkinFile(context, true, true, "", "generic", sFilename, sFolder);
+	
+					String gotMcsURL = MqlUtil.mqlCommand(context, "get env global MCSURL");
+	
+					List lstFilesToTransform = new ArrayList();
+					Hashtable htCCIHInfo = new Hashtable();
+	
+					htCCIHInfo.put("Oid"    , sOIDImageHolder   );
+					htCCIHInfo.put("File"   , sFilename         );
+					htCCIHInfo.put("Format" , "generic"         );
+	
+					lstFilesToTransform.add(htCCIHInfo);
+					new CommonImageConverterRemoteExec().convertImageAndCheckinSameObject(context, gotMcsURL, lstFilesToTransform, null, ".jpg");
+					outfile.delete();
+				}
+			}
+
+			ContextUtil.commitTransaction(context);
+			if(DecConstants.RELATIONSHIP_DECIMAGEHOLDER.equals(imageRelType)){ // 새로운 Relationship일경우 사용하는 테이블에 넣을수있게 추가
+				return emxProjectSpace_mxJPO.genImageInfo(context, sOIDParent, sOIDDecImageHolder, ImageManagerUtil.getPrimaryImageFileNameForImageManager(context, sFilename), imageType, "true");
+			}else {
+				return emxExtendedHeader_mxJPO.genHeaderImage(context, args, sOIDParent, sLanguage, sMCSURL,imageRelType, false , "true");
+			}
+		}catch (Exception ex) {
+			ContextUtil.abortTransaction(context);
+			ex.printStackTrace();
+			return "ERROR"+ex.getMessage();
+		}
+	}
+	
+	public String importExcelKeyQtyMasterData(Context context, String[] args) throws Exception{
+		decKeyQty_mxJPO keyQtyJPO = new decKeyQty_mxJPO();
+		return keyQtyJPO.importExcelKeyQtyMasterData(context, args);
+    }
+	
+	private static Map modifyCWPTaskDateAttribute(DomainObject doObj, Map mCWPChangeRegisterBase, Map<String, String> mOldAttr, SqlSession sqlSession, Context context, String sAttrName, String sNewAttrValue, String sColumnName) throws Exception {
+    	return modifyTaskDateAttribute(doObj, mCWPChangeRegisterBase, mOldAttr, sqlSession, context, sAttrName, sNewAttrValue, sColumnName, "insertImportCWPChangeRegister");
+    }
+	private static Map modifyCWPTaskAttribute(DomainObject doObj, Map mCWPChangeRegisterBase, Map<String, String> mOldAttr, SqlSession sqlSession, Context context, String sAttrName, String sNewAttrValue, String sColumnName) throws Exception {
+    	return modifyTaskAttribute(doObj, mCWPChangeRegisterBase, mOldAttr, sqlSession, context, sAttrName, sNewAttrValue, sColumnName, "insertImportCWPChangeRegister");
+    }
+    private static Map modifyTaskDateAttribute(DomainObject doObj, Map mCWPChangeRegisterBase, Map<String, String> mOldAttr, SqlSession sqlSession, Context context, String sAttrName, String sNewAttrValue, String sColumnName, String sMapperId) throws Exception {
+    	String sBeforeValue = mOldAttr.get(sAttrName);
+    	Map mCWPChangeRegister = new HashMap();
+        sBeforeValue = DecDateUtil.changeFullDateFormat(sBeforeValue, new SimpleDateFormat(eMatrixDateFormat.getEMatrixDateFormat(), Locale.US));
+        sNewAttrValue = DecDateUtil.changeFullDateFormat(sNewAttrValue, new SimpleDateFormat(eMatrixDateFormat.getEMatrixDateFormat(), Locale.US));
+    	if(!DecStringUtil.equals(sBeforeValue, sNewAttrValue)) {
+	        mCWPChangeRegister.putAll(mCWPChangeRegisterBase);
+	        mCWPChangeRegister.put("CHANGE_ACTION", "Modify");
+	        mCWPChangeRegister.put("CHANGE_ATTRIBUTE", sColumnName);
+	        mCWPChangeRegister.put("BEFORE_VALUE", sBeforeValue);
+	        mCWPChangeRegister.put("AFTER_VALUE", sNewAttrValue);
+    		doObj.setAttributeValue(context, sAttrName, sNewAttrValue);
+    	}
+    	return mCWPChangeRegister;
+    }
+    
+    private static Map modifyTaskAttribute(DomainObject doObj, Map mCWPChangeRegisterBase, Map<String, String> mOldAttr, SqlSession sqlSession, Context context, String sAttrName, String sNewAttrValue, String sColumnName, String sMapperId) throws Exception {
+    	String sBeforeValue = mOldAttr.get(sAttrName);
+    	Map mCWPChangeRegister = new HashMap();
+    	if(!DecStringUtil.equals(sBeforeValue, sNewAttrValue)) {
+    		doObj.setAttributeValue(context, sAttrName, sNewAttrValue);
+    		if(DecStringUtil.isNotEmpty(sBeforeValue)) {
+        		mCWPChangeRegister.putAll(mCWPChangeRegisterBase);
+        		mCWPChangeRegister.put("CHANGE_ACTION", "Modify");
+        		mCWPChangeRegister.put("CHANGE_ATTRIBUTE", sColumnName);
+        		mCWPChangeRegister.put("BEFORE_VALUE", sBeforeValue);
+        		mCWPChangeRegister.put("AFTER_VALUE", sNewAttrValue);
+    		}
+    	}
+    	return mCWPChangeRegister;
+    }
+	
+	public String importExcelKeyQtyData(Context context, String[] args) throws Exception{
+		decKeyQty_mxJPO keyQtyJPO = new decKeyQty_mxJPO();
+		return keyQtyJPO.importExcelKeyQtyData(context, args);
+	}
+	
+	public String importExcelCodeMasterCreate(Context context, String[] args) throws Exception{
+		decCodeMaster_mxJPO codeJPO = new decCodeMaster_mxJPO();
+		return codeJPO.importExcelData2Create(context, args);
+    }
+	public String importExcelCodeMasterAdd(Context context, String[] args) throws Exception{
+		decCodeMaster_mxJPO codeJPO = new decCodeMaster_mxJPO();
+		return codeJPO.importExcelData2Add(context, args);
+	}
+	
+	private Map<String, StringList> getDisValidateBOQ (Context context, String sProjectName) throws Exception{
+		return getDisValidateBOQ(context, sProjectName, false);
+	}
+	private Map<String, StringList> getDisValidateBOQ (Context context, String sProjectName, boolean bAttrY) throws Exception{
+		Map<String, StringList> mDisBOQ = new HashMap();
+		try {
+		    StringList slDisciplineParam = new StringList(DecConstants.SELECT_ID);
+		    slDisciplineParam.add(DecConstants.SELECT_NAME);
+		    slDisciplineParam.add("from[" + DecConstants.RELATIONSHIP_DECCODEDETAILRELADD + "|to." + DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILTYPE + " == 'BOQ Key Item'].to.name");
+		    slDisciplineParam.add("from[" + DecConstants.RELATIONSHIP_DECCODEDETAILRELADD + "|to." + DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILTYPE + " == 'BOQ Key Item'].to.current");
+		    if(bAttrY) {
+		    	slDisciplineParam.add("from[" + DecConstants.RELATIONSHIP_DECCODEDETAILRELADD + "|to." + DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILTYPE + " == 'BOQ Key Item'].to.to[" + DecConstants.RELATIONSHIP_DECCODEDETAILREL + "|from.type == '" + DecConstants.TYPE_DECCODEMASTER + "']." + DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILRELATT1);
+		    }
+		    MapList mlDiscipline = DomainObject.findObjects(context, DecConstants.TYPE_DECCODEDETAIL, DecConstants.SYMB_WILD, "revision == '" + sProjectName + "_Discipline'", slDisciplineParam);
+		    for(Object o : mlDiscipline) {
+		    	Map mDiscipline = (Map)o;
+		    	String sName = (String)mDiscipline.get(DecConstants.SELECT_NAME);
+		    	StringList slBOQCurrent = DecStringUtil.getStringListFromObject(mDiscipline.get("from[" + DecConstants.RELATIONSHIP_DECCODEDETAILRELADD + "].to.current"));
+		    	StringList slBOQName = DecStringUtil.getStringListFromObject(mDiscipline.get("from[" + DecConstants.RELATIONSHIP_DECCODEDETAILRELADD + "].to.name"));
+		    	StringList slKPIDefault = DecStringUtil.getStringListFromObject(mDiscipline.get("from[" + DecConstants.RELATIONSHIP_DECCODEDETAILRELADD + "].to.to[" + DecConstants.RELATIONSHIP_DECCODEDETAILREL + "]." + DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILRELATT1));
+		    	StringList slBOQValidateName = new StringList();
+		    	if(slBOQName.size() - slKPIDefault.size() == 1) {
+		    		slKPIDefault.add(0, DecConstants.EMPTY_STRING);
+		    	}
+		    	for(int i=0; i<slBOQCurrent.size(); i++) {
+		    		if(!"Active".equals(slBOQCurrent.get(i))) {
+		    			// slBOQName.remove(i);
+		    		}else if(bAttrY && !"Y".equalsIgnoreCase(slKPIDefault.get(i))) {
+		    			// slBOQName.remove(i);
+				    }else {
+				    	slBOQValidateName.add(slBOQName.get(i));
+				    }
+		    	}
+				mDisBOQ.put(sName, slBOQValidateName); 
+		    }
+		}catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		return mDisBOQ;
+	}
+	private Map<String, StringList> getBOQValidateUOM (Context context, String sProjectName) throws Exception{
+	    Map<String, StringList> mBOQUOM = new HashMap();
+		try {
+		    StringList slBOQKeyItem = new StringList(DecConstants.SELECT_ID);
+		    slBOQKeyItem.add(DecConstants.SELECT_NAME);
+		    slBOQKeyItem.add("from[" + DecConstants.RELATIONSHIP_DECCODEDETAILRELADD + "|to." + DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILTYPE + " == 'UOM'].to.name");
+		    slBOQKeyItem.add("from[" + DecConstants.RELATIONSHIP_DECCODEDETAILRELADD + "|to." + DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILTYPE + " == 'UOM'].to.current");
+		    MapList mlBOQKeyItem = DomainObject.findObjects(context, DecConstants.TYPE_DECCODEDETAIL, DecConstants.SYMB_WILD, "revision == '" + sProjectName + "_BOQ Key Item'", slBOQKeyItem);
+
+		    for(Object o : mlBOQKeyItem) {
+		    	Map mBOQKeyItem = (Map)o;
+		    	String sName = (String)mBOQKeyItem.get(DecConstants.SELECT_NAME);
+		    	StringList slUOMCurrent = DecStringUtil.getStringListFromObject(mBOQKeyItem.get("from[" + DecConstants.RELATIONSHIP_DECCODEDETAILRELADD + "].to.current"));
+		    	StringList slUOMName = DecStringUtil.getStringListFromObject(mBOQKeyItem.get("from[" + DecConstants.RELATIONSHIP_DECCODEDETAILRELADD + "].to.name"));
+		    	for(int i=0; i<slUOMCurrent.size(); i++) {
+		    		if(!"Active".equals(slUOMCurrent.get(i))) {
+		    			slUOMName.remove(i);
+		    		}
+		    	}
+		    	mBOQUOM.put(sName, slUOMName); 
+		    }
+		}catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		return mBOQUOM;
+	}
+}

@@ -1,0 +1,17 @@
+{
+  "version": "1.0.0",
+  "summary": "Určí, zda řetězec obsahuje jiný řetězec.",
+  "description": "Znaky v řetězci jsou indexovány zleva doprava.<br>Index prvního znaku je <doc-value translate=no>0</doc-value>, a index posledního znaku řetězce s názvem <doc-value translate=no>stringName</doc-value> je <doc-value translate=no>stringName.length - 1</doc-value>.<br>V hledaném řetězci se rozlišují malá a velká písmena.",
+  "dataPorts": {
+    "Input String": "odkaz na hodnotu řetězce.",
+    "Searched String": "hledaný řetězec.",
+    "From Index": "celé číslo udávající index, na kterém má hledání začít. Výchozí hodnota je <doc-value translate=no>0</doc-value>.<br>Pro hodnoty <doc-idp-name translate=no>From Index</doc-idp-name> menší než délka <doc-value translate=no>0</doc-value> nebo větší než délka <doc-idp-name translate=no>Input String</doc-idp-name> začne hledání na indexu <doc-value translate=no>0</doc-value> resp. <doc-idp-name translate=no>Input String</doc-idp-name>.",
+    "Found Index": "index prvního výskytu řetězce <doc-idp-name translate=no>Searched String</doc-idp-name> nebo <doc-value translate=no>-1</doc-value>, pokud není řetězec nalezen.<br>Prázdný řetězec <doc-idp-name translate=no>Searched String</doc-idp-name> odpovídá kterémukoli indexu mezi <doc-value translate=no>0</doc-value> a <doc-idp-name translate=no>Input String</doc-idp-name>."
+  },
+  "controlPorts": {
+    "In": "vyvolá spuštění bloku.",
+    "True": "aktivuje se, jestliže řetězec <doc-idp-name translate=no>Input String</doc-idp-name> obsahuje hledanou hodnotu <doc-idp-name translate=no>Searched String</doc-idp-name>.",
+    "False": "aktivuje se, jestliže řetězec <doc-idp-name translate=no>Input String</doc-idp-name> neobsahuje hledanou hodnotu <doc-idp-name translate=no>Searched String</doc-idp-name>."
+  },
+  "example": null
+}

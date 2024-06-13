@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!-- COPYRIGHT DASSAULT SYSTEMES 2008, All rights reserved -->
+
+<Package xmlns="PLMDictionaryUnified"
+         ModelerType="Top"
+         Name="DELRmiParameterModelRel"
+         Uuid="A7FCE63C-96EC-4929-B8FB-3263D2182EAF"
+         BelongsToModeler="DELRmiResourceModel"
+         UseNames="ERCoreModeler"
+         CustomerExposition="Programmer"
+         Architecture="All">
+  <CAAComment>
+    <ShortRole/>
+    <Role/>
+  </CAAComment>
+
+  <RelationClass Name="DELResourceParameterListRel"
+    Abstract="No"
+    CustomerExposition="Programmer"
+    Uuid="536CA40E-7217-41FF-90B9-30135C2BA18E"
+    Discipline="No"
+    Specializable="No"
+    CustomerExtensible="No"
+    SuperName="RelationType">
+
+    <Property Name="Newable" Value="No"/>
+    <Property Name="Searchable" Value="No"/>
+
+    <SubClause Name="from" TargetName="VPMReference"/>
+    <SubClause Name="to" TargetName="DELResourceParameterListReference"/>
+
+    <Method ImplementationType="None">
+      <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+    </Method>
+  </RelationClass>
+  
+</Package>

@@ -1,0 +1,131 @@
+<?xml version="1.0"?>
+
+<Package xmlns="PLMDictionaryUnified" Name="PLMStructureDesignRawMaterial"
+    ModelerType="Top" Uuid="699D1B50-9E4B-465F-897B-8F875CADE538"
+    CustomerExposition="Programmer" UseNames="PRODUCTCFG RawMaterialSpecification" 
+    Architecture="All" BelongsToModeler="PLMStructureDesign">
+
+  <CAAComment>
+    <ShortRole>Structure Design Raw Material Package</ShortRole>
+    <Role>This package describes the Raw Material of Structure Design.</Role>
+  </CAAComment>
+  
+  <!-- Raw Material for Structure Profiles  -->
+  <Class Name="StructureProfile_RawMaterial"
+    Uuid="3FEE8F36-F994-4342-B336-99F8DF182B67"
+    SuperName="Raw_Material"
+    Discipline="Yes"
+    Specializable="No"
+    Searchable="Yes"
+    Newable="New"
+    CustomerExposition="Programmer">
+   
+    <Property Name = "IconName" Value = "I_StructureProfile_RawMaterial"/>
+    <Property Name = "3DIconName" Value = "I_StructureProfile_RawMaterial"/>
+    <Property Name="KweNew_InstanciationMethod" Value="CATEStrRawMaterialDelegateInstanciation"/> 
+
+    <Simple Name="V_StrProfileRM_Standard" Type="String" MaxLength="100" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="002E0834-9F7D-477D-861B-32391915E9F7">
+      <Property Name="CustoUserAccess" Value="ReadWrite"/>
+      <CAAComment>
+        <ShortRole>Section Standard</ShortRole>
+        <Role>The section standard of the structure profile</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrProfileRM_Shape" Type="String" MaxLength="100" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="22C55E95-0884-4F04-8516-B9C2ED812860">
+      <Property Name="CustoUserAccess" Value="ReadWrite"/>
+      <CAAComment>
+        <ShortRole>Section Shape</ShortRole>
+        <Role>The section shape of the structure profile</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrProfileRM_Size" Type="String" MaxLength="100" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="CDDCA3E6-6ADC-455E-AA74-7AD5030388E9">
+      <Property Name="CustoUserAccess" Value="ReadWrite"/>
+      <CAAComment>
+        <ShortRole>Section Size</ShortRole>
+        <Role>The section size of the structure profile</Role>
+      </CAAComment>
+    </Simple>
+  </Class>
+  
+  <!-- Raw Material for structure plates  -->
+  <Class Name="StructurePlate_RawMaterial"
+    Uuid="BF993EC0-0354-4D18-8940-E16916A9BFFF"
+    SuperName="Raw_Material"
+    Discipline="Yes"
+    Specializable="No"
+    Searchable="Yes"
+    Newable="New"
+    CustomerExposition="Programmer">
+   
+    <Property Name = "IconName" Value = "I_StructurePlate_RawMaterial"/>
+    <Property Name = "3DIconName" Value = "I_StructurePlate_RawMaterial"/>
+    <Property Name="KweNew_InstanciationMethod" Value="CATEStrRawMaterialDelegateInstanciation"/> 
+
+    <Simple Name="V_StrPlateRM_Thickness" Type="Double" Magnitude="LENGTH" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="CA760C73-F36B-43F8-8DA2-64DFDB5C393A">
+      <Property Name="CustoUserAccess" Value="ReadWrite"/>
+      <CAAComment>
+        <ShortRole>Structure plate thickness</ShortRole>
+        <Role>The thickness of the structure plate</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrPlateRM_Width" Type="Double" Magnitude = "LENGTH" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="DF8142FC-C917-4B2B-A732-37AF32BDFB09">
+      <Property Name="CustoUserAccess" Value="ReadWrite"/>
+      <CAAComment>
+        <ShortRole>Structure plate width</ShortRole>
+        <Role>The width of the structure plate</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrPlateRM_Length" Type="Double" Magnitude = "LENGTH" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="499DC9CE-79FD-46F2-B6F2-1F86F921B96B">
+      <Property Name="CustoUserAccess" Value="ReadWrite"/>
+      <CAAComment>
+        <ShortRole>Structure plate length</ShortRole>
+        <Role>The length of the structure plate</Role>
+      </CAAComment>
+    </Simple>
+  </Class>
+  
+  <!-- Raw Material for structure standard plates  -->
+  <Class Name="StructureStandardPlate_RawMaterial"
+    Uuid="AE351DDE-B0F9-4C03-84B9-914D7886E354"
+    SuperName="Raw_Material"
+    Discipline="Yes"
+    Specializable="No"
+    Searchable="Yes"
+    Newable="New"
+    CustomerExposition="Programmer">
+   
+    <Property Name = "IconName" Value = "I_StructureStandardPlate_RawMaterial"/>
+    <Property Name = "3DIconName" Value = "I_StructureStandardPlate_RawMaterial"/>
+    <Property Name="KweNew_InstanciationMethod" Value="CATEStrRawMaterialDelegateInstanciation"/> 
+
+    <Simple Name="V_StrPlateRM_Thickness" Type="Double" Magnitude="LENGTH" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="13845A3D-414A-4AF4-BDC9-B2BF578E2273">
+      <Property Name="CustoUserAccess" Value="ReadWrite"/>
+      <CAAComment>
+        <ShortRole>Structure plate thickness</ShortRole>
+        <Role>The thickness of the structure plate</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrPlateRM_Width" Type="Double" Magnitude = "LENGTH" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="E1129EFF-8797-4B7F-9A71-6CCA5F694415">
+      <Property Name="CustoUserAccess" Value="ReadWrite"/>
+      <CAAComment>
+        <ShortRole>Structure plate width</ShortRole>
+        <Role>The width of the structure plate</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrPlateRM_Length" Type="Double" Magnitude = "LENGTH" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="87B5F34F-7CF1-412E-AEFB-550F39443C4B">
+      <Property Name="CustoUserAccess" Value="ReadWrite"/>
+      <CAAComment>
+        <ShortRole>Structure plate length</ShortRole>
+        <Role>The length of the structure plate</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrPlateRM_Shape" Type="String" MaxLength="100" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="77BB1A54-6989-4DE4-8563-4C4FF44FC04D">
+      <Property Name="CustoUserAccess" Value="ReadWrite"/>
+      <CAAComment>
+        <ShortRole>Structure plate shape</ShortRole>
+        <Role>The shape of the structure plate</Role>
+      </CAAComment>
+    </Simple>
+  </Class>
+  
+</Package>

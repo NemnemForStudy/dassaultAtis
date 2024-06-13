@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!-- COPYRIGHT DASSAULT SYSTEMES 2020, All rights reserved -->
+<!-- This defines the data model for IRPC types extended for -->
+<!-- XSoftwarePhysical system -->
+<Package xmlns="PLMDictionaryUnified" Name="PLMLayeredProductUnified"
+    ModelerType="Top" Uuid="4EB951F8-2BA5-4DDC-A957-0AA174C39DCF"
+    CustomerExposition="Programmer" UseNames="MustBeMadeFromSpecification" 
+    Architecture="All" >  
+
+  <!-- **************************************************************************************** -->
+  <!-- *******MLP MustBeMadeFrom EXTENSION*****************************************************-->
+  <!-- **************************************************************************************** -->
+  
+  <!-- NetWeight directly set in the att Quantity of MBMF relation  -->
+  
+  <Extension Name="MLP_MustBeMadeFrom"
+   Uuid="9BD1B27F-AB31-4F70-B954-75689FF66D76"
+   ScopeNames="MustBeMadeFrom"
+   CustomerExposition="ProgrammerOnly"
+   Abstract="No"
+   Specializable="No">   
+   
+
+    <Simple Name="V_MLP_MBMF_GrossWeight"  Uuid="ED90AC8A-27C8-44E4-8B5F-87E69FFE177B"  Magnitude="MASS" Type = "Double" MultiValuated="No" Protection="External"	 DefaultValue="0.0" >
+      <Property Name="CustoUserAccess" Value="ReadWrite"/>
+    </Simple>
+
+    <Simple Name="V_MLP_MBMF_TrimWeight"  Uuid="079146E0-7A5D-445C-ACC3-AC1D72E44A6D"  Magnitude="MASS" Type = "Double" MultiValuated="No" Protection="External"	DefaultValue="0.0" >
+      <Property Name="CustoUserAccess" Value="ReadWrite"/>
+    </Simple>
+
+    <Simple Name="V_MLP_MBMF_NetArea"  Uuid="5BA11542-031B-48E8-9575-BAF1BE73025F"  Magnitude="AREA" Type = "Double" MultiValuated="No" Protection="External"	  DefaultValue="0.0" >
+      <Property Name="CustoUserAccess" Value="ReadWrite"/>
+    </Simple>
+
+    <Simple Name="V_MLP_MBMF_GrossArea"  Uuid="8F329B16-873C-4AAA-AF50-9509DE1BFC7E"  Magnitude="AREA" Type = "Double" MultiValuated="No" Protection="External" DefaultValue="0.0" >
+      <Property Name="CustoUserAccess" Value="ReadWrite"/>
+    </Simple>
+
+    <Simple Name="V_MLP_MBMF_TrimArea"  Uuid="34B145FB-91F7-428B-9E11-7AE0E4B6239E"  Magnitude="AREA" Type = "Double" MultiValuated="No" Protection="External"	ResetOnCloning="No"  DefaultValue="0.0"  ResetOnNewVersion="No">
+      <Property Name="CustoUserAccess" Value="ReadWrite"/>
+    </Simple>
+
+  </Extension>  
+</Package>
+

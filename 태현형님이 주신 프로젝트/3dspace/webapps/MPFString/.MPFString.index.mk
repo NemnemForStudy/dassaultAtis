@@ -1,0 +1,13 @@
+m|MPFCore\MPFString.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.1.22330|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\MPFString\MPFString.js|1669432484|826
+s|MPFCore\MPFString.mweb\src\MPFString.js|1669417582|1502
+t|win_b64\webapps\MPFString\MPFString_en.js|1669432486|124
+s|MPFCore\MPFString.mweb\src\assets\nls\MPFString_en.json|1669417582|48
+t|win_b64\webapps\MPFString\assets\nls\MPFString_en.json|1669432483|48
+s|MPFCore\MPFString.mweb\src\assets\nls\MPFString_en.json|1669417582|48
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

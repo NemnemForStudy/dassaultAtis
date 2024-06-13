@@ -1,0 +1,147 @@
+{
+	"rootMetaType"				: "dsprcs:MfgProcess",
+	"dsprcs:MfgProcess": {
+		"mask"			: "dsprcs:MfgProcessMask.Default",
+		"cestamp"		: true,
+		"fields"		: [ "dsprcs:sequencingMode",
+							"dsprcs:program.getProcessAssetContext" ],						
+		"navigateLinks"	: [ "dsprcs:MfgProcessOcc",
+							"dsprcs:MfgOperationOcc",
+	        				"dsprcs:TimeConstraint",
+	        				"dsprcs:ItemSpecification"]
+	},
+	"dsprcs:MfgProcessOcc": {
+		"occType"		: "rootContentOcc",
+		"contentType"	: "dsprcs:MfgProcessInstance",
+		"rootType"		: "dsprcs:MfgProcess",
+		"isSequenced"	: true
+	},
+	"dsprcs:MfgProcessInstance": {
+		"mask"			: "dsprcs:MfgProcessInstanceMask.Default",
+		"fields"		: [ "dsprcs:instance.parent",
+							"dsprcs:instance.reference" ],
+		"cestamp"		: true
+	},
+	"dsprcs:TimeConstraint": {
+		"mask"			: "dsprcs:TimeConstraintMask.Default",
+		"cestamp"		: true,
+		"fields"		: [ "dsmveno:basic.created.public",
+							"dsmveno:basic.modified.public",
+							{
+								"fieldName": "dsprcs:program.getTimeConstraintToOperationOcc",
+								"isReferencedObject": false
+							}, {
+							 	"fieldName": "dsprcs:program.getTimeConstraintFromOperationOcc",
+							 	"isReferencedObject": false
+							} ]
+	},
+	"dsprcs:MfgOperationOcc": {
+		"occType"		: "rootContentOcc",
+		"contentType"	: "dsprcs:MfgOperationInstance",
+		"rootType"		: "dsprcs:MfgOperation",
+		"navigateLinks"	: [ "dsprcs:ItemSpecificationOcc",
+							"dsprcs:PreAssignedWorkCenterOcc" ],
+		"isSequenced"	: true
+	},
+	"dsprcs:MfgOperationInstance": {
+		"mask"			: "dsprcs:MfgOperationInstanceMask.Default",
+		"fields"		: [ "dsprcs:instance.parent",
+							"dsprcs:instance.reference" ],
+		"cestamp"		: true
+	},
+	"dsprcs:MfgOperation": {
+		"mask"			: "dsprcs:MfgOperationMask.Details",
+		"cestamp"		: true,
+		"navigateLinks"	: [	"dsprcs:TimeConstraint",
+							"dsprcs:PrimaryCapableResource",
+							"dsprcs:SecondaryCapableResource",
+							"dsprcs:PrimaryResourceLinkDetail",
+							"dsprcs:SecondaryResourceLinkDetail" ]
+	},
+	"dsprcs:PrimaryCapableResource": {
+		"mask"			: "dsprcs:PrimaryCapableResourceMask.Default",
+		"cestamp"		: true,
+		"fields"		: [ "dsmveno:basic.created.public",
+							"dsmveno:basic.modified.public",
+							{
+								"fieldName": "dsprcs:program.getPrimaryCapableResource",
+								"isReferencedObject": false
+							} ]
+	},
+	"dsprcs:SecondaryCapableResource": {
+		"mask"			: "dsprcs:SecondaryCapableResourceMask.Default",
+		"cestamp"		: true,
+		"fields"		: [ "dsmveno:basic.created.public",
+							"dsmveno:basic.modified.public",
+							{
+								"fieldName": "dsprcs:program.getSecondaryCapableResource",
+								"isReferencedObject": false
+							}, {
+								"fieldName": "dsprcs:program.getSecondaryCapableResourceDependsOn",
+								"isReferencedObject": false
+							} ]
+	},
+	"dsprcs:PrimaryResourceLinkDetail": {
+		"mask"			: "dsprcs:PrimaryResourceLinkDetailMask.Default",
+		"cestamp"		: true
+	},
+	"dsprcs:SecondaryResourceLinkDetail": {
+		"mask"			: "dsprcs:SecondaryResourceLinkDetailMask.Default",
+		"cestamp"		: true
+	},
+	"dsprcs:ItemSpecificationOcc": {
+		"occType"		: "linkOcc",
+		"actualFEType"	: "dsprcs:ItemSpecification",
+		"owner"			: [ "dsprcs:MfgProcess", 
+							"dsprcs:MfgOperation"],
+		"groupField"	: "dsprcs:program.getItemSpecificationOperationOcc",
+		"groupFieldType": [ "dsprcs:MfgOperationInstance", 
+							"dsprcs:MfgProcessInstance" ]
+	},
+	"dsprcs:ItemSpecification": {
+		"mask"			: "dsprcs:ItemSpecificationMask.Default",
+		"cestamp"		: true,
+		"fields"		: [ {
+								"fieldName": "dsprcs:program.getItemSpecificationOperationOcc",
+								"isReferencedObject": false
+							}, {
+								"fieldName": "dsprcs:program.getItemSpecificationItemOcc",
+								"isReferencedObject": false
+							}, {
+							 	"fieldName": "dsprcs:program.getItemSpecificationItemRef",
+							 	"isReferencedObject": false
+							}, {
+							 	"fieldName": "dsprcs:program.getItemSpecificationScopeContext",
+							 	"isReferencedObject": false
+							}, {
+								"keyInResponse"			: "implLinkUsage"
+							},
+							{
+								"keyInResponse"			: "usage"
+							},
+							{
+								"keyInResponse"			: "computedUsage"
+							} ]
+	},
+	"dsprcs:PreAssignedWorkCenterOcc": {
+		"occType"		: "linkOcc",
+		"actualFEType"	: "dsprcs:PreAssignedWorkCenter",
+		"owner"			: [ "dsprcs:MfgProcess", 
+							"dsprcs:MfgOperation" ],
+		"groupField"	: "dsprcs:program.getPreAssignedWorkCenterOperationOcc",
+		"groupFieldType": [ "dsprcs:MfgOperationInstance", 
+							"dsprcs:MfgProcessInstance" ]
+	},
+	"dsprcs:PreAssignedWorkCenter": {
+		"mask"			: "dsprcs:PreAssignedWorkCenterMask.Default",
+		"cestamp"		: true,
+		"fields"		: [ {
+								"fieldName": "dsprcs:program.getPreAssignedWorkCenterResource",
+								"isReferencedObject": false
+							},
+							{
+								"fieldName": "dsprcs:program.getPreAssignedWorkCenterOperationOcc",
+								"isReferencedObject": false
+							} ]
+	}
+}

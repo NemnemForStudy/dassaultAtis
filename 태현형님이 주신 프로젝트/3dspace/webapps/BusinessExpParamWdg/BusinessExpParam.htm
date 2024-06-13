@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:widget="http://www.netvibes.com/ns/">
+    <head>
+        <title>Business Experience Parameters</title>
+
+        <meta name="author" content="Dassault Systèmes" />
+        <meta name="description" content="Business Experience Parameters" />
+        <meta name="apiVersion" content="1.3" />
+        <meta name="debugMode" content="false" />
+        <meta name="strictMode" content="false" />
+        <meta name="noSearchInWidgetUI" content="true" />
+
+        <widget:preferences>
+            <widget:preference name="title" type="text" label="Title_html" defaultValue="" />
+        </widget:preferences>
+
+        <link rel="stylesheet" href="../UIKIT/UIKIT.css" type="text/css" />
+
+        <script type="text/javascript">
+            //<![CDATA[
+
+            // ENH: try to move this in a js file.
+            window.VU_KIT_VERSION = '1.0.17';
+
+            var dependencies = dependencies || [];
+            require(['DS/BusinessExpParamWdg/BusinessExpParam'].concat(dependencies),
+            function (BusinessExpParam) {
+                new BusinessExpParam(widget);
+            });
+            //]]>
+        </script>
+      </head>
+      <body></body>
+</html>

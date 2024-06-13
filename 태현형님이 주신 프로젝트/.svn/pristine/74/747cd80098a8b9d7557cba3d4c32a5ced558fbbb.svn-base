@@ -1,0 +1,70 @@
+@keyframes traceModeLinkOn {
+  100% {
+    stroke: #009688; } }
+
+@keyframes traceModeLinkOff {
+  0% {
+    stroke: #009688; }
+
+  100% {
+    stroke: #b2dfdb; } }
+
+/* Control Link style configuration */
+.sch-control-link .sch-control-link-path {
+  stroke: #d1d4d4;
+  stroke-width: 3px;
+  fill: none;
+  stroke-linejoin: round; }
+.sch-control-link .sch-control-link-waitcount {
+  stroke: #d1d4d4; }
+  .sch-control-link .sch-control-link-waitcount .sch-control-link-circle {
+    fill: #3d3d3d;
+    stroke-width: 1px; }
+  .sch-control-link .sch-control-link-waitcount .sch-control-link-line {
+    stroke-width: 0.6px; }
+.sch-control-link.sch-trace-done .sch-control-link-path, .sch-control-link.sch-trace-done .sch-control-link-waitcount {
+  stroke: #b2dfdb; }
+.sch-control-link.sch-trace-done.sch-trace-on .sch-control-link-path, .sch-control-link.sch-trace-done.sch-trace-on .sch-control-link-waitcount {
+  animation-duration: 0.2s;
+  animation-timing-function: ease;
+  animation-fill-mode: forwards;
+  animation-name: traceModeLinkOn; }
+.sch-control-link.sch-trace-done.sch-trace-off .sch-control-link-path, .sch-control-link.sch-trace-done.sch-trace-off .sch-control-link-waitcount {
+  animation-duration: 0.2s;
+  animation-timing-function: ease;
+  animation-fill-mode: forwards;
+  animation-name: traceModeLinkOff; }
+.sch-control-link:hover .sch-control-link-path, .sch-control-link:hover .sch-control-link-waitcount, .sch-control-link.sch-link-highlight .sch-control-link-path, .sch-control-link.sch-link-highlight .sch-control-link-waitcount {
+  stroke: #368ec4; }
+.sch-control-link:hover .sch-control-link-path, .sch-control-link.sch-link-highlight .sch-control-link-path {
+  stroke-width: 4px; }
+.sch-control-link.selected .sch-control-link-path, .sch-control-link.selected .sch-control-link-waitcount {
+  stroke: #31afff; }
+.sch-control-link.selected .sch-control-link-path {
+  stroke-width: 3px; }
+.sch-control-link.selected:hover .sch-control-link-path {
+  stroke-width: 4px; }
+.sch-control-link.vertical {
+  cursor: ew-resize; }
+.sch-control-link.horizontal {
+  cursor: ns-resize; }
+.sch-control-link.sch-link-invalid .sch-control-link-path {
+  stroke: #ff6464;
+  stroke-dasharray: 6px 2px; }
+.sch-control-link.sch-link-invalid .sch-link-path-invalid {
+  fill: none;
+  stroke: #ff6464;
+  stroke-opacity: 0;
+  stroke-width: 3px; }
+.sch-control-link.sch-link-invalid:hover .sch-control-link-path, .sch-control-link.sch-link-invalid:hover .sch-link-path-invalid, .sch-control-link.sch-link-invalid.sch-link-highlight .sch-control-link-path, .sch-control-link.sch-link-invalid.sch-link-highlight .sch-link-path-invalid {
+  stroke: #ea4f37;
+  stroke-width: 4px; }
+.sch-control-link.sch-link-invalid.selected .sch-control-link-path, .sch-control-link.sch-link-invalid.selected .sch-link-path-invalid {
+  stroke: #ff9696;
+  stroke-width: 3px; }
+
+.sch-control-link-temp {
+  stroke: #d1d4d4;
+  stroke-width: 2px;
+  stroke-dasharray: 6px, 6px;
+  fill: none; }

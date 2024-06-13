@@ -1,0 +1,1 @@
+define("DS/W3DXNavigationMenu/W3DXNavigationMenu_cs",{});define("DS/W3DXNavigationMenu/assets/nls/NavigationMenuDefault",{AddItem:"Přidat položku",NoObjectFound:"Nebyla nalezena žádná položka",Search:"Vyhledat",tooltipMenu:"Nabídka",Loading:"Probíhá načítání..."});

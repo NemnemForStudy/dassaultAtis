@@ -1,0 +1,340 @@
+<?xml version="1.0"?>
+<!-- COPYRIGHT DASSAULT SYSTEMES 2019, All rights reserved -->
+<Package xmlns="PLMDictionaryUnified"
+		ModelerType="Top"
+		CustomerExposition="Programmer"
+		Name="DELHeavyIndustryModelDisciplines"
+		Uuid="C8F23E98-20D8-4AC6-86B3-CDA5E50A2AC9"
+		UseNames="DELAsmAssemblyModelDisciplines;CATDraftingDiscipline">
+  <Comment>[V6R2022x] 2021-03-09 Added Dates Extension</Comment>
+  <Comment>[V6R2021x] 2019-11-20 Created</Comment>
+
+  <CAAComment>
+    <ShortRole>DELHeavyIndustryModelDisciplines Package</ShortRole>
+    <Role>This package describes Heavy Industry Modeler Disciplines</Role>
+  </CAAComment>
+
+  <Class Name="HeavyIndustryProductionDrawing"
+			Uuid="54F43478-F812-423F-84CD-A6DEE20E2D67"
+			CustomerExposition="Programmer"
+			SuperName="Drawing"
+			Discipline="Yes"
+			Specializable="Yes"
+			CustomerExtensible="No"
+			Searchable="Yes"/>
+
+  <Class Name="HeavyIndustryProfileAssDrawing"
+			Uuid="87C41842-DEA0-454B-80E0-39B9E4BC263A"
+			CustomerExposition="Programmer"
+			SuperName="Drawing"
+			Discipline="Yes"
+			Specializable="Yes"
+			CustomerExtensible="No"
+			Searchable="Yes"/>
+
+  <Class Name="HeavyIndustryPlateFabDrawing"
+			Uuid="0FA58EB8-216C-460C-B76C-9AA350BE09B9"
+			CustomerExposition="Programmer"
+			SuperName="Drawing"
+			Discipline="Yes"
+			Specializable="Yes"
+			CustomerExtensible="No"
+			Searchable="Yes"/>
+
+  <Class Name="HeavyIndustryProfileFabDrawing"
+			Uuid="6E072A26-301D-4CD5-9BFC-929E8D620F5E"
+			CustomerExposition="Programmer"
+			SuperName="Drawing"
+			Discipline="Yes"
+			Specializable="Yes"
+			CustomerExtensible="No"
+			Searchable="Yes"/>
+
+  <Class Name="HeavyIndustryProfileIBCDrawing"
+			Uuid="11C2BF54-3679-4C7F-8A5F-B90DAC8533DD"
+			CustomerExposition="Programmer"
+			SuperName="Drawing"
+			Discipline="Yes"
+			Specializable="Yes"
+			CustomerExtensible="No"
+			Searchable="Yes"/>
+
+  <Class Name="HeavyIndustryPlateTempDrawing"
+			Uuid="A4536B7F-2C11-4BD3-9D69-1360FFFC5AB9"
+			CustomerExposition="Programmer"
+			SuperName="Drawing"
+			Discipline="Yes"
+			Specializable="Yes"
+			CustomerExtensible="No"
+			Searchable="Yes"/>
+
+  <Class Name="HeavyIndustryProfileTempDrawing"
+			Uuid="950DFC02-2C5B-4A03-A712-1FE44FE27BF4"
+			CustomerExposition="Programmer"
+			SuperName="Drawing"
+			Discipline="Yes"
+			Specializable="Yes"
+			CustomerExtensible="No"
+			Searchable="Yes"/>
+
+  <Class Name="HeavyIndustryGirthTableDrawing"
+			Uuid="23BF2193-84A9-4A93-8707-4F2C8F8FAA57"
+			CustomerExposition="Programmer"
+			SuperName="Drawing"
+			Discipline="Yes"
+			Specializable="Yes"
+			CustomerExtensible="No"
+			Searchable="Yes"/>
+
+  <Class Name="HeavyIndustryPinJigDrawing"
+			Uuid="739D859E-7AF8-4D06-92AE-90C12BAE8EC7"
+			CustomerExposition="Programmer"
+			SuperName="Drawing"
+			Discipline="Yes"
+			Specializable="Yes"
+			CustomerExtensible="No"
+			Searchable="Yes"/>
+
+  <Class Name="HeavyIndustryWeld"
+			Uuid="4951C257-3778-4822-99F2-9C6BF3190403"
+		    Abstract="No"
+			Discipline="Yes"
+			SuperName="Fasten"
+		    Specializable="Yes"
+		    CustomerExtensible="Yes"
+		    CustomerExposition="Programmer"
+			CreateInstName="DELFmiFunctionIdentifiedInstance;ProcessInstanceSet">
+
+    <Property Name="KweNew_InstanciationMethod" Value="DELPLMFProcessAdvDelegateInstanciation"/>
+    <Property Name="KweNew_ReturnedType" Value="DELFmiFunctionIdentifiedInstance"/>
+    <Property Name="IconName" Value="I_HeavyIndustryWeld"/>
+    <Property Name="Searchable" Value="Yes"/>
+    <Property Name="Newable" Value="Insert_CAA"/>
+
+    <Simple Name="V_Weld_Efficiency"
+				Uuid="44B14CB9-2452-4808-9210-50F319B4347E"
+				Type="Double"
+				Magnitude="Ratio"
+				Protection="Free"
+				CAAExposition="L0">
+    </Simple>
+
+    <Simple Name="V_Weld_GeoType"
+				Uuid="63C83BED-F26F-4931-A4B8-04F999A3DD53"
+				Type="Integer"
+				Protection="Free"
+				CAAExposition="L0" DefaultValue="1">
+      <Property Name="RangeAsEnumName" Value="V_Weld_GeoType_Enum"/>
+      <Property Name="RangeAsEnumAuthorizedValues" Value="UNDEF;Point;Segment;Curve"/>
+      <Range>
+        <Equal>1</Equal>
+        <Equal>2</Equal>
+        <Equal>3</Equal>
+        <Equal>4</Equal>
+      </Range>
+    </Simple>
+
+    <Simple Name="V_Weld_Type"
+				Uuid="0222FA21-F117-4303-8D46-8AA83016D760"
+				Type="Integer"
+				Protection="Free"
+				CAAExposition="L0" DefaultValue="1">
+      <Property Name="RangeAsEnumName" Value="V_Weld_Type_Enum"/>
+      <Property Name="RangeAsEnumAuthorizedValues" Value="UNDEF;Continuous;Chain;Zigzag"/>
+      <Range>
+        <Equal>1</Equal>
+        <Equal>2</Equal>
+        <Equal>3</Equal>
+        <Equal>4</Equal>
+      </Range>
+    </Simple>
+
+    <Simple Name="V_Weld_Width"
+				Uuid="7521AF99-0478-4058-A4B5-4F6149469452"
+				Type="Double"
+				Magnitude="LENGTH"
+				Protection="Free"
+				CAAExposition="L0">
+    </Simple>
+
+    <Simple Name="V_Weld_Side"
+				Uuid="3BDDDC58-57E5-4681-9A5C-4C8D3D31657F"
+				Type="String"
+				MaxLength="100"
+				Protection="Free"
+				CAAExposition="L0">
+    </Simple>
+
+    <Simple Name="V_Weld_NumberOfPass"
+				Uuid="2A39AE46-C358-4F67-82D2-1445DA166B7C"
+				Type="Integer"
+				Protection="Free"
+				CAAExposition="L0">
+    </Simple>
+
+    <Simple Name="V_Weld_IsEPRequried"
+				Uuid="EA4958C8-E35A-4FF0-8830-30EF7E2CB8CC"
+				Type="Boolean"
+				MultiValuated="No"
+				Protection="Free"
+				CAAExposition="L0">
+    </Simple>
+
+    <Simple Name="V_Weld_EdgePreparation"
+				Uuid="1ADC737E-1F55-474F-92B6-EAC26E01A119"
+				Type="String"
+				MaxLength="100"
+				Protection="Free"
+				CAAExposition="L0">
+    </Simple>
+
+    <Simple Name="V_Weld_RootGap"
+				Uuid="BB61FBC1-A557-4E52-AEDF-394896BB2535"
+				Type="Double"
+				Magnitude="LENGTH"
+				Protection="Free"
+				CAAExposition="L0">
+    </Simple>
+
+    <Simple Name="V_Weld_Finish_Contour"
+				Uuid="E1B1A22D-26F1-4B60-836F-C11D6BD283D8"
+				Type="Integer"
+				Protection="Free"
+				CAAExposition="L0" DefaultValue="1">
+      <Property Name="RangeAsEnumName" Value="V_Weld_Finish_Contour_Enum"/>
+      <Property Name="RangeAsEnumAuthorizedValues" Value="UNDEF;Flush;Convex;Concave"/>
+      <Range>
+        <Equal>1</Equal>
+        <Equal>2</Equal>
+        <Equal>3</Equal>
+        <Equal>4</Equal>
+      </Range>
+    </Simple>
+
+    <Simple Name="V_Weld_Finish_Method"
+				Uuid="3D6F3DB6-82E2-477D-B6B8-E8E88A9E8855"
+				Type="Integer"
+				Protection="Free"
+				CAAExposition="L0" DefaultValue="1">
+      <Property Name="RangeAsEnumName" Value="V_Weld_Finish_Method_Enum"/>
+      <Property Name="RangeAsEnumAuthorizedValues" Value="UNDEF;Chipping;Machining;Grinding;Rolling;Hammering"/>
+      <Range>
+        <Equal>1</Equal>
+        <Equal>2</Equal>
+        <Equal>3</Equal>
+        <Equal>4</Equal>
+        <Equal>5</Equal>
+        <Equal>6</Equal>
+      </Range>
+    </Simple>
+
+    <Simple Name="V_Weld_Welding_Method"
+				Uuid="12C3AB35-F157-4E55-A54C-BB6A4EFF36F6"
+				Type="Integer"
+				Protection="Free"
+				CAAExposition="L0" DefaultValue="1">
+      <Property Name="RangeAsEnumName" Value="V_Weld_Welding_Method_Enum"/>
+      <Property Name="RangeAsEnumAuthorizedValues" Value="UNDEF;Gas;Flux;Etc"/>
+      <Range>
+        <Equal>1</Equal>
+        <Equal>2</Equal>
+        <Equal>3</Equal>
+        <Equal>4</Equal>
+      </Range>
+    </Simple>
+
+    <Simple Name="V_Weld_Welding_Material"
+				Uuid="5E3B837E-F57E-4AD5-9493-10FF9A3CBCBF"
+				Type="String"
+				MaxLength="100"
+				Protection="Free"
+				CAAExposition="L0">
+    </Simple>
+
+    <Simple Name="V_Weld_Welding_Speed"
+				Uuid="1E617E11-9F9E-435D-9140-B0A6953EC549"
+				Type="Double"
+				Magnitude="SPEED"
+				Protection="Free"
+				CAAExposition="L0">
+    </Simple>
+
+    <Simple Name="V_Weld_Position"
+				Uuid="C5497012-FC17-430A-95D5-A735E21A185A"
+				Type="String"
+				MaxLength="100"
+				Protection="Free"
+				CAAExposition="L0">
+    </Simple>
+
+  </Class>
+
+  <!--Start Planned/Actul Dates Extension -->
+  <Extension Name="SharedDatesInformation" Discipline="No" Specializable="No"  Uuid="908666A4-9F98-419F-AC6C-C9B6AA17DFC4" CustomerExposition="Programmer" ScopeNames="DELLmiProductionSystemReference;DELLmiOperationReference">
+
+    <Simple Name="V_MaturityState"
+        Uuid="8DB0DBAB-1B4F-45F9-9E53-C8B1C49136C5"
+        Type="Integer"
+        Protection="Free"
+        CAAExposition="L0" DefaultValue="1">
+      <Property Name="RangeAsEnumName" Value="V_MaturityState_Enum"/>
+      <Property Name="RangeAsEnumAuthorizedValues" Value="Firm;Ready for Execution;Work in Progress;Completed;Canceled;On Hold"/>
+      <Range>
+        <Equal>1</Equal>
+        <Equal>2</Equal>
+        <Equal>3</Equal>
+        <Equal>4</Equal>
+        <Equal>5</Equal>
+        <Equal>6</Equal>
+      </Range>
+    </Simple>
+    
+    <Simple Name="V_PlannedStartDate"
+            Uuid="8954F554-43FF-4577-A8DF-49F6400F4ACD"
+            Type="Date"
+            MultiValuated="No"
+            ResetOnCloning="No"
+            ResetOnNewVersion="No"
+            Protection="Free"
+            CAAExposition="L0">
+      <Property Name="CreateAsDateTime" Value="Yes"/>
+    </Simple>
+    
+    <Simple Name="V_PlannedEndDate"
+      Uuid="3E38CF98-8BF4-4FD1-9EFD-DD2DC46909AA"
+        Type="Date"
+        MultiValuated="No"
+        ResetOnCloning="No"
+        ResetOnNewVersion="No"            
+        Protection="Free"
+        CAAExposition="L0">
+      <Property Name="CreateAsDateTime" Value="Yes"/>
+    </Simple>
+    
+    <Simple Name="V_ActualStartDate"
+        Uuid="80E1A88D-0713-4194-97D6-7F2DD27FE71E"
+        Type="Date"
+        MultiValuated="No"
+        ResetOnCloning="No"
+        ResetOnNewVersion="No"    
+        Protection="Free"
+        CAAExposition="L0">
+      <Property Name="CreateAsDateTime" Value="Yes"/>
+    </Simple>
+    
+    <Simple Name="V_ActualEndDate"
+        Uuid="4A65A075-9C73-4478-BAEB-C209F6BD6129"
+        Type="Date"
+        MultiValuated="No"
+        ResetOnCloning="No"
+        ResetOnNewVersion="No"
+        Protection="Free"
+        CAAExposition="L0">
+      <Property Name="CreateAsDateTime" Value="Yes"/>    
+    </Simple>
+    
+  </Extension>
+  <!--End Planned/Actul Dates Extension -->
+  
+</Package>
+

@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<!-- ENOVIA DICTIONARY FOR Activation                 -->
+<!-- COPYRIGHT DASSAULT SYSTEMES 2017, All rights reserved -->
+<Package xmlns="PLMDictionaryUnified" 
+         ModelerType="Top" 
+         Name="RFLPLMFunctionalActivation" 
+         Uuid="BE8C52C3-D707-4DA8-AAEC-E66AF18E7E3B" 
+         UseNames="RFLPLMFunctional"
+         CustomerExposition="Programmer">
+
+  <!-- ******************************************* -->
+  <!-- *  FunctionalActivationReference (PLMCoreReference)     * -->
+  <!-- ******************************************* -->
+  <Class Name="RFLPLMFunctionalActivationReference" 
+         Uuid="597252D8-5514-4B32-94D3-A20FD94E698B" 
+         Abstract="No" 
+         SuperName="RFLPLMFunctionalReference"
+		 Abbreviation="fact"
+         CreateInstName="RFLPLMFunctionalActivationInstance"
+		 Discipline="Yes"
+		 Specializable="Yes"
+		 CustomerExtensible="Yes"
+         CustomerExposition="Programmer">  
+  
+    <CAAComment>
+      <ShortRole>Functional Activation Object</ShortRole>
+      <Role>Functional Activation Object</Role>
+    </CAAComment>
+
+    <!-- PLM New UI/KWE Scripts New -->
+    <Property Name="KweNew_InstanciationMethod" Value="CATEFctDelegateInstanciation"/>
+
+	 <!-- Support old typing system -->
+    <!--Property Name="DMCDerivable" Value="Yes"/-->
+	
+    <Property Name="IconName" Value="I_FLE_SD_ACTIVATION"/>	
+	<Property Name="Searchable" Value="Yes"/>
+	<Property Name="Configurable" Value="Yes"/>
+	<Property Name="KweNew_ReturnedType" Value="RFLPLMFunctionalActivationInstance"/>
+
+    <!-- Export -->
+    <Method ImplementationType="AsFather">
+      <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+    </Method>
+
+  </Class>
+
+  <!-- *************************************************** -->
+  <!-- * RFLPLMFunctionalActivationInstance (PLMCoreInstance)       * -->
+  <!-- *************************************************** -->
+  <RelationClass Name="RFLPLMFunctionalActivationInstance" 
+         Uuid="4369AD1C-1C77-4236-9E7B-E5F4201894EC" 
+         Abstract="No" 
+         SuperName="RFLPLMFunctionalInstance"
+ 		 Discipline="Yes"
+		 Specializable="Yes"
+		 CustomerExtensible="Yes"
+         CustomerExposition="Programmer">
+
+    <CAAComment>
+      <ShortRole>Functional Activation Instance Object</ShortRole>
+      <Role>Functional Activation Instance Object</Role>
+    </CAAComment>
+
+    <!-- Configuration -->
+    <Property Name="Filtrable" Value="Yes"/>
+	<Property Name="Searchable" Value="Yes"/>
+	<Property Name="Newable" Value="Insert"/>
+    <Property Name="IconName" Value="I_FLE_SD_ACTIVATION"/>
+    <Property Name="KweNew_InstanciationMethod" Value="CATEFctDelegateInstanciation"/>
+	<Property Name="KweNew_ReturnedType" Value="RFLPLMFunctionalActivationInstance"/>
+
+  </RelationClass>
+</Package>

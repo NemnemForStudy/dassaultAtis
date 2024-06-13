@@ -1,0 +1,364 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!-- COPYRIGHT DASSAULT SYSTEMES 2021, All rights reserved -->
+
+<Package CustomerExposition = "Programmer" ModelerType = "Top" Name = "GeoscienceElement" UseNames = "AECKernel" Uuid = "2b54500d-b67e-40ef-98c9-9ff5308e792e" xmlns = "PLMDictionaryUnified">
+  <Class Abstract = "Yes" CustomerExposition = "Programmer" Discipline = "Yes" Name = "GeoscienceElement" SuperName = "AecElement" Uuid = "2623da67-ccf7-4a14-846a-390dbd4a8303">
+    <Property Name = "GroupingType" Value = "GeoscienceElement"/>
+  </Class>
+
+  <Class Abstract = "Yes" CustomerExposition = "Programmer" Discipline = "Yes" Name = "GeologicAssembly" SuperName = "GeoscienceElement" Uuid = "8e72e801-5564-4972-85e1-f08e7a861190">
+    <Property Name = "InstantiationOwnerTypes" Value = "PPRContext;AecSite"/>
+  </Class>
+
+  <Class Name = "GeologyModel"
+    CustomerExposition = "Programmer"
+    Discipline = "Yes"
+    SuperName = "GeologicAssembly"
+    Uuid = "23220c51-6df8-40e3-b526-809a58db4002"
+    Abbreviation="gml">
+    <Property Name = "IconName" Value = "I_GeologyModel"/>
+    <Property Name = "3DIconName" Value = "I_GeologyModel.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATEAECDelegateInstanciation"/>
+    <Property Name = "Newable" Value = "All_Offline_CAA"/>
+    <Property Name = "Filterable" Value = "Yes"/>
+    <Property Name = "Searchable" Value = "Yes"/>
+
+    <Simple Name = "ModelExtents" Uuid="e42d3ca7-81b5-4ae7-80f3-5c681d157f7a" CAAExposition = "L0" MaxLength = "500" Protection = "Free" Type = "String"/>
+    <Simple Name = "GeologyModelSession" Uuid="efb4fa81-7c3a-4bd6-8069-3df41e9a0820" MaxLength = "2000" Protection = "Internal" Type = "String"/>
+  </Class>
+
+  <Class Abstract = "Yes" CustomerExposition = "Programmer" Discipline = "Yes" Name = "GeologicFeature" SuperName = "GeoscienceElement" Uuid = "6ba546a4-1811-4124-a23a-711e2cc506d9">
+  </Class>
+
+  <Class Abstract = "Yes" CustomerExposition = "Programmer" Discipline = "Yes" Name = "GeologicStructure" SuperName = "GeologicFeature" Uuid = "3ae87899-b84a-4dd4-a76e-694fc19b07be">
+    <Property Name = "InstantiationOwnerTypes" Value = "PPRContext;GeologicAssembly;Geochronology;GeologicStructure"/>
+  </Class>
+
+  <Class CustomerExposition = "Programmer" Discipline = "Yes" Name = "GeologicOtherStructure"
+  SuperName = "GeologicStructure" Uuid = "50fe16fe-16e2-4ba6-80b8-200e75262db4"
+  Abbreviation="gst">
+    <Property Name = "IconName" Value = "I_GeologicOtherStructure"/>
+    <Property Name = "3DIconName" Value = "I_GeologicOtherStructure.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATEAECDelegateInstanciation"/>
+    <Property Name = "Newable" Value = "All_Offline_CAA"/>
+    <Property Name = "Filterable" Value = "Yes"/>
+    <Property Name = "Searchable" Value = "Yes"/>
+
+    <Simple Name = "StructureType" Uuid = "e1b3cea3-b636-43d5-b008-a108bc1fae13" CAAExposition = "L0" MaxLength = "255" Protection = "Free" Type = "String" DefaultValue = "Undefined">
+      <Range>
+        <Equal>Undefined</Equal>
+        <Equal>Fault</Equal>
+        <Equal>Terrain</Equal>
+        <Equal>Unconformity</Equal>
+      </Range>
+    </Simple>
+  </Class>
+
+  <Class Abstract = "Yes" CustomerExposition = "Programmer" Discipline = "Yes" Name = "GeologicUnit" SuperName = "GeologicFeature" Uuid = "7c5fa53e-2c0c-499d-b2e2-8dec2e1c3eeb">
+    <Property Name = "InstantiationOwnerTypes" Value = "PPRContext;GeologyModelPart"/>
+  </Class>
+
+  <Class CustomerExposition = "Programmer" Discipline = "Yes" Name = "GeologicOtherUnit"
+  SuperName = "GeologicUnit" Uuid = "455be788-0136-491e-9a6a-3ba11eeb55b4"
+  Abbreviation="gut">
+    <Property Name = "IconName" Value = "I_GeologicOtherUnit"/>
+    <Property Name = "3DIconName" Value = "I_GeologicOtherUnit.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATEAECDelegateInstanciation"/>
+    <Property Name = "Newable" Value = "All_Offline_CAA"/>
+    <Property Name = "Filterable" Value = "Yes"/>
+    <Property Name = "Searchable" Value = "Yes"/>
+
+    <Simple Name = "AttributeValue" Uuid = "46ec4030-265a-4be1-9fc8-1f470a9a84a7" CAAExposition = "L0" MaxLength = "255" Protection = "Free" Type = "String"/>
+    <Simple Name = "Methodology" Uuid = "ad7d0f6f-678e-4d32-8a05-726f775f1451" CAAExposition = "L0" MaxLength = "255" Protection = "Free" Type = "String"/>
+    <Simple Name = "UnitVolume" Uuid = "637937cf-564a-4a25-b861-d809e699cf4b" CAAExposition = "L0" Protection = "Free" Type = "Double" Magnitude = "VOLUME"/>
+    <Simple Name = "UnitArea" Uuid = "29de72da-d7f0-400c-aed1-d4e08f07a3e9" CAAExposition = "L0" Protection = "Free" Type = "Double" Magnitude = "AREA"/>
+    <Simple Name = "IsCurrent" Uuid = "d4ab5da6-76e1-4fd3-8108-7123140fea16" Protection = "Internal" Type = "Boolean"/>
+  </Class>
+
+  <Class Abstract = "Yes" CustomerExposition = "Programmer" Discipline = "Yes" Name = "EarthResource" SuperName = "GeologicFeature" Uuid = "a1869792-3c4c-4dd7-8054-28c1474dcdc3">
+    <Property Name = "InstantiationOwnerTypes" Value = "PPRContext;GeologyModelPart"/>
+  </Class>
+
+  <Class CustomerExposition = "Programmer" Discipline = "Yes" Name = "EarthResourceOther"
+  SuperName = "EarthResource" Uuid = "ac63de41-9a6d-4997-8bd3-52c9941e3c8b"
+  Abbreviation="ger">
+    <Property Name = "IconName" Value = "I_EarthResourceOther"/>
+    <Property Name = "3DIconName" Value = "I_EarthResourceOther.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATEAECDelegateInstanciation"/>
+    <Property Name = "Newable" Value = "All_Offline_CAA"/>
+    <Property Name = "Filterable" Value = "Yes"/>
+    <Property Name = "Searchable" Value = "Yes"/>
+
+    <Simple Name = "AttributeValue" Uuid = "0e476d19-d865-4f81-a595-756908ca3962" CAAExposition = "L0" MaxLength = "255" Protection = "Free" Type = "String"/>
+    <Simple Name = "Methodology" Uuid = "b531fef7-023d-4101-acb8-3d6fc9e90090" CAAExposition = "L0" MaxLength = "255" Protection = "Free" Type = "String"/>
+    <Simple Name = "UnitVolume" Uuid = "2542ba4c-0235-4dcc-8eba-6826dcadb3e7" CAAExposition = "L0" Protection = "Free" Type = "Double" Magnitude = "VOLUME"/>
+    <Simple Name = "UnitArea" Uuid = "f279e8f8-31d4-4e26-8fdb-11ed831c55dd" CAAExposition = "L0" Protection = "Free" Type = "Double" Magnitude = "AREA"/>
+    <Simple Name = "IsCurrent" Uuid = "74f07a30-0e7a-49ba-9a55-21a2b88a1fa4" Protection = "Internal" Type = "Boolean"/>
+  </Class>
+
+  <Class Name = "GeologicStructuralZones"
+    CustomerExposition = "Programmer"
+    Discipline = "Yes"
+    SuperName = "GeologicFeature"
+    Uuid = "0f7d3cc4-1226-4ba7-8bfb-11230a26f4e2"
+    Abbreviation="gsz">
+    <Property Name = "IconName" Value = "I_GeologicStructuralZones"/>
+    <Property Name = "3DIconName" Value = "I_GeologicStructuralZones.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATEAECDelegateInstanciation"/>
+    <Property Name = "Newable" Value = "All_Offline_CAA"/>
+    <Property Name = "Filterable" Value = "Yes"/>
+    <Property Name = "Searchable" Value = "Yes"/>
+
+    <Simple Name = "MeshResolutionNumber" Magnitude = "LENGTH" Uuid = "41cfb900-445f-4c3e-aac9-ea63a9eba5a3" CAAExposition = "L0" Protection = "Free" Type = "Double"/>
+    <Simple Name = "IsCurrent" Uuid = "a0baae1f-bde9-4894-a549-45d81327bc73" Protection = "Internal" Type = "Boolean"/>
+  </Class>
+
+  <Extension Name = "GeoImplicitModellingParams"
+    CustomerExposition = "Programmer"
+    ScopeNames = "EarthResourceOther;GeologicOtherUnit"
+    Uuid = "02da98b8-6609-4426-a8c3-0f93d51fe7b9">
+
+    <Simple Name = "SurfaceReconMethod" Uuid = "dae6a608-9cec-4528-b757-ec3e3880130e" CAAExposition = "L0" MaxLength = "255" Protection = "Free" Type = "String"/>
+    <Simple Name = "AllowOverwriteEmptySections" Uuid = "91e1a9eb-ec08-40c6-bf4b-aab1190b2aae" CAAExposition = "L0" Protection = "Free" Type = "Boolean"/>
+    <Simple Name = "EllipsoidAutoComputed" Uuid = "69efe562-3171-47c0-a3a4-78d3058f27e8" CAAExposition = "L0" Protection = "Free" Type = "Boolean"/>
+    <Simple Name = "EstimateMissingBurdens" Uuid = "0055ddfe-e069-407a-87ed-387ed40f89c2" CAAExposition = "L0" Protection = "Free" Type = "Boolean"/>
+    <Simple Name = "PersistBurdens" Uuid = "2a50d271-dc4b-4d4d-b531-330942140c5c" CAAExposition = "L0" Protection = "Free" Type = "Boolean"/>
+    <Simple Name = "ModellingTechnique" Uuid = "28327e94-02f0-4a59-8250-235e85467647" CAAExposition = "L0" MaxLength = "255" Protection = "Free" Type = "String"/>
+    <Simple Name = "MinimumFeatureThickness" Uuid = "e19736d4-f61e-4067-bc62-850efd93c8bc" CAAExposition = "L0" Protection = "Free" Type = "Double" Magnitude = "LENGTH"/>
+    <Simple Name = "IntervalSplitMethod" Uuid = "5c9143ac-ab6d-4a87-bc53-acdfd5413dfe" CAAExposition = "L0" MaxLength = "255" Protection = "Free" Type = "String"/>
+    <Simple Name = "EllipsoidBearing" Uuid = "68da4a6e-fa03-4105-b413-83f8be3e9f4a" CAAExposition = "L0" Protection = "Free" Type = "Double"/>
+    <Simple Name = "EllipsoidDip" Uuid = "95136a2b-544b-4795-99cd-b1b982a9a831" CAAExposition = "L0" Protection = "Free" Type = "Double"/>
+    <Simple Name = "EllipsoidPlunge" Uuid = "b25491fa-f168-4cb8-90a9-0acd359fb62d" CAAExposition = "L0" Protection = "Free" Type = "Double"/>
+    <Simple Name = "EllipsoidMajorRatio" Uuid = "ff917374-fc8b-4d4b-a691-87daf9bc3777" CAAExposition = "L0" Protection = "Free" Type = "Double"/>
+    <Simple Name = "EllipsoidSemiMajorRatio" Uuid = "4c0a0b73-5efe-4963-9cef-73843d3c001d" CAAExposition = "L0" Protection = "Free" Type = "Double"/>
+    <Simple Name = "EllipsoidMinorRatio" Uuid = "c7c487b5-c7b4-44ce-9e14-85bc304fa980" CAAExposition = "L0" Protection = "Free" Type = "Double"/>
+    <Simple Name = "BaseRange" Uuid = "915adacb-0410-4941-9712-ca813d2f8555" CAAExposition = "L0" Protection = "Free" Type = "Double"/>
+    <Simple Name = "Kernel" Uuid = "12fb2a5d-4910-4903-926b-277f257c00a3" CAAExposition = "L0" Protection = "Free" MaxLength = "255" Type = "String"/>
+  </Extension>
+
+  <Extension Name = "GeoImplicitModellingParams2"
+  CustomerExposition = "Programmer"
+  ScopeNames = "EarthResource GeologicUnit"
+  Uuid = "e5b4a1dd-47e5-4e82-8fcf-c918b14d89da">
+
+    <Simple Name = "SurfaceReconMethod" Uuid = "7f1155a8-e34b-4d3e-9df3-99c1509b0858" CAAExposition = "L0" MaxLength = "255" Protection = "Free" Type = "String"/>
+    <Simple Name = "AllowOverwriteEmptySections" Uuid = "4c770993-2dc0-4abf-b1c1-b164a43a63c6" CAAExposition = "L0" Protection = "Free" Type = "Boolean"/>
+    <Simple Name = "EllipsoidAutoComputed" Uuid = "b0b64a94-415a-4c87-98f3-3fc7e9b8f2bf" CAAExposition = "L0" Protection = "Free" Type = "Boolean"/>
+    <Simple Name = "EstimateMissingBurdens" Uuid = "09dfe0f9-1039-44a1-b256-e3b5eda6c24a" CAAExposition = "L0" Protection = "Free" Type = "Boolean"/>
+    <Simple Name = "PersistBurdens" Uuid = "ff9b7f19-c115-416a-8e74-9b140f725db2" CAAExposition = "L0" Protection = "Free" Type = "Boolean"/>
+    <Simple Name = "ModellingTechnique" Uuid = "6e065f14-d0d9-48c3-b184-66ae3541a7e3" CAAExposition = "L0" MaxLength = "255" Protection = "Free" Type = "String"/>
+    <Simple Name = "MinimumFeatureThickness" Uuid = "7322c9a4-ba15-4d65-9eb8-1076243224d3" CAAExposition = "L0" Protection = "Free" Type = "Double" Magnitude = "LENGTH"/>
+    <Simple Name = "IntervalSplitMethod" Uuid = "c0ab1e06-e4cb-43d4-ac60-cb92b37bae69" CAAExposition = "L0" MaxLength = "255" Protection = "Free" Type = "String"/>
+    <Simple Name = "EllipsoidBearing" Uuid = "cac2d578-dd02-4430-b764-663c22c37133" CAAExposition = "L0" Protection = "Free" Type = "Double"/>
+    <Simple Name = "EllipsoidDip" Uuid = "4e2a4b7b-3120-420f-a0bd-b4c7971291a0" CAAExposition = "L0" Protection = "Free" Type = "Double"/>
+    <Simple Name = "EllipsoidPlunge" Uuid = "40ba41b6-8814-439e-a46e-00bd68114e9f" CAAExposition = "L0" Protection = "Free" Type = "Double"/>
+    <Simple Name = "EllipsoidMajorRatio" Uuid = "4494dc6c-c961-4bb8-bf88-b869afbd5df3" CAAExposition = "L0" Protection = "Free" Type = "Double"/>
+    <Simple Name = "EllipsoidSemiMajorRatio" Uuid = "f863fc03-ce80-47f2-86c9-bc3866560a4e" CAAExposition = "L0" Protection = "Free" Type = "Double"/>
+    <Simple Name = "EllipsoidMinorRatio" Uuid = "42e55ed1-fe49-4b41-9919-edf809a3da62" CAAExposition = "L0" Protection = "Free" Type = "Double"/>
+    <Simple Name = "BaseRange" Uuid = "fa042641-223c-47e5-9384-90bd4edd9898" CAAExposition = "L0" Protection = "Free" Type = "Double"/>
+    <Simple Name = "Kernel" Uuid = "6f3892a1-d47f-4c0d-a6e7-836113bd9628" CAAExposition = "L0" Protection = "Free" MaxLength = "255" Type = "String"/>
+  </Extension>
+ 
+  <Class CustomerExposition = "Programmer" Discipline = "Yes" Name = "GeologicFault"
+    SuperName = "GeologicStructure" Uuid = "3b2a0250-3efd-4208-aa01-6ad39ba2d858"
+    Abbreviation="flt">
+    <Property Name = "IconName" Value = "I_GeologicFault"/>
+    <Property Name = "3DIconName" Value = "I_GeologicFault.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATEAECDelegateInstanciation"/>
+    <Property Name = "InstantiationOwnerTypes" Value = "GeologicFault;GeologyModel"/>
+    <Property Name = "Newable" Value = "All_Offline_CAA"/>
+    <Property Name = "Filterable" Value = "Yes"/>
+    <Property Name = "Searchable" Value = "Yes"/>
+
+    <Simple Name = "FaultOrigin" Uuid = "b12d858d-102d-4da6-b0fc-a62565e67377" CAAExposition = "L0" MaxLength = "255" Protection = "Free" Type = "String" DefaultValue = "Undefined">
+      <Range>
+        <Equal>Undefined</Equal>
+        <Equal>Supplied</Equal>
+        <Equal>Generated</Equal>
+      </Range>
+    </Simple>
+    <Simple Name = "IsFaultModel" Uuid = "3ffb924c-dbfa-4c61-8b42-b897ea1309c5" Protection = "Internal" Type = "Boolean"/>
+  </Class>
+
+  <Extension Name = "GeoFaultModelingParams"
+    CustomerExposition = "Programmer"
+    ScopeNames = "GeologicFault"
+    Uuid = "1906e83b-7f58-4d63-a347-cd3864738d53">
+
+    <Simple Name = "ModeledAttribute" Uuid = "74721761-d681-446b-be7c-59dc74cc2b1e" CAAExposition = "L0" MaxLength = "255" Protection = "Free" Type = "String"/>
+    <Simple Name = "Kernel" Uuid = "83cd5241-e14b-406d-abb0-b1295636e8c8" CAAExposition = "L0" MaxLength = "255" Protection = "Free" Type = "String"/>
+    <Simple Name = "MinimumFeatureThickness" Uuid = "805bdf10-c66b-4573-b54b-e7774a22807d" CAAExposition = "L0" Protection = "Free" Type = "Double" Magnitude = "LENGTH"/>
+    <Simple Name = "SurfaceReconMethod" Uuid = "90984576-e65e-4706-8b85-da4bf245d0b4" CAAExposition = "L0" MaxLength = "255" Protection = "Free" Type = "String"/>
+  </Extension>
+
+  <Class CustomerExposition = "Programmer" Discipline = "Yes" Name = "GeologicUnconformity"
+    SuperName = "GeologicStructure" Uuid = "41fc1ae2-89c3-4c31-9675-06e4194e8420"
+    Abbreviation="unc">
+    <Property Name = "IconName" Value = "I_GeologicUnconformity"/>
+    <Property Name = "3DIconName" Value = "I_GeologicUnconformity.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATEAECDelegateInstanciation"/>
+    <Property Name = "InstantiationOwnerTypes" Value = "GeologicUnconformity;GeologyModel"/>
+    <Property Name = "Newable" Value = "All_Offline_CAA"/>
+    <Property Name = "Filterable" Value = "Yes"/>
+    <Property Name = "Searchable" Value = "Yes"/>
+  </Class>
+
+  <Class CustomerExposition = "Programmer" Discipline = "Yes" Name = "GeologicTrend"
+    SuperName = "GeologicStructure" Uuid = "777aecba-e8bc-46da-b212-f4bebf8fd09a"
+    Abbreviation="trd">
+    <Property Name = "IconName" Value = "I_GeologicTrend"/>
+    <Property Name = "3DIconName" Value = "I_GeologicTrend.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATEAECDelegateInstanciation"/>
+    <Property Name = "InstantiationOwnerTypes" Value = "GeologicTrend;GeologyModel"/>
+    <Property Name = "Newable" Value = "All_Offline_CAA"/>
+    <Property Name = "Filterable" Value = "Yes"/>
+    <Property Name = "Searchable" Value = "Yes"/>
+
+    <Simple Name = "TrendOrigin" Uuid = "fdc5b9ed-049a-4192-bf1e-db4ab3f67c5b" CAAExposition = "L0" MaxLength = "255" Protection = "Free" Type = "String" DefaultValue = "Undefined">
+      <Range>
+        <Equal>Undefined</Equal>
+        <Equal>Supplied</Equal>
+        <Equal>Generated</Equal>
+      </Range>
+    </Simple>
+    <Simple Name = "AttributeValue" Uuid = "8e09b24f-93a8-489e-bed9-f3d14468ee48" CAAExposition = "L0" MaxLength = "255" Protection = "Free" Type = "String"/>
+  </Class>
+
+  <Class CustomerExposition = "Programmer" Discipline = "Yes" Name = "GeologicBoundary"
+    SuperName = "GeologicStructure" Uuid = "d63c90eb-eb7d-4851-9d10-d881b467adc8"
+    Abbreviation="gbd">
+    <Property Name = "IconName" Value = "I_GeologicBoundary"/>
+    <Property Name = "3DIconName" Value = "I_GeologicBoundary.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATEAECDelegateInstanciation"/>
+    <Property Name = "InstantiationOwnerTypes" Value = "GeologicBoundary;GeologyModel"/>
+    <Property Name = "Newable" Value = "All_Offline_CAA"/>
+    <Property Name = "Filterable" Value = "Yes"/>
+    <Property Name = "Searchable" Value = "Yes"/>
+  </Class>
+
+  <Class CustomerExposition = "Programmer" Discipline = "Yes" Name = "GeologicConformableUnit"
+  SuperName = "GeologicUnit" Uuid = "2291b6f8-8fcd-4bc0-b208-bbf360c16309"
+  Abbreviation="gcut">
+    <Property Name = "IconName" Value = "I_GeologicConformableUnit"/>
+    <Property Name = "3DIconName" Value = "I_GeologicConformableUnit.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATEAECDelegateInstanciation"/>
+    <Property Name = "InstantiationOwnerTypes" Value = "GeologyModelPart"/>
+    <Property Name = "Newable" Value = "All_Offline_CAA"/>
+    <Property Name = "Filterable" Value = "Yes"/>
+    <Property Name = "Searchable" Value = "Yes"/>
+
+    <Simple Name = "AttributeValue" Uuid = "e36fd497-0be2-4573-bd39-a1522d7318fe" CAAExposition = "L0" MaxLength = "255" Protection = "Free" Type = "String"/>
+    <Simple Name = "Methodology" Uuid = "57d770c9-b2ba-4c79-a415-e2b5cc138f72" CAAExposition = "L0" MaxLength = "255" Protection = "Free" Type = "String"/>
+    <Simple Name = "UnitVolume" Uuid = "b6ab97c5-3054-429a-821c-e99e0ea952b3" CAAExposition = "L0" Protection = "Free" Type = "Double" Magnitude = "VOLUME"/>
+    <Simple Name = "UnitArea" Uuid = "036091f6-654d-4b5b-84ec-fc651d82c5c6" CAAExposition = "L0" Protection = "Free" Type = "Double" Magnitude = "AREA"/>
+    <Simple Name = "IsCurrent" Uuid = "f7d4fad6-8e31-4bbc-a54e-e4cd8c44c577" Protection = "Internal" Type = "Boolean"/>
+  </Class>
+
+  <Class CustomerExposition = "Programmer" Discipline = "Yes" Name = "GeologicIntrusiveUnit"
+  SuperName = "GeologicUnit" Uuid = "3f7340e3-6e25-427e-9ed6-87bf68a588de"
+  Abbreviation="giut">
+    <Property Name = "IconName" Value = "I_GeologicIntrusiveUnit"/>
+    <Property Name = "3DIconName" Value = "I_GeologicIntrusiveUnit.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATEAECDelegateInstanciation"/>
+    <Property Name = "InstantiationOwnerTypes" Value = "GeologicIntrusiveUnit;GeologyModelPart;GeologyModel"/>
+    <Property Name = "Newable" Value = "All_Offline_CAA"/>
+    <Property Name = "Filterable" Value = "Yes"/>
+    <Property Name = "Searchable" Value = "Yes"/>
+
+    <Simple Name = "AttributeValue" Uuid = "4681cb8f-cd92-4042-a6b8-9652032e6f9b" CAAExposition = "L0" MaxLength = "255" Protection = "Free" Type = "String"/>
+    <Simple Name = "Methodology" Uuid = "f131d95e-dd2e-4bfb-bf8d-905ff48a83bf" CAAExposition = "L0" MaxLength = "255" Protection = "Free" Type = "String"/>
+    <Simple Name = "UnitVolume" Uuid = "f742066f-90c2-4de3-a76a-f942dcb63199" CAAExposition = "L0" Protection = "Free" Type = "Double" Magnitude = "VOLUME"/>
+    <Simple Name = "UnitArea" Uuid = "2c897f27-7bf5-4c3d-ac50-7e2b2b7793c5" CAAExposition = "L0" Protection = "Free" Type = "Double" Magnitude = "AREA"/>
+    <Simple Name = "IntrusionOrigin" Uuid = "0ed6864d-5d10-4182-910a-5fe092e838f6" CAAExposition = "L0" MaxLength = "255" Protection = "Free" Type = "String" DefaultValue = "Undefined">
+      <Range>
+        <Equal>Undefined</Equal>
+        <Equal>Supplied</Equal>
+        <Equal>Generated</Equal>
+      </Range>
+    </Simple>
+    <Simple Name = "IsCurrent" Uuid = "233f8f50-311b-44bd-9df6-0fee2e86d48f" Protection = "Internal" Type = "Boolean"/>
+  </Class>
+
+        <!-- Mining Model -->
+      <Class Name = "MiningModel"
+        CustomerExposition = "Programmer"
+        Discipline = "Yes"
+        SuperName = "GeoscienceElement"
+        Uuid = "97eca048-d74a-11ec-9d64-0242ac120002"
+        Abbreviation="mml">
+        <Property Name = "IconName" Value = "I_MiningModel"/>
+        <Property Name = "3DIconName" Value = "I_MiningModel.cgr"/>
+        <Property Name = "KweNew_InstanciationMethod" Value = "CATKBEDelegateInstanciation"/>
+        <Property Name = "Newable" Value = "All_Offline_CAA"/>
+        <Property Name = "Filterable" Value = "Yes"/>
+        <Property Name = "Searchable" Value = "Yes"/>
+        <Property Name = "InstantiationOwnerTypes" Value = "AecSite"/>
+        <CAAComment>
+          <Role>GEOVIA Mining Model Object</Role>
+        </CAAComment>
+
+        <Simple Name = "ModelExtents" Uuid="d17e1b48-d74a-11ec-9d64-0242ac120002" CAAExposition = "L0" MaxLength = "500" Protection = "Free" Type = "String"/>
+        <Simple Name = "BlockSize" Uuid="d17e1936-d74a-11ec-9d64-0242ac120002" CAAExposition = "L0" MaxLength = "500" Protection = "Free" Type = "String"/>
+        <Simple Name = "ModelType" Uuid = "d17e179c-d74a-11ec-9d64-0242ac120002" CAAExposition = "L0" MaxLength = "255" Protection = "Free" Type = "String" DefaultValue = "Undefined">
+          <Range>
+            <Equal>Undefined</Equal>
+            <Equal>Mining Model</Equal>
+            <Equal>Production Model</Equal>
+          </Range>
+        </Simple>
+
+      </Class>
+
+      <!-- Resource Model -->
+      <Class Name = "ResourceModel"
+        CustomerExposition = "Programmer"
+        Discipline = "Yes"
+        SuperName = "GeologicAssembly"
+        Uuid = "a1380390-d74a-11ec-9d64-0242ac120002"
+        Abbreviation="rml">
+        <Property Name = "IconName" Value = "I_ResourceModel"/>
+        <Property Name = "3DIconName" Value = "I_ResourceModel.cgr"/>
+        <Property Name = "KweNew_InstanciationMethod" Value = "CATKBEDelegateInstanciation"/>
+        <Property Name = "Newable" Value = "All_Offline_CAA"/>
+        <Property Name = "Filterable" Value = "Yes"/>
+        <Property Name = "Searchable" Value = "Yes"/>
+        <Property Name = "InstantiationOwnerTypes" Value = "AecSite"/>
+        <CAAComment>
+          <Role>GEOVIA Resource Model Object</Role>
+        </CAAComment>
+
+        <Simple Name = "ModelExtents" Uuid="d17e15d0-d74a-11ec-9d64-0242ac120002" CAAExposition = "L0" MaxLength = "500" Protection = "Free" Type = "String"/>
+        <Simple Name = "BlockSize" Uuid = "d17e13dc-d74a-11ec-9d64-0242ac120002" CAAExposition = "L0" MaxLength = "255" Protection = "Free" Type = "String"/>
+        <Simple Name = "ModelType" Uuid = "d17e11d4-d74a-11ec-9d64-0242ac120002" CAAExposition = "L0" MaxLength = "255" Protection = "Free" Type = "String" DefaultValue = "Undefined">
+          <Range>
+            <Equal>Undefined</Equal>
+            <Equal>Resource Model</Equal>
+            <Equal>Grade Control Model</Equal>
+          </Range>
+        </Simple>
+      </Class>
+ 
+      <!-- Resource Domain -->
+      <Class Name = "ResourceDomain"
+        CustomerExposition = "Programmer"
+        Discipline = "Yes"
+        SuperName = "GeologicFeature"
+        Uuid = "a9930954-d74a-11ec-9d64-0242ac120002"
+        Abbreviation="rdn">
+        <Property Name = "IconName" Value = "I_ResourceDomain"/>
+        <Property Name = "3DIconName" Value = "I_ResourceDomain.cgr"/>
+        <Property Name = "KweNew_InstanciationMethod" Value = "CATKBEDelegateInstanciation"/>
+        <Property Name = "Newable" Value = "All_Offline_CAA"/>
+        <Property Name = "Filterable" Value = "Yes"/>
+        <Property Name = "Searchable" Value = "Yes"/>
+        <Property Name = "InstantiationOwnerTypes" Value = "ResourceModel"/>
+        <CAAComment>
+          <Role>GEOVIA Resource Domain Object</Role>
+        </CAAComment>
+
+
+        <Simple Name = "DomainExtents" Uuid="d17e0fb8-d74a-11ec-9d64-0242ac120002" CAAExposition = "L0" MaxLength = "500" Protection = "Free" Type = "String"/>
+        <Simple Name = "BlockSize" Uuid = "d17e0c98-d74a-11ec-9d64-0242ac120002" CAAExposition = "L0" MaxLength = "255" Protection = "Free" Type = "String"/>
+      </Class>
+
+</Package>

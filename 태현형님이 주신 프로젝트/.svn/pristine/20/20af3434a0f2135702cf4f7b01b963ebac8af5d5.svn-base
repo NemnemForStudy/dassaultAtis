@@ -1,0 +1,1 @@
+define("DS/IPClassifyUtil/IPClassifyUtil_pl",{});define("DS/IPClassifyUtil/assets/nls/IPClassifyUtil",{msg_InfoAction_Timeout:"Nie otrzymano odpowiedzi od uruchomionej akcji w określonym czasie, może to potrwać dłużej. Wynik może być widoczny po ręcznym odświeżeniu."});

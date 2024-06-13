@@ -1,0 +1,1 @@
+define("DS/ENOCockpit/ENOCockpit_zh-TW",{});define("DS/ENOCockpit/assets/nls/ENOCockpit",{appDescription:"用簡單又有效的方式瀏覽 3D 模型",rootFrozen:"在轉換之後，工作階段已凍結",transitionRefusedStaticMapping:"目標應用程式不支援具現化產品模型組態",transitionRefusedFlexibleAssemblies:"目標應用程式不支援彈性組合件"});

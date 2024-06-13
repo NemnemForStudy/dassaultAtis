@@ -1,0 +1,1 @@
+define("DS/PIMwebPropertiesTabs/PIMwebPropertiesTabs_pl",{});define("DS/PIMwebPropertiesTabs/assets/nls/PIMwebPropertiesTabs",{privLevelSimulationError:"Nie można uzyskać dostępu do definicji symulacji",isrInfoRetrievalFailed:"Nie można pobrać informacji o symulacji przenikania"});

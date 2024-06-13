@@ -1,0 +1,1 @@
+define("DS/DELWebCommonCmds/DELWebCommonCmds_ja",{});define("DS/DELWebCommonCmds/assets/nls/DELWeb3DFilterCmd",{"Dialog.Title":"確認","Dialog.FilterCancelled.Message":"フィルタの追加がキャンセルされました。フィルタなしでルート オブジェクトを追加しますか?","Dialog.okButtonText":"OK","Dialog.koButtonText":"キャンセル"});

@@ -1,0 +1,30 @@
+# Added by hslee on 2023.06.20
+# del command decProjectInterfaceCmd;
+add command decProjectInterfaceCmd
+	label 'Interface'
+	href '${SUITE_DIR}/decProjectInterfaceProcess.jsp'
+	setting 'Registered Suite' 'ProgramCentral'
+	setting 'Target Location' 'pagehidden'
+	setting 'Image' '${COMMON_DIR}/images/iconActionRefresh.png'
+;
+
+# Modified by thok on 2023.07.03
+mod command decProjectInterfaceCmd
+	add setting 'Access Expression' '(attribute[decProjectType]==ongoing)'
+;
+
+# Modified by thok on 2023.07.10 
+mod command decProjectInterfaceCmd
+	add setting 'Access Expression' '(attribute[decProjectType]==ongoing) && (current!=Complete) && (admin_platform==context.user || owner==context.user)'
+;	
+# Modified by thok on 2023.07.26 
+mod command decProjectInterfaceCmd
+	add setting 'Access Expression' '(attribute[decProjectType]==ongoing && attribute[decProjectStatus]=="In-Progress") && (context.user.isassigned[decSystemAdmin])'
+;
+
+# Modified By thok : 2023. 09. 09
+mod command decProjectInterfaceCmd
+	add setting 'Access Expression' '(attribute[decProjectType]==ongoing && attribute[decProjectStatus]=="In-Progress")'
+	add setting 'Access Program' 'decAccess' 
+	add setting 'Access Function' 'hasAccess'
+;

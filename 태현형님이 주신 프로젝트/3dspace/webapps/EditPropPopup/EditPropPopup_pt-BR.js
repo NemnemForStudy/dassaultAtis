@@ -1,0 +1,1 @@
+define("DS/EditPropPopup/EditPropPopup_pt-BR",{});define("DS/EditPropPopup/assets/nls/editPropPopup",{Properties:"Informações",PinWidget:"Fixar o widget",Loading:"Carregando...",CloseOverlay:"Fechar pop-up"});

@@ -1,0 +1,41 @@
+### 230704 created by cmg
+
+#delete type decDeliverableDoc;
+
+add type decDeliverableDoc derived Document
+  attr decDiscipline
+  attr decDocType
+  attr decUnitNm
+  attr decDwgAreaNm
+  attr decUnitNmDoc
+  attr decDwgAreaNmDoc
+  attr decSubDocNo
+  attr decAddDocNo
+  attr decTagNumber
+  attr decCWPNo
+  attr decEWPNo
+  attr decASB_YN
+  attr decDocStage
+  attr decReviseDate
+  attr decWorkFlow
+  attr decPlanDate
+  attr decForecastDate
+  attr decActualDate
+  attr decNextAction
+  attr decNextActionPlanDate
+  attr decIFCPlanDate
+  attr decIFCForecastDate
+  attr decIFCActualDate
+  attr decFileRef_ID
+  attr decFile_ID
+  attr decFile_Name
+  attr decTurnover_YN
+  attr decIWPNumber 
+  attr decLatestIFDate 
+  attr decIWPOid;
+
+add property type_decDeliverableDoc on program eServiceSchemaVariableMapping.tcl to type decDeliverableDoc;
+
+mod type decDeliverableDoc add attr decUnitNm,decDwgAreaNm,decUnitNmDoc,decDwgAreaNmDoc;
+mod type decDeliverableDoc add attr decLatestIFDate,decIWPOid;
+mod type decDeliverableDoc remove attr decIWPOid; 

@@ -1,0 +1,112 @@
+<%@page import="com.dec.util.DecConstants"%>
+<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page import="com.dec.util.DecStringUtil"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.matrixone.apps.domain.util.XSSUtil"%>
+<%@page import="com.matrixone.apps.domain.util.*"%>
+<%@page import="matrix.db.JPO"%>
+<%@page import="matrix.db.Environment"%>
+<%@page import="com.matrixone.apps.domain.*"%>
+<%@page import="java.util.*"%>
+<%@page import="java.util.regex.Pattern"%>
+<%@page import="java.util.regex.Matcher"%>
+<%@page import="java.time.LocalDate"%>
+<%@page import="java.time.format.DateTimeFormatter"%>
+
+<%@include file="emxNavigatorTopErrorInclude.inc"%>
+<%@ include file="../emxUICommonAppInclude.inc"%>
+<%@ page import="java.util.HashMap" %>
+
+
+<%
+/* 
+ * Refactored by hslee on 2023.07.11 --- [s]
+  // 필요한 데이터를 처리하는 로직을 작성합니다.
+  String proId = request.getParameter("proId");
+  System.out.println("초기화면 프로젝트 목록 클릭 : decProjectUIProcess");
+  DomainObject dom = new DomainObject(proId);
+  // 현장명 : decSiteName , 프로젝트코드 : name, 분류 : decCategory2, 국가지역 : decCountryCode, EPC : decEPCType,
+  //  공사기간 : decActualStartDate ~ decExpectedDate , 공정율 : 일단빈값
+  String srcValue = "";	
+  String decDuration = "";
+  HashMap map = new HashMap();
+  PrintWriter out2 = response.getWriter();
+  String[] objectIds = new String[10];
+  objectIds[0] = proId;
+  String imageHolder = JPO.invoke(context, "emxProjectSpace", null, "getImageHolderProjectUI", objectIds , String.class);
+  // 정규표현식 패턴
+  Pattern pattern = Pattern.compile("src='(.*?)'");
+  Matcher matcher = pattern.matcher(imageHolder);
+  //System.out.println("src: " + matcher);
+  if (matcher.find()) {
+      srcValue = matcher.group(1);
+     // System.out.println("src: " + srcValue);
+  }
+  String decSiteName = dom.getAttributeValue(context, "decSiteName");
+  String decName = dom.getName(context);
+  String decCategory2 = dom.getAttributeValue(context, "decCategory2"); 
+  String decCountryCode = dom.getAttributeValue(context, "decCountryCode");
+  String decEPCType = dom.getAttributeValue(context, "decEPCType");
+  String decDashboardURL = dom.getAttributeValue(context, "decDashboardURL");
+  String decActualStartDate2 = (String) dom.getAttributeValue(context, "decActualStartDate");
+  String decExpectedDate2 = (String) dom.getAttributeValue(context, "decExpectedDate");  
+  //원본 형식 지정
+  DateTimeFormatter originalFormatter = DateTimeFormatter.ofPattern("M/d/yyyy h:mm:ss a", Locale.US);  
+  // 변환할 형식 지정
+  DateTimeFormatter targetFormatter = DateTimeFormatter.ofPattern("yyyy/M/d", Locale.US);
+  if( !decActualStartDate2.isEmpty() && !decExpectedDate2.isEmpty() ){
+	  LocalDate date = LocalDate.parse(decActualStartDate2, originalFormatter); // 날짜 변환
+	  String decActualStartDate = date.format(targetFormatter);
+	  LocalDate date2 = LocalDate.parse(decExpectedDate2, originalFormatter);
+	  String decExpectedDate = date2.format(targetFormatter);
+	  decDuration = decActualStartDate + " ~ " + decExpectedDate; //공사기간
+  }
+  
+//   String decProgressRate = "공정률"; 
+  String decProgressRate = ""; 
+  
+  
+  map.put("decSiteName",decSiteName);
+  map.put("decName",decName);
+  map.put("decCategory2",decCategory2);
+  map.put("decCountryCode",decCountryCode);
+  map.put("decEPCType",decEPCType);
+  map.put("decDuration",decDuration);
+  map.put("decProgressRate",decProgressRate);
+  map.put("imageHolder",srcValue);
+  map.put("decDashboardURL",decDashboardURL);
+*/
+	StringList slSelect = new StringList();
+	slSelect.add(DecConstants.SELECT_ATTRIBUTE_DECDASHBOARDURL);
+	
+	Map programMap = new HashMap();
+	programMap.put("objectId", emxGetParameter(request, "proId"));
+	programMap.put("slSelect", slSelect);
+	programMap.put("user", context.getUser()); // Added by choimingi on 2023.08.10
+	
+	boolean pushContext = false;
+	Map projectOutlineMap = null;
+	try {
+		ContextUtil.pushContext(context);
+		pushContext = true;
+		
+		projectOutlineMap = JPO.invoke(context, "emxProjectSpace", null, "getProjectOutLine", JPO.packArgs(programMap), Map.class);
+		String imageSource = JPO.invoke(context, "emxProjectSpace", null, "getImageSourceOnly", JPO.packArgs(programMap), String.class);
+		projectOutlineMap.put("imgSource", imageSource);
+	} catch(Exception e) {
+		e.printStackTrace();
+		throw e;
+	} finally {
+		if ( pushContext ) { ContextUtil.popContext(context); }
+	}
+	
+	PrintWriter out2 = response.getWriter();
+	
+	String json = new com.google.gson.Gson().toJson(projectOutlineMap);
+// Refactored by hslee on 2023.07.11 --- [s]	
+	out2.flush();
+	out2.write(json);
+	out2.flush();
+	System.out.println("json : "+json);
+%>

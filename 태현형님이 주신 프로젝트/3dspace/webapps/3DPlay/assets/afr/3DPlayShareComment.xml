@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Styles xmlns:syp="http://www.3ds.com/xsd/SYP">
+
+  <Template syp:name="3DSHAREAfrWorkshopInterface" Target="CATCmdInterface">
+    <CATCmdInterface  WkbInterface= "CATI3DSHAREFixedAfrWorkshopConfiguration"/>
+  </Template>
+
+  <Template syp:name="3DSHAREAfrWorkshopHeaders" Target="CATCmdHeadersList">
+    <CATCmdHeadersList>
+      <CATCommandHeader ID="Share3DComment" Available="0" ClassName="DS/3DPlayCommands/CmdShare3DComment" HelpResourceFile = "3DPlayCommands/3DPlayHelpForCommands" ResourceFile="3DPlay/3DPlay"  />
+      <CATCommandHeader ID="ShareTo3DSwYm" Available="0" ClassName="DS/3DPlayCommands/CmdShareTo3DSwYm" HelpResourceFile = "3DPlayCommands/3DPlayHelpForCommands" ResourceFile="3DPlay/3DPlay"  />
+      <CATCommandHeader ID="SharePrint" Available="0" ClassName="DS/3DPlayCommands/CmdSharePrint" HelpResourceFile = "3DPlayCommands/3DPlayHelpForCommands" ResourceFile="3DPlay/3DPlay"  />
+      <CATCommandHeader ID="ShareDownload" Available="0" ClassName="DS/3DPlayCommands/CmdShareDownload" HelpResourceFile = "3DPlayCommands/3DPlayHelpForCommands" ResourceFile="3DPlay/3DPlay"  />
+    </CATCmdHeadersList>
+  </Template>
+
+  <Template syp:name="3DSHAREAfrWorkshopAccess" Target="CATCmdWorkbench">
+    <CATCmdWorkbench Name="3DSHAREFixedWorkbench">
+      <CATCmdContainer Name="Fixed Area" RepresentationType="AfrActionBarFixedSection">
+        <CATCmdContainer Name = "Share" Visibility = "1" RepresentationType="AfrActionBarDropDown" >
+          <CATCmdStarter Name = "Share3DComment"  Command="Share3DComment" />
+          <CATCmdStarter Name = "ShareTo3DSwYm"  Command = "ShareTo3DSwYm" />
+          <CATCmdStarter Name = "ShareDownload"  Command = "ShareDownload" />
+          <CATCmdStarter Name = "SharePrint"  Command = "SharePrint" />
+        </CATCmdContainer>
+      </CATCmdContainer>
+    </CATCmdWorkbench>
+  </Template>
+</Styles>

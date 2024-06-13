@@ -1,0 +1,54 @@
+<OOTBParameterization>
+	<Domain id="MSFCustomTypeMappingParameterization" regSuite="MSF">
+		<Family id="MSFCustomTypeMapping">
+			<Parameter id="MSFCustomTypeMappingParameterization" implementation="com.dassault_systemes.contentparameterization.v1.handler.MSFGCOMappingXPHandler">
+			</Parameter>
+		</Family>
+	</Domain>
+	<Domain id="MSFConfigurationParameterization" regSuite="MSF">
+		<Family id="MSFGCOConfiguration" icon="">
+			<Parameter id="CommentAsMandatory" implementation="com.dassault_systemes.ootbConfiguration.deployment.impl.ParameterizationExpressionImpl" regSuite="MSF">
+				<Argument id="Argument" type="boolean" input="checkbox" default="Disabled" />
+				<Constant id="expression" value="CommentAsMandatoryValue" />
+			</Parameter>
+			<Parameter id="StateFilterForMSOfficeTemplate" implementation="com.dassault_systemes.ootbConfiguration.deployment.impl.ParameterizationExpressionImpl" regSuite="MSF">
+				<Argument id="Argument" type="string" input="comboboxmultiselect" default="Private,In_Work,Frozen,Released">
+				<Value id="Private"/>
+				<Value id="In_Work"/>
+				<Value id="Frozen"/>
+				<Value id="Released"/>
+				</Argument>
+				<Constant id="expression" value="StateFilterForMSOfficeTemplateValue" />
+			</Parameter>
+			<Parameter id="MSOIUnsupportedExtensions" implementation="com.dassault_systemes.ootbConfiguration.deployment.impl.ParameterizationExpressionImpl" regSuite="MSF">
+				<Argument id="Argument" type="string" input="comboboxmultiselect" default="ipt,iam,idw,ipn,asm,cfg,par,dft,psm,pwd,prt,drw,dgm,frm,lay,mfg,SLDPRT,SLDASM,SLDDRW,dgn,dwg,CATPart,CATProduct,CADDrawing">
+				<Value id="ipt"/>
+				<Value id="iam"/>
+				<Value id="idw"/>
+				<Value id="ipn"/>
+				<Value id="asm"/>
+				<Value id="cfg"/>
+				<Value id="par"/>
+				<Value id="dft"/>
+				<Value id="psm"/>
+				<Value id="pwd"/>
+				<Value id="prt"/>
+				<Value id="drw"/>
+				<Value id="dgm"/>
+				<Value id="frm"/>
+				<Value id="lay"/>
+				<Value id="mfg"/>
+				<Value id="SLDPRT"/>
+				<Value id="SLDASM"/>
+				<Value id="SLDDRW"/>
+				<Value id="dgn"/>
+				<Value id="dwg"/>
+				<Value id="CATPart"/>
+				<Value id="CATProduct"/>
+				<Value id="CADDrawing"/>
+				</Argument>
+				<Constant id="expression" value="MSOIUnsupportedExtensionsValue" />
+			</Parameter>
+		</Family>
+	</Domain>
+</OOTBParameterization>

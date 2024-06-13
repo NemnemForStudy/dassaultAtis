@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration scan="true" scanPeriod="30 seconds">
+  <jmxConfigurator />    <define name="kernelName" class="com.matrixone.util.KernelPropertyDefiner"/>    <appender name="ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">    <file>C:/DassaultSystemes/R2023x/3DSpace/logs/${MX_TRACE_FILE_NAME:-3DXServer}_${kernelName}.log</file>    <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">      <!-- rollover daily -->      <fileNamePattern>C:/DassaultSystemes/R2023x/3DSpace/logs/${MX_TRACE_FILE_NAME:-3DXServer}_${kernelName}_%d{yyyy-MM-dd, UTC}_%i.log.zip</fileNamePattern>      <!-- or whenever the file size reaches 64MB -->      <maxFileSize>64MB</maxFileSize>    </rollingPolicy>    <encoder>      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS,GMT} | %-24([%thread]) | %-5level | %-36logger{36} | %marker | %X{sessionId} | %X{requestId} | %msg%n%ex</pattern>    </encoder>  </appender>  <root level="info">    <appender-ref ref="ROLLING" />  </root>
+  <appender name="CCMErrorAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>C:/DassaultSystemes/R2023x/3DSpace/logs/${MX_TRACE_FILE_NAME:-3DXServer}_CCMErrorMonitoring.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+      <fileNamePattern>C:/DassaultSystemes/R2023x/3DSpace/logs/${MX_TRACE_FILE_NAME:-3DXServer}_CCMErrorMonitoring_%d{yyyy-MM-dd_HH, UTC}_%i.log.zip</fileNamePattern>
+      <maxFileSize>64MB</maxFileSize>
+    </rollingPolicy>
+    <encoder>
+      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS,GMT} | %-24([%thread]) | %-5level | %-36logger{36} | %marker | %msg%n%ex</pattern>
+    </encoder>
+  </appender>
+
+    <appender name="CCMRunAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>C:/DassaultSystemes/R2023x/3DSpace/logs/${MX_TRACE_FILE_NAME:-3DXServer}_CCMProcessMonitoring.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+      <fileNamePattern>C:/DassaultSystemes/R2023x/3DSpace/logs/${MX_TRACE_FILE_NAME:-3DXServer}_CCMProcessMonitoring_%d{yyyy-MM-dd_HH, UTC}_%i.log.zip</fileNamePattern>
+      <maxFileSize>64MB</maxFileSize>
+    </rollingPolicy>
+    <encoder>
+      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS,GMT} | %-24([%thread]) | %-5level | %-36logger{36} | %marker | %msg%n%ex</pattern>
+    </encoder>
+  </appender>
+
+  <logger name="CCMTraces" level="info" additivity="FALSE" >
+    <appender-ref ref="CCMRunAppender" />
+  </logger>
+  <logger name="CCMErrors" level="info" additivity="FALSE" >
+    <appender-ref ref="CCMErrorAppender" />
+  </logger>
+</configuration>

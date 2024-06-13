@@ -1,0 +1,1 @@
+define("DS/MPFMiniCartComponent/MPFMiniCartComponent_zh",{});define("DS/MPFMiniCartComponent/assets/nls/MiniCartComponent",{items:"{itemCount} 个项目",viewCart:"查看购物车"});

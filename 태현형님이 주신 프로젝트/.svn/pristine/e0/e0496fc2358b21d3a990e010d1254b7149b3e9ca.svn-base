@@ -1,0 +1,420 @@
+<%@page import="com.dec.util.decListUtil"%>
+<%@page import="com.dec.util.DecMatrixUtil"%>
+<%@page import="com.dec.util.DecConstants"%>
+<%@page import="org.apache.commons.lang3.StringUtils"%>
+<%@include file = "../common/emxNavigatorInclude.inc"%>
+
+<emxUtil:localize id="i18nId" bundle="emxProgramCentralStringResource" locale='<xss:encodeForHTMLAttribute><%= request.getHeader("Accept-Language") %></xss:encodeForHTMLAttribute>' />
+
+<%
+try {
+	String projectId = emxGetParameter(request, "objectId");
+	String discipline = emxGetParameter(request, "Discipline");
+	String uom = emxGetParameter(request, "uom");
+	String emxTableRowIdExpr = emxGetParameter(request, "emxTableRowIdExpr");
+	
+	Map uomByDPMap = new HashMap();
+	uomByDPMap.put("PP", new String[] {"DI","Ton"});
+	uomByDPMap.put("ME", new String[] {"EA","Ton"});
+	uomByDPMap.put("IC", new String[] {"M"});
+	uomByDPMap.put("EL", new String[] {"M"});
+	uomByDPMap.put("ST", new String[] {"Ton"});
+	uomByDPMap.put("Others", new String[] {"EA"});
+	
+	String[] uomArr = (String[]) uomByDPMap.get(discipline);
+	if ( uomArr == null )
+	{
+		uomArr = (String[]) uomByDPMap.get("Others");
+	}
+	if ( StringUtils.isEmpty(uom) )
+	{
+		if ( uomArr == null )
+		{
+			uom = "EA";
+		}
+		else
+		{
+			uom = uomArr[0];
+		}
+	}
+	
+	boolean isTon = uom.equalsIgnoreCase("Ton");
+	
+	// CWP Completed 조회
+	String objectId = null;
+	String rowLevel = null;
+	String rowName = null;
+	
+	if ( StringUtils.isEmpty(emxTableRowIdExpr) )
+	{
+		objectId = projectId;
+	}
+	else
+	{
+		StringList rowIdList = FrameworkUtil.splitString(emxTableRowIdExpr, ",");
+		objectId = rowIdList.get(0);
+		rowLevel = rowIdList.get(1);
+		rowName = MqlUtil.mqlCommand(context, "print bus $1 select $2 dump", objectId, DecConstants.SELECT_NAME);
+	}
+	
+	// CWP 조회
+	DomainObject doObj = DomainObject.newInstance(context, objectId);
+	MapList cwpList = doObj.getRelatedObjects(context, DecConstants.RELATIONSHIP_SUBTASK, DecConstants.TYPE_TASK_MANAGEMENT
+			, new StringList(
+					new String[] {
+							DecConstants.SELECT_TYPE
+							, DecConstants.SELECT_NAME
+							, DecConstants.SELECT_ATTRIBUTE_DECKEYQUANTITYUOM
+							, DecConstants.SELECT_ATTRIBUTE_DECKEYQUANTITYCOMPLETED
+							, DecConstants.SELECT_ATTRIBUTE_DECDISCIPLINE
+					}
+			)
+			, null
+			, false, true
+			, (short) 0
+			, null, null
+			, 0);
+	
+	Map<String,Map> cwpNameMap = decListUtil.getSelectKeyDataMapForMapList(cwpList, DecConstants.SELECT_NAME);
+	
+	// Material Allocation Status 조회
+	Map programMap = new HashMap();
+	programMap.put("projectId", projectId);
+	programMap.put("projectCode", emxGetParameter(request, "projectCode"));
+	programMap.put("discipline", discipline);
+	programMap.put("uom", uom);
+	programMap.put("subcon", emxGetParameter(request, "Sub-Con"));
+	programMap.put("rowLevel", rowLevel);
+	programMap.put("rowName", rowName);
+	
+	MapList materialAllocationStatusList = JPO.invoke(context, "decMaterial", null, "getMaterialAllocationStatus", JPO.packArgs(programMap), MapList.class);
+	
+	// CWP Key Quantity Completed 조회
+	String webreportMQL = "temp webreport searchcriteria $1 groupby value $2 groupby value $3 groupby value $4 data value $5";
+	
+	Map webreportResultMap = DecMatrixUtil.parseWebReport(context, webreportMQL
+			, "expand bus " + objectId + " from rel Subtask recurse to all"
+			, DecConstants.SELECT_TYPE 
+			, DecConstants.SELECT_ATTRIBUTE_DECDISCIPLINE
+			, DecConstants.SELECT_ATTRIBUTE_DECKEYQUANTITYUOM
+			, "sum " + DecConstants.SELECT_ATTRIBUTE_DECKEYQUANTITYCOMPLETED);
+	
+	String completedStr = null;
+	double tempCompletedDoubleValue = 0d;
+	if ( isTon )
+	{
+		String completedKg = (String) webreportResultMap.getOrDefault(DecConstants.TYPE_DECCWPTASK + "|" + discipline + "|KG", "0.0");
+		String completedTon = (String) webreportResultMap.getOrDefault(DecConstants.TYPE_DECCWPTASK + "|" + discipline + "|TON", "0.0");
+		
+		tempCompletedDoubleValue = (Double.parseDouble(completedKg) / 1000) + Double.parseDouble(completedTon);
+		completedStr = String.valueOf(tempCompletedDoubleValue);
+	}
+	else
+	{
+		completedStr = (String) webreportResultMap.getOrDefault(DecConstants.TYPE_DECCWPTASK + "|" + discipline + "|" + uom, "0.0");
+	}
+	
+	programMap.clear();
+	programMap.put("mapList", materialAllocationStatusList);
+	programMap.put("completed", completedStr);
+	
+	Map materialAllocationStatusMap = JPO.invoke(context, "decMaterial", null, "generateHighChartData", JPO.packArgs(programMap), Map.class);
+	
+	double BOM = 0d;
+	double BOMRate = 0d;
+	double Allocated = 0d;
+	double AllocatedRate = 0d;
+	double InStock = 0d;
+	double InStockRate = 0d;
+	double Completed = 0d;
+	double CompletedRate = 0d;
+	if ( materialAllocationStatusMap != null )
+	{
+		BOM = (double) materialAllocationStatusMap.get("BOM_QTY");
+		BOMRate = Double.parseDouble(String.valueOf( materialAllocationStatusMap.get("BOMRATE") ));
+		Allocated = (double) materialAllocationStatusMap.get("ALLOCATED_QTY");
+		AllocatedRate = (double) materialAllocationStatusMap.get("ALLOCATEDRATE"); 
+		InStock = (double) materialAllocationStatusMap.get("INSTOCK_QTY");
+		InStockRate = (double) materialAllocationStatusMap.get("INSTOCKRATE");
+		Completed = Double.parseDouble(String.valueOf( materialAllocationStatusMap.get("COMPLETED_QTY") ));
+		CompletedRate = (double) materialAllocationStatusMap.get("COMPLETEDRATE");
+	}
+%>
+
+<div id="uomDiv" style="float: right; display: flex; align-items: center;">
+	<select id="uomSelect" onchange="fnChangeUOM(this)" style="font-size: 15px;">
+<%
+		String uomTemp = null;
+		for (int k = 0; k < uomArr.length; k++)
+		{
+			uomTemp = uomArr[k];
+%>
+			<option class="<%=uomTemp %>" <%=uom.equals(uomTemp) ? "selected" : "" %>><%=uomTemp %></option>
+<%			
+		}
+%>
+	</select>
+	&nbsp;
+	<img src="../common/images/iconActionSearchSpyGlass.png" onclick='showFilterSlideinDialog("<%=emxGetQueryString(request) %>")' style="cursor: pointer;">
+</div>
+
+<div id="container">
+
+</div>
+
+
+<details>
+	<summary>Summary</summary>
+	
+	<div id="tableDivVorder" style="overflow-y: scroll; overflow-x: scroll;">
+		<table id="summaryTable" class="grid" style="table-layout: fixed;">
+			<tr class="header" style="position: sticky; top: 0;">
+				<th style="position: sticky; left: 0;"><emxUtil:i18nScript localize="i18nId">ProgramCentral.Label.CWP_No</emxUtil:i18nScript></th>
+				<th><emxUtil:i18nScript localize="i18nId">ProgramCentral.Label.Discipline</emxUtil:i18nScript></th>
+				<th><emxUtil:i18nScript localize="i18nId">emxProgramCentral.Label.UnitNo</emxUtil:i18nScript></th>
+				<th><emxUtil:i18nScript localize="i18nId">emxProgramCentral.Label.AreaNo</emxUtil:i18nScript></th>
+				<th><emxUtil:i18nScript localize="i18nId">ProgramCentral.Label.Sub-Con</emxUtil:i18nScript></th>
+				<th><emxUtil:i18nScript localize="i18nId">emxProgramCentral.Label.FabCategory</emxUtil:i18nScript></th>
+				<th>BOM Q'ty</th>
+				<th>Allocated Q'ty</th>
+				<th>In Stock Q'ty</th>
+				<th>Completed Q'ty</th>
+			</tr>
+		<%
+			Map map = null;
+			Map cwpInfo = null;
+
+			String cwpNo = null;
+			String fabCatCd = null;
+			String tempDiscipline = null;
+			String keyQtyUOM = null;
+			String tempCompleted = null;
+			String mergeValue = null;
+			
+			int rowIdx = 0;
+		
+			for (Object obj : materialAllocationStatusList)
+			{
+				map = (Map) obj;
+				cwpNo = (String) map.get("CWP_NO");
+				fabCatCd = (String) map.get("FAB_CAT_NM");
+				
+				cwpInfo = (Map) cwpNameMap.get(cwpNo);
+				tempDiscipline = (String) cwpInfo.get(DecConstants.SELECT_ATTRIBUTE_DECDISCIPLINE);
+				keyQtyUOM = (String) cwpInfo.get(DecConstants.SELECT_ATTRIBUTE_DECKEYQUANTITYUOM);
+				
+				// Fab/Shop 여부에 따라 동일한 CWP No가 2행이 나올 수 있어 merge하기 위해 변수 설정
+				mergeValue = cwpNo + "_" + tempDiscipline;
+				
+				if ( discipline.equals(tempDiscipline) // 공종이 paramater로 전달된 값과 같고
+						&& ( uom.equals(keyQtyUOM) // 단위가 parameter로 전달된 값과 같거나
+								|| ( isTon && "KG".equals(keyQtyUOM) ) ) // 단위가 Ton일 경우 KG도 허용
+					)
+				{
+					if ( isTon )
+					{
+						// KG을 Ton으로 변환
+						if ( "KG".equalsIgnoreCase(keyQtyUOM) )
+						{
+							tempCompleted = (String) cwpInfo.getOrDefault(DecConstants.SELECT_ATTRIBUTE_DECKEYQUANTITYCOMPLETED, "0.0");
+							tempCompletedDoubleValue = Double.parseDouble(tempCompleted) / 1000d;
+							tempCompleted = String.valueOf( tempCompletedDoubleValue );
+						}
+						else
+						{
+							tempCompleted = (String) cwpInfo.get(DecConstants.SELECT_ATTRIBUTE_DECKEYQUANTITYCOMPLETED);
+						}
+					}
+					else
+					{
+						tempCompleted = (String) cwpInfo.get(DecConstants.SELECT_ATTRIBUTE_DECKEYQUANTITYCOMPLETED);
+					}
+					
+				}
+				else
+				{
+					tempCompleted = "0";
+				}
+	%>
+				<tr rowIdx="<%=++rowIdx %>">
+					<td class="merge1" mergeValue="<%=mergeValue + "_1" %>"><%=cwpNo %></td>
+					<td class="merge2" mergeValue="<%=mergeValue + "_2" %>"><%=tempDiscipline %></td>
+					<td class="merge3" mergeValue="<%=mergeValue + "_3" %>"><%=map.get("UNIT_NM") %></td>
+					<td class="merge4" mergeValue="<%=mergeValue + "_4" %>"><%=map.get("AREA_NM") %></td>
+					<td class="merge5" mergeValue="<%=mergeValue + "_5" %>"><%=map.get("ORG_CD") %></td>
+					<td><%=fabCatCd %></td>
+					<td><%=String.valueOf( map.get("BOM_QTY") ) %></td>
+					<td><%=String.valueOf( map.get("ALLOCATED_QTY") ) %></td>
+					<td><%=String.valueOf( map.get("INSTOCK_QTY") ) %></td>
+					<td class="merge6" mergeValue="<%=mergeValue + "_6" %>"><%=tempCompleted %></td>
+				</tr>
+	<%
+			}
+	%>
+		</table>
+	</div>
+</details>
+
+<link rel="stylesheet" href="../common/styles/emxUIDefault.css" type="text/css" />
+<link rel="stylesheet" href="../common/styles/emxUIForm.css" type="text/css" />
+<link rel="stylesheet" href="../webapps/UIKIT/UIKIT.css" type="text/css" />
+<style type="text/css">
+html, body {
+	height: calc(100% - 5px);
+	width: 100%;
+}
+#container {
+	height: calc(100% - 50px);
+	width: 100%;
+}
+summary {
+	cursor: pointer;
+}
+table tr td,th {
+	font-size: min(1.5vw, 15px);
+}
+table tr td {
+	border: 2px solid #ffffff;
+	word-wrap: break-word;
+}
+</style>
+
+<script src="../common/scripts/emxUIConstants.js"></script>
+<script src="../common/scripts/emxUICore.js"></script>
+<script src="../webapps/ENOAEFStructureBrowser/webroot/common/scripts/decemxUIFreezePane.js"></script>
+<script src="../common/scripts/hichart/highcharts.js"></script>
+<script src="../common/scripts/jquery-latest.js"></script>
+<script src="../programcentral/script/decProjectKeyQtyReport.js"></script>
+<script type="text/javascript">
+let chartElem = Highcharts.chart('container', {
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: ''
+    },
+    credits: {
+    		enabled: false
+    },
+    xAxis: {
+    		title: {
+        		enabled: false
+        },
+        categories: [
+            'BOM',
+            'Allocated',
+            'In Stock',
+            'Completed'
+        ],
+        gridLineWidth: 1
+    },
+    yAxis: {
+        min: 0,
+        title: {
+        	enabled: false
+        }
+    },
+    legend: {
+    	enabled: false
+    },
+    tooltip: {
+    	formatter: function() {
+    		let qty = Highcharts.numberFormat(this.y.toFixed(1), 0, ".", ",");
+    		let tooltip = "<span style='font-size: max(1vw, 12px)'>" + this.key + "</span><br/>";
+    		tooltip += "<span style='font-size: max(0.9vw, 11px); color:" + this.color + "'>\u25CF</span> ";
+    		tooltip += "<b>" + qty + "</b>";
+    		return tooltip;
+    	}, 
+        shared: true
+    },
+    plotOptions: {
+        column: {
+            grouping: false,
+            shadow: false,
+            borderWidth: 0
+        },
+        series: {
+            dataLabels: {
+                enabled: true,
+//                 format: '{point.y}<br/>{#if (eq point.percentage 100)}{else}({(multiply point.percentage 100):.2f}%){/if}'
+				formatter: function() {
+					let dataLabel = "<span style='font-size: max(1vw, 12px'>" + Highcharts.numberFormat(this.y, 0, ".", ",") + "</span>"; // 3자리마다 ,를 찍는다.
+					if ( this.percentage == 100 )
+					{
+						// do nothing...
+					}
+					else
+					{
+						dataLabel += "<br/><span style='font-size: max(0.9vw, 11px)'>(" + (this.percentage * 100).toFixed(1) + "%)</span>";
+					}
+					return dataLabel;
+				}
+            }
+        }
+    },
+    series: [{
+        name: "Category",
+    	data: [{y:<%=BOM %>, color: '#C6D9F1', percentage: <%=BOMRate %>}
+        , {y:<%=Allocated %>,color:'#005685',percentage:<%=AllocatedRate %>}
+        , {y:<%=InStock %>,color:'#558ED5',percentage:<%=InStockRate %>}
+        , {y:<%=Completed %>,color:'#17375E',percentage:<%=CompletedRate %>}]
+    }]
+});
+
+function fnSetTableHeight() {
+	$("#tableDivVorder").css("height", $(window).height() / 2 + "px");
+}
+
+let expanded = false;
+$(function() {
+	$("summary").on("click", function() {
+		let css = null;
+		if ( expanded )
+		{
+			css = "calc(100% - 50px)";
+		}
+		else
+		{
+			css = "calc(50% - 50px)";
+		}
+		$("#container").css("height", css);
+		fnSetTableHeight();
+		expanded = !expanded;
+	});
+	$(window).on("resize", function() {
+		fnSetTableHeight();
+	});
+	
+	fnMergeCell( ["merge1","merge2","merge3","merge4","merge5","merge6"] );
+});
+
+function fnChangeUOM(dom) {
+	let uom = dom.value;
+	let url = location.href;
+	let urlArr = url.split("&");
+	let flag = false;
+	for (let k = 0; k < urlArr.length; k++)
+	{
+		if ( urlArr[k].indexOf("uom=") > -1 )
+		{
+			urlArr[k] = "uom=" + uom;
+			flag = true;
+			break;
+		}
+	}
+	
+	if ( !flag )
+	{
+		urlArr.push("&uom=" + uom);
+	}
+	
+	location.href = urlArr.join("&");
+}
+</script>
+
+<%	
+} catch(Exception e) {
+	e.printStackTrace();
+	throw e;
+}
+%>

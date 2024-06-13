@@ -1,0 +1,1 @@
+define("DS/CAT3DAnnotSemanticWidget/CAT3DAnnotSemanticWidget_fr",{});define("DS/CAT3DAnnotSemanticWidget/assets/nls/CAT3DAnnotSemanticCmds",{});

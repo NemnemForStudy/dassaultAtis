@@ -1,0 +1,34 @@
+
+<?xml version="1.0" encoding="utf-8" ?>
+<Styles xmlns:syp="http://www.3ds.com/xsd/SYP">
+
+  <Template syp:name="3DPlayDocumentAfrWorkshopInterface" Target="CATCmdInterface">
+    <CATCmdInterface  WkbInterface= "CATI3DPlayProAfrWorkshopConfiguration"/>
+  </Template>
+
+  <Template syp:name="3DPlayDocumentAfrWorkshopHeaders" Target="CATCmdHeadersList">
+    <CATCmdHeadersList>
+      <!-- <CATCommandHeader ID="FitWidth" ClassName="DS/3DPlay2DExperience/Commands/CmdFitWidth" HelpResourceFile = "3DPlayCommands/3DPlayHelpForCommands2D" ResourceFile="3DPlay2DExperience/3DPlay2DExperience" /> -->
+      <CATCommandHeader ID="ScaleP" ClassName="DS/3DPlay2DExperience/Commands/CmdZoom" HelpResourceFile = "3DPlayCommands/3DPlayHelpForCommands2D" ResourceFile="3DPlay2DExperience/3DPlay2DExperience">
+        <CATAfrCommandHeaderArgs>
+          <CATCommandHeaderArg ID="Scale" Value="+" Mode="In" />
+        </CATAfrCommandHeaderArgs>
+      </CATCommandHeader>
+      <CATCommandHeader ID="ScaleM" ClassName="DS/3DPlay2DExperience/Commands/CmdZoom" HelpResourceFile = "3DPlayCommands/3DPlayHelpForCommands2D" ResourceFile="3DPlay2DExperience/3DPlay2DExperience">
+        <CATAfrCommandHeaderArgs>
+          <CATCommandHeaderArg ID="Scale" Value="-" Mode="In" />
+        </CATAfrCommandHeaderArgs>
+      </CATCommandHeader>
+    </CATCmdHeadersList>
+  </Template>
+  <Template syp:name="3DPlayDocumentAfrWorkshopAccess" Target="CATCmdWorkbench">
+    <CATCmdWorkbench Name="3DPlayDocumentWorkbench">
+
+      <CATCmdContainer Name="SectionViews" Visibility="1" RepresentationType="AfrActionBarSection">
+        <!-- <CATCmdStarter Name="FitWidth" Command="FitWidth" /> -->
+        <CATCmdStarter Name="ScaleP" Command="ScaleP"/>
+        <CATCmdStarter Name="ScaleM" Command="ScaleM"/>
+      </CATCmdContainer>
+    </CATCmdWorkbench>
+  </Template>
+</Styles>

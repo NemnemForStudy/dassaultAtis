@@ -1,0 +1,1 @@
+define("DS/CAT3DWPanoply/CAT3DWPanoply_ja",{});define("DS/CAT3DWPanoply/assets/nls/CAT3DWActionHelp",{tipLabel:"ヒント",defaultTitle:"ヘルプ","modal.labelButton":"了解",moreLabel:"詳細ヘルプ"});

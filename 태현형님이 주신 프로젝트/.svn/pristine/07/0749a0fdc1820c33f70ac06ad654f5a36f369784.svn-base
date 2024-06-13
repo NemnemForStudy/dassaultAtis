@@ -1,0 +1,839 @@
+{
+  "maturity": {
+    "create": "拔模",
+    "assign": "待辦事項",
+    "active": "工作中",
+    "review": "核准中",
+    "closed": "完成"
+  },
+  "priorities": {
+    "title": "優先順序",
+    "low": "低",
+    "medium": "中",
+    "high": "高",
+    "urgent": "緊急"
+  },
+  "dates": {
+    "seconds": "{number} 秒",
+    "minutes": "{number} 分鐘",
+    "hours": "{number} 小時",
+    "days": "{number} 天",
+    "months": "{number} 個月",
+    "years": "{number} 年"
+  },
+  "placeholder": {
+    "reportedAgainstPlaceholder": "在 3D 中搜尋、選擇，或置放要設定為受影響項目的物件。",
+    "resolvedByPlaceholder": "在 3D 中搜尋、選擇，或置放要設定為解決方案的物件。",
+    "resolvedItemsPlaceholder": "在 3D 中搜尋、選擇，或置放要設定為已解決項目的物件。",
+    "contextPlaceholder": "搜尋或置放要設定為關聯的物件。",
+    "emptyRelatedDatagridView": "將內容新增或置放到此處"
+  },
+  "lifecycle": {
+    "create": "將問題設定為「草稿」狀態，表示您已開始處理該問題。",
+    "assign": "將問題設定為「待辦」狀態，讓受指派者可以處理該問題。",
+    "active": "將問題設定為「工作中」狀態，表示您正在處理該問題。",
+    "review": "將問題設定為「核准中」狀態，以允許審查您所做的修正。",
+    "closed": "如果問題已解決，將問題設定為「已完成」狀態。",
+    "CREATE": "將問題設定為「{stateDisplayName}」狀態，表示您已開始處理該問題。",
+    "ASSIGN": "將問題設定為「{stateDisplayName}」狀態，讓受指派者可以處理該問題。",
+    "ACTIVE": "將問題設定為「{stateDisplayName}」狀態，表示您正在處理該問題。",
+    "REVIEW": "將問題設定為「{stateDisplayName}」狀態，以允許審查您所做的修正。",
+    "CLOSED": "如果問題已解決，將問題設定為「{stateDisplayName}」狀態。",
+    "partial": "{number} 個問題的操作失敗。",
+    "error": "發生錯誤，請重新整理您的頁面並重試。",
+    "notSupported": "只有具備相同成熟度狀態和相同驗證程序的問題可以升級或降級。",
+    "routeIndicatorTooltip": {
+      "rejectionTitle": "拒絕者：",
+      "approvalTitle": "核准者：",
+      "rejectionText": "{name} 於 {date}。",
+      "approvalText": "{name} 於 {date}。",
+      "moreTooltip": {
+        "title": "{number} 個決定",
+        "approvalText": "核准於 {date}",
+        "rejectionText": "拒絕於 {date}"
+      },
+      "inProgressTooltip": {
+        "title": "等待其核准：",
+        "multiSelectionTitle": "所選問題正在等候多位審查者的核准。"
+      }
+    },
+    "approveModal": {
+      "reasonLabel": "評論",
+      "reasonPlaceholder": "為您的核准加上評論...",
+      "header": "核准升級至「{approveTo}」",
+      "reasonRequired": "請為您的核准提供評論。",
+      "okButton": "核准",
+      "cancelButton": "取消"
+    },
+    "rejectModal": {
+      "reasonLabel": "原因",
+      "reasonPlaceholder": "您拒絕的原因...",
+      "header": "拒絕升級至「{approveTo}」",
+      "reasonRequired": "請為您的拒絕提供原因。",
+      "okButton": "拒絕",
+      "cancelButton": "取消"
+    },
+    "paths": {
+      "anyStateToClose": "允許所有者將問題從任何狀態設定為「完成」。",
+      "approve": "核准",
+      "reject": "拒絕"
+    },
+    "orgs": {
+      "Reporting": "報告組織",
+      "Responsible": "責任組織"
+    },
+    "varies": "變化",
+    "goToNextState": "下個狀態",
+    "goToPrevState": "先前狀態"
+  },
+  "routes": {
+    "header": {
+      "states": "成熟升級",
+      "routes": "決定"
+    },
+    "columns": {
+      "reviewer": "審查者",
+      "date": "決定日期",
+      "reason": "原因 / 評論",
+      "action": "動作",
+      "attachments": "附件"
+    },
+    "attachmentsManagerTitle": "成熟升級決定 [{fromState} -> {toState}] [{status}]",
+    "status": {
+      "approved": "已核准",
+      "rejected": "已拒絕",
+      "inProgress": "進行中"
+    },
+    "confirm": "確認",
+    "approve": "核准"
+  },
+  "create": {
+    "title": "問題",
+    "titleTemplate": "範本",
+    "templateName": "範本名稱",
+    "templateDesc": "說明",
+    "titleActionCreate": "新增",
+    "titleActionEdit": "編輯",
+    "templateApplySuccess": "已成功套用範本「{name}」。",
+    "templateApplyError": "套用範本「{name}」時發生錯誤。",
+    "templateApplyWarningAttachments": "無法擷取範本所參照的部分附件，將不會加入這些附件。",
+    "templateApplyWarningRelated": "無法擷取範本所參照的部分相關物件，將不會加入這些物件。",
+    "issueApplySuccess": "已成功套用問題「{title} - {name}」。",
+    "issueApplyError": "套用問題「{title} - {name}」時發生錯誤。",
+    "required": "必填欄位不應為空白。",
+    "creationSuccess": "成功建立問題。",
+    "creationTemplateSuccess": "成功建立範本。",
+    "updateTemplateSuccess": "成功更新範本。",
+    "creationFailed": "建立期間發生錯誤，請再試一次。",
+    "classificationFailed": "分類物件時發生錯誤",
+    "setAttributesFailed": "設定分類屬性時發生錯誤",
+    "validationFailed": "部分欄位未正確填寫。",
+    "promotionSuccess": "成功升級問題。",
+    "promotionFailed": "升級期間發生錯誤。",
+    "uploadImagesFailed": "上傳影像期間發生錯誤。",
+    "sendButton": "開始",
+    "saveButton": "儲存",
+    "saveAsDraftButton": "儲存為草稿",
+    "cancelButton": "取消",
+    "settings": "設定",
+    "modeToggler": {
+      "multiStep": "多步驟",
+      "fullView": "全視圖",
+      "tooltipMultiStep": "切換至多步驟檢視",
+      "tooltipFullView": "切換至完整表單檢視"
+    },
+    "start": {
+      "title": "建立問題和範本",
+      "cancelButton": "取消",
+      "actionPage": {
+        "issue": {
+          "title": "問題",
+          "fromBlank": "新增",
+          "fromIssue": "複製問題",
+          "fromTemplate": "從範本"
+        },
+        "template": {
+          "title": "範本",
+          "fromBlank": "新增",
+          "fromIssue": "從現有問題",
+          "edit": "管理",
+          "cloneSuffix": "[DUP]"
+        }
+      }
+    },
+    "views": {
+      "properties": "屬性",
+      "relatedObjects": "內容",
+      "team": "成員",
+      "attachments": "附件",
+      "moreAttributes": "更多屬性",
+      "finalize": "定案"
+    },
+    "properties": {
+      "labels": {
+        "title": "標題",
+        "titlePlaceholder": "新問題的標題...",
+        "titleHelper": "問題的簡短一行摘要。",
+        "required": " * ",
+        "type": "類型",
+        "escalationRequired": "需要升級",
+        "escalationRequired_Yes": "是",
+        "escalationRequired_No": "否",
+        "typePlaceHolder": "",
+        "typeHelper": "問題物件的類型",
+        "credentials": "認證",
+        "similarIssues": "類似問題",
+        "Created": "已建立",
+        "Updated": "已更新",
+        "ago": "前",
+        "similarIssuesHelper": "這些現有問題的標題類似。建議您不要建立另一個類似的問題，而在現有問題下評論。",
+        "description": "說明",
+        "descriptionPlaceholder": "撰寫說明...",
+        "descriptionHelper": "問題的詳細說明。",
+        "classification": "分類",
+        "classificationAddBtn": "加入",
+        "classificationPlaceholder": "選擇類別...",
+        "classificationHelper": "用於識別問題的一或多個分類。",
+        "resolutionRecommendation": "解決方法建議",
+        "resolutionRecommendationPlaceholder": "應該怎麼做？",
+        "resolutionRecommendationHelper": "應如何解決此問題的建議。",
+        "priorityHelper": "該問題相對於其他問題的重要性。",
+        "priorityHelperUrgent": "緊急：優先順序最高。表示此問題優先於所有其他問題。",
+        "priorityHelperHigh": "高：表示此問題正在引發問題，需要緊急處理。",
+        "priorityHelperMedium": "中：表示此問題具有重大影響。",
+        "priorityHelperLow": "低：表示此問題相對上影響較小。",
+        "dueDate": "到期日",
+        "dueDatePlaceholder": "選擇到期日...",
+        "dueDateHelper": "此問題應在哪一天前完成。",
+        "resolutionStatement": "解決方法陳述",
+        "resolutionStatementPlaceholder": "問題如何解決？"
+      }
+    },
+    "related": {
+      "labels": {
+        "reportedAgainst": "受影響項目",
+        "reportedAgainstshortHelper": "加入一或多個問題正在顯現的物件。",
+        "reportedAgainstlongHelper": "例如，您可以加入文件、工程和製造物件、任務或甚至是圖片 (在目標)",
+        "reportedAgainstPlaceholder": "在 3D 中搜尋、選擇，或置放要設定為受影響項目的物件。",
+        "contexts": "關聯",
+        "contextshortHelper": "加入一或多個物件以提供有關問題關聯的更多詳細資料。 ",
+        "contextlongHelper": "例如，具有文件的問題可以將專案作為關聯，而工程零件則可將父模型作為關聯。",
+        "contextPlaceholder": "搜尋或置放要設定為關聯的物件。"
+      },
+      "search": "搜尋並加入物件。",
+      "remove": "移除所選物件。",
+      "removeErrorNoSelection": "請選擇一些要移除的物件。",
+      "addBalloonAvailable": "在 3D 中選擇一個精確元素，並將其加入到問題。",
+      "addBalloonNotAvailable": "只能從「Issue 3D Review」使用在 3D 中挑選功能。",
+      "alreadyReportedAgainst": "此物件已加入，請選擇另一個物件。",
+      "dropError": "不支援部分置放的物件。",
+      "selectContextIn3D": "在 3D 中選擇一個精確元素，以選擇問題的關聯。",
+      "contextMultiError": "不支援在關聯中加入多個物件。",
+      "treelist": {
+        "tree": "標題",
+        "ds6w:type": "類型",
+        "ds6w:identifier": "名稱",
+        "ds6wg:revision": "修訂版",
+        "occurrence": "路徑"
+      }
+    },
+    "team": {
+      "labels": {
+        "owner": "擁有者",
+        "coOwners": "協調者",
+        "ownerHelper": "此人擁有問題，並有所有責任。",
+        "coOwnersHelper": "協調者與擁有者有相同的責任，但沒有刪除的權限。",
+        "assignees": "受指派者",
+        "assigneesHelper": "受指派者可以檢視、編輯和解決問題。",
+        "reviewers": "審查者",
+        "contributors": "參與者",
+        "contributorHelper": "參與者可以檢視和評估問題。",
+        "informedUsers": "知情使用者",
+        "informedUserHelper": "知情使用者可以檢視此問題，且會收到更新通知。",
+        "assignToMe": "指派給我",
+        "reportingOrganization": "報告組織",
+        "reportingOrganizationHelper": "設定此問題的組織報告。",
+        "responsibleOrganization": "責任組織",
+        "responsibleOrganizationHelper": "設定為此問題負責的組織。"
+      },
+      "alreadyAssigned": "{name} 已被指派了。",
+      "removeAssignee": "按一下以移除此使用者。",
+      "cannotAddOwnerAsCoOwner": "您無法將擁有者加入為協調者。"
+    },
+    "attachments": {
+      "labels": {
+        "attachmentsshortHelper": "加入一筆或多筆額外資訊以協助分析問題。",
+        "attachmentslongHelper": "例如，這可能是與主旨相關的圖片或文件，例如需求建議文件或新聞文章",
+        "attachmentsPlaceholder": "上傳/置放檔案、搜尋/置放 3DEXPERIENCE 物件，或是使用有註記的螢幕擷取畫面按鈕來建立和加入新附件。",
+        "attachmentsPlaceholderNotAvailable": "上傳/置放檔案或搜尋/置放 3DEXPERIENCE 物件，以建立和加入新附件。",
+        "attachments": "附件"
+      },
+      "screenshotAvailable": "拍攝螢幕擷取畫面。",
+      "screenshotNotAvailable": "只能從「Issue 3D Review」使用螢幕擷取功能。",
+      "remove": "移除所選文件。",
+      "removeErrorNoSelection": "請選擇一些要移除的文件。",
+      "attach": {
+        "fromLocalDisk": "來自本機磁碟",
+        "from3DX": "加入現有"
+      },
+      "annotate": "註記"
+    },
+    "finalize": {
+      "labels": {
+        "lifecycle": "生命週期",
+        "approval": "核准",
+        "template": "範本",
+        "saveAsTemplate": "另存範本",
+        "templateNamePlaceholder": "範本名稱 (必填欄位)...",
+        "templateDescriptionPlaceholder": "範本說明...",
+        "templateOverwrite": "將會覆寫具有相同名稱的現有範本。"
+      },
+      "closeDialogToggle": "建立後關閉對話方塊。",
+      "enableApproval": "啟用核准以確保對此問題進行驗證和審查。",
+      "assignContentOwner": "將內容擁有者自動指派給問題。",
+      "saveAsTemplateToggle": "將問題儲存為可重複使用的範本。"
+    },
+    "moreAttributes": {
+      "selectPlaceholder": "選擇數值",
+      "textPlaceholder": "輸入一個值",
+      "numberPlaceholder": "輸入一個值"
+    }
+  },
+  "templates": {
+    "title": "選擇範本",
+    "titleEdit": "管理範本",
+    "cancelButton": "取消",
+    "closeButton": "關閉",
+    "selectButton": "選擇",
+    "treeList": {
+      "shared": "共用",
+      "tree": "名稱",
+      "description": "說明",
+      "owner": "擁有者",
+      "isNotShared": "此為私人範本",
+      "isShared": "此為共用範本",
+      "placeholder": "沒有可用的範本"
+    },
+    "iconBar": {
+      "title": "範本",
+      "create": "新增",
+      "fromIssue": "問題新增",
+      "clone": "複製",
+      "edit": "編輯",
+      "delete": "刪除",
+      "share": "共用"
+    },
+    "lastUsed": {
+      "title": "最近使用"
+    },
+    "preview": {
+      "objectCount": "物件",
+      "noObject": "沒有物件"
+    },
+    "shared": {
+      "title": "問題共用範本 - {owner}",
+      "description": "本文件包含問題共用範本。",
+      "file": "問題共用範本 - {owner}",
+      "popover": {
+        "title": "連結至此共用範本",
+        "copy": "複製連結"
+      }
+    },
+    "confirmDelete": {
+      "title": "刪除 {number} 個範本",
+      "text": "確定要刪除所選範本？刪除內容將<b>永久</b>移除，且無法復原。",
+      "sharedInfo": "不為您擁有的共用範本<b>只會從您的清單</b>中移除。",
+      "sharedWarning": "您擁有的共用範本將會從<b>所有使用者</b>的清單中移除。",
+      "okButton": "刪除",
+      "cancelButton": "取消"
+    },
+    "clonePrefix": "{name} 的複製",
+    "errors": {
+      "get": "擷取範本時發生錯誤，請重新整理您的頁面並重試。",
+      "remove": "移除範本時發生錯誤，請重新整理您的頁面並重試。",
+      "save": "儲存範本時發生錯誤，請重新整理您的頁面並重試。"
+    },
+    "notifications": {
+      "sharedSuccess": "此範本已共用，且已產生可共用的 URL。",
+      "sharedTemplateAdded": "此共用範本已成功加入至您的範本清單。",
+      "sharedTemplateNotValid": "此共用範本已失效。尚未將其加入到您的範本清單。",
+      "sharedTemplateAlreadyAdded": "此共用範本已在您的範本清單中。",
+      "sharedTemplateNotAdded": "加入共用範本時發生錯誤，請重新整理您的頁面並重試。",
+      "sharedTemplateURL": "共用範本 URL 已複製到您的剪貼簿。"
+    }
+  },
+  "open": {
+    "dialog": {
+      "title": "開啟物件於...",
+      "open": "開啟",
+      "cancel": "取消"
+    },
+    "labels": {
+      "placeholder": "選擇您的應用程式",
+      "contexts": "關聯",
+      "reportedAgainst": "受影響項目",
+      "resolvedBy": "解決方案",
+      "resolvedItems": "已解決的項目",
+      "nothing": "沒有項目可開啟，請選擇其他物件。"
+    },
+    "error": "開啟所選物件時發生錯誤，請重新整理後再重試。"
+  },
+  "close": {
+    "preparing": "正在準備將狀態變更為「完成」...",
+    "titleSingle": "將 {number} 個問題設定為「完成」",
+    "titleMultiple": "將 {number} 個問題設定為「完成」",
+    "nothing": "沒有可設定為「完成」的問題。",
+    "close": "設定為完成",
+    "cancel": "取消",
+    "warning": "確定要將這些問題設定為「完成」？",
+    "closable": "將下列問題設定為「完成」後，除非重新開啟，否則無法進行任何修改：",
+    "indelible": "下列問題已完成：",
+    "singleSuccess": "{title} 已設定為「完成」。",
+    "multipleSuccess": "{number} 個問題已設定為「完成」。",
+    "error": "將狀態變更為「完成」時發生錯誤，請重試。"
+  },
+  "reopen": {
+    "preparing": "正在準備重新開啟...",
+    "title": "重新開啟 {number} 個問題",
+    "nothing": "沒有可重新開啟的問題。",
+    "reopen": "重新開啟",
+    "cancel": "取消",
+    "warning": "確定要重新開啟這些問題？",
+    "closable": "重新開啟下列問題：",
+    "indelible": "下列問題尚未設定為「完成」：",
+    "singleSuccess": "{title} 已重新開啟。",
+    "multipleSuccess": "{number} 個問題已重新開啟。",
+    "error": "重新開啟問題時發生錯誤，請重試。"
+  },
+  "delete": {
+    "preparing": "正在準備刪除...",
+    "title": "刪除 {number} 個問題",
+    "nothing": "沒有可刪除的問題。",
+    "delete": "刪除",
+    "cancel": "取消",
+    "warning": "您確定要刪除此內容？",
+    "deletable": "刪除下列問題會將它們<b>永久</b>移除，且無法復原：",
+    "indelible": "無法刪除下列問題，這些問題並非處於「草稿」狀態：",
+    "singleSuccess": "{title} 已刪除。",
+    "multipleSuccess": "{number} 個問題已刪除。",
+    "error": "刪除期間發生錯誤，請再試一次。",
+    "deletePrivilege": "僅管理員使用者可以移除已完成的簽核流程。"
+  },
+  "duplicate": {
+    "titleSingle": "複製 {number} 個問題",
+    "titleMultiple": "複製 {number} 個問題",
+    "preparing": "正在準備複製...",
+    "duplicate": "複製",
+    "cancel": "取消",
+    "content": "將複製下列問題 (<i>所複製的問題將以「草稿」狀態為您擁有</i>)：",
+    "singleSuccess": "{title} 已複製。",
+    "multipleSuccess": "{number} 個問題已複製。",
+    "multipleCopiesSuccess": "{number} 個問題已複製 {multiplication} 次。",
+    "error": "複製期間發生錯誤，請再試一次。",
+    "keepRelated": "將現有受影響項目和關聯保留在複製的問題中",
+    "keepAttachments": "在所複製的問題中保留現有附件",
+    "advancedOptions": "進階複製",
+    "titleModifier": "標題修飾符",
+    "copyCount": "副本數量",
+    "replace": "取代",
+    "replacePlaceholder": "取代標題的字串",
+    "suffix": "後綴",
+    "suffixPlaceholder": "標題後綴",
+    "prefix": "前置",
+    "prefixPlaceholder": "標題前置",
+    "iterator": "迭代器",
+    "iteratorPlaceholder": "迭代器複製排列",
+    "replaceHelp": "提供要以字串或規則運算式取代的部分標題，後面再加上要取代的字串。這兩個部分由 : 加以分隔，例如 [a-z]* : Test，標題中的所有小寫字串將由 Test 取代",
+    "suffixHelp": "提供字串作為所複製問題的標題後綴",
+    "prefixHelp": "提供字串作為所複製問題的標題前置",
+    "iteratorHelp": "提供複製後要以字串或規則運算式形式遞增的標題部分。數字部分將會遞增",
+    "confirmTitle": "確認複製 {number} 個問題。",
+    "confirm": "確認",
+    "confirmMsg": "問題 {title} 將複製為"
+  },
+  "images": {
+    "title": "{count} 個影像",
+    "actions": {
+      "download": "下載",
+      "upload": "上傳",
+      "delete": "刪除",
+      "popup": "快顯視窗",
+      "annotate": "註記"
+    },
+    "noImages": "沒有可顯示的影像。",
+    "popup": {
+      "title": "影像顯示",
+      "holdIssue": "保留目前的問題",
+      "releaseIssue": "釋出目前的問題"
+    },
+    "delete": {
+      "cancel": "取消",
+      "confirmDeleteTitle": "刪除影像",
+      "confirmDeleteMessage": "是否確定要永久刪除此影像？",
+      "imageDisplayDeleteError": "刪除影像時發生錯誤",
+      "okButton": "確定",
+      "pictureDeleted": "影像檔案已刪除。"
+    },
+    "notSupported": "不支援此檔案格式。<br>檔案：{name}。",
+    "errorUpload": "無法上傳影像 {name}。",
+    "pictureUploaded": "影像檔案已上傳。"
+  },
+  "team": {
+    "titleSingle": "{count} 位成員",
+    "titleMultiple": "{count} 位成員",
+    "error": {
+      "loadContent": "無法擷取問題資訊。",
+      "alreadyAdded": "已將使用者 {name} 加入至所選問題的 {role}。",
+      "isOwner": "使用者 {name} 是所選問題的擁有者，因此無法加入為協調者。",
+      "notSupportedDrop": "不支援置放的物件。",
+      "notFound": "找不到結果。",
+      "skipRemoveOwner": "擁有者會略過移除。",
+      "warnRemoveOwner": "無法移除擁有者。",
+      "dropNotSupported": "不支援此置放操作。",
+      "notSupportedObjects": "不支援部分置放的物件。"
+    },
+    "success": {
+      "update": "{role} 已更新。"
+    },
+    "filter": {
+      "title": "篩選",
+      "placeholder": "篩選團隊成員",
+      "filterByName": "依標題篩選",
+      "searchPlaceholder": "輸入要篩選的標題...",
+      "filterByResponsibilities": "依責任篩選",
+      "filterAll": "全部",
+      "filterAssignees": "受指派者",
+      "filterCoowners": "協調者",
+      "filterContributors": "參與者"
+    },
+    "owner": {
+      "title": "擁有者",
+      "label": "擁有者",
+      "changeOwnership": "變更擁有者"
+    },
+    "confirmRemoveTitle": "從「{role}」移除「{user}」",
+    "confirmRemoveText": "確定要從「{role}」移除「{user}」？",
+    "removeOkButton": "移除",
+    "removeCancelButton": "取消",
+    "coOwners": {
+      "title": "協調者",
+      "label": "協調者",
+      "add": "新增協調者",
+      "propagate": "將此協調者衍生至所選的全部問題",
+      "propagateAll": "將所有協調者衍生至所選的全部問題",
+      "remove": "將協調者從所選問題移除",
+      "search": {
+        "placeholder": "搜尋要加入為協調者的使用者..."
+      },
+      "addSelf": "指派給我"
+    },
+    "assignees": {
+      "title": "受指派者",
+      "label": "受指派者",
+      "add": "加入受指派者",
+      "propagate": "將此受指派者衍生至所選的全部問題",
+      "propagateAll": "將所有受指派者衍生至所選的全部問題",
+      "remove": "將受指派者從所選問題移除",
+      "search": {
+        "placeholder": "搜尋要加入為受指派者的使用者..."
+      },
+      "addSelf": "指派您自己"
+    },
+    "contributors": {
+      "title": "參與者",
+      "label": "參與者",
+      "add": "新增參與者",
+      "propagate": "將此參與者衍生至所選的全部問題",
+      "propagateAll": "將所有參與者衍生至所選的全部問題",
+      "remove": "將參與者從所選問題移除",
+      "search": {
+        "placeholder": "搜尋要加入為參與者的使用者..."
+      }
+    },
+    "informedUsers": {
+      "title": "知情使用者",
+      "label": "知情使用者",
+      "propagate": "將此知情使用者衍生至所選的全部問題",
+      "propagateAll": "將所有知情使用者衍生至所選的全部問題",
+      "remove": "從所選問題移除知情使用者",
+      "search": {
+        "placeholder": "搜尋要新增為知情使用者的使用者..."
+      }
+    },
+    "common": {
+      "tooltip": "此成員被指派給所選的全部問題。",
+      "label": "已指派",
+      "notLabel": "變化",
+      "varies": "變化",
+      "allIssues": "所有問題"
+    },
+    "notSaved": {
+      "tooltip": "此成員尚未儲存。"
+    },
+    "changeLayout": "變更視圖配置",
+    "columns": {
+      "name": "名稱",
+      "title": "標題",
+      "memberof": "成員歸屬",
+      "responsibility": "責任",
+      "actions": "動作"
+    },
+    "toolbar": {
+      "gridView": "資料網格視圖",
+      "tileView": "並排視圖",
+      "addMember": "加入成員",
+      "assignToSelf": "指派給自己",
+      "remove": "移除",
+      "filter": "篩選",
+      "propagateCoowners": "衍生所有協調者",
+      "propagateAssignees": "衍生所有受指派者",
+      "propagateContributors": "衍生所有參與者",
+      "propagateInformedUsers": "衍生所有知情使用者"
+    },
+    "menu": {
+      "coowner": "協調者",
+      "assignee": "受指派者",
+      "contributor": "參與者",
+      "informedUser": "知情使用者",
+      "remove": "移除",
+      "profile": "檢視設定檔",
+      "propagate": "衍生",
+      "changeOwner": "變更擁有者"
+    },
+    "addMember": {
+      "assignee": "受指派者",
+      "coowner": "協調者",
+      "contributor": "參與者",
+      "informedUser": "知情使用者",
+      "typeToSearch": "置放於此或輸入以搜尋",
+      "noSearchFound": "找不到搜尋結果",
+      "add": "新增",
+      "cancel": "取消"
+    },
+    "datagridPlaceholder": "找不到物件",
+    "removeTitle": "移除",
+    "removeMessage": "是否確定要從問題移除此成員？",
+    "memberAlreadyAdded": "已新增部分成員。"
+  },
+  "search": {
+    "error": {
+      "usersNotFound": "找不到指定的使用者或組織：{users}。",
+      "orgNotFound": "找不到組織。"
+    },
+    "info": {
+      "expressSearch": "請按 Enter 鍵以加入這些使用者。"
+    }
+  },
+  "resolveIssues": {
+    "title": "解決問題",
+    "okButton": "確定",
+    "cancel": "取消",
+    "reportedAgainst": "受影響項目",
+    "resolvedBy": "解決方案",
+    "resolvedItems": "已解決的項目",
+    "issue": "問題",
+    "item": "{count} 個項目",
+    "items": "{count} 個項目",
+    "revisionFamily": "修訂版系列",
+    "addReportedAgainst": "加入受影響項目",
+    "addResolvedBy": "加入解決方案",
+    "addResolvedItems": "新增已解決的項目",
+    "pickReportedAgainst": "挑選受影響項目",
+    "pickResolvedBy": "挑選解決方案",
+    "pickResolvedItems": "挑選已解決的項目",
+    "addObjectsForReportedAgainst": "加入至受影響項目",
+    "addObjectsForResolvedBy": "加入至解決方案",
+    "changeViewLayout": "變更視圖配置",
+    "errorSameIssue": "相同的問題物件無法新增為解決方案。",
+    "tooltips": {
+      "propagateHeaderTooltip": "衍生",
+      "propagateTooltip": "衍生至所選問題。",
+      "isLastRevision": "這是最新修訂版",
+      "isNotLastRevision": "這不是最新修訂版",
+      "noIsLastRevision": "不適用"
+    },
+    "contextualMenus": {
+      "remove": "移除",
+      "propagate": "衍生",
+      "maturity": "成熟度",
+      "compare": "比較",
+      "relationalExplorer": "限制條件",
+      "openWith": "開啟檔案",
+      "replaceByRevision": "以修訂版取代",
+      "replaceByLatestRevision": "以最新修訂版取代",
+      "replaceByReleasedLatestRevision": "以最新釋出修訂版取代",
+      "replaceByStableLatestRevision": "以最新穩定修訂版取代",
+      "preview": "預覽",
+      "edit": "編輯",
+      "undoEdit": "復原編輯",
+      "update": "更新",
+      "information": "資訊",
+      "download": "下載"
+    },
+    "label": "標題",
+    "name": "名稱",
+    "type": "類型",
+    "revision": "修訂版",
+    "isLastRevision": "為最新修訂版",
+    "actions": "動作",
+    "common": "",
+    "propagate": "衍生",
+    "state": "成熟度狀態",
+    "pickupError_needtoExitInspectionMode": "如果您是在檢查模式下，則無法挑選物件。",
+    "successResolved": "內容已更新。",
+    "attachSuccess": {
+      "reportedAgainst": "您已成功將 {count} 個物件作為「受影響項目」新增至 {issue}。",
+      "resolvedBy": "您已成功將 {count} 個物件作為「解決方案」新增至 {issue}。",
+      "resolvedItems": "您已成功將 {count} 個物件作為「已解決的項目」新增至 {issue}。",
+      "contexts": "您已成功將 {count} 個物件作為「關聯」新增至 {issue}。",
+      "attachments": "您已成功將 {count} 個物件作為「附件」新增至 {issue}。"
+    },
+    "attachSuccessMultiple": {
+      "reportedAgainst": "您已成功將 {count} 個物件作為「受影響項目」新增至多個問題。",
+      "resolvedBy": "您已成功將 {count} 個物件作為「解決方案」新增至多個問題。",
+      "resolvedItems": "您已成功將 {count} 個物件作為「已解決的項目」新增至多個問題。",
+      "contexts": "您已成功將 {count} 個物件作為「關聯」新增至多個問題。"
+    },
+    "errorResolved": "無法更新內容。",
+    "nothingToAdd": "已加入所選物件。",
+    "nothingToReplace": "沒有可取代的物件。",
+    "errorFetch": "無法擷取物件資訊。",
+    "errorGetIssues": "無法擷取問題資訊。",
+    "errorShowIssues": "請選擇處於「工作中」狀態的問題，然後再試一次。",
+    "errorNotSupportedMultipleObject": "不支援多個物件。",
+    "errorNotSupportedObject": "不支援此類型內容。請使用 Compass 中的適當應用程式開啟此類型內容。",
+    "issueNotDroppable": "不支援此物件。",
+    "propertiesTitle": "屬性",
+    "confirmDialog": {
+      "detachTitle": "自 {issues} 問題卸除 {number} 個物件",
+      "confirmDetach": "是否確定要卸除所選物件？",
+      "propagateTitle": "將 {number} 物件衍生至 {issues} 問題",
+      "confirmPropagate": "是否確定要衍生所選物件？",
+      "replaceByLatestRevisionTitle": "於 {issues} 問題的最新修訂版中取代了 {number} 個物件",
+      "confirmReplaceByLatestRevision": "是否確定要以最新修訂版取代所選物件？",
+      "replaceByReleasedLatestRevisionTitle": "於 {issues} 問題的最新釋出修訂版中取代了 {number} 個物件",
+      "confirmReplaceByReleasedLatestRevision": "是否確定要以最新釋出修訂版取代所選物件？",
+      "replaceByStableLatestRevisionTitle": "於 {issues} 問題的最新穩定修訂版中取代了 {number} 個物件",
+      "confirmReplaceByStableLatestRevision": "是否確定要以最新穩定修訂版取代所選物件？",
+      "confirmReplaceByTitleMessage": "{target} 已取代為 {latest}"
+    },
+    "contexts": {
+      "okButton": "確定",
+      "cancel": "取消",
+      "contexts": "關聯",
+      "columnTitle": "標題",
+      "columnName": "名稱",
+      "columnType": "類型",
+      "columnRevision": "修訂版",
+      "addContext": "加入關聯",
+      "pickContext": "挑選關聯",
+      "detachContext": "卸除關聯",
+      "contextualMenus": {
+        "detach": "卸除",
+        "propagate": "衍生",
+        "collaborativeLifecycle": "成熟度",
+        "compare": "比較",
+        "relationalExplorer": "限制條件",
+        "openWith": "開啟檔案"
+      },
+      "errorNotSupportedMultipleObject": "不支援多個物件。",
+      "errorNotSupportedObject": "不支援此物件。",
+      "errorToGetContext": "無法擷取關聯物件資訊。",
+      "successUpdateContext": "關聯已更新。",
+      "successDetachContext": "關聯已卸除。",
+      "errorUpdateContext": "無法更新關聯。",
+      "errorDetachContext": "無法卸除關聯。",
+      "confirmDetachContextTitle": "卸除關聯",
+      "confirmDetachContextMessage": "您確定要卸除此關聯？",
+      "confirmUpdateContextTitle": "更新關聯",
+      "confirmUpdateContextMessage": "您確定要更新此關聯？"
+    }
+  },
+  "tasks": {
+    "selectIn3D": "請提供現有物件以供新增，從相容的 3D 應用程式中選擇。",
+    "addObjects": "請提供現有物件以供新增。",
+    "takeScreenshot": "請提供要新增的影像。"
+  },
+  "helper": {
+    "states": {
+      "create": "問題在被指派之前已收到詳細資料。",
+      "assign": "問題已被指派並正在等待處理。",
+      "active": "受指派者正在處理問題。",
+      "review": "正在審核建議的解決方案。",
+      "closed": "建立者已接受解決方案，且問題已設定為「完成」。"
+    },
+    "dialog": {
+      "title": "Issue Management 應用程式 - 說明",
+      "tabStates": "狀態",
+      "tabShortcuts": "捷徑",
+      "subtitleShortcuts": "快捷鍵",
+      "subtitleMouseOperation": "滑鼠操作",
+      "workflow": "工作流程",
+      "states": {
+        "create": "問題在被指派之前已收到詳細資料。",
+        "assign": "問題已被指派並正在等待處理。",
+        "active": "受指派者正在處理問題。",
+        "review": "正在審核為該問題建議的解決方案。",
+        "closed": "建立者已接受解決方案，且問題已設定為「完成」。"
+      },
+      "shortcut": {
+        "key": {
+          "shortcut": {
+            "delete": "刪除",
+            "arrowUp": "上",
+            "arrowDown": "下",
+            "arrowLeft": "左視",
+            "arrowRight": "右視",
+            "enter": "輸入",
+            "shiftArrow": "Shift + 方向鍵",
+            "ctrlA": "Ctrl + A",
+            "ctrlC": "Ctrl + C"
+          },
+          "mouse": {
+            "ctrlClick": "Ctrl + 按一下",
+            "shiftClick": "Shift + 按一下",
+            "doubleClick": "連按兩下"
+          }
+        },
+        "detail": {
+          "shortcut": {
+            "delete": "刪除/卸除項目",
+            "arrowUp": "前往上一個項目",
+            "arrowDown": "前往下一個項目",
+            "arrowLeft": "摺疊項目/前往上一個項目",
+            "arrowRight": "展開項目/前往下一個項目",
+            "enter": "開啟屬性面板/提交文字輸入",
+            "shiftArrow": "選擇多個項目",
+            "ctrlA": "選擇所有項目",
+            "ctrlC": "複製所選項目"
+          },
+          "mouse": {
+            "ctrlClick": "選擇/取消選擇您點選的多個項目",
+            "shiftClick": "選擇點擊之間的所有項目",
+            "doubleClick": "開啟屬性面板/展開或摺疊項目"
+          }
+        }
+      }
+    }
+  },
+  "users": {
+    "more": "更多資訊"
+  },
+  "toolbar": {
+    "ISU_TOOLTIP_GRID_VIEW": "資料網格視圖",
+    "ISU_TOOLTIP_TILE_VIEW": "並排視圖",
+    "pickCommand": "挑選內容",
+    "pickAffectedItem": "挑選受影響項目",
+    "pickResolvedBy": "挑選解決方案",
+    "pickResolvedItems": "挑選已解決的項目",
+    "pickContext": "挑選關聯",
+    "addCommand": "從搜尋新增",
+    "addAffectedItem": "新增受影響項目",
+    "addResolvedBy": "加入解決方案",
+    "addResolvedItems": "新增已解決的項目",
+    "addContexts": "新增關聯"
+  },
+  "columns": {
+    "actionsColumn": "動作"
+  }
+}

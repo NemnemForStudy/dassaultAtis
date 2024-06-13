@@ -1,0 +1,14 @@
+m|MPFModels\MPFModel.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.1.22330|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\MPFModel\MPFModel.js|1669432488|10475
+s|MPFModels\MPFModel.mweb\src\CollectionFetchOptions.js|1669417586|310
+u|MPFModels\MPFModel.mweb\src\MPFCollection.js|1669417586|6774
+u|MPFModels\MPFModel.mweb\src\MPFModel.js|1669417586|14666
+u|MPFModels\MPFModel.mweb\src\ModelCache.js|1669417586|2008
+u|MPFModels\MPFModel.mweb\src\ModelChangeTracker.js|1669417586|1818
+u|MPFModels\MPFModel.mweb\src\ModelValidator.js|1669417586|10881
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

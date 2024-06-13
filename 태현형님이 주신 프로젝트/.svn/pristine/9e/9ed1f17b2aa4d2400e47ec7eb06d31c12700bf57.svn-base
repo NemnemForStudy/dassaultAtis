@@ -1,0 +1,1 @@
+define("DS/etree/etree_cs",{});define("DS/etree/assets/nls/overviewui",{zoom_in:"Přiblížit",zoom_out:"Oddálit",zoom_default:"Obnovit výchozí přiblížení",zoom_fit:"Přizpůsobit vše"});

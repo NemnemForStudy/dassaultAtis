@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0",
+  "summary": "Porovná hodnotu více vstupních dat za daným výrazem nastavení.",
+  "description": "Tento blok je dynamický a počet vstupních dat lze tedy změnit v okně konfigurace bloku.<br>Typ hodnoty datového bloku zpracovává všechny typy.<br>Název proměnné zapsaný v nastavení <doc-setting-name translate=no>Expression</doc-setting-name> se musí shodovat s názvem vstupních dat, jinak bude výraz považován za neplatný.<br><br>Hodnota výjimky nastavení umožňuje pokročilé porovnávání výrazů:<ul><li><doc-value translate=no>&quot;Value1 === Value2&quot;</doc-value>: zkontroluje, zda <doc-idp-name translate=no>Value1</doc-idp-name> je rovno <doc-idp-name translate=no>Value2</doc-idp-name>.</li><li><doc-value translate=no>&quot;Value3 > Value3 && Value3 < Value2&quot;</doc-value>: zkontroluje, zda <doc-idp-name translate=no>Value3</doc-idp-name> leží mezi <doc-idp-name translate=no>Value1</doc-idp-name> a <doc-idp-name translate=no>Value2</doc-idp-name> (<doc-idp-name translate=no>Value1</doc-idp-name>, <doc-idp-name translate=no>Value2</doc-idp-name> a <doc-idp-name translate=no>Value3</doc-idp-name> being numbers).</li><li><doc-value translate=no>&quot;Value1 !== Value2 || Value1 !== Value3&quot;</doc-value>: zkontroluje, zda <doc-idp-name translate=no>Value1</doc-idp-name>se nerovná <doc-idp-name translate=no>Value2</doc-idp-name> nebo <doc-idp-name translate=no>Value3</doc-idp-name>.</li></ul>",
+  "dataPorts": {
+    "Value1": "je první hodnota pro porovnání.",
+    "Value2": "je druhá hodnota pro porovnání."
+  },
+  "controlPorts": {
+    "In": "vyvolá spuštění bloku.",
+    "True": "aktivuje se, jestliže je výsledek výrazu vyplněného jednotlivými hodnotami vstupních dat kladný.",
+    "False": "aktivuje se, jestliže je výsledek výrazu vyplněného jednotlivými hodnotami vstupních dat záporný."
+  },
+  "settings": {
+    "Expression": "hodnota výrazu popisující porovnání hodnot vstupních dat."
+  },
+  "example": null
+}

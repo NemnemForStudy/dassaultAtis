@@ -1,0 +1,75 @@
+NAVIGATE     
+
+T0.PLMID, T1.PLMID
+ 
+
+FROM        
+
+PRODUCTCFG/VPMInstance T0,
+PRODUCTCFG/VPMReference T1
+
+FROM_ROOTS[?1?]
+
+ON ((RELATION(     
+
+FROM=DELLmiProductionCandidateResCnx/DELLmiCandidateResourcesCnx
+
+TO=PRODUCTCFG/VPMInstance
+
+THROUGH=POINTSTO) WITH QUALITY_FILTER(ROLE=DEL_LinkToResources))
+
+OR
+
+(RELATION(
+
+FROM=DELLmiProductionCandidateResCnx/DELLmiCandidateResourcesCnx
+
+TO=PRODUCTCFG/VPMReference
+
+THROUGH=POINTSTO) WITH QUALITY_FILTER(ROLE=DEL_LinkToResources))
+
+OR
+
+(RELATION(
+
+FROM=DELLmiProductionCandidateResCnx/DELLmiCandidateResourcesCnx
+
+TO=PRODUCTCFG/VPMInstance
+
+THROUGH=POINTSTO) WITH QUALITY_FILTER(ROLE=DEL_RefPositionSubRscForBuildUpPos))
+
+OR
+
+(RELATION(
+
+FROM=DELLmiProductionCandidateResCnx/DELLmiCandidateResourcesCnx
+
+TO=PRODUCTCFG/VPMInstance
+
+THROUGH=POINTSTO) WITH QUALITY_FILTER(ROLE=DEL_RefPositionSubRscForRscPos))
+
+OR
+
+(RELATION(
+
+FROM=DELLmiProductionCandidateResCnx/DELLmiCandidateResourcesCnx
+
+TO=PRODUCTCFG/VPMInstance
+
+THROUGH=POINTSTO) WITH QUALITY_FILTER(ROLE=DEL_SubRscForWki))
+
+OR
+
+(RELATION(
+
+FROM=DELLmiProductionCandidateResCnx/DELLmiCandidateResourcesCnx
+
+TO=Class/DOCUMENTS
+
+THROUGH=POINTSTO)))
+
+
+ITER=1;
+
+
+

@@ -1,0 +1,568 @@
+/* /!\ TO IMPROVE /!\ */
+
+.cke_toolgroup .cke_button,
+.paragraph-formatter-menu,
+.paragraph-modal {
+
+    .cke_button__h1command_icon,
+    .cke_button__h2command_icon {
+        background: none !important;
+        font-weight: bold;
+        font-size: 15px;
+        color: #1b1b1b;
+        top: -6%;
+        left: -26%;
+        opacity: 0.8;
+        font-family: initial;
+        position: relative;
+    }
+}
+
+//this rule enters in conflict with flex, and I do not see the purpose of this rule anymore
+// 
+/**.cke_reset_all {
+    max-width: 281px;
+}**/
+
+
+//Used to redefine icons using UIKIT
+
+span.cke_button_icon.cke_button__h1command_icon,
+span.cke_button_icon.cke_button__h2command_icon,
+span.cke_button_icon.cke_button__bulletedlistcommand_icon,
+span.cke_button_icon.cke_button__numberedlistcommand_icon,
+span.cke_button_icon.cke_button__blockquotecommand_icon,
+span.cke_button_icon.cke_button__formattedcommand_icon,
+span.cke_button_icon.cke_button__outdent_icon,
+span.cke_button_icon.cke_button__indent_icon,
+span.cke_button_icon.cke_button__addcustomtable_icon,
+span.cke_button_icon.cke_button__customlink_icon,
+span.cke_button_icon.cke_button__unlink_icon,
+span.cke_button_icon.cke_button__bold_icon,
+span.cke_button_icon.cke_button__italic_icon,
+span.cke_button_icon.cke_button__underline_icon,
+span.cke_button_icon.cke_button__strike_icon,
+span.cke_button_icon.cke_button__highlight_icon,
+span.cke_button_icon.cke_button__removeformat_icon {
+    position: relative !important;
+    background-image: none !important;
+    color: $grey-7;
+
+    &:after {
+        font-family: entypo;
+        position: absolute;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: normal;
+        font-variant: normal;
+        text-transform: none;
+        text-decoration: inherit;
+        text-align: center;
+        -webkit-font-smoothing: antialiased;
+        left: 1px;
+    }
+}
+
+span.cke_button_icon.cke_button__h1command_icon:after {
+    content: '\e289';
+}
+
+span.cke_button_icon.cke_button__h2command_icon:after {
+    content: '\e290';
+}
+
+span.cke_button_icon.cke_button__bulletedlistcommand_icon:after {
+    content: '\e170';
+}
+
+span.cke_button_icon.cke_button__numberedlistcommand_icon:after {
+    content: '\e301';
+}
+
+span.cke_button_icon.cke_button__blockquotecommand_icon:after {
+    content: '\e295';
+}
+
+span.cke_button_icon.cke_button__formattedcommand_icon:after {
+    content: '\e078';
+}
+
+span.cke_button_icon.cke_button__outdent_icon:after {
+    content: '\e297';
+}
+
+span.cke_button_icon.cke_button__indent_icon:after {
+    content: '\e296';
+}
+
+span.cke_button_icon.cke_button__addcustomtable_icon:after {
+    content: '\e298';
+}
+
+span.cke_button_icon.cke_button__customlink_icon:after {
+    content: '\e023';
+}
+
+span.cke_button_icon.cke_button__unlink_icon:after {
+    content: '\e288';
+}
+
+span.cke_button_icon.cke_button__bold_icon:after {
+    content: '\e313';
+}
+
+span.cke_button_icon.cke_button__italic_icon:after {
+    content: '\e314';
+}
+
+span.cke_button_icon.cke_button__underline_icon:after {
+    content: '\e315';
+}
+
+span.cke_button_icon.cke_button__strike_icon:after {
+    content: '\e316';
+}
+
+span.cke_button_icon.cke_button__highlight_icon:after {
+    content: '\e436';
+}
+
+span.cke_button_icon.cke_button__removeformat_icon:after {
+    content: '\e320';
+}
+
+//icon of the toolbar
+span.cke_button_icon.cke_button__h1command_icon,
+span.cke_button_icon.cke_button__h2command_icon,
+span.cke_button_icon.cke_button__bulletedlistcommand_icon,
+span.cke_button_icon.cke_button__numberedlistcommand_icon,
+span.cke_button_icon.cke_button__blockquotecommand_icon,
+span.cke_button_icon.cke_button__formattedcommand_icon,
+span.cke_button_icon.cke_button__outdent_icon,
+span.cke_button_icon.cke_button__indent_icon,
+span.cke_button_icon.cke_button__addcustomtable_icon,
+span.cke_button_icon.cke_button__link_icon,
+span.cke_button_icon.cke_button__unlink_icon,
+span.cke_button_icon.cke_button__bold_icon,
+span.cke_button_icon.cke_button__italic_icon,
+span.cke_button_icon.cke_button__underline_icon,
+span.cke_button_icon.cke_button__strike_icon,
+span.cke_button_icon.cke_button__highlight_icon,
+span.cke_button_icon.cke_button__removeformat_icon {
+    position: relative !important;
+    background-image: none !important;
+    color: $grey-7;
+
+    &:after {
+        font-family: entypo;
+        position: absolute;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: normal;
+        font-variant: normal;
+        text-transform: none;
+        text-decoration: inherit;
+        text-align: center;
+        -webkit-font-smoothing: antialiased;
+        left: 1px;
+    }
+}
+
+span.cke_button_icon.cke_button__h1command_icon:after {
+    content: '\e289';
+}
+
+span.cke_button_icon.cke_button__h2command_icon:after {
+    content: '\e290';
+}
+
+span.cke_button_icon.cke_button__bulletedlistcommand_icon:after {
+    content: '\e170';
+}
+
+span.cke_button_icon.cke_button__numberedlistcommand_icon:after {
+    content: '\e301';
+}
+
+span.cke_button_icon.cke_button__blockquotecommand_icon:after {
+    content: '\e295';
+}
+
+span.cke_button_icon.cke_button__formattedcommand_icon:after {
+    content: '\e078';
+}
+
+span.cke_button_icon.cke_button__outdent_icon:after {
+    content: '\e297';
+}
+
+span.cke_button_icon.cke_button__indent_icon:after {
+    content: '\e296';
+}
+
+span.cke_button_icon.cke_button__addcustomtable_icon:after {
+    content: '\e298';
+}
+
+span.cke_button_icon.cke_button__link_icon:after {
+    content: '\e023';
+}
+
+span.cke_button_icon.cke_button__unlink_icon:after {
+    content: '\e288';
+}
+
+span.cke_button_icon.cke_button__bold_icon:after {
+    content: '\e313';
+}
+
+span.cke_button_icon.cke_button__italic_icon:after {
+    content: '\e314';
+}
+
+span.cke_button_icon.cke_button__underline_icon:after {
+    content: '\e315';
+}
+
+span.cke_button_icon.cke_button__strike_icon:after {
+    content: '\e316';
+}
+
+span.cke_button_icon.cke_button__highlight_icon:after {
+    content: '\e436';
+}
+
+span.cke_button_icon.cke_button__removeformat_icon:after {
+    content: '\e320';
+}
+
+/* Dialog override */
+.cke_dialog {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
+}
+
+/*.cke_reset_all * {
+    overflow: auto;
+    max-height: 100vh;
+}*/
+
+.cke_dialog .cke_dialog_title {
+    padding: 25px 20px;
+    border-bottom: 1px solid #dbdbdb;
+    font-size: 18px;
+    background-image: none;
+    background-color: white;
+    color: #555555;
+    border-radius: 10px 10px 0px 0px;
+}
+
+.cke_dialog .cke_dialog_footer {
+    padding: 15px;
+    border-top: 1px solid #dbdbdb;
+    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+    background: #f0f0f0;
+    box-shadow: inset 0 1px #fbfbfb;
+    text-align: right;
+}
+
+.cke_dialog .cke_dialog_body {
+    background: white;
+    border-radius: 6px;
+}
+
+.cke_dialog .cke_dialog_body label {
+    display: block;
+    margin: 10px 0px 10px 0px;
+}
+
+.cke_dialog .cke_dialog_contents_body {
+    padding: 20px;
+}
+
+.cke_dialog .cke_dialog_contents {
+    border-radius: 0px 0px 10px 10px;
+    margin-top: 35px;
+}
+
+.cke_dialog .cke_dialog_close_button {
+    right: 15px !important;
+}
+
+.cke_dialog .cke_dialog_close_button {
+    top: 28px;
+}
+
+.cke_dialog a.cke_dialog_tab {
+    text-decoration: inherit;
+}
+
+.cke_dialog a.cke_dialog_ui_button_ok {
+    background: #368ec4 !important;
+    border: 1px solid #368ec4 !important;
+    color: #ffffff !important;
+}
+
+.cke_dialog a.cke_dialog_ui_button_ok:hover {
+    background: #005686 !important;
+    border: 1px solid #005686 !important;
+    color: #ffffff !important;
+}
+
+.cke_dialog a.cke_dialog_ui_button:hover {
+    text-decoration: inherit;
+    background: #e2e4e3;
+    border-color: #77797c;
+}
+
+.cke_dialog a.cke_dialog_ui_button {
+    background: #f1f1f1;
+    color: #3d3d3d;
+    border-color: #b4b6ba;
+}
+
+.cke_dialog a.cke_dialog_ui_button,
+.cke_dialog a.cke_dialog_ui_button:focus,
+.cke_dialog a.cke_dialog_ui_button:active {
+    background-image: none;
+    border-radius: 4px;
+    min-width: 72px;
+    line-height: 1.42857;
+    padding: 8px 14px 8px 14px;
+    border-width: 1px;
+    box-shadow: none;
+}
+
+.cke_dialog .cke_dialog_footer_buttons a.cke_dialog_ui_button span,
+.cke_dialog .cke_dialog_footer_buttons a.cke_dialog_ui_button span {
+    font-weight: normal;
+}
+
+.cke_dialog input.cke_dialog_ui_input_text,
+.cke_dialog input.cke_dialog_ui_input_password,
+.cke_dialog textarea.cke_dialog_ui_input_textarea,
+select.cke_dialog_ui_input_select {
+    box-shadow: none !important;
+    height: 32px !important;
+    padding: 6px 12px !important;
+}
+
+.cke_dialog .cke_dialog_tabs {
+    margin: 10px 0 0;
+    left: 20px;
+}
+
+html.ios div.cke_reset_all,
+html.android div.cke_reset_all {
+    -webkit-overflow-scrolling: touch;
+    overflow: scroll;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    /*  Commenting out height 100% here. the div.cke_reset_all covered all the viewport height (since it has high z-index) and
+        made the screen appear unresponsive. There seems to be no side-effects on commenting this property. (IR-853134)
+    */
+    /* height:100%; */
+    min-width: 100%;
+    z-index: 10010;
+}
+
+html.ios table.cke_dialog,
+html.android table.cke_dialog {
+    overflow: scroll;
+    position: absolute !important;
+    top: 0 !important;
+}
+
+/* contents.css, TO IMPROVE */
+.ckeditor-container {
+    body {
+        /* Font */
+        /* Emoji fonts are added to visualise them nicely in Internet Explorer. */
+        font-family: sans-serif, Arial, Verdana, "Trebuchet MS", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+        font-size: 12px;
+
+        /* Text color */
+        color: #333;
+
+        /* Remove the background color to make it transparent. */
+        background-color: #fff;
+
+        margin: 20px;
+    }
+
+    .cke_editable {
+        font-size: 13px;
+        line-height: 1.6;
+
+        /* Fix for missing scrollbars with RTL texts. (#10488) */
+        word-wrap: break-word;
+    }
+
+    blockquote {
+        font-style: italic;
+        font-family: Georgia, Times, "Times New Roman", serif;
+        padding: 2px 0;
+        border-style: solid;
+        border-color: #ccc;
+        border-width: 0;
+    }
+
+    .cke_contents_ltr blockquote {
+        padding-left: 20px;
+        padding-right: 8px;
+        border-left-width: 5px;
+    }
+
+    .cke_contents_rtl blockquote {
+        padding-left: 8px;
+        padding-right: 20px;
+        border-right-width: 5px;
+    }
+
+    a {
+        color: #0782C1;
+    }
+
+    ol,
+    ul,
+    dl {
+        /* IE7: reset rtl list margin. (#7334) */
+        *margin-right: 0px;
+        /* Preserved spaces for list items with text direction different than the list. (#6249,#8049)*/
+        padding: 0 40px;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-weight: normal;
+        line-height: 1.2;
+    }
+
+    hr {
+        border: 0px;
+        border-top: 1px solid #ccc;
+    }
+
+    img.right {
+        border: 1px solid #ccc;
+        float: right;
+        margin-left: 15px;
+        padding: 5px;
+    }
+
+    img.left {
+        border: 1px solid #ccc;
+        float: left;
+        margin-right: 15px;
+        padding: 5px;
+    }
+
+    pre {
+        white-space: pre-wrap;
+        /* CSS 2.1 */
+        word-wrap: break-word;
+        /* IE7 */
+        -moz-tab-size: 4;
+        tab-size: 4;
+    }
+
+    .marker {
+        background-color: Yellow;
+    }
+
+    span[lang] {
+        font-style: italic;
+    }
+
+    figure {
+        text-align: center;
+        outline: solid 1px #ccc;
+        background: rgba(0, 0, 0, 0.05);
+        padding: 10px;
+        margin: 10px 20px;
+        display: inline-block;
+    }
+
+    figure>figcaption {
+        text-align: center;
+        display: block;
+        /* For IE8 */
+    }
+
+    a>img {
+        padding: 1px;
+        margin: 1px;
+        border: none;
+        outline: 1px solid #0782C1;
+    }
+
+    /* Widget Styles */
+    .code-featured {
+        border: 5px solid red;
+    }
+
+    .math-featured {
+        padding: 20px;
+        box-shadow: 0 0 2px rgba(200, 0, 0, 1);
+        background-color: rgba(255, 0, 0, 0.05);
+        margin: 10px;
+    }
+
+    .image-clean {
+        border: 0;
+        background: none;
+        padding: 0;
+    }
+
+    .image-clean>figcaption {
+        font-size: .9em;
+        text-align: right;
+    }
+
+    .image-grayscale {
+        background-color: white;
+        color: #666;
+    }
+
+    .image-grayscale img,
+    img.image-grayscale {
+        filter: grayscale(100%);
+    }
+
+    .embed-240p {
+        max-width: 426px;
+        max-height: 240px;
+        margin: 0 auto;
+    }
+
+    .embed-360p {
+        max-width: 640px;
+        max-height: 360px;
+        margin: 0 auto;
+    }
+
+    .embed-480p {
+        max-width: 854px;
+        max-height: 480px;
+        margin: 0 auto;
+    }
+
+    .embed-720p {
+        max-width: 1280px;
+        max-height: 720px;
+        margin: 0 auto;
+    }
+
+    .embed-1080p {
+        max-width: 1920px;
+        max-height: 1080px;
+        margin: 0 auto;
+    }
+}

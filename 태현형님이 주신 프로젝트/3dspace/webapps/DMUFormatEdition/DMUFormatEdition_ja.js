@@ -1,0 +1,1 @@
+define("DS/DMUFormatEdition/DMUFormatEdition_ja",{});define("DS/DMUFormatEdition/assets/nls/DMUFormatEdition",{formatEditionModeStarted:"フォーマットの編集",slideEditionModeStarted:"スライドの編集",currentFormatUpdatedMessage:"視点が更新されました",NoFormat:"フォーマットなし",FormatChooserPanelTitle:"フォーマット",normalFormatTitle:"フォーマット",generateFormat:"フォーマットを生成"});

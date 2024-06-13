@@ -1,0 +1,1 @@
+define("DS/CATFLWidgetProperties/CATFLWidgetProperties_zh",{});define("DS/CATFLWidgetProperties/assets/nls/CATFLProperties",{msg_not_supported_selection:"不受支持的选择",msg_facet_no_available:"此分面不可用"});

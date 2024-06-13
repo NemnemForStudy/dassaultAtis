@@ -1,0 +1,10 @@
+m|CAT3DWebAppInfraUI\CAT3DWSceneObject.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.1.22323|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\CAT3DWSceneObject\CAT3DWSceneObject.js|1668832440|2664
+s|CAT3DWebAppInfraUI\CAT3DWSceneObject.mweb\src\CAT3DWConnectableObject.js|1668812477|6218
+u|CAT3DWebAppInfraUI\CAT3DWSceneObject.mweb\src\CAT3DWSceneObject.js|1668812477|1629
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

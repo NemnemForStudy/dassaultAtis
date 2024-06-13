@@ -1,0 +1,1 @@
+define("DS/SPY/SPY_ko",{});define("DS/SPY/assets/nls/CATSimNavDataHelper",{mode:"모드"});define("DS/SPY/assets/nls/CATSimNavTypes",{CATSimNavDataFrameViewImage:"이미지",CATSimNavDataFrameViewXYChart:"차트"});

@@ -1,0 +1,271 @@
+<html class=" chrome chrome32 win32"><head>
+        <meta charset="utf-8"> 
+
+        <title>GEO-SPLIT demo</title>    
+
+        <style type="text/css" media="screen">
+            html {
+                height: 100%;
+            }
+
+            #glRendererCanvasContainer {
+                height: 100%;  
+            }
+
+            body {
+                height: 100%;
+                overflow: hidden;
+                margin: 0;
+                padding: 0;
+            }
+        </style>
+
+
+<!--[if IE]>
+<script type="text/javascript">window.location.href = "SocialGlobe-no-webgl.html";</script>
+<![endif]-->
+
+<script type="text/javascript" src="../RequireJS/require.js"></script>
+<script type="text/javascript">
+//<![CDATA[
+    // Any script tag contains a "var UWA" declaration will be executed
+    // only in standalone mode
+    var UWA = {},
+        // Give another name to define/require for the curl AMD loader.
+        curl = {
+            defineName: 'curl_define',
+            requireName: 'curl_require'
+        },
+        dependencies = ['UWA/Drivers/Alone', 'widget'];
+    
+        require.config(
+              // paths
+              {
+                  baseUrl : '..',
+                  UWA : 'http://uwa.netvibes.com/lib/UWA/js/'
+              }
+        );
+//]]>
+</script>
+
+
+<!-- WebGLV6 -->
+<!-- JQuery Base -->
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<!-- DS Frameworks -->
+<script type="text/javascript" src="../WebUX/WebUX.js"></script>
+<script type="text/javascript" src="../WebVisualization/WebVisualization.js"></script>
+<script type="text/javascript" src="../SocialGlobe/SocialGlobe.js"></script> 
+<script type="text/javascript" src="../UWA/Controls/Input.js"></script> 
+
+<!-- Application Standalone emulation files -->
+<link rel="stylesheet" type="text/css" href="http://uwa.netvibes.com/lib/c/UWA/assets/css/standalone.css" />
+<script type="text/javascript" src="http://uwa.netvibes.com/lib/c/UWA/js/UWA_Standalone_Alone.js"></script>
+
+<link rel="stylesheet" type="text/css" href="style-fullscreen.css">
+<link rel="stylesheet" type="text/css" href="../Controls/nv-patch.css">
+
+<!-- Application Styles -->
+<style type="text/css">
+    .section {
+    border-bottom: 1px solid #c4c4c4;
+    font-size: 16px;
+    }
+    .section.buttons .inner {
+    overflow-x: auto;
+    margin-top: auto; /* fix an IE9 bug http://stackoverflow.com/a/6425130 */
+    }
+</style>
+
+<script type="text/javascript">
+
+var globe;
+var urls = {};
+var countriesInfos = {};
+
+function replaceAll(find, replace, str) {
+    return str.replace(new RegExp(find, 'g'), replace);
+}
+
+function loadRSSData(rssFeed) {
+
+    UWA.Data.request(rssFeed, {onComplete: function(data) {
+    
+        // replace georss: to read it in the rss feed
+        data = replaceAll("georss:relationshipTag","georssrelationshiptag",data);
+
+        var xmlDoc = new DOMParser().parseFromString(data,'text/xml');
+
+        var x=xmlDoc.getElementsByTagName("item");
+        for (i=0;i<x.length;i++) {
+            var countryAndColor = x[i].getElementsByTagName("georssrelationshiptag")[0].childNodes[0].nodeValue;
+            var country = countryAndColor.split("/")[0].replace("countrycode=","");
+            var color = countryAndColor.split("/")[1].replace("color=","");
+            globe.setCountryColor(globe.getCountryIndexFromISO3(country),color);
+            urls[globe.getCountryIndexFromISO3(country)] = x[i].getElementsByTagName("link")[0].childNodes[0].nodeValue;
+            
+            var geo = x[i].getElementsByTagName("title")[0].childNodes[0].nodeValue;
+            var countryName = x[i].getElementsByTagName("author")[0].getElementsByTagName("name")[0].childNodes[0].nodeValue;
+            countriesInfos[globe.getCountryIndexFromISO3(country)] = [geo,countryName];
+        }
+
+    }});
+    
+    var countryManager = {
+        onMouseMove: function(countryToShow, absoluteMouseX, absoluteMouseY) {
+            if(countryToShow)
+            {
+                var divInfo = document.getElementById('infos');
+                if (countriesInfos[countryToShow.getID()]) {
+                    var innerText = "<b>" + countriesInfos[countryToShow.getID()][0] + "</b><br><br>" + countriesInfos[countryToShow.getID()][1];
+                    divInfo.innerHTML = innerText;
+                }
+            } else {
+                var divInfo = document.getElementById('infos');
+                divInfo.innerHTML = "";
+            }
+        },
+        onMouseOut: function() {
+        },
+        onMouseClick: function(country) {
+            if (country != undefined) {
+                window.open(urls[country.getID()]);
+            }
+        },
+        onClearCountries: function() {
+        }
+    };
+
+    globe.setMouseOverCountryPanelManager(countryManager);
+    
+    UWA.log("GEOS data loaded.");
+}
+
+function addSection(name, content) {
+    widget.body.addContent({
+        tag: 'div',
+        'class': 'section ' + name.toLowerCase(),
+        html: [
+            { tag: 'div', 'class': 'inner', html: content }
+        ]
+    });
+}
+
+
+require( {}, ['SocialGlobe/GlobeItf','SocialGlobe/Globals','UWA/Controls/Input'].concat(dependencies), function(GlobeItf,Globals,Input) {
+ 
+    var onLoad = function()
+    {
+        //var Input = UWA.Controls.Input;
+        
+        // different paths to load the globe
+        Globals.path = "../SocialGlobe/";
+        Globals.tilespath = "../SocialGlobe/assets/tiles/";
+
+        myTilespaths = ["../SocialGlobe/assets/tiles/","http://api.tiles.mapbox.com/v3/archi.ho2j1446/","http://api.tiles.mapbox.com/v3/archi.ho3j8l6p/"];
+        
+        var div = document.getElementById('globe');
+        globe = GlobeItf.create(div, false, false);
+        
+        globe.setHalo("#111111",0.4);
+        globe.setBackgroundColor("#ffffff",1.0);
+        var autoTurn = false;
+        var projected = false;
+        var zoomEnable = true;
+        var meridiansEnable = true;
+        var geosLoaded = false;
+        //globe.autoTurn(0.2);
+        globe.allowZoom(true);
+    
+        //loadRSSData('http://ks3268288.kimsufi.com/SocialGlobe/demos/GEOS/rss/geo-split.xml');
+        
+        globe.setFragShader("../SocialGlobe/assets/shaders/tileplanet_fragment_norefraction.ps");
+        
+        globe.go();
+        
+        
+        var autoTurnBox = new Input.Checkbox();
+        autoTurnBox.addEvents({
+            onChange: function (item, selected) {
+                autoTurn = !autoTurn;
+                if (autoTurn) {
+                    globe.autoTurn(1.0);
+                } else {
+                    globe.autoTurn(0.0);
+                }
+            }
+        });
+
+        var projBox = new Input.Checkbox();
+        projBox.addEvents({
+            onChange: function (item, selected) {
+                projected = !projected;
+                globe.switchToProjection(projected);
+            }
+        });
+        
+        var zoomBox = new Input.Checkbox({attributes: {checked: true}});
+        zoomBox.addEvents({
+            onChange: function (item, selected) {
+                zoomEnable = !zoomEnable;
+                globe.enableZoom(zoomEnable);
+            }
+        });
+        
+        var meridianBox = new Input.Checkbox({attributes: {checked: true}});
+        meridianBox.addEvents({
+            onChange: function (item, selected) {
+                meridiansEnable = !meridiansEnable;
+                globe.showMeridians(meridiansEnable);
+            }
+        });
+        
+        var geoBox = new Input.Checkbox();
+        geoBox.addEvents({
+            onChange: function (item, selected) {
+                geosLoaded = !geosLoaded;
+                if (!geosLoaded) {
+                    globe.clearCountries();
+                    urls = {};
+                } else {
+                    loadRSSData('http://ks3268288.kimsufi.com/SocialGlobe/demos/GEOS/rss/geo-split.xml');
+                }
+            }
+        });
+        
+        addSection('AutoTurn',[autoTurnBox,'Globe Rotation']);
+        addSection('ProjectionMode', [projBox,'2D Map']);
+        addSection('EnableZoom', [zoomBox,'Enable Zoom']);
+        addSection('ShowMeridians', [meridianBox,'Show Meridians']);
+        addSection('GeoBox', [geoBox,'Display GEOS']);
+        
+    };
+
+        if (widget.launched)
+            onLoad();
+        else
+            widget.onLoad = onLoad;
+
+    });
+
+
+
+
+    
+</script>
+        
+
+<body>
+<div class="module moduleUwa">
+<div class="moduleWrapper">
+<div class="moduleContent chrome chrome32 win32 no-touch environment-uwa">
+    <div class="main">
+        <div class="globe" id="globe"></div>
+        </div>
+    </div>
+    <div class="section infos" id="infos">
+</div>
+
+</div></div></div>
+</body>
+</html>

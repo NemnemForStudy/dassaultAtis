@@ -1,0 +1,496 @@
+########################################################################################################################
+## Issue Management NLS used on UX side
+########################################################################################################################
+
+# The states of an issue
+issue.states.create=Koncept
+issue.states.assign=Úkoly
+issue.states.active=Probíhá práce
+issue.states.review=Ve schválení
+issue.states.closed=Dokončeno
+
+# The priority of an issue
+issue.priority.pre-assigned=Předem přiřazeno
+issue.priority.low=Nízká
+issue.priority.medium=Střední
+issue.priority.high=Vysoká
+issue.priority.urgent=Naléhavé
+
+# Notifications, please do not translate text between <strong> and </strong>
+issue.notifications.review.setting=Problém dosažen ve stavu „Ve schválení“
+issue.notifications.assignment.setting=Byl vám přidělen problém
+issue.notifications.unassignment.setting=Vaše přidělení problému bylo zrušeno
+issue.notifications.comments.mentioned.setting=Někdo se o vás zmínil v problému
+issue.notifications.comments.commented.setting=Někdo komentoval problém, ke kterému máte přístup
+issue.notifications.approval.setting=Je nutné vaše schválení
+issue.notifications.decision.setting=Někdo schválil nebo odmítl zvýšení stavu problému, který vlastníte
+
+issue.notifications.assigned.msg=Uživatel <strong>###FROM_USER_NAME###</strong> vám přiřadil problém <strong>###INSTANCE_NAME###</strong>.
+issue.notifications.unassigned.msg=Vaše přiřazení problému <strong>###INSTANCE_NAME###</strong> bylo zrušeno uživatelem <strong>###FROM_USER_NAME###</strong>.
+issue.notifications.promoted.msg=Uživatel <strong>###FROM_USER_NAME###</strong> zvýšil stav dokončení problému <strong>###INSTANCE_NAME###</strong> na <strong>###STATE_NAME###</strong>.
+issue.notifications.demoted.msg=Uživatel <strong>###FROM_USER_NAME###</strong> snížil stav dokončení problému <strong>###INSTANCE_NAME###</strong> na <strong>###STATE_NAME###</strong>.
+issue.notifications.comments.mentioned.msg=Uživatel <strong>###FROM_USER_NAME###</strong> vás zmínil v problému <strong>###INSTANCE_NAME###</strong>.
+issue.notifications.comments.commented.msg=Uživatel <strong>###FROM_USER_NAME###</strong> komentoval problém <strong>###INSTANCE_NAME###</strong>.
+issue.notifications.approval.msg=Ke zvýšení stavu problému <strong>###INSTANCE_NAME###</strong> je nutné vaše schválení.
+issue.notifications.decision.approved.msg=Uživatel <strong>###FROM_USER_NAME###</strong> schválil zvýšení stavu problému <strong>###INSTANCE_NAME###</strong> na <strong>###STATE_NAME###</strong>.
+issue.notifications.decision.rejected.msg=Uživatel <strong>###FROM_USER_NAME###</strong> zamítl zvýšení stavu problému <strong>###INSTANCE_NAME###</strong> na <strong>###STATE_NAME###</strong>.
+
+# Export PPTX
+issue.export.pptx.actionTaken=Provedená akce
+issue.export.pptx.actualEndDate=Skutečné datum ukončení
+issue.export.pptx.actualStartDate=Skutečné datum zahájení
+issue.export.pptx.assignees=Nabyvatelé
+issue.export.pptx.contexts=Kontexty
+issue.export.pptx.created=Datum vytvoření
+issue.export.pptx.description=Popis
+issue.export.pptx.dueDate=Termín dokončení
+issue.export.pptx.estimatedEndDate=Odh. datum ukončení
+issue.export.pptx.modified=Datum změny
+issue.export.pptx.owner=Vlastník
+issue.export.pptx.priority=Priorita
+issue.export.pptx.reportedAgainst=Ovlivněné položky
+issue.export.pptx.reportingOrganization=Organizace podávající hlášení
+issue.export.pptx.resolutionDate=Datum vyřešení
+issue.export.pptx.resolutionRecommendation=Doporučení k řešení
+issue.export.pptx.resolutionStatement=Popis řešení
+issue.export.pptx.resolvedBy=Vyřešeno uživatelem
+issue.export.pptx.responsibleOrganization=Odpovědná organizace
+issue.export.pptx.state=Stav
+
+# Automation for issue
+issue.automation.closure.actionTaken=Při změně stavu problému na 'Dokončeno' nebyla nastavena žádná akce
+issue.automation.closure.resolutionStatement=Při změně stavu problému na 'Dokončeno' nebyl nastaven žádný popis řešení
+
+# Automation for route
+issue.automation.routes.abstain=Zvýšení stavu problému bylo schváleno nebo zamítnuto někým jiným. Operace byla automaticky zrušena
+issue.automation.routes.description=Tato trasa byla vygenerována pro proces schvalování v rámci správy problémů
+
+# HTTP errors
+issue.errors.http.badRequest=
+issue.errors.http.notFound=
+issue.errors.http.unauthorized=
+issue.errors.http.internalServerError=
+
+# Batch generic error message
+issue.errors.batch=Požadavek nelze provést z následujících důvodů:\n
+
+# Permissions for the roles
+issue.roles.originator=Tvůrce
+issue.roles.owner=Vlastník
+issue.roles.coOwner=Koordinátor
+issue.roles.assignee=Nabyvatel
+issue.roles.contributor=Přispívající
+issue.permissions.roles=K provedení této operace musíte být {roles}
+issue.permissions.rolesenhanced=Nemáte potřebnou odpovědnost pro provedení operace s těmito problémy. Možné řešení: musíte být přidáni jako vlastník, koordinátor nebo nabyvatel na panelu Členové
+
+# Policy decline error message
+issue.errors.policydecline.addRelated=Pokud je problém otevřený, neumožňuje vám vaše odpovědnost přidat parametry Dotčené položky, Kontexty ani Vyřešeno uživatelem. Pokud je problém uzavřen, nelze přidávat související objekty ani kontexty
+
+# Permissions checker for creation
+issue.permissions.creation=Pro tento problém je nutný souhlas a potřebujete alespoň jednoho nabyvatele
+issue.permissions.restrictcreation=Operace vytvoření je pro tuto roli omezená
+
+# Permissions checker for members
+issue.permissions.assignees.add=K problému je aktuálně připojena aktivní trasa a přidávání nabyvatelů je proto zakázáno
+issue.permissions.assignees.remove=K problému je aktuálně připojena aktivní trasa a přidávání nabyvatelů je proto zakázáno
+issue.permissions.coowners.remove=K problému je aktuálně připojena aktivní trasa a odebrání nabyvatelů je proto zakázáno
+issue.closed.permission.assignees.add=Problém je v uzavřeném stavu a přidávání nabyvatelů je proto zakázáno
+issue.closed.permission.contributors.add=Problém je v uzavřeném stavu a přidávání přispěvatelů je proto zakázáno
+issue.permissions.contributors.remove=Vaše pověření vám neumožňuje odebrat přispěvatele
+
+# Permissions checker for properties
+issue.permissions.properties.closed=U problému nelze ručně zvýšit stav dokončení, protože pro tento problém je aktuálně vyžadováno schválení
+
+# Permissions checker for lifecycle
+issue.permissions.lifecycle.approval.assignee=Pro tento problém je nutný souhlas a potřebujete alespoň jednoho nabyvatele
+issue.permissions.lifecycle.approval.assigneeenhanced=Tento problém vyžaduje schválení a vyžaduje alespoň jednoho nabyvatele. Možné řešení: přiřaďte alespoň jednoho nabyvatele na panelu Členové
+issue.permissions.promotion.approval=U problému nelze ručně zvýšit stav dokončení, protože pro tento problém je aktuálně vyžadováno schválení
+issue.permissions.demotion.approval=U problému nelze ručně snížit stav dokončení, protože pro tento problém je aktuálně vyžadováno schválení
+issue.permissions.closure.approval=U problému nelze ručně nastavit stav 'Dokončeno', protože pro tento problém je aktuálně vyžadováno schválení
+issue.permissions.reopener.closed=Problém nelze znovu otevřít, protože ještě není nastaven do stavu 'Dokončeno'
+issue.permissions.delete.create=U problému nelze ručně zvýšit stav dokončení, protože pro tento problém je aktuálně vyžadováno schválení
+
+issue.access.export.pptx=Do jednoho souboru PPTX nelze exportovat více než 100 problémů
+issue.access.closure=Problém může nastavit do stavu 'Dokončeno' pouze jeho vlastník nebo nabyvatel
+issue.access.reopener=K opětovnému otevření musí být problém ve stavu 'Dokončeno'
+issue.access.approval.promotion=U problému nelze ručně zvýšit stav dokončení, protože pro tento problém je aktuálně vyžadováno schválení
+issue.access.approval.demotion=U problému nelze ručně snížit stav dokončení, protože pro tento problém je aktuálně vyžadováno schválení
+issue.access.approval.assignees.disconnect=Nelze odebrat nabyvatele z tohoto problému. Momentálně je pro tuto operaci vyžadováno schválení
+
+##
+#Internal Errors code. no need to translate error codes
+issue.error.duplicateissue=ErrorCode:2003.
+issue.error.createissue=ErrorCode:2004.
+issue.error.closedissue=ErrorCode:2005.
+issue.error.memberissue=ErrorCode:2006.
+##End Issue error codes
+
+###############################
+## Issue Modeler Entries Start
+IssueMdl.Notice.IncorrectType=Vstupní objekt není typ problému
+IssueMdl.Notice.ObjectNotFound=Vstupní objekt není možné nalézt
+IssueMdl.Notice.ProxyNotCreated=Neočekávaná chyba při vytváření proxy serveru
+IssueMdl.Notice.TransactionActive=Transakce by měla být aktivní
+IssueMdl.Notice.IssueReviewStateError=Problém by měl u této operace být před stavem "Revize"
+IssueMdl.Notice.UserOwnerCoownerError=U této operace musí být uživatel vlastník nebo koordinátor
+IssueMdl.Notice.CoownerAlreadyConnected=Koordinátor vstupů je již k problému připojen
+IssueMdl.Notice.AssigneeAlreadyConnected=Nabyvatel vstupu je již k problému připojen
+IssueMdl.Notice.ContributorAlreadyConnected=Přispěvatel vstupu je již k problému připojen
+IssueMdl.Notice.PersonNotFound=Osoba nebyla nalezena
+IssueMdl.Notice.UserOwnerCoownerAssigneeError=U této operace musí být uživatel vlastník, koordinátor nebo nabyvatel
+IssueMdl.Notice.AlreadyConnectedAsContextItem=Vstupní objekt je již připojený jako položka kontextu
+IssueMdl.Notice.NotConnectedAsContextItem=Vstupní objekt ještě není připojený jako položka kontextu
+IssueMdl.Notice.AlreadyConnectedAsAffectedItem=Vstupní objekt je již připojený jako ovlivněná položka
+IssueMdl.Notice.NotConnectedAsAffectedItem=Vstupní objekt ještě není připojený jako ovlivněná položka
+IssueMdl.Notice.AlreadyConnectedAsResolvedBy=Vstupní objekt je již připojený jako vyřešený
+IssueMdl.Notice.NotConnectedAsResolvedBy=Vstupní objekt ještě není připojený jako vyřešený
+IssueMdl.Notice.ModifyAccessError=Neexistuje přístup pro úpravy k problému
+IssueMdl.Notice.DueDateSetInThePast=Datum ukončení nesmí být dřívější než aktuální datum
+IssueMdl.Notice.BusinessLogicFailure=Chyba provedení akce PLM vytvoření obchodní logiky
+IssueMdl.Notice.ParametersInstantiate=K parametrům by měly být vytvořeny instance
+IssueMdl.Notice.PageOutOfBound=Velikost stránky je mimo meze (1 až 1000 na stránku)
+IssueMdl.Notice.ChangeConstructor.NotAccessible=Objekt nelze zobrazit. Některé možné důvody jsou:\n - Objekt v databázi neexistuje.\n - Nemáte přístup k zobrazení tohoto objektu.
+IssueMdl.Notice.ApproveReject.NoTask=U tohoto uživatele neexistuje žádný úkol ke schválení nebo zamítnutí.
+IssueMdl.Notice.Approval.NoUsers=Tento problém vyžaduje schválení a vyžaduje alespoň jednoho nabyvatele. Přiřaďte alespoň jednoho nabyvatele na panelu Členové
+IssueMdl.Notice.InputObjectNotCompliantWithSpecifiedType=Vstupní objekt není v souladu se zadaným typem
+IssueMdl.Notice.InputObjectNotCompliantForResolvedBy=Pouze objekt typu změna a úloha bude podporována jako Vyřešeno uživatelem
+IssueMdl.Notice.UserInactive=Jako nabyvatele nelze přidat neaktivní osobu
+IssueMdl.Notice.CannotConnectIssueWithCancelChange=Tuto operaci nelze provést na zrušené operaci Změnit objekt.
+IssueMdl.NoticeCAA.TypeNotAllowed=Typ zadaný ve vstupu není platný
+IssueMdl.NoticeCAA.DescriptionMandatory=Popis je povinný
+IssueMdl.NoticeCAA.PriorityNotAllowed=Priorita zadaná ve vstupu není platná
+IssueMdl.NoticeCAA.WithApprovalNotAllowed=Hodnota WithApproval zadaná ve vstupu není platná
+IssueMdl.NoticeCAA.EstimatedStartPriorToCurrent=Odhadované datum zahájení nesmí být dřívější než aktuální datum
+IssueMdl.NoticeCAA.EstimatedEndPriorToCurrent=Odhadované datum ukončení nesmí být dřívější než aktuální datum
+IssueMdl.NoticeCAA.EstimatedEndPriorToEstimatedStart=Odhadované datum ukončení nesmí být dřívější než odhadované datum zahájení
+IssueMdl.NoticeCAA.InvalidCeStamp=Hodnota CEstamp zadaná ve vstupu není platná
+IssueMdl.NoticeCAA.TitleMandatory=Název je povinný
+IssueMdl.NoticeCAA.ActualStartPriorToCurrent=Skutečné datum zahájení nesmí být dřívější než aktuální datum
+IssueMdl.NoticeCAA.ActualEndPriorToCurrent=Skutečné datum ukončení nesmí být dřívější než aktuální datum
+IssueMdl.NoticeCAA.ActualEndPriorToActualStart=Skutečné datum ukončení nesmí být dřívější než skutečné datum zahájení
+IssueMdl.NoticeCAA.TargetBallonPositionMandatory=Ve vstupu je vyžadována cílová pozice
+IssueMdl.NoticeCAA.IdentifierMustBeDefined=Identifikátor musí být definovaný
+IssueMdl.NoticeCAA.InvalidSource=Zdroj zadaný ve vstupu není platný
+IssueMdl.NoticeCAA.InputObjectNotFound=Vstupní objekt nebyl nalezen
+IssueMdl.NoticeCAA.InputObjectNotCompliantWithTypeSpecified=Vstupní objekt není v souladu se zadaným typem
+IssueMdl.NoticeCAA.InputObjectNotCompliantWithRelativePathSpecified=Vstupní objekt není v souladu se zadanou relativní cestou
+IssueMdl.NoticeCAA.InvalidComment=Je třeba zadat komentář
+IssueMdl.NoticeCAA.MembersLimit=Přidávání a odebírání členů je omezeno na 10 na klíč v jednom hovoru.
+IssueMdl.NoticeCAA.InvalidInputJson=Na vstupu byl předán neplatný objekt Json.
+IssueMdl.Notice.UserAccessError=Uživatel kontextu nemá potřebný přístup pro provedení této operace
+IssueMdl.Notice.UserAccessErrorReopenIssue=Uživatel kontextu nemá potřebný přístup pro opětovné otevření problému
+IssueMdl.Notice.UserAccessErrorCloseIssue=Uživatel kontextu nemá potřebný přístup pro uzavření problému
+IssueMdl.Notice.MarkCompleteNotAllowed=Problém nelze označit jako dokončený ze stavu 'Probíhá schvalování'
+IssueMdl.Notice.IssuePromoteResolvingItemIncomplete=Stav dokončení <type> <name> nelze zvýšit, protože nejméně jedna připojená řešená změna nedosáhla konečného stavu.
+IssueMdl.Notice.ApprovalAlreadyEnable=Schválení nelze povolit. Schvalovací proces je již povolen.
+IssueMdl.Notice.ApprovalOperationNotAllowed=Proces schvalování u problémů je řízen správními nastaveními, proto operaci nelze provést na úrovni problému.
+IssueMdl.Notice.ApprovalActiveCannotDisable=Schválení nelze zakázat, protože proces schvalování je aktivní.
+IssueMdl.Notice.ApprovalAlreadyDisable=Schválení nelze zakázat. Proces schvalování je již zakázán.
+IssueMdl.Notice.AlreadyConnectedAsResolution=<type> <name> je již připojen jako řešení
+IssueMdl.Notice.FollowerAlreadyConnected=Zadaná sledující osoba je již k problému připojena
+IssueMdl.Notice.IsNotAssignee=Zadaná osoba není k problému připojena jako nabyvatel
+IssueMdl.Notice.IsNotCoOwner=Zadaná osoba není k problému připojena jako koordinátor
+IssueMdl.Notice.IsNotContributor=Zadaná osoba není k problému připojena jako přispěvatel
+IssueMdl.Notice.IsNotFollower=Zadaná osoba není k problému připojena jako sledující osoba
+IssueMdl.Notice.NotConnectedAsResolutionItem=Zadaný objekt ještě není připojen jako položka řešení
+IssueMdl.Notice.NumberFormatException=Zadaná hodnota pro přeskočení a přechod na začátek musí být v odpovídajícím číselném formátu
+IssueMdl.Notice.SkipLessThanZero=Zadaná hodnota pro přeskočení nesmí být menší než nula
+IssueMdl.Notice.TopGreaterThanMax=Zadaná hodnota pro přechod na začátek je větší než maximální povolená hodnota
+IssueMdl.Notice.TopPositiveInteger=Zadaná hodnota pro přechod na začátek musí být kladné celé číslo
+
+
+## Issue Access Errors
+IssueMdl.Notice.UserCoownerError=Nemůžete spravovat koordinátora.\n Zkontrolujte, zda je vaše odpovědnost a stav dokončení problému kompatibilní s touto operací.
+IssueMdl.Notice.UserAssigneeError=Nemůžete spravovat nabyvatele.\n Zkontrolujte, zda je vaše odpovědnost a stav dokončení problému kompatibilní s touto operací.
+IssueMdl.Notice.UserContributorError=Nemůžete spravovat přispěvatele.\n Zkontrolujte, zda je vaše odpovědnost a stav dokončení problému kompatibilní s touto operací.
+IssueMdl.Notice.UserFollowerError=Nemůžete spravovat informované uživatele.\n Zkontrolujte, zda je vaše odpovědnost a stav dokončení problému kompatibilní s touto operací.
+IssueMdl.Notice.ModifyAffectedItemError=Nemůžete spravovat ovlivněnou položku.\n Zkontrolujte, zda je vaše odpovědnost a stav dokončení problému kompatibilní s touto operací.
+IssueMdl.Notice.ModifyResolvedByError=Nemůžete spravovat parametry Vyřešeno uživatelem.\n Zkontrolujte, zda je vaše odpovědnost a stav dokončení problému kompatibilní s touto operací.
+IssueMdl.Notice.ModifyContextError=Nemůžete spravovat položku kontextu.\n Zkontrolujte, zda je vaše odpovědnost a stav dokončení problému kompatibilní s touto operací.
+IssueMdl.Notice.ModifyResolutionError=Nemůžete spravovat rozlišení.\n Zkontrolujte, zda je vaše odpovědnost a stav dokončení problému kompatibilní s touto operací.
+IssueMdl.Notice.ModifyAttributeAccessError=Nemůžete upravovat atributy.\n Zkontrolujte, zda je vaše odpovědnost a stav dokončení problému kompatibilní s touto operací.
+IssueMdl.Notice.ResponsibleOrganizationManagement=Nemůžete spravovat odpovědnou organizaci.\n Zkontrolujte, zda je vaše odpovědnost a stav dokončení problému kompatibilní s touto operací.
+IssueMdl.Notice.UserCoownerPartOfApprovalError=Do procesu schvalování vydání jsou zapojeni koordinátoři v aktuálním stavu. Koordinátory nelze odebrat.
+IssueMdl.Notice.UserAsigneePartOfApprovalError=Do procesu schvalování vydání jsou zapojeny přiřazené osoby v aktuálním stavu. Přiřazené osoby nelze odebrat.
+IssueMdl.Notice.ReportingOrganizationManagement=Nemůžete spravovat organizaci podávající hlášení.\n Zkontrolujte, zda je vaše odpovědnost a stav dokončení problému kompatibilní s touto operací.
+IssueMdl.Notice.EnableDisableApprovalManagement=Nemůžete spravovat povolení schvalování.\n Zkontrolujte, zda je vaše odpovědnost a stav dokončení problému kompatibilní s touto operací.
+
+## Issue Modeler Entries End
+###############################
+
+########################################################################################################################
+## Issue Management parametrization
+########################################################################################################################
+
+## Issue Management parametrization
+OOTBParameterization.IssueManagement=Správa problémů
+OOTBParameterization.IssueManagement.tooltip=Definuje pravidla pro řízení chování příkazů pro správu problémů.
+
+# Family for the approvals
+OOTBParameterization.IssueManagement.Approvals=Schválení pro spouštění akce na trasách
+OOTBParameterization.IssueManagement.Approvals.tooltip=Vyberte schvalovatele pro spouštění akce na trase
+
+# Approval from New to Pending
+OOTBParameterization.IssueManagement.Approvals.param_CreateToAssign=Ke spuštění akce na trase 'Koncept' až 'Úkoly' je nutné schválení
+OOTBParameterization.IssueManagement.Approvals.param_CreateToAssign.tooltip=Typ schválení nutný ke spuštění akce na trase 'Koncept' až 'Úkoly'
+OOTBParameterization.IssueManagement.Approvals.param_CreateToAssign.Argument=Možnosti schvalovatele
+OOTBParameterization.IssueManagement.Approvals.param_CreateToAssign.Argument.tooltip=Vyberte schvalovatele pro tuto trasu
+OOTBParameterization.IssueManagement.Approvals.param_CreateToAssign.Argument.None=-
+OOTBParameterization.IssueManagement.Approvals.param_CreateToAssign.Argument.All=Všechny spoluodpovědné osoby A vlastník (stejný)
+OOTBParameterization.IssueManagement.Approvals.param_CreateToAssign.Argument.AllButOwnerMandatory=Všechny spoluodpovědné osoby a vlastník (záleží na konečném posouzení)
+OOTBParameterization.IssueManagement.Approvals.param_CreateToAssign.Argument.AnyOneResponsible=Jedna spoluodpovědná osoba NEBO vlastník
+OOTBParameterization.IssueManagement.Approvals.param_CreateToAssign.Argument.AnyOneAssignee=Pouze jeden nabyvatel
+OOTBParameterization.IssueManagement.Approvals.param_CreateToAssign.Argument.AllAssignees=Všichni nabyvatelé
+
+# Approval from Pending to Active
+OOTBParameterization.IssueManagement.Approvals.param_AssignToActive=Ke spuštění akce na trase 'Úkoly' až 'Probíhá práce' je nutné schválení
+OOTBParameterization.IssueManagement.Approvals.param_AssignToActive.tooltip=Typ schválení nutný ke spuštění akce na trase 'Úkoly' až 'Probíhá práce'
+OOTBParameterization.IssueManagement.Approvals.param_AssignToActive.Argument=Možnosti schvalovatele
+OOTBParameterization.IssueManagement.Approvals.param_AssignToActive.Argument.tooltip=Vyberte schvalovatele pro tuto trasu
+OOTBParameterization.IssueManagement.Approvals.param_AssignToActive.Argument.None=-
+OOTBParameterization.IssueManagement.Approvals.param_AssignToActive.Argument.All=Všechny spoluodpovědné osoby A vlastník (stejný)
+OOTBParameterization.IssueManagement.Approvals.param_AssignToActive.Argument.AllButOwnerMandatory=Všechny spoluodpovědné osoby a vlastník (záleží na konečném posouzení)
+OOTBParameterization.IssueManagement.Approvals.param_AssignToActive.Argument.AnyOneResponsible=Jedna spoluodpovědná osoba NEBO vlastník
+OOTBParameterization.IssueManagement.Approvals.param_AssignToActive.Argument.AnyOneAssignee=Pouze jeden nabyvatel
+OOTBParameterization.IssueManagement.Approvals.param_AssignToActive.Argument.AllAssignees=Všichni nabyvatelé
+
+# Approval from Active to Review
+OOTBParameterization.IssueManagement.Approvals.param_ActiveToReview=Ke spuštění akce na trase 'Probíhá práce' až 'Ve schválení' je nutné schválení
+OOTBParameterization.IssueManagement.Approvals.param_ActiveToReview.tooltip=Typ schválení nutný ke spuštění akce na trase 'Probíhá práce' až 'Ve schválení'
+OOTBParameterization.IssueManagement.Approvals.param_ActiveToReview.Argument=Možnosti schvalovatele
+OOTBParameterization.IssueManagement.Approvals.param_ActiveToReview.Argument.tooltip=Vyberte schvalovatele pro tuto trasu
+OOTBParameterization.IssueManagement.Approvals.param_ActiveToReview.Argument.None=-
+OOTBParameterization.IssueManagement.Approvals.param_ActiveToReview.Argument.All=Všechny spoluodpovědné osoby A vlastník (stejný)
+OOTBParameterization.IssueManagement.Approvals.param_ActiveToReview.Argument.AllButOwnerMandatory=Všechny spoluodpovědné osoby a vlastník (záleží na konečném posouzení)
+OOTBParameterization.IssueManagement.Approvals.param_ActiveToReview.Argument.AnyOneResponsible=Jedna spoluodpovědná osoba NEBO vlastník
+OOTBParameterization.IssueManagement.Approvals.param_ActiveToReview.Argument.AnyOneAssignee=Pouze jeden nabyvatel
+OOTBParameterization.IssueManagement.Approvals.param_ActiveToReview.Argument.AllAssignees=Všichni nabyvatelé
+
+# Approval from Review to Close
+OOTBParameterization.IssueManagement.Approvals.param_ReviewToClosed=Ke spuštění akce na trase 'Ve schválení' až 'Dokončeno' je nutné schválení
+OOTBParameterization.IssueManagement.Approvals.param_ReviewToClosed.tooltip=Typ schválení nutný ke spuštění akce na trase 'Ve schválení' až 'Dokončeno'
+OOTBParameterization.IssueManagement.Approvals.param_ReviewToClosed.Argument=Možnosti schvalovatele
+OOTBParameterization.IssueManagement.Approvals.param_ReviewToClosed.Argument.tooltip=Vyberte schvalovatele pro tuto trasu
+OOTBParameterization.IssueManagement.Approvals.param_ReviewToClosed.Argument.None=-
+OOTBParameterization.IssueManagement.Approvals.param_ReviewToClosed.Argument.All=Všechny spoluodpovědné osoby A vlastník (stejný)
+OOTBParameterization.IssueManagement.Approvals.param_ReviewToClosed.Argument.AllButOwnerMandatory=Všechny spoluodpovědné osoby a vlastník (záleží na konečném posouzení)
+OOTBParameterization.IssueManagement.Approvals.param_ReviewToClosed.Argument.AnyOneResponsible=Jedna spoluodpovědná osoba NEBO vlastník
+OOTBParameterization.IssueManagement.Approvals.param_ReviewToClosed.Argument.AnyOneAssignee=Pouze jeden nabyvatel
+OOTBParameterization.IssueManagement.Approvals.param_ReviewToClosed.Argument.AllAssignees=Všichni nabyvatelé
+
+# Access Controls - Properties Read
+OOTBParameterization.IssueManagement.AccessControls.Properties_Read=Řízení přístupu pro čtení vlastností
+OOTBParameterization.IssueManagement.AccessControls.Properties_Read.tooltip=Typ správy přístupu nutný pro čtení vlastností problému
+OOTBParameterization.IssueManagement.AccessControls.Properties_Read.Argument=Ovladače přístupu
+OOTBParameterization.IssueManagement.AccessControls.Properties_Read.Argument.tooltip=Vyberte ovladače přístupu pro čtení vlastností
+OOTBParameterization.IssueManagement.AccessControls.Properties_Read.Argument.Contributor=Přispívající
+OOTBParameterization.IssueManagement.AccessControls.Properties_Read.Argument.Assignee=Nabyvatel
+OOTBParameterization.IssueManagement.AccessControls.Properties_Read.Argument.Owner=Vlastník
+OOTBParameterization.IssueManagement.AccessControls.Properties_Read.Argument.Co-Owner=Koordinátor
+
+# Access Controls - Properties Edit
+OOTBParameterization.IssueManagement.AccessControls.Properties_Edit=Správa přístupu pro úpravu vlastností
+OOTBParameterization.IssueManagement.AccessControls.Properties_Edit.tooltip=Typ správy přístupu nutný pro úpravy vlastností problému
+OOTBParameterization.IssueManagement.AccessControls.Properties_Edit.Argument=Ovladače přístupu
+OOTBParameterization.IssueManagement.AccessControls.Properties_Edit.Argument.tooltip=Vyberte ovladače přístupu pro úpravu vlastností
+OOTBParameterization.IssueManagement.AccessControls.Properties_Edit.Argument.Contributor=Přispívající
+OOTBParameterization.IssueManagement.AccessControls.Properties_Edit.Argument.Assignee=Nabyvatel
+OOTBParameterization.IssueManagement.AccessControls.Properties_Edit.Argument.Owner=Vlastník
+OOTBParameterization.IssueManagement.AccessControls.Properties_Edit.Argument.Co-Owner=Koordinátor
+
+# Access Controls - Lifecycle Promote
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Promote=Správa přístupu pro zvýšení stavu dokončení životního cyklu problému
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Promote.tooltip=Typ správy přístupu nutný pro zvýšení stavu dokončení životního cyklu problému
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Promote.Argument=Ovladače přístupu
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Promote.Argument.tooltip=Vyberte ovladače přístupu pro zvýšení dokončení stavu životního stavu
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Promote.Argument.Contributor=Přispívající
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Promote.Argument.Assignee=Nabyvatel
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Promote.Argument.Owner=Vlastník
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Promote.Argument.Co-Owner=Koordinátor
+
+# Access Controls - Lifecycle Demote
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Demote=Správa přístupu pro snížení stavu dokončení životního cyklu problému
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Demote.tooltip=Typ správy přístupu nutný pro snížení stavu dokončení životního cyklu problému
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Demote.Argument=Ovladače přístupu
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Demote.Argument.tooltip=Vyberte ovladače přístupu pro snížení stavu dokončení životního stavu
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Demote.Argument.Contributor=Přispívající
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Demote.Argument.Assignee=Nabyvatel
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Demote.Argument.Owner=Vlastník
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Demote.Argument.Co-Owner=Koordinátor
+
+# Access Controls - Lifecycle Close
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Close=Správa přístupu pro uzavření životního cyklu problému
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Close.tooltip=Typ správy přístupu nutný pro uzavření životního cyklu problému
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Close.Argument=Ovladače přístupu
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Close.Argument.tooltip=Vyberte ovladače přístupu pro uzavření životního stavu
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Close.Argument.Contributor=Přispívající
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Close.Argument.Assignee=Nabyvatel
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Close.Argument.Owner=Vlastník
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Close.Argument.Co-Owner=Koordinátor
+
+# Access Controls - Lifecycle Close
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_ReopenAfterClose=Správa přístupu pro opětovné otevření životního cyklu problému (po uzavření)
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_ReopenAfterClose.tooltip=Typ správy přístupu nutný pro opětovné otevření životního cyklu problému (po uzavření)
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_ReopenAfterClose.Argument=Ovladače přístupu
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_ReopenAfterClose.Argument.tooltip=Vyberte ovladače přístupu pro opětovné otevření životního cyklu (po uzavření)
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_ReopenAfterClose.Argument.Contributor=Přispívající
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_ReopenAfterClose.Argument.Assignee=Nabyvatel
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_ReopenAfterClose.Argument.Owner=Vlastník
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_ReopenAfterClose.Argument.Co-Owner=Koordinátor
+
+# Access Controls - Lifecycle Close
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Delete=Správa přístupu pro odstranění životního cyklu problému
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Delete.tooltip=Typ správy přístupu nutný k problému (lze použít pouze pro nový stav životního cyklu)
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Delete.Argument=Ovladače přístupu
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Delete.Argument.tooltip=Vyberte ovladače přístupu pro odstranění životního cyklu
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Delete.Argument.Contributor=Přispívající
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Delete.Argument.Assignee=Nabyvatel
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Delete.Argument.Owner=Vlastník
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Delete.Argument.Co-Owner=Koordinátor
+
+# Access Controls - RelatedObjects Add
+OOTBParameterization.IssueManagement.AccessControls.RelatedObject_Add=Správa přístupu pro přidávání souvisejících objektů k problému
+OOTBParameterization.IssueManagement.AccessControls.RelatedObject_Add.tooltip=Typ správy přístupu nutný k přidání souvisejícího objektu k problému
+OOTBParameterization.IssueManagement.AccessControls.RelatedObject_Add.Argument=Ovladače přístupu
+OOTBParameterization.IssueManagement.AccessControls.RelatedObject_Add.Argument.tooltip=Vyberte ovladače přístupu pro přidání souvisejícího objektu k problému
+OOTBParameterization.IssueManagement.AccessControls.RelatedObject_Add.Argument.Contributor=Přispívající
+OOTBParameterization.IssueManagement.AccessControls.RelatedObject_Add.Argument.Assignee=Nabyvatel
+OOTBParameterization.IssueManagement.AccessControls.RelatedObject_Add.Argument.Owner=Vlastník
+OOTBParameterization.IssueManagement.AccessControls.RelatedObject_Add.Argument.Co-Owner=Koordinátor
+
+# Access Controls - Related Objects Delete
+OOTBParameterization.IssueManagement.AccessControls.RelatedObject_Delete=Správa přístupu pro odstranění souvisejících objektů z problému
+OOTBParameterization.IssueManagement.AccessControls.RelatedObject_Delete.tooltip=Typ správy přístupu nutný k odstranění souvisejícího objektu z problému
+OOTBParameterization.IssueManagement.AccessControls.RelatedObject_Delete.Argument=Ovladače přístupu
+OOTBParameterization.IssueManagement.AccessControls.RelatedObject_Delete.Argument.tooltip=Vyberte ovladače přístupu pro odstranění souvisejícího objektu z problému
+OOTBParameterization.IssueManagement.AccessControls.RelatedObject_Delete.Argument.Contributor=Přispívající
+OOTBParameterization.IssueManagement.AccessControls.RelatedObject_Delete.Argument.Assignee=Nabyvatel
+OOTBParameterization.IssueManagement.AccessControls.RelatedObject_Delete.Argument.Owner=Vlastník
+OOTBParameterization.IssueManagement.AccessControls.RelatedObject_Delete.Argument.Co-Owner=Koordinátor
+
+# Access Controls - Team Change Owner
+OOTBParameterization.IssueManagement.AccessControls.Team_ChangeOwner=Správa přístupu pro změnu vlastníka problému
+OOTBParameterization.IssueManagement.AccessControls.Team_ChangeOwner.tooltip=Typ správy přístupu nutný ke změně vlastníka problému
+OOTBParameterization.IssueManagement.AccessControls.Team_ChangeOwner.Argument=Ovladače přístupu
+OOTBParameterization.IssueManagement.AccessControls.Team_ChangeOwner.Argument.tooltip=Vyberte ovladače přístupu pro změnu vlastníka problému
+OOTBParameterization.IssueManagement.AccessControls.Team_ChangeOwner.Argument.Contributor=Přispívající
+OOTBParameterization.IssueManagement.AccessControls.Team_ChangeOwner.Argument.Assignee=Nabyvatel
+OOTBParameterization.IssueManagement.AccessControls.Team_ChangeOwner.Argument.Owner=Vlastník
+OOTBParameterization.IssueManagement.AccessControls.Team_ChangeOwner.Argument.Co-Owner=Koordinátor
+
+# Access Controls - Team Add Co-Owner
+OOTBParameterization.IssueManagement.AccessControls.Team_AddCo-Owner=Správa přístupu pro změnu vlastníka problému
+OOTBParameterization.IssueManagement.AccessControls.Team_AddCo-Owner.tooltip=Typ správy přístupu nutný ke změně vlastníka problému
+OOTBParameterization.IssueManagement.AccessControls.Team_AddCo-Owner.Argument=Ovladače přístupu
+OOTBParameterization.IssueManagement.AccessControls.Team_AddCo-Owner.Argument.tooltip=Vyberte ovladače přístupu pro změnu vlastníka problému
+OOTBParameterization.IssueManagement.AccessControls.Team_AddCo-Owner.Argument.Contributor=Přispívající
+OOTBParameterization.IssueManagement.AccessControls.Team_AddCo-Owner.Argument.Assignee=Nabyvatel
+OOTBParameterization.IssueManagement.AccessControls.Team_AddCo-Owner.Argument.Owner=Vlastník
+OOTBParameterization.IssueManagement.AccessControls.Team_AddCo-Owner.Argument.Co-Owner=Koordinátor
+
+# Access Controls - Team Add Assignee Owner
+OOTBParameterization.IssueManagement.AccessControls.Team_AddAssignee=Správa přístupu pro změnu vlastníka problému
+OOTBParameterization.IssueManagement.AccessControls.Team_AddAssignee.tooltip=Typ správy přístupu nutný ke změně vlastníka problému
+OOTBParameterization.IssueManagement.AccessControls.Team_AddAssignee.Argument=Ovladače přístupu
+OOTBParameterization.IssueManagement.AccessControls.Team_AddAssignee.Argument.tooltip=Vyberte ovladače přístupu pro změnu vlastníka problému
+OOTBParameterization.IssueManagement.AccessControls.Team_AddAssignee.Argument.Contributor=Přispívající
+OOTBParameterization.IssueManagement.AccessControls.Team_AddAssignee.Argument.Assignee=Nabyvatel
+OOTBParameterization.IssueManagement.AccessControls.Team_AddAssignee.Argument.Owner=Vlastník
+OOTBParameterization.IssueManagement.AccessControls.Team_AddAssignee.Argument.Co-Owner=Koordinátor
+
+# Access Controls - Team Add Participant
+OOTBParameterization.IssueManagement.AccessControls.Team_AddParticipant=Správa přístupu pro změnu vlastníka problému
+OOTBParameterization.IssueManagement.AccessControls.Team_AddParticipant.tooltip=Typ správy přístupu nutný ke změně vlastníka problému
+OOTBParameterization.IssueManagement.AccessControls.Team_AddParticipant.Argument=Ovladače přístupu
+OOTBParameterization.IssueManagement.AccessControls.Team_AddParticipant.Argument.tooltip=Vyberte ovladače přístupu pro změnu vlastníka problému
+OOTBParameterization.IssueManagement.AccessControls.Team_AddParticipant.Argument.Contributor=Přispívající
+OOTBParameterization.IssueManagement.AccessControls.Team_AddParticipant.Argument.Assignee=Nabyvatel
+OOTBParameterization.IssueManagement.AccessControls.Team_AddParticipant.Argument.Owner=Vlastník
+OOTBParameterization.IssueManagement.AccessControls.Team_AddParticipant.Argument.Co-Owner=Koordinátor
+
+# Access Controls - Team Remove Co-Owner
+OOTBParameterization.IssueManagement.AccessControls.Team_RemoveCo-Owner=Správa přístupu pro změnu vlastníka problému
+OOTBParameterization.IssueManagement.AccessControls.Team_RemoveCo-Owner.tooltip=Typ správy přístupu nutný ke změně vlastníka problému
+OOTBParameterization.IssueManagement.AccessControls.Team_RemoveCo-Owner.Argument=Ovladače přístupu
+OOTBParameterization.IssueManagement.AccessControls.Team_RemoveCo-Owner.Argument.tooltip=Vyberte ovladače přístupu pro změnu vlastníka problému
+OOTBParameterization.IssueManagement.AccessControls.Team_RemoveCo-Owner.Argument.Contributor=Přispívající
+OOTBParameterization.IssueManagement.AccessControls.Team_RemoveCo-Owner.Argument.Assignee=Nabyvatel
+OOTBParameterization.IssueManagement.AccessControls.Team_RemoveCo-Owner.Argument.Owner=Vlastník
+OOTBParameterization.IssueManagement.AccessControls.Team_RemoveCo-Owner.Argument.Co-Owner=Koordinátor
+
+# Access Controls - Team Remove Assignee
+OOTBParameterization.IssueManagement.AccessControls.Team_RemoveAssignee=Správa přístupu pro změnu vlastníka problému
+OOTBParameterization.IssueManagement.AccessControls.Team_RemoveAssignee.tooltip=Typ správy přístupu nutný ke změně vlastníka problému
+OOTBParameterization.IssueManagement.AccessControls.Team_RemoveAssignee.Argument=Ovladače přístupu
+OOTBParameterization.IssueManagement.AccessControls.Team_RemoveAssignee.Argument.tooltip=Vyberte ovladače přístupu pro změnu vlastníka problému
+OOTBParameterization.IssueManagement.AccessControls.Team_RemoveAssignee.Argument.Contributor=Přispívající
+OOTBParameterization.IssueManagement.AccessControls.Team_RemoveAssignee.Argument.Assignee=Nabyvatel
+OOTBParameterization.IssueManagement.AccessControls.Team_RemoveAssignee.Argument.Owner=Vlastník
+OOTBParameterization.IssueManagement.AccessControls.Team_RemoveAssignee.Argument.Co-Owner=Koordinátor
+
+# Access Controls - Team Remove Participant
+OOTBParameterization.IssueManagement.AccessControls.Team_RemoveParticipant=Správa přístupu pro změnu vlastníka problému
+OOTBParameterization.IssueManagement.AccessControls.Team_RemoveParticipant.tooltip=Typ správy přístupu nutný ke změně vlastníka problému
+OOTBParameterization.IssueManagement.AccessControls.Team_RemoveParticipant.Argument=Ovladače přístupu
+OOTBParameterization.IssueManagement.AccessControls.Team_RemoveParticipant.Argument.tooltip=Vyberte ovladače přístupu pro změnu vlastníka problému
+OOTBParameterization.IssueManagement.AccessControls.Team_RemoveParticipant.Argument.Contributor=Přispívající
+OOTBParameterization.IssueManagement.AccessControls.Team_RemoveParticipant.Argument.Assignee=Nabyvatel
+OOTBParameterization.IssueManagement.AccessControls.Team_RemoveParticipant.Argument.Owner=Vlastník
+OOTBParameterization.IssueManagement.AccessControls.Team_RemoveParticipant.Argument.Co-Owner=Koordinátor
+
+# Access Controls - Attachments Download
+OOTBParameterization.IssueManagement.AccessControls.Attachments_Download=Správa přístupu pro stahování příloh z problému
+OOTBParameterization.IssueManagement.AccessControls.Attachments_Download.tooltip=Typ správy přístupu nutný ke stahování příloh z problému
+OOTBParameterization.IssueManagement.AccessControls.Attachments_Download.Argument=Ovladače přístupu
+OOTBParameterization.IssueManagement.AccessControls.Attachments_Download.Argument.tooltip=Typ správy přístupu nutný ke stahování příloh z problému
+OOTBParameterization.IssueManagement.AccessControls.Attachments_Download.Argument.Contributor=Přispívající
+OOTBParameterization.IssueManagement.AccessControls.Attachments_Download.Argument.Assignee=Nabyvatel
+OOTBParameterization.IssueManagement.AccessControls.Attachments_Download.Argument.Owner=Vlastník
+OOTBParameterization.IssueManagement.AccessControls.Attachments_Download.Argument.Co-Owner=Koordinátor
+
+# Access Controls - Attachments Add
+OOTBParameterization.IssueManagement.AccessControls.Attachments_Add=Správa přístupu pro přidávání příloh k problému
+OOTBParameterization.IssueManagement.AccessControls.Attachments_Add.tooltip=Typ správy přístupu nutný k přidávání příloh k problému
+OOTBParameterization.IssueManagement.AccessControls.Attachments_Add.Argument=Ovladače přístupu
+OOTBParameterization.IssueManagement.AccessControls.Attachments_Add.Argument.tooltip=Vyberte ovladače přístupu pro přidávání příloh k problému
+OOTBParameterization.IssueManagement.AccessControls.Attachments_Add.Argument.Contributor=Přispívající
+OOTBParameterization.IssueManagement.AccessControls.Attachments_Add.Argument.Assignee=Nabyvatel
+OOTBParameterization.IssueManagement.AccessControls.Attachments_Add.Argument.Owner=Vlastník
+OOTBParameterization.IssueManagement.AccessControls.Attachments_Add.Argument.Co-Owner=Koordinátor
+
+# Access Controls - Attachments Delete
+OOTBParameterization.IssueManagement.AccessControls.Attachments_Remove=Správa přístupu pro odstraňování příloh z problému
+OOTBParameterization.IssueManagement.AccessControls.Attachments_Remove.tooltip=Typ správy přístupu nutný k odstraňování příloh z problému
+OOTBParameterization.IssueManagement.AccessControls.Attachments_Remove.Argument=Ovladače přístupu
+OOTBParameterization.IssueManagement.AccessControls.Attachments_Remove.Argument.tooltip=Vyberte ovladače přístupu pro odstraňování příloh z problému
+OOTBParameterization.IssueManagement.AccessControls.Attachments_Remove.Argument.Contributor=Přispívající
+OOTBParameterization.IssueManagement.AccessControls.Attachments_Remove.Argument.Assignee=Nabyvatel
+OOTBParameterization.IssueManagement.AccessControls.Attachments_Remove.Argument.Owner=Vlastník
+OOTBParameterization.IssueManagement.AccessControls.Attachments_Remove.Argument.Co-Owner=Koordinátor
+
+# Access Controls - Comments
+OOTBParameterization.IssueManagement.AccessControls.Comments_Comments=Správa přístupu pro aktualizaci komentářů k problému
+OOTBParameterization.IssueManagement.AccessControls.Comments_Comments.tooltip=Typ správy přístupu nutný k aktualizaci komentářů k problému
+OOTBParameterization.IssueManagement.AccessControls.Comments_Comments.Argument=Ovladače přístupu
+OOTBParameterization.IssueManagement.AccessControls.Comments_Comments.Argument.tooltip=Vyberte ovladače přístupu pro aktualizaci komentářů k problému
+OOTBParameterization.IssueManagement.AccessControls.Comments_Comments.Argument.Contributor=Přispívající
+OOTBParameterization.IssueManagement.AccessControls.Comments_Comments.Argument.Assignee=Nabyvatel
+OOTBParameterization.IssueManagement.AccessControls.Comments_Comments.Argument.Owner=Vlastník
+OOTBParameterization.IssueManagement.AccessControls.Comments_Comments.Argument.Co-Owner=Koordinátor
+
+# Issue Approval Enforcements
+OOTBParameterization.IssueParameterization=Správa problémů
+OOTBParameterization.IssueParameterization.tooltip=Konfigurovat zkušenost se správou problémů
+OOTBParameterization.IssueParameterization.IssueApproval=Schválení problému
+OOTBParameterization.IssueParameterization.IssueApproval.tooltip=Správa schválení problému
+OOTBParameterization.IssueParameterization.IssueApproval.ISS_ApprovalEnforcement=Vynucení schválení problému
+OOTBParameterization.IssueParameterization.IssueApproval.ISS_ApprovalEnforcement.tooltip=Vyberte kteroukoli možnost
+OOTBParameterization.IssueParameterization.IssueApproval.ISS_ApprovalEnforcement.Argument=Vynucení schválení problému
+OOTBParameterization.IssueParameterization.IssueApproval.ISS_ApprovalEnforcement.Argument.tooltip=Definujte chování, které řídí proces schvalování problému. Můžete požadovat, aby se problémy vždy vytvářely se schválením, nikdy se nevytvářely se schválením, nebo můžete uživateli umožnit, aby si vybral.
+OOTBParameterization.IssueParameterization.IssueApproval.ISS_ApprovalEnforcement.Argument.Always=Vždy
+OOTBParameterization.IssueParameterization.IssueApproval.ISS_ApprovalEnforcement.Argument.Always.tooltip=Vždy vytvořit trasu schválení
+OOTBParameterization.IssueParameterization.IssueApproval.ISS_ApprovalEnforcement.Argument.Never=Nikdy
+OOTBParameterization.IssueParameterization.IssueApproval.ISS_ApprovalEnforcement.Argument.Never.tooltip=Nikdy nevytvářet trasu schválení
+OOTBParameterization.IssueParameterization.IssueApproval.ISS_ApprovalEnforcement.Argument.UserChoice=Volba uživatele
+OOTBParameterization.IssueParameterization.IssueApproval.ISS_ApprovalEnforcement.Argument.UserChoice.tooltip=Byla vytvořena trasa schválení na základě výběru uživatele
+

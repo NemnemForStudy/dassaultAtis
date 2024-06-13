@@ -1,0 +1,1 @@
+define("UWA/Services/Auth/Adapter/Abstract",["UWA/Core","UWA/Class","UWA/Class/Options"],function(t,e,n){"use strict";var i=e.extend(n,{init:function(t){this.setOptions(t)},hasIdentity:function(){},getIdentity:function(){},clearIdentity:function(){},authenticate:function(){}});return t.namespace("Services/Auth/Adapter/Abstract",i,t)});

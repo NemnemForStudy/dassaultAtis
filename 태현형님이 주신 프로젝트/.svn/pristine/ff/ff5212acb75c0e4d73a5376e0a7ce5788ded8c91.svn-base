@@ -1,0 +1,1 @@
+define("DS/CATFLWidgetProperties/CATFLWidgetProperties_cs",{});define("DS/CATFLWidgetProperties/assets/nls/CATFLProperties",{msg_not_supported_selection:"Výběr není podporován",msg_facet_no_available:"Tento aspekt není k dispozici"});

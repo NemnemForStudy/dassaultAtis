@@ -1,0 +1,289 @@
+{
+  "version": "2.0.4",
+  "model": {
+    "definition": {
+      "uid": "c839f268-7348-4a4c-9d3f-7a08dbb90f59"
+    },
+    "name": "Test Schematic",
+    "dataPorts": [],
+    "controlPorts": [
+      {
+        "name": "Start",
+        "portType": 0
+      }
+    ],
+    "settings": [
+      {
+        "name": "CastLevel",
+        "valueType": "ECastLevel",
+        "override": false,
+        "value": 1
+      }
+    ],
+    "startupPort": "$ref:$.controlPorts[0]",
+    "nodeIdSelectors": [],
+    "blocks": [
+      {
+        "definition": {
+          "uid": "a2c886c6-64fd-4a1d-a02f-fbba81c3e080"
+        },
+        "name": "Log",
+        "dataPorts": [
+          {
+            "name": "Value1",
+            "portType": 0,
+            "valueType": "String",
+            "override": true,
+            "value": "Log an information message into the console!",
+            "dataPorts": []
+          }
+        ],
+        "controlPorts": [
+          {
+            "name": "In",
+            "portType": 0
+          },
+          {
+            "name": "Out",
+            "portType": 1
+          }
+        ],
+        "settings": [
+          {
+            "name": "Severity",
+            "valueType": "ESeverity",
+            "override": false,
+            "value": 0
+          }
+        ]
+      },
+      {
+        "definition": {
+          "uid": "a2c886c6-64fd-4a1d-a02f-fbba81c3e080"
+        },
+        "name": "Log",
+        "dataPorts": [
+          {
+            "name": "Value1",
+            "portType": 0,
+            "valueType": "String",
+            "override": true,
+            "value": "Log a warning message into the console!",
+            "dataPorts": []
+          }
+        ],
+        "controlPorts": [
+          {
+            "name": "In",
+            "portType": 0
+          },
+          {
+            "name": "Out",
+            "portType": 1
+          }
+        ],
+        "settings": [
+          {
+            "name": "Severity",
+            "valueType": "ESeverity",
+            "override": true,
+            "value": 1
+          }
+        ]
+      },
+      {
+        "definition": {
+          "uid": "a2c886c6-64fd-4a1d-a02f-fbba81c3e080"
+        },
+        "name": "Log",
+        "dataPorts": [
+          {
+            "name": "Value1",
+            "portType": 0,
+            "valueType": "String",
+            "override": true,
+            "value": "Log a debug message into the console!",
+            "dataPorts": []
+          }
+        ],
+        "controlPorts": [
+          {
+            "name": "In",
+            "portType": 0
+          },
+          {
+            "name": "Out",
+            "portType": 1
+          }
+        ],
+        "settings": [
+          {
+            "name": "Severity",
+            "valueType": "ESeverity",
+            "override": true,
+            "value": 2
+          }
+        ]
+      },
+      {
+        "definition": {
+          "uid": "a2c886c6-64fd-4a1d-a02f-fbba81c3e080"
+        },
+        "name": "Log",
+        "dataPorts": [
+          {
+            "name": "Value1",
+            "portType": 0,
+            "valueType": "String",
+            "override": true,
+            "value": "Log an error message into the console!",
+            "dataPorts": []
+          }
+        ],
+        "controlPorts": [
+          {
+            "name": "In",
+            "portType": 0
+          },
+          {
+            "name": "Out",
+            "portType": 1
+          }
+        ],
+        "settings": [
+          {
+            "name": "Severity",
+            "valueType": "ESeverity",
+            "override": true,
+            "value": 3
+          }
+        ]
+      },
+      {
+        "definition": {
+          "uid": "a2c886c6-64fd-4a1d-a02f-fbba81c3e080"
+        },
+        "name": "Log",
+        "dataPorts": [
+          {
+            "name": "Value1",
+            "portType": 0,
+            "valueType": "String",
+            "override": true,
+            "value": "Log a success message into the console!",
+            "dataPorts": []
+          }
+        ],
+        "controlPorts": [
+          {
+            "name": "In",
+            "portType": 0
+          },
+          {
+            "name": "Out",
+            "portType": 1
+          }
+        ],
+        "settings": [
+          {
+            "name": "Severity",
+            "valueType": "ESeverity",
+            "override": true,
+            "value": 4
+          }
+        ]
+      }
+    ],
+    "dataLinks": [],
+    "controlLinks": [
+      {
+        "startPort": "$ref:$.controlPorts[0]",
+        "endPort": "$ref:$.blocks[0].controlPorts[0]",
+        "waitCount": 0
+      },
+      {
+        "startPort": "$ref:$.blocks[0].controlPorts[1]",
+        "endPort": "$ref:$.blocks[1].controlPorts[0]",
+        "waitCount": 0
+      },
+      {
+        "startPort": "$ref:$.blocks[1].controlPorts[1]",
+        "endPort": "$ref:$.blocks[2].controlPorts[0]",
+        "waitCount": 0
+      },
+      {
+        "startPort": "$ref:$.blocks[2].controlPorts[1]",
+        "endPort": "$ref:$.blocks[3].controlPorts[0]",
+        "waitCount": 0
+      },
+      {
+        "startPort": "$ref:$.blocks[3].controlPorts[1]",
+        "endPort": "$ref:$.blocks[4].controlPorts[0]",
+        "waitCount": 0
+      }
+    ]
+  },
+  "ui": {
+    "graphLeft": 0,
+    "graphTop": 0,
+    "width": 1100,
+    "height": 400,
+    "blocks": [
+      {
+        "top": 190,
+        "left": 100,
+        "dataPorts": []
+      },
+      {
+        "top": 190,
+        "left": 300,
+        "dataPorts": []
+      },
+      {
+        "top": 190,
+        "left": 500,
+        "dataPorts": []
+      },
+      {
+        "top": 190,
+        "left": 700,
+        "dataPorts": []
+      },
+      {
+        "top": 190,
+        "left": 900,
+        "dataPorts": []
+      }
+    ],
+    "dataPorts": [],
+    "controlPorts": [
+      {
+        "offset": 200
+      }
+    ],
+    "dataLinks": [],
+    "controlLinks": [
+      {},
+      {},
+      {},
+      {},
+      {}
+    ],
+    "shortcuts": []
+  },
+  "templates": {
+    "model": {
+      "graphs": {},
+      "scripts": {}
+    },
+    "ui": {
+      "graphs": {},
+      "scripts": {}
+    }
+  },
+  "types": {
+    "model": {
+      "objects": {}
+    }
+  }
+}

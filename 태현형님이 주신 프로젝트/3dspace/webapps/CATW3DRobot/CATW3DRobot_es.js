@@ -1,0 +1,1 @@
+define("DS/CATW3DRobot/CATW3DRobot_es",{});define("DS/CATW3DRobot/assets/nls/CATC3DRobotSnapPanel",{translation:"Traslación",translationX:"U|X:",translationY:"V|Y:",translationZ:"W|Z:",rotation:"Rotación",rotationW:"W:",rotationU:"U:",rotationV:"V:",save:"Guardar",cancel:"Cancelar"});

@@ -1,0 +1,49 @@
+#Prog SafetyFailureModesEffectsAnalysis_ExportDesign (iPLMIDSet :  #In PLMIDSet,oPLMIDSet :  #Out PLMIDSet) : VoidType
+  {/*Declaring my local variable*/
+let fmeaIdSet(PLMIDSet)
+
+let functionalArchitectureIdSet(PLMIDSet)
+let logicalArchitectureIdSet(PLMIDSet)
+let architectureIdSet(PLMIDSet)
+
+let mainArchitectureRefRouteSet (PLMRouteSet)
+let mainArchitectureRefIdSet(PLMIDSet)
+
+let allFMEARouteSet (PLMRouteSet)
+let allFMEAIdSet(PLMIDSet)
+
+let allFMEAContentRouteSet (PLMRouteSet)
+let allFMEAContentIdSet(PLMIDSet)
+
+let causalityRelationshipRouteSet (PLMRouteSet)
+let causalityRelationshipIdSet(PLMIDSet)
+let allCausalityRelationshipContentIdSet(PLMIDSet)
+
+fmeaIdSet = Restrict(iPLMIDSet,"CATSafety/FailureModesEffectsAnalysis")
+
+/* Reverse navigation to the main architecture reference */
+mainArchitectureRefRouteSet = ExecutePLMFunction("CATSafety", "CATSafety_FMEANavigationToArchitecture", fmeaIdSet)
+mainArchitectureRefIdSet = Ids(mainArchitectureRefRouteSet)
+
+/* Get full architecture logical or functional */
+functionalArchitectureIdSet = ExecutePLMProcedure("Functional_ExportReference_Design",Restrict(mainArchitectureRefIdSet,"RFLPLMFunctional/RFLPLMFunctionalReference"))
+logicalArchitectureIdSet = ExecutePLMProcedure("Logical_ExportReference_Design",Restrict(mainArchitectureRefIdSet,"RFLVPMLogical/RFLVPMLogicalReference"))
+architectureIdSet = functionalArchitectureIdSet + logicalArchitectureIdSet
+
+/* From each reference get all safety objects */
+allFMEARouteSet = ExecutePLMFunction("CATSafety", "CATSafety_ArchitectureNavigationToFMEA", architectureIdSet)
+allFMEAIdSet = Ids(allFMEARouteSet)
+
+/* Expand FMEAs */
+allFMEAContentRouteSet = ExecutePLMFunction("CATSafety", "CATSafety_ExpandFMEA", Restrict(allFMEAIdSet,"CATSafety/FailureModesEffectsAnalysis"))
+allFMEAContentIdSet = Ids(allFMEAContentRouteSet)
+
+/* Navigate causality relationships */ 
+causalityRelationshipIdSet = Restrict(allFMEAContentIdSet,"CATSafety/FailureModesEffectsAnalysisCausalityRelationship")
+causalityRelationshipRouteSet = ExecutePLMFunction("CATSafety", "CATSafety_CausalityRelationshipNavigationToTargets", causalityRelationshipIdSet)
+allCausalityRelationshipContentIdSet = Ids(causalityRelationshipRouteSet)
+
+
+/* Aggregate results */
+oPLMIDSet =   fmeaIdSet + mainArchitectureRefIdSet + architectureIdSet + allFMEAIdSet + allFMEAContentIdSet + causalityRelationshipIdSet + allCausalityRelationshipContentIdSet
+}

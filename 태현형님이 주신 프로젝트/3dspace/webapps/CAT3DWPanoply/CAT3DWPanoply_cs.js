@@ -1,0 +1,1 @@
+define("DS/CAT3DWPanoply/CAT3DWPanoply_cs",{});define("DS/CAT3DWPanoply/assets/nls/CAT3DWActionHelp",{tipLabel:"Rada",defaultTitle:"Nápověda","modal.labelButton":"Rozumím.",moreLabel:"Další nápověda"});

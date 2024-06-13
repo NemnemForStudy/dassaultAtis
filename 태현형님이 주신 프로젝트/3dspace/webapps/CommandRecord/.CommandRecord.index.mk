@@ -1,0 +1,12 @@
+m|WApplicationFrame\CommandRecord.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.0.22078|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\CommandRecord\CommandRecord.js|1647691765|2716
+s|WApplicationFrame\CommandRecord.mweb\src\ActionBarRecord.js|1510321131|669
+u|WApplicationFrame\CommandRecord.mweb\src\CommandRecord.js|1493802236|4
+u|WApplicationFrame\CommandRecord.mweb\src\ContextualBarRecord.js|1510321093|671
+u|WApplicationFrame\CommandRecord.mweb\src\DelegateRec.js|1510769667|5541
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

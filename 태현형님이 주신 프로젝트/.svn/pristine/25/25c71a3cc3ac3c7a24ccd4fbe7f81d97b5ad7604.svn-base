@@ -1,0 +1,1 @@
+define("DS/VCXWebLevelExploderGUI/VCXWebLevelExploderGUI_ja",{});define("DS/VCXWebLevelExploderGUI/assets/nls/VCXWebLevelExploderGUI",{PreviousLevelButton:"最後の分解図に戻る",RestoreModelButton:"分解したモデルを元の状態に復元する"});

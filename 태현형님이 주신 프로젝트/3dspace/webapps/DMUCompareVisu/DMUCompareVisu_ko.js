@@ -1,0 +1,1 @@
+define("DS/DMUCompareVisu/DMUCompareVisu_ko",{});define("DS/DMUCompareVisu/assets/nls/DMUCompareVisu",{compareNotify_onemodel:"모델이 하나뿐일 때는 비교할 수 없음",compareNotify_nomodel:"비교할 제품 없음"});

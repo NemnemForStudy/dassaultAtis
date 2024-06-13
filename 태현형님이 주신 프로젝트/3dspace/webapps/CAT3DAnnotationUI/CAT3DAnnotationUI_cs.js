@@ -1,0 +1,1 @@
+define("DS/CAT3DAnnotationUI/CAT3DAnnotationUI_cs",{});define("DS/CAT3DAnnotationUI/assets/nls/CAT3DAnnotationUI",{MoreLbl:"Přečtěte si více...",FailureModes:{"0":"Nejméně důležité","1":"Nízká","2":"Střední","3":"Vysoká","4":"Velmi vysoká"}});

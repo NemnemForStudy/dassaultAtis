@@ -1,0 +1,3 @@
+define("DS/CAT3DAnnotationRsc/CAT3DAnnotationRsc",[],function(){}),
+/*!  Copyright 2020 Dassault Systemes. All rights reserved. */
+define("DS/CAT3DAnnotationRsc/CAT3DAnnotationRscServices",["DS/WebappsUtils/WebappsUtils","text!DS/CAT3DAnnotationRsc/assets/json/CAT3DAnnotationAttributesIcons.json"],function(n,t){"use strict";var o=n.getWebappsAssetUrl("CAT3DAnnotationRsc","icons/22/"),s=JSON.parse(t);return{getFeatureIconPath:function(n,t){var e;return(e=s[n]&&s[n][t]?s[n][t]:s.CategoryIcons[n]?s.CategoryIcons[n]:s.CategoryIcons.default)&&(e=o+e+".png"),e}}});

@@ -1,0 +1,1141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:widget="http://www.netvibes.com/ns/">
+    <head>
+        <title>Content Configuration</title>
+        <!-- Copyright 2017, Dassault Systemes. All rights reserved -->
+        <!-- @fullReview ZUR 15/11/23 2017x Param Skeleton -->
+        <!-- @fullReview ZUR 17/07/10 IR-533849-3DEXPERIENCER2018x, IR-501674-3DEXPERIENCER2018x and IR-506844-3DEXPERIENCER2018x -->
+        <!-- Application Metas -->
+        <meta name="author" content="Dassault Systemes" />
+        <meta name="description" content="Test" />
+        <meta name="apiVersion" content="1.3" />
+        <meta name="debugMode" content="false" />
+        <meta name="strictMode" content="false" />
+
+        <script type="text/javascript" src="../AmdLoader/AmdLoader.js"></script>
+        <link rel="stylesheet" type="text/css" href="../c/UWA/assets/css/standalone.css" />
+
+        <script type="text/javascript" src="../c/UWA/js/UWA_Standalone_Alone.js"></script>
+        <script type="text/javascript" src="../UWA2/js/Class/Model.js"></script>
+        <script type="text/javascript" src="../UWA2/js/Class/Collection.js"></script>
+        <script type="text/javascript" src="../UWA2/js/Class/View.js"></script>
+
+        <script type="text/javascript" src="../WebappsUtils/WebappsUtils.js"></script>
+        <script type="text/javascript" src="../UIKIT/UIKIT.js"></script>
+        <script type="text/javascript" src="../FedDictionaryAccess/FedDictionaryAccess.js"></script>
+        <script type="text/javascript" src="../ParameterizationSkeleton/ParameterizationSkeleton.js"></script>
+        <script type="text/javascript" src="../PlatformManagementComponents/PlatformManagementComponents.js"></script>
+        <script type="text/javascript" src="../i3DXCompassPlatformServices/i3DXCompassPlatformServices.js"></script>
+
+        <script type="text/javascript" src="../egraph/egraph.js"></script>
+
+        <link rel="stylesheet" type="text/css" href="../egraph/egraph.css" ></link>
+        <link rel="stylesheet" type="text/css" href="../ParameterizationSkeleton/ParameterizationSkeleton.css" ></link>
+
+        <!-- rem  -->
+        <widget:preferences>
+        </widget:preferences>
+
+        <style type="text/css">
+        </style>
+
+        <!-- Application JavaScript Source -->
+        <script type="text/javascript">
+
+//<![CDATA[
+/*global widget, require, define*/
+'use strict';
+
+require([
+
+    // UWA
+    'UWA/Core',
+    'UWA/Class/Model',
+    'UWA/Class/Collection',
+    'UWA/Class/View',
+
+    // WebApps
+    'WebappsUtils/WebappsUtils',
+    'DS/W3DXComponents/Skeleton',
+    'DS/W3DXComponents/ContentSet',
+    'DS/i3DXCompassPlatformServices/i3DXCompassPlatformServices',
+    'DS/W3DXComponents/Collections/ActionsCollection',
+    'DS/ParameterizationSkeleton/Utils/ParameterizationGenericServices',
+    'DS/ParameterizationSkeleton/Views/ParametersLayoutView',
+    'DS/ParameterizationSkeleton/Views/ParametersLayoutViewUtilities',
+    'DS/ParameterizationSkeleton/Views/ParametersParentView',
+    'DS/ParameterizationSkeleton/Views/ParameterizationLifecycle/LifecycleDescriptionView',
+    'DS/ParameterizationSkeleton/Utils/ParameterizationURLHandler',
+    'i18n!DS/ParameterizationSkeleton/assets/nls/ParamSkeletonNLS',
+	'i18n!DS/ParameterizationSkeleton/assets/nls/XCADMappingNLS',
+    'DS/ENODerivedFormatManagement/ENODerivedFormatManagement'
+], function (UWA, Model, Collection, View, WebappsUtils, Skeleton, ContentSet, i3DXCompassPlatformServices, ActionsCollection,  GenericServices, ParametersLayoutView, ParametersLayoutViewUtilities, ParametersParentView, LifecycleDescriptionView, URLHandler, ParamSkeletonNLS, XCADMappingNLS, ENODerivedFormatManagement) {
+
+    function renderViewHelper (displayedView) {
+        UWA.log(displayedView);
+    }
+
+    var self = {
+        bones: null,
+        height: 'auto',
+        licenceAlert: null,
+        unMaximizedHeight: null,
+        generalViewOpts :  {
+                contents : {
+                    useInfiniteScroll : false,
+                    usePullToRefresh : false
+                },
+                events: {//FUN119391
+                  onPreInject: function () {
+                    console.log("onPostInject");
+                    let sepElmStr = '<div class=" thumbnail-sub-container tile-sub-container" draggable="true" style="height: 60%; background-color: #f4f5f6;">                                            <div class=" thumbnail-header tile-header">                                                                                            </div>                                            <div class=" thumbnail-body tile-body">                                                \t                                                <div class=" thumbnail-title tile-title">Applications domain list</div>                                                <div class=" thumbnail-subtitle tile-subtitle"></div>                                                <div class=" thumbnail-content tile-content"><span id="elemSep1"></span></div>                                            <progress max="100" value="10" class=" thumbnail-progress tile-progress"></progress>                                            </div>                                            <div class=" thumbnail-actions tile-actions">                                                <div class="actions-inline-container">                                                    <div class="action-container single-action hidden">                                                        <div class="action-icon-wrapper"><span class="fonticon fonticon-2x"></span></div>                                                    </div>                                                    <div class="action-container actions-inline-dotted hidden">                                                        <div class="action-icon-wrapper"><span class="fonticon fonticon-2x fonticon-down-open"></span></div>                                                    </div>                                                </div>                                            </div>                                        </div>';
+                    let len = this.getElements('#elemSep1').length;
+                    for(let i = 0; i < len ; i++) {
+                      //widget.getElements('#elemSep1')[i].getParent().getParent().getParent().outerHTML = sepElmStr;//'<div> <hr class="solid"></div>'
+                      let htmlStr = this.getElements('#elemSep1')[i].getParent().getParent().getParent().outerHTML;
+
+                      if (htmlStr.indexOf('<div class=" tile-sub-container" draggable="true">') > -1) {
+                      //  let result = htmlStr.replace('<div class=" thumbnail-sub-container tile-sub-container" draggable="true">', '<div class=" thumbnail-sub-container tile-sub-container" draggable="true" style="height: 60%; background-color: #f4f5f6;">');
+                        //let result = '<div class=" DomainSeparator">Common configurations</div>';
+                        //widget.getElements('#elemSep1')[i].getParent().getParent().getParent().outerHTML = result;
+                        this.getElements('#elemSep1')[i].getParent().getParent().getParent().getChildren()[0].setAttribute('style', 'height:0%; width:0%;');
+                        this.getElements('#elemSep1')[i].getParent().getParent().getChildren()[0].classList.add('sepTitle');
+                        this.getElements('#elemSep1')[i].getParent().getParent().getChildren()[0].setAttribute('style', "line-height: 20px;color: #3d3d3d;")
+                        this.getElements('#elemSep1')[i].getParent().getParent().getParent().setAttribute('style', 'height:40%; background-color:#f4f5f6;');
+                        this.getElements('#elemSep1')[i].getParent().getParent().getParent().getParent().setAttribute('style', 'height:20%');
+                        this.getElements('#elemSep1')[i].getParent().getParent().getParent().getParent().removeEvent("click");
+                      }
+                    }
+                    //return view;
+
+                  },
+                  onPostInject: function (view) {
+                  }
+                }
+        },
+
+        setBodyHeight: function (height) {
+            if (height) {
+                if (height !== 'auto') {
+                    height += 'px';
+                }
+                widget.body.setStyle('height', height);
+            }
+        },
+
+        buildSkeleton : function() {
+
+            var pSkeleton = new Skeleton(
+
+            { // Renderers map
+                domains: {
+                    collection: 'DS/ParameterizationSkeleton/Collection/ParameterizationDomainsListCollection',
+                    view: null,
+                    swipe: false,
+                    viewOptions: self.generalViewOpts,
+                    idCardOptions: {
+                        actions: function () {
+                            return null;
+                        },
+                        facets: function () {
+
+                            // if (this._attributes.domainid === "MappingManagement") {
+                            //     return [{
+                            //         text: "VPM / ENG",
+                            //         icon: 'tools',
+                            //         handler: Skeleton.getRendererHandler('mappingVPMPartrenderer')
+                            //     }];
+                            // }
+                            //
+                           	// // Types Not Synchronized
+              							// if (this._attributes.domainid === "TypesNotSyncMappingManagement") {
+                            //     return [{
+                            //         text: "VPM / ENG",
+                            //         icon: 'tools',
+                            //         handler: Skeleton.getRendererHandler('typesNotSyncMappingRenderer')
+                            //     }];
+                            // }
+                            // Collaboration Management
+                            if (this._attributes.domainid === "CollaborationManagement") {
+                                return [{
+                                    text: "VPM / ENG",
+                                    icon: 'tools',
+                                    handler: Skeleton.getRendererHandler('collaborationManagementParentRenderer')
+                                }];
+                            } else if (this._attributes.domainid === "XENManagement") {//FUN090928 : SSV1
+                                return [{
+                                    text: "XEN",
+                                    icon: 'tools',
+                                    handler: Skeleton.getRendererHandler('xEngineeringPartNumberRenderer')
+                                }];
+                            } else if ( this._attributes.domainid === "DerivedFormatConversionServices" ) {//FUN093719
+                                return [{
+                                    text: "XEN",
+                                    icon: 'tools',
+                                    handler: Skeleton.getRendererHandler('derivedFormatManagement')
+                                }];
+                            }  else if (this._attributes.domainid === "SystemsArchitectureDefinition") {
+                              return [{ // FUN099143 :Added for FLManagement
+                                  text: "SAX",
+                                  icon: 'tools',
+                                  handler: Skeleton.getRendererHandler('FLWebArchitectureNumberRenderer')
+                              }];
+                            } else if (this._attributes.domainid === "SystemsSafetyParameterization") {
+                                 return [{ // FUN108877 : Added for SystemsSafety
+                                    text: "SFY",
+                                    icon: 'tools',
+                                    handler: Skeleton.getRendererHandler('SystemsSafetyRenderer')
+                                }];
+                            } else if (this._attributes.domainid === "ConfigurationUXParameterization") {
+                                return [{
+                                    text: "The Text", //need to modify ...
+                                    icon: 'tools',
+                                    handler: Skeleton.getRendererHandler('configurationManagementParentRenderer')
+                                }];
+                            } //FUN100314 ENOVIA CFG XSL Customization through Console Param
+                            else if (this._attributes.domainid === "MSFConfigurationParameterization") { //FUN111665 odw
+                                return [{
+                                    text: "MSF", //need to modify ...
+                                    icon: 'tools',
+                                    handler: Skeleton.getRendererHandler('MSFConfigurationRenderer')
+                                }];
+                            }
+                            else if (this._attributes.domainid === "DOCMConfigurationParameterization") { //FUN127101, resp - qvf
+                                return [{
+                                    text: "DOCM",
+                                    icon: 'tools',
+                                    handler: Skeleton.getRendererHandler('DOCMConfigurationRenderer')
+                                }];
+                            }
+			    else if (this._attributes.domainid === "XCADParameterization") { //FUN116134 qfp
+                                return [{
+                                    text: XCADMappingNLS.connectorsText,
+                                    icon: 'tools',
+                                    handler: Skeleton.getRendererHandler('parentRenderer')
+                                },
+                                {
+                                    text: XCADMappingNLS.commonSettingsText,
+                                    icon: 'cog',
+                                    handler: Skeleton.getRendererHandler('xCADCommonSettingRenderer')
+                                }];
+                            }
+                            //Category for Delmia Options
+                            else if (this._attributes.domainid === "OperationEngineering") {
+                                return [{
+                                    text: "OperationEngineering",
+                                    icon: 'tools',
+                                    handler: Skeleton.getRendererHandler('DELConfigurationParamRenderer')
+                                }];
+                            }
+                            //Category for VersionNaming Options
+                            else if (this._attributes.domainid === "ObjectIdentification" && this._attributes.familyid === "VersionNaming") {
+                                return [{
+                                    text: ParamSkeletonNLS.VersionNaming1,
+                                    icon: 'cog',
+                                    handler: Skeleton.getRendererHandler('VersionNamingParamRenderer')
+                                },
+                                {
+                                    text: ParamSkeletonNLS.VersionNamingExt,
+                                    icon: 'tools',
+                                    handler: Skeleton.getRendererHandler('VersionNamingExtParamRenderer')
+                                }];
+                            }
+                            else if (this._attributes.domainid === "FasteningParameterization") {//ZK8
+                                return [{
+                                    text: "FSX",
+                                    icon: 'tools',
+                                    handler: Skeleton.getRendererHandler('FasteningRenderer')
+                                }];
+                            }
+                            else if (this._attributes.domainid === "StandardMgmtConfiguration") { //FUN111665 odw
+                                return [{
+                                    text: "Standard", //need to modify ...
+                                    icon: 'tools',
+                                    handler: Skeleton.getRendererHandler('standardManagementRenderer')
+                                }];
+                            }
+                            else if (this._attributes.domainid === "SpecificationManagement") {
+                                return [{
+                                    text: "XSR", 
+                                    icon: 'tools',
+                                    handler: Skeleton.getRendererHandler('specificationManagementParentRenderer')
+                                }];
+                            } 
+                            return [{
+                                text: 'Edit',
+                                icon: 'tools',//linkedin//eye
+                                handler: Skeleton.getRendererHandler('parentRenderer')
+                            }];
+                        }
+                    }
+                },
+                //FUN090928 : SSV1
+                xEngineeringPartNumberRenderer: {
+                    collection: 'DS/ParameterizationSkeleton/Collection/ParameterizationXEngineeringCollection',
+                    view: 'DS/ParameterizationSkeleton/Views/ParameterizationXEngineering/PartNumberingLayoutView',
+                    viewOptions: function (model) {
+                        return {
+                              domainid: model.get('domainid')
+                        };
+                    },
+                    idCardOptions: {
+                        attributesMapping: {
+                            title: 'title'
+                       },
+                    },
+                },
+                MSFConfigurationRenderer: { //FUN111665 odw
+                    collection: 'DS/ParameterizationSkeleton/Collection/ParameterizationMSFCollection',
+                    view: 'DS/ParameterizationSkeleton/Views/ParameterizationMSF/MSFGCOConfigurationLayoutView',
+                    viewOptions: function (model) {
+                        return {
+                              domainid: model.get('domainid')
+                        };
+                    },
+                    idCardOptions: {
+                        attributesMapping: {
+                            title: 'title'
+                       },
+                    },
+                },
+                DOCMConfigurationRenderer: { //FUN127101 , resp - qvf
+                   collection: 'DS/ParameterizationSkeleton/Collection/ParameterizationDOCMCollection',
+                    view: 'DS/ParameterizationSkeleton/Views/ParameterizationDOCM/DOCMConfigurationLayoutView',
+                    viewOptions: function (model) {
+                        return {
+                              domainid: model.get('domainid')
+                        };
+                    },
+                    idCardOptions: {
+                        attributesMapping: {
+                            title: 'title'
+                       },
+                    },
+                },
+                //FUN099143
+                FLWebArchitectureNumberRenderer: {
+                    collection: 'DS/ParameterizationSkeleton/Collection/ParameterizationSAX/ParamSAXCollection',
+                    view: 'DS/ParameterizationSkeleton/Views/ParameterizationFLWeb/SAXMgmtView',
+                    viewOptions: function (model) {
+                        return {
+                              domainid: model.get('domainid')
+                        };
+                    },
+                    idCardOptions: {
+                        attributesMapping: {
+                            title: 'title'
+                       },
+                       facets: function () {
+                         var ret = null;
+                         if(this._attributes.domainid === "SystemsArchitectureDefinition" && this._attributes.familyid === "ArchitectureNumber"){
+                           ret = [{
+                             text: "SAX",
+                             icon: 'tools',
+                             handler:  Skeleton.getRendererHandler('SAXArchNumFormula')
+                             // (function(){
+                             //   console.log(that);
+                             //   console.log("flag value is!!!!"+Object.keys(that));
+                             //   console.log('**Before2** FLWebArchitectureNumberRenderer:::' + _self.flag);
+                             //   that.getArchNumTableType();
+                             //   console.log('we have waited and flag is set!!!'+Object.keys(that)['flag'])
+                             //   if(that.flag){
+                             //     return Skeleton.getRendererHandler('SAXArchNumFormula');
+                             //   } else {
+                             //     return Skeleton.getRendererHandler('SAXArchNumFormulaList');
+                             //   }
+                             // })()
+                           }];
+                         } else if(this._attributes.domainid === "SystemsArchitectureDefinitionCSGroup"){
+                            ret = [{
+                              text: "SAX",
+                              icon: 'tools',
+                              handler: Skeleton.getRendererHandler('SAXArchNumUnicity')
+                            }];
+                         } else if (this._attributes.domainid === 'SystemsArchitectureDefinitionOtbParameter'){
+                           ret = [{
+                               text: "SAX",
+                               icon: 'tools',
+                               handler: Skeleton.getRendererHandler('SAXOtbParam')
+                           }];
+                         }
+                         return ret;
+                       },
+                    },
+                },
+
+                SAXArchNumFormula: {
+                  collection: 'DS/ParameterizationSkeleton/Collection/ParameterizationSAX/ParamSAXFormulaCollection',
+                  view: 'DS/ParameterizationSkeleton/Views/ParameterizationFLWeb/ParamSAXFormulaView',
+                  viewOptions: function (model) {
+                      return {
+                            domainid: model.get('domainid')
+                      };
+                  },
+                  idCardOptions: {
+                      attributesMapping: {
+                          title: 'title'
+                     }
+                  }
+                },
+
+                // SAXArchNumFormulaList: {
+                //   //To uncomment below when Formula List Collection with Parse is ready
+                //   //collection: 'DS/ParameterizationSkeleton/Collection/ParameterizationSAX/ParamSAXFormulaListCollection',
+                //   collection: 'DS/ParameterizationSkeleton/Collection/ParameterizationSAX/ParamSAXFormulaCollection',
+                //   view: 'DS/ParameterizationSkeleton/Views/ParameterizationFLWeb/ParamSAXFormulaListView',
+                //   viewOptions: function (model) {
+                //       return {
+                //             domainid: model.get('domainid')
+                //       };
+                //   },
+                //   idCardOptions: {
+                //       attributesMapping: {
+                //           title: 'title'
+                //      }
+                //   }
+                // },
+
+                SAXArchNumUnicity: {
+                  collection: 'DS/ParameterizationSkeleton/Collection/ParameterizationSAX/ParamSAXUnicityCollection',
+                  view: 'DS/ParameterizationSkeleton/Views/ParameterizationFLWeb/ParamSAXUncityView',
+                  viewOptions: function (model) {
+                      return {
+                            domainid: model.get('domainid')
+                      };
+                  },
+                  idCardOptions: {
+                      attributesMapping: {
+                          title: 'title'
+                     }
+                  }
+                },
+                SAXOtbParam: {
+                  collection: 'DS/ParameterizationSkeleton/Collection/ParameterizationSAX/ParamSAXOtbCollection',
+                  view: 'DS/ParameterizationSkeleton/Views/ParameterizationFLWeb/ParamSAXOtbView',
+                  viewOptions: function (model) {
+                      return {
+                            domainid: model.get('domainid'),
+                            familyid: model.get('familyid')
+                      };
+                  },
+                  idCardOptions: {
+                      attributesMapping: {
+                          title: 'title'
+                     }
+                  }
+                },
+
+                //FUN108877
+                SystemsSafetyRenderer: {
+                    collection: 'DS/ParameterizationSkeleton/Collection/ParameterizationSystemsSafetyCollection',
+                    view: 'DS/ParameterizationSkeleton/Views/ParameterizationSystemsSafety/SystemsSafetyLayoutView',
+                    viewOptions: function (model) {
+                        return {
+                            domainid: model.get('domainid')
+                        };
+                    },
+                    idCardOptions: {
+                        attributesMapping: {
+                            title: 'title'
+                       },
+                    }
+                },
+                mappingVPMPartrenderer: {
+                    collection: 'DS/ParameterizationSkeleton/Collection/ParamCollaboration/ParameterizationMappingCollection',
+                    view: 'DS/ParameterizationSkeleton/Views/ParamCollaboration/AttributeMapping/MappingLayoutView',
+                    viewOptions: function (model) {
+                        return {
+                              domainid: model.get('domainid')
+                        };
+                    },
+                    idCardOptions: {
+                        attributesMapping: {
+                            title: 'title'
+                       },
+                    },
+                },
+
+             	// Types Not Synchronized renderer
+                typesNotSyncMappingRenderer: {
+                 	collection : 'DS/ParameterizationSkeleton/Collection/ParamCollaboration/TypesNotSyncMappingCollection',
+                     view : 'DS/ParameterizationSkeleton/Views/ParamCollaboration/TypesNotSyncMapping/TypesNotSyncMappingLayoutView',
+                     viewOptions : function (model) {
+                         return {
+                               domainid: model.get('domainid')
+                         };
+                     },
+                     idCardOptions : {
+                         typesNotSyncMapping: {
+                             title: 'title'
+                        }
+                     }
+                 },
+
+                 //Collaboration Management renderer
+                 collaborationManagementParentRenderer: {
+                     collection: 'DS/ParameterizationSkeleton/Collection/ParamCollaboration/CollabManagementCollection',
+                     view: 'DS/ParameterizationSkeleton/Views/ParamCollaboration/CollabManagementView',
+                     viewOptions: function (model) {
+                       console.log(model);
+                       return {
+                               domainid: model.get('domainid')
+                         };
+                     },
+                     idCardOptions: {
+                         attributesMapping: {
+                             title: 'title'
+                        },
+                        facets: function () {
+                          var ret = null;
+                          if(this._attributes.domainid === "MappingManagement"){
+                            ret = [{
+                                text: "VPM / ENG",
+                                icon: 'tools',
+                                handler: Skeleton.getRendererHandler('mappingVPMPartrenderer')
+                            }];
+                          } else if(this._attributes.domainid === "TypesNotSyncMappingManagement"){
+                            ret = [{
+                                text: "VPM / ENG",
+                                icon: 'tools',
+                                handler: Skeleton.getRendererHandler('typesNotSyncMappingRenderer')
+                            }];
+                          }
+                          return ret;
+                        }
+                     }
+                 },
+                //Configured structure renderer
+                 //FUN100314 ENOVIA CFG XSL Customization through Console Param
+                configurationManagementParentRenderer: {
+                    collection: 'DS/ParameterizationSkeleton/Collection/ConfigurationManagementCollection',
+                    view: 'DS/ParameterizationSkeleton/Views/ParamConfigurationManagement/ConfigurationManagementView',
+                    viewOptions: function (model) {
+                        return {
+                            domainid: model.get('domainid')
+                        };
+                    },
+                    idCardOptions: {
+                        attributesMapping: {
+                            title: 'title'
+                        },
+                    },
+                    },
+                    //PPR Syrnchro Lifecycle (child of DELConfigurationParamRenderer)
+                    DELPPRLifeCycleSyncManagementRenderer: {
+                        collection: 'DS/ParameterizationSkeleton/Collection/ParameterizationDELCollection',
+                        view: 'DS/ParameterizationSkeleton/Views/PPRSynchronizationLifeCycle/DELLifeCycleRulesParentView',
+                        viewOptions: function (model) {
+                            return {
+                                domainid: model.get('domainid')
+                            };
+                        },
+                        idCardOptions: {
+                            attributesMapping: {
+                                title: 'title'
+                            },
+                        },
+                    },
+
+                    Apriso3DExpExchangeRenderer: {
+                    collection: 'DS/ParameterizationSkeleton/Collection/ParameterizationDELCollection',//'DS/ParameterizationSkeleton/Collection/ParameterizationDELCollection',
+                    view: 'DS/ParameterizationSkeleton/Views/ParameterizationApriso3DExperience/Apriso3DExpConfigurationParentView',
+                    viewOptions: function (model) {
+                        return {
+                              domainid: model.get('domainid')
+                        };
+                    },
+                    idCardOptions: {
+                        attributesMapping: {
+                            title: 'title'
+                       },
+                    },
+                },
+                DigitalManufacturingRenderer: {
+                    collection: 'DS/ParameterizationSkeleton/Collection/ParameterizationDELCollection',//'DS/ParameterizationSkeleton/Collection/ParameterizationDELCollection',
+                    view: 'DS/ParameterizationSkeleton/Views/DELConfigurationParameterization/DELConfigurationParentView',
+                    viewOptions: function (model) {
+                        return {
+                              domainid: model.get('domainid')
+                        };
+                    },
+                    idCardOptions: {
+                        attributesMapping: {
+                            title: 'title'
+                       },
+                    },
+                },
+                    //Delmia Operation Engineering Category
+                    DELConfigurationParamRenderer: {
+                        collection: 'DS/ParameterizationSkeleton/Collection/ParameterizationDELCollectionList',
+                        view: 'DS/ParameterizationSkeleton/Views/ParamItemsListView',
+                        swipe: false,
+                        viewOptions: function (model) {
+                            var searchTitle = 'Search';
+                            return {
+                                contents: {
+                                    useInfiniteScroll: false,
+                                    usePullToRefresh: false
+                                },
+                                domainid: model.get('domainid'),
+                                actions: {
+                                    collection: new ActionsCollection([
+                                        {
+                                            id: 'searchItems',
+                                            title: searchTitle,
+                                            icon: 'search',
+                                            overflow: false
+                                        }])
+                                },
+                                events: {
+                                }
+                            };
+                        },
+                        idCardOptions: {
+                            attributesMapping: {
+                                title: 'title'
+                            },
+                            actions: function () {
+                            },
+                            facets: function () {
+                                if (this._attributes.domainid === "DELPPRLifeCycleSyncManagement") {
+                                    return [{
+                                        text: "DELPPRLifeCycleSync",
+                                        icon: 'tools',
+                                        handler: Skeleton.getRendererHandler('DELPPRLifeCycleSyncManagementRenderer')
+                                    }];
+                                }
+                                else if (this._attributes.domainid === "Apriso3DExpExchange") {
+                            return [{
+                                text: "Apriso3DExp",
+                                icon: 'tools',
+                                handler: Skeleton.getRendererHandler('Apriso3DExpExchangeRenderer')
+                            }];
+                        }
+                        else if (this._attributes.domainid === "DigitalManufacturing") {
+                            return [{
+                                text: "DigitalManufacturing",
+                                icon: 'tools',
+                                handler: Skeleton.getRendererHandler('DigitalManufacturingRenderer')
+                            }];
+                        }
+                                //else{
+                                //  return [{
+                                //      text: "DigitalManufacturing",
+                                //      icon: 'tools',
+                                //      handler: Skeleton.getRendererHandler('DigitalManufacturingRenderer')
+                                //  }];
+                                //}
+                                //@BXQ to call the parentRender for 20xFD02
+                                else {
+                                    return [{
+                                        text: 'Edit',
+                                        icon: 'tools',//linkedin//eye
+                                        handler: Skeleton.getRendererHandler('parentRenderer')
+                                    }];
+                                }
+                            },
+                        }
+                    },
+		//FUN116134 qfp
+                xCADCommonSettingRenderer : {
+                    collection: 'DS/ENOXCADCommonSettingUI/Collection/XCADCommonSettingCollection',
+                    view: 'DS/ENOXCADCommonSettingUI/Views/XCADCommonSettingLayoutView',
+                    swipe: false,
+                    viewOptions: self.generalViewOpts,
+                    collectionOptions: {
+                        type: 'mainFacet',
+                        baseUrl: URLHandler.getURL(),
+                        tenant: URLHandler.getTenant()
+                    },
+                    idCardOptions: {
+                        attributesMapping: {
+                            title: 'title'
+                       },
+                  },
+                  fetchMode: 'once'
+                    },
+
+                //Renderers for VersionNaming Options
+                VersionNamingParamRenderer: {
+                    collection: 'DS/ParameterizationSkeleton/Collection/VersionNamingCollection',
+                    view: 'DS/ParameterizationSkeleton/Views/VersionNaming1/VersionNamingLayoutView',
+                    viewOptions: function (model) {
+                        return {
+                              domainid: model.get('domainid')
+                        };
+                    },
+                    idCardOptions: {
+                        attributesMapping: {
+                            title: 'title'
+                       },
+                    },
+                },
+                VersionNamingExtParamRenderer: {
+                    collection: 'DS/ParameterizationSkeleton/Collection/VersionNamingExtCollection',
+                    view: 'DS/ParameterizationSkeleton/Views/VersionNamingExt/VersionNamingExtLayoutView',
+                    viewOptions: function (model) {
+                        return {
+                              domainid: model.get('domainid')
+                        };
+                    },
+                    idCardOptions: {
+                        attributesMapping: {
+                            title: 'title'
+                       },
+                    },
+                },
+
+                FasteningRenderer: { //ZK8
+                    collection: 'DS/ParameterizationSkeleton/Collection/ParameterizationFSXCollection',
+                    view: 'DS/ParameterizationSkeleton/Views/ParameterizationFSX/FasteningLayoutView',
+                    viewOptions: function (model) {
+                        return {
+                            domainid: model.get('domainid')
+                        };
+                    },
+                    idCardOptions: {
+                        attributesMapping: {
+                            title: 'title'
+                        },
+                    },
+                },
+		//Standard f68
+                standardManagementRenderer : {
+                    collection: 'DS/ENOStandardMgmtUI/Collection/ENOStandardMgmtCollection',
+                    view: 'DS/ENOStandardMgmtUI/Views/ENOStandardMgmtLayoutView',
+                    swipe: false,
+                    viewOptions: self.generalViewOpts,
+                    collectionOptions: {
+                        type: 'mainFacet',
+                        baseUrl: URLHandler.getURL(),
+                        tenant: URLHandler.getTenant()
+                    },
+                    idCardOptions: {
+                        attributesMapping: {
+                            title: 'title'
+                       },
+                  },
+                },
+                // sdy12 - FUN130988-FUN130989
+                specificationManagementParentRenderer: {
+                    collection: 'DS/ParameterizationSkeleton/Collection/SpecificationManagementCollection',
+                    view: 'DS/ParameterizationSkeleton/Views/ParamSpecificationManagement/SpecificationManagementView',
+                    viewOptions: function (model) {
+                        return {
+                            domainid: model.get('domainid')
+                        };
+                    },
+                    idCardOptions: {
+                        attributesMapping: {
+                            title: 'title'
+                        },
+                    },
+                  },
+                  //
+                parentRenderer: {
+                    collection: 'DS/ParameterizationSkeleton/Collection/ParameterizationParentCollection',
+                    view: ParametersParentView,
+                    swipe: false,
+                    viewOptions: function (model) {
+                        var searchTitle = 'Search',
+                        domainName = model.get('domainid');
+                        if (domainName === 'AttributeDef') {
+                            searchTitle = ParamSkeletonNLS.SearchTypes;
+                        } else if (domainName === 'LifecycleTopology'){
+                            searchTitle = ParamSkeletonNLS.SearchPolicies;
+                        }
+                    return {
+                            contents: {
+                                useInfiniteScroll : false,
+                                usePullToRefresh : false
+                            },
+                            domainid: model.get('domainid'),
+                            actions: {
+                                collection: new ActionsCollection([
+                                    {
+                                        id: 'searchItems',
+                                        title: searchTitle,
+                                        icon: 'search',
+                                        overflow: false
+                                }])
+                            },
+                            events : {
+                                onActionClick   : function (actionsView, actionView, event) {
+                                    if (event.model.id === "searchItems") {
+                                        var that = this;
+                                        that.pSkeleton = pSkeleton;
+                                        ParametersLayoutViewUtilities.showSearchInput.call(this, that);
+
+                                    }
+                                }
+                            }
+                        };
+                    },
+                    idCardOptions: {
+                        attributesMapping: {
+                            title: 'title'
+                        },
+                        actions: function () {
+                                var iAddtooltip = ParamSkeletonNLS.AddAttributeTxt,
+                                    actionsArr = [];
+
+                                if (this._attributes.domainid === "LifecycleTopology") {
+                                    iAddtooltip = ParamSkeletonNLS.AddNewRule;
+                                }
+
+                                if (this._attributes.id !== "AttributeSynchronization") {
+                                    actionsArr.push({
+                                       text: iAddtooltip,
+                                       icon: 'plus-circled',
+                                       handler: function(view) {
+                                           view.showAddElementsModal();//showAddAttributesModal
+                                       }
+                                   });
+                                }
+
+                                if (this._attributes.domainid === "XCADParameterization") {
+                                  actionsArr = [];
+                                }
+
+                                if (this._attributes.domainid === "LifecycleTopology") {
+                                    actionsArr.push({
+                                        text: ParamSkeletonNLS.RemoveElement,
+                                        icon: 'erase',
+                                        handler: function(view) {
+                                            view.removeElement();
+                                        }
+                                    });
+                                    actionsArr.push({
+                                        text: ParamSkeletonNLS.RestoreStates,
+                                        icon: 'reply',
+                                        handler: function(view){
+                                            view.restoreStates();
+                                       }
+                                    });
+                                }
+
+                                return actionsArr;
+                      },
+                      facets: function () {
+
+                            if (this._attributes.domainid === "LifecycleTopology") {
+                                return [{
+                                    text: ParamSkeletonNLS.EditText,
+                                    icon: 'tools',//linkedin//eye
+                                    handler: Skeleton.getRendererHandler('commonLevel2renderer')
+                                }, {
+                                    text: ParamSkeletonNLS.AboutText,
+                                    icon: 'help',
+                                    handler: Skeleton.getRendererHandler('aboutfacet')
+                                }];
+                            }
+
+                            return [{
+                                    text: ParamSkeletonNLS.EditText,
+                                    icon: 'tools',
+                                    handler: Skeleton.getRendererHandler('commonLevel2renderer')
+                            }];
+                        },
+                  }
+              },
+              commonLevel2renderer: {
+                    collection: 'DS/ParameterizationSkeleton/Collection/ParameterizationCommonCollection',
+                    view: 'DS/ParameterizationSkeleton/Views/ParametersCommonView',
+                    swipe: false,
+                    viewOptions: function (model) {
+                        return {
+                              domainid: model.get('domainid')
+                        };
+                    },
+                    idCardOptions: {
+                        attributesMapping: {
+                            title: 'title'
+                       },
+                  },
+              },//of commonLevel2renderer
+              aboutfacet : {
+                    collection: 'DS/ParameterizationSkeleton/Collection/LifecycleDescriptionCollection',
+                    view: LifecycleDescriptionView,
+                    swipe: false,
+                    viewOptions: self.generalViewOpts,
+                    collectionOptions: {
+                        type: 'mainFacet'
+                    },
+                    idCardOptions: {
+                        attributesMapping: {
+                            title: 'title'
+                        },
+                        // Actions are extra buttons that will be added next to the IdCard, they receive the current View as parameter. fetchMode: 'once'
+                        actions: function () {
+                            return [{
+                                    text: 'Edit',
+                                    icon: 'pencil',
+                                    handler: function(view) {
+                                        UWA.log('Context (this) is set to the IdCard, first argument is the view rendered in current panel.');
+                                    }
+                                }];
+                        }
+                    },
+                    fetchMode: 'once' //once //always
+                },
+          },
+
+            // Skeleton options
+            {
+                // Renderer that is going to be used for the Root (panel 0), if not specified the first declared renderer is used
+                root: 'domains',
+                startRoute: '/domains/AttributeDef/?facet=0',
+                // Option to activate the ChannelView in the root (see 'DS/W3DXComponents/Views/Item/SkeletonRootView') for more details
+                useRootChannelView: false, //widget.getValue('view') === 'channel',
+
+                /* Extra function to call to test if layout should be changed, should return truthy or falsy value
+                * It is used when the Skeleton changes size, to test if it shoudl change from one column(contracted = default) to two columns (expanded)*/
+                responsiveTrigger: function () {
+                    var viewType = widget.getView().type;
+
+                    // If channel view is active then set responsive trigger to maximize
+                    if (widget.getValue('view') === 'channel') {
+                        return viewType === 'maximized' || viewType === 'fullscreen';
+                    } else {
+                        // If normal view, then let the width threshold of the skeleton set the responsiveness
+                        return false;
+                    }
+                },
+
+                // Extra Skeleton event callbacks
+                events: {
+                    onItemClick: function (model) {
+                        UWA.log(model);
+                    },
+                    onSlide: function (view, model) {
+                        UWA.log(view);
+                        UWA.log(model);
+                    }
+                }
+            });
+            //FUN093719
+            ENODerivedFormatManagement.plugin(pSkeleton);
+            return pSkeleton;
+
+        },
+        onLoad: function () {
+
+            if (self.bones) { // Destroy Skeleton instance to recreate it
+                self.bones.destroy();
+            }
+
+            if (self.licenceAlert) { // If license alert is there, hide it
+                self.licenceAlert.hide();
+            }
+
+            /*var generalViewOpts = {
+                useInfiniteScroll : false,//par défaut : false
+                usePullToRefresh : false
+            };*/
+
+            var iAlertObj, optionName,
+                tenantID = "",
+                tenantName = "",
+                iProceed = true,
+                isFoundinOptions = false,
+                gOptions = [],
+                dashboardTenantOpt = "",
+                iPreferences = [];
+
+              // Skeleton instantiation
+            if ((UWA.is(widget.getValue('x3dPlatformId'))) &&
+                    (widget.getValue('x3dPlatformId') !== '')) {
+
+                tenantID = widget.getValue('x3dPlatformId');
+                URLHandler.setTenant(tenantID);
+                widget.setTitle(tenantID);
+                tenantName = tenantID;
+                dashboardTenantOpt = tenantID;
+            }
+            i3DXCompassPlatformServices.getServiceUrl({
+                serviceName: '3DSpace',
+                onComplete: function (iData) {
+                    iData.forEach(function (model) {
+                        if (model.url === undefined) {
+                            UWA.log('url is undefined, skipping ' + model.platformId);
+                        } else {
+                            gOptions.push({
+                                id: model.platformId,
+                                url: model.url
+                            });
+                        }
+                    });//for each
+
+                    if (tenantID === "") {
+                        if (gOptions.length >= 1) {
+                            //get the first one in that case
+                            tenantID = gOptions[0].id;
+                            URLHandler.setTenant(tenantID);
+                            widget.setTitle(gOptions[0].id);
+                        } else {
+                            iProceed = false;
+                            UWA.log("Paramaterization::No License on this platform");
+
+                            widget.setBody([{
+                                 tag: 'div',
+                                 id: 'parameterizationSkeleton-widget-empty-content'
+                            }]);
+                            self.licenceAlert = ParametersLayoutViewUtilities.buildNoLicenseUI();
+                            self.licenceAlert.add({ className: "warning", message: ParamSkeletonNLS.NoAccessLicensePlatformText });
+                        }
+                    }// if (tenantID === "")
+
+                    if (iProceed === true) {
+                        //at this point we are sure that we have a valid tenantid
+                        gOptions.forEach(function (opt) {
+                            if (opt.id === tenantID) {
+                                isFoundinOptions = true;
+                                URLHandler.setURL(opt.url);
+                            }
+                        });//for each
+
+                        if (isFoundinOptions === true) {//NZV : IR-583204-3DEXPERIENCER2019x
+                            GenericServices.getSessionInfo()
+                                .then(function (sessionInfo) {
+                                    if (sessionInfo.isadmin == true) {
+                                          self.bones = self.buildSkeleton();
+                                          widget.body.setContent(self.bones.render());//Render and add to DOM*/
+                                          UWA.log("Paramaterization::User is admin to this tenant");
+                                    } else {
+                                        UWA.log("Paramaterization::User is not admin to this tenant");
+                                        widget.setBody([{
+                                             tag: 'div',
+                                             id: 'parameterizationSkeleton-widget-empty-content'
+                                        }]);
+
+                                        self.licenceAlert = ParametersLayoutViewUtilities.buildNoLicenseUI();
+                                        self.licenceAlert.add({ className: "error", message: ParamSkeletonNLS.NoAdminPrivileges });
+                                    }
+                                })['catch']( function (sessionError) {
+                                    self.bones = self.buildSkeleton();
+                                    widget.body.setContent(self.bones.render());//Render and add to DOM*/
+                                    UWA.log("Paramaterization:: Service call failed!");
+                                    UWA.log(sessionError);
+                                });
+                              //var predicateList = GenericServices.getPredicates();
+                                // GenericServices.loginStep()
+                                //     .then(function (userTicket) {
+                                //         GenericServices.loginToRDFServer(userTicket)
+                                //             .then(function (dummyResult) {
+                                //                 //predicateList = GenericServices.getPredicates();
+                                //                 GenericServices.getPredicatesObject()
+                                //                     .then(function (result) {
+
+                                //                         console.log(result);
+
+                                //                         })
+                                //                     .catch(function (eMessage){
+
+                                //                         console.log(eMessage);
+
+                                //                         });
+                                //                 })
+                                //             ['catch'] (function (eMessage) {
+                                //                 console.log("loginToRDFServer failed" +eMessage)
+                                //                 });
+
+                                //         })
+                                //     ['catch'](function (eMessage) {
+                                //         console.log("loginStep failed"+eMessage)
+                                //         });
+
+
+                        } else {
+                            UWA.log("Paramaterization::No License on this platform::2");
+                            widget.setBody([{
+                                 tag: 'div',
+                                 id: 'parameterizationSkeleton-widget-empty-content'
+                            }]);
+
+                            self.licenceAlert = ParametersLayoutViewUtilities.buildNoLicenseUI();
+                            self.licenceAlert.add({ className: "warning", message: ParamSkeletonNLS.NoAccessLicensePlatformText });
+                        }
+                    }
+                    //build the selector
+                    i3DXCompassPlatformServices.getPlatformConfig({
+                        onComplete: function (platformsInfo) {
+                            var tenantDisplayName = ""
+                            gOptions.forEach(function (opt) {
+                                optionName = "";
+                                optionName = ParametersLayoutViewUtilities.getObjValFromACollection(opt.id, platformsInfo, "platformId", "displayName")
+                                if(optionName === "") {
+                                    optionName = opt.id;
+                                }
+                                if(tenantID ===  opt.id ) {
+                                    tenantDisplayName = optionName;
+                                     widget.setTitle(optionName);
+                                }
+                                iPreferences.push({
+                                   label: optionName,
+                                   value: opt.id,
+                                   id: opt.id
+                                });
+                            });
+                            if (dashboardTenantOpt !== "") {
+                                if (!ParametersLayoutViewUtilities.isDashboardChoosenTenantInPreferences(dashboardTenantOpt, iPreferences)) {
+                                    iPreferences.push({
+                                        label: tenantDisplayName,
+                                        value: dashboardTenantOpt,
+                                        id: dashboardTenantOpt
+                                    });
+                                 }
+                            }
+                            if (iPreferences.length >= 1) {
+                                widget.addPreference({
+                                    type: 'list',
+                                    id: 'x3dPlatformId',
+                                    name: 'x3dPlatformId',
+                                    label: ParamSkeletonNLS.SelectPlatform,
+                                    defaultValue: widget.getValue('x3dPlatformId'),
+                                    options: iPreferences
+                                });
+                             }
+                             UWA.log(iPreferences);
+                        }
+                    });//End of i3DXCompassPlatformServices.getPlatformConfig
+               }//onComplete of getServiceUrl
+            });//i3DXCompassPlatformServices.getServiceUrl
+        },
+
+        // Widget Event
+        onViewChange: function (event) {
+            if ((event.type !== 'fullscreen') && (event.type !== 'maximized')) {
+                if (UWA.is(self.unMaximizedHeight)) {
+                    self.bones.setHeight(self.unMaximizedHeight);
+                    self.unMaximizedHeight = null;
+                }
+            } else {
+                if (UWA.is(event.height)) {
+                    self.unMaximizedHeight = self.bones.container.clientHeight;
+                    self.bones.setHeight(event.height);
+                }
+            }
+        }
+    };
+
+
+    /*
+    * Widget events
+    */
+    widget.addEvents({
+        onLoad :self.onLoad,
+        onRefresh :self.onLoad,
+        onViewChange: self.onViewChange
+    });
+});
+
+
+//]]>
+        </script>
+      </head>
+      <body>
+      </body>
+</html>

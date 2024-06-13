@@ -1,0 +1,1 @@
+define("DS/WebDocumentVisualizationUI/WebDocumentVisualizationUI_zh-TW",{});define("DS/WebDocumentVisualizationUI/assets/nls/WebDocumentVisualizationUI",{bookmarksPanel:{title:"書籤",expandOrCollapseAll:"切換「全部展開」和「全部摺疊」"}});

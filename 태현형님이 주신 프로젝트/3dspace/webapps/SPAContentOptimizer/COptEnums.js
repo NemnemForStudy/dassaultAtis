@@ -1,0 +1,2 @@
+/*!  Copyright 2015 Dassault Systemes. All rights reserved. */
+define("DS/SPAContentOptimizer/COptEnums",[],function(){"use strict";function e(){}return e.COptPartFormat=Object.freeze({NoBRep:0,CATPart:1,CGM3D:2}),e.COptVisuFormat=Object.freeze({NoVisu:0,Cgr:1,_3Dxm:2,visuObject:3}),e.stepVersion=Object.freeze({APDefault:0,AP203:1,AP214:2,AP242:3}),e});

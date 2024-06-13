@@ -1,0 +1,107 @@
+<!doctype html>
+<html>
+
+<head>
+  <!-- Definition of require : -->
+  <script type="text/javascript" src="../AmdLoader/AmdLoader.js"></script>
+  <!-- Load UWA environment -->
+  <!-- This is required to configure RequireJS with the appropriate pathes : -->
+  <script type="text/javascript" src="../WebappsUtils/WebappsUtils.js"></script>
+  <!-- Hide proxy focus btn in web in win context as if it's pressed we can't restore it, waiting new behavior from TagNavigator planned for V6R2016x Beta 2-->
+  <style type="text/css">
+    html, body {
+      height: 100%;
+    }
+  </style>
+
+  <script type="text/javascript">
+    var query = location.search.substr(1);
+    var result = {};
+    query.split('&').forEach(function (part) {
+      if (!part) return;
+      part = part.split('+').join(' '); // replace every + with space, regexp-free version
+      var eq = part.indexOf('=');
+      var key = eq > -1 ? part.substr(0, eq) : part;
+      var val = eq > -1 ? decodeURIComponent(part.substr(eq + 1)) : '';
+      var from = key.indexOf('[');
+      if (from == -1) result[decodeURIComponent(key)] = val;
+      else {
+        var to = key.indexOf(']');
+        var index = decodeURIComponent(key.substring(from + 1, to));
+        key = decodeURIComponent(key.substring(0, from));
+        if (!result[key]) result[key] = [];
+        if (!index) result[key].push(val);
+        else result[key][index] = val;
+      }
+    });
+
+    console.log("building COMPASS_CONFIG");
+
+    COMPASS_CONFIG = {};
+
+    if (result) {
+      if (result.userid) {
+        COMPASS_CONFIG['userId'] = result.userid;
+        console.log("COMPASS_CONFIG.userId=" + COMPASS_CONFIG.userId);
+      }
+      if (result.myAppsURL) {
+        COMPASS_CONFIG['myAppsBaseUrl'] = result.myAppsURL;
+        console.log("COMPASS_CONFIG.myAppsBaseUrl=" + COMPASS_CONFIG.myAppsBaseUrl);
+      }
+      if (result.lang) {
+        COMPASS_CONFIG['lang'] = result.lang;
+        console.log("COMPASS_CONFIG.lang=" + COMPASS_CONFIG.lang);
+      }
+    }
+  </script>
+
+  <script>
+    function sendNotification(name, message) {
+      if (typeof dscef !== 'undefined') {
+        dscef.sendString(name + '=' + message);
+      }
+      else if (typeof CATCefSendString !== 'undefined') {
+        CATCefSendString(name + '=' + message);
+      }
+    }
+  </script>
+
+  <!-- Include CSS for styling of the elements we are testing in that page : -->
+  <link rel="stylesheet" type="text/css" href="../UWA2/assets/css/inline.css" />
+  <link rel="stylesheet" type="text/css" href="../UIKIT/UIKIT.css" />
+
+  <script type="text/javascript" src="AfrWebInWinLeftPanelMgr.js"></script>
+
+  <script>
+    function InitView(parameters) {
+      require(["DS/AfrWebInWinLeftPanel/AfrWebInWinLeftPanelMgr"], function (AfrWebInWinLeftPanelMgr) {
+        AfrWebInWinLeftPanelMgr.initView(parameters)
+      });
+    };
+
+    function runViewScript(parameters) {
+      require(["DS/AfrWebInWinLeftPanel/AfrWebInWinLeftPanelMgr"], function (AfrWebInWinLeftPanelMgr) {
+        AfrWebInWinLeftPanelMgr.runViewScript(parameters)
+      });
+    };
+
+    function activateView(options) {
+      require(["DS/AfrWebInWinLeftPanel/AfrWebInWinLeftPanelMgr"], function (AfrWebInWinLeftPanelMgr) {
+        AfrWebInWinLeftPanelMgr.activateView(options)
+      });
+    };
+
+    function deactivateView(options) {
+      require(["DS/AfrWebInWinLeftPanel/AfrWebInWinLeftPanelMgr"], function (AfrWebInWinLeftPanelMgr) {
+        AfrWebInWinLeftPanelMgr.deactivateView(options)
+      });
+    };
+
+  </script>
+</head>
+
+<body>
+  <div id="left-content"></div>
+</body>
+
+</html>

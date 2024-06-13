@@ -1,0 +1,1 @@
+define("DS/SMAMpwControls/SMAMpwControls_pt-BR",{});define("DS/SMAMpwControls/assets/nls/SMAMpwLegend",{frameSelectorPlaceHolder:"Selecionar um quadro...",scaleFactor:"Escala de deformação",playOnlyTooltip:"Bloquear animação para a seleção atual",min:"Mín.:",max:"Máx.:"});

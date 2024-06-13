@@ -1,0 +1,52 @@
+#####################################################################################################
+# Created by changseopLim
+# Create Date : 2024-06-12
+# Name : simplePolicy
+#####################################################################################################
+#del policy simplePolicy
+add policy simplePolicy
+	description 'simplePolicy'
+	sequence '1,2,3...'
+	store STORE
+	type simpleType, Route
+	format all
+	defaultformat generic
+	state Create
+		version true
+		revision false
+		promote true
+		checkouthistory false
+		owner all
+	state Plan
+		version true
+		revision false
+		promote true
+		checkouthistory false
+		owner read, show, viewform, checkout, demote, promote
+	state Process
+		version true
+		revision false
+		promote true
+		checkouthistory false
+		owner read, show, viewform, checkout, demote, promote
+	state Review
+		version true
+		revision false
+		promote true
+		checkouthistory false
+		owner read, show, viewform, checkout, demote, promote
+	state Complete
+		version true
+		revision false
+		promote true
+		checkouthistory false
+		owner read, show, viewform, checkout, demote
+		public read, show, viewform, checkout
+	property "state_Create" value "Create"
+	property "state_Plan" value "Active"
+	property "state_Process" value "Process"
+	property "state_Review" value "Review"
+	property "state_Complete" value "Complete"
+;
+add property policy_simplePolicy on prog eServiceSchemaVariableMapping.tcl to policy simplePolicy
+;

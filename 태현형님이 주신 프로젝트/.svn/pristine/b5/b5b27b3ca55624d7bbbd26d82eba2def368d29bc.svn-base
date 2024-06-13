@@ -1,0 +1,11 @@
+m|GEONavCommon\GEONavCommonAPI.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.1.22326|3.2
+r|G:\R425\BSF\.
+t|win_b64\typings\GEONavCommonAPI\typings\GEONavCommonServices.d.ts|1531120703|771
+s|GEONavCommon\GEONavCommonAPI.mweb\src\typings\GEONavCommonServices.d.ts|1531120703|771
+t|win_b64\webapps\GEONavCommonAPI\GEONavCommonAPI.js|1647691969|1423
+s|GEONavCommon\GEONavCommonAPI.mweb\src\GEONavCommonServices.js|1539212328|5091
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

@@ -1,0 +1,474 @@
+1. command 생성
+add command poaCommand
+	label 'emxFramework.label.poaCommand'
+	href '${COMMON_DIR}/emxIndentedTable.jsp?program=secondProject:findDocument&table=simpleTable&toolbar=simpleToolbar'
+	setting 'Target Location' content
+	setting 'Registered Suite' 'Framework'
+;
+add property command_poaCommand on prog eServiceSchemaVariableMapping.tcl to command poaCommand
+;
+
+2. 'My Enovia'에 command 추가
+mod menu 'My Enovia'
+	add command poaCommand
+;
+
+3. JPO 등록
+add prog secondProject java;
+
+4. table 생성
+add table simpleTable system
+column
+	name 'Id2024'
+	setting Width 5
+	setting 'Column Type' checkbox
+column
+	name 'No2024'
+	label 'emxFramework.label.No2024'
+	bus '$<name>'
+	href '${COMMON_DIR}/emxTree.jsp'
+	setting Width 15
+	setting 'Target Location' content
+	setting 'Registered Suite' 'Framework'
+column
+	name 'Name2024'
+	label 'emxFramework.label.Name2024'
+	bus '$<attribute[simpleTitle]>'
+	setting 'Field Type' attribute
+	setting 'Admin Type' attribute_Name2024
+	setting 'Registered Suite' 'Framework'
+column
+	name State2024
+	label 'emxFramework.label.State2024'
+	bus '$<current>'
+	setting 'Admin Type' 'State'
+	setting 'Registered Suite' 'Framework'
+column
+	name 'newWindow'
+	href '${COMMON_DIR}/emxTree.jsp'
+	setting 'Column Icon' 'images/iconNewWindow.gif'
+	setting 'Column Type' icon
+	setting 'Target Location' popup
+;
+
+5. attribute 생성
+add attribute simpleTitle
+	description 'simpleTitle'
+	type String
+;
+add property attribute_simpleTitle on prog eServiceSchemaVariableMapping.tcl to attribute simpleTitle
+;
+
+6. type 생성
+add type simpleType
+	description simpleType
+	attribute simpleTitle
+;
+add property type_simpleType on prog eServiceSchemaVariableMapping.tcl to type simpleType
+;
+
+7. toolbar에 들어갈 command 생성
+add command createSimpleToolbar
+	description createSimpleToolbar
+	label 'emxFramework.label.createSimpleToolbar'
+	href 'emxCreate.jsp?type=type_simpleType&form=CreateSimpleToolbarForm&nameField=auto&policy=simplePolicy&vaultChooser=true&submitAction=treeContent&createJPO=secondProject:objectConnect'
+	setting Image ${COMMON_DIR}/images/iconActionCreate.png
+	setting 'Target Location' popup
+	setting 'Registered Suite' 'Framework'
+;
+add property command_createSimpleToolbar on prog eServiceSchemaVariableMapping.tcl to command createSimpleToolbar
+;
+
+8. toolbar 생성
+add menu simpleToolbar
+	command createSimpleToolbar
+	command AEFGenericDelete
+;
+add property menu_simpleToolbar on prog eServiceSchemaVariableMapping.tcl to menu simpleToolbar
+;
+
+9. policy 생성
+add policy simplePolicy
+	description 'simplePolicy'
+	sequence '1,2,3...'
+	store STORE
+	type simpleType
+	format all
+	defaultformat generic
+	state Create
+		version true
+		revision false
+		promote true
+		checkouthistory false
+		owner all
+	state Plan
+		version true
+		revision false
+		promote true
+		checkouthistory false
+		owner read, show, viewform, checkout, demote, promote
+	state Process
+		version true
+		revision false
+		promote true
+		checkouthistory false
+		owner read, show, viewform, checkout, demote, promote
+	state Review
+		version true
+		revision false
+		promote true
+		checkouthistory false
+		owner read, show, viewform, checkout, demote, promote
+	state Complete
+		version true
+		revision false
+		promote true
+		checkouthistory false
+		owner read, show, viewform, checkout, demote
+		public read, show, viewform, checkout
+	property "state_Create" value "Create"
+	property "state_Plan" value "Active"
+	property "state_Process" value "Process"
+	property "state_Review" value "Review"
+	property "state_Complete" value "Complete"
+;
+add property policy_simplePolicy on prog eServiceSchemaVariableMapping.tcl to policy simplePolicy
+;
+
+10. form 생성
+add form CreateSimpleToolbarForm web
+field
+	name Name
+	label 'emxFramework.label.name'
+	bus '$<name>'
+	setting 'Field Type' basic
+	setting 'Registered Suite' 'Framework'
+field
+	name simpleTitle
+	label 'emxFramework.label.simpleTitle'
+	bus '$<attribute[simpleTitle]>'
+	setting 'Field Type' attribute
+	setting 'Admin Type' attribute_simpleTitle
+	setting 'Input Type' textbox
+	setting 'Registered Suite' 'Framework'
+	setting Editable true
+field
+	name connectObject
+	label 'emxFramework.label.connectObject'
+	range '${COMMON_DIR}/emxIndentedTable.jsp?program=secondProject:findProject2024Document&table=Table2024&selection=multiple&submitURL=../sendDocument.jsp'
+	setting 'Registered Suite' 'Framework'
+;
+add property form_CreateSimpleToolbarForm on prog eServiceSchemaVariableMapping.tcl to form CreateSimpleToolbarForm
+;
+
+11. Rel 만들기
+add relationship simpleRelationship
+	description simpleRelationship
+	nothidden
+	preventduplicates
+	from
+		type simpleType
+		meaning simpleType
+		cardinality many
+		revision replicate
+		clone replicate
+	to
+		type Type2024
+		meaning Type2024
+		cardinality many
+		revision replicate
+		clone replicate
+;
+add property relationship_simpleRelationship on prog eServiceSchemaVariableMapping.tcl to relationship simpleRelationship
+;
+
+12. AutoName Object 만들기
+add bus 'eService Object Generator' 'type_simpleType' ''
+	policy 'eService Object Generator'
+	vault 'eService Administration'
+	'eService Name Prefix' 'CIR-'
+	'eService Processing Time Limit' 60
+	'eService Retry Count' 1
+	'eService Retry Delay' 1000
+	'eService Safety Policy' policy_simplePolicy
+	'eService Safety Vault' vault_eServiceProduction
+;
+
+13. Number 자동 생성
+add bus 'eService Number Generator' 'type_simpleType' ''
+	policy 'eService Object Generator'
+	vault 'eService Administration'
+	'eService Next Number' 000001
+;
+
+14. 릴레이션 연결
+add connection 'eService Number Generator'
+	from 'eService Object Generator' 'type_simpleType' ''
+	to 'eService Number Generator' 'type_simpleType' ''
+;
+
+15. 상세 조회 시 form 만들기
+del form simpleDetailForm;
+add form simpleDetailForm web
+field
+	name Name 
+	label 'emxFramework.label.name'
+	bus '$<name>'
+	setting 'Field Type' basic
+	setting 'Registered Suite' 'Framework'
+	setting Editable false
+field
+	name simpleTitle
+	label 'emxFramework.label.simpleTitle'
+	bus '$<attribute[simpleTitle]>'
+	setting 'Field Type' attribute
+	setting 'Admin Type' attribute_simpleTitle
+	setting 'Registered Suite' 'Framework'
+field
+	name connectObject
+	label 'emxFramework.label.connectObject'
+	setting 'Field Type' programHTMLOutput
+	setting 'program' secondProject
+	setting 'function' showObject
+	setting 'Target Location' popup
+	setting 'Registered Suite' 'Framework'
+;
+add property form_simpleDetailForm on prog eServiceSchemaVariableMapping.tcl to form simpleDetailForm
+;
+
+mod form simpleDetailForm
+	field mod name connectObject
+	setting 'Target Location' popup
+;
+
+16. 상세 조회 시 menu 만들기
+add menu type_simpleType
+	description type_simpleType
+	label '$<name>'
+	href '${COMMON_DIR}/emxPortal.jsp?portal=simplePortal'
+;
+add property menu_type_simpleType on prog eServiceSchemaVariableMapping.tcl to menu type_simpleType
+;
+
+17. 메뉴 등록
+mod menu Tree add menu type_simpleType;
+
+18. portal, channel, command 생성
+add command simpleProperties
+	label 'emxFramework.label.simpleProperties'
+	href '${COMMON_DIR}/emxForm.jsp?editLink=true&form=simpleDetailForm&toolbar=promoteToolbar'
+	setting 'Registered Suite' 'Framework'
+	setting 'Target Location' popup
+;
+add property command_simpleProperties on prog eServiceSchemaVariableMapping.tcl to command simpleProperties
+;
+
+add command simplePOA
+	label 'emxFramework.label.simplePOA'
+	href '${COMMON_DIR}/emxIndentedTable.jsp?program=secondProject:findRelatedDocument&table=simplePOATable&freezePane=Id, Name&toolbar=simplePOAToolbar&expandProgram=secondProject:expandObject&expandMultiLevelsJPO=true'
+	setting 'Registered Suite' 'Framework'
+;
+add property command_simplePOA on prog eServiceSchemaVariableMapping.tcl to command simplePOA
+;
+
+add channel simplePropertiesChannel
+	description simplePropertiesChannel
+	command simpleProperties
+;
+add property channel_simplePropertiesChannel on prog eServiceSchemaVariableMapping.tcl to channel simplePropertiesChannel
+;
+
+add channel simplePOAChannel
+	description simplePOAChannel
+	command simplePOA
+;
+add property channel_simplePOAChannel on prog eServiceSchemaVariableMapping.tcl to channel simplePOAChannel
+;
+
+add portal simplePortal
+	description simplePortal
+	channel 'simplePropertiesChannel'
+	channel 'simplePOAChannel'
+;
+add property portal_simplePortal on prog eServiceSchemaVariableMapping.tcl to portal simplePortal
+;
+
+add command simplePortal
+	description simplePortal
+	href '${COMMON_DIR}/emxPortal.jsp?portal=simplePortal'
+;
+add property command_simplePortal on prog eServiceSchemaVariableMapping.tcl to command simplePortal
+;
+
+19. menu type_simpleType에 href 변경
+mod menu type_simpleType
+	label '$<name>'
+;
+
+20. simplePOATable 만들기
+add table simplePOATable system
+column
+	name Id
+	setting 'Column Type' checkbox
+column
+	name Name
+	label 'emxFramework.label.name'
+	bus '$<name>'
+	setting 'Column Type' program
+	setting 'program' secondProject
+	setting 'function' showRelatedObject
+	setting 'Registered Suite' 'Framework'
+column name checkStatus
+	label 'emxFramework.label.checkStatus'
+	bus '$<relationship[ResolutionRel2024].attribute[checkStatus]>'
+	setting 'Field Type' attribute
+	setting 'Admin Type' attribute_checkStatus
+	setting 'Registered Suite' 'Framework'
+;
+
+21. toolbar 생성
+add menu promoteToolbar
+	command simpleLifecyclePromote
+;
+add property menu_promoteToolbar on prog eServiceSchemaVariableMapping.tcl to menu promoteToolbar
+;
+
+mod menu promoteToolbar
+	add command simpleLifecyclePromote
+;
+
+22. simplePOA에 toolbar 추가
+add menu simplePOAToolbar
+	command APPDecisionRemoveLink
+;
+add property menu_simplePOAToolbar on prog eServiceSchemaVariableMapping.tcl to menu simplePOAToolbar	
+;
+
+add command connectObject
+	label 'emxFramework.label.iconRouteIndicator'
+	alt 'emxFramework.label.iconRouteIndicator'
+	href '${COMMON_DIR}/emxIndentedTable.jsp?program=secondProject:findProject2024Document&table=Table2024&selection=multiple&submitURL=../sendDocument.jsp&postProcessJPO=secondProject:objectConnect'
+	setting Image '${COMMON_DIR}/images/iconSmallMasterFeature.gif'
+;
+add property command_connectObject on prog eServiceSchemaVariableMapping.tcl to command connectObject
+;
+
+23. form 하나 더 만들어봐
+add form SimpleRelatedForm web
+field
+	name connectObject
+	label 'emxFramework.label.connectObject'
+	range '${COMMON_DIR}/emxIndentedTable.jsp?program=secondProject:findProject2024Document&table=Table2024&selection=multiple&submitURL=../sendDocument.jsp'
+;
+add property form_SimpleRelatedForm on prog eServiceSchemaVariableMapping.tcl to form SimpleRelatedForm
+;
+
+24. resolution 에 toolbar 박기
+add command checkCommand
+	label 'emxFramework.label.checkCommand'
+	href '${COMMON_DIR}/checkTorF.jsp'
+	setting Image 
+	${COMMON_DIR}/images/iconStatusUserNotSubscribedToEvent.gif
+	setting 'program' secondProject
+	setting 'function' checkStatus
+	setting 'Target Location' listHidden
+	setting 'Registered Suite' 'Framework'
+;
+add property command_checkCommand on prog eServiceSchemaVariableMapping.tcl to command checkCommand
+;
+
+add menu ResolutionToolbar
+	command checkCommand
+;
+add property menu_ResolutionToolbar on prog eServiceSchemaVariableMapping.tcl to menu ResolutionToolbar
+;
+
+mod menu type_ResolutionType2024
+	href '${COMMON_DIR}/emxForm.jsp?editLink=true&form=ResolutionDetailForm2024&toolbar=ResolutionToolbar'
+;
+
+25. attribute만들기
+add attribute checkStatus
+	description checkStatus
+	type string
+;
+add property attribute_checkStatus on prog eServiceSchemaVariableMapping.tcl to attribute checkStatus
+;
+
+26. rel에 attribute를 넣어보자
+mod relationship ResolutionRel2024
+	add attribute checkStatus
+;
+
+27. simplePOATable에 column 변경
+mod table simplePOATable system
+	column mod name checkStatus
+	# 여기서 bus대신 rel로 변경
+	# rel에서 다 가져오니 조치사항에 있는 것을 부모에 있는 걸 가져올려고 하니 to를 사용
+	bus '$<to[ResolutionRel2024].attribute[checkStatus]>'
+	setting 'Field Type' attribute
+	setting 'Admin Type' attribute_checkStatus
+;
+
+mod table simplePOATable system
+	column mod name checkStatus
+	bus '$<to[ResolutionRel2024].attribute[checkStatus]>'
+;
+
+# rel로 가져 오는거 보단
+	
+28. checkTorF.jsp 작성
+
+29. promote를 위한 trigger 생성하기
+모두 O일 때 Process -> Review로 Promote
+mod policy simplePolicy
+	state Process
+	add trigger promote check emxTriggerManager input PolicySimplePolicyProcessReviewCheck
+;
+
+add bus 'eService Trigger Program Parameters' PolicySimplePolicyProcessReviewCheck policySimplePolicyProcessReviewCheck
+	policy 'eService Trigger Program Policy'
+	vault 'eService Administration'
+	'eService Program Name' secondProject
+	'eService Method Name' policySimplePolicyProcessReviewCheck
+	'eService Sequence Number' 1
+	'eService Program Argument 1' ${OBJECTID}
+;
+promote bus 'eService Trigger Program Parameters' PolicySimplePolicyProcessReviewCheck policySimplePolicyProcessReviewCheck
+;
+
+30. Review일 때 promote기능 안보이게
+mod command simpleLifecyclePromote
+	remove setting 'Access Mask' disable
+	remove setting 'Access Function' hasNextState
+	remove setting 'Access Program' emxLifecycle
+;
+
+31. 그냥 만들면 단순 결재 라인 작성에서 create가 되지 않는다. 그래서 Object Route 라는 rel에 내가 쓰는 type(simpleType) 추가
+mod relationship 'Object Route'
+	from add type simpleType
+;
+
+32. policy에 type을 추가하자
+# 처음에 Route type에 policy를 추가하려 했는데
+그것이 아닌 policy에 type을 추가하면 자동으로 type에 policy가 추가가 된다.
+mod policy simplePolicy
+	add type Route
+;
+
+33. Route라는 policy에 trigger 추가 Review에서 만들어진 결재가 승인이 된다면 Complete로 변경되는 Trigger
+mod policy Route
+	state 'In Process'
+	add trigger promote action emxTriggerManager input PolicySimplePolicyReviewCompleteAction
+;
+
+add bus 'eService Trigger Program Parameters' PolicySimplePolicyReviewCompleteAction policySimplePolicyReviewCompleteAction 
+	policy 'eService Trigger Program Policy'
+	vault 'eService Administration'
+	'eService Program Name' secondProject
+	'eService Method Name' policySimplePolicyReviewCompleteAction
+	'eService Sequence Number' 1
+	'eService Program Argument 1' ${OBJECTID}
+;
+promote bus 'eService Trigger Program Parameters' PolicySimplePolicyReviewCompleteAction policySimplePolicyReviewCompleteAction
+;

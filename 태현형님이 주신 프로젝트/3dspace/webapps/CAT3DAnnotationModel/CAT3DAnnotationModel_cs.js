@@ -1,0 +1,1 @@
+define("DS/CAT3DAnnotationModel/CAT3DAnnotationModel_cs",{});define("DS/CAT3DAnnotationModel/assets/nls/CAT3DAnnotationModel",{compositePliesLbl:"Vrstvy"});

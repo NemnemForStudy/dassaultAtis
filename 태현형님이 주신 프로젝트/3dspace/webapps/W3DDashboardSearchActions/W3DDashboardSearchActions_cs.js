@@ -1,0 +1,1 @@
+define("DS/W3DDashboardSearchActions/W3DDashboardSearchActions_cs",{});define("DS/W3DDashboardSearchActions/assets/nls/main",{goToDashboard:"Otevřít",type:"Typ",typeValue:"Ovládací panel",title:"Název",creationDate:"Datum vytvoření",modificationDate:"Datum úpravy",responsible:"Odpovědná osoba",propertiesFacet:"Vlastnosti",membersFacet:"Členové"});

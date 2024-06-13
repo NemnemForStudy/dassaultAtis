@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "CSIParametersFileVersion2JSONSchema.json",
+  "title": "CSI Parameters version 2",
+  "description": "JSON Schema of a CSI Parameters File version 2",
+  "type": "object",
+  "required": [
+    "grammarVersion",
+    "definition"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "grammarVersion": {
+      "type": "integer",
+      "enum": [ 2 ]
+    },
+    "definition": {
+      "$ref": "CSIParametersJSONSchema.json#/definitions/nonDefaultValueParameters"
+    }
+  }
+}

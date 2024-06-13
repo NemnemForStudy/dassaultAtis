@@ -1,0 +1,1 @@
+define("DS/CATWebUXCVS/CATWebUXCVS_ru",{});define("DS/CATWebUXCVS/assets/nls/CATWebUXCVS",{valStateChange:{dlgTitle:"Проверка",closeBtn:"Закрыть",inProgress:"Выполняется",passed:"Пройдено",failed:"Сбой"}});

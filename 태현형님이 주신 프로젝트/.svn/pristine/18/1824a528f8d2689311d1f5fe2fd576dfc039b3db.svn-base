@@ -1,0 +1,9 @@
+m|XCTWebExperienceModel\CAT3DExpMaterialWebMedia.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.0.22242|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\CAT3DExpMaterialWebMedia\CAT3DExpMaterialWebMedia.js|1661891435|950
+s|XCTWebExperienceModel\CAT3DExpMaterialWebMedia.mweb\src\extensions\CATE3DXMaterialAssetMedia.js|1661369973|2055
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

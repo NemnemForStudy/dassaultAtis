@@ -1,0 +1,145 @@
+{
+    "Write" : {
+        "attributes" : [
+            {
+                "name": "type",
+                "status": "RO"
+            },
+            {
+                "name": "V_Name",
+                "status": "RW"
+            },
+            {
+                "name": "PLM_ExternalID",
+                "status": "RO"
+            },
+            {
+                "name": "revision",
+                "status": "RO"
+            },
+            {
+                "name": "V_description",
+                "status": "RW"
+            },
+            {
+                "name": "V_versionComment",
+                "status": "RW"
+            },
+            {
+                "name": "V_NeedDedicatedSystem",
+                "status": "RW"
+            },
+            {
+                "name": "V_LifeLimit",
+                "status": "RW"
+            },
+            {
+                "name": "V_EstimatedMTBF",
+                "status": "RW"
+            },
+            {
+                "name": "V_EstimatedMTTR",
+                "status": "RW"
+            },
+            {
+                "name": "V_EstimatedMTBUR",
+                "status": "RW"
+            },
+            {
+                "name": "V_Essentiality",
+                "status": "RW"
+            },
+            {
+                "name": "V_ReplacementType",
+                "status": "RW"
+            },
+            {
+                "name": "V_Replaceable",
+                "status": "RW"
+            },
+            {
+                "name": "V_Repairable",
+                "status": "RW"
+            },
+            {
+                "name": "originated",
+                "status": "RO"
+            },
+            {
+                "name": "V_fromExternalID",
+                "status": "RO"
+            },
+            {
+                "name": "modified",
+                "status": "RO"
+            },
+            {
+                "name": "current",
+                "status": "RO"
+            },
+            {
+                "name": "policy",
+                "status": "RO"
+            },
+            {
+                "name": "owner",
+                "status": "RO"
+            },
+            {
+                "name": "organization",
+                "status": "RO"
+            },
+            {
+                "name": "project",
+                "status": "RO"
+            }
+        ]
+    },
+    "details" : {
+        "attributes" : {
+            "PLM_ExternalID": {
+                "mandatory": true
+            },
+            "V_Name": {
+                "mandatory": true
+            },
+            "owner": {
+                "mandatory": true
+            },
+            "V_NeedDedicatedSystem": {
+                "mandatory": true,
+                "defaultValue": "2",
+                "authorized_required": true,
+                "authorizedValues": [
+                    "1",
+                    "2"
+                ]
+            },
+            "V_ReplacementType" : {
+                "authorized_required": true,
+                "authorizedValues": [
+                    "Line And Shop",
+                    "Shop Only",
+                    "Not Defined"
+                ]
+            },
+            "V_Replaceable" : {
+                "authorized_required": true,
+                "authorizedValues": [
+                    "Yes",
+                    "No",
+                    "Not Defined"
+                ]
+            },
+            "V_Repairable" : {
+                "authorized_required": true,
+                "authorizedValues": [
+                    "Yes",
+                    "No",
+                    "Not Defined"
+                ]
+            }
+        }
+    },
+    "revision":"0"
+}

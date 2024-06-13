@@ -1,0 +1,1 @@
+Proj4js.defs["EPSG:7528"] = "+proj=tmerc +lat_0=43.36666666666667 +lon_0=-90 +k=1.0000365285 +x_0=147218.6942 +y_0=0.0037 +ellps=GRS80 +units=m +no_defs";

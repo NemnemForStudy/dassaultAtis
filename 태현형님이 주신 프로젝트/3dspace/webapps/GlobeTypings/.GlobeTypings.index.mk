@@ -1,0 +1,9 @@
+m|SocialGlobe\GlobeTypings.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.3.23042|3.2
+r|G:\R425\BSF\.
+t|win_b64\typings\GlobeTypings\GlobeAPI.d.ts|1671613528|619
+s|SocialGlobe\GlobeTypings.mweb\src\GlobeAPI.d.ts|1671613528|619
+t|win_b64\typings\GlobeTypings\GlobeUWA.d.ts|1674657008|599
+s|SocialGlobe\GlobeTypings.mweb\src\GlobeUWA.d.ts|1674657008|599

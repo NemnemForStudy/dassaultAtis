@@ -1,0 +1,1 @@
+define("DS/CfgDictionary/CfgDictionary_cs",{});define("DS/CfgDictionary/assets/nls/CfgDictionary",{option:"možnost",rule:"pravidlo",value:"hodnota",variability_group:"skupina variability",variant:"varianta"});

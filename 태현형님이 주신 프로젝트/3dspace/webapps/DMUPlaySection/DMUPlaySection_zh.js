@@ -1,0 +1,1 @@
+define("DS/DMUPlaySection/DMUPlaySection_zh",{});define("DS/DMUPlaySection/assets/nls/DMUPlaySection",{sectionplane:"截面平面",sectioncurves:"截面曲面",notifyComputeContourfailure:"无法计算截面轮廓",viewMenu:"视图菜单",exploreView:"浏览视图",detailedView:"详细视图",lblIncrement:" 增量：",lblOnlyNum:"仅此范围中的数字",sectionPrefix:"小节"});

@@ -1,0 +1,102 @@
+.item {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    height: 100%;
+
+    -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none;
+         -moz-user-select: none;
+          -ms-user-select: none;
+              user-select: none;
+}
+.item .img {
+    flex-shrink: 0; /* To avoid to stretch img. */
+}
+
+.item.pos-fit {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.item.pos-fill {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.ie .item.pos-fill.row {
+    flex-direction: row; /* ie11 needs to change flex direction to well align center vertically and horizontally */
+}
+.ie .item.pos-fill.column {
+    flex-direction: column; /* ie11 needs to change flex direction to well align center vertically and horizontally */
+}
+.item.pos-original {
+    display: flex;
+    flex-direction: row;
+    overflow: auto;
+    align-items: center;
+    justify-content: center;
+}
+.item.pos-original.overflow-width {
+    justify-content: flex-start;
+}
+.item.pos-original.overflow-height {
+    align-items: flex-start;
+}
+
+.item.default-item {
+    -webkit-touch-callout: text; /* iOS Safari */
+      -webkit-user-select: text;
+         -moz-user-select: text;
+          -ms-user-select: text;
+              user-select: text;
+}
+.item .default-img-ctn,
+.item .info-ctn {
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.item .default-img-ctn {
+    justify-content: flex-start;
+}
+.item .info-ctn {
+    min-height: 40%;
+    justify-content: flex-end;
+}
+.item .default-img {
+    min-width: 128px;
+    width: 20%;
+}
+.item .info-ctn .url-ctn,
+.item .info-ctn .tooltip-ctn {
+    padding: 10px 0;
+    max-width: 100%;
+}
+
+.item .alert {
+    margin: 0 auto;
+}
+
+.item .play-icon {
+    text-shadow: 0 0 5px rgba(0, 0, 0, .7);
+    position: absolute;
+    color: white;
+    height: 80px;
+    width: 80px;
+    line-height: 80px;
+    margin: 0;
+    z-index: 1;
+    top: calc(50% - 40px);
+    left: calc(50% - 40px);
+    opacity: .6;
+    transition: opacity .3s;
+}
+
+.medialinks:hover .item:hover .play-icon {
+    opacity: .9;
+}

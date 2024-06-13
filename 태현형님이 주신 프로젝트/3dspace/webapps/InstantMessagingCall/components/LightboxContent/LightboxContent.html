@@ -1,0 +1,100 @@
+<div
+  id="im-call-content"
+  :class="{ 
+    verticalize: !userlist_at_top, 
+    hasSpeaker: hasSpeaker,
+    userListHidden: !showUserList
+  }"
+  :style="{
+    backgroundImage: !backgroundImage ? '' : 'url(' + $store.state.assets_url + 'background.jpg)'
+  }"
+>
+  <im-call-user-list
+    v-show="showUserList"
+    :hasSpeaker="hasSpeaker"
+    :showSelfView="showSelfView"
+    :minimized="minimized"
+  />
+
+  <im-call-user-item
+    class="speaker"
+    v-if="hasSpeaker && !hasFeature"
+    :user_id="speaker_id"
+    :track_id="speaker_track_id"
+    :isSpeakerView="true"
+    :room="room"
+  />
+
+  <!-- Collab Experience ODE/WhiteBoard/... -->
+  <im-call-collaboration
+    class="speaker"
+    v-show="hasFeature"
+    :feature_id="feature_id"
+    :feature="feature"
+    :isODE="isODE"
+    :isWhiteboard="isWhiteboard"
+    :isConfetti="isConfetti"
+    :is3DPlay="is3DPlay"
+  />
+
+  <im-call-speaker-name
+    id="speaker-name"
+    v-if="hasSpeaker && !hasFeature"
+    :user_id="speaker_id"
+  />
+
+  <im-call-bar
+    class="noPickup oncall"
+    v-show="displayActionBar"
+    :room="room"
+    :showSelfView="showSelfView"
+    :showUserList="showUserList"
+    :hasFeature="hasFeature"
+    :hasSpeaker="hasSpeaker"
+    :isODE="isODE"
+    :isWhiteboard="isWhiteboard"
+    :isTelephonySupported="isTelephonySupported"
+    :isConfetti="isConfetti"
+    :is3DPlay="is3DPlay"
+  />
+
+  <im-call-bar-item
+    id="close-bar-item"
+    class="fonticon-expand-collapse-panel"
+    :class= "{
+      'rotate180': !displayActionBar
+    }"
+    @click.native="toggleActionBar"
+    :label="$store.getters.nls('toggleActionBar')"
+    :rightTooltip="true"
+  />
+
+  <vu-dialer
+    v-if="isTelephonySupported"
+    v-show="isDialerON"
+    class=""
+    :callFunction="sendNbr"
+  />
+
+  <im-call-self
+    v-if="!$store.getters.selfViewInUserList"
+    :showSelfView="showSelfView"
+  />
+
+  <!-- Maximize Buttons -->
+  <div
+    id="im-call-video-minimize-container"
+  >
+    <im-call-video-minimize
+      :logins="[login_myself]"
+      v-if="!showSelfView"
+      @click.native="displaySelfView"
+    />  
+    <im-call-video-minimize
+      :logins="logins"
+      v-if="!showUserList"
+      @click.native="displayUserList"
+    />
+  </div>
+
+</div>

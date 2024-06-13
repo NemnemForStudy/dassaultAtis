@@ -1,0 +1,1 @@
+define("DS/ENOFloatingPanel/ENOFloatingPanel_zh-TW",{});define("DS/ENOFloatingPanel/assets/nls/ENOFloatingPanel",{EFP_ClosePanel:"關閉",EFP_MaximizePanel:"最大化",EFP_RestorePanel:"回復",EFP_PinWidget:"釘選 widget",EFP_Settings:"設定"});

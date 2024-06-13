@@ -1,0 +1,1 @@
+define("DS/CAT3DAnnotationScenario/CAT3DAnnotationScenario_cs",{});define("DS/CAT3DAnnotationScenario/assets/nls/CAT3DAnnotationScenario",{A3EScenario_Title:"3D tolerance a popisy",A3EScenario_Description:"Zobrazení a procházení popisů"});

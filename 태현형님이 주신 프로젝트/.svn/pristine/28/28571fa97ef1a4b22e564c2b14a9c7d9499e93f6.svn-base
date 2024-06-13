@@ -1,0 +1,23 @@
+# Added by hslee on 2023.06.20
+# del table decProjectKeyQtyReportSummary system;
+add table decProjectKeyQtyReportSummary system
+	column
+		name 'Name'
+		label 'emxProgramCentral.Label.Code'
+		businessobject 'name'
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Field Type' 'basic'
+		setting 'Width' '70'
+	column
+		name 'Description'
+		label 'emxProgramCentral.Wzrd.Description'
+		businessobject 'description'
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Field Type' 'basic'
+		setting 'Width' '100'
+	column
+		name 'DynamicColumn'
+        setting 'Column Type' 'Dynamic'
+        setting 'Dynamic Column Program' 'decKeyQty'
+        setting 'Dynamic Column Function' 'getUnitColumn'
+;

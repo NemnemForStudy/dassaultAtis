@@ -1,0 +1,14 @@
+NAVIGATE 
+	T1.PLMID, T1.PLM_ExternalID, T2.PLMID, T2.PLM_ExternalID, T3.PLMID, T3.PLM_ExternalID
+	
+FROM 
+	DELFmiFunctionalModel/DELFmiFunctionReference T1, 
+	DELFmiFunctionalModelPrereqMatCnx/DELFmiProcessPrereqMaterializationCnx T2, 
+	PRODUCTCFG/VPMReference T3
+	
+FROM_ROOTS [?1?] 
+ON RELATION(FROM= PRODUCTCFG/VPMReference TO= DELFmiFunctionalModelPrereqMatCnx/DELFmiProcessPrereqMaterializationCnx THROUGH=POINTEDBY)
+THEN RELATION(FROM= DELFmiFunctionalModelPrereqMatCnx/DELFmiProcessPrereqMaterializationCnx TO= DELFmiFunctionalModel/DELFmiFunctionReference THROUGH=POINTSTO)
+WITH QUALITY_FILTER(CATEGORY=ISOWNEDBY)
+
+ITER=1 ;

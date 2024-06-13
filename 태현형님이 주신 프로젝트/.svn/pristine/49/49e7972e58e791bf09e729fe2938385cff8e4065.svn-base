@@ -1,0 +1,1 @@
+define("DS/CAT3DAnnotationBaseCmds/CAT3DAnnotationBaseCmds_ko",{});define("DS/CAT3DAnnotationBaseCmds/assets/nls/CAT3DAnnotationBaseCmds",{DisplayHistorySuccessfulLbl:"삭제된 표시 기록 보기 및 캡처",InfosPanelTitle:"시맨틱 표준",CloseButton:"닫기",relatedAttrPanelTitle:"기능 관련 정보"});

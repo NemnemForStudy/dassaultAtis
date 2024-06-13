@@ -1,0 +1,1 @@
+define("DS/DMUFormatEdition/DMUFormatEdition_en",{});define("DS/DMUFormatEdition/assets/nls/DMUFormatEdition",{formatEditionModeStarted:"Editing formats",slideEditionModeStarted:"Editing slides",currentFormatUpdatedMessage:"Viewpoint udpated",NoFormat:"No Format",FormatChooserPanelTitle:"Format",normalFormatTitle:"Format",generateFormat:"Generate Format"});

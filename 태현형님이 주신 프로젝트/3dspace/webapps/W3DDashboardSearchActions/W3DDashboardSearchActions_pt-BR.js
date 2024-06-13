@@ -1,0 +1,1 @@
+define("DS/W3DDashboardSearchActions/W3DDashboardSearchActions_pt-BR",{});define("DS/W3DDashboardSearchActions/assets/nls/main",{goToDashboard:"Abrir",type:"Tipo",typeValue:"Painel de instrumentos",title:"Título",creationDate:"Data de criação",modificationDate:"Data da modificação",responsible:"Responsável",propertiesFacet:"Propriedades",membersFacet:"Membros"});

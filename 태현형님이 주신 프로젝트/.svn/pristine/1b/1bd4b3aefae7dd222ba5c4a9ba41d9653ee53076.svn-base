@@ -1,0 +1,1 @@
+define("DS/3DPlayAnnotationUtils/3DPlayAnnotationUtils_de",{});define("DS/3DPlayAnnotationUtils/assets/nls/3DPlayAnnotation",{PlaceHolder:"Neuer Text",ClickToLaunchText:"Klicken Sie in die Ansicht, um ein neues Textfeld zu erstellen",cancelText:"Abbrechen",validateText:"Validieren",nextText:"Weiter"});

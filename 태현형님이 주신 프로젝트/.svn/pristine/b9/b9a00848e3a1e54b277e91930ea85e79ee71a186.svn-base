@@ -1,0 +1,1 @@
+define("DS/SPYExtUI/SPYExtUI_cs",{});define("DS/SPYExtUI/assets/nls/CATSimNavDataFrameViewXYChartUI",{rootName:"Aktuální krok",loadCaseName:"Aktuální zatížení"});

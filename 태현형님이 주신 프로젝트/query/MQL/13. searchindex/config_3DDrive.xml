@@ -1,0 +1,84 @@
+<INDEXER>
+	<CHUNK size="10000"/>
+	<DATABASE name="AdvancedSearchDB0"/>
+	<PROVIDER name="XL"/>
+	<SERVER host="localhost" baseport="19000"/>
+	<TRANSLATE_SYMBOLIC program="" method=""/>
+	<INDEXED-VAULTS names="*" excludevaults="*_archive">
+		<BOTYPE name="DOCUMENTS" excludepolicies="Version,Versioned Design Policy" includes="basic,document,workspacesField,titleField,2DThumbnailImageDoc.2dthb" excludefields="RESERVED"/>
+		<BOTYPE name="Workspace Vault" includes="basic"/>
+		<BOTYPEFIELDS name="basic">
+			<!-- Please do not uncomment the ID field. ID field search will be done using the reference refinement.-->
+			<!--
+				<FIELD name="ID" select="id" type="STRING" hidden="true"/>
+			-->
+			<!--
+				Please do not uncomment below block.  Below fields are hard coded by core.
+				Adding below fields will not have any impact as core will still use hard coded fields.
+				This section is added to let end user know which fields are hard coded and how are they defined in the core. 
+			-->
+			<!--
+				<FIELD name="OWNER" select="owner" format="user" type="STRING,PARAMETRIC" sixw="ds6w:responsible"/>
+				<FIELD name="POLICY" select="policy" type="STRING,PARAMETRIC"/>
+				<FIELD name="REVISION" select="revision" type="STRING,PARAMETRIC"/>
+				<FIELD name="CURRENT" chooserJPO="emxAEFFullSearch:getStateChooserValues" select="current" type="STRING,PARAMETRIC"/>
+				<FIELD name="ORIGINATED" select="originated" type="DATE"/>
+				<FIELD name="MODIFIED" select="modified" type="DATE"/>
+				<FIELD name="RESERVEDBY" select="reservedby" format="user" type="STRING,PARAMETRIC"/>
+				<FIELD name="TYPE" chooserJPO="emxAEFFullSearch:getTypeChooserValues" chooserURL="${COMMON_DIR}/emxTypeChooser.jsp" select="type" type="STRING,PARAMETRIC" sixw="ds6w:businessType"/>
+				<FIELD name="INTERFACE" select="interface" type="STRING,PARAMETRIC" hidden="true" sixw="ds6w:businessType"/>
+				<TAXONOMY name="TYPES" select="program[emxTypeLineage -method getLineage '${TYPE}']"/>
+				<TAXONOMY name="INTERFACES" select="execute[emxInterfaceLineage -method getLineage interface]" hidden="true"/>
+				<TAGTAXONOMY name="TAGS" select="program[emxTagLineage -method getLineage '${OBJECTID}']"/>
+			-->
+			<!-- The above basic BOTYPEFIELDS changes have been done for the IR-212669V6R2014 and IR-223969V6R2014-->
+			<FIELD name="NAME" select="name" type="STRING" fastsort="true"/>
+			<FIELD name="VAULT" select="vault" chooserURL="${COMMON_DIR}/emxVaultChooser.jsp" type="IDENTIFIER" hidden="true" />
+			<FIELD name="ORIGINATOR" select="attribute[Originator]" format="user" type="STRING" hidden="true"/>
+			<FIELD name="ORIGINATOR_FULLNAME" select="execute[emxPerson -method getFullName 'attribute[Originator]']" type="STRING,PARAMETRIC" sixw="ds6w:originator"/>
+			<FIELD name="COMMENT" select="attribute[Comment]" type="STRING" sixw="ds6wg:Comment"/>
+			<FIELD name="LASTREVISION" select="evaluate[if(revision == last) then true else false]" type="STRING,PARAMETRIC"/>
+			<FIELD name="LATESTREVISION" select="latest" type="STRING,PARAMETRIC"/>
+			<FIELD name="MAJORLATEST" select="majorid" type="STRING"/>
+			<FIELD name="LIBRARY" select="to[Classified Item].from.name" type="STRING,PARAMETRIC" sixw="ds6w:library"/>			
+		</BOTYPEFIELDS>
+		<BOTYPEFIELDS name="document">
+			<FIELD name="DESIGNATED_USER" select="attribute[Designated User]" type="STRING" sixw="ds6wg:Designated_User"/>
+			<FIELD name="CHECKIN_REASON" select="attribute[Checkin Reason]" type="STRING" sixw="ds6wg:Checkin_Reason"/>
+			<FIELD name="LANGUAGE_TAG" select="attribute[Language]" type="STRING,PARAMETRIC" sixw="ds6w:language"/>
+			<FIELD name="ACCESS_TYPE" select="attribute[Access Type]" type="STRING,PARAMETRIC"/>
+			<FIELD name="VERSION_DATE" select="attribute[Version Date]" type="DATE" sixw="ds6wg:Version_Date"/>
+			<FIELD name="MINOR_VERSION" select="attribute[Version]" type="STRING,PARAMETRIC"/>
+			<FIELD name="FILE_VERSION" select="attribute[File Version]" type="STRING,PARAMETRIC"/>
+			<FIELD name="WORKSPACE_FOLDER" select="to[Vaulted Objects].from.name" type="STRING"/>
+			<FIELD name="IS_REL_VAULTED_OBJECTS" select="relationship[Vaulted Objects]" type="STRING"/>
+			<FIELD name="IS_REL_OBJECTROUTE" select="relationship[Object Route]" type="STRING"/>
+			<FIELD name="BPS_IS_VERSION_DOCUMENT" select="attribute[Is Version Object]" type="STRING" hidden="true"/>
+			<FIELD name="DOCUMENT_EXTENTION_TYPE" select="execute[emxDocument -method getThumbnailExtention 'format[generic].file.name']" type="STRING,PARAMETRIC" sixw="ds6w:docExtension"/>
+		</BOTYPEFIELDS>
+		<BOTYPEFIELDS name="workspacesField">
+			<TAXONOMY name="WORKSPACES" select="program[emxSearchIndexExpansion -construct 'Data Vaults,Sub Vaults,Vaulted Objects' ${OBJECTID}]"/>
+		</BOTYPEFIELDS>
+		<BOTYPEFIELDS name="titleField">
+			<FIELD name="DOC_TITLE" select="attribute[Title]" type="STRING"/>
+		</BOTYPEFIELDS>
+		<BOTYPE.EXTFIELDS name="Workspace Vault" includes="filter.3ddrive.rootfolders"/>
+		<BOTYPEFIELDS name="filter.3ddrive.rootfolders">
+			<FIELD name="sdccode" key="filterrootfolder" onlyForSXI="TRUE" type="STRING" select="CONST:filterRootFolder" />
+		</BOTYPEFIELDS>
+		<BOTYPEFIELDS name="bo_defaultbasics">
+			<FIELD name="RESERVED" select="reserved" type="BOOLEAN,PARAMETRIC" hidden="true" override="true"/>
+			<FIELD name="PROJECT" select="project" type="STRING,PARAMETRIC" hidden="true" override="true"/>
+			<FIELD name="POLICY_TAG" select="policy" type="STRING,PARAMETRIC" hidden="true" override="true"/>
+            <FIELD name="POLICYCURRENT" chooserJPO="emxAEFFullSearch:getStateChooserValues"  select="evaluate[policy+'.'+current]" type="STRING,PARAMETRIC" hidden="true" override="true"/>
+		</BOTYPEFIELDS>
+		<BOTYPEFIELDS name="2DThumbnailImageDoc.2dthb">
+			<FIELD key="2DThumbnailImageDoc2dthb" name="2dthb.phyid" select="physicalid" type="STRING" fts="false" hidden="true"/>
+			<FIELD key="2DThumbnailImageDoc2dthb" name="2dthb.name" select="format[mxMedium Image].file.name" type="STRING" fts="false" hidden="true"/>
+			<FIELD key="2DThumbnailImageDoc2dthb" name="2dthb.format" select="CONST:mxMedium Image" type="STRING" fts="false" hidden="true"/>
+		</BOTYPEFIELDS>
+		<FORMAT name="*"/>
+		<STORE name="*"/>
+		<EXTENSION names="pdf,xls,zip,ppt,doc,txt,docx,xlsx,pptx"/>
+	</INDEXED-VAULTS>
+</INDEXER>

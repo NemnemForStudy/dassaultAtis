@@ -1,0 +1,1 @@
+define("DS/ApplicationFrame/ApplicationFrame_pl",{});define("DS/ApplicationFrame/assets/nls/ApplicationFrameActionBar",{hideActionBar:"Ukryj pasek akcji",showActionBar:"Pokaż pasek akcji"});

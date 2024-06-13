@@ -1,0 +1,1 @@
+define("DS/3DPlayWidgetViews/3DPlayWidgetViews_pl",{});define("DS/3DPlayWidgetViews/assets/nls/3DPlayWidgetView",{DROP_MSG_LP:"Upuść zawartość tutaj"});

@@ -1,0 +1,2362 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Project">
+	<select id="selectCWPChangeRegister" parameterType="map" resultType="map">
+		SELECT * 
+		  FROM 
+		DEC_CWP_CHANGE_REGISTER
+		 WHERE SITE_CD = #{SITE_CD}
+	</select>
+	<select id="selectCWPChangeRegisterDESCChangeDate" parameterType="map" resultType="map">
+		SELECT * 
+		  FROM 
+		DEC_CWP_CHANGE_REGISTER
+		 WHERE SITE_CD = #{SITE_CD}
+		<if test="@com.dec.util.DecStringUtil@isNotEmpty(CWP_NO)">AND CWP_NO LIKE #{CWP_NO}</if>  
+		<if test="@com.dec.util.DecStringUtil@isNotEmpty(INPUT_TYPE)">AND INPUT_TYPE LIKE #{INPUT_TYPE}</if>  
+		<if test="@com.dec.util.DecStringUtil@isNotEmpty(CHANGE_ACTION)">AND CHANGE_ACTION LIKE #{CHANGE_ACTION}</if>  
+		<if test="@com.dec.util.DecStringUtil@isNotEmpty(CHANGE_ATTRIBUTE)">AND CHANGE_ATTRIBUTE LIKE #{CHANGE_ATTRIBUTE}</if>  
+		<if test="@com.dec.util.DecStringUtil@isNotEmpty(BEFORE_VALUE)">AND BEFORE_VALUE LIKE #{BEFORE_VALUE}</if>  
+		<if test="@com.dec.util.DecStringUtil@isNotEmpty(AFTER_VALUE)">AND AFTER_VALUE LIKE #{AFTER_VALUE}</if>  
+		<if test="@com.dec.util.DecStringUtil@isNotEmpty(CHANGE_USER)">AND CHANGE_USER LIKE #{CHANGE_USER}</if>  
+		 ORDER BY CHANGE_DATE DESC
+	</select>
+	<select id="selectIWPChangeRegisterDESCChangeDate" parameterType="map" resultType="map">
+		SELECT * 
+		  FROM 
+		DEC_IWP_CHANGE_REGISTER
+		 WHERE SITE_CD = #{SITE_CD}
+		 ORDER BY CHANGE_DATE DESC
+	</select>
+	<select id="selectIWPChangeRegister" parameterType="map" resultType="map">
+		SELECT * 
+		  FROM 
+		DEC_IWP_CHANGE_REGISTER
+		 WHERE SITE_CD = #{SITE_CD}
+	</select>
+	
+	<select id="selectLastUpdateCWPChangeRegister" parameterType="map" resultType="map">
+		SELECT CWP_NO, MAX(CHANGE_DATE) AS CHANGE_DATE, CHANGE_USER, CWP_OID
+		  	FROM DEC_CWP_CHANGE_REGISTER
+		  	WHERE SITE_CD = #{SITE_CD} AND CHANGE_ACTION = #{CHANGE_ACTION}
+		  	GROUP BY CWP_NO, CHANGE_USER, CWP_OID
+	</select>
+	<select id="selectLastUpdateIWPChangeRegister" parameterType="map" resultType="map">
+		SELECT * 
+		  FROM 
+		DEC_IWP_CHANGE_REGISTER
+		 WHERE SITE_CD = #{SITE_CD}
+		 AND IWP_NO = #{IWP_NO}
+		 AND CHANGE_ACTION = #{CHANGE_ACTION}
+		ORDER BY ID DESC
+	</select>
+	<select id="selectCWPChangeRegisterforOIDDESCChangeDate" parameterType="map" resultType="map">
+		SELECT * 
+		  FROM 
+		DEC_CWP_CHANGE_REGISTER
+		 WHERE CWP_OID = #{CWP_OID}
+		 ORDER BY CHANGE_DATE DESC
+	</select>
+	
+	<resultMap id="KPIinfo" type="Map">
+      <result property="id"      	column="OBJECTID" javaType="String"/>
+      <result property="SITE_CD"      	column="SITE_CD"/>
+      <result property="UNIT_ID"      	column="UNIT_ID"/>
+      <result property="CONSTRUCTION_ITEM"      column="CONSTRUCTION_ITEM"/>
+      <result property="TARGET"      	column="TARGET"/>
+      <result property="ACTUAL"      	column="ACTUAL"/>
+      <result property="TOTAL"      	column="TOTAL"/>
+      <result property="KPIDATE"      	column="KPIDATE"/>
+	</resultMap>
+	
+	<select id="selectConstructionKPI" parameterType="map" resultMap="KPIinfo">
+		SELECT ID AS objectId, SITE_CD, UNIT_ID, DISCIPLINE, CONSTRUCTION_ITEM, TARGET, ACTUAL, TOTAL, KPIDATE, KPIWEEK, CUTOFFDATE, INPUTDATE
+		  FROM DEC_CONSTRUCTION_KPI
+		 WHERE SITE_CD = #{SITE_CD}
+		<if test="@com.dec.util.DecStringUtil@isNotEmpty(DISCIPLINE)">AND DISCIPLINE = #{DISCIPLINE}</if>  
+		<if test="@com.dec.util.DecStringUtil@isNotEmpty(CONSTRUCTION_ITEM)">AND CONSTRUCTION_ITEM = #{CONSTRUCTION_ITEM}</if>  
+		<if test="@com.dec.util.DecStringUtil@isNotEmpty(UNIT_ID)">AND UNIT_ID = #{UNIT_ID}</if>
+		<if test="@com.dec.util.DecStringUtil@isNotEmpty(KPIDATE_FROM)"><![CDATA[AND KPIDATE > #{KPIDATE_FROM}]]></if>
+		<if test="@com.dec.util.DecStringUtil@isNotEmpty(KPIDATE_TO)"><![CDATA[AND KPIDATE < #{KPIDATE_TO}]]></if>
+		ORDER BY KPIDATE ASC
+	</select>
+	
+	<select id="selectConstructionKPIItem" parameterType="map" resultType="map">
+		SELECT CONSTRUCTION_ITEM, DISCIPLINE, UNIT_ID
+		  FROM 
+		DEC_CONSTRUCTION_KPI
+		 WHERE SITE_CD = #{SITE_CD}
+	</select>
+	
+	<select id="selectProjectBiz" parameterType="map" resultType="map">
+		SELECT *
+		  FROM IF_PROJECT_BIZ_LIST_IN
+		 WHERE SITE_CD = #{SITE_CD}
+	</select>
+
+	<select id="selectProjectSchedule" parameterType="map" resultType="map">
+		SELECT SITE_CD,
+	   		   CHG_SQNUM,
+	   		   CT_ST_YMD,
+	   		   CT_EN_YMD,
+	   		   CON_PERIOD,
+	   		   REAL_CONST_YMD,
+	   		   REAL_CONEND_YMD,
+	   		   CHG_RESN
+  		  FROM X3DDEC_ADMIN.IF_PROJECT_SCHEDULE_LIST_IN
+		 WHERE SITE_CD = #{SITE_CD}
+		 <if test="@com.dec.util.DecStringUtil@isNotEmpty(MAX_CHG_SQNUM)">
+		 	AND CHG_SQNUM = (SELECT MAX(CHG_SQNUM) FROM X3DDEC_ADMIN.IF_PROJECT_SCHEDULE_LIST_IN WHERE SITE_CD = #{SITE_CD})
+		 </if>
+	</select>
+	
+	<select id="selectProjectScheduleMax" parameterType="map" resultType="map">
+	SELECT REAL_CONST_YMD,
+	   	   REAL_CONEND_YMD
+      FROM IF_PROJECT_SCHEDULE_LIST_IN
+     WHERE SITE_CD = #{SITE_CD} 
+       AND CHG_SQNUM = (SELECT MAX(CHG_SQNUM) AS CHG_SQNUM 
+  					      FROM IF_PROJECT_SCHEDULE_LIST_IN
+  					     WHERE SITE_CD = #{SITE_CD})
+	</select>
+	
+	<!-- SafetyStatics[S] -->
+	
+	<select id="selectSafetyStatics" parameterType="map" resultType="map">
+		SELECT SITE_CD, 
+			   TO_CHAR(CUT_OFF_YEAR) || '년 ' || TO_CHAR(CUT_OFF_MONTH) || '월 ' || TO_CHAR(CUT_OFF_WEEK) || '주차' as CUT_OFF_WEEK, 
+			   CUT_OFF_DATE, 
+			   NO_ACCIDENT_HOUR, 
+			   DEATH, 
+			   INJURY, 
+			   NEAR_MISS, 
+			   UA_UC, 
+			   PEOPLE_INPUT
+  		  FROM X3DDEC_ADMIN.DEC_SAFETY_STATICS_LIST
+		 WHERE SITE_CD = #{SITE_CD}
+	</select>
+	
+	<delete id="deleteSafetyStatics" parameterType="map">
+		DELETE X3DDEC_ADMIN.DEC_SAFETY_STATICS_LIST
+		 WHERE SITE_CD = #{SITE_CD}
+		   AND TO_CHAR(CUT_OFF_YEAR) || '년 ' || TO_CHAR(CUT_OFF_MONTH) || '월 ' || TO_CHAR(CUT_OFF_WEEK) || '주차'=#{CUT_OFF_WEEK}
+	</delete>
+	
+	<select id="selectSafetyStaticsOne" parameterType="map" resultType="map">
+		SELECT NO_ACCIDENT_HOUR, 
+			   DEATH, 
+			   INJURY, 
+			   NEAR_MISS, 
+			   UA_UC, 
+			   PEOPLE_INPUT
+  		  FROM X3DDEC_ADMIN.DEC_SAFETY_STATICS_LIST
+		 WHERE SITE_CD = #{SITE_CD}
+		   AND TO_CHAR(CUT_OFF_YEAR) || '년 ' || TO_CHAR(CUT_OFF_MONTH) || '월 ' || TO_CHAR(CUT_OFF_WEEK) || '주차' = #{CUT_OFF_WEEK}
+	</select>
+	
+	<select id="selectSafetyStaticsOne2" parameterType="map" resultType="map">
+		SELECT NO_ACCIDENT_HOUR, 
+			   DEATH, 
+			   INJURY, 
+			   NEAR_MISS, 
+			   UA_UC, 
+			   PEOPLE_INPUT
+  		  FROM X3DDEC_ADMIN.DEC_SAFETY_STATICS_LIST
+		 WHERE SITE_CD = #{SITE_CD}
+		   AND CUT_OFF_YEAR = #{CUT_OFF_YEAR}
+		   AND CUT_OFF_MONTH = #{CUT_OFF_MONTH}
+		   AND CUT_OFF_WEEK = #{CUT_OFF_WEEK}
+	</select>
+	
+	<insert id="insertSafetyStatics" parameterType="map">
+		INSERT INTO X3DDEC_ADMIN.DEC_SAFETY_STATICS_LIST
+		(
+			SITE_CD, 
+			CUT_OFF_YEAR, 
+			CUT_OFF_MONTH, 
+			CUT_OFF_WEEK, 
+			CUT_OFF_DATE, 
+			NO_ACCIDENT_HOUR, 
+			DEATH, 
+			INJURY, 
+			NEAR_MISS, 
+			UA_UC, 
+			PEOPLE_INPUT
+		)
+		VALUES
+		(
+			#{SITE_CD}, 
+			#{CUT_OFF_YEAR}, 
+			#{CUT_OFF_MONTH}, 
+			#{CUT_OFF_WEEK}, 
+			to_date(#{CUT_OFF_DATE}, 'YYYYMMDDHH24MISS'), 
+			#{NO_ACCIDENT_HOUR}, 
+			#{DEATH}, 
+			#{INJURY}, 
+			#{NEAR_MISS}, 
+			#{UA_UC}, 
+			#{PEOPLE_INPUT}
+		)
+	</insert>
+	
+	<select id="checkSafetyStaticsDuplication" parameterType="map" resultType="Integer">
+		SELECT count(1) as cnt
+  		  FROM X3DDEC_ADMIN.DEC_SAFETY_STATICS_LIST
+		 WHERE SITE_CD = #{SITE_CD}
+		   AND CUT_OFF_YEAR = #{CUT_OFF_YEAR}
+		   AND CUT_OFF_MONTH = #{CUT_OFF_MONTH}
+		   AND CUT_OFF_WEEK = #{CUT_OFF_WEEK}
+	</select>
+	
+	<update id="updateSafetyStatics" parameterType="map">
+		UPDATE X3DDEC_ADMIN.DEC_SAFETY_STATICS_LIST
+		   SET CUT_OFF_DATE = to_date(#{CUT_OFF_DATE}, 'YYYYMMDDHH24MISS'), 
+			   NO_ACCIDENT_HOUR = #{NO_ACCIDENT_HOUR}, 
+			   DEATH = #{DEATH}, 
+			   INJURY = #{INJURY}, 
+			   NEAR_MISS = #{NEAR_MISS}, 
+			   UA_UC = #{UA_UC}, 
+			   PEOPLE_INPUT = #{PEOPLE_INPUT}
+		 WHERE SITE_CD = #{SITE_CD}
+		   AND CUT_OFF_YEAR = #{CUT_OFF_YEAR}
+		   AND CUT_OFF_MONTH = #{CUT_OFF_MONTH}
+		   AND CUT_OFF_WEEK = #{CUT_OFF_WEEK}
+	</update>
+	
+	<update id="updateSafetyStatics2" parameterType="map">
+		UPDATE X3DDEC_ADMIN.DEC_SAFETY_STATICS_LIST
+		   SET NO_ACCIDENT_HOUR = #{NO_ACCIDENT_HOUR}, 
+			   DEATH = #{DEATH}, 
+			   INJURY = #{INJURY}, 
+			   NEAR_MISS = #{NEAR_MISS}, 
+			   UA_UC = #{UA_UC}, 
+			   PEOPLE_INPUT = #{PEOPLE_INPUT}
+		 WHERE SITE_CD = #{SITE_CD}
+		   AND TO_CHAR(CUT_OFF_YEAR) || '년 ' || TO_CHAR(CUT_OFF_MONTH) || '월 ' || TO_CHAR(CUT_OFF_WEEK) || '주차'=#{CUT_OFF_WEEK}
+	</update>
+	
+	<select id="selectDashBoardSafetyStaticsSum" parameterType="map" resultType="map">
+		SELECT SUM(DEATH) AS DEATH,
+ 		 	   SUM(INJURY) AS INJURY,
+ 			   SUM(NEAR_MISS) AS NEAR_MISS,
+ 			   SUM(UA_UC) AS UA_UC
+   		  FROM X3DDEC_ADMIN.DEC_SAFETY_STATICS_LIST
+  		 WHERE SITE_CD = #{SITE_CD}
+	</select>
+	
+	<select id="selectDashBoardSafetyStaticsLatest" parameterType="map" resultType="map">
+		SELECT NO_ACCIDENT_HOUR,
+ 			   CUT_OFF_DATE,
+ 			   DEATH, 
+			   INJURY, 
+			   NEAR_MISS, 
+			   UA_UC,
+			   PEOPLE_INPUT
+   		  FROM X3DDEC_ADMIN.DEC_SAFETY_STATICS_LIST
+  		 WHERE SITE_CD = #{SITE_CD}
+    	   AND CUT_OFF_DATE = (SELECT MAX(CUT_OFF_DATE) AS CUT_OFF_DATE
+   						  		 FROM X3DDEC_ADMIN.DEC_SAFETY_STATICS_LIST
+  						 	    WHERE SITE_CD = #{SITE_CD}
+   					   		   )
+	</select>
+	
+	
+	<!-- SafetyStatics[E] -->
+	
+	<!-- Progress[S] -->
+	
+	<select id="selectProgress" parameterType="map" resultType="map">
+		SELECT SITE_CD, 
+			   TO_CHAR(CUT_OFF_YEAR) || '년 ' || TO_CHAR(CUT_OFF_MONTH) || '월 ' || TO_CHAR(CUT_OFF_WEEK) || '주차' as CUT_OFF_WEEK, 
+			   CUT_OFF_DATE,
+			   NVL(NVL(ENG_PLAN_INPUT, ENG_PLAN),'---') as ENG_PLAN,
+			   NVL(NVL(ENG_ACTUAL_INPUT, ENG_ACTUAL),'---')  as ENG_ACTUAL,
+			   NVL(NVL(PROC_PLAN_INPUT, PROC_PLAN),'---')  as PROC_PLAN,
+			   NVL(NVL(PROC_ACTUAL_INPUT, PROC_ACTUAL),'---')  as PROC_ACTUAL,
+			   NVL(NVL(CON_PLAN_INPUT, CON_PLAN),'---')  as CON_PLAN,
+			   NVL(NVL(CON_ACTUAL_INPUT, CON_ACTUAL),'---')  as CON_ACTUAL,
+			   NVL(NVL(COMM_PLAN_INPUT, COMM_PLAN),'---')  as COMM_PLAN,
+			   NVL(NVL(COMM_ACTUAL_INPUT, COMM_ACTUAL),'---')  as COMM_ACTUAL,
+			   NVL(NVL(OVERALL_PLAN_INPUT, OVERALL_PLAN),'---')  as OVERALL_PLAN,
+			   NVL(NVL(OVERALL_ACTUAL_INPUT, OVERALL_ACTUAL),'---')  as OVERALL_ACTUAL
+  		  FROM X3DDEC_ADMIN.DEC_PROGRESS_LIST
+		 WHERE SITE_CD = #{SITE_CD}
+		 <if test="@com.dec.util.DecStringUtil@isNotNull(MAX_CUT_OFF_DATE)">
+		   AND CUT_OFF_DATE = (SELECT MAX(CUT_OFF_DATE) FROM DEC_PROGRESS_LIST WHERE SITE_CD = #{SITE_CD})
+		 </if>
+	</select>
+	
+	<select id="selectProgressOne" parameterType="map" resultType="map">
+		SELECT NVL(NVL(ENG_PLAN_INPUT, ENG_PLAN),'') as ENG_PLAN,
+			   NVL(NVL(ENG_ACTUAL_INPUT, ENG_ACTUAL),'')  as ENG_ACTUAL,
+			   NVL(NVL(PROC_PLAN_INPUT, PROC_PLAN),'')  as PROC_PLAN,
+			   NVL(NVL(PROC_ACTUAL_INPUT, PROC_ACTUAL),'')  as PROC_ACTUAL,
+			   NVL(NVL(CON_PLAN_INPUT, CON_PLAN),'')  as CON_PLAN,
+			   NVL(NVL(CON_ACTUAL_INPUT, CON_ACTUAL),'')  as CON_ACTUAL,
+			   NVL(NVL(COMM_PLAN_INPUT, COMM_PLAN),'')  as COMM_PLAN,
+			   NVL(NVL(COMM_ACTUAL_INPUT, COMM_ACTUAL),'')  as COMM_ACTUAL,
+			   NVL(NVL(OVERALL_PLAN_INPUT, OVERALL_PLAN),'')  as OVERALL_PLAN,
+			   NVL(NVL(OVERALL_ACTUAL_INPUT, OVERALL_ACTUAL),'')  as OVERALL_ACTUAL
+  		  FROM X3DDEC_ADMIN.DEC_PROGRESS_LIST
+		 WHERE SITE_CD = #{SITE_CD}
+		   AND CUT_OFF_YEAR = #{CUT_OFF_YEAR}
+		   AND CUT_OFF_MONTH = #{CUT_OFF_MONTH}
+		   AND CUT_OFF_WEEK = #{CUT_OFF_WEEK}
+	</select>
+	
+	<select id="selectProgressOneForUpdate" parameterType="map" resultType="map">
+		SELECT SITE_CD,
+			   NVL(NVL(ENG_PLAN_INPUT, ENG_PLAN),'') as ENG_PLAN,
+			   NVL(NVL(ENG_ACTUAL_INPUT, ENG_ACTUAL),'')  as ENG_ACTUAL,
+			   NVL(NVL(PROC_PLAN_INPUT, PROC_PLAN),'')  as PROC_PLAN,
+			   NVL(NVL(PROC_ACTUAL_INPUT, PROC_ACTUAL),'')  as PROC_ACTUAL,
+			   NVL(NVL(CON_PLAN_INPUT, CON_PLAN),'')  as CON_PLAN,
+			   NVL(NVL(CON_ACTUAL_INPUT, CON_ACTUAL),'')  as CON_ACTUAL,
+			   NVL(NVL(COMM_PLAN_INPUT, COMM_PLAN),'')  as COMM_PLAN,
+			   NVL(NVL(COMM_ACTUAL_INPUT, COMM_ACTUAL),'')  as COMM_ACTUAL,
+			   NVL(NVL(OVERALL_PLAN_INPUT, OVERALL_PLAN),'')  as OVERALL_PLAN,
+			   NVL(NVL(OVERALL_ACTUAL_INPUT, OVERALL_ACTUAL),'')  as OVERALL_ACTUAL
+  		  FROM X3DDEC_ADMIN.DEC_PROGRESS_LIST
+		 WHERE SITE_CD = #{SITE_CD}
+		   AND TO_CHAR(CUT_OFF_YEAR) || '년 ' || TO_CHAR(CUT_OFF_MONTH) || '월 ' || TO_CHAR(CUT_OFF_WEEK) || '주차'=#{CUT_OFF_WEEK}
+	</select>
+	
+	<select id="selectDailyProgressOne" parameterType="map" resultType="map">
+		SELECT NVL(ENG_PLAN,'') as ENG_PLAN,
+			   NVL(ENG_ACTUAL,'')  as ENG_ACTUAL
+  		  FROM X3DDEC_ADMIN.IF_PROGRESS_DAILY_LIST_IN
+		 WHERE SITE_CD = #{SITE_CD}
+		   AND TO_CHAR(CUT_OFF_DATE,'YYYYMMDD') = #{CUT_OFF_DATE}
+	</select>
+	
+	<select id="selectDashBoardProgressTableThisWeek" parameterType="map" resultType="map">
+		SELECT NVL(NVL(ENG_PLAN_INPUT, ENG_PLAN),'No Data') as ENG_PLAN,
+		 	   NVL(NVL(ENG_ACTUAL_INPUT, ENG_ACTUAL),'No Data')  as ENG_ACTUAL,
+		 	   NVL(NVL(PROC_PLAN_INPUT, PROC_PLAN),'No Data')  as PROC_PLAN,
+		 	   NVL(NVL(PROC_ACTUAL_INPUT, PROC_ACTUAL),'No Data')  as PROC_ACTUAL,
+		 	   NVL(NVL(CON_PLAN_INPUT, CON_PLAN),'No Data')  as CON_PLAN,
+		 	   NVL(NVL(CON_ACTUAL_INPUT, CON_ACTUAL),'No Data')  as CON_ACTUAL,
+		 	   NVL(NVL(COMM_PLAN_INPUT, COMM_PLAN),'No Data')  as COMM_PLAN,
+		 	   NVL(NVL(COMM_ACTUAL_INPUT, COMM_ACTUAL),'No Data')  as COMM_ACTUAL,
+		 	   NVL(NVL(OVERALL_PLAN_INPUT, OVERALL_PLAN),'No Data')  as OVERALL_PLAN,
+		 	   NVL(NVL(OVERALL_ACTUAL_INPUT, OVERALL_ACTUAL),'No Data')  as OVERALL_ACTUAL,
+		 	   CUT_OFF_DATE
+  		  FROM X3DDEC_ADMIN.DEC_PROGRESS_LIST
+		 WHERE SITE_CD = #{SITE_CD}
+		   AND CUT_OFF_DATE = (SELECT MAX(CUT_OFF_DATE) as CUT_OFF_DATE
+  		  					     FROM X3DDEC_ADMIN.DEC_PROGRESS_LIST
+		 					    WHERE SITE_CD = #{SITE_CD})
+	</select>
+	
+	<select id="selectDashBoardProgressTablePreviousWeek" parameterType="map" resultType="map">
+		SELECT NVL(NVL(ENG_ACTUAL_INPUT, ENG_ACTUAL),'No Data')  as ENG_ACTUAL,
+		       NVL(NVL(PROC_ACTUAL_INPUT, PROC_ACTUAL),'No Data')  as PROC_ACTUAL,
+		 	   NVL(NVL(CON_ACTUAL_INPUT, CON_ACTUAL),'No Data')  as CON_ACTUAL,
+		 	   NVL(NVL(COMM_ACTUAL_INPUT, COMM_ACTUAL),'No Data')  as COMM_ACTUAL,
+		 	   NVL(NVL(OVERALL_ACTUAL_INPUT, OVERALL_ACTUAL),'No Data')  as OVERALL_ACTUAL
+  		  FROM X3DDEC_ADMIN.DEC_PROGRESS_LIST
+		 WHERE SITE_CD = #{SITE_CD}
+		   AND CUT_OFF_DATE = (SELECT MAX(CUT_OFF_DATE) as CUT_OFF_DATE
+  		  					     FROM X3DDEC_ADMIN.DEC_PROGRESS_LIST
+		 					    WHERE SITE_CD = #{SITE_CD}
+		 					      AND CUT_OFF_DATE != (SELECT MAX(CUT_OFF_DATE) as CUT_OFF_DATE
+  		  					     						 FROM X3DDEC_ADMIN.DEC_PROGRESS_LIST
+		 					    					    WHERE SITE_CD = #{SITE_CD}))
+	</select>
+	
+	<select id="selectDashBoardProgressTableLatestCutOffDate" parameterType="map" resultType="map">
+		SELECT MAX(CUT_OFF_DATE) as CUT_OFF_DATE
+  		  FROM X3DDEC_ADMIN.DEC_PROGRESS_LIST
+		 WHERE SITE_CD = #{SITE_CD}
+	</select>
+	
+	<delete id="deleteProgress" parameterType="map">
+		DELETE X3DDEC_ADMIN.DEC_PROGRESS_LIST
+		 WHERE SITE_CD = #{SITE_CD}
+		   AND TO_CHAR(CUT_OFF_YEAR) || '년 ' || TO_CHAR(CUT_OFF_MONTH) || '월 ' || TO_CHAR(CUT_OFF_WEEK) || '주차'=#{CUT_OFF_WEEK}
+	</delete>
+	
+	<update id="updateProgress" parameterType="map">
+		UPDATE X3DDEC_ADMIN.DEC_PROGRESS_LIST
+		   SET CUT_OFF_DATE = to_date(#{CUT_OFF_DATE}, 'YYYYMMDDHH24MISS'),
+		   	   ENG_PLAN_INPUT = #{ENG_PLAN},
+		   	   ENG_ACTUAL_INPUT = #{ENG_ACTUAL},
+		   	   PROC_PLAN_INPUT = #{PROC_PLAN},
+		   	   PROC_ACTUAL_INPUT = #{PROC_ACTUAL},
+		   	   CON_PLAN_INPUT = #{CON_PLAN},
+		   	   CON_ACTUAL_INPUT = #{CON_ACTUAL},
+		   	   COMM_PLAN_INPUT = #{COMM_PLAN},
+		   	   COMM_ACTUAL_INPUT = #{COMM_ACTUAL},
+		   	   OVERALL_PLAN_INPUT = #{OVERALL_PLAN},
+		   	   OVERALL_ACTUAL_INPUT = #{OVERALL_ACTUAL}  
+		 WHERE SITE_CD = #{SITE_CD}
+		   AND CUT_OFF_YEAR = #{CUT_OFF_YEAR}
+		   AND CUT_OFF_MONTH = #{CUT_OFF_MONTH}
+		   AND CUT_OFF_WEEK = #{CUT_OFF_WEEK}
+	</update>
+	
+	<update id="updateProgress2" parameterType="map">
+		UPDATE X3DDEC_ADMIN.DEC_PROGRESS_LIST
+		   SET ENG_PLAN_INPUT = #{ENG_PLAN},
+		   	   ENG_ACTUAL_INPUT = #{ENG_ACTUAL},
+		   	   PROC_PLAN_INPUT = #{PROC_PLAN},
+		   	   PROC_ACTUAL_INPUT = #{PROC_ACTUAL},
+		   	   CON_PLAN_INPUT = #{CON_PLAN},
+		   	   CON_ACTUAL_INPUT = #{CON_ACTUAL},
+		   	   COMM_PLAN_INPUT = #{COMM_PLAN},
+		   	   COMM_ACTUAL_INPUT = #{COMM_ACTUAL},
+		   	   OVERALL_PLAN_INPUT = #{OVERALL_PLAN},
+		   	   OVERALL_ACTUAL_INPUT = #{OVERALL_ACTUAL}
+		 WHERE SITE_CD = #{SITE_CD}
+		   AND TO_CHAR(CUT_OFF_YEAR) || '년 ' || TO_CHAR(CUT_OFF_MONTH) || '월 ' || TO_CHAR(CUT_OFF_WEEK) || '주차'=#{CUT_OFF_WEEK}
+	</update>
+	
+	<insert id="insertProgress" parameterType="map">
+		INSERT INTO X3DDEC_ADMIN.DEC_PROGRESS_LIST
+		(
+			SITE_CD, 
+			CUT_OFF_YEAR, 
+			CUT_OFF_MONTH, 
+			CUT_OFF_WEEK, 
+			CUT_OFF_DATE, 
+			ENG_PLAN_INPUT, 
+			ENG_ACTUAL_INPUT, 
+			PROC_PLAN_INPUT, 
+			PROC_ACTUAL_INPUT, 
+			CON_PLAN_INPUT, 
+			CON_ACTUAL_INPUT,
+			COMM_PLAN_INPUT, 
+			COMM_ACTUAL_INPUT,
+			OVERALL_PLAN_INPUT, 
+			OVERALL_ACTUAL_INPUT
+		)
+		VALUES
+		(
+			#{SITE_CD}, 
+			#{CUT_OFF_YEAR}, 
+			#{CUT_OFF_MONTH}, 
+			#{CUT_OFF_WEEK}, 
+			to_date(#{CUT_OFF_DATE}, 'YYYYMMDDHH24MISS'), 
+			#{ENG_PLAN},
+			#{ENG_ACTUAL},
+			#{PROC_PLAN},
+			#{PROC_ACTUAL},
+			#{CON_PLAN},
+			#{CON_ACTUAL},
+			#{COMM_PLAN},
+			#{COMM_ACTUAL},
+			#{OVERALL_PLAN},
+			#{OVERALL_ACTUAL}
+		)
+	</insert>
+	
+	<select id="checkProgressDuplication" parameterType="map" resultType="Integer">
+		SELECT count(1) as cnt
+  		  FROM X3DDEC_ADMIN.DEC_PROGRESS_LIST
+		 WHERE SITE_CD = #{SITE_CD}
+		   AND CUT_OFF_YEAR = #{CUT_OFF_YEAR}
+		   AND CUT_OFF_MONTH = #{CUT_OFF_MONTH}
+		   AND CUT_OFF_WEEK = #{CUT_OFF_WEEK}
+	</select>
+	
+	<select id="selectDashBoardProgressChartComparisonLastWeek" parameterType="map" resultType="map">
+		SELECT CUT_OFF_DATE,
+			   ENG_PLAN,
+			   ENG_ACTUAL,
+			   PROC_PLAN,
+			   PROC_ACTUAL,
+			   CON_PLAN,
+			   CON_ACTUAL,
+			   COMM_PLAN,
+			   COMM_ACTUAL,
+			   OVERALL_PLAN,
+			   OVERALL_ACTUAL
+  		 FROM
+     	(
+        SELECT TO_CHAR(CUT_OFF_DATE,'yyyy/MM/dd') AS CUT_OFF_DATE,
+      		   TO_CHAR(CUT_OFF_DATE,'YYYYMMDD') AS CUT_OFF_DATE2,
+	  		   TO_NUMBER(NVL(NVL(ENG_PLAN_INPUT, ENG_PLAN),'0')) - TO_NUMBER(LAG(NVL(NVL(ENG_PLAN_INPUT, ENG_PLAN),'0'),1,0) OVER(ORDER BY CUT_OFF_DATE)) AS ENG_PLAN,
+			   TO_NUMBER(NVL(NVL(ENG_ACTUAL_INPUT, ENG_ACTUAL),'0')) - TO_NUMBER(LAG(NVL(NVL(ENG_ACTUAL_INPUT, ENG_ACTUAL),'0'),1,0) OVER(ORDER BY CUT_OFF_DATE)) AS ENG_ACTUAL,
+			   TO_NUMBER(NVL(NVL(PROC_PLAN_INPUT, PROC_PLAN),'0')) - TO_NUMBER(LAG(NVL(NVL(PROC_PLAN_INPUT, PROC_PLAN),'0'),1,0) OVER(ORDER BY CUT_OFF_DATE)) AS PROC_PLAN,
+			   TO_NUMBER(NVL(NVL(PROC_ACTUAL_INPUT, PROC_ACTUAL),'0')) - TO_NUMBER(LAG(NVL(NVL(PROC_ACTUAL_INPUT, PROC_ACTUAL),'0'),1,0) OVER(ORDER BY CUT_OFF_DATE)) AS PROC_ACTUAL,
+			   TO_NUMBER(NVL(NVL(CON_PLAN_INPUT, CON_PLAN),'0')) - TO_NUMBER(LAG(NVL(NVL(CON_PLAN_INPUT, CON_PLAN),'0'),1,0) OVER(ORDER BY CUT_OFF_DATE)) AS CON_PLAN,
+			   TO_NUMBER(NVL(NVL(CON_ACTUAL_INPUT, CON_ACTUAL),'0')) - TO_NUMBER(LAG(NVL(NVL(CON_ACTUAL_INPUT, CON_ACTUAL),'0'),1,0) OVER(ORDER BY CUT_OFF_DATE)) AS CON_ACTUAL,
+			   TO_NUMBER(NVL(NVL(COMM_PLAN_INPUT, COMM_PLAN),'0')) - TO_NUMBER(LAG(NVL(NVL(COMM_PLAN_INPUT, COMM_PLAN),'0'),1,0) OVER(ORDER BY CUT_OFF_DATE)) AS COMM_PLAN,
+			   TO_NUMBER(NVL(NVL(COMM_ACTUAL_INPUT, COMM_ACTUAL),'0')) - TO_NUMBER(LAG(NVL(NVL(COMM_ACTUAL_INPUT, COMM_ACTUAL),'0'),1,0) OVER(ORDER BY CUT_OFF_DATE)) AS COMM_ACTUAL,
+			   TO_NUMBER(NVL(NVL(OVERALL_PLAN_INPUT, OVERALL_PLAN),'0')) - TO_NUMBER(LAG(NVL(NVL(OVERALL_PLAN_INPUT, OVERALL_PLAN),'0'),1,0) OVER(ORDER BY CUT_OFF_DATE)) AS OVERALL_PLAN,
+			   TO_NUMBER(NVL(NVL(OVERALL_ACTUAL_INPUT, OVERALL_ACTUAL),'0')) - TO_NUMBER(LAG(NVL(NVL(OVERALL_ACTUAL_INPUT, OVERALL_ACTUAL),'0'),1,0) OVER(ORDER BY CUT_OFF_DATE)) AS OVERALL_ACTUAL
+  		  FROM X3DDEC_ADMIN.DEC_PROGRESS_LIST    
+   	  	 WHERE SITE_CD = #{SITE_CD}
+   	  	 ) A WHERE a.CUT_OFF_DATE2 between TO_CHAR(#{FROMDATE}) and TO_CHAR(#{TODATE})
+	</select>
+	
+	<select id="selectDashBoardProgressChartNormal" parameterType="map" resultType="map">
+		SELECT A.CUT_OFF_DATE,
+        	   A.ENG_PLAN,
+        	   A.ENG_ACTUAL,
+        	   A.PROC_PLAN,
+        	   A.PROC_ACTUAL,
+        	   A.CON_PLAN,
+        	   A.CON_ACTUAL,
+        	   A.COMM_PLAN,
+        	   A.COMM_ACTUAL,
+        	   A.OVERALL_PLAN,
+        	   A.OVERALL_ACTUAL
+          FROM					 
+       (SELECT TO_CHAR(CUT_OFF_DATE,'yyyy/MM/dd') AS CUT_OFF_DATE,
+               TO_CHAR(CUT_OFF_DATE,'yyyymmdd') AS CUT_OFF_DATE2,
+  		 	   NVL(NVL(ENG_PLAN_INPUT, ENG_PLAN),'0') as ENG_PLAN,
+		 	   NVL(NVL(ENG_ACTUAL_INPUT, ENG_ACTUAL),'0') as ENG_ACTUAL,
+		 	   NVL(NVL(PROC_PLAN_INPUT, PROC_PLAN),'0') as PROC_PLAN,
+		 	   NVL(NVL(PROC_ACTUAL_INPUT, PROC_ACTUAL),'0') as PROC_ACTUAL,
+		 	   NVL(NVL(CON_PLAN_INPUT, CON_PLAN),'0') as CON_PLAN,
+		 	   NVL(NVL(CON_ACTUAL_INPUT, CON_ACTUAL),'0') as CON_ACTUAL,
+		 	   NVL(NVL(COMM_PLAN_INPUT, COMM_PLAN),'0') as COMM_PLAN,
+		 	   NVL(NVL(COMM_ACTUAL_INPUT, COMM_ACTUAL),'0') as COMM_ACTUAL,
+		 	   NVL(NVL(OVERALL_PLAN_INPUT, OVERALL_PLAN),'0') as OVERALL_PLAN,
+		 	   NVL(NVL(OVERALL_ACTUAL_INPUT, OVERALL_ACTUAL),'0') as OVERALL_ACTUAL
+  		  FROM X3DDEC_ADMIN.DEC_PROGRESS_LIST    
+   		 WHERE SITE_CD = #{SITE_CD}) A
+   		 WHERE A.CUT_OFF_DATE2 between TO_CHAR(#{FROMDATE}) and TO_CHAR(#{TODATE})
+	</select>
+	
+	<select id="selectDashBoardProgressChartMaxMinDate" parameterType="map" resultType="map">
+	  SELECT MAX(CUT_OFF_DATE) AS CUT_OFF_DATE	
+		FROM
+		(	
+		  SELECT TO_CHAR(CUT_OFF_DATE,'YYYYMMDD') AS CUT_OFF_DATE
+		    FROM DEC_PROGRESS_LIST 
+		   WHERE SITE_CD = #{SITE_CD}
+		ORDER BY CUT_OFF_DATE DESC
+		)
+		WHERE <![CDATA[ ROWNUM <= 5 ]]>
+		
+	  UNION ALL
+	  
+		SELECT MIN(CUT_OFF_DATE) AS CUT_OFF_DATE	 		
+		FROM
+		(	
+		  SELECT TO_CHAR(CUT_OFF_DATE,'YYYYMMDD') AS CUT_OFF_DATE
+		    FROM DEC_PROGRESS_LIST 
+		   WHERE SITE_CD = #{SITE_CD}
+		ORDER BY CUT_OFF_DATE DESC
+		)
+		WHERE <![CDATA[ ROWNUM <= 5 ]]>
+	</select>	
+	
+	<select id="selectDashBoardProgressChartComparisonLastWeekMonthly" parameterType="map" resultType="map">
+		SELECT A.CUT_OFF_DATE,
+			   A.ENG_PLAN,
+			   A.ENG_ACTUAL,
+			   A.PROC_PLAN,
+			   A.PROC_ACTUAL,
+			   A.CON_PLAN,
+			   A.CON_ACTUAL,
+			   A.COMM_PLAN,
+			   A.COMM_ACTUAL,
+			   A.OVERALL_PLAN,
+			   A.OVERALL_ACTUAL 
+		  FROM (SELECT TO_CHAR(CUT_OFF_DATE,'yyyy/MM/dd') AS CUT_OFF_DATE,
+					   TO_CHAR(CUT_OFF_DATE,'YYYYMMDD') AS CUT_OFF_DATE2,
+					   TO_NUMBER(NVL(NVL(ENG_PLAN_INPUT, ENG_PLAN),'0')) - TO_NUMBER(LAG(NVL(NVL(ENG_PLAN_INPUT, ENG_PLAN),'0'),1,0) OVER(ORDER BY CUT_OFF_DATE)) AS ENG_PLAN,
+					   TO_NUMBER(NVL(NVL(ENG_ACTUAL_INPUT, ENG_ACTUAL),'0')) - TO_NUMBER(LAG(NVL(NVL(ENG_ACTUAL_INPUT, ENG_ACTUAL),'0'),1,0) OVER(ORDER BY CUT_OFF_DATE)) AS ENG_ACTUAL,
+					   TO_NUMBER(NVL(NVL(PROC_PLAN_INPUT, PROC_PLAN),'0')) - TO_NUMBER(LAG(NVL(NVL(PROC_PLAN_INPUT, PROC_PLAN),'0'),1,0) OVER(ORDER BY CUT_OFF_DATE)) AS PROC_PLAN,
+					   TO_NUMBER(NVL(NVL(PROC_ACTUAL_INPUT, PROC_ACTUAL),'0')) - TO_NUMBER(LAG(NVL(NVL(PROC_ACTUAL_INPUT, PROC_ACTUAL),'0'),1,0) OVER(ORDER BY CUT_OFF_DATE)) AS PROC_ACTUAL,
+					   TO_NUMBER(NVL(NVL(CON_PLAN_INPUT, CON_PLAN),'0')) - TO_NUMBER(LAG(NVL(NVL(CON_PLAN_INPUT, CON_PLAN),'0'),1,0) OVER(ORDER BY CUT_OFF_DATE)) AS CON_PLAN,
+					   TO_NUMBER(NVL(NVL(CON_ACTUAL_INPUT, CON_ACTUAL),'0')) - TO_NUMBER(LAG(NVL(NVL(CON_ACTUAL_INPUT, CON_ACTUAL),'0'),1,0) OVER(ORDER BY CUT_OFF_DATE)) AS CON_ACTUAL,
+					   TO_NUMBER(NVL(NVL(COMM_PLAN_INPUT, COMM_PLAN),'0')) - TO_NUMBER(LAG(NVL(NVL(COMM_PLAN_INPUT, COMM_PLAN),'0'),1,0) OVER(ORDER BY CUT_OFF_DATE)) AS COMM_PLAN,
+					   TO_NUMBER(NVL(NVL(COMM_ACTUAL_INPUT, COMM_ACTUAL),'0')) - TO_NUMBER(LAG(NVL(NVL(COMM_ACTUAL_INPUT, COMM_ACTUAL),'0'),1,0) OVER(ORDER BY CUT_OFF_DATE)) AS COMM_ACTUAL,
+					   TO_NUMBER(NVL(NVL(OVERALL_PLAN_INPUT, OVERALL_PLAN),'0')) - TO_NUMBER(LAG(NVL(NVL(OVERALL_PLAN_INPUT, OVERALL_PLAN),'0'),1,0) OVER(ORDER BY CUT_OFF_DATE)) AS OVERALL_PLAN,
+					   TO_NUMBER(NVL(NVL(OVERALL_ACTUAL_INPUT, OVERALL_ACTUAL),'0')) - TO_NUMBER(LAG(NVL(NVL(OVERALL_ACTUAL_INPUT, OVERALL_ACTUAL),'0'),1,0) OVER(ORDER BY CUT_OFF_DATE)) AS OVERALL_ACTUAL 
+				  FROM DEC_PROGRESS_LIST a LEFT OUTER JOIN (SELECT SITE_CD,
+				   												   CUT_OFF_YEAR ,
+													        	   CUT_OFF_MONTH,
+													        	   MAX(CUT_OFF_WEEK) AS CUT_OFF_WEEK 
+													          FROM X3DDEC_ADMIN.DEC_PROGRESS_LIST    
+													   	  	 WHERE SITE_CD = #{SITE_CD} 
+													   	  GROUP BY SITE_CD,CUT_OFF_YEAR,CUT_OFF_MONTH
+													   	   ) b ON a.SITE_CD = b.SITE_CD
+													   	   	  AND a.CUT_OFF_YEAR  = b.CUT_OFF_YEAR
+													   	   	  AND a.CUT_OFF_MONTH  = b.CUT_OFF_MONTH
+													   	   	  AND a.CUT_OFF_WEEK  = b.CUT_OFF_WEEK
+				  WHERE a.SITE_CD = #{SITE_CD} 
+				    AND a.CUT_OFF_YEAR  = b.CUT_OFF_YEAR
+				    AND a.CUT_OFF_MONTH  = b.CUT_OFF_MONTH
+				    AND a.CUT_OFF_WEEK  = b.CUT_OFF_WEEK
+				) A WHERE a.CUT_OFF_DATE2 between TO_CHAR(#{FROMDATE}) and TO_CHAR(#{TODATE})
+			ORDER BY a.CUT_OFF_DATE
+	</select>
+	
+	<select id="selectDashBoardProgressChartNormalMonthly" parameterType="map" resultType="map">
+		SELECT A.CUT_OFF_DATE,
+			   A.ENG_PLAN,
+			   A.ENG_ACTUAL,
+			   A.PROC_PLAN,
+			   A.PROC_ACTUAL,
+			   A.CON_PLAN,
+			   A.CON_ACTUAL,
+			   A.COMM_PLAN,
+			   A.COMM_ACTUAL,
+			   A.OVERALL_PLAN,
+			   A.OVERALL_ACTUAL 
+		  FROM (SELECT TO_CHAR(CUT_OFF_DATE,'yyyy/MM/dd') AS CUT_OFF_DATE,
+					   TO_CHAR(CUT_OFF_DATE,'YYYYMMDD') AS CUT_OFF_DATE2,
+					   NVL(NVL(ENG_PLAN_INPUT, ENG_PLAN),'0') as ENG_PLAN,
+				 	   NVL(NVL(ENG_ACTUAL_INPUT, ENG_ACTUAL),'0') as ENG_ACTUAL,
+				 	   NVL(NVL(PROC_PLAN_INPUT, PROC_PLAN),'0') as PROC_PLAN,
+				 	   NVL(NVL(PROC_ACTUAL_INPUT, PROC_ACTUAL),'0') as PROC_ACTUAL,
+				 	   NVL(NVL(CON_PLAN_INPUT, CON_PLAN),'0') as CON_PLAN,
+				 	   NVL(NVL(CON_ACTUAL_INPUT, CON_ACTUAL),'0') as CON_ACTUAL,
+				 	   NVL(NVL(COMM_PLAN_INPUT, COMM_PLAN),'0') as COMM_PLAN,
+				 	   NVL(NVL(COMM_ACTUAL_INPUT, COMM_ACTUAL),'0') as COMM_ACTUAL,
+				 	   NVL(NVL(OVERALL_PLAN_INPUT, OVERALL_PLAN),'0') as OVERALL_PLAN,
+				 	   NVL(NVL(OVERALL_ACTUAL_INPUT, OVERALL_ACTUAL),'0') as OVERALL_ACTUAL
+				  FROM DEC_PROGRESS_LIST a LEFT OUTER JOIN (SELECT SITE_CD,
+				   												   CUT_OFF_YEAR ,
+													        	   CUT_OFF_MONTH,
+													        	   MAX(CUT_OFF_WEEK) AS CUT_OFF_WEEK 
+													          FROM X3DDEC_ADMIN.DEC_PROGRESS_LIST    
+													   	  	 WHERE SITE_CD = #{SITE_CD} 
+													   	  GROUP BY SITE_CD,CUT_OFF_YEAR,CUT_OFF_MONTH
+													   	   ) b ON a.SITE_CD = b.SITE_CD
+													   	   	  AND a.CUT_OFF_YEAR  = b.CUT_OFF_YEAR
+													   	   	  AND a.CUT_OFF_MONTH  = b.CUT_OFF_MONTH
+													   	   	  AND a.CUT_OFF_WEEK  = b.CUT_OFF_WEEK
+				  WHERE a.SITE_CD = #{SITE_CD} 
+				    AND a.CUT_OFF_YEAR  = b.CUT_OFF_YEAR
+				    AND a.CUT_OFF_MONTH  = b.CUT_OFF_MONTH
+				    AND a.CUT_OFF_WEEK  = b.CUT_OFF_WEEK
+				) A WHERE a.CUT_OFF_DATE2 between TO_CHAR(#{FROMDATE}) and TO_CHAR(#{TODATE})
+		ORDER BY a.CUT_OFF_DATE
+	</select>
+	
+	<select id="selectDashBoardProgressChartMaxMinDateMonthly" parameterType="map" resultType="map">
+	  SELECT MAX(TO_CHAR(CUT_OFF_YEAR) || (CASE WHEN <![CDATA[ CUT_OFF_MONTH < 10 ]]> THEN '0' || TO_CHAR(CUT_OFF_MONTH) ELSE TO_CHAR(CUT_OFF_MONTH) END)) || '31' AS CUT_OFF_DATE
+		FROM
+		(	
+		  SELECT SITE_CD,
+			     CUT_OFF_YEAR ,
+        	     CUT_OFF_MONTH,
+        	     MAX(CUT_OFF_WEEK) AS CUT_OFF_WEEK 
+		    FROM DEC_PROGRESS_LIST 
+		   WHERE SITE_CD = #{SITE_CD}
+		GROUP BY SITE_CD,
+			     CUT_OFF_YEAR ,
+        	     CUT_OFF_MONTH
+		ORDER BY CUT_OFF_YEAR , CUT_OFF_MONTH DESC
+		)
+		WHERE <![CDATA[ ROWNUM <= 5 ]]>
+		
+	 UNION ALL	
+		
+	  SELECT MIN(TO_CHAR(CUT_OFF_YEAR) || (CASE WHEN <![CDATA[ CUT_OFF_MONTH < 10 ]]> THEN '0' || TO_CHAR(CUT_OFF_MONTH) ELSE TO_CHAR(CUT_OFF_MONTH) END)) || '01' AS CUT_OFF_DATE
+		FROM
+		(	
+		  SELECT SITE_CD,
+			     CUT_OFF_YEAR ,
+        	     CUT_OFF_MONTH,
+        	     MAX(CUT_OFF_WEEK) AS CUT_OFF_WEEK 
+		    FROM DEC_PROGRESS_LIST 
+		   WHERE SITE_CD = #{SITE_CD}
+		GROUP BY SITE_CD,
+			     CUT_OFF_YEAR ,
+        	     CUT_OFF_MONTH
+		ORDER BY CUT_OFF_YEAR , CUT_OFF_MONTH DESC
+		)
+		WHERE <![CDATA[ ROWNUM <= 5 ]]>
+	</select>	
+	
+	<select id="selectDashBoardProgressChartFindThisWeek" parameterType="map" resultType="map">
+	   SELECT TO_CHAR(CUT_OFF_DATE,'yyyy/MM/dd') AS CUT_OFF_DATE,
+  		 	  ROWNUM-1 AS NUM,
+  		 	  (CASE WHEN TO_CHAR(CUT_OFF_DATE,'YYYYMMDD') between TO_CHAR(TRUNC(to_date(#{TODAY} , 'YYYYMMDDHH24MISS'), 'iw') , 'yyyymmdd') and TO_CHAR(TRUNC(to_date(#{TODAY} , 'YYYYMMDDHH24MISS'), 'iw') + 6, 'yyyymmdd')
+  		 	  		THEN 'Y' ELSE 'N' END) AS THISWEEK
+  		 FROM X3DDEC_ADMIN.DEC_PROGRESS_LIST    
+   		WHERE SITE_CD = #{SITE_CD}
+     	  AND TO_CHAR(CUT_OFF_DATE,'YYYYMMDD') between TO_CHAR(TRUNC(to_date(#{FROMDATE}, 'YYYYMMDDHH24MISS'), 'iw') , 'yyyymmdd') and 
+     						  		 				   TO_CHAR(TRUNC(to_date(#{TODATE}, 'YYYYMMDDHH24MISS'), 'iw') + 6, 'yyyymmdd')
+	</select>
+	
+	<!-- Progress[E] -->
+	
+	<!-- Material[S] -->
+	
+	<select id="selectDashMaterialDisciplineList" parameterType="map" resultType="map">
+	   SELECT a.DCPLN_CD 
+	     FROM X3DDEC_ADMIN.IF_MATERIAL_LIST_IN a LEFT OUTER JOIN (SELECT * 
+      																FROM IF_CWP_LIST_OUT
+    <if test="@com.dec.util.DecStringUtil@isNotEmpty(PACK_LVL_CD)">WHERE ${PACK_LVL_CD} = #{rowName}</if>
+      															 ) b ON a.SITE_CD  = b.SITE_CD 
+      												   				AND a.CWP_NO  = b.CWP_NO 
+	    WHERE a.SITE_CD = #{SITE_CD} 
+	    <if test="@com.dec.util.DecStringUtil@isNotEmpty(ORG_CD)">AND a.ORG_CD = #{ORG_CD}</if>
+	 	<if test="@com.dec.util.DecStringUtil@isNotEmpty(OBJ_TP_CD)">AND a.OBJ_TP_CD = #{OBJ_TP_CD}</if>
+	 	<if test="@com.dec.util.DecStringUtil@isNotEmpty(DELI_DEST_NM)">AND a.DELI_DEST_NM = #{DELI_DEST_NM}</if>
+	 	<if test="@com.dec.util.DecStringUtil@isNotEmpty(FAB_CAT_NM)">AND a.FAB_CAT_NM = #{FAB_CAT_NM}</if>
+	 	  AND a.CWP_NO = b.CWP_NO
+	 GROUP BY a.DCPLN_CD
+	</select>
+	
+	<select id="selectDashMaterialStatusCount" parameterType="map" resultType="map">
+
+
+	SELECT ITEM_STS_CD,CNT FROM
+	(
+	     SELECT CASE WHEN (a.ITEM_STS_CD = 'NY') THEN 'NOT YET'
+	     		WHEN (a.ITEM_STS_CD = 'MR') OR (a.ITEM_STS_CD = 'RFQ') OR (a.ITEM_STS_CD = 'TBE') THEN 'MR'
+    	   		WHEN (a.ITEM_STS_CD = 'VD') OR (a.ITEM_STS_CD = 'MAT') OR (a.ITEM_STS_CD = 'FAB') THEN 'FAB' 
+    	    	WHEN (a.ITEM_STS_CD = 'SHIP') OR (a.ITEM_STS_CD = 'AT') OR (a.ITEM_STS_CD = 'PL') THEN 'SHIP' 
+    	   	    WHEN (a.ITEM_STS_CD = 'MRR') OR (a.ITEM_STS_CD = 'INV') THEN 'SITE' 
+    	   ELSE a.ITEM_STS_CD END AS ITEM_STS_CD, 
+    	   count(*) AS cnt  
+      FROM IF_MATERIAL_LIST_IN a LEFT OUTER JOIN (SELECT * 
+      												FROM IF_CWP_LIST_OUT
+     <if test="@com.dec.util.DecStringUtil@isNotEmpty(PACK_LVL_CD)">WHERE ${PACK_LVL_CD} = #{rowName}</if>
+      												) b ON a.SITE_CD  = b.SITE_CD 
+      												   AND a.CWP_NO  = b.CWP_NO 
+     WHERE a.SITE_CD = #{SITE_CD}
+	 <if test="@com.dec.util.DecStringUtil@isNotEmpty(ORG_CD)">AND a.ORG_CD = #{ORG_CD}</if>
+	 <if test="@com.dec.util.DecStringUtil@isNotEmpty(OBJ_TP_CD)">AND a.OBJ_TP_CD = #{OBJ_TP_CD}</if>
+	 <if test="@com.dec.util.DecStringUtil@isNotEmpty(DELI_DEST_NM)">AND a.DELI_DEST_NM = #{DELI_DEST_NM}</if>
+	 <if test="@com.dec.util.DecStringUtil@isNotEmpty(FAB_CAT_NM)">AND a.FAB_CAT_NM = #{FAB_CAT_NM}</if>
+       AND a.CWP_NO = b.CWP_NO
+  GROUP BY (CASE WHEN (a.ITEM_STS_CD = 'NY') THEN 'NOT YET'
+  				 WHEN (a.ITEM_STS_CD = 'MR') OR (a.ITEM_STS_CD = 'RFQ') OR (a.ITEM_STS_CD = 'TBE') THEN 'MR'
+    	   		 WHEN (a.ITEM_STS_CD = 'VD') OR (a.ITEM_STS_CD = 'MAT') OR (a.ITEM_STS_CD = 'FAB') THEN 'FAB' 
+    	    	 WHEN (a.ITEM_STS_CD = 'SHIP') OR (a.ITEM_STS_CD = 'AT') OR (a.ITEM_STS_CD = 'PL') THEN 'SHIP' 
+    	   	     WHEN (a.ITEM_STS_CD = 'MRR') OR (a.ITEM_STS_CD = 'INV') THEN 'SITE' 
+    	    ELSE a.ITEM_STS_CD END)
+  )
+ ORDER BY (CASE WHEN (ITEM_STS_CD = 'NOT YET') THEN 1
+  				 WHEN (ITEM_STS_CD = 'MR') THEN 2
+    	   		 WHEN (ITEM_STS_CD = 'PO') THEN 3 
+    	   		 WHEN (ITEM_STS_CD = 'FAB') THEN 4
+    	   		 WHEN (ITEM_STS_CD = 'IRC') THEN 5
+    	    	 WHEN (ITEM_STS_CD = 'SHIP') THEN 6
+    	    	 WHEN (ITEM_STS_CD = 'SITE')THEN 7 
+    	    	 WHEN (ITEM_STS_CD = 'ISS') THEN 8 END)
+	</select>
+	
+	<select id="selectDashMaterialStatusList" parameterType="map" resultType="map">
+	
+	
+	SELECT ITEM_STS_CD FROM
+	(
+	SELECT CASE WHEN (a.ITEM_STS_CD = 'NY') THEN 'NOT YET'
+				WHEN (a.ITEM_STS_CD = 'MR') OR (a.ITEM_STS_CD = 'RFQ') OR (a.ITEM_STS_CD = 'TBE') THEN 'MR'
+    	   		WHEN (a.ITEM_STS_CD = 'VD') OR (a.ITEM_STS_CD = 'MAT') OR (a.ITEM_STS_CD = 'FAB') THEN 'FAB' 
+    	    	WHEN (a.ITEM_STS_CD = 'SHIP') OR (a.ITEM_STS_CD = 'AT') OR (a.ITEM_STS_CD = 'PL') THEN 'SHIP' 
+    	   	    WHEN (a.ITEM_STS_CD = 'MRR') OR (a.ITEM_STS_CD = 'INV') THEN 'SITE' 
+    	   ELSE a.ITEM_STS_CD END AS ITEM_STS_CD
+      FROM IF_MATERIAL_LIST_IN a LEFT OUTER JOIN (SELECT * 
+      												FROM IF_CWP_LIST_OUT
+     <if test="@com.dec.util.DecStringUtil@isNotEmpty(PACK_LVL_CD)">WHERE ${PACK_LVL_CD} = #{rowName}</if>
+      												) b ON a.SITE_CD  = b.SITE_CD 
+      												   AND a.CWP_NO  = b.CWP_NO 
+     WHERE a.SITE_CD = #{SITE_CD}
+       AND a.DCPLN_CD = #{DCPLN_CD}
+       AND a.CWP_NO  = b.CWP_NO
+       <if test="@com.dec.util.DecStringUtil@isNotEmpty(ORG_CD)">AND a.ORG_CD = #{ORG_CD}</if>
+	   <if test="@com.dec.util.DecStringUtil@isNotEmpty(OBJ_TP_CD)">AND a.OBJ_TP_CD = #{OBJ_TP_CD}</if>
+	   <if test="@com.dec.util.DecStringUtil@isNotEmpty(DELI_DEST_NM)">AND a.DELI_DEST_NM = #{DELI_DEST_NM}</if>
+	   <if test="@com.dec.util.DecStringUtil@isNotEmpty(FAB_CAT_NM)">AND a.FAB_CAT_NM = #{FAB_CAT_NM}</if> 
+  GROUP BY (CASE WHEN (a.ITEM_STS_CD = 'NY') THEN 'NOT YET'
+  				 WHEN (a.ITEM_STS_CD = 'MR') OR (a.ITEM_STS_CD = 'RFQ') OR (a.ITEM_STS_CD = 'TBE') THEN 'MR'
+    	   		 WHEN (a.ITEM_STS_CD = 'VD') OR (a.ITEM_STS_CD = 'MAT') OR (a.ITEM_STS_CD = 'FAB') THEN 'FAB' 
+    	    	 WHEN (a.ITEM_STS_CD = 'SHIP') OR (a.ITEM_STS_CD = 'AT') OR (a.ITEM_STS_CD = 'PL') THEN 'SHIP' 
+    	   	     WHEN (a.ITEM_STS_CD = 'MRR') OR (a.ITEM_STS_CD = 'INV') THEN 'SITE' 
+    	    ELSE a.ITEM_STS_CD END)
+  )
+  ORDER BY (CASE WHEN (ITEM_STS_CD = 'NOT YET') THEN 1
+  				 WHEN (ITEM_STS_CD = 'MR') THEN 2
+    	   		 WHEN (ITEM_STS_CD = 'PO') THEN 3 
+    	   		 WHEN (ITEM_STS_CD = 'FAB') THEN 4
+    	   		 WHEN (ITEM_STS_CD = 'IRC') THEN 5
+    	    	 WHEN (ITEM_STS_CD = 'SHIP') THEN 6
+    	    	 WHEN (ITEM_STS_CD = 'SITE')THEN 7 
+    	    	 WHEN (ITEM_STS_CD = 'ISS') THEN 8 END)
+	</select>
+	
+	<select id="selectDashMaterialItemList" parameterType="map" resultType="map">
+	   SELECT a.ITEM_GRP_CD as ITEM
+	     FROM X3DDEC_ADMIN.IF_MATERIAL_LIST_IN a LEFT OUTER JOIN (SELECT * 
+      												FROM IF_CWP_LIST_OUT
+     <if test="@com.dec.util.DecStringUtil@isNotEmpty(PACK_LVL_CD)">WHERE ${PACK_LVL_CD} = #{rowName}</if>
+      												) b ON a.SITE_CD  = b.SITE_CD 
+      												   AND a.CWP_NO  = b.CWP_NO 
+	    WHERE a.SITE_CD = #{SITE_CD}
+	      AND a.DCPLN_CD = #{DCPLN_CD}
+	      AND a.CWP_NO  = b.CWP_NO 
+	      <if test="@com.dec.util.DecStringUtil@isNotEmpty(ORG_CD)">AND a.ORG_CD = #{ORG_CD}</if>
+	 	  <if test="@com.dec.util.DecStringUtil@isNotEmpty(OBJ_TP_CD)">AND a.OBJ_TP_CD = #{OBJ_TP_CD}</if>
+	 	  <if test="@com.dec.util.DecStringUtil@isNotEmpty(DELI_DEST_NM)">AND a.DELI_DEST_NM = #{DELI_DEST_NM}</if>
+	 	  <if test="@com.dec.util.DecStringUtil@isNotEmpty(FAB_CAT_NM)">AND a.FAB_CAT_NM = #{FAB_CAT_NM}</if>
+	 GROUP BY a.ITEM_GRP_CD
+	</select>
+	
+	<select id="selectDashMaterialItemStatusList" parameterType="map" resultType="map">
+	   SELECT a.ITEM_GRP_CD  || '_' ||  CASE WHEN (a.ITEM_STS_CD = 'NY') THEN 'NOT YET'
+	   			WHEN (a.ITEM_STS_CD = 'MR') OR (a.ITEM_STS_CD = 'RFQ') OR (a.ITEM_STS_CD = 'TBE') THEN 'MR'
+    	   		WHEN (a.ITEM_STS_CD = 'VD') OR (a.ITEM_STS_CD = 'MAT') OR (a.ITEM_STS_CD = 'FAB') THEN 'FAB' 
+    	    	WHEN (a.ITEM_STS_CD = 'SHIP') OR (a.ITEM_STS_CD = 'AT') OR (a.ITEM_STS_CD = 'PL') THEN 'SHIP' 
+    	   	    WHEN (a.ITEM_STS_CD = 'MRR') OR (a.ITEM_STS_CD = 'INV') THEN 'SITE' 
+    	   		ELSE a.ITEM_STS_CD END AS ITEM_STATUS,
+	     	  count(*) AS cnt 
+    	 FROM IF_MATERIAL_LIST_IN a LEFT OUTER JOIN (SELECT * 
+      												FROM IF_CWP_LIST_OUT
+     <if test="@com.dec.util.DecStringUtil@isNotEmpty(PACK_LVL_CD)">WHERE ${PACK_LVL_CD} = #{rowName}</if>
+      												) b ON a.SITE_CD  = b.SITE_CD 
+      												   AND a.CWP_NO  = b.CWP_NO 
+   	    WHERE a.SITE_CD = #{SITE_CD}
+   	      AND a.DCPLN_CD = #{DCPLN_CD}
+   	      AND a.CWP_NO  = b.CWP_NO 
+   	      <if test="@com.dec.util.DecStringUtil@isNotEmpty(ORG_CD)">AND a.ORG_CD = #{ORG_CD}</if>
+	 	  <if test="@com.dec.util.DecStringUtil@isNotEmpty(OBJ_TP_CD)">AND a.OBJ_TP_CD = #{OBJ_TP_CD}</if>
+	 	  <if test="@com.dec.util.DecStringUtil@isNotEmpty(DELI_DEST_NM)">AND a.DELI_DEST_NM = #{DELI_DEST_NM}</if>
+	 	  <if test="@com.dec.util.DecStringUtil@isNotEmpty(FAB_CAT_NM)">AND a.FAB_CAT_NM = #{FAB_CAT_NM}</if>
+	 GROUP BY (a.ITEM_GRP_CD  || '_' ||  CASE WHEN (a.ITEM_STS_CD = 'NY') THEN 'NOT YET'
+	 			WHEN (a.ITEM_STS_CD = 'MR') OR (a.ITEM_STS_CD = 'RFQ') OR (a.ITEM_STS_CD = 'TBE') THEN 'MR'
+    	   		WHEN (a.ITEM_STS_CD = 'VD') OR (a.ITEM_STS_CD = 'MAT') OR (a.ITEM_STS_CD = 'FAB') THEN 'FAB' 
+    	    	WHEN (a.ITEM_STS_CD = 'SHIP') OR (a.ITEM_STS_CD = 'AT') OR (a.ITEM_STS_CD = 'PL') THEN 'SHIP' 
+    	   	    WHEN (a.ITEM_STS_CD = 'MRR') OR (a.ITEM_STS_CD = 'INV') THEN 'SITE' 
+    	   		ELSE a.ITEM_STS_CD END)
+	</select>
+	
+	<select id="selectDashMaterialStatusDetails" parameterType="map" resultType="map">
+	   SELECT NVL(a.UNIT_NM,'') AS UNIT,
+       		  NVL(a.CWP_NO,'') AS CWP,
+       		  NVL(a.PRFR_GRP_CD,'') AS PRIORITY_GROUP,
+       		  NVL(a.PRFR_RANK,0) AS PRIORITY_NO,
+       		  NVL(a.ORG_CD,'') AS SUB_CON,
+       		  NVL(a.ISO_NO,'') AS DWG_NO,
+       		  NVL(a.OBJ_TP_CD,'') AS CONST_ITEM,
+       		  NVL(a.ITEM_GRP_CD,'') AS ITEM_GROUP,
+       		  NVL(a.IDENT_CD,'') AS IDENT,
+       		  NVL(a.COMMODITY_SHORTDESC,'') AS DESC_,
+       		  NVL(a.DES_QTY,0) AS BOM_QTY,
+       		  NVL(a.ALLOC_QTY,0) AS ALLOC_QTY,
+       		  NVL(a.OFW_QTY,0) AS ISSUE_QTY,
+       		  NVL(a.ITEM_STS_CD,'') AS BOM_ITEM_STATUS,
+       		  NVL(a.ITEM_STS_CD,'') AS MATERIAL_STATUS,
+       		  NVL(a.PO_OUT_NO,'') AS PO,
+       		  NVL(a.DELAY_NO,'') AS DELAY,
+       		  NVL(a.SITE_INWH_DEMYMD,'') AS RAS,
+       		  NVL(a.ETA,'') AS ETA,
+       		  NVL(a.FNL_ETA_YMD,'') AS AVAILABILITY_DATE
+	     FROM X3DDEC_ADMIN.IF_MATERIAL_LIST_IN a LEFT OUTER JOIN (SELECT * 
+      												FROM IF_CWP_LIST_OUT
+     <if test="@com.dec.util.DecStringUtil@isNotEmpty(PACK_LVL_CD)">WHERE ${PACK_LVL_CD} = #{rowName}</if>
+      												) b ON a.SITE_CD  = b.SITE_CD 
+      												   AND a.CWP_NO  = b.CWP_NO 
+   		WHERE a.SITE_CD = #{SITE_CD}
+   		  AND a.ITEM_GRP_CD = #{ITEM}
+   		  AND a.CWP_NO  = b.CWP_NO 
+   		  AND (CASE WHEN (a.ITEM_STS_CD = 'NY') THEN 'NOT YET'
+   		  			WHEN (a.ITEM_STS_CD = 'MR') OR (a.ITEM_STS_CD = 'RFQ') OR (a.ITEM_STS_CD = 'TBE') THEN 'MR'
+    	   		    WHEN (a.ITEM_STS_CD = 'VD') OR (a.ITEM_STS_CD = 'MAT') OR (a.ITEM_STS_CD = 'FAB') THEN 'FAB' 
+    	    	    WHEN (a.ITEM_STS_CD = 'SHIP') OR (a.ITEM_STS_CD = 'AT') OR (a.ITEM_STS_CD = 'PL') THEN 'SHIP' 
+    	   	        WHEN (a.ITEM_STS_CD = 'MRR') OR (a.ITEM_STS_CD = 'INV') THEN 'SITE' 
+    	   		    ELSE a.ITEM_STS_CD END) = #{STATUS}
+    	  <if test="@com.dec.util.DecStringUtil@isNotEmpty(ORG_CD)">AND a.ORG_CD = #{ORG_CD}</if>
+	 	  <if test="@com.dec.util.DecStringUtil@isNotEmpty(OBJ_TP_CD)">AND a.OBJ_TP_CD = #{OBJ_TP_CD}</if>
+	 	  <if test="@com.dec.util.DecStringUtil@isNotEmpty(DELI_DEST_NM)">AND a.DELI_DEST_NM = #{DELI_DEST_NM}</if>
+	 	  <if test="@com.dec.util.DecStringUtil@isNotEmpty(FAB_CAT_NM)">AND a.FAB_CAT_NM = #{FAB_CAT_NM}</if>
+	</select>
+	
+	<!-- Material[E] -->
+	
+	<!-- Project Material Comparison [S] -->
+	
+	<select id="selectProjectMaterialComparisonPartCd2" parameterType="map" resultType="map">
+	   SELECT  
+			NVL(PJ01.PART_CD, PJ02.PART_CD) AS PART_CD, 
+			NVL(PJ01.PART_SHORTDESC, PJ02.PART_SHORTDESC) AS PART_SHORTDESC, 
+			NVL(PJ01.PJ01_QTY,0) AS "${PROJECT_NAME1}",
+			NVL(PJ02.PJ02_QTY,0) AS "${PROJECT_NAME2}"
+		FROM 
+		(
+			SELECT 
+				NVL(BIDDING.PART_CD, BM_TRK.PART_CD) AS PART_CD, 
+				NVL(BIDDING.PART_SHORTDESC, BM_TRK.PART_SHORTDESC) AS PART_SHORTDESC, 
+				GREATEST(NVL(BM_TRK.BM_TRK_SUM,0) , NVL(BIDDING.BIDDING_SUM,0)) AS PJ01_QTY
+			FROM (
+				SELECT SITE_CD,PART_CD,PART_SHORTDESC,SUM(DES_QTY) AS BM_TRK_SUM FROM IF_BM_TRK_IN 
+				WHERE SITE_CD = TO_CHAR(#{PROJECT_NAME1})
+				AND IF_DATE = (SELECT MAX(IF_DATE)
+							FROM IF_BM_TRK_IN 
+							WHERE SITE_CD = TO_CHAR(#{PROJECT_NAME1}))
+							GROUP BY SITE_CD,PART_CD,PART_SHORTDESC
+		) BM_TRK
+		FULL OUTER JOIN (
+			SELECT SITE_CD,PART_CD,PART_SHORTDESC,SUM(DES_QTY) AS BIDDING_SUM FROM DEC_BM_TRK_BIDDING  
+			WHERE SITE_CD = TO_CHAR(#{PROJECT_NAME1})
+			GROUP BY SITE_CD,PART_CD,PART_SHORTDESC
+		) BIDDING
+		ON BM_TRK.PART_CD = BIDDING.PART_CD 
+		AND BM_TRK.PART_SHORTDESC = BIDDING.PART_SHORTDESC
+		) PJ01
+		FULL OUTER JOIN
+		(
+			SELECT 
+				NVL(BIDDING.PART_CD, BM_TRK.PART_CD) AS PART_CD, 
+				NVL(BIDDING.PART_SHORTDESC, BM_TRK.PART_SHORTDESC) AS PART_SHORTDESC, 
+				GREATEST(NVL(BM_TRK.BM_TRK_SUM,0) , NVL(BIDDING.BIDDING_SUM,0)) AS PJ02_QTY
+			FROM (
+				SELECT SITE_CD,PART_CD,PART_SHORTDESC,SUM(DES_QTY) AS BM_TRK_SUM FROM IF_BM_TRK_IN 
+				WHERE SITE_CD = TO_CHAR(#{PROJECT_NAME2})
+				AND IF_DATE = (SELECT MAX(IF_DATE)
+							FROM IF_BM_TRK_IN 
+							WHERE SITE_CD = TO_CHAR(#{PROJECT_NAME2}))
+							GROUP BY SITE_CD,PART_CD,PART_SHORTDESC
+			) BM_TRK
+		FULL OUTER JOIN (
+			SELECT SITE_CD,PART_CD,PART_SHORTDESC,SUM(DES_QTY) AS BIDDING_SUM FROM DEC_BM_TRK_BIDDING  
+			WHERE SITE_CD = TO_CHAR(#{PROJECT_NAME2})
+			GROUP BY SITE_CD,PART_CD,PART_SHORTDESC
+			) BIDDING
+		ON BM_TRK.PART_CD = BIDDING.PART_CD 
+		AND BM_TRK.PART_SHORTDESC = BIDDING.PART_SHORTDESC
+		) PJ02
+		ON PJ01.PART_CD = PJ02.PART_CD
+		AND PJ01.PART_SHORTDESC = PJ02.PART_SHORTDESC
+		ORDER BY PART_CD
+	</select>
+	
+	<select id="selectProjectMaterialComparisonPartCd3" parameterType="map" resultType="map">
+	   SELECT 
+			NVL(PJ01_02.PART_CD, PJ03.PART_CD) AS PART_CD, 
+			NVL(PJ01_02.PART_SHORTDESC, PJ03.PART_SHORTDESC) AS PART_SHORTDESC, 
+			NVL(PJ01_02.PJ01_QTY,0) AS "${PROJECT_NAME1}",
+			NVL(PJ01_02.PJ02_QTY,0) AS "${PROJECT_NAME2}",
+			NVL(PJ03.PJ03_QTY,0) AS "${PROJECT_NAME3}"
+		FROM 
+			(
+				SELECT  
+					NVL(PJ01.PART_CD, PJ02.PART_CD) AS PART_CD, 
+					NVL(PJ01.PART_SHORTDESC, PJ02.PART_SHORTDESC) AS PART_SHORTDESC, 
+					NVL(PJ01.PJ01_QTY,0) AS PJ01_QTY,
+					NVL(PJ02.PJ02_QTY,0) AS PJ02_QTY
+				FROM 
+				(
+					SELECT 
+						NVL(BIDDING.PART_CD, BM_TRK.PART_CD) AS PART_CD, 
+						NVL(BIDDING.PART_SHORTDESC, BM_TRK.PART_SHORTDESC) AS PART_SHORTDESC, 
+						GREATEST(NVL(BM_TRK.BM_TRK_SUM,0) , NVL(BIDDING.BIDDING_SUM,0)) AS PJ01_QTY
+					FROM (
+						SELECT SITE_CD,PART_CD,PART_SHORTDESC,SUM(DES_QTY) AS BM_TRK_SUM FROM IF_BM_TRK_IN 
+						WHERE SITE_CD = TO_CHAR(#{PROJECT_NAME1})
+						AND IF_DATE = (SELECT MAX(IF_DATE)
+									FROM IF_BM_TRK_IN 
+									WHERE SITE_CD = TO_CHAR(#{PROJECT_NAME1}))
+									GROUP BY SITE_CD,PART_CD,PART_SHORTDESC
+					) BM_TRK
+				FULL OUTER JOIN (
+					SELECT PART_CD,PART_SHORTDESC,SUM(DES_QTY) AS BIDDING_SUM FROM DEC_BM_TRK_BIDDING  
+					WHERE SITE_CD = TO_CHAR(#{PROJECT_NAME1})
+					GROUP BY SITE_CD,PART_CD,PART_SHORTDESC
+					) BIDDING
+					ON BM_TRK.PART_CD = BIDDING.PART_CD 
+					AND BM_TRK.PART_SHORTDESC = BIDDING.PART_SHORTDESC
+				) PJ01
+				FULL OUTER JOIN
+				(
+					SELECT 
+						NVL(BIDDING.PART_CD, BM_TRK.PART_CD) AS PART_CD, 
+						NVL(BIDDING.PART_SHORTDESC, BM_TRK.PART_SHORTDESC) AS PART_SHORTDESC, 
+						GREATEST(NVL(BM_TRK.BM_TRK_SUM,0) , NVL(BIDDING.BIDDING_SUM,0)) AS PJ02_QTY
+					FROM (
+						SELECT SITE_CD,PART_CD,PART_SHORTDESC,SUM(DES_QTY) AS BM_TRK_SUM FROM IF_BM_TRK_IN 
+						WHERE SITE_CD = TO_CHAR(#{PROJECT_NAME2})
+						AND IF_DATE = (SELECT MAX(IF_DATE)
+									FROM IF_BM_TRK_IN 
+									WHERE SITE_CD = TO_CHAR(#{PROJECT_NAME2}))
+									GROUP BY SITE_CD,PART_CD,PART_SHORTDESC
+					) BM_TRK
+				FULL OUTER JOIN (
+					SELECT SITE_CD,PART_CD,PART_SHORTDESC,SUM(DES_QTY) AS BIDDING_SUM FROM DEC_BM_TRK_BIDDING  
+					WHERE SITE_CD = TO_CHAR(#{PROJECT_NAME2})
+					GROUP BY SITE_CD,PART_CD,PART_SHORTDESC
+					) BIDDING
+				ON BM_TRK.PART_CD = BIDDING.PART_CD 
+				AND BM_TRK.PART_SHORTDESC = BIDDING.PART_SHORTDESC
+				) PJ02
+				ON PJ01.PART_CD = PJ02.PART_CD
+				AND PJ01.PART_SHORTDESC = PJ02.PART_SHORTDESC
+			) PJ01_02
+		FULL OUTER JOIN
+			(
+			SELECT 
+				NVL(BIDDING.PART_CD, BM_TRK.PART_CD) AS PART_CD, 
+				NVL(BIDDING.PART_SHORTDESC, BM_TRK.PART_SHORTDESC) AS PART_SHORTDESC, 
+				GREATEST(NVL(BM_TRK.BM_TRK_SUM,0) , NVL(BIDDING.BIDDING_SUM,0)) AS PJ03_QTY
+			FROM (
+				SELECT PART_CD,PART_SHORTDESC,SUM(DES_QTY) AS BM_TRK_SUM FROM IF_BM_TRK_IN 
+				WHERE SITE_CD = TO_CHAR(#{PROJECT_NAME3})
+				AND IF_DATE = (SELECT MAX(IF_DATE)
+							FROM IF_BM_TRK_IN 
+							WHERE SITE_CD = TO_CHAR(#{PROJECT_NAME3}))
+							GROUP BY SITE_CD,PART_CD,PART_SHORTDESC
+			) BM_TRK
+				FULL OUTER JOIN (
+					SELECT PART_CD,PART_SHORTDESC,SUM(DES_QTY) AS BIDDING_SUM FROM DEC_BM_TRK_BIDDING  
+					WHERE SITE_CD = TO_CHAR(#{PROJECT_NAME3})
+					GROUP BY SITE_CD,PART_CD,PART_SHORTDESC
+				) BIDDING
+				ON BM_TRK.PART_CD = BIDDING.PART_CD 
+				AND BM_TRK.PART_SHORTDESC = BIDDING.PART_SHORTDESC
+			) PJ03
+		ON PJ01_02.PART_CD = PJ03.PART_CD
+		AND PJ01_02.PART_SHORTDESC = PJ03.PART_SHORTDESC
+		ORDER BY PART_CD
+	</select>
+	
+	<select id="selectProjectMaterialComparisonCommodityCd2" parameterType="map" resultType="map">
+	   SELECT  
+			NVL(PJ01.PART_CD, PJ02.PART_CD) AS PART_CD, 
+			NVL(PJ01.PART_SHORTDESC, PJ02.PART_SHORTDESC) AS PART_SHORTDESC, 
+			NVL(PJ01.COMMODITY_CD, PJ02.COMMODITY_CD) AS COMMODITY_CD, 
+			NVL(PJ01.COMMODITY_SHORTDESC, PJ02.COMMODITY_SHORTDESC) AS COMMODITY_SHORTDESC, 
+			NVL(PJ01.BASE_MAT_CD, PJ02.BASE_MAT_CD) AS BASE_MAT_CD,
+			NVL(PJ01.RAT_CD, PJ02.RAT_CD) AS RAT_CD, 
+			NVL(PJ01.PJ01_QTY,0) AS "${PROJECT_NAME1}",
+			NVL(PJ02.PJ02_QTY,0) AS "${PROJECT_NAME2}"
+		FROM 
+		(
+			SELECT 
+				NVL(BM_TRK.PART_CD, BIDDING.PART_CD) AS PART_CD, 
+				NVL(BM_TRK.PART_SHORTDESC, BIDDING.PART_SHORTDESC) AS PART_SHORTDESC, 
+				NVL(BM_TRK.COMMODITY_CD, BIDDING.COMMODITY_CD) AS COMMODITY_CD, 
+				NVL(BM_TRK.COMMODITY_SHORTDESC, BIDDING.COMMODITY_SHORTDESC) AS COMMODITY_SHORTDESC, 
+				NVL(BM_TRK.BASE_MAT_CD, BIDDING.BASE_MAT_CD) AS BASE_MAT_CD, 
+				NVL(BM_TRK.RAT_CD, BIDDING.RAT_CD) AS RAT_CD, 
+				GREATEST(NVL(BM_TRK.BM_TRK_SUM,0) , NVL(BIDDING.BIDDING_SUM,0)) AS PJ01_QTY
+			FROM (
+				SELECT PART_CD,PART_SHORTDESC,COMMODITY_CD,COMMODITY_SHORTDESC,BASE_MAT_CD,RAT_CD,SUM(DES_QTY) AS BM_TRK_SUM FROM IF_BM_TRK_IN 
+				WHERE SITE_CD = TO_CHAR(#{PROJECT_NAME1})
+				AND IF_DATE = (SELECT MAX(IF_DATE)
+							FROM IF_BM_TRK_IN 
+							WHERE SITE_CD = TO_CHAR(#{PROJECT_NAME1}))
+							GROUP BY PART_CD,PART_SHORTDESC,COMMODITY_CD,COMMODITY_SHORTDESC,BASE_MAT_CD,RAT_CD
+			) BM_TRK
+			FULL OUTER JOIN (
+				SELECT PART_CD,PART_SHORTDESC,COMMODITY_CD,COMMODITY_SHORTDESC,BASE_MAT_CD,RAT_CD,SUM(DES_QTY) AS BIDDING_SUM FROM DEC_BM_TRK_BIDDING  
+				WHERE SITE_CD = TO_CHAR(#{PROJECT_NAME1})
+				GROUP BY PART_CD,PART_SHORTDESC,COMMODITY_CD,COMMODITY_SHORTDESC,BASE_MAT_CD,RAT_CD
+			) BIDDING
+			ON BM_TRK.PART_CD = BIDDING.PART_CD 
+			AND BM_TRK.PART_SHORTDESC = BIDDING.PART_SHORTDESC
+			AND BM_TRK.COMMODITY_CD = BIDDING.COMMODITY_CD
+			AND BM_TRK.COMMODITY_SHORTDESC = BIDDING.COMMODITY_SHORTDESC
+		) PJ01
+        FULL OUTER JOIN
+		(
+			SELECT 
+				NVL(BM_TRK.PART_CD, BIDDING.PART_CD) AS PART_CD, 
+				NVL(BM_TRK.PART_SHORTDESC, BIDDING.PART_SHORTDESC) AS PART_SHORTDESC, 
+				NVL(BM_TRK.COMMODITY_CD, BIDDING.COMMODITY_CD) AS COMMODITY_CD, 
+				NVL(BM_TRK.COMMODITY_SHORTDESC, BIDDING.COMMODITY_SHORTDESC) AS COMMODITY_SHORTDESC, 
+				NVL(BM_TRK.BASE_MAT_CD, BIDDING.BASE_MAT_CD) AS BASE_MAT_CD, 
+				NVL(BM_TRK.RAT_CD, BIDDING.RAT_CD) AS RAT_CD, 
+				GREATEST(NVL(BM_TRK.BM_TRK_SUM,0) , NVL(BIDDING.BIDDING_SUM,0)) AS PJ02_QTY
+			FROM (
+				SELECT PART_CD,PART_SHORTDESC,COMMODITY_CD,COMMODITY_SHORTDESC,NVL(BASE_MAT_CD,'') AS BASE_MAT_CD, NVL(RAT_CD,'') AS RAT_CD, SUM(DES_QTY) AS BM_TRK_SUM FROM IF_BM_TRK_IN 
+				WHERE SITE_CD = TO_CHAR(#{PROJECT_NAME2})
+				AND IF_DATE = (SELECT MAX(IF_DATE)
+							FROM IF_BM_TRK_IN 
+							WHERE SITE_CD = TO_CHAR(#{PROJECT_NAME2}))
+							GROUP BY PART_CD,PART_SHORTDESC,COMMODITY_CD,COMMODITY_SHORTDESC,BASE_MAT_CD,RAT_CD
+			) BM_TRK
+			FULL OUTER JOIN (
+				SELECT PART_CD,PART_SHORTDESC,COMMODITY_CD,COMMODITY_SHORTDESC,NVL(BASE_MAT_CD,'') AS BASE_MAT_CD, NVL(RAT_CD,'') AS RAT_CD,SUM(DES_QTY) AS BIDDING_SUM FROM DEC_BM_TRK_BIDDING  
+				WHERE SITE_CD = TO_CHAR(#{PROJECT_NAME2})
+				GROUP BY PART_CD,PART_SHORTDESC,COMMODITY_CD,COMMODITY_SHORTDESC,BASE_MAT_CD,RAT_CD
+			) BIDDING
+			ON BM_TRK.PART_CD = BIDDING.PART_CD 
+			AND BM_TRK.PART_SHORTDESC = BIDDING.PART_SHORTDESC
+			AND BM_TRK.COMMODITY_CD = BIDDING.COMMODITY_CD
+			AND BM_TRK.COMMODITY_SHORTDESC = BIDDING.COMMODITY_SHORTDESC
+		) PJ02
+		ON PJ01.PART_CD = PJ02.PART_CD
+		AND PJ01.PART_SHORTDESC = PJ02.PART_SHORTDESC
+		AND PJ01.COMMODITY_CD = PJ02.COMMODITY_CD
+		AND PJ01.COMMODITY_SHORTDESC = PJ02.COMMODITY_SHORTDESC
+		ORDER BY  COMMODITY_CD
+	</select>
+	
+	<select id="selectProjectMaterialComparisonCommodityCd3" parameterType="map" resultType="map">
+	   SELECT 
+			NVL(PJ01_02.PART_CD, PJ03.PART_CD) AS PART_CD, 
+			NVL(PJ01_02.PART_SHORTDESC, PJ03.PART_SHORTDESC) AS PART_SHORTDESC, 
+			NVL(PJ01_02.COMMODITY_CD, PJ03.COMMODITY_CD) AS COMMODITY_CD, 
+			NVL(PJ01_02.COMMODITY_SHORTDESC, PJ03.COMMODITY_SHORTDESC) AS COMMODITY_SHORTDESC, 
+			NVL(PJ01_02.BASE_MAT_CD, PJ03.BASE_MAT_CD) AS BASE_MAT_CD, 
+			NVL(PJ01_02.RAT_CD, PJ03.RAT_CD) AS RAT_CD, 
+			NVL(PJ01_02.PJ01_QTY,0) AS "${PROJECT_NAME1}",
+			NVL(PJ01_02.PJ02_QTY,0) AS "${PROJECT_NAME2}",
+			NVL(PJ03.PJ03_QTY,0) AS "${PROJECT_NAME3}"
+		FROM 
+			(
+				SELECT  
+					NVL(PJ01.PART_CD, PJ02.PART_CD) AS PART_CD, 
+					NVL(PJ01.PART_SHORTDESC, PJ02.PART_SHORTDESC) AS PART_SHORTDESC, 
+					NVL(PJ01.COMMODITY_CD, PJ02.COMMODITY_CD) AS COMMODITY_CD, 
+					NVL(PJ01.COMMODITY_SHORTDESC, PJ02.COMMODITY_SHORTDESC) AS COMMODITY_SHORTDESC, 
+					NVL(PJ01.BASE_MAT_CD, PJ02.BASE_MAT_CD) AS BASE_MAT_CD,
+					NVL(PJ01.RAT_CD, PJ02.RAT_CD) AS RAT_CD, 
+					NVL(PJ01.PJ01_QTY,0) AS PJ01_QTY,
+					NVL(PJ02.PJ02_QTY,0) AS PJ02_QTY
+				FROM 
+				(
+					SELECT 
+						NVL(BM_TRK.PART_CD, BIDDING.PART_CD) AS PART_CD, 
+						NVL(BM_TRK.PART_SHORTDESC, BIDDING.PART_SHORTDESC) AS PART_SHORTDESC, 
+						NVL(BM_TRK.COMMODITY_CD, BIDDING.COMMODITY_CD) AS COMMODITY_CD, 
+						NVL(BM_TRK.COMMODITY_SHORTDESC, BIDDING.COMMODITY_SHORTDESC) AS COMMODITY_SHORTDESC, 
+						NVL(BM_TRK.BASE_MAT_CD, BIDDING.BASE_MAT_CD) AS BASE_MAT_CD, 
+						NVL(BM_TRK.RAT_CD, BIDDING.RAT_CD) AS RAT_CD, 
+						GREATEST(NVL(BM_TRK.BM_TRK_SUM,0) , NVL(BIDDING.BIDDING_SUM,0)) AS PJ01_QTY
+					FROM (
+						SELECT PART_CD,PART_SHORTDESC,COMMODITY_CD,COMMODITY_SHORTDESC,BASE_MAT_CD,RAT_CD,SUM(DES_QTY) AS BM_TRK_SUM FROM IF_BM_TRK_IN 
+						WHERE SITE_CD = TO_CHAR(#{PROJECT_NAME1})
+						AND IF_DATE = (SELECT MAX(IF_DATE)
+									FROM IF_BM_TRK_IN 
+									WHERE SITE_CD = TO_CHAR(#{PROJECT_NAME1}))
+									GROUP BY PART_CD,PART_SHORTDESC,COMMODITY_CD,COMMODITY_SHORTDESC,BASE_MAT_CD,RAT_CD
+					) BM_TRK
+					FULL OUTER JOIN (
+						SELECT PART_CD,PART_SHORTDESC,COMMODITY_CD,COMMODITY_SHORTDESC,BASE_MAT_CD,RAT_CD,SUM(DES_QTY) AS BIDDING_SUM FROM DEC_BM_TRK_BIDDING  
+						WHERE SITE_CD = TO_CHAR(#{PROJECT_NAME1})
+						GROUP BY PART_CD,PART_SHORTDESC,COMMODITY_CD,COMMODITY_SHORTDESC,BASE_MAT_CD,RAT_CD
+					) BIDDING
+					ON BM_TRK.PART_CD = BIDDING.PART_CD 
+					AND BM_TRK.PART_SHORTDESC = BIDDING.PART_SHORTDESC
+					AND BM_TRK.COMMODITY_CD = BIDDING.COMMODITY_CD
+					AND BM_TRK.COMMODITY_SHORTDESC = BIDDING.COMMODITY_SHORTDESC
+				) PJ01
+		        FULL OUTER JOIN
+				(
+					SELECT 
+						NVL(BM_TRK.PART_CD, BIDDING.PART_CD) AS PART_CD, 
+						NVL(BM_TRK.PART_SHORTDESC, BIDDING.PART_SHORTDESC) AS PART_SHORTDESC, 
+						NVL(BM_TRK.COMMODITY_CD, BIDDING.COMMODITY_CD) AS COMMODITY_CD, 
+						NVL(BM_TRK.COMMODITY_SHORTDESC, BIDDING.COMMODITY_SHORTDESC) AS COMMODITY_SHORTDESC, 
+						NVL(BM_TRK.BASE_MAT_CD, BIDDING.BASE_MAT_CD) AS BASE_MAT_CD, 
+						NVL(BM_TRK.RAT_CD, BIDDING.RAT_CD) AS RAT_CD, 
+						GREATEST(NVL(BM_TRK.BM_TRK_SUM,0) , NVL(BIDDING.BIDDING_SUM,0)) AS PJ02_QTY
+					FROM (
+						SELECT PART_CD,PART_SHORTDESC,COMMODITY_CD,COMMODITY_SHORTDESC,NVL(BASE_MAT_CD,'') AS BASE_MAT_CD, NVL(RAT_CD,'') AS RAT_CD, SUM(DES_QTY) AS BM_TRK_SUM FROM IF_BM_TRK_IN 
+						WHERE SITE_CD = TO_CHAR(#{PROJECT_NAME2})
+						AND IF_DATE = (SELECT MAX(IF_DATE)
+									FROM IF_BM_TRK_IN 
+									WHERE SITE_CD = TO_CHAR(#{PROJECT_NAME2}))
+									GROUP BY PART_CD,PART_SHORTDESC,COMMODITY_CD,COMMODITY_SHORTDESC,BASE_MAT_CD,RAT_CD
+					) BM_TRK
+					FULL OUTER JOIN (
+						SELECT PART_CD,PART_SHORTDESC,COMMODITY_CD,COMMODITY_SHORTDESC,NVL(BASE_MAT_CD,'') AS BASE_MAT_CD, NVL(RAT_CD,'') AS RAT_CD,SUM(DES_QTY) AS BIDDING_SUM FROM DEC_BM_TRK_BIDDING  
+						WHERE SITE_CD = TO_CHAR(#{PROJECT_NAME2})
+						GROUP BY PART_CD,PART_SHORTDESC,COMMODITY_CD,COMMODITY_SHORTDESC,BASE_MAT_CD,RAT_CD
+					) BIDDING
+					ON BM_TRK.PART_CD = BIDDING.PART_CD 
+					AND BM_TRK.PART_SHORTDESC = BIDDING.PART_SHORTDESC
+					AND BM_TRK.COMMODITY_CD = BIDDING.COMMODITY_CD
+					AND BM_TRK.COMMODITY_SHORTDESC = BIDDING.COMMODITY_SHORTDESC
+				) PJ02
+				ON PJ01.PART_CD = PJ02.PART_CD
+				AND PJ01.PART_SHORTDESC = PJ02.PART_SHORTDESC
+				AND PJ01.COMMODITY_CD = PJ02.COMMODITY_CD
+				AND PJ01.COMMODITY_SHORTDESC = PJ02.COMMODITY_SHORTDESC
+			) PJ01_02
+		FULL OUTER JOIN
+			(
+			SELECT 
+				NVL(BIDDING.PART_CD, BM_TRK.PART_CD) AS PART_CD, 
+				NVL(BIDDING.PART_SHORTDESC, BM_TRK.PART_SHORTDESC) AS PART_SHORTDESC, 
+				NVL(BIDDING.COMMODITY_CD, BM_TRK.COMMODITY_CD) AS COMMODITY_CD, 
+				NVL(BIDDING.COMMODITY_SHORTDESC, BM_TRK.COMMODITY_SHORTDESC) AS COMMODITY_SHORTDESC, 
+				NVL(BIDDING.BASE_MAT_CD, BM_TRK.BASE_MAT_CD) AS BASE_MAT_CD, 
+				NVL(BIDDING.RAT_CD, BM_TRK.RAT_CD) AS RAT_CD, 
+				GREATEST(NVL(BM_TRK.BM_TRK_SUM,0) , NVL(BIDDING.BIDDING_SUM,0)) AS PJ03_QTY
+			FROM (
+				SELECT PART_CD,PART_SHORTDESC,COMMODITY_CD,COMMODITY_SHORTDESC,BASE_MAT_CD,RAT_CD,SUM(DES_QTY) AS BM_TRK_SUM FROM IF_BM_TRK_IN 
+				WHERE SITE_CD = TO_CHAR(#{PROJECT_NAME3})
+				AND IF_DATE = (SELECT MAX(IF_DATE)
+							FROM IF_BM_TRK_IN 
+							WHERE SITE_CD = TO_CHAR(#{PROJECT_NAME3}))
+							GROUP BY PART_CD,PART_SHORTDESC,COMMODITY_CD,COMMODITY_SHORTDESC,BASE_MAT_CD,RAT_CD
+			) BM_TRK
+				FULL OUTER JOIN (
+					SELECT PART_CD,PART_SHORTDESC,COMMODITY_CD,COMMODITY_SHORTDESC,BASE_MAT_CD,RAT_CD,SUM(DES_QTY) AS BIDDING_SUM FROM DEC_BM_TRK_BIDDING  
+					WHERE SITE_CD = TO_CHAR(#{PROJECT_NAME3})
+					GROUP BY PART_CD,PART_SHORTDESC,COMMODITY_CD,COMMODITY_SHORTDESC,BASE_MAT_CD,RAT_CD
+				) BIDDING
+				ON BM_TRK.PART_CD = BIDDING.PART_CD 
+				AND BM_TRK.PART_SHORTDESC = BIDDING.PART_SHORTDESC
+				AND BM_TRK.COMMODITY_CD = BIDDING.COMMODITY_CD
+				AND BM_TRK.COMMODITY_SHORTDESC = BIDDING.COMMODITY_SHORTDESC
+			) PJ03
+		ON PJ01_02.PART_CD = PJ03.PART_CD
+		AND PJ01_02.PART_SHORTDESC = PJ03.PART_SHORTDESC
+		AND PJ01_02.COMMODITY_CD = PJ03.COMMODITY_CD
+		AND PJ01_02.COMMODITY_SHORTDESC = PJ03.COMMODITY_SHORTDESC
+		ORDER BY COMMODITY_CD
+	</select>
+	
+	<select id="selectProjectMaterialComparisonIdentCd2" parameterType="map" resultType="map">
+	   SELECT  
+			NVL(PJ01.PART_CD, PJ02.PART_CD) AS PART_CD, 
+			NVL(PJ01.PART_SHORTDESC, PJ02.PART_SHORTDESC) AS PART_SHORTDESC, 
+			NVL(PJ01.COMMODITY_CD, PJ02.COMMODITY_CD) AS COMMODITY_CD, 
+			NVL(PJ01.COMMODITY_SHORTDESC, PJ02.COMMODITY_SHORTDESC) AS COMMODITY_SHORTDESC, 
+			NVL(PJ01.BASE_MAT_CD, PJ02.BASE_MAT_CD) AS BASE_MAT_CD,
+			NVL(PJ01.RAT_CD, PJ02.RAT_CD) AS RAT_CD, 
+			NVL(PJ01.IDENT_CD, PJ02.IDENT_CD) AS IDENT_CD, 
+			NVL(PJ01.SIZE1, PJ02.SIZE1) AS SIZE1, 
+			NVL(PJ01.SIZE2, PJ02.SIZE2) AS SIZE2, 
+			NVL(PJ01.SIZE3, PJ02.SIZE3) AS SIZE3, 
+			NVL(PJ01.SIZE4, PJ02.SIZE4) AS SIZE4, 
+			NVL(PJ01.PJ01_QTY,0) AS "${PROJECT_NAME1}",
+			NVL(PJ02.PJ02_QTY,0) AS "${PROJECT_NAME2}"
+		FROM 
+		(
+			SELECT 
+				NVL(BM_TRK.PART_CD, BIDDING.PART_CD) AS PART_CD, 
+				NVL(BM_TRK.PART_SHORTDESC, BIDDING.PART_SHORTDESC) AS PART_SHORTDESC, 
+				NVL(BM_TRK.COMMODITY_CD, BIDDING.COMMODITY_CD) AS COMMODITY_CD, 
+				NVL(BM_TRK.COMMODITY_SHORTDESC, BIDDING.COMMODITY_SHORTDESC) AS COMMODITY_SHORTDESC, 
+				NVL(BM_TRK.BASE_MAT_CD, BIDDING.BASE_MAT_CD) AS BASE_MAT_CD, 
+				NVL(BM_TRK.RAT_CD, BIDDING.RAT_CD) AS RAT_CD, 
+				NVL(BM_TRK.IDENT_CD, BIDDING.IDENT_CD) AS IDENT_CD, 
+				NVL(BM_TRK.SIZE1, BIDDING.SIZE1) AS SIZE1, 
+				NVL(BM_TRK.SIZE2, BIDDING.SIZE2) AS SIZE2, 
+				NVL(BM_TRK.SIZE3, BIDDING.SIZE3) AS SIZE3, 
+				NVL(BM_TRK.SIZE4, BIDDING.SIZE4) AS SIZE4, 
+				GREATEST(NVL(BM_TRK.BM_TRK_SUM,0) , NVL(BIDDING.BIDDING_SUM,0)) AS PJ01_QTY
+			FROM (
+				SELECT PART_CD,PART_SHORTDESC,COMMODITY_CD,COMMODITY_SHORTDESC,BASE_MAT_CD,RAT_CD,SUM(DES_QTY) AS BM_TRK_SUM ,IDENT_CD,SIZE1,SIZE2,SIZE3,SIZE4 FROM IF_BM_TRK_IN 
+				WHERE SITE_CD = TO_CHAR(#{PROJECT_NAME1})
+				AND IF_DATE = (SELECT MAX(IF_DATE)
+							FROM IF_BM_TRK_IN 
+							WHERE SITE_CD = TO_CHAR(#{PROJECT_NAME1}))
+							GROUP BY PART_CD,PART_SHORTDESC,COMMODITY_CD,COMMODITY_SHORTDESC,BASE_MAT_CD,RAT_CD,IDENT_CD,SIZE1,SIZE2,SIZE3,SIZE4
+			) BM_TRK
+			FULL OUTER JOIN (
+				SELECT PART_CD,PART_SHORTDESC,COMMODITY_CD,COMMODITY_SHORTDESC,BASE_MAT_CD,RAT_CD,SUM(DES_QTY) AS BIDDING_SUM,IDENT_CD,SIZE1,SIZE2,SIZE3,SIZE4 FROM DEC_BM_TRK_BIDDING  
+				WHERE SITE_CD = TO_CHAR(#{PROJECT_NAME1})
+				GROUP BY PART_CD,PART_SHORTDESC,COMMODITY_CD,COMMODITY_SHORTDESC,BASE_MAT_CD,RAT_CD,IDENT_CD,SIZE1,SIZE2,SIZE3,SIZE4
+			) BIDDING
+			ON BM_TRK.PART_CD = BIDDING.PART_CD
+			AND BM_TRK.PART_SHORTDESC = BIDDING.PART_SHORTDESC
+			AND BM_TRK.COMMODITY_CD = BIDDING.COMMODITY_CD
+			AND BM_TRK.COMMODITY_SHORTDESC = BIDDING.COMMODITY_SHORTDESC
+			AND BM_TRK.IDENT_CD = BIDDING.IDENT_CD
+		) PJ01
+        FULL OUTER JOIN
+		(
+						SELECT 
+				NVL(BM_TRK.PART_CD, BIDDING.PART_CD) AS PART_CD, 
+				NVL(BM_TRK.PART_SHORTDESC, BIDDING.PART_SHORTDESC) AS PART_SHORTDESC, 
+				NVL(BM_TRK.COMMODITY_CD, BIDDING.COMMODITY_CD) AS COMMODITY_CD, 
+				NVL(BM_TRK.COMMODITY_SHORTDESC, BIDDING.COMMODITY_SHORTDESC) AS COMMODITY_SHORTDESC, 
+				NVL(BM_TRK.BASE_MAT_CD, BIDDING.BASE_MAT_CD) AS BASE_MAT_CD, 
+				NVL(BM_TRK.RAT_CD, BIDDING.RAT_CD) AS RAT_CD, 
+				NVL(BM_TRK.IDENT_CD, BIDDING.IDENT_CD) AS IDENT_CD, 
+				NVL(BM_TRK.SIZE1, BIDDING.SIZE1) AS SIZE1, 
+				NVL(BM_TRK.SIZE2, BIDDING.SIZE2) AS SIZE2, 
+				NVL(BM_TRK.SIZE3, BIDDING.SIZE3) AS SIZE3, 
+				NVL(BM_TRK.SIZE4, BIDDING.SIZE4) AS SIZE4, 
+				GREATEST(NVL(BM_TRK.BM_TRK_SUM,0) , NVL(BIDDING.BIDDING_SUM,0)) AS PJ02_QTY
+			FROM (
+				SELECT PART_CD,PART_SHORTDESC,COMMODITY_CD,COMMODITY_SHORTDESC,BASE_MAT_CD,RAT_CD,SUM(DES_QTY) AS BM_TRK_SUM ,IDENT_CD,SIZE1,SIZE2,SIZE3,SIZE4 FROM IF_BM_TRK_IN 
+				WHERE SITE_CD = TO_CHAR(#{PROJECT_NAME2})
+				AND IF_DATE = (SELECT MAX(IF_DATE)
+							FROM IF_BM_TRK_IN 
+							WHERE SITE_CD = TO_CHAR(#{PROJECT_NAME2}))
+							GROUP BY PART_CD,PART_SHORTDESC,COMMODITY_CD,COMMODITY_SHORTDESC,BASE_MAT_CD,RAT_CD,IDENT_CD,SIZE1,SIZE2,SIZE3,SIZE4
+			) BM_TRK
+			FULL OUTER JOIN (
+				SELECT PART_CD,PART_SHORTDESC,COMMODITY_CD,COMMODITY_SHORTDESC,BASE_MAT_CD,RAT_CD,SUM(DES_QTY) AS BIDDING_SUM,IDENT_CD,SIZE1,SIZE2,SIZE3,SIZE4 FROM DEC_BM_TRK_BIDDING  
+				WHERE SITE_CD = TO_CHAR(#{PROJECT_NAME2})
+				GROUP BY PART_CD,PART_SHORTDESC,COMMODITY_CD,COMMODITY_SHORTDESC,BASE_MAT_CD,RAT_CD,IDENT_CD,SIZE1,SIZE2,SIZE3,SIZE4
+			) BIDDING
+			ON BM_TRK.PART_CD = BIDDING.PART_CD
+			AND BM_TRK.PART_SHORTDESC = BIDDING.PART_SHORTDESC
+			AND BM_TRK.COMMODITY_CD = BIDDING.COMMODITY_CD
+			AND BM_TRK.COMMODITY_SHORTDESC = BIDDING.COMMODITY_SHORTDESC
+			AND BM_TRK.IDENT_CD = BIDDING.IDENT_CD
+		) PJ02
+		ON PJ01.PART_CD = PJ02.PART_CD
+		AND PJ01.PART_SHORTDESC = PJ02.PART_SHORTDESC
+		AND PJ01.COMMODITY_CD = PJ02.COMMODITY_CD
+		AND PJ01.COMMODITY_SHORTDESC = PJ02.COMMODITY_SHORTDESC
+		AND PJ01.IDENT_CD = PJ02.IDENT_CD
+		ORDER BY  IDENT_CD
+	</select>
+	
+	<select id="selectProjectMaterialComparisonIdentCd3" parameterType="map" resultType="map">
+	   SELECT 
+			NVL(PJ01_02.PART_CD, PJ03.PART_CD) AS PART_CD, 
+			NVL(PJ01_02.PART_SHORTDESC, PJ03.PART_SHORTDESC) AS PART_SHORTDESC, 
+			NVL(PJ01_02.COMMODITY_CD, PJ03.COMMODITY_CD) AS COMMODITY_CD, 
+			NVL(PJ01_02.COMMODITY_SHORTDESC, PJ03.COMMODITY_SHORTDESC) AS COMMODITY_SHORTDESC, 
+			NVL(PJ01_02.BASE_MAT_CD, PJ03.BASE_MAT_CD) AS BASE_MAT_CD,
+			NVL(PJ01_02.RAT_CD, PJ03.RAT_CD) AS RAT_CD, 
+			NVL(PJ01_02.IDENT_CD, PJ03.IDENT_CD) AS IDENT_CD, 
+			NVL(PJ01_02.SIZE1, PJ03.SIZE1) AS SIZE1, 
+			NVL(PJ01_02.SIZE2, PJ03.SIZE2) AS SIZE2, 
+			NVL(PJ01_02.SIZE3, PJ03.SIZE3) AS SIZE3, 
+			NVL(PJ01_02.SIZE4, PJ03.SIZE4) AS SIZE4, 
+			NVL(PJ01_02.PJ01_QTY,0) AS "${PROJECT_NAME1}",
+			NVL(PJ01_02.PJ02_QTY,0) AS "${PROJECT_NAME2}",
+			NVL(PJ03.PJ03_QTY,0) AS "${PROJECT_NAME3}"
+		FROM 
+			(
+				SELECT  
+					NVL(PJ01.PART_CD, PJ02.PART_CD) AS PART_CD, 
+					NVL(PJ01.PART_SHORTDESC, PJ02.PART_SHORTDESC) AS PART_SHORTDESC, 
+					NVL(PJ01.COMMODITY_CD, PJ02.COMMODITY_CD) AS COMMODITY_CD, 
+					NVL(PJ01.COMMODITY_SHORTDESC, PJ02.COMMODITY_SHORTDESC) AS COMMODITY_SHORTDESC, 
+					NVL(PJ01.BASE_MAT_CD, PJ02.BASE_MAT_CD) AS BASE_MAT_CD,
+					NVL(PJ01.RAT_CD, PJ02.RAT_CD) AS RAT_CD, 
+					NVL(PJ01.IDENT_CD, PJ02.IDENT_CD) AS IDENT_CD, 
+					NVL(PJ01.SIZE1, PJ02.SIZE1) AS SIZE1, 
+					NVL(PJ01.SIZE2, PJ02.SIZE2) AS SIZE2, 
+					NVL(PJ01.SIZE3, PJ02.SIZE3) AS SIZE3, 
+					NVL(PJ01.SIZE4, PJ02.SIZE4) AS SIZE4, 
+					NVL(PJ01.PJ01_QTY,0) AS PJ01_QTY,
+					NVL(PJ02.PJ02_QTY,0) AS PJ02_QTY
+				FROM 
+				(
+					SELECT 
+						NVL(BM_TRK.PART_CD, BIDDING.PART_CD) AS PART_CD, 
+						NVL(BM_TRK.PART_SHORTDESC, BIDDING.PART_SHORTDESC) AS PART_SHORTDESC, 
+						NVL(BM_TRK.COMMODITY_CD, BIDDING.COMMODITY_CD) AS COMMODITY_CD, 
+						NVL(BM_TRK.COMMODITY_SHORTDESC, BIDDING.COMMODITY_SHORTDESC) AS COMMODITY_SHORTDESC, 
+						NVL(BM_TRK.BASE_MAT_CD, BIDDING.BASE_MAT_CD) AS BASE_MAT_CD, 
+						NVL(BM_TRK.RAT_CD, BIDDING.RAT_CD) AS RAT_CD, 
+						NVL(BM_TRK.IDENT_CD, BIDDING.IDENT_CD) AS IDENT_CD, 
+						NVL(BM_TRK.SIZE1, BIDDING.SIZE1) AS SIZE1, 
+						NVL(BM_TRK.SIZE2, BIDDING.SIZE2) AS SIZE2, 
+						NVL(BM_TRK.SIZE3, BIDDING.SIZE3) AS SIZE3, 
+						NVL(BM_TRK.SIZE4, BIDDING.SIZE4) AS SIZE4, 
+						GREATEST(NVL(BM_TRK.BM_TRK_SUM,0) , NVL(BIDDING.BIDDING_SUM,0)) AS PJ01_QTY
+					FROM (
+						SELECT PART_CD,PART_SHORTDESC,COMMODITY_CD,COMMODITY_SHORTDESC,BASE_MAT_CD,RAT_CD,SUM(DES_QTY) AS BM_TRK_SUM ,IDENT_CD,SIZE1,SIZE2,SIZE3,SIZE4 FROM IF_BM_TRK_IN 
+						WHERE SITE_CD = TO_CHAR(#{PROJECT_NAME1})
+						AND IF_DATE = (SELECT MAX(IF_DATE)
+									FROM IF_BM_TRK_IN 
+									WHERE SITE_CD = TO_CHAR(#{PROJECT_NAME1}))
+									GROUP BY PART_CD,PART_SHORTDESC,COMMODITY_CD,COMMODITY_SHORTDESC,BASE_MAT_CD,RAT_CD,IDENT_CD,SIZE1,SIZE2,SIZE3,SIZE4
+					) BM_TRK
+					FULL OUTER JOIN (
+						SELECT PART_CD,PART_SHORTDESC,COMMODITY_CD,COMMODITY_SHORTDESC,BASE_MAT_CD,RAT_CD,SUM(DES_QTY) AS BIDDING_SUM,IDENT_CD,SIZE1,SIZE2,SIZE3,SIZE4 FROM DEC_BM_TRK_BIDDING  
+						WHERE SITE_CD = TO_CHAR(#{PROJECT_NAME1})
+						GROUP BY PART_CD,PART_SHORTDESC,COMMODITY_CD,COMMODITY_SHORTDESC,BASE_MAT_CD,RAT_CD,IDENT_CD,SIZE1,SIZE2,SIZE3,SIZE4
+					) BIDDING
+					ON BM_TRK.PART_CD = BIDDING.PART_CD
+					AND BM_TRK.PART_SHORTDESC = BIDDING.PART_SHORTDESC
+					AND BM_TRK.COMMODITY_CD = BIDDING.COMMODITY_CD
+					AND BM_TRK.COMMODITY_SHORTDESC = BIDDING.COMMODITY_SHORTDESC
+					AND BM_TRK.IDENT_CD = BIDDING.IDENT_CD
+				) PJ01
+		        FULL OUTER JOIN
+				(
+					SELECT 
+						NVL(BM_TRK.PART_CD, BIDDING.PART_CD) AS PART_CD, 
+						NVL(BM_TRK.PART_SHORTDESC, BIDDING.PART_SHORTDESC) AS PART_SHORTDESC, 
+						NVL(BM_TRK.COMMODITY_CD, BIDDING.COMMODITY_CD) AS COMMODITY_CD, 
+						NVL(BM_TRK.COMMODITY_SHORTDESC, BIDDING.COMMODITY_SHORTDESC) AS COMMODITY_SHORTDESC, 
+						NVL(BM_TRK.BASE_MAT_CD, BIDDING.BASE_MAT_CD) AS BASE_MAT_CD, 
+						NVL(BM_TRK.RAT_CD, BIDDING.RAT_CD) AS RAT_CD, 
+						NVL(BM_TRK.IDENT_CD, BIDDING.IDENT_CD) AS IDENT_CD, 
+						NVL(BM_TRK.SIZE1, BIDDING.SIZE1) AS SIZE1, 
+						NVL(BM_TRK.SIZE2, BIDDING.SIZE2) AS SIZE2, 
+						NVL(BM_TRK.SIZE3, BIDDING.SIZE3) AS SIZE3, 
+						NVL(BM_TRK.SIZE4, BIDDING.SIZE4) AS SIZE4, 
+						GREATEST(NVL(BM_TRK.BM_TRK_SUM,0) , NVL(BIDDING.BIDDING_SUM,0)) AS PJ02_QTY
+					FROM (
+						SELECT PART_CD,PART_SHORTDESC,COMMODITY_CD,COMMODITY_SHORTDESC,BASE_MAT_CD,RAT_CD,SUM(DES_QTY) AS BM_TRK_SUM ,IDENT_CD,SIZE1,SIZE2,SIZE3,SIZE4 FROM IF_BM_TRK_IN 
+						WHERE SITE_CD = TO_CHAR(#{PROJECT_NAME2})
+						AND IF_DATE = (SELECT MAX(IF_DATE)
+									FROM IF_BM_TRK_IN 
+									WHERE SITE_CD = TO_CHAR(#{PROJECT_NAME2}))
+									GROUP BY PART_CD,PART_SHORTDESC,COMMODITY_CD,COMMODITY_SHORTDESC,BASE_MAT_CD,RAT_CD,IDENT_CD,SIZE1,SIZE2,SIZE3,SIZE4
+					) BM_TRK
+					FULL OUTER JOIN (
+						SELECT PART_CD,PART_SHORTDESC,COMMODITY_CD,COMMODITY_SHORTDESC,BASE_MAT_CD,RAT_CD,SUM(DES_QTY) AS BIDDING_SUM,IDENT_CD,SIZE1,SIZE2,SIZE3,SIZE4 FROM DEC_BM_TRK_BIDDING  
+						WHERE SITE_CD = TO_CHAR(#{PROJECT_NAME2})
+						GROUP BY PART_CD,PART_SHORTDESC,COMMODITY_CD,COMMODITY_SHORTDESC,BASE_MAT_CD,RAT_CD,IDENT_CD,SIZE1,SIZE2,SIZE3,SIZE4
+					) BIDDING
+					ON BM_TRK.PART_CD = BIDDING.PART_CD
+					AND BM_TRK.PART_SHORTDESC = BIDDING.PART_SHORTDESC
+					AND BM_TRK.COMMODITY_CD = BIDDING.COMMODITY_CD
+					AND BM_TRK.COMMODITY_SHORTDESC = BIDDING.COMMODITY_SHORTDESC
+					AND BM_TRK.IDENT_CD = BIDDING.IDENT_CD
+				) PJ02
+				ON PJ01.PART_CD = PJ02.PART_CD
+				AND PJ01.PART_SHORTDESC = PJ02.PART_SHORTDESC
+				AND PJ01.COMMODITY_CD = PJ02.COMMODITY_CD
+				AND PJ01.COMMODITY_SHORTDESC = PJ02.COMMODITY_SHORTDESC
+				AND PJ01.IDENT_CD = PJ02.IDENT_CD
+			) PJ01_02
+		FULL OUTER JOIN
+			(
+			SELECT 
+				NVL(BM_TRK.PART_CD, BIDDING.PART_CD) AS PART_CD, 
+				NVL(BM_TRK.PART_SHORTDESC, BIDDING.PART_SHORTDESC) AS PART_SHORTDESC, 
+				NVL(BM_TRK.COMMODITY_CD, BIDDING.COMMODITY_CD) AS COMMODITY_CD, 
+				NVL(BM_TRK.COMMODITY_SHORTDESC, BIDDING.COMMODITY_SHORTDESC) AS COMMODITY_SHORTDESC, 
+				NVL(BM_TRK.BASE_MAT_CD, BIDDING.BASE_MAT_CD) AS BASE_MAT_CD, 
+				NVL(BM_TRK.RAT_CD, BIDDING.RAT_CD) AS RAT_CD, 
+				NVL(BM_TRK.IDENT_CD, BIDDING.IDENT_CD) AS IDENT_CD, 
+				NVL(BM_TRK.SIZE1, BIDDING.SIZE1) AS SIZE1, 
+				NVL(BM_TRK.SIZE2, BIDDING.SIZE2) AS SIZE2, 
+				NVL(BM_TRK.SIZE3, BIDDING.SIZE3) AS SIZE3, 
+				NVL(BM_TRK.SIZE4, BIDDING.SIZE4) AS SIZE4, 
+				GREATEST(NVL(BM_TRK.BM_TRK_SUM,0) , NVL(BIDDING.BIDDING_SUM,0)) AS PJ03_QTY
+				FROM (
+					SELECT PART_CD,PART_SHORTDESC,COMMODITY_CD,COMMODITY_SHORTDESC,BASE_MAT_CD,RAT_CD,SUM(DES_QTY) AS BM_TRK_SUM ,IDENT_CD,SIZE1,SIZE2,SIZE3,SIZE4 FROM IF_BM_TRK_IN 
+					WHERE SITE_CD = TO_CHAR(#{PROJECT_NAME3})
+					AND IF_DATE = (SELECT MAX(IF_DATE)
+								FROM IF_BM_TRK_IN 
+								WHERE SITE_CD = TO_CHAR(#{PROJECT_NAME3}))
+								GROUP BY PART_CD,PART_SHORTDESC,COMMODITY_CD,COMMODITY_SHORTDESC,BASE_MAT_CD,RAT_CD,IDENT_CD,SIZE1,SIZE2,SIZE3,SIZE4
+					) BM_TRK
+				FULL OUTER JOIN (
+					SELECT PART_CD,PART_SHORTDESC,COMMODITY_CD,COMMODITY_SHORTDESC,BASE_MAT_CD,RAT_CD,SUM(DES_QTY) AS BIDDING_SUM,IDENT_CD,SIZE1,SIZE2,SIZE3,SIZE4 FROM DEC_BM_TRK_BIDDING  
+					WHERE SITE_CD = TO_CHAR(#{PROJECT_NAME3})
+					GROUP BY PART_CD,PART_SHORTDESC,COMMODITY_CD,COMMODITY_SHORTDESC,BASE_MAT_CD,RAT_CD,IDENT_CD,SIZE1,SIZE2,SIZE3,SIZE4
+				    ) BIDDING
+				ON BM_TRK.PART_CD = BIDDING.PART_CD
+				AND BM_TRK.PART_SHORTDESC = BIDDING.PART_SHORTDESC
+				AND BM_TRK.COMMODITY_CD = BIDDING.COMMODITY_CD
+				AND BM_TRK.COMMODITY_SHORTDESC = BIDDING.COMMODITY_SHORTDESC
+				AND BM_TRK.IDENT_CD = BIDDING.IDENT_CD
+			) PJ03
+		ON PJ01_02.PART_CD = PJ03.PART_CD
+		AND PJ01_02.PART_SHORTDESC = PJ03.PART_SHORTDESC
+		AND PJ01_02.COMMODITY_CD = PJ03.COMMODITY_CD
+		AND PJ01_02.COMMODITY_SHORTDESC = PJ03.COMMODITY_SHORTDESC
+		AND PJ01_02.IDENT_CD = PJ03.IDENT_CD
+		ORDER BY  IDENT_CD
+	</select>
+	
+	<!-- Project Material Comparison [E] -->
+		
+	<!-- Change Project Code [S] -->
+	
+	<update id="changeProjectCodeDecSafetyStataics" parameterType="map">
+		UPDATE X3DDEC_ADMIN.DEC_SAFETY_STATICS_LIST
+		   SET SITE_CD=#{NEW_PROJECT_CODE}
+		 WHERE SITE_CD=#{OG_PROJECT_CODE}
+	</update>
+	
+	<update id="changeProjectCodeDecProgress" parameterType="map">
+		UPDATE X3DDEC_ADMIN.DEC_PROGRESS_LIST
+		   SET SITE_CD=#{NEW_PROJECT_CODE}
+		 WHERE SITE_CD=#{OG_PROJECT_CODE}
+	</update>
+	
+	<update id="changeProjectCodeIFProjectInfo" parameterType="map">
+		UPDATE X3DDEC_ADMIN.IF_PROJECT_INFO_IN
+		   SET SITE_CD=#{NEW_PROJECT_CODE}
+		 WHERE SITE_CD=#{OG_PROJECT_CODE}
+	</update>
+	
+	<update id="changeProjectCodeIFProjectBIzList" parameterType="map">
+		UPDATE X3DDEC_ADMIN.IF_PROJECT_BIZ_LIST_IN
+		   SET SITE_CD=#{NEW_PROJECT_CODE}
+		 WHERE SITE_CD=#{OG_PROJECT_CODE}
+	</update>
+	
+	<update id="changeProjectCodeIFProjectScheduleList" parameterType="map">
+		UPDATE X3DDEC_ADMIN.IF_PROJECT_SCHEDULE_LIST_IN
+		   SET SITE_CD=#{NEW_PROJECT_CODE}
+		 WHERE SITE_CD=#{OG_PROJECT_CODE}
+	</update>
+	
+	<update id="changeProjectCodeIFDeliverableList" parameterType="map">
+		UPDATE X3DDEC_ADMIN.IF_DELIVERABLE_LIST_IN
+		   SET SITE_CD=#{NEW_PROJECT_CODE}
+		 WHERE SITE_CD=#{OG_PROJECT_CODE}
+	</update>
+	
+	<update id="changeProjectCodeIFVendorPrintList" parameterType="map">
+		UPDATE X3DDEC_ADMIN.IF_VENDOR_PRINT_LIST_IN
+		   SET SITE_CD=#{NEW_PROJECT_CODE}
+		 WHERE SITE_CD=#{OG_PROJECT_CODE}
+	</update>
+	
+	<update id="changeProjectCodeDecCWPChangeRegister" parameterType="map">
+		UPDATE X3DDEC_ADMIN.DEC_CWP_CHANGE_REGISTER
+		   SET SITE_CD=#{NEW_PROJECT_CODE}
+		 WHERE SITE_CD=#{OG_PROJECT_CODE}
+	</update>
+	
+	<update id="changeProjectCodeDecConstructionKPI" parameterType="map">
+		UPDATE X3DDEC_ADMIN.DEC_CONSTRUCTION_KPI
+		   SET SITE_CD=#{NEW_PROJECT_CODE}
+		 WHERE SITE_CD=#{OG_PROJECT_CODE}
+	</update>
+	
+	<update id="changeProjectCodeDecKeyQtyProjectSetupFlag" parameterType="map">
+		UPDATE X3DDEC_ADMIN.DEC_KEY_QTY_PROJECT_SETUP_FLAG
+		   SET SITE_CD=#{NEW_PROJECT_CODE}
+		 WHERE SITE_CD=#{OG_PROJECT_CODE}
+	</update>
+	
+	<update id="changeProjectCodeDecKeyQtyMontlyData" parameterType="map">
+		UPDATE X3DDEC_ADMIN.DEC_KEY_QUANTITY_MONTLY_DATA
+		   SET SITE_CD=#{NEW_PROJECT_CODE}
+		 WHERE SITE_CD=#{OG_PROJECT_CODE}
+	</update>
+	
+	<select id="selectProjectCodeDecProjectInfo" parameterType="map" resultType="map">
+		SELECT SITE_CD
+			 , STATE
+		  FROM X3DDEC_ADMIN.DEC_PROJECT_INFO_LIST
+	</select>
+	
+	<insert id="insertProjectCodeDecProjectInfo" parameterType="map">
+		INSERT INTO X3DDEC_ADMIN.DEC_PROJECT_INFO_LIST
+		(
+			SITE_CD
+			, STATE
+		)
+		VALUES
+		(
+			#{SITE_CD}
+			, #{STATE}
+		)
+	</insert>
+	
+	<update id="changeProjectCodeDecProjectInfo" parameterType="map">
+		UPDATE X3DDEC_ADMIN.DEC_PROJECT_INFO_LIST
+		   SET SITE_CD=#{NEW_PROJECT_CODE}
+		   <if test="@com.dec.util.DecStringUtil@isNotEmpty(STATE)">
+		   	 , STATE=#{STATE} 
+		   </if>
+		 WHERE SITE_CD=#{OG_PROJECT_CODE}
+	</update>
+	
+	<update id="changeProjectCodeIFProjectPo" parameterType="map">
+		UPDATE X3DDEC_ADMIN.IF_PROJECT_PO_LIST_IN
+		   SET SITE_CD=#{NEW_PROJECT_CODE}
+		 WHERE SITE_CD=#{OG_PROJECT_CODE}
+	</update>
+	
+	<update id="changeProjectCodeDecIWPChangeRegister" parameterType="map">
+		UPDATE X3DDEC_ADMIN.DEC_IWP_CHANGE_REGISTER
+		   SET SITE_CD=#{NEW_PROJECT_CODE}
+		 WHERE SITE_CD=#{OG_PROJECT_CODE}
+	</update>
+	
+	<update id="changeProjectCodeIFMaterial" parameterType="map">
+		UPDATE X3DDEC_ADMIN.IF_MATERIAL_LIST_IN
+		   SET SITE_CD=#{NEW_PROJECT_CODE}
+		 WHERE SITE_CD=#{OG_PROJECT_CODE}
+	</update>
+	
+	<update id="changeProjectCodeIFProgressDaily" parameterType="map">
+		UPDATE X3DDEC_ADMIN.IF_PROGRESS_DAILY_LIST_IN
+		   SET SITE_CD=#{NEW_PROJECT_CODE}
+		 WHERE SITE_CD=#{OG_PROJECT_CODE}
+	</update>
+	
+	<!-- Change Project Code [E] -->
+	
+	<insert id="insertChangeRegister" parameterType="map">
+		INSERT INTO X3DDEC_ADMIN.DEC_CWP_CHANGE_REGISTER
+		(
+			SITE_CD
+			, CWP_NO
+		)
+		VALUES
+		(
+			#{SITE_CD}
+			, #{CWP_NO}
+		)
+	</insert>
+	
+	<insert id="insertImportCWPChangeRegister" parameterType="map">
+		INSERT INTO X3DDEC_ADMIN.DEC_CWP_CHANGE_REGISTER
+		(
+			SITE_CD
+			, CWP_NO
+			, CHANGE_DATE
+			, INPUT_TYPE
+			, CHANGE_ACTION
+			, CHANGE_ATTRIBUTE
+			, BEFORE_VALUE
+			, AFTER_VALUE
+			, CHANGE_USER
+			, CWP_OID
+		)
+		VALUES
+		(
+			#{SITE_CD}
+			, #{CWP_NO}
+			, TO_DATE(#{CHANGE_DATE} , 'YYYY-MM-DD HH24:MI:SS')
+			, #{INPUT_TYPE}
+			, #{CHANGE_ACTION}
+			, #{CHANGE_ATTRIBUTE}
+			, #{BEFORE_VALUE}
+			, #{AFTER_VALUE}
+			, #{CHANGE_USER}
+			, #{CWP_OID}
+		)
+	</insert>
+	
+	<insert id="insertImportCWPChangeRegisterList" parameterType="java.util.List">
+		INSERT INTO X3DDEC_ADMIN.DEC_CWP_CHANGE_REGISTER
+		(
+			SITE_CD
+			, CWP_NO
+			, CHANGE_DATE
+			, INPUT_TYPE
+			, CHANGE_ACTION
+			, CHANGE_ATTRIBUTE
+			, BEFORE_VALUE
+			, AFTER_VALUE
+			, CHANGE_USER
+			, CWP_OID
+		)
+		<foreach item="rowMap" collection="list" open="" separator="UNION ALL" close="">
+			SELECT
+				#{rowMap.SITE_CD}
+				, #{rowMap.CWP_NO}
+				, TO_DATE(#{rowMap.CHANGE_DATE} , 'YYYY-MM-DD HH24:MI:SS')
+				, #{rowMap.INPUT_TYPE}
+				, #{rowMap.CHANGE_ACTION}
+				, #{rowMap.CHANGE_ATTRIBUTE}
+				, #{rowMap.BEFORE_VALUE}
+				, #{rowMap.AFTER_VALUE}
+				, #{rowMap.CHANGE_USER}
+				, #{rowMap.CWP_OID}
+			FROM DUAL
+		</foreach>
+	</insert>
+	
+	<insert id="insertImportIWPChangeRegister" parameterType="map">
+		INSERT INTO X3DDEC_ADMIN.DEC_IWP_CHANGE_REGISTER
+		(
+			SITE_CD
+			, IWP_NO
+			, CHANGE_DATE
+			, INPUT_TYPE
+			, CHANGE_ACTION
+			, CHANGE_ATTRIBUTE
+			, BEFORE_VALUE
+			, AFTER_VALUE
+			, CHANGE_USER
+			, IWP_OID
+		)
+		VALUES
+		(
+			#{SITE_CD}
+			, #{IWP_NO}
+			, TO_DATE(#{CHANGE_DATE} , 'YYYY-MM-DD HH24:MI:SS')
+			, #{INPUT_TYPE}
+			, #{CHANGE_ACTION}
+			, #{CHANGE_ATTRIBUTE}
+			, #{BEFORE_VALUE}
+			, #{AFTER_VALUE}
+			, #{CHANGE_USER}
+			, #{IWP_OID}
+		)
+	</insert>
+	
+	<insert id="insertImportIWPChangeRegisterList" parameterType="map">
+		INSERT INTO X3DDEC_ADMIN.DEC_IWP_CHANGE_REGISTER
+		(
+			SITE_CD
+			, IWP_NO
+			, CHANGE_DATE
+			, INPUT_TYPE
+			, CHANGE_ACTION
+			, CHANGE_ATTRIBUTE
+			, BEFORE_VALUE
+			, AFTER_VALUE
+			, CHANGE_USER
+			, IWP_OID
+		)
+		<foreach item="rowMap" collection="list" open="" separator="UNION ALL" close="">
+			SELECT
+				#{rowMap.SITE_CD}
+				, #{rowMap.IWP_NO}
+				, TO_DATE(#{rowMap.CHANGE_DATE} , 'YYYY-MM-DD HH24:MI:SS')
+				, #{rowMap.INPUT_TYPE}
+				, #{rowMap.CHANGE_ACTION}
+				, #{rowMap.CHANGE_ATTRIBUTE}
+				, #{rowMap.BEFORE_VALUE}
+				, #{rowMap.AFTER_VALUE}
+				, #{rowMap.CHANGE_USER}
+				, #{rowMap.IWP_OID}
+			FROM DUAL
+		</foreach>
+	</insert>
+	
+	<update id="updateImportConstructionKPI" parameterType="map">
+		UPDATE X3DDEC_ADMIN.DEC_CONSTRUCTION_KPI
+		<set>
+			<if test="@com.dec.util.DecStringUtil@isNotNull(TARGET)">TARGET=#{TARGET},</if>  
+			<if test="@com.dec.util.DecStringUtil@isNotNull(ACTUAL)">ACTUAL=#{ACTUAL},</if>  
+			<if test="@com.dec.util.DecStringUtil@isNotNull(TOTAL)">TOTAL=#{TOTAL},</if>
+			<if test="@com.dec.util.DecStringUtil@isNotEmpty(CUTOFFDATE)">CUTOFFDATE=TO_DATE(#{CUTOFFDATE}, 'YYYY-MM-DD HH24:MI:SS'),</if>
+			<if test="@com.dec.util.DecStringUtil@isNotNull(SITE_CD)">SITE_CD=#{SITE_CD}</if>  
+		</set>
+		WHERE ID=#{ID}
+	</update>
+	
+	<update id="mergeImportConstructionKPI" parameterType="java.util.List">
+		BEGIN
+		<foreach collection="list" item="item" separator=" ">
+		MERGE INTO X3DDEC_ADMIN.DEC_CONSTRUCTION_KPI
+		USING DUAL
+		ON (SITE_CD = #{item.SITE_CD} AND UNIT_ID = #{item.UNIT_ID} AND DISCIPLINE = #{item.DISCIPLINE} AND CONSTRUCTION_ITEM = #{item.CONSTRUCTION_ITEM} AND KPIDATE = TO_DATE(#{item.KPIDATE} , 'YYYY-MM-DD HH24:MI:SS'))
+		WHEN MATCHED THEN
+		UPDATE SET
+		<choose>
+			<when test="@com.dec.util.DecStringUtil@isNotEmpty(item.CUTOFFDATE)">
+		CUTOFFDATE=TO_DATE(#{item.CUTOFFDATE}, 'YYYY-MM-DD HH24:MI:SS'),
+			</when>
+		</choose>
+		TARGET=#{item.TARGET}, 
+		ACTUAL=#{item.ACTUAL}, 
+		TOTAL=#{item.TOTAL}
+		WHEN NOT MATCHED THEN
+        INSERT(
+        	SITE_CD
+			, UNIT_ID
+			, DISCIPLINE
+			, CONSTRUCTION_ITEM
+			, TARGET
+			, ACTUAL
+			, TOTAL
+			, KPIDATE
+			, KPIWEEK
+			<choose>
+				<when test="@com.dec.util.DecStringUtil@isNotEmpty(item.CUTOFFDATE)">
+				, CUTOFFDATE
+				</when>
+			</choose>
+			, INPUTDATE
+        )
+        VALUES(
+			#{item.SITE_CD}
+			, #{item.UNIT_ID}
+			, #{item.DISCIPLINE}
+			, #{item.CONSTRUCTION_ITEM}
+			, #{item.TARGET}
+			, #{item.ACTUAL}
+			, #{item.TOTAL}
+			, TO_DATE(#{item.KPIDATE}, 'YYYY-MM-DD HH24:MI:SS')
+			, #{item.KPIWEEK}
+			<choose>
+				<when test="@com.dec.util.DecStringUtil@isNotEmpty(item.CUTOFFDATE)">
+				, TO_DATE(#{item.CUTOFFDATE}, 'YYYY-MM-DD HH24:MI:SS')
+				</when>
+			</choose>
+			, TO_DATE(#{item.INPUTDATE}, 'YYYY-MM-DD HH24:MI:SS')
+        );
+		</foreach>
+		END;
+	</update>
+	
+	<update id="updateChangeRegister" parameterType="map">
+		UPDATE X3DDEC_ADMIN.DEC_CWP_CHANGE_REGISTER
+		   SET SITE_CD=#{SITE_CD}
+		 WHERE ID=#{ID}
+	</update>
+	
+	<delete id="deleteChangeRegister" parameterType="map">
+		DELETE X3DDEC_ADMIN.DEC_CWP_CHANGE_REGISTER
+		 WHERE ID=#{ID}
+	</delete>
+	
+	
+	<!--  choimingi on 2023.05.26  -->
+	<select id="selectDailyLoginStatus" parameterType="map" resultType="map">
+		SELECT * FROM DEC_DAILY_LOGIN_STATUS WHERE TRUNC(LOGIN_DATE) = TO_DATE(#{LOGIN_DATE}, 'YYYY/MM/DD')
+	</select>
+	
+	<select id="selectDailyLoginStatusStartEnd" parameterType="map" resultType="map">
+		SELECT * FROM DEC_DAILY_LOGIN_STATUS WHERE TRUNC(LOGIN_DATE) BETWEEN TO_DATE(#{START_DATE}, 'YYYY/MM/DD') AND TO_DATE(#{END_DATE}, 'YYYY/MM/DD')
+	</select>
+	
+	<select id="selectDailyLoginPersonName" parameterType="map" resultType="map">
+	 	SELECT * FROM DEC_DAILY_LOGIN_STATUS WHERE PERSON_NAME =  #{PERSON_NAME}
+	</select>
+	
+	
+	<resultMap id="ChangeLoginfo" type="Map">
+      <result property="id"      	column="ID" javaType="String"/>
+      <result property="SITE_CD"      	column="SITE_CD"/>
+      <result property="REQUEST_DATE"      	column="REQUEST_DATE"/>
+      <result property="ACCEPT_DATE"      column="ACCEPT_DATE"/>
+      <result property="INPUT_DATE"      column="INPUT_DATE"/>
+      <result property="ORIGINATOR"      	column="ORIGINATOR"/>
+      <result property="CHANGE_ORIGINATOR"      	column="CHANGE_ORIGINATOR"/>
+      <result property="CHANGE_DESC"      	column="CHANGE_DESC"/>
+      <result property="ADDEDITDELETE"      	column="ADDEDITDELETE"/>
+      <result property="OLD_NO"      	column="OLD_NO"/>
+      <result property="NEW_NO"      	column="NEW_NO"/>
+      <result property="OPERATIONCENTER"      	column="OPERATIONCENTER"/>
+      <result property="STATUS"      	column="STATUS"/>
+      <result property="SUMMARY_OF_OUTCOME"      	column="SUMMARY_OF_OUTCOME"/>
+	</resultMap>
+	
+	<select id="selectProjectChangeLogHistory" parameterType="map" resultMap="ChangeLoginfo">
+	 <![CDATA[ 
+		SELECT CHANGELOGNUMBER,
+			SITE_CD, 
+			REQUEST_DATE,
+			ACCEPT_DATE,
+			INPUT_DATE,
+			ORIGINATOR, 
+			CHANGE_ORIGINATOR, 
+			CHANGE_DESC, 
+			ADDEDITDELETE,
+			OLD_NO,
+			NEW_NO,
+			OPERATIONCENTER,
+			STATUS,
+			SUMMARY_OF_OUTCOME,
+			CHANGELOGNUMBER AS ID FROM X3DDEC_ADMIN.DEC_PROJECT_CHANGE_LOG_HISTORY WHERE SITE_CD = #{siteCd}
+	  ]]>
+	</select>
+	
+		<select id="selectCountProjectChangeLogHistory" parameterType="map" resultType="map">
+	  <![CDATA[ 
+	        SELECT COUNT(*) AS COUNT 
+	        	FROM X3DDEC_ADMIN.DEC_PROJECT_CHANGE_LOG_HISTORY WHERE SITE_CD = #{siteCd}
+	  ]]>
+	</select>
+
+	<select id="selectMaxNumberProjectChangeLogHistory" parameterType="map" resultType="map">
+	  <![CDATA[ 
+	        SELECT MAX(CHANGELOGNUMBER) AS CHANGELOGNUMBER 
+	        	FROM X3DDEC_ADMIN.DEC_PROJECT_CHANGE_LOG_HISTORY WHERE SITE_CD = #{siteCd}
+	  ]]>
+	</select>
+	
+	<insert id="insertProjectChangeHistory" parameterType="map">
+		INSERT INTO X3DDEC_ADMIN.DEC_PROJECT_CHANGE_LOG_HISTORY
+		(	
+			CHANGELOGNUMBER,
+			SITE_CD, 
+			REQUEST_DATE, 
+			INPUT_DATE, 
+			ORIGINATOR, 
+			CHANGE_ORIGINATOR, 
+			CHANGE_DESC, 
+			ADDEDITDELETE,
+			OLD_NO,
+			NEW_NO,
+			OPERATIONCENTER,
+			STATUS,
+			SUMMARY_OF_OUTCOME
+		)
+		VALUES
+		(	#{CHANGELOGNUMBER},
+			#{SITE_CD}, 
+			TO_DATE(#{REQUEST_DATE}, 'YYYY-MM-DD HH24:MI:SS'),
+			TO_DATE(#{INPUT_DATE}, 'YYYY-MM-DD HH24:MI:SS'),
+			#{ORIGINATOR}, 
+			#{CHANGEORIGINATOR}, 
+			#{CHANGE_DESC}, 
+			#{ADDEDITDELETE},
+			#{OLD_NO},
+			#{NEW_NO},
+			#{OPERATIONCENTER},
+			#{STATUS},
+			#{SUMMARYOFOUTCOME}
+		)
+	  
+	</insert>
+	
+	<delete id="deleteProjectChangeLog" parameterType="map">
+		DELETE FROM X3DDEC_ADMIN.DEC_PROJECT_CHANGE_LOG_HISTORY
+		 WHERE SITE_CD = #{SITE_CD}
+		   AND CHANGELOGNUMBER = #{CHANGELOGNUMBER}		  
+	</delete>
+	
+	<update id="updateProjectChangeLog" parameterType="map">
+		UPDATE X3DDEC_ADMIN.DEC_PROJECT_CHANGE_LOG_HISTORY
+		<set>
+			<if test="@com.dec.util.DecStringUtil@isNotNull(ADDEDITDELETE)">ADDEDITDELETE=#{ADDEDITDELETE},</if>  
+			<if test="@com.dec.util.DecStringUtil@isNotNull(CHANGE_DESC)">CHANGE_DESC=#{CHANGE_DESC},</if>  
+			<if test="@com.dec.util.DecStringUtil@isNotNull(OLD_NO)">OLD_NO=#{OLD_NO},</if>
+			<if test="@com.dec.util.DecStringUtil@isNotNull(NEW_NO)">NEW_NO=#{NEW_NO},</if>  
+			<if test="@com.dec.util.DecStringUtil@isNotNull(CHANGE_ORIGINATOR)">CHANGE_ORIGINATOR=#{CHANGE_ORIGINATOR},</if>
+			<if test="@com.dec.util.DecStringUtil@isNotNull(OPERATIONCENTER)">OPERATIONCENTER=#{OPERATIONCENTER},</if>
+			<if test="@com.dec.util.DecStringUtil@isNotEmpty(ACCEPT_DATE)">ACCEPT_DATE=TO_DATE(#{ACCEPT_DATE}, 'YYYY-MM-DD HH24:MI:SS'),</if>
+			<if test="@com.dec.util.DecStringUtil@isNotEmpty(REQUEST_DATE)">REQUEST_DATE=TO_DATE(#{REQUEST_DATE}, 'YYYY-MM-DD HH24:MI:SS'),</if>
+			<if test="@com.dec.util.DecStringUtil@isNotNull(STATUS)">STATUS=#{STATUS},</if>  
+			<if test="@com.dec.util.DecStringUtil@isNotNull(SUMMARY_OF_OUTCOME)">SUMMARY_OF_OUTCOME=#{SUMMARY_OF_OUTCOME}</if>  
+		</set>
+		WHERE CHANGELOGNUMBER=#{CHANGELOGNUMBER} AND SITE_CD = #{SITECD}
+	</update>
+	
+	<!--  choimingi on 2023.08.08 [E]  -->
+	
+	<select id="selectKeyQtyMaster" resultType="map">
+		SELECT MST.KEY_CD
+			 , FLAG.REPORT_FLAG
+			 , FLAG.USED_FLAG
+			 , MST.ROW_NO
+			 , MST.KEY_L1
+			 , MST.KEY_L2
+			 , MST.KEY_L3
+			 , MST.CATEGORY
+			 , MST.KEY_ITEM
+			 , MST.Unit AS UOM
+			 , MST.DP_CD
+          FROM X3DDEC_ADMIN.DEC_KEY_QTY_TRACKING_MASTER MST
+          , (
+             	SELECT KEY_CD
+             		 , REPORT_FLAG 
+             		 , USED_FLAG
+             	  FROM X3DDEC_ADMIN.DEC_KEY_QTY_PROJECT_SETUP_FLAG 
+             	 WHERE SITE_CD = #{SITE_CD}
+             	 <if test="@com.dec.util.DecStringUtil@isNotNull(USED_FLAG_IS_NULL)">AND USED_FLAG IS NULL</if>  
+             	 <if test="@com.dec.util.DecStringUtil@isNotNull(REPORT_FLAG)">AND REPORT_FLAG=#{REPORT_FLAG}</if>  
+             ) FLAG
+         WHERE MST.KEY_CD = FLAG.KEY_CD
+         ORDER BY MST.ROW_NO
+	</select>
+	
+	<insert id="insertKeyQtyMaster" parameterType="map">
+		INSERT INTO X3DDEC_ADMIN.DEC_KEY_QTY_TRACKING_MASTER
+		(
+			KEY_CD
+			, ROW_NO
+			, KEY_L1
+			, KEY_L2
+			, KEY_L3
+			, CATEGORY
+			, KEY_ITEM
+			, Unit
+			, DP_CD
+			, CHANGE_DATE
+			, CHANGE_USER
+		)
+		<foreach item="rowMap" index="index" collection="list" open="" separator="UNION ALL" close="">
+			SELECT
+				#{rowMap.KEY_CD}
+				, #{rowMap.ROW_NO}
+				, #{rowMap.KEY_L1}
+				, #{rowMap.KEY_L2}
+				, #{rowMap.KEY_L3}
+				, #{rowMap.CATEGORY}
+				, #{rowMap.KEY_ITEM}
+				, #{rowMap.Unit}
+				, #{rowMap.DP_CD}
+				, SYSDATE
+				, #{rowMap.CHANGE_USER}
+			FROM DUAL
+		</foreach>
+	</insert>
+	
+	<update id="updateKeyQtyMaster" parameterType="map">
+		UPDATE X3DDEC_ADMIN.DEC_KEY_QTY_TRACKING_MASTER
+		<set>
+			<if test="@com.dec.util.DecStringUtil@isNotNull(KEY_L1)">KEY_L1=#{KEY_L1},</if>  
+			<if test="@com.dec.util.DecStringUtil@isNotNull(KEY_L2)">KEY_L2=#{KEY_L2},</if>  
+			<if test="@com.dec.util.DecStringUtil@isNotNull(KEY_L3)">KEY_L3=#{KEY_L3},</if>  
+			<if test="@com.dec.util.DecStringUtil@isNotNull(CATEGORY)">CATEGORY=#{CATEGORY},</if>  
+			<if test="@com.dec.util.DecStringUtil@isNotNull(KEY_ITEM)">KEY_ITEM=#{KEY_ITEM},</if>  
+			<if test="@com.dec.util.DecStringUtil@isNotNull(Unit)">Unit=#{Unit},</if>  
+			<if test="@com.dec.util.DecStringUtil@isNotNull(DP_CD)">DP_CD=#{DP_CD},</if>
+			CHANGE_DATE=SYSDATE,
+			<if test="@com.dec.util.DecStringUtil@isNotEmpty(CHANGE_USER)">CHANGE_USER=#{CHANGE_USER}</if>  
+		</set>
+		WHERE KEY_CD=#{KEY_CD} 
+	</update>
+	
+	<delete id="deleteKeyQtyMaster">
+		DELETE FROM X3DDEC_ADMIN.DEC_KEY_QTY_TRACKING_MASTER
+	</delete>
+	
+	<insert id="insertProjectSetupFlag" parameterType="map">
+		INSERT INTO X3DDEC_ADMIN.DEC_KEY_QTY_PROJECT_SETUP_FLAG
+		(
+			SITE_CD
+			, KEY_CD
+			, REPORT_FLAG
+			, USED_FLAG
+		)
+		<foreach item="rowMap" index="index" collection="list" open="" separator="UNION ALL" close="">
+			SELECT
+				#{rowMap.SITE_CD}
+				, #{rowMap.KEY_CD}
+				, #{rowMap.REPORT_FLAG}
+				, #{rowMap.USED_FLAG}
+			FROM DUAL
+		</foreach>
+	</insert>
+	
+	<insert id="cloneMasterSetupFlag" parameterType="map">
+		INSERT INTO X3DDEC_ADMIN.DEC_KEY_QTY_PROJECT_SETUP_FLAG
+		(
+			SITE_CD
+			, KEY_CD
+			, REPORT_FLAG
+			, USED_FLAG
+		)
+		SELECT #{TARGET_SITE_CD}
+			 , KEY_CD
+			 , REPORT_FLAG
+			 , USED_FLAG
+		  FROM X3DDEC_ADMIN.DEC_KEY_QTY_PROJECT_SETUP_FLAG
+		 WHERE SITE_CD = #{SOURCE_SITE_CD}
+	</insert>
+	
+	<update id="updateProjectSetupFlag" parameterType="map">
+		UPDATE X3DDEC_ADMIN.DEC_KEY_QTY_PROJECT_SETUP_FLAG
+		<set>
+			<if test="@com.dec.util.DecStringUtil@isNotNull(REPORT_FLAG)">REPORT_FLAG=#{REPORT_FLAG},</if>  
+			<if test="@com.dec.util.DecStringUtil@isNotNull(USED_FLAG)">USED_FLAG=#{USED_FLAG}</if>  
+		</set>
+		 WHERE SITE_CD=#{SITE_CD}
+		   AND KEY_CD=#{KEY_CD} 
+	</update>
+	
+	<delete id="deleteProjectSetupFlag" parameterType="map">
+		DELETE FROM X3DDEC_ADMIN.DEC_KEY_QTY_PROJECT_SETUP_FLAG
+		<where>
+			<if test="@com.dec.util.DecStringUtil@isNotEmpty(SITE_CD)">SITE_CD=#{SITE_CD}</if>  
+			<if test="@com.dec.util.DecStringUtil@isNotEmpty(KEY_CD)">AND KEY_CD=#{KEY_CD}</if>  
+		</where>
+	</delete>
+	
+	<select id="selectProjectInfo" parameterType="map" resultType="map">
+		SELECT *
+		  FROM X3DDEC_ADMIN.IF_PROJECT_INFO_IN
+		 WHERE SITE_CD=#{SITE_CD}
+	</select>
+	
+	<select id="selectKeyQtyMonthlyData" parameterType="map" resultType="map">
+		SELECT A.UNIT_ID
+			 , LISTAGG(A.CUT_OFF_YEAR || '_' || A.CUT_OFF_MONTH, ',') AS CUT_OFF
+		  FROM (
+				SELECT UNIT_ID 
+					 , CUT_OFF_YEAR 
+					 , CUT_OFF_MONTH 
+				  FROM X3DDEC_ADMIN.DEC_KEY_QUANTITY_MONTLY_DATA
+				 WHERE SITE_CD = #{SITE_CD}
+				   AND UNIT_ID IN (
+				   <foreach item="unitId" index="index" collection="unitIdList" open="" separator="," close="">
+						#{unitId}
+				   </foreach> 
+				   )
+				 GROUP BY UNIT_ID 
+					 , CUT_OFF_YEAR 
+					 , CUT_OFF_MONTH 
+		   ) A
+		  GROUP BY A.UNIT_ID 
+	</select>
+	
+	<insert id="insertKeyQtyMonthlyData" parameterType="map">
+		INSERT INTO X3DDEC_ADMIN.DEC_KEY_QUANTITY_MONTLY_DATA
+		(
+			SITE_CD
+			, UNIT_ID
+			, KEY_CD
+			, CUT_OFF_YEAR
+			, CUT_OFF_MONTH
+			, PRJ_BID_QTY
+			, PRJ_APPROVED_VO_QTY
+			, PRJ_REVISED_CONT_QTY
+			, PRJ_APPROVED_VO_QTY_BEFORE_BUDGET
+			, PRJ_VERIFIED_OVERBUDGET_QTY_BEFORE_BUDGET
+			, PRJ_BUDGET_QTY
+			, PRJ_APPROVED_VO_QTY_AFTER_BUDGET
+			, PRJ_VERIFIED_OVERBUDGET_QTY_AFTER_BUDGET
+			, PRJ_REVISED_BUDGET_QTY
+			, ENG_NET_PRESENT_QTY
+			, ENG_TO_GO_QTY
+			, ENG_TOTAL_FORECAST_QTY
+			, ENG_PREV_TOTAL_FORECAST_QTY
+			, ENG_PERIOD_DELTA
+			, VARIANCE
+			, CHANGE_USER
+			, CUT_OFF_DATE
+		)
+		<foreach item="rowMap" index="index" collection="list" open="" separator="UNION ALL" close="">
+			SELECT
+				#{SITE_CD}
+				, #{UNIT_ID}
+				, #{rowMap.KEY_CD}
+				, #{CUT_OFF_YEAR}
+				, #{CUT_OFF_MONTH}
+				, #{rowMap.PRJ_BID_QTY}
+				, #{rowMap.PRJ_APPROVED_VO_QTY}
+				, #{rowMap.PRJ_REVISED_CONT_QTY}
+				, #{rowMap.PRJ_APPROVED_VO_QTY_BEFORE_BUDGET}
+				, #{rowMap.PRJ_VERIFIED_OVERBUDGET_QTY_BEFORE_BUDGET}
+				, #{rowMap.PRJ_BUDGET_QTY}
+				, #{rowMap.PRJ_APPROVED_VO_QTY_AFTER_BUDGET}
+				, #{rowMap.PRJ_VERIFIED_OVERBUDGET_QTY_AFTER_BUDGET}
+				, #{rowMap.PRJ_REVISED_BUDGET_QTY}
+				, #{rowMap.ENG_NET_PRESENT_QTY}
+				, #{rowMap.ENG_TO_GO_QTY}
+				, #{rowMap.ENG_TOTAL_FORECAST_QTY}
+				, #{rowMap.ENG_PREV_TOTAL_FORECAST_QTY}
+				, #{rowMap.ENG_PERIOD_DELTA}
+				, #{rowMap.VARIANCE}
+				, #{CHANGE_USER}
+				, #{CUT_OFF_DATE}
+			FROM DUAL
+		</foreach>
+		
+	</insert>
+	
+	<delete id="deleteKeyQtyMonthlyData" parameterType="map">
+		DELETE FROM X3DDEC_ADMIN.DEC_KEY_QUANTITY_MONTLY_DATA
+		 WHERE SITE_CD = #{SITE_CD}
+		 <if test="@com.dec.util.DecStringUtil@isNotEmpty(UNIT_ID)">AND UNIT_ID = #{UNIT_ID}</if>
+		 <if test="@com.dec.util.DecStringUtil@isNotEmpty(CUT_OFF_YEAR)">AND CUT_OFF_YEAR = #{CUT_OFF_YEAR}</if>
+		 <if test="@com.dec.util.DecStringUtil@isNotEmpty(CUT_OFF_MONTH)">AND CUT_OFF_MONTH = #{CUT_OFF_MONTH}</if>
+	</delete>
+
+	<select id="selectKeyQtyReportData" parameterType="map" resultType="map">
+		SELECT MST.KEY_CD 
+			 , MST.ROW_NO
+			 , MST.KEY_L1 
+			 , MST.KEY_L2
+			 , MST.KEY_L3 
+			 , MST.CATEGORY  
+			 , MST.KEY_ITEM 
+			 , MST.UNIT AS UOM
+			 , MST.DP_CD 
+			 , ROUND(PRJ.PRJ_BID_QTY, 2) AS PRJ_BID_QTY
+			 , ROUND(PRJ.PRJ_APPROVED_VO_QTY, 2) AS PRJ_APPROVED_VO_QTY 
+			 , ROUND(PRJ.PRJ_REVISED_CONT_QTY, 2) AS PRJ_REVISED_CONT_QTY 
+			 , ROUND(PRJ.PRJ_APPROVED_VO_QTY_BEFORE_BUDGET, 2) AS PRJ_APPROVED_VO_QTY_BEFORE_BUDGET 
+			 , ROUND(PRJ.PRJ_VERIFIED_OVERBUDGET_QTY_BEFORE_BUDGET, 2) AS PRJ_VERIFIED_OVERBUDGET_QTY_BEFORE_BUDGET 
+		 	 , ROUND(PRJ.PRJ_BUDGET_QTY, 2) AS PRJ_BUDGET_QTY 
+		 	 , ROUND(PRJ.PRJ_APPROVED_VO_QTY_AFTER_BUDGET, 2) AS PRJ_APPROVED_VO_QTY_AFTER_BUDGET 
+		 	 , ROUND(PRJ.PRJ_VERIFIED_OVERBUDGET_QTY_AFTER_BUDGET, 2) AS PRJ_VERIFIED_OVERBUDGET_QTY_AFTER_BUDGET 
+		 	 , ROUND(PRJ.PRJ_REVISED_BUDGET_QTY, 2) AS PRJ_REVISED_BUDGET_QTY 
+		 	 , ROUND(PRJ.ENG_NET_PRESENT_QTY, 2) AS ENG_NET_PRESENT_QTY 
+		 	 , ROUND(PRJ.ENG_TO_GO_QTY, 2) AS ENG_TO_GO_QTY 
+		 	 , ROUND(PRJ.ENG_TOTAL_FORECAST_QTY, 2) AS ENG_TOTAL_FORECAST_QTY 
+		 	 , ROUND(PRJ.ENG_PREV_TOTAL_FORECAST_QTY, 2) AS ENG_PREV_TOTAL_FORECAST_QTY 
+		 	 , ROUND(PRJ.ENG_PERIOD_DELTA, 2) AS ENG_PERIOD_DELTA 
+		 	 , ROUND(PRJ.VARIANCE, 2) AS VARIANCE  
+			 , PRJ.TYPE1_REMARK 
+		 	 , PRJ.TYPE2_REMARK  	 
+		 	 , PRJ.CUT_OFF_DATE  	 
+		  FROM X3DDEC_ADMIN.DEC_KEY_QTY_TRACKING_MASTER MST
+		 RIGHT OUTER JOIN (
+				SELECT FLG.KEY_CD 
+				<choose>
+					<when test="UNIT_ID != null">
+					 , MD.PRJ_BID_QTY
+					 , MD.PRJ_APPROVED_VO_QTY
+					 , MD.PRJ_REVISED_CONT_QTY
+					 , MD.PRJ_APPROVED_VO_QTY_BEFORE_BUDGET 
+					 , MD.PRJ_VERIFIED_OVERBUDGET_QTY_BEFORE_BUDGET
+					 , MD.PRJ_BUDGET_QTY
+					 , MD.PRJ_APPROVED_VO_QTY_AFTER_BUDGET 
+					 , MD.PRJ_VERIFIED_OVERBUDGET_QTY_AFTER_BUDGET 
+					 , MD.PRJ_REVISED_BUDGET_QTY 
+					 , MD.ENG_NET_PRESENT_QTY 
+					 , MD.ENG_TO_GO_QTY 
+					 , MD.ENG_TOTAL_FORECAST_QTY 
+					 , MD.ENG_PREV_TOTAL_FORECAST_QTY 
+					 , MD.ENG_PERIOD_DELTA
+					 , MD.VARIANCE
+					 , MD.TYPE1_REMARK 
+					 , MD.TYPE2_REMARK 
+					 , MD.CUT_OFF_DATE
+					</when>
+					<otherwise>
+					 , SUM(MD.PRJ_BID_QTY) AS PRJ_BID_QTY
+					 , SUM(MD.PRJ_APPROVED_VO_QTY) AS PRJ_APPROVED_VO_QTY
+					 , SUM(MD.PRJ_REVISED_CONT_QTY) AS PRJ_REVISED_CONT_QTY
+					 , SUM(MD.PRJ_APPROVED_VO_QTY_BEFORE_BUDGET) AS PRJ_APPROVED_VO_QTY_BEFORE_BUDGET 
+					 , SUM(MD.PRJ_VERIFIED_OVERBUDGET_QTY_BEFORE_BUDGET) AS  PRJ_VERIFIED_OVERBUDGET_QTY_BEFORE_BUDGET
+					 , SUM(MD.PRJ_BUDGET_QTY) AS PRJ_BUDGET_QTY 
+					 , SUM(MD.PRJ_APPROVED_VO_QTY_AFTER_BUDGET) AS PRJ_APPROVED_VO_QTY_AFTER_BUDGET 
+					 , SUM(MD.PRJ_VERIFIED_OVERBUDGET_QTY_AFTER_BUDGET) AS PRJ_VERIFIED_OVERBUDGET_QTY_AFTER_BUDGET 
+					 , SUM(MD.PRJ_REVISED_BUDGET_QTY) AS PRJ_REVISED_BUDGET_QTY 
+					 , SUM(MD.ENG_NET_PRESENT_QTY) AS ENG_NET_PRESENT_QTY 
+					 , SUM(MD.ENG_TO_GO_QTY) AS ENG_TO_GO_QTY 
+					 , SUM(MD.ENG_TOTAL_FORECAST_QTY) AS ENG_TOTAL_FORECAST_QTY 
+					 , SUM(MD.ENG_PREV_TOTAL_FORECAST_QTY) AS ENG_PREV_TOTAL_FORECAST_QTY 
+					 , SUM(MD.ENG_PERIOD_DELTA) AS ENG_PERIOD_DELTA
+					 , SUM(MD.VARIANCE) AS VARIANCE
+					 , <![CDATA[
+					 	LISTAGG(CASE WHEN TYPE1_REMARK IS NOT NULL OR TYPE1_REMARK <> '' 
+	 					THEN '<li>' || UNIT_ID || ' : ' || TYPE1_REMARK || '</li>'
+	 					ELSE ''
+	 					END) AS TYPE1_REMARK
+	 					]]>
+					 , <![CDATA[ 
+					 	LISTAGG(CASE WHEN TYPE2_REMARK IS NOT NULL OR TYPE2_REMARK <> '' 
+	 					THEN '<li>' || UNIT_ID || ' : ' || TYPE2_REMARK || '</li>'
+	 					ELSE ''
+	 					END) AS TYPE2_REMARK
+	 					]]>
+	 				 , MAX(MD.CUT_OFF_DATE) AS CUT_OFF_DATE
+					</otherwise>
+				</choose>
+				  FROM X3DDEC_ADMIN.DEC_KEY_QTY_PROJECT_SETUP_FLAG FLG
+				     , X3DDEC_ADMIN.DEC_KEY_QUANTITY_MONTLY_DATA MD
+				 WHERE FLG.SITE_CD = MD.SITE_CD 
+				   AND FLG.KEY_CD = MD.KEY_CD 
+				   AND FLG.SITE_CD = #{SITE_CD}
+				   <![CDATA[ AND (FLG.USED_FLAG <> 'Y' OR FLG.USED_FLAG IS NULL) ]]>
+				   <if test="@com.dec.util.DecStringUtil@isNotEmpty(REPORT_FLAG)">AND FLG.REPORT_FLAG = #{REPORT_FLAG}</if>
+				   <if test="@com.dec.util.DecStringUtil@isNotEmpty(UNIT_ID)">AND MD.UNIT_ID = #{UNIT_ID}</if>    
+				   AND MD.CUT_OFF_YEAR = #{CUT_OFF_YEAR}
+				   AND MD.CUT_OFF_MONTH = #{CUT_OFF_MONTH}  
+			 <if test="UNIT_ID == null">
+				 GROUP BY FLG.KEY_CD 
+			 </if>
+		     ) PRJ
+		    ON (MST.KEY_CD = PRJ.KEY_CD)
+		 ORDER BY MST.ROW_NO
+	</select>
+	
+	<select id="selectKeyQtyTrendData" parameterType="map" resultType="map">
+		SELECT KEY_CD
+			 , DP_CD
+			 , CATEGORY
+			 , KEY_ITEM
+			 , UNIT
+			 , LISTAGG('’' || SUBSTR(CUT_OFF_YEAR, 3, 2), ',') WITHIN GROUP (ORDER BY CUT_OF_YEAR_MONTH) AS CUT_OFF_YEAR
+			 , LISTAGG('"' || INITCAP(TO_CHAR(CUT_OFF_DATE, 'MON-DD', 'NLS_DATE_LANGUAGE = American')) || '"', ',') WITHIN GROUP (ORDER BY CUT_OF_YEAR_MONTH) AS CUT_OFF_DATE
+			 , LISTAGG(PRJ_BUDGET_QTY, ',') WITHIN GROUP (ORDER BY CUT_OF_YEAR_MONTH) AS PRJ_BUDGET_QTY
+			 , LISTAGG(ENG_NET_PRESENT_QTY, ',') WITHIN GROUP (ORDER BY CUT_OF_YEAR_MONTH) AS ENG_NET_PRESENT_QTY
+			 , LISTAGG(ENG_TOTAL_FORECAST_QTY, ',') WITHIN GROUP (ORDER BY CUT_OF_YEAR_MONTH) AS ENG_TOTAL_FORECAST_QTY
+		  FROM (
+				SELECT MD.KEY_CD 
+					 , MST.DP_CD 
+					 , MST.CATEGORY 
+					 , MST.KEY_ITEM 
+					 , MST.UNIT
+					 , MD.CUT_OFF_YEAR
+					 , TO_DATE(MD.CUT_OFF_YEAR || LPAD(MD.CUT_OFF_MONTH, 2, '0'), 'YYYYMM') AS CUT_OF_YEAR_MONTH
+				<choose>
+					<when test="UNIT_ID != null">
+					 , MD.CUT_OFF_DATE
+					 , ROUND(NVL(MD.PRJ_BUDGET_QTY, 0), 2) AS PRJ_BUDGET_QTY
+					 , ROUND(NVL(MD.ENG_NET_PRESENT_QTY, 0), 2) AS ENG_NET_PRESENT_QTY
+					 , ROUND(NVL(MD.ENG_TOTAL_FORECAST_QTY, 0), 2) AS ENG_TOTAL_FORECAST_QTY
+					</when>
+					<otherwise>
+					 , MAX(MD.CUT_OFF_DATE) AS CUT_OFF_DATE
+					 , ROUND(SUM(NVL(MD.PRJ_BUDGET_QTY, 0)), 2) AS PRJ_BUDGET_QTY
+					 , ROUND(SUM(NVL(MD.ENG_NET_PRESENT_QTY, 0)), 2) AS ENG_NET_PRESENT_QTY
+					 , ROUND(SUM(NVL(MD.ENG_TOTAL_FORECAST_QTY, 0)), 2) AS ENG_TOTAL_FORECAST_QTY  
+					</otherwise>
+				</choose>
+				  FROM X3DDEC_ADMIN.DEC_KEY_QTY_PROJECT_SETUP_FLAG FLG
+				 INNER JOIN X3DDEC_ADMIN.DEC_KEY_QUANTITY_MONTLY_DATA MD
+				    ON (
+						FLG.SITE_CD = MD.SITE_CD 
+				  	  	AND FLG.KEY_CD = MD.KEY_CD 
+				  	  	AND FLG.SITE_CD = #{SITE_CD}
+				  	  	<if test="UNIT_ID != null">
+					   	   AND MD.UNIT_ID = #{UNIT_ID}
+						</if>
+				  	  	AND FLG.REPORT_FLAG = 'Y'
+				  	  	AND TO_DATE(MD.CUT_OFF_YEAR || LPAD(MD.CUT_OFF_MONTH, 2, '0'), 'YYYYMM')
+				  	  		BETWEEN TO_DATE(#{FROM_YEAR} || LPAD(#{FROM_MONTH}, 2, '0'), 'YYYYMM') 
+				   				AND TO_DATE(#{TO_YEAR} || LPAD(#{TO_MONTH}, 2, '0'), 'YYYYMM')
+				    )
+				 LEFT OUTER JOIN X3DDEC_ADMIN.DEC_KEY_QTY_TRACKING_MASTER MST 
+				   ON (
+				   	   MD.KEY_CD = MST.KEY_CD 
+				   )
+				<if test="UNIT_ID == null">
+				 GROUP BY MD.KEY_CD 
+					 , MST.DP_CD 
+					 , MST.CATEGORY 
+					 , MST.KEY_ITEM 
+					 , MST.UNIT
+					 , MD.CUT_OFF_YEAR
+					 , TO_DATE(MD.CUT_OFF_YEAR || LPAD(MD.CUT_OFF_MONTH, 2, '0'), 'YYYYMM')
+				</if>
+			)
+	GROUP BY KEY_CD
+	    , DP_CD
+	    , CATEGORY
+	    , KEY_ITEM 
+	    , UNIT
+	ORDER BY KEY_CD
+	</select>
+	
+	<update id="updateKeyQtyMonthlyData" parameterType="map">
+		UPDATE X3DDEC_ADMIN.DEC_KEY_QUANTITY_MONTLY_DATA
+		   SET TYPE2_REMARK = #{TYPE2_REMARK}
+		     , CHANGE_USER = #{CHANGE_USER}
+		 WHERE SITE_CD = #{SITE_CD}
+		   AND UNIT_ID = #{UNIT_ID}
+		   AND KEY_CD = #{KEY_CD}
+		   AND CUT_OFF_YEAR = #{CUT_OFF_YEAR}
+		   AND CUT_OFF_MONTH = #{CUT_OFF_MONTH}
+	</update>
+
+	<select id="selectPOList" parameterType="map" resultType="map">
+		SELECT SITE_CD
+		  	 , DCPLN_NM
+		  	 , PO_NO
+		  	 , PO_NM
+		  FROM X3DDEC_ADMIN.IF_PROJECT_PO_LIST_IN
+		 WHERE SITE_CD = #{SITE_CD}
+	</select>
+	
+		<insert id="insertDailyLoginStatus" parameterType="map">
+		INSERT INTO X3DDEC_ADMIN.DEC_DAILY_LOGIN_STATUS
+		(   
+			LOGIN_DATE
+			, PERSON_NAME
+		)   
+		VALUES
+		(   
+			#{LOGIN_DATE}
+			, #{PERSON_NAME}
+		)   
+	</insert>
+	
+	<select id="selectCWPListOut" parameterType="map" resultType="map">
+		SELECT * 
+		  FROM 
+		IF_CWP_LIST_OUT
+		 WHERE SITE_CD = #{SITE_CD}
+		<if test="@com.dec.util.DecStringUtil@isNotEmpty(OBJECTID)">AND OBJECTID = #{OBJECTID}</if>  
+	</select>
+	
+	<update id="mergeProjectInfo" parameterType="java.util.List">
+		<foreach collection="list" item="item" separator=" ">
+		MERGE INTO X3DDEC_ADMIN.DEC_PROJECT_INFO_LIST
+		USING DUAL
+		   ON (SITE_CD = #{item.SITE_CD})
+		 WHEN MATCHED THEN
+		 	  UPDATE
+		 	  	 SET STATE = #{item.STATE}
+		 WHEN NOT MATCHED THEN
+		 	  INSERT (
+		 	  		SITE_CD
+		 	  		, STATE
+		 	  )
+		 	  VALUES (
+		 	  		#{item.SITE_CD}
+		 	  		, #{item.STATE}
+		 	  )
+		</foreach>
+	</update>
+	
+	<select id="selectMaxKeyQtyCutOffDate" parameterType="map" resultType="String">
+		SELECT MAX(TO_NUMBER( CUT_OFF_YEAR || LPAD(CUT_OFF_MONTH, 2, '0') ) ) AS MAX_CUT_OFF_YEAR_MONTH
+		  FROM DEC_KEY_QUANTITY_MONTLY_DATA
+		 WHERE SITE_CD = #{SITE_CD}
+		   <if test="@com.dec.util.DecStringUtil@isNotEmpty(UNIT_ID)">AND UNIT_ID = #{UNIT_ID}</if>  
+		   <![CDATA[ AND TO_NUMBER( CUT_OFF_YEAR || LPAD(CUT_OFF_MONTH, 2, '0') ) < TO_NUMBER( #{CUT_OFF_YEAR} || LPAD(#{CUT_OFF_MONTH}, 2, '0') ) ]]>
+	</select>
+
+</mapper>

@@ -1,0 +1,82 @@
+{
+   "ManageCapableResourcesPanel":{
+      "columnConfig":{
+         "Description":"Sample configuration file delivered by DS.",
+         "name":"CapableResources",
+         "Title":"UI Config",
+         "Label":{
+            "displayType":"NonEditable",
+            "dataIndex":"V_Name.reference",
+            "dicoType":"PLMEntity"
+         },
+         "addDefaultGroupingColumns": false,
+         "Columns":{
+            "Column":[
+               {
+                  "displayType":"MANAGECAPABLERESOURCESMOD",
+                  "dataIndex":"Type"
+               },
+               {
+                  "displayType":"MANAGECAPABLERESOURCESMOD",
+                  "dataIndex":"Preferred"
+               },
+               {
+                  "displayType":"MANAGECAPABLERESOURCESMOD",
+                  "dataIndex":"ResourceUsage"
+               }
+            ]
+         }
+      },
+      "dragDropManager":"WUXManageCapableRscDragDrop",
+      "dataGridViewOptions":{
+         "enableDragAndDrop":true,
+         "setReusablecontent":false,
+         "toolbarOptions":{
+            "items":[
+               {
+                  "id":"MCROpenManageStepOperationsUI",
+                  "icon":"Manage Step Operation Usages",
+                  "category":"insert",
+                  "disabled":true,
+                  "position":"far",
+                  "tooltip":{
+                     "title":"ManageCapableResource.Tooltip.OpenManagStepOperationPanel.Title",
+                     "shortHelp":"ManageCapableResource.Tooltip.OpenManagStepOperationPanel.ShortHelp"
+                  }
+               },
+               {
+                  "id":"MCRDeleteLinks",
+                  "icon":"Delete Primary/Secondary Link",
+                  "category":"delete",
+                  "position":"far",
+                  "disabled":true,
+                  "tooltip":{
+                     "title":"ManageCapableResource.Tooltip.DeleteLink.Title",
+                     "shortHelp":"ManageCapableResource.Tooltip.DeleteLink.ShortHelp"
+                  }
+               }
+            ]
+         }
+      }
+   },
+   "ManageStepOperationsUsagePanel":{
+      "columnConfig":{
+         "Description":"Sample configuration file delivered by DS.",
+         "name":"StepOperations",
+         "Title":"UI Config",
+         "Label":{
+            "displayType":"NonEditable",
+            "dataIndex":"V_Name.reference",
+            "dicoType":"PLMEntity"
+         },
+         "Columns":{
+
+         }
+      },
+      "dragDropManager":"WUXManageCapableRscDragDrop",
+      "dataGridViewOptions":{
+         "enableDragAndDrop":false,
+         "setReusablecontent":false
+      }
+   }
+}

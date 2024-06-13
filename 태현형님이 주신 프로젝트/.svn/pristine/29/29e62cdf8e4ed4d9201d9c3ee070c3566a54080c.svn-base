@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!-- COPYRIGHT DASSAULT SYSTEMES 2021, All rights reserved -->
+
+<Package CustomerExposition = "Programmer" ModelerType = "Top" Name = "GeoscienceEntity" UseNames = "PRODUCTCFG" Uuid = "dc03b27e-e2a8-46ae-9cf9-1d82c5954be7" xmlns = "PLMDictionaryUnified">
+  <Class Abstract = "Yes" CustomerExposition = "Programmer" Discipline = "Yes" Name = "GeoscienceEntity" SuperName = "VPMReference" Uuid = "f592864a-0f1a-4eb9-8c1a-dc7ce6afddc1">
+    <Property Name = "GroupingType" Value = "GeoscienceEntity"/>
+  </Class>
+
+  <Class Name = "GeologyModelPart"
+    CustomerExposition = "Programmer"
+    Discipline = "Yes"
+    SuperName = "GeoscienceEntity"
+    Uuid = "47fd03b7-abc7-4406-8767-07602c4cfde3"
+    Abbreviation="gmp">
+    <Property Name = "IconName" Value = "I_GeologyModelPart"/>
+    <Property Name = "3DIconName" Value = "I_GeologyModelPart.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATKBEDelegateInstanciation"/> 
+    <Property Name = "Newable" Value = "All_Offline_CAA"/> 
+    <Property Name = "Filterable" Value = "Yes"/>
+    <Property Name = "Searchable" Value = "Yes"/>
+    <Property Name = "InstantiationOwnerTypes" Value = "PPRContext;GeologicAssembly"/>
+
+    <Simple Name = "ModelledAttribute" Uuid = "b3c0cc10-b001-4a72-958f-98cc6c7c13ec" CAAExposition = "L0" Protection = "Free" MaxLength = "255" Type = "String"/>
+    <Simple Name = "Methodology" Uuid = "f3195437-7231-4980-a824-3fa486759c73" CAAExposition = "L0" Protection = "Free" MaxLength = "255" Type = "String"/>
+    <Simple Name = "IsCurrent" Uuid = "972ae640-4b03-4afc-a99d-2d8bbc216823" Protection = "Internal" Type = "Boolean"/>
+  </Class>
+
+  <Class Name = "Geochronology"
+    CustomerExposition = "Programmer"
+    Discipline = "Yes"
+    SuperName = "GeoscienceEntity"
+    Uuid = "235a947d-cdfc-40ce-888b-0241f2206001"
+    Abbreviation="gch">
+    <Property Name = "IconName" Value = "I_Geochronology"/>
+    <Property Name = "3DIconName" Value = "I_Geochronology.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATKBEDelegateInstanciation"/>
+    <Property Name = "Newable" Value = "All_Offline_CAA"/> 
+    <Property Name = "Filterable" Value = "Yes"/>
+    <Property Name = "Searchable" Value = "Yes"/>
+    <Property Name = "InstantiationOwnerTypes" Value = "PPRContext;GeologicAssembly"/>
+
+    <Simple Name = "ConformableAttribute" Uuid = "976361c9-cdff-4430-9870-a95dbea6b9ce" CAAExposition = "L0" Protection = "Free" MaxLength = "255" Type = "String"/>
+    <Simple Name = "Events" Uuid = "7d903f16-2e75-4a97-910d-16cf7e3a93c8" CAAExposition = "L0" Protection = "Free" MaxLength = "255" Type = "String" MultiValuated = "Yes"/>
+  </Class>
+
+ <!-- Earth Volume Measure -->
+  <Class Name = "EarthVolumeMeasure" 
+         CustomerExposition = "Programmer" 
+         Discipline = "Yes" 
+         SuperName = "GeoscienceEntity" 
+         Uuid = "d17e1ec2-d74a-11ec-9d64-0242ac120002"
+         Abbreviation="evm">
+    <Property Name = "IconName" Value = "I_EarthVolumeMeasure"/>
+    <Property Name = "3DIconName" Value = "I_EarthVolumeMeasure.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATKBEDelegateInstanciation"/> 
+    <Property Name = "Newable" Value = "All_Offline_CAA"/> 
+    <Property Name = "Filterable" Value = "Yes"/>
+    <Property Name = "Searchable" Value = "Yes"/>
+    <Property Name = "InstantiationOwnerTypes" Value = "ResourceModel;MiningModel;ResourceDomain"/>
+
+    <CAAComment>
+      <Role>GEOVIA Earth Volume Measure Object.</Role>
+    </CAAComment>
+
+    <Simple Name = "ReportedAttributes" Uuid = "d17e845c-d74a-11ec-9d64-0242ac120002" CAAExposition = "L0" Protection = "Free" MaxLength = "255" Type = "String"  MultiValuated = "Yes"/>
+    <Simple Name = "AggregatedBy" Uuid = "d17e82b8-d74a-11ec-9d64-0242ac120002" CAAExposition = "L0" Protection = "Free" MaxLength = "255" Type = "String"  MultiValuated = "Yes"/>
+  </Class>
+
+   <!-- Volume of Interest -->
+   <Class Name = "EarthVolumeofInterest"
+        CustomerExposition = "Programmer"
+        Discipline = "Yes"
+        SuperName = "GeoscienceEntity"
+        Uuid = "d17e223c-d74a-11ec-9d64-0242ac120002"
+        Abbreviation="evi">
+        <Property Name = "IconName" Value = "I_EarthVolumeofInterest"/>
+        <Property Name = "3DIconName" Value = "I_EarthVolumeofInterest.cgr"/>
+        <Property Name = "KweNew_InstanciationMethod" Value = "CATKBEDelegateInstanciation"/>
+        <Property Name = "Newable" Value = "All_Offline_CAA"/>
+        <Property Name = "Filterable" Value = "Yes"/>
+        <Property Name = "Searchable" Value = "Yes"/>
+        <Property Name = "InstantiationOwnerTypes" Value = "ResourceModel;MiningModel;ResourceDomain"/>
+
+        <CAAComment>
+          <Role>GEOVIA Volume of Interest Object.</Role>
+        </CAAComment>
+
+        <Simple Name = "Attributes" Uuid = "d17e2548-d74a-11ec-9d64-0242ac120002" CAAExposition = "L0" Protection = "Free" MaxLength = "255" Type = "String" MultiValuated = "Yes"/>
+    </Class>
+ 
+</Package>

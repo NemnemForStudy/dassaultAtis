@@ -1,0 +1,182 @@
+{
+	"dswo:WorkOrderStep": {
+		"kindOf": "content",
+		"beType": "type_DELLmiOperationPPRReference",
+		"patchCSRF": true,
+		"search": true,
+		"cestamp": true,
+		"isPublic": true,
+		"optionCheck": {
+			"modify": true,
+			"produce": true,
+			"navigate": true
+		},
+		"defaultMask": "dsmvwo:WorkOrderStepMask.Default",
+		"contentLinks": [
+			"dswo:Alert",
+			"dswo:SignOff",
+			"dswo:Instruction",
+			"dswo:DataCollect",
+			"dswo:DataCollectPlan",
+			"dswo:CheckList",
+			"dswo:PrimaryResourceLinkDetail",
+			"dswo:SecondaryResourceLinkDetail"
+		],
+		"extensionLinks": [
+		]
+	},
+	"dswo:Instruction": {
+		"kindOf": "content",
+		"beType": "type_DELWkiInstructionReference",
+		"patchCSRF": true,
+		"search": true,
+		"cestamp": true,
+		"isPublic": true,
+		"optionCheck": {
+			"modify": true,
+			"produce": true,
+			"navigate": true
+		},
+		"defaultMask": "dsmvwo:InstructionMask.Default",
+		"contentLinks": [
+		],
+		"extensionLinks": [
+		]
+	},
+	"dswo:Alert": {
+		"kindOf": "content",
+		"beType": "type_DELWkiAlertReference",
+		"patchCSRF": true,
+		"search": true,
+		"cestamp": true,
+		"isPublic": true,
+		"optionCheck": {
+			"modify": true,
+			"produce": true,
+			"navigate": true
+		},
+		"defaultMask": "dsmvwo:AlertMask.Default",
+		"contentLinks": [
+		],
+		"extensionLinks": [
+		]
+	},
+	"dswo:SignOff": {
+		"kindOf": "content",
+		"beType": "type_DELWkiSignOffReference",
+		"patchCSRF": true,
+		"search": true,
+		"cestamp": true,
+		"isPublic": true,
+		"optionCheck": {
+			"modify": true,
+			"produce": true,
+			"navigate": true
+		},
+		"defaultMask": "dsmvwo:SignOffMask.Default",
+		"contentLinks": [
+		],
+		"extensionLinks": [
+		]
+	},
+	"dswo:DataCollect": {
+		"kindOf": "content",
+		"beType": "type_DELWkiDataCollectReference",
+		"patchCSRF": true,
+		"search": true,
+		"cestamp": true,
+		"isPublic": true,
+		"optionCheck": {
+			"modify": true,
+			"produce": true,
+			"navigate": true
+		},
+		"defaultMask": "dsmvwo:DataCollectMask.Default",
+		"contentLinks": [
+		],
+		"extensionLinks": [
+		]
+	},
+	"dswo:DataCollectPlan": {
+		"kindOf": "content",
+		"beType": "type_DELWkiDataCollectPlanReference",
+		"patchCSRF": true,
+		"search": true,
+		"cestamp": true,
+		"isPublic": true,
+		"optionCheck": {
+			"modify": true,
+			"produce": true,
+			"navigate": true
+		},
+		"defaultMask": "dsmvwo:DataCollectPlanMask.Default",
+		"contentLinks": [
+			"dswo:DataCollectRow"
+		],
+		"extensionLinks": [
+		]
+	},
+	"dswo:CheckList": {
+		"kindOf": "content",
+		"beType": "type_DELWkiDataCollectChecklistReference",
+		"patchCSRF": true,
+		"search": true,
+		"cestamp": true,
+		"isPublic": true,
+		"optionCheck": {
+			"modify": true,
+			"produce": true,
+			"navigate": true
+		},
+		"defaultMask": "dsmvwo:CheckListMask.Default",
+		"contentLinks": [
+			"dswo:DataCollectRow"
+		],
+		"extensionLinks": [
+		]
+	},
+	"dswo:DataCollectRow": {
+        "kindOf": "content",
+        "beType": "type_PLMSpecifyHowToCollectDataCnx",
+        "patchCSRF":true,
+        "search":true,
+        "cestamp":true,
+        "defaultMask":"dswo:DataCollectRowMask.Default",
+    	"isPublic": true,
+        "optionCheck" : {
+        	"modify"      : true,
+        	"produce"     : true,
+        	"navigate"    : true
+        }
+    },
+	"dswo:PrimaryResourceLinkDetail": {
+    	"kindOf": "content",
+        "beType": "virtual_PrimaryResourceLinkDetail",
+        "patchCSRF":true,
+        "search":true,
+        "cestamp":true,
+        "defaultMask":"dswo:PrimaryResourceLinkDetailMask.Default",
+    	"implementationClass": "com.dassault_systemes.delmia.ppr.nav.crs_utils.GenericVirtualNavContent",
+    	"isPublic": false,
+        "optionCheck" : {
+        	"modify"      : true,
+        	"produce"     : true,
+        	"navigate"    : true
+        }
+    },
+    "dswo:SecondaryResourceLinkDetail": {
+    	"kindOf": "content",
+        "beType": "virtual_SecondaryResourceLinkDetail",
+        "patchCSRF":true,
+        "search":true,
+        "cestamp":true,
+        "defaultMask":"dswo:SecondaryResourceLinkDetailMask.Default",
+    	"implementationClass": "com.dassault_systemes.delmia.ppr.nav.crs_utils.GenericVirtualNavContent",
+    	"isPublic": false,
+        "optionCheck" : {
+        	"modify"      : true,
+        	"produce"     : true,
+        	"navigate"    : true
+        }
+    }
+}

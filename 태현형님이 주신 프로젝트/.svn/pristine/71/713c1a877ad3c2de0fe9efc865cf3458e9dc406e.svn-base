@@ -1,0 +1,12 @@
+m|DELWebViewerBase\DELWebViewerUtils.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.3.23042|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\DELWebViewerUtils\DELWebViewerUtils.js|1676090251|2587
+s|DELWebViewerBase\DELWebViewerUtils.mweb\src\DELWebViewerSettingsMgt.js|1675177863|4602
+t|win_b64\webapps\DELWebViewerUtils\assets\json\DELWebViewerSettings.json|1667619911|5695
+s|DELWebViewerBase\DELWebViewerUtils.mweb\src\assets\json\DELWebViewerSettings.json|1666272292|5695
+u|DELWebViewerBase\DELWebViewerUtils.mweb\src\Utils.js|1674218462|6863
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

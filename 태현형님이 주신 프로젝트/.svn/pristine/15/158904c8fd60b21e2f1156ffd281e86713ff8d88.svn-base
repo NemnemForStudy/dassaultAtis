@@ -1,0 +1,1 @@
+define("DS/SocialToolbarCustomization/script/abstract",["UWA/Class"],function(e){"use strict";return e.extend({getThumbnailUrlFromContentUri:function(e){throw new Error("This method should have been overridden.")},getRedirectionUrlFromContentUri:function(e){throw new Error("This method should have been overridden.")}})});

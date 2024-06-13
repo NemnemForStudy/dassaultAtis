@@ -1,0 +1,1 @@
+define("DS/ENODOUtilsServices/ENODOUtilsServices_pt-BR",{});define("DS/ENODOUtilsServices/assets/nls/enodo_notifications",{error:{title:"Erro",security_context_fail:"A solicitação do servidor não pode ser enviada : falha ao recuperar o contexto de segurança."}});

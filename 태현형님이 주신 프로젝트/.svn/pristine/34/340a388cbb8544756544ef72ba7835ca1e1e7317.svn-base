@@ -1,0 +1,1 @@
+define("DS/ErrorWidget/ErrorWidget_cs",{});define("DS/ErrorWidget/assets/nls/langEW",{"Server issue":"Nelze komunikovat se serverem","Forbidden access":"Nemáte oprávnění pro přístup k serveru"});

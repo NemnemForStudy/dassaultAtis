@@ -1,0 +1,1 @@
+define("DS/ModelLoader_str/loader",["DS/GEOV1Loader/GEOstrServices"],function(e){return function(){this.load=function(o,n,d,r,t,i){(new e).load(o,{multiLoad:!1},n,d,r,t,i)}}});

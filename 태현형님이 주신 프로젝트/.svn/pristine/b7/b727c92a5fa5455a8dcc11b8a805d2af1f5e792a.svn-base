@@ -1,0 +1,1 @@
+define("DS/ENOXModelListView/ENOXModelListView_ja",{});define("DS/ENOXModelListView/assets/nls/ModelListView",{_collapse_content:"コンテンツを折りたたむ",_expand_content:"コンテンツを展開する",_groupByAction:"グループ",_color:"色",_model:"モデル",_action:"アクション",_dataGridView:"データ グリッド ビュー",_tileView:"タイル ビュー",_thumbnailView:"サムネイル ビュー",_largeTileView:"大きいタイル ビュー"});

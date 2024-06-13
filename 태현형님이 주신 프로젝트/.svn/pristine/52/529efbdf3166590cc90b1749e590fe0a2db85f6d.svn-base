@@ -1,0 +1,508 @@
+
+/* Copyright 2015 Dassault Systèmes company. All rights reserved.*/
+/*
+*pour s'assurer que lors de la concaténation les @import ne s'éxécutent pas
+*/
+.life-is-beautiful {
+	color: pink;
+}
+
+/* Copyright 2014 Dassault SystÃ¨mes company. All rights reserved.*/
+
+@import "Utils/Renderers/DMSAppActions.css";
+
+.staging-corner-ribbon {
+    position: fixed;
+    top: -3px;
+    right: -28px;
+    width: 70px;
+    font-size: 17px;
+    line-height: 25px;
+    z-index: 10000;
+    cursor: pointer;
+    background-color: #368ec4;
+    background-color: #d42834;
+    background-color: #bd1526;
+    color: white;
+/*    text-shadow: 2px 1px 2px red; */
+    text-align: center;
+    vertical-align: middle;
+    transform: rotate(45deg);
+    transition: font-size 0.5s;
+}
+
+.staging-corner-ribbon:hover {
+    font-size: 15px;
+}
+
+.staging-corner-ribbon > p {
+    visibility: hidden;
+    padding: 10px;
+    left: -106px;
+    top: 90px;
+    width: 220px;
+    background-color: #555;
+    background-color: #f4f5f6;
+    color: #fff;
+    color: #77797C;
+    color: #368ec4;
+    text-align: center;
+    border: 1px solid #E2E4E3;
+    border-radius: 4px;
+    position: absolute;
+    z-index: 20000;
+    font-size: 12px;
+    font-family: arial;
+    font-weight: 400;
+    line-height: 125%;
+    opacity: 0.1;
+    transition: opacity 0.5s;
+    transform: rotate(-45deg);
+    text-shadow: none;
+}
+
+.staging-corner-ribbon:hover > p {
+    visibility: visible;
+    opacity: 1;
+}
+
+a.tab-item:hover {
+    color: #3d3d3d;
+}
+
+.sortDropdownMenu {
+    min-width: 250px !important;
+}
+
+.sortPanelRow span.item-text {
+    width: 150px;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis, cursor: default !important;
+}
+
+.item-icon-group {
+    display: inline-flex;
+    float: right;
+    justify-content: space-around;
+    min-width: 50px;
+}
+
+    .item-icon-group .fonticon:hover {
+        opacity: 1;
+    }
+
+.item-icon-sort {
+    opacity: .6;
+    cursor: pointer;
+    font-size: 1.5em;
+    padding: 2px;
+}
+
+    .item-icon-sort.active {
+        color: #368ec4;
+    }
+
+#ToolsGridContent {
+    display: grid;
+    -ms-grid-columns: 3fr 45px 10fr 260px 2fr;
+    -ms-grid-rows: 1fr 2fr 2fr 4fr 1fr 2fr;
+    grid-template-columns: 3fr 45px 10fr 260px 2fr;
+    grid-template-rows: 1fr 2fr 2fr 4fr 1fr 2fr;
+}
+
+
+#ToolsCusto {
+    grid-column: 1 / span 5;
+    -ms-grid-column: 1 / span 5;
+    grid-row: 1;
+    -ms-grid-row: 1;
+}
+
+/*#ToolsIndex {
+    grid-column: 1 / span 5;
+    -ms-grid-column: 1 / span 5;
+    grid-row: 4;
+    -ms-grid-row: 4;
+}*/
+
+#ToolsBR {
+    grid-column: 1 / span 5;
+    -ms-grid-column: 1 / span 5;
+    grid-row: 5;
+    -ms-grid-row: 5;
+}
+
+#ToolsExportLabel {
+    grid-column: 1;
+    -ms-grid-column: 1;
+    grid-row: 2;
+    -ms-grid-row: 2;
+}
+
+#ToolsImportLabel {
+    grid-column: 1;
+    -ms-grid-column: 1;
+    grid-row: 3;
+    -ms-grid-row: 3;
+}
+
+#ToolsIndexLabel {
+    grid-column: 1;
+    -ms-grid-column: 1;
+    grid-row: 4;
+    -ms-grid-row: 4;
+}
+
+/*#ToolsExportBRLabel{
+	grid-column: 1 ; 
+	-ms-grid-column: 1;
+	grid-row: 7;
+	-ms-grid-row:7;
+}*/
+
+#ToolsImportBRLabel {
+    grid-column: 1;
+    -ms-grid-column: 1;
+    grid-row: 6;
+    -ms-grid-row: 6;
+}
+
+#ToolsExportInfo {
+    -ms-grid-column: 2;
+    grid-column: 2;
+    grid-row: 2;
+    -ms-grid-row: 2;
+}
+
+#ToolsImportInfo {
+    grid-column: 2;
+    -ms-grid-column: 2;
+    grid-row: 3;
+    -ms-grid-row: 3;
+}
+
+#ToolsUpdateIndexInfo {
+    grid-column: 2;
+    -ms-grid-column: 2;
+    grid-row: 4;
+    -ms-grid-row: 4;
+}
+
+/*#ToolsExportBRInfo{
+	grid-column: 2 ; 
+	grid-row: 7;
+}*/
+
+#ToolsImportBRInfo {
+    grid-column: 2;
+    -ms-grid-column: 2;
+    grid-row: 6;
+    -ms-grid-row: 6;
+}
+
+#ToolsBrowseImportFile {
+    grid-column: 4;
+    -ms-grid-column: 4;
+    grid-row: 3;
+    -ms-grid-row: 3;
+    justify-self: end;
+    -ms-grid-column-align: end;
+    margin-top: 10px;
+    /*display:inline-table*/;
+    /*display:flex;*/
+}
+
+#ToolsBrowseImportBRFile {
+    grid-column: 3;
+    -ms-grid-column: 3;
+    grid-row: 6;
+    -ms-grid-row: 6;
+    margin-top: 10px;
+    justify-self: end;
+    -ms-grid-column-align: end;
+    /*display:inline-table;*/
+    /*display:flex;*/
+}
+
+.ToolsSectionHeader {
+    background: lightgrey;
+    padding: 5px 0px 5px 5px;
+    margin-left: 5px;
+    font-weight: bold;
+}
+
+.ToolsLabel {
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.ToolsInfo {
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.ToolsDivButton {
+    margin-top: 10px;
+    margin-right: 10px;
+    justify-self: center;
+    -ms-grid-column-align: center;
+}
+
+
+
+/*#ImportFileInput{
+	margin-right:0px;
+	margin-left:0px;
+	display:table-cell;
+}*/
+
+/*#ImportBRFileInput{
+	margin-right:0px;
+	margin-left:0px;
+	display:table-cell;
+}*/
+
+/*.ToolsImportFileInput{
+	margin-right:0px;
+	margin-left:0px;
+	display:table-cell;
+}*/
+
+/*#ToolsBrowseImportFile .uwa-input-button
+{
+	border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}*/
+
+
+/*.ToolsDivBrowseFile  .uwa-input-button
+{
+	border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}*/
+
+.ToolsDivBrowseFile {
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+/*#ToolsBrowseImportFile > .xml-file-input
+{
+	margin-right:0px;
+	margin-left:0px;
+	display:table-cell;
+    width:100%;
+}*/
+
+/*.ToolsDivBrowseFile > .xml-file-input
+{
+	margin-right:0px;
+	margin-left:0px;
+	display:table-cell;
+    width:100%;
+}*/
+
+/*#ToolsBrowseImportBRFile .uwa-input-button
+{
+	border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}*/
+
+
+/*#ToolsBrowseImportBRFile > .xml-file-input
+{
+	margin-right:0px;
+	margin-left:0px;
+	display:table-cell;
+    width:100%;
+}*/
+
+
+.ToolsButton {
+    /*width:100%;*/
+}
+
+#ToolsExportButton {
+    grid-column: 5;
+    -ms-grid-column: 5;
+    grid-row: 2;
+    -ms-grid-row: 2;
+}
+
+#ToolsImportButton {
+    grid-column: 5;
+    -ms-grid-column: 5;
+    grid-row: 3;
+    -ms-grid-row: 3;
+}
+
+/*.ToolsUploadButton{
+    display:table-cell;
+    height: 32px;
+    padding-bottom: 1px;
+   border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    padding-top: 1px;
+}*/
+
+/*#ToolsBrowseImportFile > .uwa-file-button
+{
+	border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}*/
+
+
+#ToolsUpdateIndexButton {
+    grid-column: 5;
+    -ms-grid-column: 5;
+    grid-row: 4;
+    -ms-grid-row: 4;
+}
+
+/*#ToolsExportBRButton{
+	grid-column: 4 ; 
+	-ms-grid-column: 4;
+	grid-row: 7;
+	-ms-grid-row:7;
+}*/
+
+#ToolsImportBRButton {
+    grid-column: 5;
+    -ms-grid-column: 5;
+    grid-row: 6;
+    -ms-grid-row: 6;
+}
+
+
+#ToolsBrowseImportBRFile {
+    grid-column: 4;
+    -ms-grid-column: 4;
+    grid-row: 6;
+    -ms-grid-row: 6;
+}
+
+#ToolsSelectCollabSpace {
+    grid-column: 3;
+    -ms-grid-column: 3;
+    grid-row: 6;
+    -ms-grid-row: 6;
+    margin-top: 10px;
+    margin-left: 15px;
+    margin-right: 15px;
+    justify-self: end;
+    -ms-grid-column-align:end;
+    /*display: inline-table;
+	justify-self: center;*/
+}
+
+
+#selectCollabSpace {
+    width: 260px;
+    height: 32px;
+}
+
+.alert.Tools-alert {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    z-index: 2100;
+}
+
+#collabSpaceImgAlert {
+    color: black;
+    display: table-cell;
+    padding-right: 5px;
+}
+
+#CollabSpaceAlert {
+    display: table-cell
+}
+
+
+#ToolsUpdateIndexHistory {
+    grid-column: 3/ span 2;
+    -ms-grid-column: 3/ span 2;
+    grid-row: 4;
+    -ms-grid-row: 4;
+    margin-top: 10px;
+    justify-self: center;
+    -ms-grid-column-align: center;
+}
+
+#ToolsDivUpdateIndexStatus {
+    display: inline-table;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+#ToolsSpinnerIndexInfo {
+}
+
+#pSatusUpdate {
+    display: table-cell;
+}
+
+#StatusUpdateFailed {
+    display: table-cell;
+}
+
+#StatusUpdateSuccess {
+    display: table-cell;
+}
+
+/*#ToolsDivUpdateIndexTime{
+   grid-column: 2; 
+	grid-row: 2;
+    font-size: 0.8em;
+    margin-left: 10px;
+ }*/
+
+
+.ToolsUpdateInfoDiv {
+    font-size: 0.8em;
+    margin-left: 10px;
+}
+
+
+.UpdateIndexTimeInfo {
+    display: table-cell;
+}
+
+#startUpdateIndex {
+    display: table-cell;
+}
+
+#endUpdateIndexIcon {
+    display: table-cell;
+}
+
+#endUpdateIndex {
+    display: table-cell;
+}
+
+#ToolsResetButton {
+    /* padding: 0;*/
+    border: 0;
+    background: 0;
+    cursor: pointer;
+    padding-bottom: 0px;
+    padding-top: 0px;
+}
+
+#mainToolsDiv{
+	height: 100%;
+	width: 100%;
+}
+
+#to-scroll-tools{
+	height: 100%;
+	width: 100%;
+}
+
+.actions-container {
+    overflow: visible;
+}

@@ -1,0 +1,27 @@
+1. 테이블을 그린다
+2. name, title, description, document, category, current, originated(날짜) 를 리스트로 보여준다.
+
+jsp로
+
+3. 만약 쉽게 되더라?
+-> 검색 필터를 달아보자
+조건 : title / category : select box (range 값 4개)
+
+mql사용해서 start searchindex mode partial로 검색해보자.
+
+Context context = Framework.getContext(session);
+
+name = DOC-001
+    description = My First Document Descrption
+    shortdescription = My First Document Descrption
+    revision = 1
+    originated = 7/10/2023 3:38:28 PM
+    modified = 7/10/2023 3:52:44 PM
+    lattice = eService Production
+    owner = admin_platform
+
+temp query bus atisDocument * * select *;
+
+Project Deliverable, Management Document, Etc <- range값
+
+attribute[Title]=='My First Document'&&attribute[atisDocumentCategory]=='Management Document'

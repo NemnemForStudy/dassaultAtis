@@ -1,0 +1,10 @@
+################################################################################################
+# Create By jhlee : 2023. 07. 12
+# Admin Type : relationship
+# Name : Project Access Key
+################################################################################################
+
+#del relationship 'Project Access Key';
+copy relationship 'Project Access Key' 'Project Access Key_ootb';
+
+mod relationship 'Project Access Key' add trigger Create Override emxTriggerManager input 'RelationshipProjectAccessKeyCreateOverride';

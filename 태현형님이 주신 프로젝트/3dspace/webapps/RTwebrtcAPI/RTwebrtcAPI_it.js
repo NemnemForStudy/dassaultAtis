@@ -1,0 +1,1 @@
+define("DS/RTwebrtcAPI/RTwebrtcAPI_it",{});define("DS/RTwebrtcAPI/assets/nls/feed",{Call:"Chiama",notCompatible:"Questa funzione non è supportata dal browser o dispositivo in uso"});

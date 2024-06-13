@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:widget="http://www.netvibes.com/ns/"
+>
+  <!-- Copyright 2016 , Dassault Systemes. All rights reserved. -->
+  <head>
+    <!-- Application Metas Start -->
+    <meta name="author" content="Dassault Systemes" />
+    <meta name="brand" content="ENOVIA" />
+    <meta name="noSearchInWidgetUI" content="true" />
+    <meta name="helpPath" content="UnifiedImport/assets/help" />
+    <!-- Application Metas End -->
+
+    <!-- Application JS Start -->
+    <script>
+      require([
+        "DS/UnifiedImport/UnifiedImport",
+        "DS/UnifiedImport/utils/Essentials",
+      ], function (UnifiedImport, Essentials) {
+        "use strict";
+        Essentials.init();
+        widget.addEvent("onLoad", UnifiedImport.onLoad.bind(null, {}));
+      });
+    </script>
+    <!-- Application JS End -->
+  </head>
+  <body></body>
+</html>

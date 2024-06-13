@@ -1,0 +1,14 @@
+# Added by choimingi on 2023.09.09
+# del command decPIMAWPWFPEditCmd;
+add command decPIMAWPWFPEditCmd
+	href 'javascript:editMode()'
+	setting 'Registered Suite' 'Framework'
+	setting 'Image' '${COMMON_DIR}/images/iconActionEdit.png'
+;
+
+mod command decPIMAWPWFPEditCmd
+	add setting 'Access Program' 'decInterfaceDV'
+	add setting 'Access Function' 'isCWPTable'
+;
+
+mod menu decDeliverableStatusToolbar add command decPIMAWPWFPEditCmd;

@@ -1,0 +1,1 @@
+define("DS/WidgetServices/WidgetServices_pl",{});define("DS/WidgetServices/assets/nls/SecurityContextNls",{ErrorSecurityContextEmpty:"Użytkownik nie preferuje kontekstu zabezpieczeń",ErrorSecurityContext:"Wystąpił błąd podczas pobierania kontekstu zabezpieczeń",ErrorTimeOut:"Pobieranie kontekstu zabezpieczeń przez serwer zajmuje zbyt dużo czasu"});

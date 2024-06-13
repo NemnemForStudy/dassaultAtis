@@ -1,0 +1,31 @@
+################################################################################################
+# Modified By thok : 2023. 07. 25
+# Admin Type : command
+# Name : APPImageManager
+################################################################################################
+copy command APPImageManager APPImageManager_ootb;
+mod command APPImageManager
+	add setting 'Access Expression' 'admin_platform==context.user'
+;
+
+# Modified By thok : 2023. 07. 28
+mod command APPImageManager
+	add setting 'Access Expression' 'context.user.isassigned[decSystemAdmin]'
+;
+
+# Modified By thok : 2023. 08. 17
+mod command APPImageManager
+	remove setting 'Access Expression'
+;
+
+# Modified By thok : 2023. 09. 09
+mod command APPImageManager
+	add setting 'hasAccess' 'PIM'
+	add setting 'Access Program' 'decAccess' 
+	add setting 'Access Function' 'hasAccess'
+;
+
+# Modified By thok : 2023.10.27
+mod command APPImageManager
+	label 'Images'
+;

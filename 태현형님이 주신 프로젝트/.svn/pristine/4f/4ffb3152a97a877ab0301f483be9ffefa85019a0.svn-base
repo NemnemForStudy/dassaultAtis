@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<!-- COPYRIGHT DASSAULT SYSTEMES 2019, All rights reserved -->
+<Package xmlns="PLMDictionaryUnified"
+         ModelerType="Top"
+         Name="DIFModelerLabelTemplateRep"
+         BelongsToModeler="DIFModeler2DTemplate"
+         UseProcedures="DIFpe_Procedures"
+         Uuid="2F1BE8EC-8538-4C7C-82D3-06BEB75DAB41"
+         UseNames="DIFModeler2DTemplateRepAbstract"
+         CustomerExposition="Programmer">
+  <Property Name="FormerTypingLegacy" Value="No"/>
+
+  <CAAComment>
+    <ShortRole>DIF modeler Template Rep (part 3)</ShortRole>
+    <Role>This package describes the DIF Template Rep model built on top of PLM Core2</Role>
+  </CAAComment>
+
+  <Comment>last update 2019-02-14-8.00.00</Comment>
+
+  <!-- DIFModelerLabelTemplateRep provides :         -->
+  <!-- DIFLabelTemplate       PLMCoreRepReference -->
+
+  <!-- ******************************************* -->
+  <!-- *  DIFLabelTemplate (PLMCoreRepReference) * -->
+  <!-- ******************************************* -->
+  <Class Name="DIFLabelTemplate"
+         Uuid="9FD5AF8C-807E-4F99-A648-5DF00CEEACF6"
+         Abstract="No"
+         SuperName="DIF2DTemplateRepAbstract"
+         Abbreviation="lbl"
+         CustomerExposition="Programmer"
+         Specializable="No"
+         DeleteAvailability="Yes">
+
+    <CAAComment>
+      <ShortRole>DIF Template Label Rep Object</ShortRole>
+      <Role>DIF Template Label Rep Object</Role>
+    </CAAComment>
+
+    <!-- PLM New UI/KWE Scripts New -->
+    <!-- <Property Name="Newable" Value="New"/> We block plm new in + menu for now -->
+    <Property Name="Newable" Value="New"/>
+    <Property Name="KweNew_InstanciationMethod" Value="CATDifTemplateKBEDelegateInstanciation"/>
+
+    <!-- Icon and 3D Icon -->
+    <Property Name="IconName" Value="I_D3M_TemplateLabel"/>
+
+    <!-- Collaborative Space Applicability -->
+    <Property Name="ShareBetweenProjectsAvailability" Value="Yes"/>
+	
+	<!-- Change Management support -->
+	<Property Name="ChangeManagementSupport" Value="Yes"/>
+
+	<!-- Export -->
+    <Method ImplementationType="Self">
+      <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+      
+      <ProcedureForUsage>
+        <Usage href="ExportScope.meth#Design"/>
+        <UsedProcedure href="DIFpe_Procedures.proc#DIFModeler_ExportCompletion_DifAbstract2DTemplate"/>
+      </ProcedureForUsage>
+
+      <ProcedureForUsage>
+        <Usage href="ExportScope.meth#Remove"/>
+        <UsedProcedure href="DIFpe_Procedures.proc#DIFModeler_ExportCompletion_Myself"/>
+      </ProcedureForUsage>
+
+      <ProcedureForUsage>
+        <Usage href="ExportScope.meth#TransferSiteOwnership"/>
+        <UsedProcedure href="DIFpe_Procedures.proc#DIFModeler_ExportCompletion_Myself"/>
+      </ProcedureForUsage>
+
+    </Method>
+
+  </Class>
+  
+</Package>

@@ -1,0 +1,137 @@
+﻿.onesearch_results .onesearch_skeleton .search-content-set-container {
+
+  .search-content-set-contents .RespTileGridView {
+    align-self: stretch;
+    flex: 1 1 auto;
+    display: flex;
+    height: 100%;
+
+    .wux-layouts-collectionview {
+      width: inherit;
+
+      .wux-controls-responsivetileview-description {
+        white-space: nowrap; // IR-916546-3DEXPERIENCER2022x
+      }
+    }
+
+    .search-timeLine-container:not(.hidden) {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      z-index: 1;
+      height: 98%;
+      right: 2%;
+      width: calc((251/780)*93vw - 246.8461538461538px - 65px);
+
+      .fromToInput {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        margin: auto;
+        margin-top: 3%;
+
+        .input-container {
+          margin: auto;
+        }
+
+        #from-input-container {
+          margin-right: 2%;
+        }
+      }
+
+      .search-timeLine-container-content {
+        display: flex;
+        flex-direction: row;
+        height: 95%;
+        width: 100%;
+        margin: auto;
+        margin-top: 5%;
+
+        .search-timeLine-content {
+          display: flex;
+          flex-direction: column;
+          width: 75%;
+
+          .search-timeline-content-header {
+            display: flex;
+            flex-direction: row;
+            background-color: #fff;
+            border-radius: 50px;
+            padding: 5px 15px;
+
+            span {
+              font-size: 2em;
+              color: #42a2da;
+              font-weight: 900;
+              cursor: pointer;
+              margin: auto;
+              margin-left: 0;
+            }
+
+            .search-timeline-content-header-title {
+              text-align: end;
+              font-size: x-large;
+              font-weight: bold;
+              color: #42a2da;
+              margin: auto;
+              margin-right: 0;
+            }
+          }
+
+          .search-timeLine-content-index {
+            display: flex;
+            flex-direction: row-reverse;
+            margin: auto;
+            width: 100%;
+
+            .search-timeLine-content-index-title {
+              font-weight: bold;
+              font-size: medium;
+              text-align: end;
+              white-space: nowrap;
+              width: 100%;
+              margin-left: 5%;
+              cursor: pointer;
+              margin-bottom: 0;
+              text-overflow: ellipsis;
+              overflow: hidden;
+
+              &:hover {
+                color: #42a2da;
+              }
+            }
+
+            .wux-controls-progressbar-linear-lite {
+              margin: auto;
+              transform: rotateY(180deg);
+              background: transparent;
+
+              .wux-controls-progressbar-linear-bar {
+                //background: #005685 !important;
+              }
+            }
+          }
+        }
+
+        .wux-controls-slider-vertical {
+            margin: 0 auto;       
+
+          .wux-controls-slider-bgFilled {
+            //background: #005685;
+          }
+        }
+      }
+
+      .wux-controls-button {
+        margin-top: 5%;
+        font-weight: 700;
+      }
+    }
+  }
+}
+
+// IR-763344-3DEXPERIENCER2021x - format label size.
+.wux-controls-responsivetileview-title {
+  right: auto !important;
+  left: auto !important;
+}

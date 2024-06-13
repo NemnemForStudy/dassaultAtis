@@ -1,0 +1,1 @@
+define("DS/CATWebUXSlideShow/CATWebUXSlideShow_ko",{});define("DS/CATWebUXSlideShow/assets/nls/CATWebUXSlideShow",{previousSlide:"이전 보기",nextSlide:"다음 보기",exitSlideShow:"슬라이드 쇼 종료",slideShowCannotBeLaunched:"Nothing to display in Presentation mode"});

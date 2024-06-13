@@ -1,0 +1,19 @@
+# Added by hslee on 2023.07.26
+# delete relationship decCodeMasterTemplateRel;
+
+add relationship decCodeMasterTemplateRel
+	description 'Code Master Template to Code Master(rev. -)'
+	preventduplicates
+	from
+	 type 'decCodeMasterTemplate'
+	 cardinality 1
+	 revision none
+	 clone none
+	to
+	 type 'decCodeMaster'
+	 cardinality many
+	 revision none
+	 clone none
+;
+
+add property relationship_decCodeMasterTemplateRel on program eServiceSchemaVariableMapping.tcl to relationship decCodeMasterTemplateRel;

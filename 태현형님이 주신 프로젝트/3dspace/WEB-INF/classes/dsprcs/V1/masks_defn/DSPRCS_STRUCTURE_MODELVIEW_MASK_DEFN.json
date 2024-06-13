@@ -1,0 +1,172 @@
+{
+	"rootMetaType"				: "dsprcs:MfgProcess",
+	"addPathsToResponse"		: true,
+	"dsprcs:MfgProcess": {
+		"mask"			: "dsprcs:MfgProcessMask.Default",
+		"fields"		: [ "dsprcs:sequencingMode",
+							"dsprcs:program.getProcessAssetContext" ],
+		"models"		: [ "dsprcs:MfgProcess",
+							"dsprcs:MfgProcessInstance",
+							"dsprcs:MfgOperationInstance", 
+							"dsprcs:MfgOperation"],
+		"navigateLinks"	: [ "dsprcs:PreAssignedWorkCenter",
+							"dsprcs:TimeConstraint",
+							"dsprcs:ItemSpecification",
+							"dsprcs:TransientTimeCnxSeq",
+							"dsprcs:TransientTimeCnxFilter" ],
+		"cestamp"		: true
+	},
+	"dsprcs:MfgProcessInstance": {
+		"mask"			: "dsprcs:MfgProcessInstanceMask.Default",
+		"fields"		: [ "dsprcs:instance.parent",
+							"dsprcs:instance.reference" ],
+		"cestamp"		: true
+	},
+	"dsprcs:MfgOperationInstance": {
+		"mask"			: "dsprcs:MfgOperationInstanceMask.Default",
+		"fields"		: [ "dsprcs:instance.parent",
+							"dsprcs:instance.reference" ],
+		"isSequenced"	: true,
+		"cestamp"		: true
+	},
+	"dsprcs:MfgOperation": {
+		"mask"			: "dsprcs:MfgOperationMask.Details",
+		"cestamp"		: true,
+		"navigateLinks"	: [	"dsprcs:TimeConstraint",
+							"dsprcs:TransientTimeCnxSeq",
+							"dsprcs:TransientTimeCnxFilter",
+							"dsprcs:PrimaryCapableResource",
+							"dsprcs:SecondaryCapableResource",
+							"dsprcs:PrimaryResourceLinkDetail",
+							"dsprcs:SecondaryResourceLinkDetail" ]
+	},
+	"dsprcs:PreAssignedWorkCenter": {
+		"mask"			: "dsprcs:PreAssignedWorkCenterMask.Default",
+		"cestamp"		: true,
+		"fields"		: [ {
+								"fieldName": "dsprcs:program.getPreAssignedWorkCenterResource",
+								"isReferencedObject": false
+							},
+							{
+								"fieldName": "dsprcs:program.getPreAssignedWorkCenterOperationOcc",
+								"isReferencedObject": false
+							} ]
+	},
+	"dsprcs:TimeConstraint": {
+		"mask"			: "dsprcs:TimeConstraintMask.Default",
+		"cestamp"		: true,
+		"fields"		: [ "dsmveno:basic.created.public",
+							"dsmveno:basic.modified.public",
+							{
+								"fieldName": "dsprcs:program.getTimeConstraintToOperationOcc",
+								"isReferencedObject": false
+							}, {
+							 	"fieldName": "dsprcs:program.getTimeConstraintFromOperationOcc",
+							 	"isReferencedObject": false
+							} ]
+	},
+	"dsprcs:ItemSpecification": {
+		"mask"			: "dsprcs:ItemSpecificationMask.Default",
+		"cestamp"		: true,
+		"fields"		: [ {
+								"fieldName": "dsprcs:program.getItemSpecificationOperationOcc",
+								"isReferencedObject": false
+							}, {
+								"fieldName": "dsprcs:program.getItemSpecificationItemOcc",
+								"isReferencedObject": false
+							}, {
+							 	"fieldName": "dsprcs:program.getItemSpecificationItemRef",
+							 	"isReferencedObject": false
+							}, {
+							 	"fieldName": "dsprcs:program.getItemSpecificationScopeContext",
+							 	"isReferencedObject": false
+							}, {
+								"keyInResponse"			: "implLinkUsage"
+							},
+							{
+								"keyInResponse"			: "usage"
+							},
+							{
+								"keyInResponse"			: "computedUsage"
+							} ]
+	},
+	"dsprcs:PrimaryCapableResource": {
+		"mask"			: "dsprcs:PrimaryCapableResourceMask.Default",
+		"cestamp"		: true,
+		"fields"		: [ "dsmveno:basic.created.public",
+							"dsmveno:basic.modified.public",
+							{
+								"fieldName": "dsprcs:program.getPrimaryCapableResource",
+								"isReferencedObject": false
+							} ]
+	},
+	"dsprcs:SecondaryCapableResource": {
+		"mask"			: "dsprcs:SecondaryCapableResourceMask.Default",
+		"cestamp"		: true,
+		"fields"		: [ "dsmveno:basic.created.public",
+							"dsmveno:basic.modified.public",
+							{
+								"fieldName": "dsprcs:program.getSecondaryCapableResource",
+								"isReferencedObject": false
+							}, {
+								"fieldName": "dsprcs:program.getSecondaryCapableResourceDependsOn",
+								"isReferencedObject": false
+							} ]
+	},
+	"dsprcs:PrimaryResourceLinkDetail": {
+		"mask"			: "dsprcs:PrimaryResourceLinkDetailMask.Default",
+		"cestamp"		: true,
+		"fields"		: [ {
+								"conceptualName"		: "document",
+								"isReferencedObject"	: true,
+								"isMember"				: true,
+								"keyInResponse"			: "dsdoc:Document"
+							} ]
+	},
+	"dsprcs:SecondaryResourceLinkDetail": {
+		"mask"			: "dsprcs:SecondaryResourceLinkDetailMask.Default",
+		"cestamp"		: true,
+		"fields"		: [ {
+								"conceptualName"		: "document",
+								"isReferencedObject"	: true,
+								"isMember"				: true,
+								"keyInResponse"			: "dsdoc:Document"
+							} ]
+	},
+	"dsprcs:TransientTimeCnxSeq": {
+		"fields"		: [ {
+								"keyInResponse"		: "isProductFlow",
+								"format"			: "boolean"		
+							},
+							{
+								"keyInResponse"		: "isOptional",
+								"format"			: "boolean"		
+							},
+							{
+								"keyInResponse"		: "delay",
+								"format"			: "double"		
+							},
+							{
+								"keyInResponse"		: "maximumRetries",
+								"format"			: "integer"		
+							} ]
+	},
+	"dsprcs:TransientTimeCnxFilter": {
+		"fields"		: [ {
+								"keyInResponse"		: "isProductFlow",
+								"format"			: "boolean"		
+							},
+							{
+								"keyInResponse"		: "isOptional",
+								"format"			: "boolean"		
+							},
+							{
+								"keyInResponse"		: "delay",
+								"format"			: "double"		
+							},
+							{
+								"keyInResponse"		: "maximumRetries",
+								"format"			: "integer"		
+							} ]
+	}
+}

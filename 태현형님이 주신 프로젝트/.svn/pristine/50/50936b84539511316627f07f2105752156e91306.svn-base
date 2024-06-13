@@ -1,0 +1,17 @@
+################################################################################################
+# Created By jhlee : 2023. 09. 08
+# Admin Type : command
+# Name : decSampleExcelDownloadCmdKPI
+################################################################################################
+#del command decSampleExcelDownloadCmdKPI;
+add command decSampleExcelDownloadCmdKPI
+	label 'ProgramCentral.Label.SampleExcelDownload' 
+	href '${COMMON_DIR}/decSampleExcelDownload.jsp?type=KPI'
+	alt 'ProgramCentral.Label.SampleExcelDownload' 
+	setting 'Registered Suite' ProgramCentral
+	setting 'Target Location' listHidden
+	setting 'Submit' true
+	setting 'Image' "${COMMON_DIR}/images/I_ImportFromFile_32.png"
+;
+add property 'command_decSampleExcelDownloadCmdKPI' on program 'eServiceSchemaVariableMapping.tcl' to command 'decSampleExcelDownloadCmdKPI'
+;

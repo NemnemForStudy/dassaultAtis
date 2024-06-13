@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <title><%= htmlWebpackPlugin.options.title %></title>
+    <link rel="stylesheet" href="./UIKIT.css">
+  <script type="text/javascript" src="https://jarjar.dsone.3ds.com/vuekit/master/binaries/vu-kit.umd.js"></script>
+  <link rel="stylesheet" href="https://jarjar.dsone.3ds.com/vuekit/master/binaries/vu-kit.css">
+
+    <script>
+      window.dsBaseUrl = 'https://dsext001-eu1-intf220519-3dswym.3dexperience.3ds.com/';
+      window.dsResourceUrl = dsBaseUrl;
+      window.dsUntrustedBaseUrl = '';
+      window.dsDefaultWebappsBaseUrl = dsResourceUrl + 'uwp/resources/0/en/webapps';
+
+      window.require = {
+          baseUrl: dsDefaultWebappsBaseUrl,
+          paths: {
+              'ds': dsResourceUrl + 'uwp/resources/0/en/wp/script',
+              'DS': dsDefaultWebappsBaseUrl,
+              "V6frame":dsResourceUrl+"uwp/resources/3120702781/en/V6frame/script",
+              "wp":dsResourceUrl+"uwp/resources/2037997472/en/wp/script",
+              "swym":dsResourceUrl+"uwp/resources/131772461/en/swym/script"
+          },
+          config: {
+              i18n: {
+                  locale: 'en'
+              },
+              'DS/Logger/Logger': {
+                  disableLog: !true
+              }
+          },
+          urlArgs: 'debug_me',
+          skipDataMain: true
+      }
+    </script>
+    <script type="text/javascript" src="../AmdLoader/AmdLoader.js"></script>
+  </head>
+  <body>
+    <noscript>
+      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+  </body>
+</html>

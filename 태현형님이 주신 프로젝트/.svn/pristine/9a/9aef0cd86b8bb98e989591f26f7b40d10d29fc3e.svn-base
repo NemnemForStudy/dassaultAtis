@@ -1,0 +1,52 @@
+<vu-lightbox z-index="210"
+             v-show="show"
+             id="search-lightbox"
+             :widget="isWidget"
+             :disableCompass="true"
+             :primaryActions="primaryActions"
+             :customActions="true"
+             :menuActions="menuActions"
+             :sideActions="sideActions"
+             :panels="panels"
+             :objectType="objectType"
+             @click-open="open"
+             @click-information="toggleInformationPanel"
+             @click-actions="contextualMenu"
+             @click-previous="refreshContent(-1)"
+             @click-next="refreshContent(1)"
+             @close="closeLightbox"
+             @close-panel-information="toggleInformationPanel">
+  <template v-slot:lightbox-content>
+    <div ref="lightboxContent" id="lightbox--content" v-bind:style="styleLightboxContent">
+      <div class="loadingPreview" v-bind:style="styleLoadingPreviewArea"></div>
+      <div ref="lightboxPreviewArea" id="lightbox--preview-area" v-bind:style="stylePreviewArea"></div>
+      <div class="preview-img preview-body__adapter preview-body__adapter--visible"  v-bind:style="stylePreviewImg">
+        <p class="preview-img__title">{{noPreviewTitle}}</p>
+        <p class="preview-img__description">{{noPreviewDescription}}</p>
+      </div>
+    </div>
+  </template>
+  <template v-slot:lightbox-panel-information>
+    <div ref="lightboxInformationPanel" id="lightbox--information-panel" v-bind:style="styleInformationArea">
+      <div ref="searchSignatureZone" class="searchSignatureZone">
+        <span class="user-picture-view-container">
+          <img class="e-nopicture"/>
+        </span>
+        <div class="user-subtitle"> </div>
+      </div>
+      <div ref="informationZone" class="searchPreviewInformationZone"></div>
+    </div>
+  </template>
+  <!---->
+  <template v-slot:lightbox-bar__object-type>
+    <div ref="lightboxTypeIcon" class="thumbnail-section" :style="{ 'background-image': 'url(' + typeIcon + ')' }"></div>
+  </template>
+  <!---->
+  <!-- lightboxTitle -->
+  <template v-slot:lightbox-bar__title>
+    <div ref="lightboxTitle"></div>
+  </template>
+  <!---->
+
+
+</vu-lightbox>

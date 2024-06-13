@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Styles xmlns:syp="http://www.3ds.com/xsd/SYP">
+
+  <Template syp:name="XCTWebExperienceAppPlayInterface" Target="CATCmdInterface">
+	  <CATCmdInterface WkbInterface="XCTWebExperienceAppPlayConfiguration" />
+  </Template>
+
+  <Template syp:name="XCTWebExperienceAppPlayWorkshopHeaders" Target="CATCmdHeadersList">
+	  <CATCmdHeadersList>      
+      <!-- Play -->
+      <CATCommandHeader ID="PlayHdr"  ClassName="DS/XCTWebExperienceAppPlay/commands/XCTWebPlayCmd"   ResourceFile="XCTWebExperienceAppPlay/XCTWebExperienceAppPlay" />
+      <CATCommandHeader ID="PauseHdr" ClassName="DS/XCTWebExperienceAppPlay/commands/XCTWebPauseCmd"  ResourceFile="XCTWebExperienceAppPlay/XCTWebExperienceAppPlay" />
+      <CATCommandHeader ID="StopHdr"  ClassName="DS/XCTWebExperienceAppPlay/commands/XCTWebStopCmd"   ResourceFile="XCTWebExperienceAppPlay/XCTWebExperienceAppPlay" />    
+      <!-- Visu -->
+      <CATCommandHeader ID = "VisuQMCommand" ClassName="DS/ViewerCommands/VisuQMCommand" SharedLibraryName = "ShareUI" HelpResourceFile = "ViewerCommands/ViewerCommandsIDs" ResourceFile="ViewerCommands/ViewerCommands"/>
+	  <!-- RightSidePanel -->
+	  <CATCommandHeader ClassName="DS/3DPlayCommands/Cmd3DRightSidePanel" ID="RightSidePanel" HelpResourceFile="PADUtils/PADUtilsHelpForCommands" ResourceFile="PADUtils/PADUtils" Available="1" Behavior="CATAfrHeaderCheck">
+		  <CATAfrCommandHeaderArgs>
+			  <CATCommandHeaderArg ID="geomMetryMode" Value="3D" Mode="In" />
+		  </CATAfrCommandHeaderArgs>
+	  </CATCommandHeader>
+    </CATCmdHeadersList>
+  </Template>
+  
+  <Template syp:name="XCTWebExperienceAppPlayWorkshopAccess" Target="CATCmdWorkbench">
+	  <CATCmdWorkbench Name="XCTWebExperienceAppPlayWorkbench">    
+      <!-- Play -->
+      <CATCmdStarter Name = "Play"  Command = "PlayHdr" />
+      <CATCmdStarter Name = "Pause" Command = "PauseHdr" />
+      <CATCmdStarter Name = "Stop"  Command = "StopHdr" />
+
+      <CATCmdSeparator Name = "PlayVisuSeparator" />
+      
+      <!-- Visu -->       
+      <CATCmdStarter Name = "QM" Command = "VisuQMCommand"/>
+
+      <CATCmdSeparator Name = "PlayVisuSeparator" />
+
+	  <!-- RightSidePanel -->
+	  <CATCmdStarter Name = "RightSidePanel" Command = "RightSidePanel"/>
+    </CATCmdWorkbench>
+  </Template>
+</Styles>

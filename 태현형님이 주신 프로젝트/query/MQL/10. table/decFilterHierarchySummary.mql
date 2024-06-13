@@ -1,0 +1,57 @@
+# Added by hslee on 2023.05.16
+# del table decFilterHierarchySummary system;
+add table decFilterHierarchySummary system
+	column
+		name 'Name'
+		label 'emxProgramCentral.Common.Name'
+		bus 'name'
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Field Type' 'basic'
+#column
+#	name 'decCWPActivityType'
+#	label 'Activity Type'
+#	bus '$<attribute[decCWPActivityType]>'
+#	setting 'Registered Suite' 'ProgramCentral'
+#	setting 'Field Type' 'attribute'
+#	setting 'Admin Type' 'attribut_decCWPActivityType'
+#column
+#	name 'Type'
+#	label 'Type'
+#	bus 'type'
+#	setting 'Registered Suite' 'ProgramCentral'
+#	setting 'Field Type' 'basic'
+	column
+		name 'decWBSType'
+		label 'ProgramCentral.Common.WBSType'
+		bus '$<attribute[decWBSType]>'
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Field Type' 'attribute'
+		setting 'Admin Type' 'attribute_decWBSType'
+	column
+		name 'decDiscipline'
+		label 'emxProgramCentral.Label.decDiscipline'
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Column Type' 'program'
+		setting 'program' 'decCodeMaster'
+		setting 'function' 'getCodeMasterDesc'
+		setting 'MasterName' 'Discipline'
+		setting 'attributeName' 'decDiscipline'
+	column
+		name 'decSubConNo'
+		label 'ProgramCentral.Label.Sub-Con'
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Column Type' 'program'
+		setting 'program' 'decCodeMaster'
+		setting 'function' 'getCodeMasterDesc'
+		setting 'MasterName' 'Sub-Con'
+		setting 'attributeName' 'decSubConNo'
+	column
+		name 'decSubConNo2'
+		label 'ProgramCentral.Label.Sub-Con2'
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Column Type' 'program'
+		setting 'program' 'decCodeMaster'
+		setting 'function' 'getCodeMasterDesc'
+		setting 'MasterName' 'Sub-Con'
+		setting 'attributeName' 'decSubConNo2'
+;

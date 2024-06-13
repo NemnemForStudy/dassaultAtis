@@ -1,0 +1,44 @@
+################################################################################################
+# Create By jhlee : 2023. 07. 27
+# Admin Type : menu
+# Name : type_TaskManagement
+################################################################################################
+
+copy menu type_TaskManagement type_TaskManagement_ootb;
+
+mod menu type_TaskManagement
+	add command decSchedule
+	add command decCwpPlanList
+	add command decCwpSummaryList
+	add command decIWPExcutionList
+	add command decDeliverableStatusCommand
+	add command decVPDocumentStatusCommand
+	add command decCwpChangeHistoryList
+;
+
+mod menu type_TaskManagement
+	order command decSchedule 1
+	order command decCwpPlanList 2
+	order command decCwpSummaryList 3
+#	order command decIWPExcutionList
+#	order command decDeliverableStatusCommand
+#	order command decCwpChangeHistoryList
+;
+
+mod menu type_TaskManagement
+	label 'ProgramCentral.Label.Detail'
+	href '${COMMON_DIR}/emxPortal.jsp?portal=PMCPropertiesPortal&header=emxProgramCentral.Gate.Portal.Properties&export=false&HelpMarker=emxhelpprojectproperties'
+;
+
+mod menu type_TaskManagement
+	remove setting 'Structure Menu' 
+;
+
+# Modified by hslee on 2023.08.02
+mod menu type_TaskManagement 
+	add command decProjectMaterialStatusLink
+;
+# Modified by hslee on 2023.09.11
+mod menu type_TaskManagement 
+	add command decCWPMaterialStatusLink
+;

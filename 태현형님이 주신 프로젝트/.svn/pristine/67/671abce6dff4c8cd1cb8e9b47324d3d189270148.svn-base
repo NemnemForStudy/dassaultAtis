@@ -1,0 +1,1 @@
+define("DS/CATWebUXComponents/CATWebUXComponents_ja",{});define("DS/CATWebUXComponents/assets/nls/CATWebUXComponents",{validationPanelOk:"OK",validationPanelCancel:"キャンセル",replyButtonLabel:"返信",addButtonLabel:"新規コメント",pointedPageRemoved:"参照されているページが除去されました"});

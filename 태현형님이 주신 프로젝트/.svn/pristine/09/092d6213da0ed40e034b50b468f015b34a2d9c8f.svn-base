@@ -1,0 +1,98 @@
+################################################################################################
+# Create By jhlee 2023. 05. 02
+# Admin Type : table
+# Name : decProjectSpaceUnitImageListTable
+################################################################################################
+
+#del table "decProjectSpaceUnitImageListTable" system;
+add table "decProjectSpaceUnitImageListTable" system
+    column
+        name        "Name"
+        label       "emxProgramCentral.Common.Name"
+        businessobject "name"
+        alt         ""
+        range       ""
+        update      ""
+        href        "${COMMON_DIR}/emxTree.jsp"
+        setting	    'Registered Suite'        	"ProgramCentral"
+        setting	    'Show Type Icon'          	"true"
+        setting	    'Target Location'         	"content"
+    column
+        name        "Description"
+        label       "emxProgramCentral.Common.Description"
+        businessobject "description"
+        alt         ""
+        range       ""
+        update      ""
+        setting	    'Admin Type'              	"title"
+        setting	    'Field Type'              	"basic"
+        setting	    'Registered Suite'	 		"ProgramCentral"
+    column
+    	name        'Site Photo Image Drop'
+    	label       'ProgramCentral.Common.ImageDrop'
+        alt         ""
+        range       ""
+        update      ""
+    	setting	 	'Column Type'		 		"programHTMLOutput"
+    	setting	 	'program'			 		"emxProjectSpace"
+    	setting	 	'function'					"getSitePhotoImageDrop"
+        setting	    'Registered Suite'	 		"ProgramCentral"
+    	setting	 	'Group Header'		 		"ProgramCentral.Common.SitePhoto"
+    column
+    	name	 	'Site Photo Image Info'
+    	label	 	'ProgramCentral.Common.ImageInfo'
+        alt         ""
+        range       ""
+        update      ""
+    	setting	 	'Column Type'		 		"programHTMLOutput"
+    	setting	 	'program'			 		"emxProjectSpace"
+    	setting	 	'function'			 		"getSitePhotoImageInfo"
+        setting	    'Registered Suite'	 		"ProgramCentral"
+    	setting	 	'Group Header'		 		"ProgramCentral.Common.SitePhoto"
+    column
+    	name	 	'Plot Plan Image Drop'
+    	label	 	'ProgramCentral.Common.ImageDrop'
+        alt         ""
+        range       ""
+        update      ""
+    	setting	 	'Column Type'		 		"programHTMLOutput"
+    	setting	 	'program'			 		"emxProjectSpace"
+    	setting	 	'function'				 	"getPlotPlanImageDrop"
+        setting	    'Registered Suite'		 	"ProgramCentral"
+    	setting	 	'Group Header'		 		"ProgramCentral.Common.PlotPlan"
+    column
+    	name	 	'Plot Plan Image Info'
+    	label	 	'ProgramCentral.Common.ImageInfo'
+        alt         ""
+        range       ""
+        update      ""
+    	setting	 	'Column Type'		 		"programHTMLOutput"
+    	setting	 	'program'			 		"emxProjectSpace"
+    	setting	 	'function'			 		"getPlotPlanImageInfo"
+        setting	    'Registered Suite'	 		"ProgramCentral"
+    	setting	 	'Group Header'		 		"ProgramCentral.Common.PlotPlan"
+    column
+    	name	 	'3D Image Drop'
+    	label	 	'ProgramCentral.Common.ImageDrop'
+        alt         ""
+        range       ""
+        update      ""
+    	setting	 	'Column Type'		 	 	"programHTMLOutput"
+    	setting	 	'program'			  		"emxProjectSpace"
+    	setting	 	'function'			  		"get3DImageDrop"
+        setting	    'Registered Suite'	  		"ProgramCentral"
+    	setting	 	'Group Header'		  		"ProgramCentral.Common.3D"
+    column
+    	name	 	'3D Image Info'
+    	label	 	'ProgramCentral.Common.ImageInfo'
+        alt         ""
+        range       ""
+        update      ""
+    	setting	 	'Column Type'		  		"programHTMLOutput"
+    	setting	 	'program'			 	 	"emxProjectSpace"
+    	setting	 	'function'			  		"get3DImageInfo"
+        setting	    'Registered Suite'	  		"ProgramCentral"
+    	setting	 	'Group Header'		 	 	"ProgramCentral.Common.3D"
+;
+
+add property 'table_decProjectSpaceUnitImageListTable' on prog eServiceSchemaVariableMapping.tcl to table 'decProjectSpaceUnitImageListTable' system;

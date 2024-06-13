@@ -1,0 +1,476 @@
+{
+  "FTA": {
+    "type": "object",
+    "attributes": {
+      "version": {
+        "type": "number",
+        "mandatory": true
+      },
+      "context": {
+        "type": "object",
+        "mandatory": true,
+        "attributes": {
+          "data": {
+            "type": "array",
+            "mandatory": true,
+            "minimum": 0,
+            "childStructure": {
+              "type": "object",
+              "attributes": {
+                "path": {
+                  "type": "array",
+                  "minimum": 1,
+                  "mandatory": true,
+                  "childStructure": {
+                    "type": "string",
+                    "mandatory": true
+                  }
+                },
+                "annotationSetID": {
+                  "type": "string",
+                  "mandatory": true
+                },
+                "viewOrCaptureDisplayedID": {
+                  "type": "string"
+                },
+                "displayOpts": {
+                  "type": "string"
+                },
+                "displayedIDs": {
+                  "type": "array",
+                  "minimum": 0,
+                  "partialContentAllowed": true,
+                  "childStructure": {
+                    "type": "string",
+                    "mandatory": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "content": {
+        "type": "object",
+        "mandatory": true,
+        "attributes": {
+          "annots": {
+            "type": "array",
+            "minimum": 0,
+            "mandatory": true,
+            "childStructure": {
+              "type": "object",
+              "attributes": {
+                "annotationSetID": {
+                  "type": "string",
+                  "mandatory": true
+                },
+                "annotationIDs": {
+                  "type": "array",
+                  "minimum": 0,
+                  "childStructure": {
+                    "type": "string",
+                    "mandatory": true
+                  }
+                },
+                "featureIDs": {
+                  "type": "array",
+                  "minimum": 0,
+                  "childStructure": {
+                    "type": "string",
+                    "mandatory": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "ITF": {
+    "type": "object",
+    "attributes": {
+      "version": {
+        "type": "number",
+        "mandatory": true
+      },
+      "context": {
+        "type": "object",
+        "mandatory": true,
+        "attributes": {
+          "data": {
+            "type": "array",
+            "mandatory": true,
+            "minimum": 1,
+            "childStructure": {
+              "type": "object",
+              "attributes": {
+                "isr": {
+                  "type": "string",
+                  "mandatory": true
+                },
+                "itfs": {
+                  "type": "array",
+                  "mandatory": true,
+                  "minimum": 0,
+                  "partialContentAllowed": true,
+                  "childStructure": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "content": {
+        "type": "object",
+        "mandatory": true,
+        "attributes": {
+          "prefs": {
+            "type": "object",
+            "mandatory": true,
+            "attributes": {
+              "useStoredResults": {
+                "type": "number",
+                "fromVersion": 1,
+                "mandatory": true
+              },
+              "geometries": {
+                "type": "object",
+                "mandatory": true,
+                "attributes": {
+                  "mode": {
+                    "type": "number",
+                    "mandatory": true
+                  },
+                  "clash": {
+                    "type": "number",
+                    "mandatory": true
+                  },
+                  "contact": {
+                    "type": "number",
+                    "mandatory": true
+                  },
+                  "clearance": {
+                    "type": "number",
+                    "mandatory": true
+                  }
+                }
+              },
+              "quantifiers": {
+                "type": "object",
+                "mandatory": true,
+                "attributes": {
+                  "volume": {
+                    "toVersion": 0,
+                    "type": "boolean",
+                    "mandatory": true
+                  },
+                  "vector": {
+                    "toVersion": 0,
+                    "type": "boolean",
+                    "mandatory": true
+                  },
+                  "minDist": {
+                    "type": "boolean",
+                    "mandatory": true
+                  }
+                }
+              },
+              "displayOptions": {
+                "type": "object",
+                "fromVersion": 1,
+                "mandatory": true,
+                "attributes": {
+                  "clash": {
+                    "type": "number",
+                    "mandatory": true
+                  },
+                  "contact": {
+                    "type": "number",
+                    "mandatory": true
+                  },
+                  "clearance": {
+                    "type": "number",
+                    "mandatory": true
+                  },
+                  "quantifiers": {
+                    "type": "number",
+                    "mandatory": true
+                  },
+                  "colorsState": {
+                    "type": "number",
+                    "mandatory": true
+                  },
+                  "transparencyState": {
+                    "type": "number",
+                    "mandatory": true
+                  }
+                }
+              }
+            }
+          },
+          "itfs": {
+            "type": "array",
+            "mandatory": true,
+            "minimum": 0,
+            "childStructure": {
+              "type": "object",
+              "mandatory": true,
+              "attributes": {
+                "id": {
+                  "type": "string",
+                  "mandatory": true
+                },
+                "pos3D|pos3Drel": {
+                  "type": "array",
+                  "mandatory": true,
+                  "minimum": 3,
+                  "childStructure": {
+                    "type": "number",
+                    "mandatory": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "MSR": {
+    "type": "object",
+    "attributes": {
+      "version": {
+        "type": "number",
+        "mandatory": true
+      },
+      "context": {
+        "type": "object",
+        "mandatory": true,
+        "attributes": {
+          "datadisplay": {
+            "type": "object",
+            "mandatory": true,
+            "attributes": {
+              "contentId": {
+                "type": "string",
+                "mandatory": true
+              },
+              "contentName": {
+                "type": "string",
+                "mandatory": true
+              },
+              "sequenceName": {
+                "type": "string",
+                "mandatory": true
+              },
+              "sequenceOrder": {
+                "type": "number",
+                "mandatory": true
+              }
+            }
+          },
+          "time": {
+            "type": "object",
+            "mandatory": false,
+            "attributes": {
+              "frameIdx": {
+                "type": "number",
+                "mandatory": true
+              },
+              "framePosition": {
+                "type": "number",
+                "mandatory": false
+              },
+              "groupId": {
+                "type": "string",
+                "mandatory": true
+              },
+              "groupIdNoMode": {
+                "type": "string",
+                "mandatory": false
+              },
+              "unit": {
+                "type": "string",
+                "mandatory": false
+              }
+            }
+          }
+        }
+      },
+      "content": {
+        "type": "object",
+        "mandatory": true,
+        "attributes": {
+          "animationScope": {
+            "type": "object",
+            "mandatory": false,
+            "attributes": {
+              "lockStatus": {
+                "type": "boolean",
+                "mandatory": true
+              }
+            }
+          },
+          "camera": {
+            "type": "object",
+            "mandatory": false,
+            "attributes": {
+              "cameraId": {
+                "type": "string",
+                "mandatory": true
+              }
+            }
+          },
+          "customization": {
+            "type": "object",
+            "mandatory": false,
+            "attributes": {
+              "userMin": {
+                "type": "object",
+                "mandatory": false,
+                "attributes": {
+                  "value": {
+                    "type": "number",
+                    "mandatory": true
+                  },
+                  "unit": {
+                    "type": "string",
+                    "mandatory": false
+                  }
+                }
+              },
+              "userMax": {
+                "type": "object",
+                "mandatory": false,
+                "attributes": {
+                  "value": {
+                    "type": "number",
+                    "mandatory": true
+                  },
+                  "unit": {
+                    "type": "string",
+                    "mandatory": false
+                  }
+                }
+              }
+            }
+          },
+          "hidden3DElementsIds": {
+            "type": "array",
+            "mandatory": false,
+            "minimum": 1,
+            "childStructure": {
+              "type": "string",
+              "mandatory": true
+            }
+          },
+          "sidePanel": {
+            "type": "object",
+            "mandatory": false,
+            "attributes": {
+              "state": {
+                "type": "boolean",
+                "mandatory": true
+              }
+            }
+          },
+          "expandableUI": {
+            "type": "array",
+            "mandatory": false,
+            "minimum": 1,
+            "childStructure": {
+              "type": "object",
+              "attributes": {
+                "expandableId": {
+                  "type": "string",
+                  "mandatory": true
+                },
+                "expanded": {
+                  "type": "boolean",
+                  "mandatory": true
+                }
+              }
+            }
+          },
+          "extractableUI": {
+            "type": "array",
+            "mandatory": false,
+            "minimum": 1,
+            "childStructure": {
+              "type": "object",
+              "attributes": {
+                "extractableId": {
+                  "type": "string",
+                  "mandatory": true
+                },
+                "extracted": {
+                  "type": "boolean",
+                  "mandatory": true
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "POI": {
+    "type": "object",
+    "attributes": {
+      "version": {
+        "type": "number",
+        "mandatory": true
+      },
+      "context": {
+        "type": "object",
+        "mandatory": true,
+        "attributes": {
+          "layerIds": {
+            "type": "array",
+            "mandatory": false,
+            "minimum": 0,
+            "childStructure": {
+              "type": "string",
+              "mandatory": true
+            }
+          }
+        }
+      },
+      "content": {
+        "type": "object",
+        "mandatory": true,
+        "attributes": {
+          "layerOverloads": {
+            "type": "array",
+            "mandatory": false,
+            "childStructure": {
+              "type": "object",
+              "attributes": {
+                "id": {
+                  "type": "string",
+                  "mandatory": true
+                },
+                "visible": {
+                  "type": "boolean",
+                  "mandatory": false
+                },
+                "color": {
+                  "type": "string",
+                  "mandatory": false
+                },
+                "clustered": {
+                  "type": "boolean",
+                  "mandatory": false
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

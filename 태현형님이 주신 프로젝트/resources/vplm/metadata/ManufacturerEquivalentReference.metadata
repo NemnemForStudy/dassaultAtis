@@ -1,0 +1,111 @@
+<?xml version="1.0" ?>
+<!-- ENOVIA DICTIONARY  -->
+<!-- COPYRIGHT DASSAULT SYSTEMES 2015, All rights reserved -->
+
+<Package xmlns="PLMDictionaryUnified" 
+    ModelerType="Top" 
+	BelongsToModeler="PRODUCT"
+    Name="ManufacturerEquivalentReference"
+	UseNames="PRODUCTCFG"
+	UseProcedures="ManufacturerEquivalentItemCompletion"
+    Uuid="1230b18e-e692-11e9-81b4-2a2ae2dbcce4"
+    CustomerExposition="Programmer">
+<!--
+  <CAAComment>
+    <ShortRole>Manufacturer Equivalent Reference Package</ShortRole>
+    <Role>Manufacturer Equivalent Reference Package</Role>
+  </CAAComment>
+-->
+  
+ <!-- Extension on Reference -->
+  <Extension Name="ManufacturerEquivalentItemExtension"
+      Uuid="2d720970-e692-11e9-81b4-2a2ae2dbcce4"
+      CustomerExposition="Programmer"
+      ScopeNames="VPMReference"
+      Searchable="Yes"
+	  IconName="I_MEI" >
+	 <!-- Used to define ManufacturerEquivalentItem Manufacturer Part Number -->
+    <Simple Name="ManufacturerPartNumber"
+      Uuid="2d720bdc-e692-11e9-81b4-2a2ae2dbcce4"
+      Type="String"
+      Protection="Free"
+	  MaxLength="256"
+	  ResetOnCloning="Yes"
+	  ResetOnNewVersion="No" >
+    </Simple>
+	
+	    <!-- Used to define ManufacturerEquivalentItem Part Source -->
+    <Simple Name="PartSource"
+      Uuid="a0523773-9090-455c-823d-cd77d5cdb95d"
+      Type="String"
+      Protection="Free"
+	  MaxLength="256"
+	  ResetOnCloning="No"
+	  ResetOnNewVersion="No" >
+    </Simple>
+	
+	    <!-- Used to define ManufacturerEquivalentItem Part Source URL -->
+    <Simple Name="PartSourceURL"
+      Uuid="2b14c378-f7c3-4f0a-8038-71779efb182e"
+      Type="String"
+      Protection="Free"
+	  MaxLength="1024"
+	  ResetOnCloning="No"
+	  ResetOnNewVersion="No" >
+    </Simple>
+	
+	 <!-- Used to define ManufacturerEquivalentItem Manufacturer Name -->
+    <Simple Name="ManufacturerName"
+      Uuid="5416c6f7-2829-4e89-8241-53450f0c8f09"
+      Type="String"
+      Protection="External"
+	  Faceted="Yes"
+	  MaxLength="256"
+	  ResetOnCloning="No"
+	  ResetOnNewVersion="No" 
+	  UIAccess="None">
+    </Simple>
+	
+	 <!-- Used to define ManufacturerEquivalentItem Manufacturer Service -->
+    <Simple Name="ManufacturerService"
+      Uuid="c2c06c0e-b6d6-11eb-8529-0242ac130003"
+      Type="String"
+      Protection="External"
+	  Faceted="Yes"
+	  MaxLength="256"
+	  ResetOnCloning="No"
+	  ResetOnNewVersion="No"
+	  UIAccess="None">
+    </Simple>
+	
+	 <!-- Used to define ManufacturerEquivalentItem Manufacturer Title -->
+    <Simple Name="ManufacturerTitle"
+      Uuid="f09b6a76-eddf-11eb-9a03-0242ac130003"
+      Type="String"
+      Protection="External"
+	  Faceted="Yes"
+	  MaxLength="256"
+	  ResetOnCloning="No"
+	  ResetOnNewVersion="No" 
+	  UIAccess="None">
+    </Simple>
+	
+	<!-- PROCEDURES Declaration  -->
+	<Method ImplementationType="Self">
+      <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+      <ProcedureForUsage>
+        <Usage href="ExportScope.meth#TransferSiteOwnership"/>
+        <UsedProcedure href="ManufacturerEquivalentItemCompletion.proc#ManufacturerEquivalentItemCompletion"/>
+      </ProcedureForUsage>
+    </Method>
+	
+	<Method ImplementationType="Self">
+      <RealizeMethodType href="ExchangeScope.meth#ExchangeScope"/>
+      <ProcedureForUsage>
+        <Usage href="ExchangeScope.meth#XPDM"/>
+        <UsedProcedure href="ManufacturerEquivalentItemCompletion.proc#ManufacturerEquivalentItemCompletion"/>
+      </ProcedureForUsage>
+    </Method>
+	
+	</Extension>
+</Package>

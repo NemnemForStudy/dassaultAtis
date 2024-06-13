@@ -1,0 +1,1 @@
+define("DS/MIBQueryWidget/MIBQueryWidget_it",{});define("DS/MIBQueryWidget/assets/nls/MIBQueryWidgetNls",{CommandDialogTitle:"Cerca contenuti MIB",BtnOK:"Ricerca",BtnCancel:"Annulla",BtnOk2:"Apri",Query:"Ricerca"});

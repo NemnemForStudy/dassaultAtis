@@ -1,0 +1,1 @@
+define("DS/3DPlayAnnotationUtils/3DPlayAnnotationUtils_zh",{});define("DS/3DPlayAnnotationUtils/assets/nls/3DPlayAnnotation",{PlaceHolder:"新文本",ClickToLaunchText:"在视图中单击以创建新文本框",cancelText:"取消",validateText:"验证",nextText:"下一步"});

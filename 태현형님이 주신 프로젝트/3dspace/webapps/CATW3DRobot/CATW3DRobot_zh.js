@@ -1,0 +1,1 @@
+define("DS/CATW3DRobot/CATW3DRobot_zh",{});define("DS/CATW3DRobot/assets/nls/CATC3DRobotSnapPanel",{translation:"平移",translationX:"U|X：",translationY:"V|Y：",translationZ:"W|Z：",rotation:"旋转",rotationW:"W：",rotationU:"U：",rotationV:"V：",save:"保存",cancel:"取消"});

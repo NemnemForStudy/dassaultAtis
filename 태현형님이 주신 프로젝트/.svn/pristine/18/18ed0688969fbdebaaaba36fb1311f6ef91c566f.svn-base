@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapping xmlns="http://www.3ds.com/enovia-matrixone/vplm-m1/mapping" version="9">
+
+  <!-- Package -->
+  <pattern.VPLM_PACKAGE>
+    <vplm.Package name="PLMSIMULIADisciplines2" />
+    <m1.package name="PLMSIMULIADisciplines2" />
+
+    <!-- Extension -->
+    <pattern.VPLM_EXTENSION>
+      <vplm.Extension name="SimulationRepDimension" />
+      <m1.interface name="SimulationRepDimension" />
+
+      <!-- Simple -->
+      <pattern.VPLM_SIMPLE>
+        <vplm.Simple name="V_Dimension" />
+        <m1.attribute name="SimulationRepDimension.V_Dimension" local="yes" />
+      </pattern.VPLM_SIMPLE>
+
+      <!-- Simple -->
+      <pattern.VPLM_SIMPLE>
+        <vplm.Simple name="V_Fidelity" />
+        <m1.attribute name="SimulationRepDimension.V_Fidelity" local="yes" />
+      </pattern.VPLM_SIMPLE>
+
+    </pattern.VPLM_EXTENSION>
+
+    <!-- Class -->
+    <pattern.VPLM_CLASS>
+      <vplm.PLMConnection name="SIMConnection" />
+      <m1.type name="SIMConnection" mxtnr_submitted="no" />
+
+    </pattern.VPLM_CLASS>
+
+    <!-- Class -->
+    <pattern.VPLM_CLASS>
+      <vplm.PLMCoreRepReference name="FEM" />
+      <m1.type name="FEM" />
+
+      <!-- Simple -->
+      <pattern.VPLM_SIMPLE>
+        <vplm.Simple name="V_ExtendedData" />
+        <m1.attribute name="FEM.V_ExtendedData" local="yes" />
+      </pattern.VPLM_SIMPLE>
+
+      <!-- Simple -->
+      <pattern.VPLM_SIMPLE>
+        <vplm.Simple name="V_Physics" />
+        <m1.attribute name="FEM.V_Physics" local="yes" />
+      </pattern.VPLM_SIMPLE>
+
+      <!-- Simple -->
+      <pattern.VPLM_SIMPLE>
+        <vplm.Simple name="V_SolverId" />
+        <m1.attribute name="FEM.V_SolverId" local="yes" />
+      </pattern.VPLM_SIMPLE>
+
+    </pattern.VPLM_CLASS>
+
+    <!-- Class -->
+    <pattern.VPLM_CLASS>
+      <vplm.PLMCoreRepReference name="SIMShape" />
+      <m1.type name="SIMShape" />
+
+    </pattern.VPLM_CLASS>
+
+    <!-- Class -->
+    <pattern.VPLM_CLASS>
+      <vplm.PLMCoreRepReference name="XRep" />
+      <m1.type name="XRep" />
+
+    </pattern.VPLM_CLASS>
+
+    <!-- Class -->
+    <pattern.VPLM_CLASS>
+      <vplm.PLMCoreRepReference name="EMAGRep" />
+      <m1.type name="EMAGRep" />
+
+    </pattern.VPLM_CLASS>
+
+    <!-- Class -->
+    <pattern.VPLM_CLASS>
+      <vplm.PLMCoreRepReference name="FluidRep" />
+      <m1.type name="FluidRep" />
+
+    </pattern.VPLM_CLASS>
+
+    <!-- Class -->
+    <pattern.VPLM_CLASS>
+      <vplm.PLMCoreRepReference name="MOTMechanismRep" />
+      <m1.type name="MOTMechanismRep" />
+
+    </pattern.VPLM_CLASS>
+
+  </pattern.VPLM_PACKAGE>
+
+</mapping>

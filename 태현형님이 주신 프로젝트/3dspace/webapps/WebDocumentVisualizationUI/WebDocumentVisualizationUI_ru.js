@@ -1,0 +1,1 @@
+define("DS/WebDocumentVisualizationUI/WebDocumentVisualizationUI_ru",{});define("DS/WebDocumentVisualizationUI/assets/nls/WebDocumentVisualizationUI",{bookmarksPanel:{title:"Закладки",expandOrCollapseAll:"Переключение между параметрами Развернуть и Свернуть все"}});

@@ -1,0 +1,1 @@
+define("DS/CAT3DAnnotationWidget/CAT3DAnnotationWidget_pl",{});define("DS/CAT3DAnnotationWidget/assets/nls/CAT3DAnnotationWidget",{customApp:"Dostosuj aplikację",prefs:"Preferencje",difAnnotSet:"Otwórz zestawy adnotacji"});

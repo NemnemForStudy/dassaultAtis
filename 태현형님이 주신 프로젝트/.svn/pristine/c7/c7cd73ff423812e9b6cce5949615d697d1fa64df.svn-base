@@ -1,0 +1,153 @@
+# ----------------------------------------------------------------------------
+# help tags
+# ----------------------------------------------------------------------------
+
+MaskCompilerHelp= \
+Použití\: java VPLMPosMaskCompiler [-h]\n\
+\                                [-addpath <additional_input_directory>]\n\
+\                                [-d <output_directory>]\n\
+\                                [-log <log_directory>]\n\
+\                                [-html <html_directory>]\n\
+\                                [-solution <solution>]\n\
+\                                [-m <mask_name>]\n\
+\                                -connect <server_url>\n\
+\n\
+Zkompiluje všechny soubory '.mask' v podadresáři vplm/startup/mask/<mask_name>[@<solution>] umístění třídy.\n\
+Zkompilovaný soubor se jmenuje\: <output_directory>/<mask_name>[@<solution>].SecurityMask\n\
+Soubor protokolu je     \: <log_directory>/result.log\n\
+\n\
+Argumenty\:\n\
+\  -h\:       tato nápověda\n\
+\  -addpath\: definuje další vstupní adresář, kde se mají hledat soubory masky (absolutní cesta)\n\
+\  -d\:       definuje výstupní adresář pro protokoly a zkompilované soubory masky\n\
+\  -html\:    definuje výstupní adresář pro HTML soubor vykreslování masky\n\
+\  -log\:     definuje výstupní adresář pro protokoly (výchozí\: <output_directory>)\n\
+\  -solution\:definuje řešení (výchozí nastavení je prázdná přípona, která znamená 'běžné' řešení)\n\
+\  -m\:       definuje název masky (výchozí\: DEFAULT)\n\
+\  -connect\: definuje adresu URL serveru (i.e. http://server:port/enovia/)\n\
+\n\
+Nasazení\:\n\
+\  Soubor '.SecurityMask' je třeba zkopírovat do adresáře webové aplikace ENOVIA WEB-INF/classes/vplm/.
+
+MaskGeneratorHelp= \
+Použití\: java VPLMPosMaskGenerator [-h]\n\
+\                                 [-addpath <additional_input_directory>]\n\
+\                                 [-d <output_directory>]\n\
+\                                 [-log <log_directory>]\n\
+\                                 [-solution <solution_name>]\n\
+\                                 [-m <mask_name>]\n\
+\                                 -connect <server_url>\n\
+\                                 <modeler> [<modeler> ...]\n\
+\n\
+Vygeneruje přidružené soubory '.mask' daného modeláře.\n\
+Vygenerovaný soubor se jmenuje\: <output_directory>/<modeler>.mask\n\
+\n\
+Argumenty\:\n\
+\  -h\:       tato nápověda\n\
+\  -addpath\: definuje další vstupní adresář, kde se mají hledat soubory masky (absolutní cesta)\n\
+\  -d\:       definuje výstupní adresář pro pro vygenerované soubory masky\n\
+\  -log\:     definuje výstupní adresář pro protokoly (výchozí\: <output_directory>)\n\
+\  -solution\:definuje řešení (výchozí nastavení je prázdná přípona, která znamená 'běžné' řešení)\n\
+\  -m\:       definuje název masky (výchozí\: DEFAULT)\n\
+\  -connect\: definuje adresu URL serveru (i.e. http://server:port/enovia/)\n\
+\n\
+Poznámka: soubory '.mask' je nutno po vygenerování (a případné změně) zkompilovat\n\
+\      pomocí nástroje VPLMPosMaskCompiler.
+
+# ----------------------------------------------------------------------------
+# Information and trace messages
+# ----------------------------------------------------------------------------
+
+INFO_ParentModeler_Mask= Soubor masky pro nadřazený modelář "{0}" je: {1}
+
+INFO_Entity_init_from_parent= Inicializace masky atributů z entity "{0}"
+
+INFO_Entity_inherited_attribute= Kopírovat atribut "{0}"
+
+INFO_Entity_inherited_func_attribute= Kopírovat atribut "{0}"
+
+INFO_Attribute_skip_internal= Vynechat interní atribut "{0}"
+
+INFO_Attribute_skip_aggregate= Vynechat agregátní atribut "{0}"
+
+INFO_Attribute= Přidat atribut "{0}", povinný={1}, externí={2}, upravitelný={3}
+
+INFO_IDSet= Přidat atribut "{0}"
+
+# ----------------------------------------------------------------------------
+# generation warnings and errors tags
+# ----------------------------------------------------------------------------
+
+Modeler_does_not_exist= Modelář "{0}" neexistuje
+
+Modeler_has_no_entity= Modelář "{0}" nemá žádnou entitu
+
+File_cannot_be_opened= Soubor {0} "{1}" nelze otevřít – důvod: {2}
+
+File_cannot_be_created= Soubor {0} "{1}" nelze vytvořit – důvod: {2}
+
+# ----------------------------------------------------------------------------
+# compilation warnings and errors tags
+# ----------------------------------------------------------------------------
+
+Command_is_Unknown= Neznámý příkaz [{0}]
+
+Command_is_Unknown.advice= Ověřit syntaxi příkazu
+
+UnexpectedMaskName= Očekávaný název masky je "{0}" ne "{1}"
+
+UnexpectedMaskName.advice= Upravit název masky v příkazu MASKA
+
+Entity_is_Unknown= Entita "{0}" nepatří do balíčku "{1}"
+
+Entity_is_Unknown.advice= Důvodem může být překlep \: zkontrolujte správnost syntaxe v metadatech
+
+Attr_was_not_Previously_Defined= Entita "{0}" : atribut "{1}" nebyl předem definován příkazem 'ATTR'
+
+Attr_was_not_Previously_Defined.advice= Každý atribut musí být před použitím v 'FATTR' deklarován v příkazu 'ATTR'
+
+Attr_is_Unknown= Entita "{0}" nemá žádný atribut "{1}"
+
+Attr_is_Unknown.advice= Důvodem může být překlep \: \nzkontrolujte správnost syntaxe v metadatech
+
+Attr_should_be_Mandatory= Entita "{0}", atribut "{1}" : povinná vlastnost nesmí být být 'N', zatímco v metadatech je 'Y'
+
+Attr_should_be_Mandatory.advice= MANDATORY atribut v metadatech musí zůstat MANDATORY i v masce
+
+Attr_should_have_AuthValues_instead_of_Help= Entita "{0}", atribut "{1}" : Nelze použít hodnoty HELP, jestliže jsou v metadatech definovány AUTHORIZED hodnoty
+
+Attr_should_have_AuthValues_instead_of_Help.advice= Nastavit příznak hodnot ověření/nápovědy na 'A' (AUTHORIZED hodnoty)
+
+AttrValue_does_not_belong_to_Authorized_values= Entita "{0}", atribut "{1}" : hodnotu "{2}" nelze použít jako povolenou hodnotu
+
+AttrValue_does_not_belong_to_Authorized_values.advice= Povolená hodnota deklarovaná v masce musí být podmnožinou hodnot povolených v metadatech
+
+AttrDefValue_must_be_set_when_Authorized_values= Entita "{0}", atribut "{1}" : Výchozí hodnota nesmí mít být nulová, pokud je příznak povolené hodnoty 'Y'
+
+AttrDefValue_must_be_set_when_Authorized_values.advice= Nastavte výchozí hodnotu nebo přepněte příznak povolené hodnoty na 'N'
+
+Function_is_Unknown= Neočekávaná funkce "{0}"
+
+Function_is_Unknown.advice= Použijte jeden z očekávaných názvů funkcí
+
+Attr_External_cannot_be_used_with_function= Entita "{0}" : atribut externího typu "{1}" nelze nastavit jako upravitelný atribut ve funkci "{2}"
+
+Attr_External_cannot_be_used_with_function.advice= Buď jej nastavte jako neupravitelný ('N') v příkazu FATTR\nNebo atribut odeberte z této funkce (odeberte příkaz FATTR)
+
+Attr_Mandatory_cannot_be_set_as_NOT_modifiable= Entita "{0}" : MANDATORY atribut "{1}" nelze ve funkci 'CREATE' nastavit jako NOT EDITABLE
+
+Attr_Mandatory_cannot_be_set_as_NOT_modifiable.advice= Nastavte MANDATORY  atribut jako EDITABLE ('A') ve funkci 'CREATE'
+
+Attr_ReadOnly_cannot_be_modified_with_WRITE= Entita "{0}" : atribut "{1}", jehož ochrana je jen pro čtení, nelze změnit funkcí 'WRITE'
+
+Attr_ReadOnly_cannot_be_modified_with_WRITE.advice= Nastavte atribut jen pro čtení jako NOT EDITABLE ('N') ve funkci 'WRITE'
+
+Attr_has_Invalid_Boolean_value= Neočekávaná logická hodnota "{0}" \: očekáváno 'Y' nebo 'N'
+
+Attr_cannot_be_masked_due_to_InvalidProtection= Entita "{0}" : nelze použít atribut "{1}" v masce, protože to neumožňuje jeho příznak ochrany ({2})
+
+Attr_cannot_be_masked_due_to_InvalidProtection.advice= Odebrat privátní/interní atributy
+
+Package_has_NO_Mask= Tento balíček nemá žádnou přidruženou masku
+
+Package_has_NO_Mask.advice= Definujte soubor .mask pro každý balíček

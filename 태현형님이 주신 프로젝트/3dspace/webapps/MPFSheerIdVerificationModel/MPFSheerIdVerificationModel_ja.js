@@ -1,0 +1,1 @@
+define("DS/MPFSheerIdVerificationModel/MPFSheerIdVerificationModel_ja",{});define("DS/MPFSheerIdVerificationModel/assets/nls/MPFSheerIdVerificationModel",{firstName:"名",lastName:"姓",emailAddress:"電子メール アドレス",birthData:"生年月日",organization:"組織",phoneNumber:"電話番号",xIsInvalid:"{x} は無効です",xIsRequired:"{x} は必須です"});

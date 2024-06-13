@@ -1,0 +1,1 @@
+define("DS/CAT3DAnnotationWidget/CAT3DAnnotationWidget_zh-TW",{});define("DS/CAT3DAnnotationWidget/assets/nls/CAT3DAnnotationWidget",{customApp:"自訂您的應用程式",prefs:"偏好",difAnnotSet:"開啟註記集"});

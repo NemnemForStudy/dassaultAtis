@@ -1,0 +1,1 @@
+define("UWA/Controls/SchemaForm/Sanitizers",["UWA/Core"],function(r){"use strict";var e;return e={"uwa-trim":function(r){return(r||"").trim()},"uwa-normalize-number":function(r){return"string"==typeof r?""===r?void 0:Number(r.replace(",",".").replace(" ","")):Number(r)},"uwa-first":function(r){return Array.isArray(r)?r[0]:r}},r.namespace("Controls/SchemaForm/Sanitizers",e,r)});

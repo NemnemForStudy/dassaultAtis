@@ -1,0 +1,22 @@
+<div id="im-call-member-list">
+  <!--
+    We create 2 lists with all users.
+    The sort between in call or not is done in member-item
+   -->
+  <ul>
+    <im-call-member-item
+      v-for="(item, index) in members"
+      :key="`member-${index}`"
+      :user="item"
+      :hasJoined="true"
+    />
+  </ul>
+  <ul class="has-not-joined">
+    <im-call-member-item
+      v-for="(item, index) in members"
+      :key="`member-${index}`"
+      :user="item"
+      :hasJoined="false"
+    />
+  </ul>
+</div>

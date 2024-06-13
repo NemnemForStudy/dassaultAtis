@@ -1,0 +1,41 @@
+{
+  "getMfgItemInstallDependencies": {
+    "url": "/resources/v1/modeler/dsmfg/invoke/dsmfg:getMfgItemInstallDependencies",
+    "method": "POST",
+    "payload": {
+        "assemblyid": "",
+        "installinstids": [
+        ],
+        "predecessor": true,
+        "successor": false,
+        "nodependency": true,
+        "graphconstraint": false
+    }
+},
+"WorkInstructionsTypes":{
+  "DELWkiInstructionReference":{
+    "url" : "/resources/v1/modeler/dsprcs/dsprcs:Instruction/{ID}?$mask=dsprcs:InstructionMask.Details",
+    "method" : "GET"
+  },
+  "DELWkiSignOffReference":{
+    "url" : "/resources/v1/modeler/dsprcs/dsprcs:SignOff/{ID}?$mask=dsprcs:SignOffMask.Details",
+    "method" : "GET"
+  },
+  "DELWkiAlertReference":{
+    "url" : "/resources/v1/modeler/dsprcs/dsprcs:Alert/{ID}?$mask=dsprcs:AlertMask.Details",
+    "method" : "GET"
+  },
+  "DELWkiDataCollectPlanReference":{
+    "url" : "/resources/v1/modeler/dsprcs/dsprcs:DataCollectPlan/{ID}/dsprcs:DataCollectRow",
+    "method" : "GET"
+  },
+  "DELWkiDataCollectChecklistReference":{
+    "url" : "/resources/v1/modeler/dsprcs/dsprcs:CheckList/{ID}/dsprcs:DataCollectRow",
+    "method" : "GET"
+  },
+  "DELWkiDataCollectReference":{
+    "url" : "/resources/v1/modeler/dsprcs/dsprcs:DataCollect/{ID}?$mask=dsprcs:DataCollectMask.Details",
+    "method" : "GET"
+  }
+}
+}

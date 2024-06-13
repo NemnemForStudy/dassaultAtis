@@ -1,0 +1,1 @@
+define("DS/VCXWebComposer3DPlayExperience/VCXWebComposer3DPlayExperience_ja",{});define("DS/VCXWebComposer3DPlayExperience/assets/nls/VCXWebComposer3DPlayExperience",{test:"テスト"});

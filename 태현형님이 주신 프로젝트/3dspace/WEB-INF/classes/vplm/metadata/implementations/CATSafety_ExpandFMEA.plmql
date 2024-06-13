@@ -1,0 +1,14 @@
+EXPAND
+T1.PLMID, T2.PLMID, T3.PLMID, T5.PLMID, T6.PLMID, T7.PLMID
+FROM 
+
+	CATSafetyFailureModesEffectsAnalysis/FailureModesEffectsAnalysisAnalyzes T1,
+	CATSafetyFailureModesEffectsAnalysis/FailureModesEffectsAnalysisAnalysisContext T2,
+	CATSafetyFailureModesEffectsAnalysis/FailureModesEffectsAnalysisCausalityRelationship T3,
+	CATSafetyFailureModesEffectsAnalysis/FailureModesEffectsAnalysisRep T4,
+	CATSafetyFailureModesEffectsAnalysis/FailureModesEffectsAnalysisRepInstance T5,
+	PLMCORE/PLMCoreReference T6,
+	PLMCORE/PLMCoreInstance T7
+
+FROM_ROOTS [?1?]
+DEPTH=1;

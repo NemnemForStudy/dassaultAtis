@@ -1,0 +1,20 @@
+################################################################################################
+# Create By jhlee : 2023. 06. 26
+# Admin Type : trigger
+# Name : RelationshipDecEWPRelCreateCheck
+################################################################################################
+#del bus 'eService Trigger Program Parameters' 'RelationshipDecEWPRelCreateCheck' 'insertCWPChangeHistory';
+add bus 'eService Trigger Program Parameters' 'RelationshipDecEWPRelCreateCheck' 'insertCWPChangeHistory'
+    Vault 'eService Administration'
+    Policy 'eService Trigger Program Policy'
+    owner 'creator'
+    current 'Active'
+    Description ''
+    'eService Sequence Number' '1'
+    'eService Program Argument 1' '${FROMOBJECTID}'
+    'eService Program Argument 2' '${TOOBJECTID}'
+    'eService Method Name' InsertCWPChangeHistoryForEWPRel
+    'eService Program Name' emxTask
+    'eService Error Type' Error
+    'eService Run In Background' FALSE
+;

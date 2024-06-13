@@ -1,0 +1,66 @@
+{
+    "settings": {
+        "readOnlyApp": {
+            "value": false
+        },
+        "WSAccessV2": {
+            "value": false
+        },
+        "intent": {
+            "value": "bookmark_intent"
+        },
+        "dgvOptions": {
+            "value": {
+                "viewMode": "comfortable",
+                "dgv": {
+                    "defaultColumnDef": {
+                        "width": "auto",
+                        "typeRepresentation": "string"
+                    },
+                    "showRowBorderFlag": true,
+                    "cellDragEnabledFlag": true,
+                    "rowDragEnabledFlag": true,
+                    "alternateBackgroundFlag": false,
+                    "showRowIndexFlag": false,
+                    "rowSelection": "multiple",
+                    "cellSelection": "none",
+                    "selectionBehavior": {
+                        "canInteractiveMultiselectWithCheckboxClick": true,
+                        "canMultiSelect": true,
+                        "enableFeedbackForActiveCell": true,
+                        "enableShiftSelection": true,
+                        "toggle": false,
+                        "unselectAllOnEmptyArea": true
+                    },
+                    "placeholder": "",
+                    "columns": []
+                },
+                "dgvLayout": {
+                    "cellHeight": 38,
+                    "columnHeaderHeight": 38,
+                    "rowsHeader": false
+                }
+            }
+        }
+    },
+    "columnsCusto": {
+        	"default": true,
+        	"order": ["tree", "ds6wg:revision", "ds6w:type", "ds6w:status", "ds6w:description", "ds6w:responsible", "ds6w:modified", 
+        	          "ds6w:created", "ds6w:identifier", "ds6w:reservedBy"],
+        	"attributes": [	
+        		{"ds6w" : "ds6wg:revision"},
+        		{"ds6w" : "ds6w:type"},
+        		{"ds6w" : "ds6w:status"},
+        		{"ds6w" : "ds6w:description"},
+        		{"ds6w" : "ds6w:responsible"},
+				{"ds6w" : "ds6w:modified", "kind": "timestamp", "isHidden": false , 
+					"customisation": { "layout": { "removable": false, "removableFromView": false } }, 
+					"defaultSortOrder" : "desc"},
+        		{"ds6w" : "ds6w:created", "kind": "timestamp"},
+        		{"ds6w" : "ds6w:identifier"},
+        		{"ds6w" : "ds6w:reservedBy"}        		
+        	],
+        	"commandColumns": [],
+        	"typeRepresentations": {}
+    }
+}

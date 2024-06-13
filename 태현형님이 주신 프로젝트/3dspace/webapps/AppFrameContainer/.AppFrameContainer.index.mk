@@ -1,0 +1,12 @@
+m|WAfrFoundation\AppFrameContainer.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.0.22078|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\AppFrameContainer\AppFrameContainer.js|1647691605|186
+s|WAfrFoundation\AppFrameContainer.mweb\src\App.js|1502178541|532
+t|win_b64\webapps\AppFrameContainer\container.html|1647691605|1413
+s|WAfrFoundation\AppFrameContainer.mweb\src\container.html|1563290067|1413
+u|WAfrFoundation\AppFrameContainer.mweb\src\AppFrameContainer.js|1457459975|0
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapping xmlns="http://www.3ds.com/enovia-matrixone/vplm-m1/mapping" version="9">
+
+  <!-- Package -->
+  <pattern.VPLM_PACKAGE>
+    <vplm.Package name="DELLmiProductionSystemPPR" />
+    <m1.package name="DELLmiProductionSystemPPR" />
+
+    <!-- Extension -->
+    <pattern.VPLM_EXTENSION>
+      <vplm.Extension name="DELLmiImplicitFilteringExt" />
+      <m1.interface name="DELLmiImplicitFilteringExt" />
+
+      <!-- Simple -->
+      <pattern.VPLM_SIMPLE>
+        <vplm.Simple name="V_ImplicitFilteringMode" />
+        <m1.attribute name="DELLmiImplicitFilteringExt.V_ImplicitFilteringMode" local="yes" />
+      </pattern.VPLM_SIMPLE>
+
+    </pattern.VPLM_EXTENSION>
+
+    <!-- RelationClass -->
+    <pattern.VPLM_RELATIONCLASS>
+      <vplm.PLMCoreInstance name="DELLmiPPRSystemInstance" />
+      <m1.relationship name="DELLmiPPRSystemInstance" />
+
+    </pattern.VPLM_RELATIONCLASS>
+
+    <!-- Class -->
+    <pattern.VPLM_CLASS>
+      <vplm.PLMCoreReference name="DELLmiPPRSystemReference" />
+      <m1.type name="DELLmiPPRSystemReference" />
+
+      <!-- Simple -->
+      <pattern.VPLM_SIMPLE>
+        <vplm.Simple name="V_SequencingMode" />
+        <m1.attribute name="DELLmiPPRSystemReference.V_SequencingMode" local="yes" />
+      </pattern.VPLM_SIMPLE>
+
+    </pattern.VPLM_CLASS>
+
+  </pattern.VPLM_PACKAGE>
+
+</mapping>

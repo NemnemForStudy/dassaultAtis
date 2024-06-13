@@ -1,0 +1,21 @@
+################################################################################################
+# Create By jhlee 2023. 07. 27
+# Admin Type : command
+# Name : decSchedule
+################################################################################################
+
+#del command 'decSchedule';
+add command 'decSchedule'
+	description 'decSchedule'
+	label 'emxProgramCentral.Common.Subtasks'
+	href '${SUITE_DIR}/emxProgramCentralTaskGateDispatcher.jsp?showPageURLIcon=false'
+	alt 'emxProgramCentral.Common.Subtasks'
+	setting 'Registered Suite' 'ProgramCentral'
+	setting 'Target Location' 'content'
+;
+add property 'command_decSchedule' on prog eServiceSchemaVariableMapping.tcl to command 'decSchedule';
+
+# Modified By thok 2023.10.27
+mod command decSchedule
+	label 'Schedule'
+;

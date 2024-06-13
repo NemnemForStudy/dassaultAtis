@@ -1,0 +1,1129 @@
+[
+    {
+        "ParsingVersion": "2.0",
+        "DeclarativeTypes": [
+            {
+                "ConceptualName": "DELLmiOperationReference",
+                "ParentType": "DELLmiAbstractProductionEntity",
+                "IsAbstract": true,
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "DELLmiOperationReference",
+                        "Behavior": "REFERENCE"
+                    },
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "DELLmiOperationReference",
+                        "Behavior": "REFERENCE"
+                    }
+                ],
+                "Attributes": [
+                    {
+                        "ConceptualName": "estimatedTime",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELLmiOperationReference.V_EstimatedTime"
+                            },
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELLmiOperationReference.V_EstimatedTime"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "estimatedTime_AddedValueRatio",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELLmiOperationReference.V_EstimatedTime_AddedValueRatio"
+                            },
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELLmiOperationReference.V_EstimatedTime_AddedValueRatio"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "isTimeProportionalToQty",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELLmiOperationReference.V_IsTimeProportionalToQty"
+                            },
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELLmiOperationReference.V_IsTimeProportionalToQty"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "measuredTime",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELLmiOperationReference.V_MeasuredTime"
+                            },
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELLmiOperationReference.V_MeasuredTime"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "timeMode",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELLmiOperationReference.V_TimeMode"
+                            },
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELLmiOperationReference.V_TimeMode"
+                            }
+                        ],
+                        "Checkers": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.checkers.MfgOperationAttributeTimeModeChecker"
+                            }
+                        ],
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.transforms.MfgOperationAttributeTimeModeTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.threed_space.tools.transform.AttributeFormatToStringTransform"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "trackTime",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELLmiOperationReference.V_TrackTime"
+                            },
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELLmiOperationReference.V_TrackTime"
+                            }
+                        ],
+                        "Checkers": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.checkers.AttributeTrackTimeChecker"
+                            }
+                        ],
+                        "Setters": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.setters.AttributeMfgOperationTrackTimeSetter"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "customerAttributes",
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.threed_space.tools.transform.DELCRUDCustomerAttrs3DSpaceTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.index.tools.transform.DELCRUDCustomerAttributesIndexTransform"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "DELLmiPPROperationReference",
+                "ParentType": "DELLmiOperationReference",
+                "IsAbstract": true,
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "DELLmiPPROperationReference",
+                        "Behavior": "REFERENCE"
+                    },
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "DELLmiPPROperationReference",
+                        "Behavior": "REFERENCE"
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "dsprcs:MfgOperation",
+                "ParentType": "DELLmiPPROperationReference",
+                "IsAbstract": true,
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "DELLmiOperationPPRReference",
+                        "Behavior": "CUSTOM",
+                        "Class": "com.dassault_systemes.delmia.crud.process.bytype.threed_space.impl.DELMIACRUDPPRSysOpReferenceExecutionImpl"
+                    },
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "DELLmiOperationPPRReference",
+                        "Behavior": "REFERENCE"
+                    }
+                ],
+                "Attributes": [
+                    {
+                        "ConceptualName": "executionTemplate",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELLmiOperationPPRReference.V_Execution_template_name"
+                            },
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELLmiOperationPPRReference.V_Execution_template_name"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "magnitude",
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.transforms.AttributeMfgOperationMagnitudeTransform"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "timeOutMachineBefore",
+                        "Setters": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.setters.AttributeMfgOperationTimeOutMachineBeforeSetter"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "timeOutMachineAfter",
+                        "Setters": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.setters.AttributeMfgOperationTimeOutMachineAfterSetter"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "remoteObjectInfo",
+                        "Transforms": [
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.transforms.DELCRUDProcIndexRemoteObjectTransform"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "uiAttributes",
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.threed_space.tools.transform.DELCRUDUIAttributes3DSpaceTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.index.tools.transform.DELCRUDUIAttributesIndexTransform"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "kind",
+                        "Checkers": [
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.tools.checkers.AttributeDefaultChecker"
+                            }
+                        ],
+                        "Getters": [
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.getters.MfgProductionPlanningKindGetter"
+                            }
+                        ]
+                    },
+					{
+                        "ConceptualName": "dsprcs:MfgOperationEnterpriseAttributes",
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.transforms.DELCRUDProcEnterpriseAttributeIndexTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.transforms.DELCRUDProcEnterpriseAttributeIndexTransform"
+                            }
+                        ]
+                    }
+				]
+            },
+            {
+                "ConceptualName": "DELLmiHeaderOperationReference",
+                "ParentType": "dsprcs:MfgOperation",
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "DELLmiHeaderOperationReference",
+                        "Behavior": "REFERENCE"
+                    },
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "DELLmiHeaderOperationReference",
+                        "Behavior": "REFERENCE"
+                    }
+                ],
+                "Attributes": [
+                    {
+                        "ConceptualName": "interruptible",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELLmiHeaderOperationReference.V_Interruptible"
+                            },
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELLmiHeaderOperationReference.V_Interruptible"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "manageVariant",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELLmiHeaderOperationReference.V_ManageVariant"
+                            },
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELLmiHeaderOperationReference.V_ManageVariant"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "sequencingMode",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELLmiHeaderOperationReference.V_SequencingMode"
+                            },
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELLmiHeaderOperationReference.V_SequencingMode"
+                            }
+                        ],
+                        "Checkers": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.checkers.AttributeSequencingModeChecker"
+                            }
+                        ],
+                        "Setters": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.setters.AttributeMfgOperationSequencingModeSetter"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "rollup",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELLmiHeaderOperationReference.V_UseGanttTimeSolver"
+                            },
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELLmiHeaderOperationReference.V_UseGanttTimeSolver"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "quantityToBeProducedPerTime",
+                        "Checkers": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.checkers.AttributeQuantityMagnitudePairChecker"
+                            }
+                        ],
+                        "Setters": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.setters.AttributeMfgOperationQtyToBeProducedPerTimeSetter"
+                            }
+                        ],
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.transforms.MfgOperationAttrQuantityToBeProducedPerTimeTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.transforms.MfgOperationAttrQuantityToBeProducedPerTimeTransform"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "preparationTime",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELLmiAdditionalTime.V_PreparationTime"
+                            },
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELLmiAdditionalTime.V_PreparationTime"
+                            }
+                        ],
+                        "Setters": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.setters.AttributeMfgOperationPreparationTime"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "preProcessingTime",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELLmiAdditionalTime.V_TimeOutMachineBefore"
+                            },
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELLmiAdditionalTime.V_TimeOutMachineBefore"
+                            }
+                        ],
+                        "Setters": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.setters.AttributeMfgOperationTimeOutMachineBeforeSetter"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "postProcessingTime",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELLmiAdditionalTime.V_TimeOutMachineAfter"
+                            },
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELLmiAdditionalTime.V_TimeOutMachineAfter"
+                            }
+                        ],
+                        "Setters": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.setters.AttributeMfgOperationTimeOutMachineAfterSetter"
+                            }
+                        ]
+                    },
+					{
+                        "ConceptualName": "dsprcs:HeaderOperationEnterpriseAttributes",
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.transforms.DELCRUDProcEnterpriseAttributeIndexTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.transforms.DELCRUDProcEnterpriseAttributeIndexTransform"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "DELLmiGeneralOperationReference",
+                "ParentType": "dsprcs:MfgOperation",
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "DELLmiGeneralOperationReference",
+                        "Behavior": "REFERENCE"
+                    },
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "DELLmiGeneralOperationReference",
+                        "Behavior": "REFERENCE"
+                    }
+                ],
+                "Attributes": [
+                    {
+                        "ConceptualName": "sequencingMode",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELLmiGeneralOperationReference.V_SequencingMode"
+                            },
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELLmiGeneralOperationReference.V_SequencingMode"
+                            }
+                        ],
+                        "Checkers": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.checkers.AttributeSequencingModeChecker"
+                            }
+                        ],
+                        "Setters": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.setters.AttributeMfgOperationSequencingModeSetter"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "materialScrap",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELLmiGeneralOperationReference.V_MaterialScrap"
+                            },
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELLmiGeneralOperationReference.V_MaterialScrap"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "manageVariant",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELLmiGeneralOperationReference.V_ManageVariant"
+                            },
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELLmiGeneralOperationReference.V_ManageVariant"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "rollup",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELLmiGeneralOperationReference.V_UseGanttTimeSolver"
+                            },
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELLmiGeneralOperationReference.V_UseGanttTimeSolver"
+                            }
+                        ]
+                    },
+					{
+                        "ConceptualName": "dsprcs:DELLmiGeneralOperationReferenceEnterpriseAttributes",
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.transforms.DELCRUDProcEnterpriseAttributeIndexTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.transforms.DELCRUDProcEnterpriseAttributeIndexTransform"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "DELLmiLoadingOperationReference",
+                "ParentType": "dsprcs:MfgOperation",
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "DELLmiLoadingOperationReference",
+                        "Behavior": "REFERENCE"
+                    },
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "DELLmiLoadingOperationReference",
+                        "Behavior": "REFERENCE"
+                    }
+                ],
+                "Attributes": [
+                    {
+                        "ConceptualName": "materialScrap",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELLmiLoadingOperationReference.V_MaterialScrap"
+                            },
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELLmiLoadingOperationReference.V_MaterialScrap"
+                            }
+                        ]
+                    },
+					{
+                        "ConceptualName": "dsprcs:DELLmiLoadingOperationReferenceEnterpriseAttributes",
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.transforms.DELCRUDProcEnterpriseAttributeIndexTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.transforms.DELCRUDProcEnterpriseAttributeIndexTransform"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "DELLmiUnloadingOperationReference",
+                "ParentType": "dsprcs:MfgOperation",
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "DELLmiUnloadingOperationReference",
+                        "Behavior": "REFERENCE"
+                    },
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "DELLmiUnloadingOperationReference",
+                        "Behavior": "REFERENCE"
+                    }
+                ],
+                "Attributes": [
+					{
+                        "ConceptualName": "dsprcs:DELLmiUnLoadingOperationReferenceEnterpriseAttributes",
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.transforms.DELCRUDProcEnterpriseAttributeIndexTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.transforms.DELCRUDProcEnterpriseAttributeIndexTransform"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "DELLmiRemoveMaterialOperationReference",
+                "ParentType": "dsprcs:MfgOperation",
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "DELLmiRemoveMaterialOperationReference",
+                        "Behavior": "REFERENCE"
+                    },
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "DELLmiRemoveMaterialOperationReference",
+                        "Behavior": "REFERENCE"
+                    }
+                ],
+                "Attributes": [
+					{
+                        "ConceptualName": "dsprcs:DELLmiRemoveMaterialOperationReferenceEnterpriseAttributes",
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.transforms.DELCRUDProcEnterpriseAttributeIndexTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.transforms.DELCRUDProcEnterpriseAttributeIndexTransform"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "DELLmiTransferOperationReference",
+                "ParentType": "dsprcs:MfgOperation",
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "DELLmiTransferOperationReference",
+                        "Behavior": "REFERENCE"
+                    },
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "DELLmiTransferOperationReference",
+                        "Behavior": "REFERENCE"
+                    }
+                ],
+                "Attributes": [
+                    {
+                        "ConceptualName": "capacity",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELLmiTransferOperationReference.V_Capacity"
+                            },
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELLmiTransferOperationReference.V_Capacity"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "dsprcs:DELLmiTransferOperationReferenceEnterpriseAttributes",
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.transforms.DELCRUDProcEnterpriseAttributeIndexTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.transforms.DELCRUDProcEnterpriseAttributeIndexTransform"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "DELLmiPunctualOperationReference",
+                "ParentType": "dsprcs:MfgOperation",
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "DELLmiPunctualOperationReference",
+                        "Behavior": "REFERENCE"
+                    },
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "DELLmiPunctualOperationReference",
+                        "Behavior": "REFERENCE"
+                    }
+                ],
+                "Attributes": [
+                    {
+                        "ConceptualName": "timePerFastening",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELLmiPunctualOperationReference.V_TimePerFastening"
+                            },
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELLmiPunctualOperationReference.V_TimePerFastening"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "dsprcs:DELLmiPunctualOperationReferenceEnterpriseAttributes",
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.transforms.DELCRUDProcEnterpriseAttributeIndexTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.transforms.DELCRUDProcEnterpriseAttributeIndexTransform"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "DELLmiCurveOperationReference",
+                "ParentType": "dsprcs:MfgOperation",
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "DELLmiCurveOperationReference",
+                        "Behavior": "REFERENCE"
+                    },
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "DELLmiCurveOperationReference",
+                        "Behavior": "REFERENCE"
+                    }
+                ],
+                "Attributes": [
+                    {
+                        "ConceptualName": "fasteningRate",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELLmiCurveOperationReference.V_FasteningRate"
+                            },
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELLmiCurveOperationReference.V_FasteningRate"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "dsprcs:DELLmiCurveOperationReferenceEnterpriseAttributes",
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.transforms.DELCRUDProcEnterpriseAttributeIndexTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.transforms.DELCRUDProcEnterpriseAttributeIndexTransform"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "DELLmiInterruptOperationReference",
+                "ParentType": "dsprcs:MfgOperation",
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "DELLmiInterruptOperationReference",
+                        "Behavior": "REFERENCE"
+                    },
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "DELLmiInterruptOperationReference",
+                        "Behavior": "REFERENCE"
+                    }
+                ],
+                "Attributes": [
+                    {
+                        "ConceptualName": "inputResources",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELLmiInterruptOperationReference.V_InputResources"
+                            },
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELLmiInterruptOperationReference.V_InputResources"
+                            }
+                        ],
+                        "Checkers": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.checkers.AttributeAuthorizedValueChecker"
+                            }
+                        ],
+                        "Transforms": [
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.threed_space.tools.transform.AttributeFormatToStringTransform"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "occurrenceTime",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELLmiInterruptOperationReference.V_OccurrenceTime"
+                            },
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELLmiInterruptOperationReference.V_OccurrenceTime"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "occurrenceTimeMode",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELLmiInterruptOperationReference.V_OccurrenceTimeMode"
+                            },
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELLmiInterruptOperationReference.V_OccurrenceTimeMode"
+                            }
+                        ],
+                        "Checkers": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.checkers.AttributeAuthorizedValueChecker"
+                            }
+                        ],
+                        "Transforms": [
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.threed_space.tools.transform.AttributeFormatToStringTransform"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "restart",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELLmiInterruptOperationReference.V_Restart"
+                            },
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELLmiInterruptOperationReference.V_Restart"
+                            }
+                        ],
+                        "Checkers": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.checkers.AttributeAuthorizedValueChecker"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "stopingOnGoingOp",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELLmiInterruptOperationReference.V_StopingOnGoingOp"
+                            },
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELLmiInterruptOperationReference.V_StopingOnGoingOp"
+                            }
+                        ],
+                        "Checkers": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.checkers.AttributeAuthorizedValueChecker"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "dsprcs:DELLmiInterruptOperationReferenceEnterpriseAttributes",
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.transforms.DELCRUDProcEnterpriseAttributeIndexTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.transforms.DELCRUDProcEnterpriseAttributeIndexTransform"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "DELLmiBufferOperationReference",
+                "ParentType": "dsprcs:MfgOperation",
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "DELLmiBufferOperationReference",
+                        "Behavior": "REFERENCE"
+                    },
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "DELLmiBufferOperationReference",
+                        "Behavior": "REFERENCE"
+                    }
+                ],
+                "Attributes": [
+                    {
+                        "ConceptualName": "recorderLevel",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELLmiBufferOperationReference.V_RecorderLevel"
+                            },
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELLmiBufferOperationReference.V_RecorderLevel"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "capacity",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELLmiBufferOperationReference.V_Capacity"
+                            },
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELLmiBufferOperationReference.V_Capacity"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "dsprcs:DELLmiBufferOperationReferenceEnterpriseAttributes",
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.transforms.DELCRUDProcEnterpriseAttributeIndexTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.transforms.DELCRUDProcEnterpriseAttributeIndexTransform"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "DELLmiSinkOperationReference",
+                "ParentType": "dsprcs:MfgOperation",
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "DELLmiSinkOperationReference",
+                        "Behavior": "REFERENCE"
+                    },
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "DELLmiSinkOperationReference",
+                        "Behavior": "REFERENCE"
+                    }
+                ],
+                "Attributes": [
+                    {
+                        "ConceptualName": "proportion",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELLmiSinkOperationReference.V_Proportion"
+                            },
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELLmiSinkOperationReference.V_Proportion"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "lot",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELLmiSinkOperationReference.V_Lot"
+                            },
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELLmiSinkOperationReference.V_Lot"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "dsprcs:DELLmiSinkOperationReferenceEnterpriseAttributes",
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.transforms.DELCRUDProcEnterpriseAttributeIndexTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.transforms.DELCRUDProcEnterpriseAttributeIndexTransform"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "DELLmiSourceOperationReference",
+                "ParentType": "dsprcs:MfgOperation",
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "DELLmiSourceOperationReference",
+                        "Behavior": "REFERENCE"
+                    },
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "DELLmiSourceOperationReference",
+                        "Behavior": "REFERENCE"
+                    }
+                ],
+                "Attributes": [
+                    {
+                        "ConceptualName": "proportion",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELLmiSourceOperationReference.V_Proportion"
+                            },
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELLmiSourceOperationReference.V_Proportion"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "lot",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELLmiSourceOperationReference.V_Lot"
+                            },
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELLmiSourceOperationReference.V_Lot"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "dsprcs:DELLmiSourceOperationReferenceEnterpriseAttributes",
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.transforms.DELCRUDProcEnterpriseAttributeIndexTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.transforms.DELCRUDProcEnterpriseAttributeIndexTransform"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "DELLmiPunctualOperationReference",
+                "ParentType": "dsprcs:MfgOperation",
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "DELLmiPunctualOperationReference",
+                        "Behavior": "REFERENCE"
+                    },
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "DELLmiPunctualOperationReference",
+                        "Behavior": "REFERENCE"
+                    }
+                ],
+                "Attributes": [
+                    {
+                        "ConceptualName": "timePerFastening",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELLmiPunctualOperationReference.V_TimePerFastening"
+                            },
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELLmiPunctualOperationReference.V_TimePerFastening"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "dsprcs:DELLmiPunctualOperationReferenceEnterpriseAttributes",
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.transforms.DELCRUDProcEnterpriseAttributeIndexTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.transforms.DELCRUDProcEnterpriseAttributeIndexTransform"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]

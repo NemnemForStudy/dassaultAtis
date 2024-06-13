@@ -1,0 +1,488 @@
+// Variables
+$red-1: #ea4f37;
+$cyan-1: #00b8de;
+$green-1: #57b847;
+
+// Helpers
+@mixin animation($duration: 0.3s) {
+  transition: all $duration ease-out;
+}
+
+// Alert
+.dashboard-story-alert {
+  z-index: 1001;
+
+  u {
+    cursor: pointer;
+  }
+}
+
+// Show element helpers
+.tuto-show-element {
+  z-index: 1001 !important;
+}
+
+.tuto-relative-position {
+  position: relative;
+}
+
+.tuto-parent-zIndex {
+  z-index: auto !important;
+  opacity: 1 !important;
+  transform: none !important;
+  // Need for Mobile
+  overflow: visible !important;
+  // Need when tab scroller appear
+  perspective: none !important;
+  transform-style: initial !important;
+  -webkit-transform-style: initial !important;
+  // Need to avoid painting issue in mobile with tab scroller
+  transition: none !important;
+  -webkit-font-smoothing: none !important;
+}
+
+.tuto-show-selectable {
+  background-color: #fff;
+  cursor: pointer;
+  border-radius: 3px;
+
+  &.animated {
+    @include animation(0.5s);
+    opacity: 0.6;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  .underline-tab-el,
+  .fonticon-down-open {
+    display: none !important;
+  }
+}
+
+.tuto-container {
+  opacity: 0;
+  font-size: 16px;
+
+  &.show {
+    opacity: 1;
+  }
+
+  .btn {
+    @include animation();
+  }
+
+  .tuto-overlay {
+    opacity: 0;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: -webkit-radial-gradient(
+      center,
+      ellipse,
+      rgba(0, 0, 0, 0.4) 0,
+      rgba(0, 0, 0, 0.9) 100%
+    );
+    background: -moz-radial-gradient(
+      center,
+      ellipse,
+      rgba(0, 0, 0, 0.4) 0,
+      rgba(0, 0, 0, 0.9) 100%
+    );
+    background: -ms-radial-gradient(center, ellipse, rgba(0, 0, 0, 0.4) 0, rgba(0, 0, 0, 0.9) 100%);
+    background: -o-radial-gradient(center, ellipse, rgba(0, 0, 0, 0.4) 0, rgba(0, 0, 0, 0.9) 100%);
+    background: radial-gradient(
+      farthest-corner circle at center,
+      rgba(0, 0, 0, 0.4) 0,
+      rgba(0, 0, 0, 0.9) 100%
+    );
+
+    @include animation();
+
+    &.show {
+      opacity: 1;
+      z-index: 999;
+    }
+  }
+
+  .tuto-highlight {
+    position: fixed;
+    opacity: 0;
+    border-radius: 4px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.4);
+    background-color: #fff;
+    background-color: rgba(255, 255, 255, 0.9);
+
+    &.tuto-scenario {
+      @include animation();
+    }
+
+    &.show {
+      z-index: 1000;
+      opacity: 1;
+      border: 1px solid rgba(0, 0, 0, 0.5);
+    }
+  }
+
+  .tuto-bubble-container {
+    position: absolute;
+    visibility: visible;
+    width: 320px;
+    max-height: 400px;
+    border-radius: 3px;
+    box-shadow: 0 1px 10px rgba(0, 0, 0, 0.4);
+    @include animation();
+    background-color: rgba(000, 0, 0, 0.5);
+    color: #fff;
+    font-family: Arial, sans-serif;
+    opacity: 0;
+
+    .tuto-ribbon {
+      position: absolute;
+      left: -5px;
+      top: -5px;
+      z-index: 1;
+      overflow: hidden;
+      width: 75px;
+      height: 75px;
+      text-align: right;
+
+      span {
+        font-size: 10px;
+        font-weight: bold;
+        color: #ffffff;
+        text-transform: uppercase;
+        text-align: center;
+        line-height: 20px;
+        transform: rotate(-45deg);
+        -webkit-transform: rotate(-45deg);
+        width: 100px;
+        display: block;
+        background: #79a70a;
+        background: linear-gradient(#00b8de 0%, #0087a3 100%);
+        box-shadow: 0 3px 10px -5px rgba(0, 0, 0, 1);
+        position: absolute;
+        top: 19px;
+        left: -21px;
+
+        &::before {
+          content: "";
+          position: absolute;
+          left: 0px;
+          top: 100%;
+          z-index: -1;
+          border-left: 3px solid #0087a3;
+          border-right: 3px solid transparent;
+          border-bottom: 3px solid transparent;
+          border-top: 3px solid #0087a3;
+        }
+
+        &::after {
+          content: "";
+          position: absolute;
+          right: 0px;
+          top: 100%;
+          z-index: -1;
+          border-left: 3px solid transparent;
+          border-right: 3px solid #0087a3;
+          border-bottom: 3px solid transparent;
+          border-top: 3px solid #0087a3;
+        }
+      }
+    }
+
+    &.center {
+      position: absolute;
+      transform: translate(-50%, -50%);
+    }
+
+    &.top {
+      border-bottom: 5px solid $cyan-1;
+    }
+
+    &.right {
+      border-left: 5px solid $cyan-1;
+    }
+
+    &.bottom {
+      border-top: 5px solid $cyan-1;
+    }
+
+    &.left {
+      border-right: 5px solid $cyan-1;
+    }
+
+    &.show {
+      z-index: 1001;
+      opacity: 1;
+    }
+
+    textarea {
+      width: 100%;
+      padding: 13px;
+      background-color: rgba(0, 0, 0, 0);
+      outline: 0 !important;
+      -webkit-appearance: none;
+      box-shadow: none !important;
+      resize: none;
+      border: 1px dashed #77797c;
+    }
+
+    textarea:hover,
+    textarea:active,
+    textarea:focus {
+      outline: 0 !important;
+      -webkit-appearance: none;
+      box-shadow: none !important;
+      resize: none;
+      border: 1px dashed #fff;
+    }
+
+    textarea::placeholder {
+      color: #fff;
+      font-style: normal;
+      font-size: 16px;
+    }
+
+    .tuto-title {
+      margin-left: 10px;
+      margin-top: 8px;
+      margin-right: 60px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      color: #f4f5f6;
+      font-size: 16px;
+
+      &.tuto-title-intro {
+        margin-right: 33px;
+      }
+    }
+
+    .tuto-bubble {
+      padding: 0 10px 10px 10px;
+
+      .tuto-bubble-title {
+        visibility: visible;
+        margin: 15px 0;
+        border-radius: 3px;
+        @include animation();
+        font-size: 14px;
+        max-height: 50px;
+        overflow-y: hidden;
+        min-height: 48px;
+      }
+
+      .tuto-bubble-content {
+        visibility: visible;
+        margin: 10px 0 15px 0;
+        border-radius: 3px;
+        @include animation();
+        font-size: 14px;
+        max-height: 200px;
+        overflow-y: auto;
+        word-break: break-word;
+        padding-right: 5px;
+
+        &::-webkit-scrollbar-track {
+          border-radius: 10px;
+        }
+
+        &::-webkit-scrollbar {
+          width: 3px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          border-radius: 15px;
+          background-color: #77797c;
+        }
+
+        p {
+          margin: 0;
+        }
+      }
+
+      .tuto-bubble-previous-next {
+        text-align: right;
+        white-space: nowrap;
+
+        .tuto-nav-button {
+          color: $cyan-1;
+          text-decoration: none;
+          border: 1px solid $cyan-1;
+        }
+
+        .tuto-nav-button:hover,
+        .tuto-nav-button:focus,
+        .tuto-nav-button:active {
+          background-color: $cyan-1;
+          color: #fff;
+        }
+      }
+    }
+
+    .tuto-pagination {
+      text-align: center;
+      padding: 0 10px;
+
+      ul {
+        clear: both;
+        margin: 15px auto 0;
+        padding: 0;
+        display: inline-block;
+
+        li {
+          list-style: none;
+          float: left;
+          margin: 0 2px;
+
+          a {
+            display: block;
+            width: 6px;
+            height: 6px;
+            background: #ccc;
+            border-radius: 10px;
+            text-decoration: none;
+
+            &.active {
+              background: $cyan-1;
+            }
+          }
+        }
+      }
+
+      .delete-step,
+      .add-step {
+        color: #fff;
+        text-decoration: none;
+        position: absolute;
+        right: 5px;
+        top: 8px;
+        cursor: pointer;
+      }
+
+      .add-step {
+        right: 30px;
+      }
+    }
+
+    .tuto-pagination-intro {
+      .add-step {
+        right: 5px;
+      }
+    }
+
+    .tuto-bubble-menu {
+      position: absolute;
+      right: 5px;
+      top: 8px;
+      padding: 0;
+      min-width: auto;
+      font-size: 16px;
+
+      .tuto-bubble-menu-item {
+        color: #fff;
+
+        &:hover,
+        &:focus {
+          text-decoration: none;
+          cursor: pointer;
+          outline: 0;
+        }
+      }
+    }
+  }
+
+  .tuto-arrow {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    z-index: 1002;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    @include animation();
+
+    &.show {
+      opacity: 1;
+    }
+
+    &.top {
+      border-width: 0 10px 10px 10px;
+      border-color: transparent transparent $cyan-1 transparent;
+    }
+
+    &.right {
+      border-width: 10px 0 10px 10px;
+      border-color: transparent transparent transparent $cyan-1;
+    }
+
+    &.bottom {
+      border-width: 10px 10px 0 10px;
+      border-color: $cyan-1 transparent transparent transparent;
+    }
+
+    &.left {
+      border-width: 10px 10px 10px 0;
+      border-color: transparent $cyan-1 transparent transparent;
+    }
+  }
+
+  .tuto-menu {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    padding: 0;
+    min-width: auto;
+    color: #fff;
+    z-index: 1001;
+    display: none;
+
+    &.show {
+      display: block;
+    }
+
+    &:hover,
+    &:focus {
+      text-decoration: none;
+      cursor: pointer;
+      color: #fff;
+      outline: 0;
+    }
+
+    .tuto-menu-item {
+      width: 25px;
+      font-size: 20px;
+
+      &.active {
+        color: $cyan-1;
+      }
+    }
+  }
+}
+
+.ifw-clear-pointer-path {
+  .tuto-bubble-container.center {
+    pointer-events: none;
+    opacity: 0.3;
+  }
+}
+
+.ifw-clear-view {
+  .tuto-bubble-container.center {
+    opacity: 0;
+  }
+
+  .column.right.tuto-show-element.shown.maximized {
+    opacity: 0;
+  }
+}
+
+.column.right.tuto-show-element.shown.maximized ~ .tuto-container.show .tuto-bubble-container {
+  pointer-events: none;
+  opacity: 0;
+}

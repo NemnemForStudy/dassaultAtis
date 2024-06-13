@@ -1,0 +1,132 @@
+<?xml version="1.0" ?>
+<!-- COPYRIGHT DASSAULT SYSTEMES 2021, All rights reserved -->
+
+<!-- SIMULIA PowerBy Dictionary  -->
+
+<Package xmlns="PLMDictionaryUnified" 
+    ModelerType="Top" 
+    Name="SMAPowerByModel2"
+    Uuid="6c1d3f84-6378-4215-859b-eb8d1206dc71"
+    UseNames="ERCoreModeler PLMCORE"
+    BelongsToModeler="SMAPowerBy" 
+    CustomerExposition="Programmer"
+	Architecture="All"
+    >
+
+    <Comment>
+        SIMULIA PowerBy Modeler
+        Defines entities that support SIMULIA Power'By.
+    </Comment>
+    <!--
+       - This is a companion to VPMDictionary\\SMAPowerBy.metadata.
+       - The SMAPByPrereqSimulation RelationClass cannot be defined in SMAPowerBy.metadata.
+       - See the Architecture setting in the Package declaration above.
+    -->
+
+
+  <!-- Intent: this extension is added to the SIMObjSimulationSystem SRs
+       to hold the synchronization stamp of the SR target (the SimulatedProduct).
+  -->
+  <Extension Name="SMAPbySimulationSystemSRExtension" 
+      Uuid="42d9f283-4ac0-44ad-9077-34eb28598bdb"
+      CustomerExposition="ProgrammerOnly"
+      ScopeNames="SemanticRelation"
+	  Specializable="No"
+      Searchable="No" >
+  
+    <!-- Target Syncho Stamp -->
+    <Simple Name="TargetSynchoStamp"
+      Uuid="015fd26f-33b5-440b-81ad-16827a8fe60f"
+      Type="String"
+      Protection="External"
+      MultiValuated="No"
+      UIAccess="None"
+      Faceted="No"  >
+    </Simple>
+  </Extension>
+
+
+
+   <!-- Intent: points from a Simulation Scenario Rep to its prereq Simulation Scenario Rep.
+   -->
+   <RelationClass Name="SMAPByPrereqSimulation" 
+		Uuid="d1cf21a7-2795-4b6d-bcb4-734e0519c77b" 
+		Abstract="No" 
+		CustomerExposition="Programmer"
+		SuperName="RelationType"
+		Specializable="No"
+		CustomerExtensible="No"
+		>
+
+		<SubClause Name="from"   TargetName="dsc_Scenario_Rep"
+			clone="replicate"
+            minorrevision="replicate"
+		/>
+		<SubClause Name="to"   TargetName="dsc_Scenario_Rep"
+		    propagateconnection="No" />
+		
+		<!-- The id of the prereq analysiscase -->
+		<Simple Name="AnalysisCase"
+			Uuid="09b5ee57-1d19-4c81-851c-d5d74b68ac7a"
+			Type="String"
+            MultiValuated="No"
+			ResetOnCloning="No"
+			ResetOnNewVersion="No"
+			Protection="External"
+            UIAccess="None"
+            Faceted="No"  >
+		</Simple>
+
+        <Method ImplementationType="None">
+          <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+        </Method>
+   </RelationClass>
+
+
+
+   <!-- Intent: points from a Product to a dependee Product.
+        Source Product A depends on target Product B.
+        Initial Usage: Simpack: Model to Database or Library.
+   -->
+   <RelationClass Name="SMADependsOn"
+		Uuid="B16C957C-AE36-4A13-A76F-ABE85E83EFFC" 
+		Abstract="No" 
+		CustomerExposition="Programmer"
+		SuperName="RelationType"
+		Specializable="No"
+		CustomerExtensible="No"
+		>
+
+		<SubClause Name="from"   TargetName="VPMReference"/>
+		<SubClause Name="from"   TargetName="XRep"/>
+		<SubClause Name="to"   TargetName="VPMReference" />
+		
+        <Method ImplementationType="None">
+          <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+        </Method>
+   </RelationClass>
+
+
+
+   <!-- Intent: points from an XRep to a dependee XRep.
+        Source XRep A depends on target XRep B.
+        Initial Usage: Simpack
+   -->
+   <RelationClass Name="SMAFTRepDependsOn"
+		Uuid="F4E78A8A-8369-460D-8755-915551E4C3FF" 
+		Abstract="No" 
+		CustomerExposition="Programmer"
+		SuperName="RelationType"
+		Specializable="No"
+		CustomerExtensible="No"
+		>
+
+		<SubClause Name="from"   TargetName="XRep"/>
+		<SubClause Name="to"   TargetName="XRep" />
+		
+        <Method ImplementationType="None">
+          <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+        </Method>
+   </RelationClass>
+
+</Package>

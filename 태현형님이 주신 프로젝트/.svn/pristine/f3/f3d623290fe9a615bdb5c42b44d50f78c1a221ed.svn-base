@@ -1,0 +1,34 @@
+################################################################################################
+# Created By thok : 2023. 06. 29
+# Admin Type : command
+# Name : decRequestEdit
+################################################################################################
+#delete command decRequestEdit;
+add command 'decRequestEdit' 
+	description 'Edit Request' 
+	alt 'emxProgramCentral.Button.Edit' 
+	label 'emxProgramCentral.Button.Edit' 
+	href '${COMMON_DIR}/decRequestDialogFS.jsp?mode=edit&'
+	setting 'Submit' 'true' 
+	setting 'Target Location' 'slideInFrame'
+	setting 'Registered Suite' 'ProgramCentral' 
+	setting 'Image' '${COMMON_DIR}/images/iconActionEdit.png'
+	property application value 'ProgramManagementBase'
+	property installer value 'ENOVIAEngineering' 
+	property 'installed date' value '06-29-2023' 
+	property version value 'R423.HF7' 
+	property 'original name' value 'decRequestEdit'
+;
+add property command_decRequestEdit on program eServiceSchemaVariableMapping.tcl to command 'decRequestEdit'
+;
+
+# Modified By thok : 2023. 08. 10
+mod command 'decRequestEdit' 
+	add setting 'Access Function' 'isRequestOriginator' 
+	add setting 'Access Program' 'decRequest'
+;
+
+# Modified By thok : 2023. 09. 19
+mod command 'decRequestEdit' 
+	add setting 'Access Function' 'isRequestEditAvailable' 
+;

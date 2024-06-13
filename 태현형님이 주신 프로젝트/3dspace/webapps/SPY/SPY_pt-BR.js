@@ -1,0 +1,1 @@
+define("DS/SPY/SPY_pt-BR",{});define("DS/SPY/assets/nls/CATSimNavDataHelper",{mode:"Modo"});define("DS/SPY/assets/nls/CATSimNavTypes",{CATSimNavDataFrameViewImage:"Imagem",CATSimNavDataFrameViewXYChart:"Gráfico"});

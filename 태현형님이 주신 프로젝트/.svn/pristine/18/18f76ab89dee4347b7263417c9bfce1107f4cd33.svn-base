@@ -1,0 +1,30 @@
+precision highp float;
+
+const float Eta = 1.0/1.2;
+const float FresnelPower1 = 0.6;
+const float FresnelPower2 = 2.0;
+const float F = ((1.0 - Eta) * (1.0 - Eta)) / ((1.0 + Eta) * (1.0 + Eta));
+const float PI = 3.14159;
+
+varying vec3 vTextureCoord;
+varying vec3 vNormal;
+varying vec3 vTangent;
+varying vec3 vBinormal;
+
+uniform float uMyOffset ;
+uniform samplerCube uShadowSampler;
+uniform sampler2D uOSMSampler;
+uniform samplerCube uReflection;
+
+void main(void)
+
+{
+    //vec3 toto = externalThickness;
+    //gl_FragColor.rgba = vec4(vTextureCoord,1.0);
+    //return;
+
+    vec4 OSMColor = texture2D(uOSMSampler, vTextureCoord.xy);
+
+    gl_FragColor = OSMColor;
+
+}

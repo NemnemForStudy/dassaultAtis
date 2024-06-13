@@ -1,0 +1,1 @@
+define("DS/CAT3DWLoaderLight/CAT3DWLoaderLight_ja",{});define("DS/CAT3DWLoaderLight/assets/nls/CAT3DWLoaderLight",{defaultLoader:"ロード中です..."});

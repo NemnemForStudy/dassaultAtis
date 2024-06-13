@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ENOVIA DICTIONARY  -->
+<!-- COPYRIGHT DASSAULT SYSTEMES 2021, All rights reserved -->
+<Package
+  Name="MustBeMadeFromSpecification"
+  Uuid="57483953-4d4a-44ac-939d-d28440d597dd"
+  UseNames="ERCoreModeler"
+  ModelerType="Top"
+  xmlns="PLMDictionaryUnified"
+  CustomerExposition="Programmer"
+  Architecture="All"
+>
+  <RelationClass
+    Name="MustBeMadeFrom"
+	Uuid="98eb45df-6256-4a26-b08d-98d99a9af38f"
+    SuperName="RelationType"
+    Abstract="No"
+    CustomerExposition="Programmer"
+    CustomerExtensible ="Yes"
+    Specializable ="No"
+    PublicResourceURI="/resources/v1/modeler/dseng/dseng:EngItem/{pid}/dseng:MakeFrom/{pid}"
+    >
+    
+ 	<Simple Name="V_TreeOrder"
+            Uuid="921bb5c0-ce6f-47e4-af03-ca1689f050d2"
+            Type="Double"
+            MultiValuated="No"
+            Protection="External"
+            DefaultValue="0">
+    </Simple>
+  
+    <SubClause Name="from" TargetName="VPMReference" minorrevision="replicate" clone="replicate"/>
+    <SubClause Name="to" TargetName="VPMReference"/>
+	<Method ImplementationType="None">
+      <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+    </Method>
+  </RelationClass>
+  
+  <!-- MustBeMadeFrom Quantity extensions start -->
+    <Extension Name="MadeFromQuantity_Area"
+      Uuid="2be960a8-265e-48e2-bd8f-2f81606486af"
+      CustomerExposition="ProgrammerOnly"
+      ScopeNames="MustBeMadeFrom"
+      Abstract="No"
+      Specializable="No">
+	 <Simple Name="V_ContQuantity"
+            Uuid="1ccdd832-441b-40c6-9dea-44a7fdfdbc6b"
+            Type="Double"
+			Magnitude="AREA"
+            MultiValuated="No"
+            Protection="External"
+            DefaultValue="0">
+	  <Property Name="SIXW" Value="ds6w:requests"/> 
+	 </Simple>
+    </Extension>
+	<Extension Name="MadeFromQuantity_Length"
+      Uuid="ace2cd5d-a358-47a2-95c6-43b3f824ba00"
+      CustomerExposition="ProgrammerOnly"
+      ScopeNames="MustBeMadeFrom"
+      Abstract="No"
+      Specializable="No">
+	 <Simple Name="V_ContQuantity"
+            Uuid="f73a7856-4336-4819-9bc3-38a73ee0e763"
+            Type="Double"
+			Magnitude="LENGTH"
+            MultiValuated="No"
+            Protection="External"
+            DefaultValue="0">
+	  <Property Name="SIXW" Value="ds6w:requests"/> 
+	 </Simple>
+    </Extension>
+	<Extension Name="MadeFromQuantity_Mass"
+      Uuid="fdb1d191-3787-4dd7-94b9-e59ca387a5d0"
+      CustomerExposition="ProgrammerOnly"
+      ScopeNames="MustBeMadeFrom"
+      Abstract="No"
+      Specializable="No">
+	 <Simple Name="V_ContQuantity"
+            Uuid="3fcba8f2-73b4-4f3a-8b42-8dfdb84eea42"
+            Type="Double"
+			Magnitude="MASS"
+            MultiValuated="No"
+            Protection="External"
+            DefaultValue="0">
+	  <Property Name="SIXW" Value="ds6w:requests"/> 
+	 </Simple>
+    </Extension>
+	<Extension Name="MadeFromQuantity_Volume"
+      Uuid="15713f78-c516-4a36-8973-479115acee28"
+      CustomerExposition="ProgrammerOnly"
+      ScopeNames="MustBeMadeFrom"
+      Abstract="No"
+      Specializable="No">
+	 <Simple Name="V_ContQuantity"
+            Uuid="e4ad2130-2557-4b3e-8079-2dc161299dfa"
+            Type="Double"
+			Magnitude="VOLUME"
+            MultiValuated="No"
+            Protection="External"
+            DefaultValue="0">
+	  <Property Name="SIXW" Value="ds6w:requests"/> 
+	 </Simple>
+    </Extension>
+	<Extension Name="MadeFromQuantity_AsRequired"
+      Uuid="92e661d3-e1f4-4372-8147-9e915473a761"
+      CustomerExposition="ProgrammerOnly"
+      ScopeNames="MustBeMadeFrom"
+      Abstract="No"
+      Specializable="No">
+		<Simple
+	      Name="AsRequired"
+	      Type="Boolean"
+		  Uuid="3c5a0278-6e5b-4def-800c-038662e8ef34"
+	      DefaultValue="FALSE"
+	      Protection="External"
+	      PLMImpacting="No"></Simple>
+    </Extension>
+	<!-- MustBeMadeFrom Quantity extensions end -->
+	
+	<!-- MustBeMadeFrom Reference extension start -->
+	<Extension Name="MadeFrom_ReferenceDescription"
+      Uuid="b1142247-9f22-442c-974c-979312d57e53"
+      CustomerExposition="ProgrammerOnly"
+      ScopeNames="MustBeMadeFrom"
+      Abstract="No"
+      Specializable="No">
+		<Simple
+	      Name="ReferenceName"
+	      Type="String"
+	      Uuid="b507e02a-89b1-4604-99d7-dcb4366b6fe6"
+	      MaxLength="256"
+		  ResetOnCloning="No"
+		  ResetOnNewVersion="No"
+	      Protection="External">
+	    </Simple>
+	    <Simple
+	      Name="IsComputed"
+	      Type="Boolean"
+		  Uuid="e38d2690-b70a-11ec-b909-0242ac120002"
+	      DefaultValue="TRUE"
+	      ResetOnCloning="No"
+		  ResetOnNewVersion="No"
+	      Protection="External"
+	      PLMImpacting="No"></Simple>
+    </Extension>
+    <!-- MustBeMadeFrom Reference extension end -->
+</Package>

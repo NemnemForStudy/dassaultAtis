@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0",
+  "summary": "比较遵循给定设置表达式的多个输入数据的值。",
+  "description": "此块是动态的，因此可以使用块配置对话框更改输入数据计数。<br>数据端口值类型处理所有类型。<br>设置<doc-setting-name translate=no>表达式</doc-setting-name>中写入的变量名称必须与输入数据名称对应，否则表达式将被视为无效。<br><br>设置表达式值处理高级表达式比较：<ul><li><doc-value translate=no>&quot;Value1 === Value2&quot;</doc-value>：确保 <doc-idp-name translate=no>Value1</doc-idp-name> 等于 <doc-idp-name translate=no>Value2</doc-idp-name>。</li><li><doc-value translate=no>&quot;Value3 > Value3 && Value3 < Value2&quot;</doc-value>：确保 <doc-idp-name translate=no>Value3</doc-idp-name> 介于 <doc-idp-name translate=no>Value1</doc-idp-name> 和 <doc-idp-name translate=no>Value2</doc-idp-name> 之间（<doc-idp-name translate=no>Value1</doc-idp-name>、<doc-idp-name translate=no>Value2</doc-idp-name> 和 <doc-idp-name translate=no>Value3</doc-idp-name> 必须为数字）。</li><li><doc-value translate=no>&quot;Value1 !== Value2 || Value1 !== Value3&quot;</doc-value>：确保 <doc-idp-name translate=no>Value1</doc-idp-name> 与 <doc-idp-name translate=no>Value2</doc-idp-name> 或 <doc-idp-name translate=no>Value3</doc-idp-name> 不同。</li></ul>",
+  "dataPorts": {
+    "Value1": "是要比较的第一个值。",
+    "Value2": "是要比较的第二个值。"
+  },
+  "controlPorts": {
+    "In": "触发块执行。",
+    "True": "在由每个输入数据值填充的表达式的结果为正值时激活。",
+    "False": "在由每个输入数据值填充的表达式的结果为负值时激活。"
+  },
+  "settings": {
+    "Expression": "描述输入数据值比较的表达式的值。"
+  },
+  "example": null
+}

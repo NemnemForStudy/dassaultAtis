@@ -1,0 +1,1 @@
+define("DS/MPFTooltip/Tooltip",["UWA/Class/View","DS/UIKIT/Tooltip","css!DS/MPFTooltip/MPFTooltip"],function(t,o){"use strict";return t.extend({tagName:"span",className:"mpf-entry-tooltip fonticon fonticon-info",setup:function(t){this.body=t.body,this.tooltip=new o({body:this.body,target:this.container})},render:function(){return this}})});

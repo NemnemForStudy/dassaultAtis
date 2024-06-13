@@ -1,0 +1,23 @@
+### 230418 Created by CMG
+
+#delete command decTableMasterCreateCommand;
+
+add command decTableMasterCreateCommand
+	label "emxFramework.Label.decTableMasterCreateCommand"
+	href "${COMMON_DIR}/emxCreate.jsp?type=decCodeMaster&policy=decCodeMaster&form=decTableMasterCreateForm&header=emxFramework.Label.decTableMasterCreateCommand&createJPO=decTableMaster:createTableMaster&submitAction=refreshCaller"
+	setting "Registered Suite" "Framework"
+	setting "Image" "${COMMON_DIR}/images/iconActionCreate.png"
+	setting "Popup Modal" true
+	setting "Target Location" "slidein"
+	setting 'Access Expression' 'type.kindOf[Project Space]==false'
+	property "installer" value "ENOVIAEngineering"
+	property "application" value "Framework"
+	property "original name" value "decTableMasterCreateCommand"
+;
+
+#mod menu decTableMasterToolbar add command decTableMasterCreateCommand;
+
+# Modified by hslee on 2023.07.26
+mod command decTableMasterCreateCommand
+	href '${COMMON_DIR}/emxCreate.jsp?type=decCodeMaster&policy=decCodeMaster&form=decTableMasterCreateForm&header=emxFramework.Label.decTableMasterCreateCommand&createJPO=decTableMaster:createTableMaster&submitAction=refreshCaller&masterType=Table&showApply=true'
+;

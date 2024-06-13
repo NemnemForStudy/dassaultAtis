@@ -1,0 +1,22 @@
+#####################################################################################################
+# Created by changseopLim
+# Create Date : 2024-05-29
+# Name : simplePOATable 
+#####################################################################################################
+#del table simplePOATable system
+add table simplePOATable system
+column
+	name Id
+	setting 'Column Type' checkbox
+column
+	name Name
+	label 'emxFramework.label.name'
+	bus '$<name>'
+	setting 'Registered Suite' 'Framework'
+	setting 'Show Type Icon' true
+column mod name checkStatus
+	# rel에서 다 가져오니 조치사항에 있는 것을 부모에 있는 걸 가져올려고 하니 to를 사용
+	bus '$<to[ResolutionRel2024].attribute[checkStatus]>'
+	setting 'Field Type' attribute
+	setting 'Admin Type' attribute_checkStatus
+;

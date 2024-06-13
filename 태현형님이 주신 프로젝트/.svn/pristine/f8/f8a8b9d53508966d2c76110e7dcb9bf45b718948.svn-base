@@ -1,0 +1,14 @@
+m|WAfrFoundation\WAfrAcceleratorManager.mweb
+b|j|n,m
+b|c|n,m
+v|6.425.0.22264|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\WAfrAcceleratorManager\AcceleratorManagerHelperUtilities.js|1663790942|1932
+s|WAfrFoundation\WAfrAcceleratorManager.mweb\src\AcceleratorManagerHelperUtilities.js|1662024839|5829
+t|win_b64\webapps\WAfrAcceleratorManager\WAfrAcceleratorManager.js|1647692313|0
+s|WAfrFoundation\WAfrAcceleratorManager.mweb\src\WAfrAcceleratorManager.js|1586967741|4
+t|win_b64\webapps\WAfrAcceleratorManager\mod_AcceleratorInterpreter.js|1647692312|4761
+s|WAfrFoundation\WAfrAcceleratorManager.mweb\src\mod_AcceleratorInterpreter.js|1587045740|14638
+t|win_b64\webapps\WAfrAcceleratorManager\mod_AcceleratorManagementComponent.js|1663790943|6988
+s|WAfrFoundation\WAfrAcceleratorManager.mweb\src\mod_AcceleratorManagementComponent.js|1662024055|24986
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

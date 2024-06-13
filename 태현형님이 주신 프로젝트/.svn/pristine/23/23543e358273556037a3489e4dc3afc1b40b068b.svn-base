@@ -1,0 +1,1 @@
+define("DS/DocumentManagement/DocumentManagement_de",{});define("DS/DocumentManagement/assets/nls/DocumentManagementNLS",{"FileManagement.UploadFail.nameNotUnique":"Es ist bereits ein Inhalt mit diesem Namen vorhanden."});

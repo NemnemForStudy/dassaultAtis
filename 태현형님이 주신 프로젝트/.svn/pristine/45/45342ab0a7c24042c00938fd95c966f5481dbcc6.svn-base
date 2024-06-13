@@ -1,0 +1,1 @@
+define("DS/FeedReaderWdg/FeedReaderWdg_zh-TW",{});define("DS/FeedReaderWdg/assets/nls/feed",{loading:"正在載入",placeHolderEnterFeed:"輸入摘要 URL",submitFeedBtn:"加入",Title_html:"摘要標題",Url_html:"摘要 URL",View_html:"檢視",errorURL:"發生錯誤。請嘗試其他摘要 URL。",emptyFeedWarning:"此摘要中沒有新聞。",goToWebsite:"移至網站",details:"詳細資料",shareArticle:"分享文章"});

@@ -1,0 +1,1 @@
+define("DS/ModelLoader_dtm/loader",["DS/GEOV1Loader/GEOdtmServices"],function(e){"use strict";return function(){this.load=function(d,o,t,n,i,r){(new e).load(d,{multiLoad:!1},o,t,n,i,r)}}});

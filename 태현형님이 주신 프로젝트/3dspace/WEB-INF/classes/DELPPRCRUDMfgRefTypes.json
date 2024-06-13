@@ -1,0 +1,1625 @@
+[
+    {
+        "ParsingVersion": "2.0",
+        "DeclarativeTypes": [
+            {
+                "ConceptualName": "dsmfg:MfgItem",
+                "IsAbstract": true,
+                "ParentType": "PLMReference",
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "DELFmiFunctionReference",
+                        "Behavior": "CUSTOM",
+                        "Class": "com.dassault_systemes.delmia.crud.mbom.behavior.DELMIACRUDPPRMfgItemReferenceExecutionImpl"
+                    },
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "DELFmiFunctionReference",
+                        "Behavior": "REFERENCE"
+                    }
+                ],
+                "Attributes": [
+                    {
+                        "ConceptualName": "isLotNumberRequired",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELAsmLotRefRequired.V_LotNumberRequired"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELAsmLotRefRequired.V_LotNumberRequired"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "isSerialNumberRequired",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELAsmUnitRefRequired.V_SerialNumberRequired"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELAsmUnitRefRequired.V_SerialNumberRequired"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "estimatedTime",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELFmiFunctionReference.V_EstimatedTime"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELFmiFunctionReference.V_EstimatedTime"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "installDependencies",
+                        "Checkers": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.tools.checkers.AttributeDefaultChecker"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.tools.checkers.AttributeDefaultChecker"
+                            }
+                        ],
+                        "Getters": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.getters.InstallDependenciesCustomGetter"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "scopeEngItem",
+                        "Getters": [
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.getters.MBOMNavigateIndexGetter"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "partialScopeEngItem",
+                        "Getters": [
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.getters.MBOMNavigateIndexGetter"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "resultingEngItem",
+                        "Getters": [
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.getters.MBOMNavigateIndexGetter"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "uiAttributes",
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.threed_space.tools.transform.DELCRUDUIAttributes3DSpaceTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.index.tools.transform.DELCRUDUIAttributesIndexTransform"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "customerAttributes",
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.threed_space.tools.transform.DELCRUDCustomerAttrs3DSpaceTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.index.tools.transform.DELCRUDCustomerAttributesIndexTransform"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "dsmfg:MfgItemEnterpriseAttributes",
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.DELCRUDMBOMEnterpriseAttributeIndexTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.DELCRUDMBOMEnterpriseAttributeIndexTransform"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "dsmfg:EnterpriseReference",
+                        "Transforms": [
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.AttributeMfgItemPartNumberAsDetails"
+                            },
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.AttributeMfgItemPartNumberAsDetails"
+                            }                            
+                        ]
+                    },
+                    {
+                        "ConceptualName": "partNumber",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "EnterpriseExtension.V_PartNumber"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.EnterpriseExtension.V_PartNumber"
+                            }
+                        ]
+                    }                                       
+                ]
+            },
+            {
+                "ConceptualName": "DELFmiFunctionPPRCreateReference",
+                "ParentType": "DELFmiFunctionPPRDiscreteReference",
+                "IsAbstract": true,
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "DELFmiFunctionPPRCreateReference",
+                        "Behavior": "REFERENCE"
+                    },
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "DELFmiFunctionPPRCreateReference",
+                        "Behavior": "REFERENCE"
+                    }
+                ],
+                "Attributes": [
+                    {
+                        "ConceptualName": "estimatedCost",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELFmiFunctionPPRCreateReference.V_EstimatedCost"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELFmiFunctionPPRCreateReference.V_EstimatedCost"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "estimatedCostCurrency",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELFmiFunctionPPRCreateReference.V_EstimatedCostCurrency"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELFmiFunctionPPRCreateReference.V_EstimatedCostCurrency"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "estimatedLeadTimeDescription",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELFmiFunctionPPRCreateReference.V_EstimatedLeadTimeDescription"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELFmiFunctionPPRCreateReference.V_EstimatedLeadTimeDescription"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "estimatedWeight",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELFmiFunctionPPRCreateReference.V_EstimatedWeight"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELFmiFunctionPPRCreateReference.V_EstimatedWeight"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "manufacturedItemClassification",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELFmiFunctionPPRCreateReference.V_ManufacturedItemClassification"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELFmiFunctionPPRCreateReference.V_ManufacturedItemClassification"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "materialCategory",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELFmiFunctionPPRCreateReference.V_MaterialCategory"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELFmiFunctionPPRCreateReference.V_MaterialCategory"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "spareManufacturedItem",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELFmiFunctionPPRCreateReference.V_SpareManufacturedItem"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELFmiFunctionPPRCreateReference.V_SpareManufacturedItem"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "targetReleaseDate",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELFmiFunctionPPRCreateReference.V_TargetReleaseDate"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELFmiFunctionPPRCreateReference.V_TargetReleaseDate"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "DELFmiFunctionPPRAddReference",
+                "ParentType": "dsmfg:MfgItem",
+                "IsAbstract": true,
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "DELFmiFunctionPPRAddReference",
+                        "Behavior": "REFERENCE"
+                    },
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "DELFmiFunctionPPRAddReference",
+                        "Behavior": "REFERENCE"
+                    }
+                ],
+                "Attributes": [
+                    {
+                        "ConceptualName": "estimatedCost",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELFmiFunctionPPRAddReference.V_EstimatedCost"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELFmiFunctionPPRAddReference.V_EstimatedCost"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "estimatedCostCurrency",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELFmiFunctionPPRAddReference.V_EstimatedCostCurrency"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELFmiFunctionPPRAddReference.V_EstimatedCostCurrency"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "estimatedLeadTimeDescription",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELFmiFunctionPPRAddReference.V_EstimatedLeadTimeDescription"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELFmiFunctionPPRAddReference.V_EstimatedLeadTimeDescription"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "estimatedWeight",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELFmiFunctionPPRAddReference.V_EstimatedWeight"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELFmiFunctionPPRAddReference.V_EstimatedWeight"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "manufacturedItemClassification",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELFmiFunctionPPRAddReference.V_ManufacturedItemClassification"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELFmiFunctionPPRAddReference.V_ManufacturedItemClassification"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "materialCategory",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELFmiFunctionPPRAddReference.V_MaterialCategory"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELFmiFunctionPPRAddReference.V_MaterialCategory"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "spareManufacturedItem",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELFmiFunctionPPRAddReference.V_SpareManufacturedItem"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELFmiFunctionPPRAddReference.V_SpareManufacturedItem"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "targetReleaseDate",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELFmiFunctionPPRAddReference.V_TargetReleaseDate"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELFmiFunctionPPRAddReference.V_TargetReleaseDate"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "DELFmiContinuousFunctionReference",
+                "ParentType": "dsmfg:MfgItem",
+                "IsAbstract": true,
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "DELFmiContinuousFunctionReference",
+                        "Behavior": "REFERENCE"
+                    },
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "DELFmiContinuousFunctionReference",
+                        "Behavior": "REFERENCE"
+                    }
+                ],
+                "Attributes": []
+            },
+            {
+                "ConceptualName": "DELFmiFunctionPPRDiscreteReference",
+                "ParentType": "dsmfg:MfgItem",
+                "IsAbstract": true,
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "DELFmiFunctionPPRDiscreteReference",
+                        "Behavior": "REFERENCE"
+                    },
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "DELFmiFunctionPPRDiscreteReference",
+                        "Behavior": "REFERENCE"
+                    }
+                ],
+                "Attributes": []
+            },
+            {
+                "ConceptualName": "DELFmiFunctionPPRContinuousReference",
+                "ParentType": "DELFmiContinuousFunctionReference",
+                "IsAbstract": true,
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "DELFmiFunctionPPRContinuousReference",
+                        "Behavior": "REFERENCE"
+                    },
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "DELFmiFunctionPPRContinuousReference",
+                        "Behavior": "REFERENCE"
+                    }
+                ],
+                "Attributes": [
+                    {
+                        "ConceptualName": "estimatedCost",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELFmiFunctionPPRContinuousReference.V_EstimatedCost"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELFmiFunctionPPRContinuousReference.V_EstimatedCost"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "estimatedCostCurrency",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELFmiFunctionPPRContinuousReference.V_EstimatedCostCurrency"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELFmiFunctionPPRContinuousReference.V_EstimatedCostCurrency"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "estimatedLeadTimeDescription",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELFmiFunctionPPRContinuousReference.V_EstimatedLeadTimeDescription"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELFmiFunctionPPRContinuousReference.V_EstimatedLeadTimeDescription"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "estimatedWeight",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELFmiFunctionPPRContinuousReference.V_EstimatedWeight"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELFmiFunctionPPRContinuousReference.V_EstimatedWeight"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "manufacturedItemClassification",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELFmiFunctionPPRContinuousReference.V_ManufacturedItemClassification"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELFmiFunctionPPRContinuousReference.V_ManufacturedItemClassification"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "materialCategory",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELFmiFunctionPPRContinuousReference.V_MaterialCategory"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELFmiFunctionPPRContinuousReference.V_MaterialCategory"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "spareManufacturedItem",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELFmiFunctionPPRContinuousReference.V_SpareManufacturedItem"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELFmiFunctionPPRContinuousReference.V_SpareManufacturedItem"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "targetReleaseDate",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELFmiFunctionPPRContinuousReference.V_TargetReleaseDate"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELFmiFunctionPPRContinuousReference.V_TargetReleaseDate"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "CA",
+                "ParentType": "DELFmiFunctionPPRCreateReference",
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "CreateAssembly",
+                        "Behavior": "REFERENCE"
+                    },
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "CreateAssembly",
+                        "Behavior": "REFERENCE"
+                    }
+                ],
+                "Attributes": [
+                    {
+                        "ConceptualName": "outsourced",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "V_Outsourced"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.CreateAssembly.V_Outsourced"
+                            }
+                        ],
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.AttributeCreateAssemblyOutsourcedTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.AttributeMfgItemOutsourcedIndexTransform"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "planningRequired",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "V_NeedDedicatedSystem"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.CreateAssembly.V_NeedDedicatedSystem"
+                            }
+                        ],
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.AttributeMfgItemPlanningRequiredTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.AttributeMfgItemPlanningRequiredIndexTransform"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "dsmfg:CreateAssemblyEnterpriseAttributes",
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.DELCRUDMBOMEnterpriseAttributeIndexTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.DELCRUDMBOMEnterpriseAttributeIndexTransform"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "Drill",
+                "ParentType": "DELFmiFunctionPPRDiscreteReference",
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "Drill",
+                        "Behavior": "REFERENCE"
+                    },
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "Drill",
+                        "Behavior": "REFERENCE"
+                    }
+                ],
+                "Attributes": [
+                    {
+                        "ConceptualName": "depthOfFeature",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "Drill.V_DepthOfFeature"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.Drill.V_DepthOfFeature"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "diameterOfFeature",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "Drill.V_DiameterOfFeature"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.Drill.V_DiameterOfFeature"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "dsmfg:DrillEnterpriseAttributes",
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.DELCRUDMBOMEnterpriseAttributeIndexTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.DELCRUDMBOMEnterpriseAttributeIndexTransform"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "Pre Drill",
+                "ParentType": "DELFmiFunctionPPRDiscreteReference",
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "PreDrill",
+                        "Behavior": "REFERENCE"
+                    },
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "PreDrill",
+                        "Behavior": "REFERENCE"
+                    }
+                ],
+                "Attributes": [
+                    {
+                        "ConceptualName": "depthOfFeature",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "PreDrill.V_DepthOfFeature"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.PreDrill.V_DepthOfFeature"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "diameterOfFeature",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "PreDrill.V_DiameterOfFeature"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.PreDrill.V_DiameterOfFeature"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "dsmfg:PreDrillEnterpriseAttributes",
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.DELCRUDMBOMEnterpriseAttributeIndexTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.DELCRUDMBOMEnterpriseAttributeIndexTransform"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "Manufacturing Kit",
+                "ParentType": "DELFmiFunctionPPRCreateReference",
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "CreateKit",
+                        "Behavior": "REFERENCE"
+                    },
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "CreateKit",
+                        "Behavior": "REFERENCE"
+                    }
+                ],
+                "Attributes": [
+                    {
+                        "ConceptualName": "outsourced",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "V_Outsourced"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.CreateKit.V_Outsourced"
+                            }
+                        ],
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.AttributeMfgItemOutsourcedTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.AttributeMfgItemOutsourcedIndexTransform"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "planningRequired",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "V_NeedDedicatedSystem"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.CreateKit.V_NeedDedicatedSystem"
+                            }
+                        ],
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.AttributeMfgItemPlanningRequiredTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.AttributeMfgItemPlanningRequiredIndexTransform"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "dsmfg:CreateKitEnterpriseAttributes",
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.DELCRUDMBOMEnterpriseAttributeIndexTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.DELCRUDMBOMEnterpriseAttributeIndexTransform"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "Manufacturing Material",
+                "ParentType": "DELFmiFunctionPPRCreateReference",
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "CreateMaterial",
+                        "Behavior": "REFERENCE"
+                    },
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "CreateMaterial",
+                        "Behavior": "REFERENCE"
+                    }
+                ],
+                "Attributes": [
+                    {
+                        "ConceptualName": "outsourced",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "V_Outsourced"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.CreateMaterial.V_Outsourced"
+                            }
+                        ],
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.AttributeMfgItemOutsourcedTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.AttributeMfgItemOutsourcedIndexTransform"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "planningRequired",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "V_NeedDedicatedSystem"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.CreateMaterial.V_NeedDedicatedSystem"
+                            }
+                        ],
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.AttributeMfgItemPlanningRequiredTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.AttributeMfgItemPlanningRequiredIndexTransform"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "dsmfg:CreateMaterialEnterpriseAttributes",
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.DELCRUDMBOMEnterpriseAttributeIndexTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.DELCRUDMBOMEnterpriseAttributeIndexTransform"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "Fasten",
+                "ParentType": "DELFmiFunctionPPRCreateReference",
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "Fasten",
+                        "Behavior": "REFERENCE"
+                    },
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "Fasten",
+                        "Behavior": "REFERENCE"
+                    }
+                ],
+                "Attributes": [
+                    {
+                        "ConceptualName": "mfgFastenerStrategy",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "V_MfgFastenerStrategy"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.Fasten.V_MfgFastenerStrategy"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "dsmfg:FastenEnterpriseAttributes",
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.DELCRUDMBOMEnterpriseAttributeIndexTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.DELCRUDMBOMEnterpriseAttributeIndexTransform"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "Manufactured Part",
+                "ParentType": "DELFmiFunctionPPRCreateReference",
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "ElementaryEndItem",
+                        "Behavior": "REFERENCE"
+                    },
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "ElementaryEndItem",
+                        "Behavior": "REFERENCE"
+                    }
+                ],
+                "Attributes": [
+                    {
+                        "ConceptualName": "outsourced",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "V_Outsourced"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.ElementaryEndItem.V_Outsourced"
+                            }
+                        ],
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.AttributeMfgItemOutsourcedTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.AttributeMfgItemOutsourcedIndexTransform"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "planningRequired",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "V_NeedDedicatedSystem"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.ElementaryEndItem.V_NeedDedicatedSystem"
+                            }
+                        ],
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.AttributeMfgItemPlanningRequiredTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.AttributeMfgItemPlanningRequiredIndexTransform"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "dsmfg:ElementaryEndItemEnterpriseAttributes",
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.DELCRUDMBOMEnterpriseAttributeIndexTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.DELCRUDMBOMEnterpriseAttributeIndexTransform"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "Manufacturing Installation",
+                "ParentType": "DELFmiFunctionPPRAddReference",
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "Installation",
+                        "Behavior": "REFERENCE"
+                    },
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "Installation",
+                        "Behavior": "REFERENCE"
+                    }
+                ],
+                "Attributes": [
+                    {
+                        "ConceptualName": "planningRequired",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "V_NeedDedicatedSystem"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.Installation.V_NeedDedicatedSystem"
+                            }
+                        ],
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.AttributeMfgItemPlanningRequiredTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.AttributeMfgItemPlanningRequiredIndexTransform"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "dsmfg:InstallationEnterpriseAttributes",
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.DELCRUDMBOMEnterpriseAttributeIndexTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.DELCRUDMBOMEnterpriseAttributeIndexTransform"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "Provide",
+                "ParentType": "DELFmiFunctionPPRCreateReference",
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "Provide",
+                        "Behavior": "REFERENCE"
+                    },
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "Provide",
+                        "Behavior": "REFERENCE"
+                    }
+                ],
+                "Attributes": [
+                    {
+                        "ConceptualName": "dsmfg:ProvideEnterpriseAttributes",
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.DELCRUDMBOMEnterpriseAttributeIndexTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.DELCRUDMBOMEnterpriseAttributeIndexTransform"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "Continuous Manufactured Material",
+                "ParentType": "DELFmiFunctionPPRContinuousReference",
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "ProcessContinuousCreateMaterial",
+                        "Behavior": "REFERENCE"
+                    },
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "ProcessContinuousCreateMaterial",
+                        "Behavior": "REFERENCE"
+                    }
+                ],
+                "Attributes": [
+                    {
+                        "ConceptualName": "outsourced",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "V_Outsourced"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.ProcessContinuousCreateMaterial.V_Outsourced"
+                            }
+                        ],
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.AttributeMfgItemOutsourcedTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.AttributeMfgItemOutsourcedIndexTransform"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "planningRequired",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "V_NeedDedicatedSystem"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.ProcessContinuousCreateMaterial.V_NeedDedicatedSystem"
+                            }
+                        ],
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.AttributeMfgItemPlanningRequiredTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.AttributeMfgItemPlanningRequiredIndexTransform"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "magnitude",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELFmiMagnitudeExt.V_DimensionType"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELFmiMagnitudeExt.V_DimensionType"
+                            }
+                        ],
+                        "Checkers": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.checkers.PPRContinuousReferenceAttributeMagnitudeChecker"
+                            }
+                        ],
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.AttributePPRContinuousReferenceMagnitudeTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.AttributePPRContinuousReferenceMagnitudeTransform"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "dsmfg:ProcessContinuousCreateMaterialEnterpriseAttributes",
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.DELCRUDMBOMEnterpriseAttributeIndexTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.DELCRUDMBOMEnterpriseAttributeIndexTransform"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "Continuous Provided Material",
+                "ParentType": "DELFmiFunctionPPRContinuousReference",
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "ProcessContinuousProvide",
+                        "Behavior": "REFERENCE"
+                    },
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "ProcessContinuousProvide",
+                        "Behavior": "REFERENCE"
+                    }
+                ],
+                "Attributes": [
+                    {
+                        "ConceptualName": "magnitude",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELFmiMagnitudeExt.V_DimensionType"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.DELFmiMagnitudeExt.V_DimensionType"
+                            }
+                        ],
+                        "Checkers": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.checkers.PPRContinuousReferenceAttributeMagnitudeChecker"
+                            }
+                        ],
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.AttributePPRContinuousReferenceMagnitudeTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.AttributePPRContinuousReferenceMagnitudeTransform"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "dsmfg:ProcessContinuousProvideEnterpriseAttributes",
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.DELCRUDMBOMEnterpriseAttributeIndexTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.DELCRUDMBOMEnterpriseAttributeIndexTransform"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "Annotation",
+                "ParentType": "DELFmiFunctionPPRDiscreteReference",
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "Annotation",
+                        "Behavior": "REFERENCE"
+                    },
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "Annotation",
+                        "Behavior": "REFERENCE"
+                    }
+                ],
+                "Attributes": [
+                    {
+                        "ConceptualName": "dsmfg:AnnotationEnterpriseAttributes",
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.DELCRUDMBOMEnterpriseAttributeIndexTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.DELCRUDMBOMEnterpriseAttributeIndexTransform"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "Machine",
+                "ParentType": "DELFmiFunctionPPRDiscreteReference",
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "Machine",
+                        "Behavior": "REFERENCE"
+                    },
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "Machine",
+                        "Behavior": "REFERENCE"
+                    }
+                ],
+                "Attributes": [
+                    {
+                        "ConceptualName": "dsmfg:MachineEnterpriseAttributes",
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.DELCRUDMBOMEnterpriseAttributeIndexTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.DELCRUDMBOMEnterpriseAttributeIndexTransform"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "Transform",
+                "ParentType": "DELFmiFunctionPPRDiscreteReference",
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "Transform",
+                        "Behavior": "REFERENCE"
+                    },
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "Transform",
+                        "Behavior": "REFERENCE"
+                    }
+                ],
+                "Attributes": [
+                    {
+                        "ConceptualName": "dsmfg:TransformEnterpriseAttributes",
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.DELCRUDMBOMEnterpriseAttributeIndexTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.DELCRUDMBOMEnterpriseAttributeIndexTransform"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "Marking",
+                "ParentType": "DELFmiFunctionPPRDiscreteReference",
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "Marking",
+                        "Behavior": "REFERENCE"
+                    },
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "Marking",
+                        "Behavior": "REFERENCE"
+                    }
+                ],
+                "Attributes": [
+                    {
+                        "ConceptualName": "dsmfg:MarkingEnterpriseAttributes",
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.DELCRUDMBOMEnterpriseAttributeIndexTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.DELCRUDMBOMEnterpriseAttributeIndexTransform"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "Unfasten",
+                "ParentType": "DELFmiFunctionPPRCreateReference",
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "Unfasten",
+                        "Behavior": "REFERENCE"
+                    },
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "Unfasten",
+                        "Behavior": "REFERENCE"
+                    }
+                ],
+                "Attributes": [
+                    {
+                        "ConceptualName": "dsmfg:UnfastenEnterpriseAttributes",
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.DELCRUDMBOMEnterpriseAttributeIndexTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.DELCRUDMBOMEnterpriseAttributeIndexTransform"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "SplitProcess",
+                "ParentType": "DELFmiFunctionPPRDiscreteReference",
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "SplitProcess",
+                        "Behavior": "REFERENCE"
+                    },
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "SplitProcess",
+                        "Behavior": "REFERENCE"
+                    }
+                ],
+                "Attributes": [
+                    {
+                        "ConceptualName": "dsmfg:SplitProcessEnterpriseAttributes",
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.DELCRUDMBOMEnterpriseAttributeIndexTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.DELCRUDMBOMEnterpriseAttributeIndexTransform"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "Beveling",
+                "ParentType": "DELFmiFunctionPPRDiscreteReference",
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "Beveling",
+                        "Behavior": "REFERENCE"
+                    },
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "Beveling",
+                        "Behavior": "REFERENCE"
+                    }
+                ],
+                "Attributes": [
+                    {
+                        "ConceptualName": "dsmfg:BevelingEnterpriseAttributes",
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.DELCRUDMBOMEnterpriseAttributeIndexTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.DELCRUDMBOMEnterpriseAttributeIndexTransform"
+                            }
+                        ]
+                    }
+                ]
+            },
+			{
+                "ConceptualName": "Cutting",
+                "ParentType": "DELFmiFunctionPPRDiscreteReference",
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "Cutting",
+                        "Behavior": "REFERENCE"
+                    },
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "Cutting",
+                        "Behavior": "REFERENCE"
+                    }
+                ],
+                "Attributes": [
+                    {
+                        "ConceptualName": "dsmfg:CuttingEnterpriseAttributes",
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.DELCRUDMBOMEnterpriseAttributeIndexTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.DELCRUDMBOMEnterpriseAttributeIndexTransform"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "Grinding",
+                "ParentType": "DELFmiFunctionPPRDiscreteReference",
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "Grinding",
+                        "Behavior": "REFERENCE"
+                    },
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "Grinding",
+                        "Behavior": "REFERENCE"
+                    }
+                ],
+                "Attributes": [
+                    {
+                        "ConceptualName": "dsmfg:GrindingEnterpriseAttributes",
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.DELCRUDMBOMEnterpriseAttributeIndexTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.DELCRUDMBOMEnterpriseAttributeIndexTransform"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "RemoveMaterial",
+                "ParentType": "Transform",
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "RemoveMaterial",
+                        "Behavior": "REFERENCE"
+                    },
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "RemoveMaterial",
+                        "Behavior": "REFERENCE"
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "NoDrill",
+                "ParentType": "RemoveMaterial",
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "NoDrill",
+                        "Behavior": "REFERENCE"
+                    },
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "NoDrill",
+                        "Behavior": "REFERENCE"
+                    }
+                ],
+                "Attributes": [
+                    {
+                        "ConceptualName": "dsmfg:NoDrillEnterpriseAttributes",
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.DELCRUDMBOMEnterpriseAttributeIndexTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.DELCRUDMBOMEnterpriseAttributeIndexTransform"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]

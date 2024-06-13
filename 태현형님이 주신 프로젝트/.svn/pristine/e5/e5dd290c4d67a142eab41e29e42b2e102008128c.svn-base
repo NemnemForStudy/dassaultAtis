@@ -1,0 +1,1 @@
+define("DS/ENOProcessStepsReferential/ENOProcessStepsReferential_ja",{});define("DS/ENOProcessStepsReferential/assets/nls/ProcessStepsReferential",{MyReferential:"最近のマイ ドキュメント"});

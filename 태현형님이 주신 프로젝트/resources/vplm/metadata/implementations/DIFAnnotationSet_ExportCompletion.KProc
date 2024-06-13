@@ -1,0 +1,66 @@
+#Prog DIFAnnotationSet_ExportCompletion (iPLMIDSet :  #In PLMIDSet, oPLMIDSet :  #Out PLMIDSet) : VoidType
+{
+
+let PLMIDSetAnnotationSets(PLMIDSet)
+
+let PLMDifMBDObjectsSet(PLMRouteSet)
+let PLMDifMBDObjectsIDSet(PLMIDSet)
+
+/* Connections retrieved from the input objects */
+let PLMDifAnnotatedProductCnxSet(PLMRouteSet)
+let PLMDifAnnotatedProductCnxIDSet(PLMIDSet)
+
+/* Products retrieved from the connexion */
+let PLMDifAnnotatedProductsSet(PLMRouteSet)
+let PLMDifAnnotatedProductsIDSet(PLMIDSet)
+
+/* Products expanded */
+let PLMDifProductsExpanded(PLMRouteSet)
+let PLMDifProductsExpandedIDSet(PLMIDSet)
+
+let PLMRouteSet1(PLMRouteSet)
+let PLMIDSet1 (PLMIDSet)
+
+/* view stream retrieved */
+let PLMDifRepReferenceWithStandard(PLMIDSet) /*Rep Ref with standard*/
+
+/* Standard */
+let PLMDifStandardSet(PLMRouteSet)
+let PLMDifStandardIDSet(PLMIDSet)
+
+/* Restrict to Annotation Set */
+PLMIDSetAnnotationSets = Restrict(iPLMIDSet, "DIFModelerAnnotationSet/DIFAnnotationSet")
+
+/* Retrieve AnnotationSet and Expand it */
+/* We should get MBDViews, Captures and standard*/
+PLMDifMBDObjectsSet  =  ExecutePLMFunction("DIFModeler01", "DifModeler_AddMBDObjects", PLMIDSetAnnotationSets)
+PLMDifMBDObjectsIDSet = Ids(PLMDifMBDObjectsSet)
+
+
+/* Restrict to get the DIFViewStream and DIFBackgroundViewRep in order to get the standard*/
+PLMDifRepReferenceWithStandard = Restrict(PLMDifMBDObjectsIDSet,"DIFModeler03/DIFViewStream")
+
+/* Retrieve all DIFStandard from DifViewStream */
+PLMDifStandardSet = ExecutePLMFunction("DIFModeler01", "DifModeler_AddStandard", PLMDifRepReferenceWithStandard)
+PLMDifStandardIDSet = Ids(PLMDifStandardSet) 
+
+/* Retrieve the Product and expand it */
+/*Completes with all Representations(except NavRep) and LPPrivateRep, VPMPorts and VPMConnections*/
+
+PLMDifAnnotatedProductCnxSet = ExecutePLMFunction("DIFModeler01", "DifModeler_AddAnnotatedProductCnx", PLMIDSetAnnotationSets)
+PLMDifAnnotatedProductCnxIDSet = Ids(PLMDifAnnotatedProductCnxSet)
+
+/* Retrieve all Products from connexions */
+PLMDifAnnotatedProductsSet  =  ExecutePLMFunction("DIFModeler01", "DifModeler_AddAnnotatedProduct", PLMDifAnnotatedProductCnxIDSet)
+PLMDifAnnotatedProductsIDSet = Ids(PLMDifAnnotatedProductsSet)
+
+/* Expand the product */
+PLMDifProductsExpanded = ExecutePLMFunction("PRODUCTCFG", "ProductCfg_AddChildrenProduct", Restrict(PLMDifAnnotatedProductsIDSet, "PRODUCTCFG/VPMReference")) 
+PLMDifProductsExpandedIDSet = Ids(PLMDifProductsExpanded) + PLMDifAnnotatedProductsIDSet
+
+PLMRouteSet1 = ExecutePLMFunction("PRODUCTCFG", "ProductCfg_AddVPMRepsPortsAndConnections", Restrict(PLMDifProductsExpandedIDSet, "PRODUCTCFG/VPMReference"))
+PLMIDSet1 = Ids(PLMRouteSet1)
+
+oPLMIDSet = iPLMIDSet + PLMDifMBDObjectsIDSet + PLMIDSet1 + PLMDifAnnotatedProductCnxIDSet + PLMDifProductsExpandedIDSet + PLMDifStandardIDSet
+
+}

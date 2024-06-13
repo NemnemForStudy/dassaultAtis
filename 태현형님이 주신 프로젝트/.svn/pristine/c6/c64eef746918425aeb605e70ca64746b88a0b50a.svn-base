@@ -1,0 +1,33 @@
+# Added by hslee on 2023.06.26
+# del command decProjectCloneCodeMasterCmd;
+add command decProjectCloneCodeMasterCmd
+	label 'Clone Code Master'
+	#href '${SUITE_DIR}/decProjectCloneCodeMasterProcess.jsp'
+	href '${COMMON_DIR}/decTurnOnProgress.jsp?forwardURL=../programcentral/decProjectCloneCodeMasterProcess.jsp'
+	setting 'Registered Suite' 'ProgramCentral'
+	setting 'Target Location' 'listHidden'
+	setting 'Image' '${COMMON_DIR}/images/iconActionRefresh.png'
+	user decSystemAdmin
+;
+
+mod command decProjectCloneCodeMasterCmd
+	add user decSystemAdmin
+;
+
+# Modified by choimingi on 2023.09.09
+mod command decProjectCloneCodeMasterCmd
+	add setting 'hasAccess' 'PIM' 
+	add setting 'Access Program' 'decAccess'
+	add setting 'Access Function' 'hasAccess'
+;
+
+# Modified by hslee on 2023.09.11
+mod command decProjectCloneCodeMasterCmd
+	add setting 'Access Expression' 'type == "Project Space"'
+;
+mod command decProjectCloneCodeMasterCmd
+	label 'Sync Code Master'
+;
+mod command decProjectCloneCodeMasterCmd
+	href '${COMMON_DIR}/decTurnOnProgress.jsp?forwardURL=../programcentral/decProjectCloneCodeMasterProcess.jsp&masterType=Code'
+;

@@ -1,0 +1,1 @@
+define("DS/VCXWebGUICommands/VCXWebGUICommands_pl",{});define("DS/VCXWebGUICommands/assets/nls/VCXWebGUICommands",{VCXSetVisibilityAllChexkBoxCmd:"Przełącz na tryb edycji"});

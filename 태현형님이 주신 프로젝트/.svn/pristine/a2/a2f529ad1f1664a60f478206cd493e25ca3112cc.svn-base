@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:widget="http://www.netvibes.com/ns/">
+<head>
+
+    <!-- Application Metas -->
+    <title>Native Launcher</title>
+
+    <meta name="author" content="Dassault Systèmes" />
+    <meta name="description" content="Native Application Launcher" />
+    <meta name="keywords" content="Native Application" />
+    <meta name="version" content="0.1.0" />
+    <meta name="inline" content="true" />
+    <meta name="debugMode" content="false" />
+    <meta name="noSearchInWidgetUI" content="true" />
+    <meta charset="UTF-8" />
+
+    <widget:preferences>
+        <widget:preference name="applicationId" defaultValue="" type="hidden" />
+        <widget:preference name="title" defaultValue="" type="hidden" />
+        <widget:preference name="icon" defaultValue="" type="hidden" />
+    </widget:preferences>
+
+    <link rel="stylesheet" type="text/css" href="../c/UWA/assets/css/standalone.css" />
+    <link rel="stylesheet" href="../UIKIT/UIKIT.css" type="text/css" />
+
+
+
+    <script type="text/javascript" src="../AmdLoader/AmdLoader.js"></script>
+    <script type="text/javascript" src="../c/UWA/js/UWA_Standalone_Alone.js"></script>
+    <script type="text/javascript" src="../UIKIT/UIKIT.js"></script>
+    <style type="text/css">
+
+    </style>
+
+    <!-- Application JavaScript Source -->
+    <script type="text/javascript">
+        //<![CDATA[
+
+        /*global widget, require */
+        require(
+                [
+                    // UWA
+                    'UWA/Core',
+                    'UWA/Class/View',
+
+                    // UIKIT
+                    'DS/UIKIT/Input/Button',
+
+                    'DS/WebappsUtils/WebappsUtils',
+                    // i18n
+                    'i18n!NativeLauncherWdg/assets/nls/NativeLauncher'
+                ],
+                function (UWA, View, Button, WebappsUtils, i18n) {
+
+                    'use strict';
+
+                    function setTitle() {
+                        var t = widget.getValue('title');
+                        if (t) {
+                            widget.setTitle();
+                        }
+                    }
+
+                    function setIcon() {
+                        var i = widget.getValue('icon');
+                        if (i) {
+                            widget.setIcon(widget.getValue('icon'));
+                        }
+                    }
+
+                    function getResourcePath() {
+                        return WebappsUtils.getWebappsAssetUrl('NativeLauncherWdg', '');
+                    }
+
+                    function launch() {
+                        var applicationId = widget.getValue('applicationId');
+                        UWA.log('TODO:' + applicationId);
+                    }
+
+                    var ContentView = View.extend({
+                        tagName: 'div',
+                        setup: function () {
+                            return this;
+                        },
+                        render: function () {
+                            this.container.setContent(this.buildSkeleton());
+                            return this;
+                        },
+                        buildSkeleton: function () {
+                            var playButton = new Button({
+                                value: i18n.Play,
+                                className: 'default',
+                                events: {
+                                    onClick: launch
+                                }
+                            }), background = {
+                                tag: 'img',
+                                styles: {
+                                    width: '100%',
+                                    height: 'auto'
+                                },
+                                src: getResourcePath() + 'DropContent2.png'
+                            };
+
+                            return [
+                                background,
+                                {
+                                    'class': 'text-center',
+                                    html: playButton
+                                }
+                            ];
+                        }
+                    });
+
+                    /**
+                     *
+                     */
+                    function onLoad() {
+                        var view = new ContentView().render();
+                        setTitle();
+                        setIcon();
+                        widget.body.empty();
+                        view.inject(widget.body);
+                    } // End function onLoad()
+
+
+                    // Add widget events
+                    widget.addEvents({
+                        onLoad: onLoad,
+                        onRefresh: onLoad
+                    });
+                }
+        );
+
+        //]]>
+    </script>
+</head>
+<body></body>
+</html>

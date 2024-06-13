@@ -1,0 +1,1 @@
+define("DS/VideoGalleryWdg/VideoGalleryWdg_zh",{});define("DS/VideoGalleryWdg/assets/nls/VideoGallery",{NoInternet:"您的 internet 连接似乎处于非活动状态"});

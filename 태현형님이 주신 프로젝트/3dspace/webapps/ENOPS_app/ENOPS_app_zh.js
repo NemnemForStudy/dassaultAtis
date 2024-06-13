@@ -1,0 +1,1 @@
+define("DS/ENOPS/ENOPS_app_zh",{});define("DS/ENOPS_app/assets/nls/ENOPS_app",{appDescription:"以轻松高效的方式浏览和编辑您的结构",newProduct:"新产品",newPart:"新零件",newDrawing:"新工程图"});

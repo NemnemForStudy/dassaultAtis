@@ -1,0 +1,1 @@
+define("DS/DataGridWidget/DataGridWidget_cs",{});define("DS/DataGridWidget/assets/nls/datagrid",{position:"poloha"});

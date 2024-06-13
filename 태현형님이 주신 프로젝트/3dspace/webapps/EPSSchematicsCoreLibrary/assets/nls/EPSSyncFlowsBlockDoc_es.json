@@ -1,0 +1,11 @@
+{
+  "version": "1.0.0",
+  "summary": "Este bloque le ayuda a sincronizar el control y el flujo de datos. Activará el puerto de control de salida en cuanto se hayan activado todos los puertos de control de entrada. Para un escenario más complejo (por ejemplo, ejecutando este bloque varias veces), lea la descripción detallada que se incluye a continuación.",
+  "description": "Cada puerto de control de entrada tiene un contador interno que se incrementa cuando el puerto se ha activado y que disminuye cuando el bloque sale a través del puerto de control de salida <doc-ocp-name translate=no>Out</doc-ocp-name>. Cada vez que se activa un puerto de control de entrada, el bloque se ejecuta y sale a través del puerto de control de salida <doc-ocp-name translate=no>Out</doc-ocp-name> solo si todos los contadores internos del puerto de control de entrada son estrictamente mayores que 0.",
+  "controlPorts": {
+    "In1": "activa la ejecución del bloque e incrementa el contador interno asociado a este puerto.",
+    "In2": "activa la ejecución del bloque e incrementa el contador interno asociado a este puerto.",
+    "Out": "se activa solo cuando todos los contadores internos del puerto de control de entrada son estrictamente mayores que 0. Disminuye todos los contadores internos del puerto de control de entrada."
+  },
+  "example": null
+}

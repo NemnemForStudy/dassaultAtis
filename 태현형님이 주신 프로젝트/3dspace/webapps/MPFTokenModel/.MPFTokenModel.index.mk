@@ -1,0 +1,13 @@
+m|MPFModels\MPFTokenModel.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.1.22330|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\MPFTokenModel\MPFTokenModel.js|1669432501|2199
+s|MPFModels\MPFTokenModel.mweb\src\ConsumeTokenDataProxy.js|1669417588|1483
+u|MPFModels\MPFTokenModel.mweb\src\MPFTokenModel.js|1669417588|0
+u|MPFModels\MPFTokenModel.mweb\src\TokenFactory.js|1669417588|2772
+u|MPFModels\MPFTokenModel.mweb\src\TokenModel.js|1669417588|1957
+u|MPFModels\MPFTokenModel.mweb\src\ValidateTokenDataProxy.js|1669417588|1492
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

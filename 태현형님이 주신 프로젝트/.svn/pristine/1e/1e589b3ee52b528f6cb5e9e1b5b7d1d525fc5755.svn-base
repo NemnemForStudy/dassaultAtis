@@ -1,0 +1,1 @@
+define("DS/WAfrExecutionContext/WAfrExecutionContext_pl",{});define("DS/WAfrExecutionContext/assets/nls/Transition",{"WAfrTransitionLaunched.title":"Uruchamianie "});

@@ -1,0 +1,68 @@
+<?xml version = "1.0"?>
+<!-- COPYRIGHT DASSAULT SYSTEMES 2022, All rights reserved -->
+<Package xmlns="PLMDictionaryUnified" 
+         ModelerType="Top" 
+         CustomerExposition="Programmer" 
+         Name="PLMHangerSupport_EngSpecification" 
+         Uuid="CCB7DE82-79F2-4381-A788-75AA29ACDE58" 
+         UseNames="PLMEnsEngSpecification" 
+         BelongsToModeler="PLMHangerSupport_EngSpecification">
+  <CAAComment>
+    <ShortRole>Support Specification Package</ShortRole>
+    <Role>This package describes the Engineering Specification objects for Hanger and Support Applications.</Role>
+  </CAAComment>
+  <Comment>Initial creation: ENH1 APR 2022</Comment>
+
+  <Class Name="SptSpecification" Uuid="3E1CBB50-37AA-4927-BDC1-A027BCFB19B3" Abbreviation="spts" CustomerExposition="Programmer" Abstract="No"
+        SuperName="Ens_AbstractSpec" Discipline="Yes" CustomerExtensible="Yes">
+    <Property Name="IconName"                    Value="I_SptEngSpec_Spec"/>
+    <Property Name="Searchable"                  Value="Yes"/>
+    <Property Name="Newable"                     Value="New"/>
+    <Property Name="KweNew_InstanciationMethod"  Value="CATEnsCompanyStdsInstanciation"/>
+    <Property Name="ProposedInDataSetup"         Value="Yes"/>
+    <CAAComment>
+      <ShortRole>Support Specification</ShortRole>
+      <Role>Support Specification</Role>
+    </CAAComment>
+  </Class>
+  <Class Name="SptPrimarySupportFilter" Uuid="E2AEFBA3-C300-4E6E-9F17-F287129A8211" Abbreviation="sptpf" CustomerExposition="Programmer" Abstract="No"
+    SuperName="Ens_AbstractFilter" Discipline="Yes" CustomerExtensible="Yes" CreateInstName="EnsFilterInstance">
+    <Property Name="IconName"                    Value="I_SptEngSpec_Filter"/>
+    <Property Name="Searchable"                  Value="Yes"/>
+    <Property Name="Newable"                     Value="All"/>
+    <Property Name="KweNew_InstanciationMethod"  Value="CATEnsCompanyStdsInstanciation"/>
+    <Property Name="KweNew_ReturnedType"         Value="EnsFilterInstance"/>
+    <CAAComment>
+      <ShortRole>Support Primary Support Filter</ShortRole>
+      <Role>Support Primary Support Filter</Role>
+    </CAAComment>
+  </Class>
+  <Class Name="SptIntermediatePartFilter" Uuid="E62BFD51-AE0D-4781-9E5C-ACFC0E02616A" Abbreviation="sptif" CustomerExposition="Programmer" Abstract="No"
+    SuperName="Ens_AbstractFilter" Discipline="Yes" CustomerExtensible="Yes" CreateInstName="EnsFilterInstance">
+    <Property Name="IconName"                    Value="I_SptEngSpec_Filter"/>
+    <Property Name="Searchable"                  Value="Yes"/>
+    <Property Name="Newable"                     Value="All"/>
+    <Property Name="KweNew_InstanciationMethod"  Value="CATEnsCompanyStdsInstanciation"/>
+    <Property Name="KweNew_ReturnedType"         Value="EnsFilterInstance"/>
+    <CAAComment>
+      <ShortRole>Support Intermediate Part Filter</ShortRole>
+      <Role>Support Intermediate Part Filter</Role>
+    </CAAComment>
+  </Class>
+  <Class Name="SptIntermediatePartMappingTable" Uuid="F4B9D3A7-DD72-4184-9D88-42D56BBA6498" Abbreviation="sptipmt" CustomerExposition="Programmer" Abstract="No"
+    SuperName="Ens_TechnoTable2" Discipline="Yes" CustomerExtensible="Yes" CreateInstName="EnsTechnologicalTableInstance">
+    <Property Name="IconName"                    Value="I_SptEngSpec_Table"/>
+    <Property Name="Searchable"                  Value="Yes"/>
+    <Property Name="Newable"                     Value="All"/>
+    <Property Name="KweNew_InstanciationMethod"  Value="CATEnsCompanyStdsInstanciation"/>
+    <Property Name="KweNew_ReturnedType"         Value="EnsTechnologicalTableInstance"/>
+  </Class>
+  <Class Name="SptMechanicalInterfaceTypeTable" Uuid="82F20B24-8C75-44E5-AE8D-6B7D7E2A2AB2" Abbreviation="sptmit" CustomerExposition="Programmer" Abstract="No"
+    SuperName="Ens_TechnoTable2" Discipline="Yes" CustomerExtensible="Yes" CreateInstName="EnsTechnologicalTableInstance">
+    <Property Name="IconName"                    Value="I_SptEngSpec_Table"/>
+    <Property Name="Searchable"                  Value="Yes"/>
+    <Property Name="Newable"                     Value="All"/>
+    <Property Name="KweNew_InstanciationMethod"  Value="CATEnsCompanyStdsInstanciation"/>
+    <Property Name="KweNew_ReturnedType"         Value="EnsTechnologicalTableInstance"/>
+  </Class>
+</Package>

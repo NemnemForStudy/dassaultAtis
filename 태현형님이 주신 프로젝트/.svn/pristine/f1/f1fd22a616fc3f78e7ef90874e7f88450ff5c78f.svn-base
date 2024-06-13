@@ -1,0 +1,1 @@
+define("DS/CATWebUXCVS/CATWebUXCVS_cs",{});define("DS/CATWebUXCVS/assets/nls/CATWebUXCVS",{valStateChange:{dlgTitle:"Ověření",closeBtn:"Zavřít",inProgress:"Probíhá",passed:"Úspěšná",failed:"Nezdařilo se"}});

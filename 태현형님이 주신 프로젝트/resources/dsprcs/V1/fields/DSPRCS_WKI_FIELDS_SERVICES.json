@@ -1,0 +1,353 @@
+{
+	"dsprcs:Alert.text": {
+        "property": "attribute[DELWkiAlertReference.V_WIAlert_Message]",
+        "key": "text",
+        "example": "Any text",
+        "description": "The Instruction message to inform the Shop Floor worker about safety warning or a change in an established (long running) process.",
+        "index": "bo.DELWkiAlertReference.V_WIAlert_Message"
+	},
+	"dsprcs:Alert.showMode": {
+        "property": "attribute[DELWkiAlertReference.V_WIAlert_ShowMode]",
+        "key": "showMode",
+        "example": "1",
+        "description": "This is used to specify whether the Alert needs to be shown to the worker always or only once",
+        "format": "integer",
+        "index": "bo.DELWkiAlertReference.V_WIAlert_ShowMode"
+	},
+	"dsprcs:Alert.trackComfirmation": {
+        "property": "attribute[DELWkiAlertReference.V_WIAlert_TrackConfirmation]",
+        "key": "trackComfirmation",
+        "example": "true",
+        "description": "This is used to specify whether the Workers acknowledgement of the Alert is to be tracked.",
+        "format": "boolean",
+        "index": "bo.DELWkiAlertReference.V_WIAlert_TrackConfirmation"
+	},
+	"dsprcs:WorkInstructionEnterpriseAttributes": {
+		"property": "computed",
+        "key": "dsprcs:WorkInstructionEnterpriseAttributes",
+		"example": "com.dassault_systemes.enovia.xapps.dsprcs.implementations.dsprcsOpenAPIImpl.getEnterpriseAttributesDetails"
+	},
+	"dsprcs:AlertEnterpriseAttributes": {
+		"property": "computed",
+        "key": "dsprcs:AlertEnterpriseAttributes",
+		"example": "com.dassault_systemes.enovia.xapps.dsprcs.implementations.dsprcsOpenAPIImpl.getEnterpriseAttributesDetails"
+	},
+	"dsprcs:SignOffEnterpriseAttributes": {
+		"property": "computed",
+        "key": "dsprcs:SignOffEnterpriseAttributes",
+		"example": "com.dassault_systemes.enovia.xapps.dsprcs.implementations.dsprcsOpenAPIImpl.getEnterpriseAttributesDetails"
+	},
+	"dsprcs:InstructionEnterpriseAttributes": {
+		"property": "computed",
+        "key": "dsprcs:InstructionEnterpriseAttributes",
+		"example": "com.dassault_systemes.enovia.xapps.dsprcs.implementations.dsprcsOpenAPIImpl.getEnterpriseAttributesDetails"
+	},
+	"dsprcs:Instruction.text": {
+        "property": "attribute[DELWkiInstructionReference.V_WIInstruction_Text]",
+        "key": "text",
+        "example": "Any text",
+        "description": "The Instruction message to give the Shop Floor worker.",
+        "index": "bo.DELWkiInstructionReference.V_WIInstruction_Text"
+	},
+	"dsprcs:SignOff.text": {
+        "property": "attribute[DELWkiSignOffReference.V_WISignOff_Text]",
+        "key": "text",
+        "example": "Any text",
+        "description": "The Instruction message to give the Shop Floor worker details on how to do the sign off.",
+        "index": "bo.DELWkiSignOffReference.V_WISignOff_Text"
+	},
+	"dsprcs:SignOff.isPartialSignoffAllowed": {
+        "property": "attribute[DELWkiSignOffReference.V_WISignOff_AllowPartial]",
+        "key": "isPartialSignoffAllowed",
+        "example": "true",
+        "description": "This is used to specify whether a Partial Sign Off can be performed on the Shop Floor",
+        "format": "boolean",
+        "index": "bo.DELWkiSignOffReference.V_WISignOff_AllowPartial"
+	},
+	"dsprcs:SignOff.isOptional": {
+        "property": "attribute[DELWkiSignOffReference.V_WISignOff_NotMandatory]",
+        "key": "isOptional",
+        "example": "true",
+        "description": "This is used to specify whether it is mandatory to perform the Sign Off",
+        "format": "boolean",
+        "index": "bo.DELWkiSignOffReference.V_WISignOff_NotMandatory"
+	},
+	"dsprcs:SignOff.actors": {
+        "property": "computed",
+        "key": "actors",
+        "example": "[ABC, DEF]",
+        "fetchOnce": true,
+        "description": "The person(s) that need to sign off on the task after it has been completed by the Shop Floor worker.",
+        "index": "bo.DELWkiSignOffReference.V_WISignOff_Actors",
+        "_isMultiValuated": true
+	},
+	"dsprcs:DataCollect.text": {
+        "property": "attribute[DELWkiDataCollectReference.V_WIDC_Text]",
+        "key": "text",
+        "example": "Any text",
+        "description": "The Instruction message to give the Shop Floor worker details on how to do the data collect.",
+        "index": "bo.DELWkiDataCollectReference.V_WIDC_Text"
+	},
+	"dsprcs:DataCollect.label": {
+        "property": "attribute[DELWkiDataCollectReference.V_WIDC_Label]",
+        "key": "label",
+        "example": "ABCD",
+        "description": "Label in the collected data.",
+        "index": "bo.DELWkiDataCollectReference.V_WIDC_Label"
+	},
+	"dsprcs:DataCollect.dcType": {
+        "property": "attribute[DELWkiDataCollectReference.V_WIDC_Type]",
+        "key": "dcType",
+        "example": "Integer",
+        "description": "The type of data (Integer, Real, Text, Boolean) that is to be collected.",
+        "format": "integer",
+        "index": "bo.DELWkiDataCollectReference.V_WIDC_Type"
+	},
+	"dsprcs:DataCollect.sampleSize": {
+        "property": "attribute[DELWkiDataCollectReference.V_WIDC_SampleSize]",
+        "key": "sampleSize",
+        "example": "120",
+        "description": "Indicates the sample size of the collected data",
+        "format": "integer",
+        "index": "bo.DELWkiDataCollectReference.V_WIDC_SampleSize"
+	},
+	"dsprcs:DataCollect.hasMaxValuated": {
+        "property": "attribute[DELWkiDataCollectReference.V_WIDC_IsMaxValuated]",
+        "key": "hasMaxValuated",
+        "example": "true or false",
+        "description": "Indicates whether the collected data has max value",
+        "format": "boolean",
+        "index": "bo.DELWkiDataCollectReference.V_WIDC_IsMaxValuated"
+	},
+	"dsprcs:DataCollect.hasMinValuated": {
+        "property": "attribute[DELWkiDataCollectReference.V_WIDC_IsMinValuated]",
+        "key": "hasMinValuated",
+        "example": "true or false",
+        "description": "Indicates whether the collected data has min value",
+        "format": "boolean",
+        "index": "bo.DELWkiDataCollectReference.V_WIDC_IsMinValuated"
+	},
+	"dsprcs:DataCollect.magnitude": {
+        "property": "attribute[DELWkiDataCollectReference.V_WIDC_Magnitude]",
+        "key": "magnitude",
+        "example": "Any magnitude",
+        "description": "Indicates the magnitude of the collected data",
+        "index": "bo.DELWkiDataCollectReference.V_WIDC_Magnitude"
+	},
+	"dsprcs:DataCollect.maxValue": {
+        "property": "attribute[DELWkiDataCollectReference.V_WIDC_Max]",
+        "key": "maxValue",
+        "example": "100.00",
+        "description": "The largest possible value that the collected data can be (applicable only to Real and Integer types).",
+        "format": "double",
+        "index": "bo.DELWkiDataCollectReference.V_WIDC_Max"
+	},
+	"dsprcs:DataCollect.minValue": {
+        "property": "attribute[DELWkiDataCollectReference.V_WIDC_Min]",
+        "key": "minValue",
+        "example": "100.00",
+        "description": "The lowest possible value that the collected data can be (applicable only to Real and Integer types).",
+        "format": "double",
+        "index": "bo.DELWkiDataCollectReference.V_WIDC_Min"
+	},
+	"dsprcs:DataCollect.possibleValues": {
+        "property": "computed",
+        "key": "possibleValues",
+        "example": "com.dassault_systemes.enovia.xapps.dsprcs.implementations.dsprcsOpenAPIImpl.getpossibleValuesResponse",
+        "fetchOnce": true,
+        "description": "The possible values that the collected data can be. This could be array of numbers or array of strings based on the data type.",
+        "_isMultiValuated": true
+	},
+	"dsprcs:DataCollect.minIncluded": {
+        "property": "attribute[DELWkiDataCollectReference.V_WIDC_IsMinIncluded]",
+        "key": "minIncluded",
+        "example": "true or false",
+        "description": "Indicated whether the min value is included.",
+        "format": "boolean",
+        "index": "bo.DELWkiDataCollectReference.V_WIDC_IsMinIncluded"
+	},
+	"dsprcs:DataCollect.maxIncluded": {
+        "property": "attribute[DELWkiDataCollectReference.V_WIDC_IsMaxIncluded]",
+        "key": "maxIncluded",
+        "example": "true or false",
+        "description": "Indicated whether the max value is included.",
+        "format": "boolean",
+        "index": "bo.DELWkiDataCollectReference.V_WIDC_IsMaxIncluded"
+	},
+	"dsprcs:DataCollectEnterpriseAttributes": {
+		"property": "computed",
+        "key": "dsprcs:DataCollectEnterpriseAttributes",
+		"example": "com.dassault_systemes.enovia.xapps.dsprcs.implementations.dsprcsOpenAPIImpl.getEnterpriseAttributesDetails"
+	},
+	"dsprcs:DataCollectRow.possibleValues": {
+        "property": "computed",
+        "key": "possibleValues",
+        "fetchOnce": true,
+        "example": "com.dassault_systemes.enovia.xapps.dsprcs.implementations.dsprcsOpenAPIImpl.getpossibleValuesResponse",
+        "description": "The possible values that can be collected. This could be array of Integers or array of strings based on the data type.",
+        "_isMultiValuated": true
+	},
+	"dsprcs:DataCollectRow.label": {
+        "property": "attribute[PLMSpecifyHowToCollectDataCnx.V_DCLabel]",
+        "key": "label",
+        "example": "Any label",
+        "description": "The label to be set.",
+        "index": "bo.PLMSpecifyHowToCollectDataCnx.V_DCLabel"
+	},
+	"dsprcs:DataCollectRow.mode": {
+        "property": "attribute[PLMSpecifyHowToCollectDataCnx.V_DCMode]",
+        "key": "mode",
+        "example": "Collected",
+        "description": "Indicates whether data to be collected or computed.",
+        "index": "bo.PLMSpecifyHowToCollectDataCnx.V_DCMode"
+	},
+	"dsprcs:DataCollectRow.numberOfMeasurements": {
+        "property": "attribute[PLMSpecifyHowToCollectDataCnx.V_DCNbSameMeasurement]",
+        "key": "numberOfMeasurements",
+        "example": "10",
+        "description": "Specify the number of values to be collected",
+        "format": "integer",
+        "index": "bo.PLMSpecifyHowToCollectDataCnx.V_DCNbSameMeasurement"
+	},
+	"dsprcs:DataCollectRow.text": {
+        "property": "computed",
+        "key": "text",
+        "fetchOnce": true,
+        "example": "Any text",
+        "description": "The Instruction message to tell the Shop Floor worker what task needs to perform.",
+        "index": "bo.PLMSpecifyHowToCollectDataCnx.V_DCRichText"
+	},
+	"dsprcs:DataCollectRow.dcType": {
+		"property": "computed",
+        "key": "dcType",
+        "fetchOnce": true,
+        "example": 1,
+        "description": "Indicates Real(1), Integer(2), Text(3), Boolean(4), Timestamp(5) value."
+	},
+	"dsprcs:DataCollectRow.magnitude": {
+		"property": "computed",
+        "key": "magnitude",
+        "fetchOnce": true,
+        "example": "Any magnitude",
+        "description": "Object magnitude value."
+	},
+	"dsprcs:DataCollectRow.maxValue": {
+		"property": "computed",
+        "key": "maxValue",
+        "fetchOnce": true,
+		"example": "com.dassault_systemes.enovia.xapps.dsprcs.implementations.dsprcsOpenAPIImpl.getQuantityResponse",
+        "description": "Object maxValue value."
+	},
+	"dsprcs:DataCollectRow.minValue": {
+		"property": "computed",
+        "key": "minValue",
+        "fetchOnce": true,
+		"example": "com.dassault_systemes.enovia.xapps.dsprcs.implementations.dsprcsOpenAPIImpl.getQuantityResponse",
+        "description": "Object minValue value."
+	},
+	"dsprcs:DataCollectRow.controlMinValue": {
+		"property": "computed",
+        "key": "controlMinValue",
+        "fetchOnce": true,
+		"example": "com.dassault_systemes.enovia.xapps.dsprcs.implementations.dsprcsOpenAPIImpl.getQuantityResponse",
+        "description": "Object controlMinValue value."
+	},
+	"dsprcs:DataCollectRow.controlMaxValue": {
+		"property": "computed",
+        "key": "controlMaxValue",
+        "fetchOnce": true,
+		"example": "com.dassault_systemes.enovia.xapps.dsprcs.implementations.dsprcsOpenAPIImpl.getQuantityResponse",
+        "description": "Object controlMaxValue value."
+	},
+	"dsprcs:DataCollectRow.nominalValue": {
+		"property": "computed",
+        "key": "nominalValue",
+        "fetchOnce": true,
+		"example": "com.dassault_systemes.enovia.xapps.dsprcs.implementations.dsprcsOpenAPIImpl.getQuantityResponse",
+        "description": "Object nominalValue value."
+	},
+	"dsprcs:DataCollectRow.minIncluded": {
+		"property": "computed",
+        "key": "minIncluded",
+        "fetchOnce": true,
+        "description": "Object minIncluded value."
+	},
+	"dsprcs:DataCollectRow.maxIncluded": {
+		"property": "computed",
+        "key": "maxIncluded",
+        "fetchOnce": true,
+        "description": "Object maxIncluded value."
+	},
+	"dsprcs:DataCollectRow.controlMinIncluded": {
+		"property": "computed",
+        "key": "controlMinIncluded",
+        "fetchOnce": true,
+        "description": "Object controlMinIncluded value."
+	},
+	"dsprcs:DataCollectRow.controlMaxIncluded": {
+		"property": "computed",
+        "key": "controlMaxIncluded",
+        "fetchOnce": true,
+        "description": "Object controlMaxIncluded value."
+	},
+	"dsprcs:CheckListRow.label": {
+        "property": "attribute[PLMSpecifyHowToCollectDataCnx.V_DCLabel]",
+        "key": "label",
+        "example": "Any label",
+        "description": "The label set for the Check List Row.",
+        "index": "bo.PLMSpecifyHowToCollectDataCnx.V_DCLabel"
+	},
+	"dsprcs:CheckListRow.text": {
+        "property": "computed",
+        "key": "text",
+        "fetchOnce": true,
+        "example": "Any text",
+        "description": "The Instruction message to tell the Shop Floor worker what task needs to perform.",
+        "index": "bo.PLMSpecifyHowToCollectDataCnx.V_DCRichText"
+	},
+	"dsprcs:CheckListRow.dcType": {
+		"property": "computed",
+        "key": "dcType",
+        "fetchOnce": true,
+        "example": 1,
+        "description": "Indicates Real(1),Integer(2),Text(3),Boolean(4),Timestamp(5) value."
+	},
+	"dsprcs:CheckListRow.possibleValues": {
+        "property": "computed",
+        "key": "possibleValues",
+        "fetchOnce": true,
+        "example": "com.dassault_systemes.enovia.xapps.dsprcs.implementations.dsprcsOpenAPIImpl.getpossibleValuesResponse",
+        "description": "The possible values that can be collected. This could be array of Integers or array of strings based on the data type.",
+        "_isMultiValuated": true
+	},
+	"dsprcs:Unit.BuildDisposition": {
+		"property": "attribute[Build Disposition]",
+		"key": "buildDisposition",
+		"example": "String value",
+		"index":"PLC_BUILD_DISPOSITION",
+		"description": "Build Disposition value"
+	},
+	"dsprcs:Unit.BuildSerialNumber": {
+		"property": "attribute[Build Serial Number]",
+		"key": "buildSerialNumber",
+		"example": "String value",
+		"index": "PLC_BUILD_SERIAL_NUMBER",
+		"description": "Build Serial Number value"
+	},
+	"dsprcs:Unit.BuildUnitNumber": {
+		"property": "attribute[Build Unit Number]",
+		"key": "buildUnitNumber",
+		"example": "Integer value",
+		"index": "PLC_BUILD_UNIT_NUMBER",
+		"description": "Build Unit Number value",
+		"format": "integer"
+	},
+	"dsprcs:Unit.DateShipped": {
+		"property": "attribute[Date Shipped]",
+		"key": "dateShipped",
+		"example": "Date value",
+		"index":"PLC_SHIPPED_DATE",
+		"description": "Date Shipped value",
+		"format": "datetimeutc"
+	}
+}

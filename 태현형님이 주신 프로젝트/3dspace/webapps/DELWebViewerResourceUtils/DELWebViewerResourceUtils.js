@@ -1,0 +1,1 @@
+define("DS/DELWebViewerResourceUtils/ResourceUtils",[],function(){"use strict";return function(e){var n=e&&e.nls?e.nls:{};return{getNLSValue:function(e,r,t,u){var i,s,c;return e?(c=e,t&&(c=t+"."+c),u&&(c=c+"."+u),i=(s=n.get(c))!==c?r?n.replace(s,r):s:e):c="Wrong NLS key",i||c},destroy:function(){n={}}}}});

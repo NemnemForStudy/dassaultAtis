@@ -1,0 +1,26 @@
+NAVIGATE     
+T0.physicalid, T0.logicalid, T0.type , T0.name ,
+T1.physicalid, T1.logicalid, T1.type , T1.name 
+
+FROM      
+
+Class/VPMReference T0,RelationClass/MustBeMadeFrom T1
+
+FROM_ROOTS [?1?]
+ON 
+	( RELATION
+		(FROM=Class/VPMReference     
+		TO=RelationClass/MustBeMadeFrom
+		THROUGH=POINTEDBY 
+		)
+		WITH QUALITY_FILTER(CATEGORY=ISOWNEDBY) 
+	)
+THEN 
+	( RELATION
+		(FROM=RelationClass/MustBeMadeFrom
+		TO=Class/VPMReference
+		THROUGH=POINTSTO 
+		)
+		WITH QUALITY_FILTER (CATEGORY=ISINSTANCEOF)
+	 )
+ITER = 1 ;

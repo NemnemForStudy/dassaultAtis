@@ -1,0 +1,1 @@
+define("DS/CfgFilterCommands/CfgFilterCommands_zh",{});define("DS/CfgFilterCommands/assets/nls/CfgUnitFilterCmd",{Dialog_Title:"按单位条件过滤",No_Model_Title:"没有附加到根参考的模型。",No_Model_Msg:"请附加模型。",No_Evolution_Crit_Error:"无法进行单位过滤，因为根参考上未启用单位条件。",Unit_Firing_Generic_Error:"单位触发失败。"});

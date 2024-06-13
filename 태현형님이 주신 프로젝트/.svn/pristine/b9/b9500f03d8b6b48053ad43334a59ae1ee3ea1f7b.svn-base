@@ -1,0 +1,56 @@
+################################################################################################
+# Create By choimingi : 2023. 07. 18
+# Admin Type : menu
+# Name : type_decDeliverableDoc
+################################################################################################
+#delete menu type_decDeliverableDoc;
+copy menu type_ProjectSpace type_decDeliverableDoc;
+mod Tree add menu type_decDeliverableDoc;
+
+mod menu type_decDeliverableDoc
+  add setting 'Default Category'  PMCGateProperties
+  add setting 'Document Command'  PMCGateProperties
+  remove setting 'Target Location' 
+;
+
+# Modified by choimingi on 2023.07.17
+mod menu type_decDeliverableDoc
+	add  command decDeliverableStatusCommand
+;
+
+mod menu type_decDeliverableDoc remove
+	command PMCSchedule, 
+	,PMCProjectCollaborationPowerView;
+    ,PMCTaskReferenceDocument
+    ,PMCProjectSpacePropertiesPowerView
+    ,PMCExecution
+    ,PMCWhatIfProjectExperiments
+    ,PMCFinancials
+    ,PMCFolder
+    ,PMCObjectives
+    ,PMCAccess_ResourcePlan
+    ,decProjectSpaceUnitImageList
+    ,decCwpMasterList
+    ,decCwpPlanList
+    ,decCwpSummaryList
+    ,decCwpChangeHistoryList
+    ,decIWPExcutionList
+    ,decDeskCodeMaster
+    ,decDeskTableMaster
+    ,decProjectSafetyStaticsView
+    ,decProjectProgressView
+    ,decProjectKeyQtyMgmtCmd
+    ,decProjectKeyQtyReportCmd
+    ,decConstructionKPIList
+    ,decDeliverableStatusCommand
+    ,decProjectMaterialStatusLink;
+
+mod menu type_decDeliverableDoc remove command decProjectChart;
+mod menu type_decDeliverableDoc href '${COMMON_DIR}/emxPortal.jsp?portal=decDeliverableDocPropertiesPortal&showPageHeader=false&HelpMarker=emxhelpprojectdetails'
+mod menu type_decDeliverableDoc
+ href '${COMMON_DIR}/emxForm.jsp?form=decDeliverableDocPropertiesForm&toolbar=decDeliverableDocDetailsToolbar&HelpMarker=emxhelpdocumentproperties&formHeader=emxComponents.Common.PropertiesPageHeading&Export=False&displayCDMFileSummary=true';
+ mod menu type_decDeliverableDoc label 'emxProgramCentral.Command.decDeliverableDocProperties.Details';
+ 
+ mod menu type_decDeliverableDoc add command decDeliverableDocChangeHistoryList;
+ mod menu type_decDeliverableDoc remove command APPDocumentFileVersions;
+  

@@ -1,0 +1,541 @@
+{
+    "migration": {
+        "upgrade": "This widget has been upgraded, please refresh your browser page to have the latest version."
+    },
+    "maturity": {
+        "create": "Draft",
+        "assign": "To Do",
+        "active": "In Work",
+        "review": "In Approval",
+        "closed": "Completed"
+    },
+    "priorities": {
+        "title": "Priority",
+        "low": "Low",
+        "medium": "Medium",
+        "high": "High",
+        "urgent": "Urgent",
+        "pre-assigned": "Pre-assigned"
+    },
+    "dates": {
+        "seconds": "{number} second(s)",
+        "minutes": "{number} minute(s)",
+        "hours": "{number} hour(s)",
+        "days": "{number} day(s)",
+        "months": "{number} month(s)",
+        "years": "{number} year(s)"
+    },
+    "skeleton": {
+        "dueDate": "Due date: {date}",
+        "issueSelection": "{number} Issues selected.",
+        "changes": "Changes will be applied to all.",
+        "lifecycleNotAvailable": "Only Issues with same state can be promoted or demoted.",
+        "deletedIssueInTheSelection": "At least one of the selected Issue(s) has been deleted.",
+        "actions": {
+            "delete": "Delete the selected Issue(s)",
+            "changeOwner": "Change Ownership",
+            "close": "Close the Issue(s)"
+        },
+        "facets": {
+            "properties": "Properties",
+            "relatedObjects": "Related Object(s)",
+            "team": "Members",
+            "attachments": "Attachments",
+            "comments": "Comments",
+            "history": "History",
+            "documents": "Documents"
+        }
+    },
+    "lifecycle": {
+        "create": "Set the issue(s) as 'Draft' state to indicate you start to work on it.",
+        "assign": "Set the issue(s) as 'To Do' state to allow assignees to work on it.",
+        "active": "Set the issue(s) as 'In Work' state to indicate you are working on it.",
+        "review": "Set the issue(s) as 'In Approval' state to allow the review of your fix.",
+        "closed": "Set the issue(s) as 'Completed' state if everything has been fixed.",
+        "partial": "The operation failed for {number} issue(s).",
+        "error": "An error occurred, please refresh your page and retry."
+    },
+    "create": {
+        "title": "issue",
+        "titleTemplate": "template(s)",
+        "titleActionCreate": "New",
+        "titleActionEdit": "Edit",
+        "templateApplySuccess": "Template '{name}' has been applied successfully.",
+        "templateApplyError": "An error occurred when applying template '{name}'.",
+        "issueApplySuccess": "Issue '{title} - {name}' has been applied successfully.",
+        "issueApplyError": "An error occurred when applying issue '{title} - {name}'.",
+        "required": "Required field must not be empty.",
+        "creationSuccess": "Issue created with success.",
+        "creationTemplateSuccess": "Template created with success.",
+        "creationFailed": "An error occurred during the creation, please retry again.",
+        "validationFailed": "Some fields are not properly filled.",
+        "promotionSuccess": "Issue promoted with success.",
+        "promotionFailed": "An error occurred during the promotion.",
+        "uploadImagesFailed": "An error occurred during the upload of images.",
+        "createButton": "Create and Close",
+        "createButtonEditMode": "Update",
+        "createAnotherButton": "Create",
+        "resetButton": "Clear",
+        "modeToggler": {
+            "multiStep": "Multi-Step",
+            "fullView": "Full-View",
+            "tooltipMultiStep": "Switch to multi-step view",
+            "tooltipFullView": "Switch to full form view"
+        },
+        "start": {
+            "title": "Create issues and templates",
+            "cancelButton": "Cancel",
+            "actionPage": {
+                "issue": {
+                    "title": "Issue",
+                    "fromBlank": "New",
+                    "fromIssue": "Duplicate an issue",
+                    "fromTemplate": "From a template"
+                },
+                "template": {
+                    "title": "Template",
+                    "fromBlank": "New",
+                    "fromIssue": "From an existing issue",
+                    "edit": "Manage",
+                    "cloneSuffix": "[DUP]"
+                }
+            }
+        },
+        "templateChooser": {
+            "title": "Select a template",
+            "titleEdit": "Manage templates",
+            "cancelButton": "Cancel",
+            "closeButton": "Close",
+            "selectButton": "Select",
+            "treeList": {
+                "tree": "Name",
+                "description": "Description",
+                "placeholder": "No template available"
+            },
+            "iconBar": {
+                "title": "Templates",
+                "create": "New",
+                "fromIssue": "New from issue",
+                "clone": "Duplicate",
+                "edit": "Edit",
+                "delete": "Delete"
+            },
+            "lastUsed": {
+                "title": "Recently used"
+            },
+            "preview": {
+                "objectCount": "objects",
+                "noObject": "No object"
+            },
+            "confirmDelete": {
+                "title": "Remove template(s)",
+                "text": "Are you sure you want to permanently delete the selected template(s)?",
+                "okButton": "Delete",
+                "cancelButton": "Cancel"
+            },
+            "clonePrefix": "Duplicate of",
+            "errors": {
+                "get": "An error occurred when retrieving templates, please refresh your page and retry.",
+                "remove": "An error occurred when removing templates, please refresh your page and retry.",
+                "save": "An error occurred when saving templates, please refresh your page and retry."
+            }
+        },
+        "views": {
+            "properties": "Properties",
+            "relatedObjects": "Related Object(s)",
+            "team": "Members",
+            "documents": "Documents",
+            "moreAttributes": "More Attributes",
+            "finalize": "Finalize"
+        },
+        "properties": {
+            "labels": {
+                "title": "Title",
+                "titlePlaceholder": "Title of the new issue...",
+                "titleHelper": "A brief one-line summary of the issue.",
+                "description": "Description",
+                "descriptionPlaceholder": "Write a description...",
+                "descriptionHelper": "A detailed description of the issue. A set of ready to use rich-text features are available.",
+                "resolutionRecommendation": "Resolution Recommendation",
+                "resolutionRecommendationPlaceholder": "How should it be done?",
+                "resolutionRecommendationHelper": "A recommendation to explain how this issue should be fixed.",
+                "priorityHelper": "The importance of the issue in relation to other issues.",
+                "priorityHelperUrgent": "Urgent: Highest priority. Indicates that this issue takes precedence over all others.",
+                "priorityHelperHigh": "High: Indicates that this issue is causing a problem and requires urgent attention.",
+                "priorityHelperMedium": "Medium: Indicates that this issue has a significant impact.",
+                "priorityHelperLow": "Low: Indicates that this issue has a relatively minor impact.",
+                "dueDate": "Due Date",
+                "dueDatePlaceholder": "Select a Due Date...",
+                "dueDateHelper": "The date by which this issue should be completed."
+            }
+        },
+        "related": {
+            "labels": {
+                "reportedAgainst": "Affected Items",
+                "reportedAgainstHelper": "This relationship is used to link any objects to an issue, in order to identify them as 'faulty'. For example, it can be a 3D object, a document...",
+                "reportedAgainstPlaceholder": "Search, select in 3D or drop an object to set as Affected Item.",
+                "contexts": "Contexts",
+                "contextHelper": "Also called DMU Context, it is used to attach one object to the issue, for a better understanding of the issue. It can be another 3D object with a bigger structure, to be able to see the full context of an issue.",
+                "contextPlaceholder": "Search or drop an object to set as Context."
+            },
+            "search": "Search and add an object.",
+            "remove": "Remove selected object(s).",
+            "removeErrorNoSelection": "Please select some objects to be removed.",
+            "addBalloonAvailable": "Pick a precise element in the 3D to add it to the issue.",
+            "addBalloonNotAvailable": "Pick in 3D feature is only available from 'Issue 3D Review'.",
+            "alreadyReportedAgainst": "This object has already been added, please select another one.",
+            "dropError": "Some dropped objects are not supported.",
+            "contextMultiError": "Adding multiple objects in context is not supported.",
+            "treelist": {
+                "tree": "Title",
+                "ds6w:type": "Type",
+                "ds6w:identifier": "Name",
+                "ds6wg:revision": "Revision"
+            }
+        },
+        "team": {
+            "labels": {
+                "assignees": "Assignees",
+                "assigneesHelper": "This relationship allows you to assign people to the issue (can be several). The person will now be able to see this issue in their list, and start to work on it.",
+                "reviewers": "Reviewers",
+                "contributors": "Contributors",
+                "assignToMe": "Assign To Me"
+            },
+            "alreadyAssigned": "{name} has already been assigned.",
+            "removeAssignee": "Click to remove this user."
+        },
+        "documents": {
+            "labels": {
+                "images": "Images",
+                "imagesHelper": "Images can be uploaded or be captured using 'Issue 3D Review' application.",
+                "imagesPlaceholder": "Upload an image or use screenshot button to create and add a new one.",
+                "imagesPlaceholderNotAvailable": "Upload an image using the Upload button.",
+                "documents": "Documents"
+            },
+            "uploadImage": "Upload an image",
+            "screenshotAvailable": "Take a screenshot",
+            "screenshotNotAvailable": "Screenshot feature is only available from 'Issue 3D Review'.",
+            "remove": "Remove selected document(s).",
+            "removeErrorNoSelection": "Please select some documents to be removed."
+        },
+        "finalize": {
+            "labels": {
+                "automation": "Automation",
+                "saveAsTemplate": "Save as Template",
+                "templateName": "Template Name",
+                "templateNamePlaceholder": "A unique identifier for the Template...",
+                "templateDescription": "Template Description",
+                "templateOverwrite": "An existing Template with same name will be overwritten."
+            },
+            "closeDialogToggle": "Close the dialog after creation.",
+            "saveAsTemplateToggle": "Save the form as a reusable Template."
+        }
+    },
+    "delete": {
+        "preparing": "Preparing the deletion...",
+        "title": "Deleting {number} issues(s).",
+        "nothing": "There are no issues to delete.",
+        "delete": "Delete",
+        "cancel": "Cancel",
+        "warning": "Are you sure you want to delete this content?",
+        "deletable": "Deleting the following issue(s) remove them <b>permanently</b> and cannot be undone:",
+        "indelible": "The following issue(s) cannot be deleted, <b>you must own the issue in 'Draft' state<b>:",
+        "singleSuccess": "{title} has been deleted.",
+        "multipleSuccess": "{number} issues have been deleted.",
+        "error": "An error occurred during the deletion, please retry."
+    },
+    "duplicate": {
+        "title": "Duplicate {number} issues(s).",
+        "preparing": "Preparing the duplication...",
+        "duplicate": "Duplicate",
+        "cancel": "Cancel",
+        "content": "The following issue(s) will be duplicated (<i>the duplicated issue(s) will be under your ownership in 'Draft' state</i>):",
+        "singleSuccess": "{title} has been duplicated.",
+        "multipleSuccess": "{number} issues have been duplicated.",
+        "multipleCopiesSuccess": "{number} issue(s) have been duplicated {multiplication} times.",
+        "error": "An error occurred during the duplication, please retry."
+    },
+    "attachments": {
+        "title": "Attachment Manager - {title}",
+        "holdIssue": "Hold/Release issue",
+        "popup": "Popup"
+    },
+    "images": {
+        "title": "{count} Image(s)",
+        "actions": {
+            "download": "Download",
+            "upload": "Upload",
+            "delete": "Delete",
+            "popup": "Popup",
+            "annotate": "Annotate"
+        },
+        "noImages": "No images to show.",
+        "popup": {
+            "title": "Image Display",
+            "holdIssue": "Hold the current issue",
+            "releaseIssue": "Release the current issue"
+        },
+        "delete": {
+            "cancel": "Cancel",
+            "confirmDeleteTitle": "Delete Image",
+            "confirmDeleteMessage": "Are you sure you want to permanently delete this image?",
+            "imageDisplayDeleteError": "Error when deleting images",
+            "okButton": "OK",
+            "pictureDeleted": "Image file(s) has been deleted."
+        },
+        "notSupported": "This file format is not supported. <br>File: {name}.",
+        "errorUpload": "Cannot upload the image {name}.",
+        "pictureUploaded": "Image file(s) has been uploaded."
+    },
+    "team": {
+        "title": "{count} Member(s)",
+        "error": {
+            "loadContent": "Cannot retrieve issue information.",
+            "alreadyAdded": "The user {name} has already been added to the {role} of selected issue(s).",
+            "update": "Failed to update issues {role}",
+            "notSupportedDrop": "The dropped objects are not supported.",
+            "notFound": "No result found."
+        },
+        "success": {
+            "update": "Issues {role} has been updated."
+        },
+        "filter": {
+            "title": "Filter",
+            "placeholder": "Filter team members"
+        },
+        "owner": {
+            "title": "Responsible",
+            "changeOwnership": "Change Ownership",
+            "addSelf": "Assign to Me"
+        },
+        "confirmRemoveTitle": "Remove '{user}' from '{role}'",
+        "confirmRemoveText": "Are you sure you want to remove '{user}' from '{role}'?",
+        "removeOkButton": "Remove",
+        "removeCancelButton": "Cancel",
+        "assignees": {
+            "title": "Assignees",
+            "add": "Add Assignees",
+            "save": "Save Assignees",
+            "propagate": "Propagate to all selected issue(s)",
+            "discard": "Discard changes",
+            "remove": "Remove from selected issue(s)",
+            "search": {
+                "placeholder": "Search member to add as Assignee..."
+            },
+            "addSelf": "Assign to Me"
+        },
+        "reviewers": {
+            "title": "Reviewers",
+            "add": "Add Reviewers",
+            "save": "Save Reviewers",
+            "propagate": "Propagate to all selected issue(s)",
+            "discard": "Discard changes",
+            "remove": "Remove from selected issue(s)",
+            "search": {
+                "placeholder": "Search member to add as Reviewer..."
+            },
+            "addSelf": "Assign to Me"
+        },
+        "contributors": {
+            "title": "Contributors",
+            "add": "Add Contributors",
+            "save": "Save Contributors",
+            "propagate": "Propagate to all selected issue(s)",
+            "discard": "Discard changes",
+            "remove": "Remove from selected issue(s)",
+            "search": {
+                "placeholder": "Search member to add as Contributor..."
+            },
+            "addSelf": "Assign to Me"
+        },
+        "common": {
+            "tooltip": "This member is assigned to all selected issues.",
+            "label": "Is Assigned",
+            "notLabel": "Varies"
+        },
+        "notSaved": {
+            "tooltip": "This member has not been saved yet."
+        },
+        "changeLayout": "Change view Layout"
+    },
+    "helper": {
+        "states": {
+            "create": "Issue is receiving details before being assigned.",
+            "assign": "Issue has been assigned and is waiting to be worked on.",
+            "active": "Issue is being worked on by the assignees.",
+            "review": "The proposed solution for the issue is being reviewed.",
+            "closed": "Solution is accepted by the creator and the issue is set as 'Completed'."
+        },
+        "dialog": {
+            "title": "Issue Management Applications - Help",
+            "tabStates": "States",
+            "tabShortcuts": "Shortcuts",
+            "subtitleShortcuts": "Shortcut keys",
+            "subtitleMouseOperation": "Mouse operations",
+            "states": {
+                "create": "Issue is receiving details before being assigned.",
+                "assign": "Issue has been assigned and is waiting to be worked on.",
+                "active": "Issue is being worked on by the assignees.",
+                "review": "The proposed solution for the issue is being reviewed.",
+                "closed": "Solution is accepted by the creator and the issue is set as 'Completed'."
+            },
+            "shortcut": {
+                "key": {
+                    "shortcut": {
+                        "delete": "Delete",
+                        "arrowUp": "Up",
+                        "arrowDown": "Down",
+                        "arrowLeft": "Left",
+                        "arrowRight": "Right",
+                        "enter": "Enter",
+                        "shiftArrow": "Shift + Arrows",
+                        "ctrlA": "Ctrl + A",
+                        "ctrlC": "Ctrl + C"
+                    },
+                    "mouse": {
+                        "ctrlClick": "Ctrl + Click",
+                        "shiftClick": "Shift + Click",
+                        "doubleClick": "Double click"
+                    }
+                },
+                "detail": {
+                    "shortcut": {
+                        "delete": "Delete/Detach item",
+                        "arrowUp": "Go to previous item",
+                        "arrowDown": "Go to next item",
+                        "arrowLeft": "Collapse item/Go to previous item",
+                        "arrowRight": "Expand item/Go to next item",
+                        "enter": "Open properties panel/Submit text input",
+                        "shiftArrow": "Select multiple items",
+                        "ctrlA": "Select all items",
+                        "ctrlC": "Copy selected item"
+                    },
+                    "mouse": {
+                        "ctrlClick": "Select multiple items that you click/Unselect",
+                        "shiftClick": "Select all items in between your click",
+                        "doubleClick": "Open properties panel/Expand or Collapse item"
+                    }
+                }
+            }
+        }
+    },
+    "taskManager": {
+        "cancel": "Cancel",
+        "iconToExit": "Cancel pick object in 'Issue 3D Review'"
+    },
+    "share": {
+        "successMultiple": "Link to {number} issue(s) have been successfully copied.",
+        "successSingle": "Link to the issue {name} has been successfully copied",
+        "info": "There is a limit of {number} issues that can be shared. The URL has been copied to clipboard."
+    },
+    "move": {
+        "move": "Move"
+    },
+    "error": {
+        "0": {
+            "title": "This content is no longer accessible.",
+            "subtitle": "Refresh the widget.",
+            "message": "The object may have been deleted, or you may no longer have the required access."
+        },
+        "1": {
+            "title": "You cannot perform this operation on : Issue",
+            "subtitle": "You do not have the appropriate responsibility to perform the operation on these issues.",
+            "message": "Possible Resolution: You need to be added as owner of the issue in the Members panel"
+        },
+        "2": {
+            "title": "You cannot duplicate this type of object: Issue",
+            "subtitle": "Verify that you are using the correct credentials.",
+            "message": "You may not have the required responsibility in the target collaborative space to duplicate this type of object."
+        },
+        "4": {
+            "title": "You cannot create this type of object: Issue",
+            "subtitle": "Verify that you are using the correct credentials.",
+            "message": "You may not have the required responsibility in the target collaborative space to create this type of object."
+        },
+        "5": {
+            "title": "You cannot perform this operation on: Issue",
+            "subtitle": "The Action Taken and Resolution Statement are not filled in.",
+            "message": "Possible solution: You need to add information for Action Taken and Resolution Statement of the issue in Properties panel."
+        },
+        "6": {
+            "title": "You cannot perform this operation on: Issue",
+            "subtitle": "The Action Taken field is not filled in.",
+            "message": "Possible solution: You need to add information for Action Taken of the issue in Properties panel."
+        },
+        "7": {
+            "title": "You cannot perform this operation on: Issue",
+            "subtitle": "The Resolution Statement field is not filled in.",
+            "message": "Possible solution: You need to add information for Resolution Statement of the issue in Properties panel."
+        },
+        "8": {
+            "title": "You cannot perform this operation on: Issue",
+            "subtitle": "The Resolution Date field is not filled in.",
+            "message": "Possible solution: You need to add information for Resolution Date of the issue in Properties panel."
+        },
+        "2005": {
+            "title": "You cannot perform this operation on : Issue",
+            "subtitle": "Issue is in Completed state.",
+            "message": "This operation is prohibited."
+        },
+        "1500028": {
+            "title": "You cannot delete this type of object: Issue",
+            "subtitle": "Verify that you are using the correct credentials.",
+            "message": "You may not have the required responsibility in the target collaborative space to delete this type of object."
+        },
+        "1004": {
+            "title": "The request could not be performed for the following reason(s):",
+            "subtitle": "This Issue requires approval and needs at least one assignee.",
+            "message": "Possible Resolution: Please assign at least one assignee in the Members panel."
+        },
+        "1005": {
+            "title": "You cannot perform this operation on: Issue",
+            "subtitle": "You do not have the appropriate responsibility to perform the operation on these issues.",
+            "message": "Possible Resolution: You need to be added as owner or coordinator of the issue in the Members panel."
+        },
+        "1005_1": {
+            "title": "You cannot perform this operation on: Issue",
+            "subtitle": "Verify that you are using the correct credentials.",
+            "message": "You may not have the required access role in the target collaborative space to perform this operation."
+        },
+        "11": {
+            "title": "You cannot perform this operation on : Template",
+            "subtitle": "Verify that you are using the correct credentials.",
+            "message": "You may not have the required responsibility in the target collaborative space."
+        },
+        "11_1": {
+            "title": "You cannot perform this operation on : Template",
+            "subtitle": "Verify that you are using the correct credentials.",
+            "message": "You may not have the necessary rights or Template is in incorrect maturity state"
+        },
+        "12": {
+            "title": "Invalid Date",
+            "subtitle": "Estimated Start Date should not be later than Due Date.",
+            "message": "Please enter valid dates."
+        },
+        "1500028_1": {
+            "title": "You cannot perform this operation on : Issue",
+            "subtitle": "Verify that you are using the correct credentials.",
+            "message": "You may not have the required responsibility in the target collaborative space to perform this operation."
+        },
+        "10": {
+            "title": "You cannot perform this operation on : Issue",
+            "subtitle": "You do not have the appropriate responsibility to perform the operation on these issues.",
+            "message": "Possible Resolution: You need to be added as owner, coordinator or assignee of the issue in the Members panel."
+        },
+        "9": {
+            "title": "You cannot perform this operation on: Issue",
+            "subtitle": "Issue object cannot be demoted.",
+            "message": "Issue object cannot be demoted, as at least one Resolving Item connected to Issue has Passed In Work state."
+        },
+        "13": {
+            "title": "You cannot perform this operation on: Issue",
+            "subtitle": "Issue object cannot be promoted.",
+            "message": "Issue object cannot be promoted, as at least one Resolving Item connected to Issue is not Completed."
+        },
+        "1500167_1" : {
+            "title": "The request could not be performed for the following reason(s):",
+            "subtitle": "Issue object cannot be promoted.",
+            "message": "Issue object cannot be promoted, as none of the Resolving Change started."
+        }
+    }
+}

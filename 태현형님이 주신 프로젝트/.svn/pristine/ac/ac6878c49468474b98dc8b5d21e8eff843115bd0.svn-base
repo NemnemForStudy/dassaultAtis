@@ -1,0 +1,1 @@
+define("DS/XCADSTPADocument/STPAInputDocument",["DS/XCADSTPXDocument/STPXInputDocument"],function(e){"use strict";return e.zipped=!0,e.requestResponseType="arraybuffer",e});

@@ -1,0 +1,17 @@
+
+NAVIGATE
+        T0.PLM_ExternalID,
+        T0.PLMID,
+        T1.physicalid,
+        T1.logicalid,
+        T1.type
+FROM
+        "VPMCfgEffectivity/VPMCfgEffectivity" T0,
+        "Class/Change Action" T1
+FROM_ROOTS [?1?]
+ON ( RELATION (
+        FROM="VPMCfgEffectivity/VPMCfgEffectivity"
+        TO="Class/Change Action"
+        THROUGH=POINTSTO )
+WITH QUALITY_FILTER (ROLE=CFG_ExpressionImpactingCriteria));
+

@@ -1,0 +1,1 @@
+define("DS/NativeLauncherWdg/NativeLauncherWdg_en",{});define("DS/NativeLauncherWdg/assets/nls/NativeLauncher",{Play:"Play"});

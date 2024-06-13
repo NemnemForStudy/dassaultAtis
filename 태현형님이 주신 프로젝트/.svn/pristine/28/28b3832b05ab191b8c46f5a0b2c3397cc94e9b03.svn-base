@@ -1,0 +1,1 @@
+define("DS/ENOProcessStepsReferential/ENOProcessStepsReferential_fr",{});define("DS/ENOProcessStepsReferential/assets/nls/ProcessStepsReferential",{MyReferential:"Mes documents récents"});

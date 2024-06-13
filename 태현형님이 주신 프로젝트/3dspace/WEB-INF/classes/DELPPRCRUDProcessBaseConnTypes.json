@@ -1,0 +1,139 @@
+[
+    {
+        "ParsingVersion": "2.0",
+        "DeclarativeTypes": [
+            {
+                "ConceptualName": "RFLPLMImplementConnection",
+                "ParentType": "PLMConnection",
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "RFLPLMImplementConnection",
+                        "Behavior": "REFERENCE"
+                    },
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "RFLPLMImplementConnection",
+                        "Behavior": "REFERENCE"
+                    }
+                ],
+                "Attributes": [
+                    {
+                        "ConceptualName": "operationOcc",
+                        "Transforms": [
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.transforms.DELMIACRUDIndexImplementConnectionPathSR"
+                            }
+                        ],
+                        "Getters": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.getters.MfgProductionPlanningCustomGetterOperationOccurrence"
+                            }
+                        ],
+                        "Checkers": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.tools.checkers.AttributeNotNullAndUniqueValueCheckerEx"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "itemOcc",
+                        "Transforms": [
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.transforms.DELMIACRUDIndexImplementConnectionPathSR"
+                            }
+                        ],
+                        "Getters": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.getters.MfgProductionPlanningCustomGetterMfgItemOccurrence"
+                            }
+                        ],
+                        "Checkers": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.tools.checkers.AttributeNotNullAndUniqueValueCheckerEx"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "scopeContext",
+                        "Transforms": [
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.transforms.DELMIACRUDIndexImplementConnectionPathSR"
+                            }
+                        ],
+                        "Getters": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.getters.MfgProductionPlanningCustomGetterScopeContext"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "scopeContextWithRef",
+                        "Transforms": [
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.transforms.DELMIACRUDIndexImplementConnectionPathSR"
+                            }
+                        ],
+                        "Getters": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.getters.MfgProductionPlanningCustomGetterScopeContext"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "itemRef",
+                        "Transforms": [
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.transforms.DELMIACRUDIndexImplementConnectionPathSR"
+                            }
+                        ],
+                        "Getters": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.getters.MfgProductionPlanningCustomGetterMfgItemReference"
+                            }
+                        ],
+                        "Checkers": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.tools.checkers.AttributeNotNullAndUniqueValueChecker"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "isScope",
+                        "Transforms": [
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.transforms.DELMIACRUDIndexTransformIsScopeToPathSR"
+                            }
+                        ],
+                        "Getters": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.getters.MfgProductionPlanningCustomGetterIsScope"
+                            }
+                        ],
+                        "Checkers": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.tools.checkers.AttributeNotNullAndUniqueValueChecker"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]

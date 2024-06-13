@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Styles xmlns:syp="http://www.3ds.com/xsd/SYP">
+
+    <Template syp:name="3DPlayReviewExperienceHeaders" Target="CATCmdHeadersList">
+        <CATCmdHeadersList>
+
+            <!--3DPlay command headers-->
+            <CATCommandHeader ID="ShareTo3DSwYm" Available="0" ClassName="DS/3DPlayCommands/CmdShareTo3DSwYm" HelpResourceFile = "3DPlayCommands/3DPlayHelpForCommands" ResourceFile="3DPlay/3DPlay" />
+            <CATCommandHeader ID="SharePrint" Available="0" ClassName="DS/3DPlayCommands/CmdSharePrint" HelpResourceFile = "3DPlayCommands/3DPlayHelpForCommands" ResourceFile="3DPlay/3DPlay" />
+            <CATCommandHeader ID="ShareDownload" Available="0" ClassName="DS/3DPlayCommands/CmdShareDownload" HelpResourceFile = "3DPlayCommands/3DPlayHelpForCommands" ResourceFile="3DPlay/3DPlay" />
+            <CATCommandHeader ClassName="DS/DMUBaseCommands/DMURightSidePanelCmd" ID="RightSidePanel" HelpResourceFile="PADUtils/PADUtilsHelpForCommands" ResourceFile="PADUtils/PADUtils" Available="1" Behavior="CATAfrHeaderCheck">
+                <CATAfrCommandHeaderArgs>
+                    <CATCommandHeaderArg ID="PropertiesReadOnly" Value="true" Mode="In" />
+                </CATAfrCommandHeaderArgs>
+            </CATCommandHeader>
+
+            <CATCommandHeader ID="CATWebUXSlideShowHdr" ClassName="DS/CATWebUXSlideShow/CATWebUXSlideShowCmd" ResourceFile="CATWebUXSlideShow/CATWebUXSlideShow" HelpResourceFile="CATWebUXSlideShow/CATWebUXSlideShow" Behavior="CATAfrHeaderCheck">
+                <CATAfrCommandHeaderArgs>
+                    <CATCommandHeaderArg ID="ControllerID" Value="DMU3DMarkupSlideShow" Mode="In" />
+                </CATAfrCommandHeaderArgs>
+            </CATCommandHeader>
+
+            <CATCommandHeader ID = "VisuZoomView"                         ClassName = "DS/ViewerCommands/VisuZoomViewCmd"                                   ResourceFile = "ViewerCommands/ViewerCommands"                 HelpResourceFile = "ViewerCommands/ViewerCommandsIDs"    SharedLibraryName = "ShareUI" />
+            <CATCommandHeader ID = "VisuPanView"                          ClassName = "DS/ViewerCommands/VisuPanViewCmd"                                    ResourceFile = "ViewerCommands/ViewerCommands"                 HelpResourceFile = "ViewerCommands/ViewerCommandsIDs"    SharedLibraryName = "ShareUI" />
+            <CATCommandHeader ID = "VisuRotateView"                       ClassName = "DS/ViewerCommands/VisuRotateViewCmd"                                 ResourceFile = "ViewerCommands/ViewerCommands"                 HelpResourceFile = "ViewerCommands/ViewerCommandsIDs"    SharedLibraryName = "ShareUI" />
+            <CATCommandHeader ID = "VisuReframeView"                      ClassName = "DS/ViewerCommands/VisuReframeViewCmd"                                ResourceFile = "ViewerCommands/ViewerCommands"                 HelpResourceFile = "ViewerCommands/ViewerCommandsIDs"    SharedLibraryName = "ShareUI" />
+            <CATCommandHeader ID = "ViewSelector"                         ClassName = "DS/3DPlayCommands/CmdViewSelector"                                   ResourceFile = "3DPlay/3DPlayExperience3D"                     HelpResourceFile = "3DPlayCommands/3DPlayHelpForCommands3D" />
+            <CATCommandHeader ID="FlyWalkCmd" ClassName="DS/FlyWalkCommand/FlyWalkCmd" HelpResourceFile="FlyWalkCommand/FlyWalkCommandIDs" ResourceFile="FlyWalkCommand/FlyWalkCmd" Behavior="CATAfrHeaderCheck"/>
+            <CATCommandHeader ID="DMUSwitch3DMarkersResponsiveDisplayHdr" ClassName="DS/DMUBaseCommands/DMUSwitch3DMarkersResponsiveDisplayCmd" ResourceFile="DMUBaseCommands/DMUBaseWebCommands" HelpResourceFile="DMUBaseCommands/DMUBaseCommands"/>
+            <CATCommandHeader ID="VisuViewPanelCommand" ClassName="DS/ViewerCommands/VisuViewPanelCommand" ResourceFile="ViewerCommands/ViewerCommands" HelpResourceFile="ViewerCommands/ViewerCommandsIDs" />
+
+            <CATCommandHeader ID ="measure2CmdHdr" ClassName="DS/3DPlayCommands/Proxy/CmdMeasureProxy" HelpResourceFile="DMUMeasure/DMUMeasure" ResourceFile="DMUBaseCommands/3DPlayPro" Available="1">
+                <CATAfrCommandHeaderArgs>
+                    <CATCommandHeaderArg ID = "3dPlay" Value = "3dPlay" Mode = "In" />
+                    <CATCommandHeaderArg ID = "RemoveNonPersistent" Value = "false" Mode = "In" />
+                </CATAfrCommandHeaderArgs>
+            </CATCommandHeader>
+
+            <CATCommandHeader ID="section2CmdHdr" ClassName="DS/3DPlayCommands/Proxy/CmdSectionProxy" HelpResourceFile="DMUSection/DMUSection" ResourceFile="DMUBaseCommands/3DPlayPro" Available="1">
+                <CATAfrCommandHeaderArgs>
+                    <CATCommandHeaderArg ID = "3dReview" Value = "3dReview" Mode = "In" />
+                </CATAfrCommandHeaderArgs>
+            </CATCommandHeader>
+            <CATCommandHeader ID="LockUnlockSectionHdr" ClassName="DS/DMUSection/DMULockUnlockSection" ResourceFile="DMUBaseCommands/3DPlayPro" HelpResourceFile="DMUSection/DMUSection" Behavior="CATAfrHeaderCheck" />
+            <CATCommandHeader ID="CATWebUXPreferencesHdr" ClassName="DS/CATWebUXPreferences/CATWebUXPreferencesCmd" ResourceFile="CATWebUXPreferences/CATWebUXPreferences"    HelpResourceFile = "CATWebUXPreferences/CATWebUXPreferences" />
+
+
+            <!--header simulation-->
+            <CATCommandHeader ID = "CATSPYAnimateCmdHdr"         ClassName = "DS/SPYUI/commands/CATSPYAnimateCmd"         ResourceFile = "SPYUI/SimulationPlayer" HelpResourceFile = "SPYUI/SimulationPlayerWeb_Help" />
+            <CATCommandHeader ID = "CATSPYMSRAccessCmdHdr"       ClassName = "DS/SPYUI/commands/CATSPYMSRAccessCmd"       ResourceFile = "SPYUI/SimulationPlayer" HelpResourceFile = "SPYUI/SimulationPlayerWeb_Help" />
+            <CATCommandHeader ID = "CATSPYHideShowLegendCmdHdr"  ClassName = "DS/SPYUI/commands/CATSPYHideShowLegendCmd"  ResourceFile = "SPYUI/SimulationPlayer" HelpResourceFile = "SPYUI/SimulationPlayerWeb_Help" />
+            <CATCommandHeader ID = "CATSPYShowHideExtremaCmdHdr" ClassName = "DS/SPYUI/commands/CATSPYShowHideExtremaCmd" ResourceFile = "SPYUI/SimulationPlayer" HelpResourceFile = "SPYUI/SimulationPlayerWeb_Help" />
+
+        </CATCmdHeadersList>
+    </Template>
+
+    <Template syp:name="3DPlayReviewExperienceAccess" Target="CATCmdWorkbench">
+        <CATCmdWorkbench Name="3DPlayReviewExperienceWorkbench">
+            <CATCmdContainer Name="Fixed Area" RepresentationType="AfrActionBarFixedSection">
+                <CATCmdStarter Name="CATWebUXSlideShowHdrStr" Command="CATWebUXSlideShowHdr" />
+                <CATCmdSeparator Name = "VisuMode_Separator"/>
+                <CATCmdContainer Name = "Share" Visibility = "1" RepresentationType="AfrActionBarDropDown">
+                    <CATCmdStarter Name = "ShareTo3DSwYm"  Command = "ShareTo3DSwYm" />
+                    <CATCmdStarter Name = "ShareDownload"  Command = "ShareDownload" />
+                    <CATCmdStarter Name = "SharePrint"  Command = "SharePrint" />
+                </CATCmdContainer>
+            </CATCmdContainer>
+
+            <!-- Simulation -->
+            <CATCmdContainer Name="MSRSection" RepresentationType="AfrActionBarSection">
+                <CATCmdStarter Name="MSR_Animate" Command="CATSPYAnimateCmdHdr"/>
+                <CATCmdStarter Name="MSR_ChooseContent" Command="CATSPYMSRAccessCmdHdr"/>
+                <CATCmdStarter Name="MSR_ToggleExtrema" Command="CATSPYShowHideExtremaCmdHdr"/>
+                <CATCmdStarter Name="MSR_ToggleLegend" Command="CATSPYHideShowLegendCmdHdr"/>
+            </CATCmdContainer>
+
+            <CATCmdContainer Name = "SectionViews" Visibility = "1" RepresentationType="AfrActionBarSection">
+                <CATCmdStarter Name="DMUSwitch3DMarkersResponsiveDisplayStr" Command="DMUSwitch3DMarkersResponsiveDisplayHdr" />
+                <CATCmdStarter Name = "VisuReframeViewStr"       Command = "VisuReframeView" />
+                <CATCmdStarter Name = "VisuPanViewStr"           Command = "VisuPanView" />
+                <CATCmdStarter Name = "VisuRotateViewStr"        Command = "VisuRotateView" />
+                <CATCmdStarter Name = "VisuZoomViewStr"          Command = "VisuZoomView" />
+                <CATCmdStarter Name = "ViewSelector"            Command = "ViewSelector" />
+                <CATCmdStarter Name="VisuViewPanelCommand" Command="VisuViewPanelCommand" />
+                <CATCmdSeparator Name="RSP_Separator"/>
+                <CATCmdStarter Name = "FlyWalkStr" Command="FlyWalkCmd"/>
+                <CATCmdSeparator Name="RSP_Separator2"/>
+                <CATCmdStarter Name="RightSidePanel" Command="RightSidePanel" />
+            </CATCmdContainer>
+
+            <CATCmdContainer Name = "Tools" Visibility = "1" RepresentationType="AfrActionBarSection">
+                <CATCmdStarter Name = "Measure"                 Command = "measure2CmdHdr" />
+                <CATCmdContainer Name = "Section" Visibility = "1" RepresentationType="AfrActionBarDropDown">
+                    <CATCmdStarter Name = "Section"               Command = "section2CmdHdr" />
+                    <CATCmdStarter Name="LockUnlockSection" Command="LockUnlockSectionHdr" />
+                </CATCmdContainer>
+                <CATCmdSeparator Name = "Markup_Separator"/>
+                <CATCmdStarter Name = "CATWebUXPreferencesStr"                 Command = "CATWebUXPreferencesHdr" />
+            </CATCmdContainer>
+
+        </CATCmdWorkbench>
+    </Template>
+
+</Styles>

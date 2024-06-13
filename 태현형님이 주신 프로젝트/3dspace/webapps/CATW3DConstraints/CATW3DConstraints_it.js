@@ -1,0 +1,1 @@
+define("DS/CATW3DConstraints/CATW3DConstraints_it",{});define("DS/CATW3DConstraints/assets/nls/CATW3DConstraintsView",{cstCoincidence:"Coincidenza",cstContact:"Contatto",plane:"Piano",sidePanel:"Affianca alternative"});

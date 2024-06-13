@@ -1,0 +1,151 @@
+@keyframes traceModeDataLinkOn {
+  100% {
+    stroke: #009688; } }
+
+@keyframes traceModeDataLinkOff {
+  0% {
+    stroke: #009688; }
+
+  100% {
+    stroke: #b2dfdb; } }
+
+@keyframes traceModeDataLinkCastLevelOn {
+  100% {
+    fill: #009688;
+    stroke: #009688; } }
+
+@keyframes traceModeDataLinkCastLevelOff {
+  0% {
+    fill: #009688;
+    stroke: #009688; }
+
+  100% {
+    fill: #b2dfdb;
+    stroke: #b2dfdb; } }
+
+/* Data Link style configuration */
+.sch-data-link {
+  /* Manage minimized data link display and show full link on hover */ }
+  .sch-data-link.minimized .sch-data-link-path, .sch-data-link.minimized .sch-data-link-dottedpath, .sch-data-link.minimized .sch-data-link-castlevel, .sch-data-link.minimized .sch-link-path-invalid {
+    display: none; }
+  .sch-data-link.minimized:hover .sch-data-link-path, .sch-data-link.minimized:hover .sch-data-link-dottedpath, .sch-data-link.minimized:hover .sch-data-link-castlevel, .sch-data-link.minimized.sch-link-highlight .sch-data-link-path, .sch-data-link.minimized.sch-link-highlight .sch-data-link-dottedpath, .sch-data-link.minimized.sch-link-highlight .sch-data-link-castlevel {
+    display: inline; }
+  .sch-data-link .sch-data-link-castlevel {
+    cursor: help; }
+    .sch-data-link .sch-data-link-castlevel .sch-data-link-castlevelbackground {
+      fill: white; }
+    .sch-data-link .sch-data-link-castlevel .sch-data-link-castlevelicon {
+      stroke: #77797c;
+      fill: #b4b6ba; }
+  .sch-data-link.sch-trace-done .sch-data-link-path, .sch-data-link.sch-trace-done .sch-data-link-dottedpath {
+    stroke: #b2dfdb; }
+  .sch-data-link.sch-trace-done .sch-data-link-castlevel .sch-data-link-castlevelicon {
+    stroke: #b2dfdb;
+    fill: #b2dfdb; }
+  .sch-data-link.sch-trace-done.sch-trace-on .sch-data-link-path, .sch-data-link.sch-trace-done.sch-trace-on .sch-data-link-dottedpath {
+    animation-duration: 0.2s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+    animation-name: traceModeDataLinkOn; }
+  .sch-data-link.sch-trace-done.sch-trace-on .sch-data-link-castlevel .sch-data-link-castlevelicon {
+    animation-duration: 0.2s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+    animation-name: traceModeDataLinkCastLevelOn; }
+  .sch-data-link.sch-trace-done.sch-trace-off .sch-data-link-path, .sch-data-link.sch-trace-done.sch-trace-off .sch-data-link-dottedpath {
+    animation-duration: 0.2s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+    animation-name: traceModeDataLinkOff; }
+  .sch-data-link.sch-trace-done.sch-trace-off .sch-data-link-castlevel .sch-data-link-castlevelicon {
+    animation-duration: 0.2s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+    animation-name: traceModeDataLinkCastLevelOff; }
+  .sch-data-link.sch-link-invalid .sch-data-link-path {
+    stroke: #ff6464;
+    stroke-dasharray: 6px 2px; }
+  .sch-data-link.sch-link-invalid .sch-data-link-dottedpath {
+    stroke: #ff6464; }
+  .sch-data-link.sch-link-invalid .sch-link-path-invalid {
+    fill: none;
+    stroke: #ff6464;
+    stroke-opacity: 0;
+    stroke-width: 1px; }
+  .sch-data-link.sch-link-invalid .sch-data-link-castlevel .sch-data-link-castlevelicon {
+    stroke: #844138;
+    fill: #ff6464; }
+  .sch-data-link.sch-link-invalid .sch-data-link-minimizedpath {
+    stroke: #ff6464;
+    fill: #ff6464; }
+  .sch-data-link.sch-link-invalid:hover .sch-data-link-path, .sch-data-link.sch-link-invalid:hover .sch-link-path-invalid, .sch-data-link.sch-link-invalid.sch-link-highlight .sch-data-link-path, .sch-data-link.sch-link-invalid.sch-link-highlight .sch-link-path-invalid {
+    stroke: #ea4f37;
+    stroke-width: 4px; }
+  .sch-data-link.sch-link-invalid:hover .sch-data-link-minimizedpath, .sch-data-link.sch-link-invalid.sch-link-highlight .sch-data-link-minimizedpath {
+    stroke: #ea4f37;
+    stroke-width: 4px;
+    fill: #ea4f37; }
+  .sch-data-link.sch-link-invalid:hover .sch-data-link-dottedpath, .sch-data-link.sch-link-invalid.sch-link-highlight .sch-data-link-dottedpath {
+    stroke: #ea4f37; }
+  .sch-data-link.sch-link-invalid:hover .sch-data-link-castlevel .sch-data-link-castlevelicon, .sch-data-link.sch-link-invalid.sch-link-highlight .sch-data-link-castlevel .sch-data-link-castlevelicon {
+    stroke: #844138;
+    fill: #ea4f37; }
+  .sch-data-link.sch-link-invalid.selected .sch-data-link-path, .sch-data-link.sch-link-invalid.selected .sch-link-path-invalid {
+    stroke: #ff9696;
+    stroke-width: 1px; }
+  .sch-data-link.sch-link-invalid.selected .sch-data-link-minimizedpath {
+    stroke: #ff9696;
+    fill: #ff9696; }
+  .sch-data-link.sch-link-invalid.selected .sch-data-link-dottedpath {
+    stroke: #ff9696; }
+  .sch-data-link.sch-link-invalid.selected .sch-data-link-castlevel .sch-data-link-castlevelicon {
+    stroke: #844138;
+    fill: #ff9696; }
+  .sch-data-link:hover .sch-data-link-path, .sch-data-link.sch-link-highlight .sch-data-link-path {
+    stroke: #368ec4;
+    stroke-width: 4px; }
+  .sch-data-link:hover .sch-data-link-dottedpath, .sch-data-link.sch-link-highlight .sch-data-link-dottedpath {
+    stroke: #368ec4; }
+  .sch-data-link:hover .sch-data-link-castlevel .sch-data-link-castlevelicon, .sch-data-link.sch-link-highlight .sch-data-link-castlevel .sch-data-link-castlevelicon {
+    fill: #368ec4;
+    stroke: #005686; }
+  .sch-data-link:hover .sch-data-link-minimizedpath, .sch-data-link.sch-link-highlight .sch-data-link-minimizedpath {
+    stroke: #368ec4;
+    stroke-width: 4px;
+    fill: #368ec4; }
+    .sch-data-link:hover .sch-data-link-minimizedpath > :not(line), .sch-data-link.sch-link-highlight .sch-data-link-minimizedpath > :not(line) {
+      display: none; }
+  .sch-data-link.selected .sch-data-link-path {
+    stroke: #31afff;
+    stroke-width: 1px; }
+  .sch-data-link.selected .sch-data-link-dottedpath {
+    stroke: #31afff; }
+  .sch-data-link.selected .sch-data-link-castlevel .sch-data-link-castlevelicon {
+    fill: #31afff;
+    stroke: #368ec4; }
+  .sch-data-link.selected .sch-data-link-minimizedpath {
+    stroke: #31afff;
+    stroke-width: 1px;
+    fill: #31afff; }
+  .sch-data-link.selected:hover .sch-data-link-path, .sch-data-link.selected:hover .sch-data-link-minimizedpath {
+    stroke-width: 4px; }
+
+.sch-data-link-path {
+  stroke: #b4b6ba;
+  stroke-width: 1px;
+  fill: none; }
+  .sch-data-link-path.temp {
+    stroke-dasharray: 6px, 6px; }
+
+.sch-data-link-dottedpath {
+  stroke: #b4b6ba;
+  stroke-width: 3px;
+  stroke-linecap: round;
+  stroke-dasharray: 0px, 50px;
+  stroke-dashoffset: 2px;
+  fill: none; }
+
+.sch-data-link-minimizedpath {
+  stroke: #b4b6ba;
+  stroke-width: 1px;
+  fill: #b4b6ba; }

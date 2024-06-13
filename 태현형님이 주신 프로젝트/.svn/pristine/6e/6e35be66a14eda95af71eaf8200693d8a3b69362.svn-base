@@ -1,0 +1,40 @@
+<!-- numeric.js & num_util test example. Author: qif  -->
+<html>
+<head>
+<script src="../../../../../../numeric.js-1.2.6/numeric-1.2.6.js"></script>
+<script src="../../num_util.js"></script>
+</head>
+<body> 
+<div id="out"></div>
+<script> 
+var s = document.getElementById("out");
+s.innerHTML += "";
+s.innerHTML +=
+"<samp>"+
+"   A = RQ <br/>"+ 
+"</samp>"  
+  var Arow = [[1,1,0],[1,0,1],[0,1,1]];
+  var Acol = numeric.transpose(Arow);
+  s.innerHTML  += "<br/>A="+M2DtoTable(Arow); 
+  var sol = getRQ(Acol);
+  var Q = sol["Q"], R = sol["R"];
+  s.innerHTML  += "<br/>R="+ColMtoTable(R);  
+  var RQ = numeric.dot(R,Q);
+  s.innerHTML  += "<br/>RQ="+M2DtoTable(RQ);    
+  
+  var Arow = [[12,-51,4],[6,167,-68],[-4,24,-41]];
+  var Acol = numeric.transpose(Arow);
+  s.innerHTML  += "<br/>A="+M2DtoTable(Arow); 	
+  var sol = getRQ(Acol);
+  var Q = sol["Q"];
+  s.innerHTML  += "<br/>Q="+ColMtoTable(Q);
+    
+  R = sol["R"];
+  s.innerHTML  += "<br/>R="+ColMtoTable(R);  
+  var RQ = numeric.dot(R,Q);
+  s.innerHTML  += "<br/>RQ="+M2DtoTable(RQ);      
+</script>
+ 
+</body>
+</html>
+

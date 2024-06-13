@@ -1,0 +1,65 @@
+{
+  "schema": {
+    "type": "object",
+    "required": [
+      "ds3DSearchProp"
+    ],
+    "properties": {
+      "ds3DSearchProp": {
+        "type": "string",
+        "title": "Project",
+        "x-display": "custom-ds-3dsearch-input",
+        "x-props": {
+          "serviceName": "3dplan",
+          "servicePath": "v1/invoke/dsxplan:exportJSON",
+          "searchPrecondition": "([ds6w:type]:\"dsplan:Project\")"
+        }
+      },
+      "MemberSection": {
+        "type": "object",
+        "title": "Members",
+        "properties": {
+          "LeadersList": {
+            "type": "array",
+            "title": "Leader",
+            "items": {
+              "type": "string"
+            },
+            "x-display": "custom-ds-roles-input",
+            "x-props": {
+              "placeholder": "",
+              "helper": ""
+            }
+          },
+          "AuthorsList": {
+            "type": "array",
+            "title": "Author",
+            "items": {
+              "type": "string"
+            },
+            "x-display": "custom-ds-roles-input",
+            "x-props": {
+              "placeholder": "",
+              "helper": ""
+            }
+          },
+          "ViewersList": {
+            "type": "array",
+            "title": "Viewer",
+            "items": {
+              "type": "string"
+            },
+            "x-display": "custom-ds-roles-input",
+            "x-props": {
+              "placeholder": "",
+              "helper": ""
+            }
+          }
+        }
+      }
+    }
+  },
+  "options": {
+    "editMode": "inline"
+  }
+}

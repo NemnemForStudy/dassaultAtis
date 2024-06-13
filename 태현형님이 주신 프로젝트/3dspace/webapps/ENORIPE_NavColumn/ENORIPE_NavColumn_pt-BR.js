@@ -1,0 +1,1 @@
+define("DS/ENORIPE/ENORIPE_NavColumn_pt-BR",{});define("DS/ENORIPE_NavColumn/assets/nls/ENORIPE_NavColumn",{hasNONPS:"Tem Objetos Relacionados"});

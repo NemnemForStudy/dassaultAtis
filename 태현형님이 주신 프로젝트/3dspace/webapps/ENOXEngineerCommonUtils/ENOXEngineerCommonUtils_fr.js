@@ -1,0 +1,1 @@
+define("DS/ENOXEngineerCommonUtils/ENOXEngineerCommonUtils_fr",{});define("DS/ENOXEngineerCommonUtils/assets/nls/XENCommonNls",{loading:"Chargement...","eng.ui.button.ok":"OK","eng.ui.button.cancel":"Annuler","app.failure":"L'app a rencontré une erreur inattendue. Contactez votre administrateur pour obtenir de l'aide."});

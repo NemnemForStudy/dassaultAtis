@@ -1,0 +1,1 @@
+define("DS/CAT3DWInfraWizard/CAT3DWInfraWizard_ru",{});define("DS/CAT3DWInfraWizard/assets/nls/CAT3DWWizardStep",{validateBtnLabel:"Далее",cancelBtnLabel:"Назад"});

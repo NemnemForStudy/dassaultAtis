@@ -1,0 +1,1 @@
+define("DS/MPFMiniCartComponent/MPFMiniCartComponent_ko",{});define("DS/MPFMiniCartComponent/assets/nls/MiniCartComponent",{items:"{itemCount}개 아이템",viewCart:"카트 보기"});

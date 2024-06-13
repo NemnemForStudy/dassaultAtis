@@ -1,0 +1,379 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "CSIParametersJSONSchema.json",
+  "title": "CSIParametersJSONSchema",
+  "type": "array",
+  "description": "JSON Schema of a Parameters",
+  "minItems": 1,
+  "uniqueItems": true,
+  "definitions": {
+    "label": {
+      "type": "string",
+      "pattern": "^[a-z][A-Za-z0-9]*$",
+      "description": "Label of the Property"
+    },
+    "desc": {
+      "type": "string",
+      "description": "Associated description"
+    },
+    "basic": {
+      "type": "string",
+      "enum": [
+        "string",
+        "int8",
+        "uint8",
+        "int16",
+        "uint16",
+        "int32",
+        "uint32",
+        "int64",
+        "uint64",
+        "float",
+        "double",
+        "bool",
+        "buffer"
+      ]
+    },
+    "type": {
+      "type": "string",
+      "minLength": 1
+    },
+    "file": {
+      "type": "string",
+      "description": "Parameters File -Deprecated-",
+      "minLength": 1
+    },
+    "byteLimit": {
+      "type": "integer",
+      "description": "Maximum allowed binary size"
+    },
+    "charLimit": {
+      "type": "integer",
+      "description": "Maximum allowed number of characters"
+    },
+    "enum": {
+      "type": "array",
+      "description": "Enum of allowed values for string Properties",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "optional": {
+      "type": "object",
+      "description": "Optional properties",
+      "additionalProperties": false,
+      "properties": {
+        "isOptional": {
+          "type": "boolean",
+          "description": "Define is a Property is optional"
+        },
+        "default_value": {
+          "type": "string",
+          "description": "Default value of the Property"
+        },
+        "desc": {
+          "$ref": "#/definitions/desc"
+        }
+      },
+      "oneOf": [
+        {
+          "required": [
+            "isOptional"
+          ],
+          "not": {
+            "required": [
+              "default_value"
+            ]
+          }
+        },
+        {
+          "required": [
+            "default_value"
+          ],
+          "not": {
+            "required": [
+              "isOptional"
+            ]
+          }
+        },
+        {
+          "required": [
+            "default_value",
+            "isOptional"
+          ],
+          "dependencies": {
+            "default_value": {
+              "properties": {
+                "isOptional": {
+                  "enum": [
+                    true
+                  ]
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "nonDefaultValueOptional": {
+      "type": "object",
+      "description": "Optional properties with default value",
+      "additionalProperties": false,
+      "required": [
+        "isOptional"
+      ],
+      "properties": {
+        "isOptional": {
+          "type": "boolean",
+          "description": "Define is a Property is optional"
+        },
+        "desc": {
+          "$ref": "#/definitions/desc"
+        }
+      }
+    },
+    "property": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "label": {
+          "$ref": "#/definitions/label"
+        },
+        "desc": {
+          "$ref": "#/definitions/desc"
+        },
+        "basic": {
+          "$ref": "#/definitions/basic",
+          "description": "A basic Property"
+        },
+        "basicArray": {
+          "$ref": "#/definitions/basic",
+          "description": "A basic array Property"
+        },
+        "parameters": {
+          "$ref": "#",
+          "description": "Inline Parameters Property"
+        },
+        "parametersArray": {
+          "$ref": "#",
+          "description": "Inline Parameters array Property"
+        },
+        "type": {
+          "$ref": "#/definitions/type",
+          "description": "A Type Property"
+        },
+        "typeArray": {
+          "$ref": "#/definitions/type",
+          "description": "A Type array Property"
+        },
+        "byteLimit": {
+          "$ref": "#/definitions/byteLimit"
+        },
+        "charLimit": {
+          "$ref": "#/definitions/charLimit"
+        },
+        "enum": {
+          "$ref": "#/definitions/enum"
+        },
+        "optional": {
+          "$ref": "#/definitions/optional"
+        }
+      },
+      "dependencies": {
+        "byteLimit": {
+          "properties": {
+            "basic": {
+              "enum": [
+                "buffer",
+                "string"
+              ]
+            }
+          }
+        },
+        "charLimit": {
+          "properties": {
+            "basic": {
+              "enum": [
+                "string"
+              ]
+            }
+          }
+        },
+        "enum": {
+          "properties": {
+            "basic": {
+              "enum": [
+                "string"
+              ]
+            }
+          }
+        }
+      },
+      "oneOf": [
+        {
+          "required": [
+            "label",
+            "basic"
+          ]
+        },
+        {
+          "required": [
+            "label",
+            "basicArray"
+          ]
+        },
+        {
+          "required": [
+            "label",
+            "parameters"
+          ]
+        },
+        {
+          "required": [
+            "label",
+            "parametersArray"
+          ]
+        },
+        {
+          "required": [
+            "label",
+            "type"
+          ]
+        },
+        {
+          "required": [
+            "label",
+            "typeArray"
+          ]
+        }
+      ]
+    },
+    "nonDefaultValueProperty": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "label": {
+          "$ref": "#/definitions/label"
+        },
+        "desc": {
+          "$ref": "#/definitions/desc"
+        },
+        "basic": {
+          "$ref": "#/definitions/basic",
+          "description": "A basic Property"
+        },
+        "basicArray": {
+          "$ref": "#/definitions/basic",
+          "description": "A basic array Property"
+        },
+        "parameters": {
+          "$ref": "#",
+          "description": "Inline Parameters Property"
+        },
+        "parametersArray": {
+          "$ref": "#",
+          "description": "Inline Parameters array Property"
+        },
+        "type": {
+          "$ref": "#/definitions/type",
+          "description": "A Type Property"
+        },
+        "typeArray": {
+          "$ref": "#/definitions/type",
+          "description": "A Type array Property"
+        },
+        "byteLimit": {
+          "$ref": "#/definitions/byteLimit"
+        },
+        "charLimit": {
+          "$ref": "#/definitions/charLimit"
+        },
+        "enum": {
+          "$ref": "#/definitions/enum"
+        },
+        "optional": {
+          "$ref": "#/definitions/nonDefaultValueOptional"
+        }
+      },
+      "dependencies": {
+        "byteLimit": {
+          "properties": {
+            "basic": {
+              "enum": [
+                "buffer",
+                "string"
+              ]
+            }
+          }
+        },
+        "charLimit": {
+          "properties": {
+            "basic": {
+              "enum": [
+                "string"
+              ]
+            }
+          }
+        },
+        "enum": {
+          "properties": {
+            "basic": {
+              "enum": [
+                "string"
+              ]
+            }
+          }
+        }
+      },
+      "oneOf": [
+        {
+          "required": [
+            "label",
+            "basic"
+          ]
+        },
+        {
+          "required": [
+            "label",
+            "basicArray"
+          ]
+        },
+        {
+          "required": [
+            "label",
+            "parameters"
+          ]
+        },
+        {
+          "required": [
+            "label",
+            "parametersArray"
+          ]
+        },
+        {
+          "required": [
+            "label",
+            "type"
+          ]
+        },
+        {
+          "required": [
+            "label",
+            "typeArray"
+          ]
+        }
+      ]
+    },
+    "nonDefaultValueParameters": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/definitions/nonDefaultValueProperty"
+      }
+    }
+  },
+  "items": {
+    "$ref": "#/definitions/property"
+  }
+}

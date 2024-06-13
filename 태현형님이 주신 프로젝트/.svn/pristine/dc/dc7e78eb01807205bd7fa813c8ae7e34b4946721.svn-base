@@ -1,0 +1,380 @@
+[
+	{
+		"ParsingVersion": "2.0",
+		"Corpus": [
+			{
+				"version": "2.0",
+				"ArchiCompatiableVersions": [
+					"VERSION_4"
+				],
+				"CorpusCompatibilities": [
+				],
+				"DeclarativeTypes": [
+					{
+						"ConceptualName": "PLMEntity",
+						"IsAbstract": true,
+						"Attributes": [
+							{
+								"ConceptualName": "title",
+								"State": "MANDATORY",
+								"ModelerMapping": [
+									{
+										"Modeler": "_3DSpaceDB",
+										"Mapping": "V_Name"
+									},
+									{
+										"Modeler": "_Index",
+										"Mapping": "bo.PLMEntity.V_Name"
+									}
+								]
+							},
+							{
+								"ConceptualName": "name",
+								"ModelerMapping": [
+									{
+										"Modeler": "_3DSpaceDB",
+										"Mapping": "PLM_ExternalID"
+									},
+									{
+										"Modeler": "_Index",
+										"Mapping": "bo.PLMEntity.PLM_ExternalID"
+									}
+								]
+							},
+							{
+								"ConceptualName": "description",
+								"ModelerMapping": [
+									{
+										"Modeler": "_3DSpaceDB",
+										"Mapping": "V_description"
+									},
+									{
+										"Modeler": "_Index",
+										"Mapping": "bo.PLMEntity.V_description"
+									}
+								]
+							},
+							{
+								"ConceptualName": "state",
+								"ModelerMapping": [
+									{
+										"Modeler": "_3DSpaceDB",
+										"Mapping": "current"
+									}
+								]
+							}
+						]
+					},
+					{
+						"ConceptualName": "PLMInstance",
+						"IsAbstract": true,
+						"Attributes": [
+							{
+								"ConceptualName": "title",
+								"ModelerMapping": [
+									{
+										"Modeler": "_3DSpaceDB",
+										"Mapping": "PLMInstance.PLM_ExternalID"
+									},
+									{
+										"Modeler": "_Index",
+										"Mapping": "ro.PLMInstance.PLM_ExternalID"
+									}
+								]
+							}
+						]
+					},
+					{
+						"ConceptualName": "dswo:WorkOrderStep",
+						"ParentType" : "PLMEntity",
+						"IsAbstract": true,
+						"Attributes": [
+							{
+								"ConceptualName": "aggregatingReference",
+								"State": "MANDATORY",
+								"Checkers": [
+									{
+										"Modeler": "_3DSpaceDB",
+										"Class": "com.dassault_systemes.delmia.crud.corpus.tools.checkers.AttributeNotNullAndUniqueValueChecker"
+									}
+								],
+								"Setters": [
+									{
+										"Modeler": "_3DSpaceDB",
+										"Class": "com.dassault_systemes.delmia.crud.workorder.attributes.setters.AttributeWOStepInstanceCreationSetter"
+									}
+								],
+								"Getters": [
+									{
+										"Modeler": "_3DSpaceDB",
+										"Class": "com.dassault_systemes.delmia.crud.workorder.attributes.getters.AttributeWOStepParentWOGetter"
+									}
+								]
+							}
+						]
+					},
+					{
+						"ConceptualName": "dswo:WorkOrderStepInstance",
+						"ParentType" : "PLMInstance",
+						"ModelerMapping": [
+							{
+								"Modeler": "_3DSpaceDB",
+								"Mapping": "DELLmiOperationInstance",
+								"Behavior": "INSTANCE"
+							},
+							{
+								"Modeler": "_Index",
+								"Mapping": "DELLmiOperationInstance",
+								"Behavior": "INSTANCE"
+							}
+						]
+					},
+					{
+						"ConceptualName": "GeneralOperationReference",
+						"ParentType": "dswo:WorkOrderStep",
+						"ModelerMapping": [
+							{
+								"Modeler": "_3DSpaceDB",
+								"Mapping": "DELLmiGeneralOperationReference",
+								"Behavior": "REFERENCE"
+							},
+							{
+								"Modeler": "_Index",
+								"Mapping": "DELLmiGeneralOperationReference",
+								"Behavior": "REFERENCE"
+							}
+						],
+						"Attributes": [
+							{
+								"ConceptualName": "materialScrap",
+								"ModelerMapping": [
+									{
+										"Modeler": "_3DSpaceDB",
+										"Mapping": "DELLmiGeneralOperationReference.V_MaterialScrap"
+									},
+									{
+										"Modeler": "_Index",
+										"Mapping": "bo.DELLmiGeneralOperationReference.V_MaterialScrap"
+									}
+								]
+							},
+							{
+								"ConceptualName": "ganttimeSolver",
+								"ModelerMapping": [
+									{
+										"Modeler": "_3DSpaceDB",
+										"Mapping": "DELLmiGeneralOperationReference.V_UseGanttTimeSolver"
+									},
+									{
+										"Modeler": "_Index",
+										"Mapping": "bo.DELLmiGeneralOperationReference.V_UseGanttTimeSolver"
+									}
+								]
+							},
+							{
+								"ConceptualName": "manageVariant",
+								"ModelerMapping": [
+									{
+										"Modeler": "_3DSpaceDB",
+										"Mapping": "DELLmiGeneralOperationReference.V_ManageVariant"
+									},
+									{
+										"Modeler": "_Index",
+										"Mapping": "bo.DELLmiGeneralOperationReference.V_ManageVariant"
+									}
+								]
+							}
+						]
+					},
+					{
+						"ConceptualName": "PunctualOperationReference",
+						"ParentType": "dswo:WorkOrderStep",
+						"ModelerMapping": [
+							{
+								"Modeler": "_3DSpaceDB",
+								"Mapping": "DELLmiPunctualOperationReference",
+								"Behavior": "REFERENCE"
+							},
+							{
+								"Modeler": "_Index",
+								"Mapping": "DELLmiPunctualOperationReference",
+								"Behavior": "REFERENCE"
+							}
+						],
+						"Attributes": [
+							{
+								"ConceptualName": "timePerFastening",
+								"ModelerMapping": [
+									{
+										"Modeler": "_3DSpaceDB",
+										"Mapping": "DELLmiPunctualOperationReference.V_TimePerFastening"
+									},
+									{
+										"Modeler": "_Index",
+										"Mapping": "bo.DELLmiPunctualOperationReference.V_TimePerFastening"
+									}
+								]
+							}
+						]
+					},
+					{
+						"ConceptualName": "CurveOperationReference",
+						"ParentType": "dswo:WorkOrderStep",
+						"ModelerMapping": [
+							{
+								"Modeler": "_3DSpaceDB",
+								"Mapping": "DELLmiCurveOperationReference",
+								"Behavior": "REFERENCE"
+							},
+							{
+								"Modeler": "_Index",
+								"Mapping": "DELLmiCurveOperationReference",
+								"Behavior": "REFERENCE"
+							}
+						],
+						"Attributes": [
+							{
+								"ConceptualName": "fasteningRate",
+								"ModelerMapping": [
+									{
+										"Modeler": "_3DSpaceDB",
+										"Mapping": "DELLmiCurveOperationReference.V_FasteningRate"
+									},
+									{
+										"Modeler": "_Index",
+										"Mapping": "bo.DELLmiCurveOperationReference.V_FasteningRate"
+									}
+								]
+							}
+						]
+					},
+					{
+						"ConceptualName": "LoadingOperationReference",
+						"ParentType": "dswo:WorkOrderStep",
+						"ModelerMapping": [
+							{
+								"Modeler": "_3DSpaceDB",
+								"Mapping": "DELLmiLoadingOperationReference",
+								"Behavior": "REFERENCE"
+							},
+							{
+								"Modeler": "_Index",
+								"Mapping": "DELLmiLoadingOperationReference",
+								"Behavior": "REFERENCE"
+							}
+						],
+						"Attributes": [
+							{
+								"ConceptualName": "materialScrap",
+								"ModelerMapping": [
+									{
+										"Modeler": "_3DSpaceDB",
+										"Mapping": "DELLmiLoadingOperationReference.V_MaterialScrap"
+									},
+									{
+										"Modeler": "_Index",
+										"Mapping": "bo.DELLmiLoadingOperationReference.V_MaterialScrap"
+									}
+								]
+							}
+						]
+					},
+					{
+						"ConceptualName": "PickingOperationReference",
+						"ParentType": "dswo:WorkOrderStep",
+						"ModelerMapping": [
+							{
+								"Modeler": "_3DSpaceDB",
+								"Mapping": "DELLmiPickingOperationReference",
+								"Behavior": "REFERENCE"
+							},
+							{
+								"Modeler": "_Index",
+								"Mapping": "DELLmiPickingOperationReference",
+								"Behavior": "REFERENCE"
+							}
+						],
+						"Attributes": [
+							{
+								"ConceptualName": "materialScrap",
+								"ModelerMapping": [
+									{
+										"Modeler": "_3DSpaceDB",
+										"Mapping": "DELLmiPickingOperationReference.V_MaterialScrap"
+									},
+									{
+										"Modeler": "_Index",
+										"Mapping": "bo.DELLmiPickingOperationReference.V_MaterialScrap"
+									}
+								]
+							}
+						]
+					},
+					{
+						"ConceptualName": "UnloadingOperationReference",
+						"ParentType": "dswo:WorkOrderStep",
+						"ModelerMapping": [
+							{
+								"Modeler": "_3DSpaceDB",
+								"Mapping": "DELLmiUnloadingOperationReference",
+								"Behavior": "REFERENCE"
+							},
+							{
+								"Modeler": "_Index",
+								"Mapping": "DELLmiUnloadingOperationReference",
+								"Behavior": "REFERENCE"
+							}
+						]
+					},
+					{
+						"ConceptualName": "RemoveMaterialOpReference",
+						"ParentType": "dswo:WorkOrderStep",
+						"ModelerMapping": [
+							{
+								"Modeler": "_3DSpaceDB",
+								"Mapping": "DELLmiRemoveMaterialOpReference",
+								"Behavior": "REFERENCE"
+							},
+							{
+								"Modeler": "_Index",
+								"Mapping": "DELLmiRemoveMaterialOpReference",
+								"Behavior": "REFERENCE"
+							}
+						]
+					},
+					{
+						"ConceptualName": "TransferOperationReference",
+						"ParentType": "dswo:WorkOrderStep",
+						"ModelerMapping": [
+							{
+								"Modeler": "_3DSpaceDB",
+								"Mapping": "DELLmiTransferOperationReference",
+								"Behavior": "REFERENCE"
+							},
+							{
+								"Modeler": "_Index",
+								"Mapping": "DELLmiTransferOperationReference",
+								"Behavior": "REFERENCE"
+							}
+						],
+						"Attributes": [
+							{
+								"ConceptualName": "capacity",
+								"ModelerMapping": [
+									{
+										"Modeler": "_3DSpaceDB",
+										"Mapping": "DELLmiTransferOperationReference.V_Capacity"
+									},
+									{
+										"Modeler": "_Index",
+										"Mapping": "bo.DELLmiTransferOperationReference.V_Capacity"
+									}
+								]
+							}
+						]
+					}
+				]
+			}
+		]
+	}
+]

@@ -1,0 +1,11 @@
+{
+  "version": "1.0.0",
+  "summary": "Mit diesem Block können Sie Ihre Steuerung und den Datenfluss synchronisieren. Der Ausgabesteueranschluss wird aktiviert, sobald alle Eingabesteueranschlüsse aktiviert wurden. Für ein komplexeres Szenario (z. B. mehrmaliges Ausführen dieses Blocks) lesen Sie bitte die untenstehende detaillierte Beschreibung.",
+  "description": "Jeder Eingabesteueranschluss verfügt über einen internen Zähler, der erhöht wird, wenn der Anschluss aktiviert wurde, und verringert wird, wenn der Block über den Ausgabesteueranschluss <doc-ocp-name translate=no>Out</doc-ocp-name> beendet wird. Bei jeder Aktivierung eines Eingabesteueranschlusses wird der Block ausgeführt und nur dann über den Ausgabesteueranschluss <doc-ocp-name translate=no>Out</doc-ocp-name> beendet, wenn alle internen Zähler des Eingabesteueranschlusses zwingend größer als 0 sind.",
+  "controlPorts": {
+    "In1": "löst die Blockausführung aus und erhöht den internen Zähler, der diesem Anschluss zugeordnet ist.",
+    "In2": "löst die Blockausführung aus und erhöht den internen Zähler, der diesem Anschluss zugeordnet ist.",
+    "Out": "ist nur aktiviert, wenn alle internen Zähler des Eingabesteueranschlusses zwingend größer als 0 sind. Dies verringert alle internen Zähler des Eingabesteueranschlusses."
+  },
+  "example": null
+}

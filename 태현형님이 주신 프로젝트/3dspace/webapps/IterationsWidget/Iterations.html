@@ -1,0 +1,880 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8" />
+<!-- Application Metas -->
+<title>Iterations</title>
+ <meta name="autoRefresh" content="0" />
+ <meta http-equiv="cache-control" content="no-cache" />
+	<meta http-equiv="pragma" content="no-cache" />
+	<meta http-equiv="expires" content="0" />
+
+<!-- AMDLoader -->
+<script type="text/javascript" src="../AmdLoader/AmdLoader.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+<!-- UWA -->
+<link rel="stylesheet" type="text/css" href="../c/UWA/assets/css/standalone.css" />
+<script type="text/javascript" src="../c/UWA/js/UWA_Standalone_Alone.js"></script>
+
+<!-- Web Fundamentals -->
+<script type="text/javascript" src="../WebVisualization/WebVisualization.js"></script>
+<script type="text/javascript" src="../WebUX/WebUX.js"></script>
+
+<!-- fullscreen widget :do not use in production -->
+<link rel="stylesheet" type="text/css" href="../Controls/nv-patch.css" />
+<link rel="stylesheet" type="text/css" href="./IterationsWidget.css" />
+
+<script type="text/javascript">
+	// Use iframe to avoid cross domain problem when using CGRViewer in an iframe. 
+	// We use CGRViewer in an iframe to avoid some of its limitations caused by storing data in window, e.g. two CGRViewers cannot function properly in the same page.
+
+    var dependencies = dependencies || [];
+
+	require([   'UWA/Core', 
+                'DS/IterationsWidget/IterationsPlayer',
+				'DS/IterationsWidget/IterationsGrid',
+				'DS/IterationsWidget/Toolbar',
+				'DS/IterationsWidget/IterationsTable',
+				'DS/Controls/Button',
+				'DS/Controls/TooltipModel',
+				'DS/WAFData/WAFData',
+				'DS/WebInWinHelper/WebInWinHelper',
+                'DS/LifecycleServices/LifecycleAlert'
+			].concat(dependencies),
+
+			function(UWA, IterationsPlayer, IterationsGrid, Toolbar, IterationsTable, Button, WUXTooltipModel, WAFData, webinwinHelper, LifecycleAlert) {
+				"use strict";
+
+				function getUrlParamVal(variable) {
+					var query = window.location.search.substring(1);
+					var vars = query.split("&");
+					for (var i = 0; i < vars.length; i++) {
+						var pair = vars[i].split("=");
+						if (pair[0] == variable) {
+							return decodeURIComponent(pair[1]);
+						}
+					}
+					return '';
+				}
+
+				var lang = getUrlParamVal('lang');
+				var nlsJsonPath = 'text!DS/IterationsWidget/assets/nls/IterationsWidget_' + lang + '.json';
+				var NLS = {};
+				require(
+						[ nlsJsonPath ],
+						function(nlsJson) {
+							"use strict";
+							NLS.json = JSON.parse(nlsJson);
+							NLS.get = function(name) {
+								return NLS.json[name];
+							}
+
+							function onLoad() {
+								widget.body.innerHTML = '';
+                                widget.body.classList.add("iterationsBody");
+
+								var oid = getUrlParamVal("objectId");
+								if (oid == null || oid == '') {
+									widget.body.innerHTML = '<label style="font-family: arial; font-size: 13px;">'
+											+ NLS.get("NoInput") + '</label>';
+                                    widget.body.id = "iterationsBody-";
+									return;
+								}
+
+                                widget.body.id = "iterationsBody-" + oid;
+
+                                loadIterations(
+									oid,
+									function onIterationsLoaded(results, isMIB) {
+
+                                        var iterations = [];
+
+                                        results.forEach( result => {
+                                            var iteration = {name: "", date: "", date_ms: 0, cgr: null, modified_by: "", description: "",
+                                                                    id: "", fullcontenturl: "", physicalid: "", iternumber: -1, isMIB: false};
+                                            if (isMIB) {
+                                                iteration.id = oid + "/" + result.id;
+                                                iteration.fullcontenturl = iteration.id;
+                                                iteration.modified_by = result.owner;
+                                                iteration.description = result.comment;
+                                                iteration.date = result.creation;
+                                                let creation_date = new Date(result.creation);
+                                                if (creation_date.toString()==="Invalid Date")
+                                                    console.log("invalid date returned from server: " + result.creation);
+                                                iteration.date_ms = creation_date.getTime();
+                                                iteration.iternumber = parseInt(result.id);
+                                                iteration.isMIB = true;
+                                            }
+                                            /*else if (result.fullcontenturl) {
+                                                iteration.id = result.fullcontenturl;
+                                                iteration.fullcontenturl = result.fullcontenturl;
+                                                iteration.modified_by = result.modified_by;
+                                                iteration.description = result.description;
+                                                iteration.date = result.date;
+                                                iteration.date_ms = result.date_ms;
+                                                iteration.iternumber = parseInt(result.iteration);
+                                                iteration.isMIB = true;
+                                            }*/ else {
+                                                iteration.id = result.id;
+                                                iteration.physicalid = result.physicalid;
+                                                if (result.name)
+                                                    iteration.name = result.name.replace('*(Current State)', NLS.get("LastSavedModelString")),
+                                                iteration.date = result.date;
+                                                iteration.date_ms = result.date_ms;
+                                                iteration.cgr = result.cgr;
+                                            }
+                                            if (!iteration.name) iteration.name = "";
+                                            iterations.push(iteration);
+                                        });
+                                            
+										if (iterations.length == 0) {
+											widget.body.innerHTML = '<label style="font-family: arial; font-size: 13px;">' + NLS.get("NoIteration") + '</label>';
+											return;
+										}
+
+										iterations.sort(function compare(a,b) {
+                                            if (a.isMIB && b.isMIB) {  //case MIB
+												if (a.iternumber < b.iternumber) return -1;
+												if (a.iternumber > b.iternumber) return 1;
+												if (a.sandbox) return 1;
+												if (b.sandbox) return -1;
+												return 0;
+											}
+											if (a.date_ms < b.date_ms) return -1; //case non-MIB
+											if (a.date_ms > b.date_ms) return 1;
+											return 0;
+										});
+
+                                        iterations.forEach( (iteration,index) => { //MIB specific
+                                            if (iteration.isMIB)
+                                                iteration.displayed_iteration = index + 1;
+                                        });
+
+                                        var lastIteration = iterations.slice(-1);
+                                        if (lastIteration.length==1 && lastIteration[0].isMIB) lastIteration[0].isMIBLastIter = true; ////MIB specific: set the last iteration as the one selected
+
+                                        window.iterations = iterations;										
+										window.oid = oid;
+										widget.body.innerHTML = '';
+										buildUI();
+										viewEvenly();
+										widget.body.setAttribute('data-rec-id', 'iterationsBody');
+									}
+                                );
+							}
+
+							function buildUI() {
+								var container = widget.body;
+
+								var atLeastOneWithCGR = false;
+								var iterations = window.iterations;
+								for (var i = 0 ; i < iterations.length; i++) {
+									var iteration = iterations[i];
+									if (iteration.cgr!==undefined&&iteration.cgr!==null)
+										atLeastOneWithCGR = true;
+								}
+
+								// get the socket address
+								// if exsists then it is a web-in-win call
+								var webinwinElement = null;
+								var webinwinAddinmode = null;
+								var addinmode = null;
+								var el = null;
+								try {
+									el = window.frameElement;
+								}
+								catch (ex){
+									// ignore ex here from IE when frameElement is access denied which equals to null from other browsers
+								}
+								
+								if ( typeof el !== undefined && el != null ){
+									webinwinElement = el.dataset.socket;
+									webinwinAddinmode = el.dataset.addinmode;
+									var _isWebInWinODTMode = getUrlParamVal('_isWebInWinODTMode');
+									if ( _isWebInWinODTMode != '' ){
+										webinwinAddinmode = window.parent.addinmode;
+										webinwinElement = window.parent.webinwincom_socket;
+									}
+								}
+								if (webinwinElement) window.webinwinSocket = webinwinElement;
+								if (webinwinAddinmode) {
+									addinmode = webinwinAddinmode;	
+									window.addinmode = addinmode;
+								}
+
+                                if (webinwinElement)
+                                    window.webinwinSocket = window.parent._webinwincom_socket;
+
+                                if (webinwinElement)
+                                    window.oidAlias = window.parent._oidAlias;
+
+                                var isODT = false;
+                                if (webinwinElement && window.parent._isWebInWinODTMode === true) isODT = true;
+
+                                var caseMIB = false;
+                                if (iterations.length>=1&&iterations[0].isMIB) caseMIB = true;
+
+                                var compareBtnNotAuthorized = false;
+                                if (webinwinElement && null == addinmode) {
+                                    var licenseList = [];
+                                    licenseList = window.parent._licenseList;
+                                    if (typeof licenseList !== undefined && licenseList.length > 0) {
+                                        licenseList.forEach(function (object) {
+                                            if (object.license === 'MES.prd' && object.authorized === '0' ||
+                                                object.license === 'HA1.prd' && object.authorized === '0')
+                                                compareBtnNotAuthorized = true;
+                                        });
+                                    }
+                                }
+
+								// Toolbar
+								var headToolbarHeight = 20;
+								
+                                var UIOptions = {
+                                    withIterationsPlayer: false,
+                                    withIterationsTable: false,
+                                    withCompareBtn: false,
+                                    withOpenBtn: false,
+                                    withRestoreBtn: false, //Restore webinwin
+                                    withMIBRestoreBtn: false, //Restore for MIB
+                                };
+
+                                if (atLeastOneWithCGR) UIOptions.withIterationsPlayer = true;
+                                if (!atLeastOneWithCGR) UIOptions.withIterationsTable = true;
+                                if (webinwinElement)   UIOptions.withIterationsTable = true;
+
+                                if (webinwinElement && (addinmode==null || addinmode.toLowerCase()!=='catiav5')) UIOptions.withCompareBtn = true;
+                                if (webinwinElement && (addinmode==null || addinmode.toLowerCase()!=='catiav5')) UIOptions.withOpenBtn = true;
+                                if (webinwinElement && (addinmode==null || addinmode.toLowerCase()!=='catiav5')) UIOptions.withRestoreBtn = true;
+                                if (caseMIB)           UIOptions.withMIBRestoreBtn = true;
+
+								var iterationsToolbar = buildToolbar(container, headToolbarHeight, UIOptions);
+
+                                //D4N 'MES' licesnse disable compare btn
+                                //D4N IR-539779-3DExperienceR2018x
+                                if (compareBtnNotAuthorized) {
+                                    if (window.hasOwnProperty('compareBtn'))
+                                        window.compareBtn.disable();
+                                }
+
+                                var playerContainer = null;
+                                var compareViewContainer = null;
+                                var listContainer = null;
+
+                                if (UIOptions.withIterationsPlayer) {
+                                    // build player container
+                                    playerContainer = new UWA.Element('div', { 'id': 'iterationPlayerContainer' });
+                                    playerContainer.style.position = 'absolute';
+                                    playerContainer.style.width = '100%';
+                                    playerContainer.style.height = 'calc(100% - 22px)';
+                                    if (UIOptions.withIterationsTable)
+                                        playerContainer.style.height = 'calc(50% - 22px)';
+                                    playerContainer.style.top = '22px';
+                                    var player = new IterationsPlayer(window.iterations, true, NLS, lang, webinwinElement, isODT);
+                                    window.iterationsPlayer = player;
+                                    player.inject(playerContainer);
+                                    playerContainer.inject(container);
+                                }
+
+                                if (UIOptions.withIterationsPlayer) {
+                                    // build compare view container
+                                    compareViewContainer = new UWA.Element('div', { 'id': 'iterationCompareViewContainer' });
+                                    //var compareViewContainer = new UWA.Element('div');
+                                    compareViewContainer.style.position = 'absolute';
+                                    compareViewContainer.style.width = '100%';
+                                    compareViewContainer.style.height = 'calc(100% - 22px)';
+                                    if (UIOptions.withIterationsTable)
+                                        compareViewContainer.style.height = 'calc(50% - 22px)';
+                                    compareViewContainer.style.top = '22px';
+                                    //compareViewContainer.id = 'iterationCompareViewContainer';
+                                    compareViewContainer.style.visibility = 'hidden';
+
+                                    // Grid View
+                                    var grid = new IterationsGrid(
+                                        window.iterations,
+                                        headToolbarHeight,
+                                        webinwinElement,
+                                        isODT);
+                                    window.iterationsGrid = grid;
+                                    grid.inject(compareViewContainer);
+                                    compareViewContainer.inject(container);
+                                }
+
+                                // list view
+                                if (UIOptions.withIterationsTable) {
+                                    listContainer = new UWA.Element('div', { 'id': 'iterationslistcontainer' });
+                                    listContainer.style.position = 'absolute';
+                                    listContainer.style.top = '50%';
+                                    listContainer.style.width = '100%';
+                                    if (UIOptions.withIterationsPlayer && (addinmode==null || addinmode.toLowerCase()!=='catiav5'))
+                                        listContainer.style.height = '50%';
+                                    else  if (UIOptions.withIterationsPlayer && addinmode!=null && addinmode.toLowerCase()=='catiav5')
+                                        listContainer.style.height = 'calc(50% - 24px)';
+                                    else {
+                                        listContainer.style.top = '22px';
+                                        listContainer.style.height = 'calc(100% - 22px)';
+                                    }
+
+                                    // build list view
+                                    var options = {
+                                        'parentContainer': listContainer,
+                                        'oid': window.oid,
+                                        'iterations': window.iterations,
+                                        'newGETRequestPromise': newGETRequestPromise
+                                    };
+                                    var listTable = new IterationsTable(NLS,lang, options, isODT);
+                                    window.listTable = listTable;
+                                    listTable.inject(listContainer);
+
+                                    listContainer.inject(container);
+                                }
+
+                                // for CATIA V5
+                                // D4N Build  "Replace" & "Cancel" Buttons
+                                if (null != addinmode && addinmode.toLowerCase() === 'catiav5') {
+                                    var buttonDiv = UWA.Element('div', { 'id': 'restoreButtonDiv' });
+
+                                    window.buttonClose = new Button({
+                                        domId: "idCloseButton",
+                                        label: NLS.get("CATIAV5CancelButton"),
+                                        emphasize: "secondary",
+                                        showLabelFlag: true,
+                                        disabled: false,
+                                        tooltipInfos: new WUXTooltipModel({ shortHelp: NLS.get("cancelButtonShortHelp"), mouseRelativePosition: true }),
+                                        "onClick": function () {
+                                            var socket = window.webinwinSocket;
+                                            webinwinHelper.closePanel(socket);
+                                        }
+                                    }).inject(buttonDiv);
+
+                                    window.buttonRestore = new Button({
+                                        domId: "idRestoreButton",
+                                        label: NLS.get("CATIAV5RestoreButton"),
+                                        emphasize: "primary",
+                                        showLabelFlag: true,
+                                        disabled: true,
+                                        tooltipInfos: new WUXTooltipModel({ shortHelp: NLS.get("restoreIterationsShortHelp"), mouseRelativePosition: true }),
+                                        "onClick": function () {
+                                            restoreIterations();
+                                        }
+                                    }).inject(buttonDiv);
+
+                                    if (listContainer)
+                                        buttonDiv.inject(listContainer);
+
+                                    if (window.parent._isWebInWinODTMode === true) {
+                                        window.parent._V5RestoreBtn = window.buttonRestore;
+                                        window.parent._V5CloseBtn = window.buttonClose;
+                                        widget.body.setAttribute('V5RestoreBtn', 'true');
+                                        widget.body.setAttribute('V5CloseBtn', 'true');
+                                    }
+                                }
+
+                                //
+
+                                container.addEventListener('click', function (event) {
+                                    if (window.listTable != null) {
+                                        window.listTable.checkRestoreBtn();
+                                    }
+                                });
+
+                                if (null != addinmode && addinmode.toLowerCase() === 'catiav5') {
+                                    var socket1 = window.webinwinSocket;
+                                    webinwinHelper.viewReadyFireWintopNotif(socket1);
+                                }
+
+                                // ODT
+
+                                var nodeList = document.getElementsByClassName("wux-layouts-gridengine-poolcontainer-rel");
+                                for (var i = 0; i < nodeList.length; i++) {
+                                    var node = nodeList.item(i);
+                                    node.setAttribute('data-rec-id', 'wux-layouts-gridengine-poolcontainer-rel' + "_" + i);
+                                }
+
+                                var dataNodeList = [];
+                                if (window.listTable)
+                                    dataNodeList = window.listTable._treeList.getManager().elements.poolContainerRel.querySelectorAll('wux-datagrid-cell wux-layouts-treeview-cell wux-datagrid-cell-even');
+                                for (var i = 0; i < dataNodeList.length; i++) {
+                                    var node = dataNodeList.item(i);
+                                    node.setAttribute('data-rec-id', 'wux-datagrid-cell wux-layouts-treeview-cell wux-datagrid-cell-even-' + i);
+                                }
+
+                                var tagList = document.getElementsByTagName('body')
+                                for (var i = 0; i < tagList.length; i++) {
+                                    tagList[i].setAttribute('data-rec-id', 'body+' + i);
+                                }
+
+                                var children = widget.body.children;
+                                for (var i = 0; i < children.length; i++) {
+                                    var child = children[i];
+                                    var className = child.className;
+                                    var dataRecId = child.getAttribute('data-rec-id');
+                                    if (className != "" && (dataRecId == null || dataRecId == ""))
+                                        children[i].setAttribute('data-rec-id', className + '-' + i);
+                                    else if (dataRecId == null || dataRecId == "")
+                                        children[i].setAttribute('data-rec-id', child.nodeName + '-' + i);
+                                    recurseAndAdd(child, /*alldescendants,*/ i);
+                                }
+
+                                function recurseAndAdd(el,/* descendants,*/ parentLevel) {
+                                    if (el === null) return;
+                                    var dataRecId = el.getAttribute('data-rec-id');
+                                    if (el.className == "" && (dataRecId == null || dataRecId == "")) {
+                                        dataRecId = el.nodeName; //+'-'+parentLevel;
+                                        el.setAttribute('data-rec-id', dataRecId);
+                                    } else if (dataRecId == null || dataRecId == "") {
+                                        dataRecId = el.className; //+'-'+parentLevel;
+                                        el.setAttribute('data-rec-id', dataRecId);
+                                    }
+                                    var children = el.childNodes;//childNodes;
+                                    for (var i = 0; i < children.length; i++) {
+                                        if (children[i].nodeType == 1) {
+                                            recurseAndAdd(children[i],/* descendants,*/ i);
+                                        }
+                                    }
+                                }
+
+                                // ODT
+                                var odtMode = getUrlParamVal('_isWebInWinODTMode');
+                                if (odtMode === 'true') {
+                                    widget.body.setAttribute('listContainer', 'true');
+                                    widget.body.setAttribute('compareViewContainer', 'true');
+                                    widget.body.setAttribute('playerContainer', 'true');
+                                }
+
+                                //ODT
+                                if (playerContainer) playerContainer.setAttribute('data-rec-id', 'iterationPlayerContainer');
+                                if (compareViewContainer) compareViewContainer.setAttribute('data-rec-id', 'iterationcompareViewContainer');
+                                if (listContainer) listContainer.setAttribute('data-rec-id', 'iterationslistContainer');
+							}
+
+							function viewEvenly() {
+								if (typeof window.evenViewButton !== 'undefined')  window.evenViewButton.check();
+								if (typeof window.propotionViewButton !== 'undefined')  window.propotionViewButton.uncheck();
+								if (typeof window.gridViewButton !== 'undefined')  window.gridViewButton.uncheck();
+                                if (typeof window.iterationsGrid !== 'undefined')  window.iterationsGrid.hide();
+								if (typeof window.iterationsPlayer !== 'undefined') window.iterationsPlayer.showEvenly();
+							}
+
+							function viewPropotionally() {
+								if (typeof window.evenViewButton !== 'undefined')  window.evenViewButton.uncheck();
+                                if (typeof window.propotionViewButton !== 'undefined')  window.propotionViewButton.check();
+								if (typeof window.gridViewButton !== 'undefined')  window.gridViewButton.uncheck();
+                                if (typeof window.iterationsGrid !== 'undefined')  window.iterationsGrid.hide();
+								if (typeof window.iterationsPlayer !== 'undefined') window.iterationsPlayer.showPropotionally();
+							}
+
+							function viewGrid() {
+								if (typeof window.evenViewButton !== 'undefined')  window.evenViewButton.uncheck();
+								if (typeof window.propotionViewButton !== 'undefined')  window.propotionViewButton.uncheck();
+                                if (typeof window.gridViewButton !== 'undefined')  window.gridViewButton.check();
+								if (typeof window.iterationsPlayer !== 'undefined') window.iterationsPlayer.hide();
+								if (typeof window.iterationsGrid !== 'undefined')  window.iterationsGrid.show();
+							}
+
+							function buildToolbar(container, toolbarHeight, UIOptions) {
+
+								var headToolbar = new Toolbar(30, toolbarHeight, 'top', 'right');
+								headToolbar.inject(container);
+								headToolbar.container.innerText = window.iterations.length + " " + NLS.get("Results");
+								
+                                if (UIOptions.withIterationsPlayer) {
+								    window.gridViewButton = headToolbar.addButton(
+										'assets/images/grid_view.png', 
+                                        NLS.get("GridView"),
+										'assets/images/grid_view_active.png', 
+                                        viewGrid);
+								    window.gridViewButton.hide(); // disable grid view before the webgl context lost problem can be solved
+                                }
+								
+                                if (UIOptions.withIterationsPlayer) {
+                                    window.propotionViewButton = headToolbar.addButton(
+                                        'assets/images/timeline_view.png',
+                                        NLS.get("TimelineView"),
+                                        'assets/images/timeline_view_active.png',
+                                        viewPropotionally);
+
+                                    window.evenViewButton = headToolbar.addButton(
+                                        'assets/images/seq_view.png',
+                                        NLS.get("SequentialView"),
+                                        'assets/images/seq_view_active.png',
+                                        viewEvenly);
+                                }
+
+								if (UIOptions.withCompareBtn) {
+								    window.compareBtn = headToolbar.addButton(
+                                        'assets/images/I_PartComparison.png',
+                                        NLS.get("CompareIteration"),
+                                        null, compareIterations);
+                                    window.compareBtn.disable();
+                                }
+
+                                if (UIOptions.withOpenBtn) {
+                                    window.openBtn = headToolbar.addButton(
+                                        'assets/images/I_OpenIteration.png',
+                                        NLS.get("OpenIteration"),
+                                        null, openIterations);
+                                    window.openBtn.disable();
+                                }
+
+                                if (UIOptions.withMIBRestoreBtn) {
+                                    window.restoreBtn = headToolbar.addButton(
+                                        'assets/images/I_ManageAccess_NothingToCommit.png',
+                                        NLS.get("RestoreIteration"),
+                                        null, restoreIterationMIB);
+                                    window.restoreBtn.disable();
+                                }
+                                else if (UIOptions.withRestoreBtn) {
+                                    window.restoreBtn = headToolbar.addButton(
+                                        'assets/images/I_ManageAccess_NothingToCommit.png',
+                                        NLS.get("RestoreIteration"),
+                                        null, restoreIterations);
+                                    window.restoreBtn.disable();
+                                }
+                                
+								return headToolbar;
+							}
+
+                            function newGETRequestPromise(service, urlparams) {
+                                var href = window.location.href; // https://vdevpril258am.ux.dsone.3ds.com/3DSpace/webapps/IterationsWidget/Iterations.html?objectId=D72B9B561F5B00006DA579552D570E00
+								var i = href.indexOf('webapps');
+								var root = href.substring(0, i); // https://vdevpril258am.ux.dsone.3ds.com/3DSpace/
+								var webServiceUrl = root + service + '?tenant=' + getUrlParamVal('tenant') 
+                                if (urlparams) webServiceUrl = webServiceUrl + '&' + urlparams;
+
+                                var headers = {
+									'Accept'      : 'application/json',
+                                    'Content-Type': 'application/json'
+								};
+								headers['SecurityContext'] = getUrlParamVal('SecurityContext');
+                                
+                                return new Promise ( (resolve) => {
+                                    WAFData.authenticatedRequest(webServiceUrl, {
+										method:'GET',
+										headers: headers,
+										timeout: 1000 * 60 * 60 * 24,
+										type: 'json',
+										onComplete: function(res) {
+											resolve ( {OK: res} );
+										},
+										onFailure: function(object, e) {
+                                            if (e) console.log(e);
+											resolve ( {error : object} );
+										},
+										onTimeout: function() {
+                                            console.log('webservice failed: A connection timeout occured.');
+                                            resolve ( {error : 'timeout'} );
+										},
+									});									
+								});
+                            }
+                            
+                            function newPOSTRequestPromise(service, urlparams, data) {
+                                var href = window.location.href;
+								var i = href.indexOf('webapps');
+								var root = href.substring(0, i);
+								var webServiceUrl = root + service + '?tenant=' + getUrlParamVal('tenant') 
+                                if (urlparams) webServiceUrl = webServiceUrl + '&' + urlparams;
+
+                                var headers = {
+									'Accept'      : 'application/json',
+                                    'Content-Type': 'application/json'
+								};
+								headers['SecurityContext'] = getUrlParamVal('SecurityContext');
+                                
+                                return new Promise ( (resolve) => {
+                                    WAFData.authenticatedRequest(webServiceUrl, {
+										method:'POST',
+										headers: headers,
+										timeout: 1000 * 60 * 60 * 24,
+										type: 'json',
+                                        data: JSON.stringify(data),
+										onComplete: function(res) {
+											resolve ( {OK: res} );
+										},
+										onFailure: function(object, e) {
+                                            if (e) console.log(e);
+											resolve ( {error : object} );
+										},
+										onTimeout: function() {
+                                            console.log('webservice failed: A connection timeout occured.');
+                                            resolve ( {error : 'timeout'} );
+										},
+									});									
+								});
+                            }
+							
+							function loadIterations(oid, onloaded) {
+								var _isWebInWinODTMode = getUrlParamVal('_isWebInWinODTMode');
+								
+                                var isMIB = false;
+                                if (oid && oid.startsWith("cid:"))
+                                    isMIB = true;
+
+								if ( _isWebInWinODTMode == '' && !isMIB) // not ODT mode
+								{
+                                    var href = window.location.href; // https://vdevpril258am.ux.dsone.3ds.com/3DSpace/webapps/IterationsWidget/Iterations.html?objectId=D72B9B561F5B00006DA579552D570E00
+								    var i = href.indexOf('webapps');
+								    var root = href.substring(0, i); // https://vdevpril258am.ux.dsone.3ds.com/3DSpace/
+								    var webServiceUrl = root + 'resources/iteration/list/iterationlist?tenant=' + getUrlParamVal('tenant') + '&objectId=' + oid;
+                                
+								    var headers = {
+									    'Accept'         : 'application/json',
+                                        'Content-Type'   : 'application/json'
+								    };
+                                    headers['SecurityContext'] = getUrlParamVal('SecurityContext');
+
+									WAFData.authenticatedRequest(webServiceUrl, {
+										method:'GET',
+										headers: headers,
+										timeout: 1000 * 60 * 60 * 24,
+										type: 'json',
+										onComplete: function(obj) {
+											onloaded(obj.results);
+										},
+										onFailure: function(object, e) {
+											widget.body.innerHTML = '<label style="font-family: arial; font-size: 13px;">' + NLS.get("LoadFail") + '</label>';
+											console.log('loadIterations failed: ' + object);
+											if (e) console.log(e);
+										},
+										onTimeout: function() {
+											widget.body.innerHTML = '<label style="font-family: arial; font-size: 13px;">' + NLS.get("Timeout") + '</label>';
+											console.log('loadIterations failed: A connection timeout occured.');
+										},
+									});									
+								}
+                                else if ( _isWebInWinODTMode == '' && isMIB) // not ODT mode
+								{
+                                    var href = window.location.href; // https://vdevpril258am.ux.dsone.3ds.com/3DSpace/webapps/IterationsWidget/Iterations.html?objectId=D72B9B561F5B00006DA579552D570E00
+								    var i = href.indexOf('webapps');
+								    var root = href.substring(0, i); // https://vdevpril258am.ux.dsone.3ds.com/3DSpace/
+                                    var webServiceUrl = root + 'resources/v1/dslc/iterationgraph?tenant=' + getUrlParamVal('tenant');
+                               
+    								var headers = {
+	    								'Accept'       : 'application/json',
+                                        'Content-Type' : 'application/json'
+			    					};
+                                    headers['SecurityContext'] = getUrlParamVal('SecurityContext');
+
+                                    var data = {versionid: oid};
+
+									WAFData.authenticatedRequest(webServiceUrl, {
+										method:'POST',
+										headers: headers,
+										timeout: 1000 * 60 * 60 * 24,
+										type: 'json',
+                                        data: JSON.stringify(data),
+										onComplete: function(obj) {
+                                            if (obj
+                                                && Array.isArray(obj.iterationgraphs) && obj.iterationgraphs.length==1 
+                                                && Array.isArray(obj.iterationgraphs[0].iterations)) {
+                                                    onloaded(obj.iterationgraphs[0].iterations,isMIB);
+                                            }
+                                            else {
+                                                widget.body.innerHTML = '<label style="font-family: arial; font-size: 13px;">' + NLS.get("LoadFail") + '</label>';
+											    console.log('loadIterations (MIB case) failed: ' + obj);
+                                            }
+										},
+										onFailure: function(object, e) {
+											widget.body.innerHTML = '<label style="font-family: arial; font-size: 13px;">' + NLS.get("LoadFail") + '</label>';
+											console.log('loadIterations (MIB case) failed: ' + object);
+											if (e) console.log(e);
+										},
+										onTimeout: function() {
+											widget.body.innerHTML = '<label style="font-family: arial; font-size: 13px;">' + NLS.get("Timeout") + '</label>';
+											console.log('loadIterations (MIB case) failed: A connection timeout occured.');
+										},
+									});									
+								}		
+								else {
+									// ODT
+									var obj = window.parent.IterationsWebInWinPayload;
+									if ( undefined !== typeof(obj ) && null != obj ){
+										var objectsArray = JSON.parse(obj);
+										
+										if( objectsArray.hasOwnProperty("results") ){
+											var iterations = objectsArray.results;
+											onloaded(iterations);
+										}
+									}
+								}
+							}	
+							
+							function setObjNameRev(parentContainer){
+								if ( typeof window.oidAlias !== undefined && window.oidAlias != null ){
+									var  label = new UWA.Element('div', { 'class': 'DMU3DCompareText DMU3DCompareRightLabel', html: window.oidAlias }); 
+									label.inject(parentContainer);
+								}
+							}
+
+                            function logToConsole(msg) {
+                                if (window.webinwinSocket)
+                                    window.webinwinSocket.dispatchEvent(
+                                        'onDispatchToWin',
+                                        {
+                                            notif_name: 'onLogLineToCNEXTOUTPUT',
+                                            notif_parameters: "lf_web_in_win: " + msg
+                                        },
+                                        'lf_web_in_win'
+                                    );
+                                console.log(msg);
+                            }
+							
+							// restore iteration MIB
+							function restoreIterationMIB(){
+                                
+                                logToConsole("restore MIB iteration");
+
+                                if (! window.listTable) {
+                                    logToConsole("listTable is not set");
+                                    return;
+                                }
+                                
+                                var sel = window.listTable.selectedObjects;
+                                if (sel.length != 1) return;
+
+                                var iteration = window.listTable.list[sel[0]];                                
+                                
+                                var sectx = getUrlParamVal('SecurityContext');
+                                var filter_cred_data = { Command: "restoreIteration", SecurityContexts: [sectx] };
+                                var request_data = { versionid: window.oid, iterationid: ""+iteration.iternumber, graph: false};
+
+                                logToConsole("launch MIB Restore Iteration / versionid:" + window.oid + ", iterationid:" + iteration.iternumber + ", cred_data:" + filter_cred_data);
+
+                                newPOSTRequestPromise('resources/lifecycle/util/filterValidSCs',null,filter_cred_data)
+	              			    .then((c) => {
+                                    if (c && c.OK && c.OK.data && c.OK.data.length==1)
+                                        return newPOSTRequestPromise('resources/v1/dslc/restoreversioniteration',null,request_data);
+                                    else 
+                                    {
+                                        logToConsole("MIB Restore Iteration failed");
+                                        var error = {
+					                        eventID: 'error',
+					                        msg: NLS.restoreNotAuthorizedForCurrentCS
+				                            };
+				                        LifecycleAlert.displayNotification(error);
+                                    }
+	              			    })
+                                .then( (result) => {
+                                    if (result && result.OK && !result.OK.errorID) {
+                                        logToConsole("MIB Restore Iteration done");
+                                        onLoad();
+                                    }
+                                    else {
+                                        var error = {
+					                        eventID: 'error',
+					                        msg: (result && result.OK && result.OK.errorMessage) ? result.OK.errorMessage : NLS.restoreFailed
+				                            };
+				                        LifecycleAlert.displayNotification(error);
+                                    }
+                                })
+	              			    .catch((e) => {
+	              			    });
+							}
+
+							// restore iterations 
+							function restoreIterations(){
+                                logToConsole("restore iterations");
+
+                                if (! window.listTable) {
+                                    logToConsole("listTable is not set");
+                                    return;
+                                }
+
+                                var sel = window.listTable.selectedObjects;
+                                if (sel.length != 1) return;
+
+                                var iteration = window.listTable.list[sel[0]];
+
+                                var currentObj = { 'physicalid': window.oid };
+                                
+                                logToConsole("launchWinRestoreIterations: " + window.oid + " " + iteration.physicalid);
+                                
+                                var socket = window.webinwinSocket;
+                                webinwinHelper.launchWinRestoreIterations(socket, currentObj, iteration);
+                                
+                                logToConsole("launchWinRestoreIterations done");
+							}
+							
+							// open iterations
+							function openIterations() {
+                                logToConsole("open iterations");
+
+                                if (! window.listTable) {
+                                    logToConsole("listTable is not set");
+                                    return;
+                                }
+
+                                var sel = window.listTable.selectedObjects;
+                                var currString = NLS.get("LastSavedModelString");
+                                var iterations = [];
+                                logToConsole("sel.length: " + sel.length);
+                                if (sel.length == 0) return;
+
+                                for (var j = 0; j < sel.length; j++) {
+                                    var selectedIter = window.listTable.list[sel[j]]; 
+                                    var name = selectedIter.name;
+									if ( name.indexOf(currString) === -1 ) {
+										iterations.push(selectedIter);
+										logToConsole("sel " + j + " => " +  selectedIter.name);
+										logToConsole("sel " + j + " => " +  selectedIter.physicalid);
+									} else {
+										logToConsole("sel " + j + " (skipped) => " + selectedIter.name);
+										logToConsole("sel " + j + " (skipped) => " + selectedIter.physicalid);
+									}
+                                }
+
+                                logToConsole("launchWinOpenIterations: " + iterations.length);
+
+                                //WebInWinHelper
+                                var socket = window.webinwinSocket;
+                                webinwinHelper.launchWinOpenIterations(socket, iterations);
+
+                                logToConsole("launchWinOpenIterations done");
+							}
+							
+							// compare iterations
+							function compareIterations(){
+                                logToConsole("compare iterations");
+
+                                if (! window.listTable) {
+                                    logToConsole("listTable is not set");
+                                    return;
+                                }
+								
+                                var table = window.listTable;
+                                var sel = [];
+                                sel = window.listTable.selectedObjects;
+                                if (sel.length != 2) return;
+                                var iterations = [];
+                                for (var i = 0; i < sel.length; i++) {
+                                    iterations.push(window.listTable.list[sel[i]]);
+                                }
+
+                                logToConsole("launchWinCompareIterations: " + iterations[0].physicalid + " " + iterations[1].physicalid);
+                                
+                                var socket = window.webinwinSocket;
+                                webinwinHelper.launchWinCompareIterations(socket, iterations[0], iterations[1]);
+                                
+                                logToConsole("launchWinCompareIterations done");
+							}
+							
+							// set ODT variables
+							function setODTVariables(){
+							}
+
+							if (widget.launched) {
+								onLoad();
+							} else {
+								widget.onLoad = onLoad;
+							}
+						});
+			});
+</script>
+</head>
+<body>
+</body>
+</html>

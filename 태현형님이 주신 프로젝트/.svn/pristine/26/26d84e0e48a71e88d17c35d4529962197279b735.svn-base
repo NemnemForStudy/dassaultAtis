@@ -1,0 +1,1 @@
+define("DS/EditPropPopup/EditPropPopup_zh-TW",{});define("DS/EditPropPopup/assets/nls/editPropPopup",{Properties:"資訊",PinWidget:"釘選小工具",Loading:"正在載入...",CloseOverlay:"關閉快顯視窗"});

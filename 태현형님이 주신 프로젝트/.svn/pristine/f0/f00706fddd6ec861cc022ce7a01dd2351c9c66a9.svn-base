@@ -1,0 +1,16 @@
+m|ENOXPortfolioFoundationsUX\CfgSolver.mweb
+b|j|c,m
+b|c|n,m
+v|6.425.1.22327|3.2
+r|G:\R425\BSF\.
+t|ENOXPortfolioFoundationsUX\CfgSolver.mweb\LocalGenerated\win_b64\CfgSolverDebug.css|1663373566|2493
+s|ENOXPortfolioFoundationsUX\CfgSolver.mweb\src\CfgSolverDebug.scss|1537190020|672
+t|win_b64\webapps\CfgSolver\CfgSolver.js|1647691743|19631
+s|ENOXPortfolioFoundationsUX\CfgSolver.mweb\src\CfgSolverDebug.js|1537189828|14715
+t|win_b64\webapps\CfgSolver\CfgSolverDebug.css|1669240351|477
+g|ENOXPortfolioFoundationsUX\CfgSolver.mweb\LocalGenerated\win_b64\CfgSolverDebug.css|1663373566|2493
+u|ENOXPortfolioFoundationsUX\CfgSolver.mweb\src\CfgSolverServices.js|1646842226|40531
+u|WebUiAssets\ProtectedInterfaces\_variables.uikit.scss|1662555505|6689
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240
+u|win_b64\code\toolcmds\yuicompressor-2.4.9.bat|1647654585|205

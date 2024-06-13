@@ -1,0 +1,1 @@
+define("CATCDSJS/CATCDS",[navigator.userAgent&&-1!=navigator.userAgent.search("Chrome")?"DS/CATCDSJSImp/CATCDSJSWithoutAsm":"DS/CATCDSJSImp/CATCDSJSWithAsm"],function(C){"use strict";return C}),define("DS/CATCDSJS/CATCDS",["CATCDSJS/RequirePromise!DS/CATCDSWasm/CATCDSWasm"],function(C){"use strict";return C});

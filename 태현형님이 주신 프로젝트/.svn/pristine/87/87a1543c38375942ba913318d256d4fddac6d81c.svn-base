@@ -1,0 +1,33 @@
+### 230418 Created by CMG
+
+#delete command decTableMasterCommand;
+
+
+add command decTableMasterCommand
+	label "emxFramework.Command.decTableMasterCommand"
+	href '${COMMON_DIR}/emxIndentedTable.jsp?program=decTableMaster:findTableMaster&table=decTableMasterTable&header=emxFramework.command.decTableMasterCommand&toolbar=decTableMasterToolbar&editLink=true&selection=multiple&sortColumnName=none&submitAction=refreshCaller'
+	setting "Registered Suite" "Framework"
+	setting "Target Location" "content"
+	property "installer" value "ENOVIAEngineering"
+	property "application" value "Framework"
+	property "original name" value "decTableMasterCommand"
+;
+
+
+mod command decTableMasterCommand 
+href '${COMMON_DIR}/emxIndentedTable.jsp?program=decTableMaster:findTableMaster&table=decTableMasterTable&header=emxFramework.command.decTableMasterCommand&toolbar=decTableMasterToolbar&editLink=true&selection=multiple&sortColumnName=none&submitAction=refreshCaller'
+;
+
+add property command_decTableMasterCommand on program eServiceSchemaVariableMapping.tcl to command decTableMasterCommand;
+
+# Modified by hslee on 2023.07.25
+mod command decTableMasterCommand
+	href '${COMMON_DIR}/emxIndentedTable.jsp?program=decTableMaster:findTableMaster&table=decTableMasterTable&header=emxFramework.Type.decTableMaster&toolbar=decTableMasterToolbar&editLink=true&selection=multiple&sortColumnName=Name&submitAction=refreshCaller&suiteKey=Framework'
+;
+
+# Modified by choimingi on 2023.09.09
+mod command decTableMasterCommand
+	add setting 'hasAccess' 'PIM' 
+	add setting 'Access Program' 'decAccess'
+	add setting 'Access Function' 'hasAccess'
+;

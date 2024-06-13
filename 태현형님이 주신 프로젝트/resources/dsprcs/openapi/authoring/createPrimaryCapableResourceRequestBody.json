@@ -1,0 +1,41 @@
+{
+	"properties": {
+		"items": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"properties": {
+					"resource": {
+						"type": "object",
+						"description": "Referenced object of resource.",
+						"required": [
+							"identifier"
+						],
+						"properties": {
+							"source": {
+								"description": "Full path to the source, including the server hostname",
+								"type": "string",
+								"example": "https://vdevpril1081plp.dsone.3ds.com/3DSpace"
+							},
+							"type": {
+								"description": "Type of the object",
+								"type": "string",
+								"example": "VPMReference"
+							},
+							"identifier": {
+								"description": "Physical ID of the object",
+								"type": "string",
+								"example": "5C0779CEF11C472C9537094C2FA82333"
+							},
+							"relativePath": {
+								"description": "Relative path from the source to get the details of the object, including the ID of the object",
+								"type": "string",
+								"example": "/resources/v1/modeler/dsrsc/dsrsc:Resource/5C0779CEF11C472C9537094C2FA82333"
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

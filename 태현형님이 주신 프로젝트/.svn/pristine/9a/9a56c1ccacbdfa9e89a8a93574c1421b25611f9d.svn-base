@@ -1,0 +1,82 @@
+
+    <BOTYPE name="Organization" includes="basic,address,HNPOrganization,MCCOrg,LocationName,PRGOrganization,PRGCompany,MCCOrgELV,SRCSUPPLIERFields,SUPSuppliers,MEPOrg,SUPSupplierSearch,EXC_ORG_FIELDS,OrgContactDetails,APRFactory,APPagent,APRSortOrder" excludefields="ORGANIZATION,PROJECT" />
+
+    <BOTYPE name="Business Unit" includes="basic,HNPbasic,PRGOrganization,CPSBUSpecific,CPSRegionAndBU,APPagent,APROrganization,HNPOrganization,OrgContactDetails" />
+
+    <BOTYPE name="Location" includes="basic,address,plant,location,PRGLocation,SUPLocation,CSTLocation,part_engineering"/>
+
+    <BOTYPE name="Person" includes="basic,person,address,HNPPerson,PRGPerson,CPSPerson,PRGBusinessSkills,CPNPerson,MEPPerson,ENGPerson,DCL_Person,ACTTaskPerson,AUDPerson,EXC_PERSON_FIELDS,InboxTaskScope" excludefields="ORGANIZATION,PROJECT,ORIGINATOR_FULLNAME,OWNER_FULLNAME"/>
+
+    <BOTYPE name="Region" includes="basic,CPSRegionAndBU"/>
+
+    <BOTYPE name="Business Skill" includes="basic,EXC_BUSSKILL_FIELDS"/>
+
+    <BOTYPE name="Plant" includes="basic,address,plant"/>
+
+	<BOTYPE name="Security Context" includes="basic,securityContextOrgProjDetails" searchable="true" />
+	
+	<BOTYPEFIELDS name="securityContextOrgProjDetails">
+        <FIELD name="Org" select="from[Security Context Organization].to.name" type="STRING" sixw="ds6w:org"/>
+    </BOTYPEFIELDS>
+
+    <BOTYPE name="PnOProject" includes="basic,CS_VISIBILITY_FAMILY" excludefields="ORGANIZATION,PROJECT" searchable="false"/>
+    <BOTYPEFIELDS name="CS_VISIBILITY_FAMILY">
+            <FIELD name="CS_FAMILY" select="attribute[PnO Family]" type="STRING" />
+            <FIELD name="CS_VISIBILITY" select="attribute[PnO Visibility]" type="STRING" />
+    </BOTYPEFIELDS>
+	
+	<BOTYPE name="Business Role" includes="basic" searchable="false" />
+
+    <BOTYPE name="Country" includes="basic,country,Reg_Country"/>
+
+    <BOTYPEFIELDS name="country">
+            <FIELD name="CONTINENT_CODE" select="attribute[Continent Code]" type="STRING,PARAMETRIC"/>
+            <FIELD name="COUNTRY_CODE_2LETTER" select="attribute[Country Code (2 Letter)]" type="STRING,PARAMETRIC"/>
+            <FIELD name="COUNTRY_CODE_3LETTER" select="attribute[Country Code (3 Letter)]" type="STRING,PARAMETRIC"/>
+            <FIELD name="COUNTRY_NUMBER" select="attribute[Country Number]" type="STRING,PARAMETRIC"/>
+            <FIELD name="EXC_LICENSED_COUNTRY_LOCATION_FROM_ID" select="to[Licensed Country Location].from.id" type="STRING" hidden="true"/>
+    </BOTYPEFIELDS>
+
+    <BOTYPEFIELDS name="person">
+            <FIELD name="USERROLE" select="program[emxPerson -method getStrAllRolesSymbolicAssigned '$NAME']" type="STRING,PARAMETRIC" sixw="ds6w:userRole"/>
+            <FIELD name="FIRSTNAME" select="attribute[First Name]" type="STRING" fastsort="true" sixw="ds6wg:First Name"/>
+            <FIELD name="LASTNAME" select="attribute[Last Name]" type="STRING" fastsort="true" sixw="ds6wg:Last Name"/>
+            <FIELD name="LEAD_RESPONSIBILITY_ROLE" select="to[Lead Responsibility].attribute[Project Role].value" type="STRING"/>
+            <FIELD name="MEMBER" select="to[Member].from.name" type="STRING,PARAMETRIC" sixw="ds6w:member"/>
+            <FIELD name="MEMBER_ID" select="to[Member].from.id" type="STRING" hidden="true"/>
+            <FIELD name="EMPLOYEE_ID" select="to[Employee].from.id" type="STRING" hidden="true"/>
+            <FIELD name="BU_EMPLOYEE_ID" select="to[Business Unit Employee].from.id" type="STRING" hidden="true"/>
+            <FIELD name="CHANGE_ASSIGNMENT" select="from[Assigned EC].to.name" type="STRING"/>
+            <FIELD name="RESOURCE_POOL_ID" select="to[Member].from.id" type="STRING" hidden="true"/>
+            <FIELD name="EMPLOYMENT_TYPE" select="to[Employee].attribute[Employment Type]" type="STRING,PARAMETRIC" sixw="ds6w:employmentType"/>
+        <FIELD name="EMAILADDRESS" select="attribute[Email Address]" type="STRING" sixw="ds6wg:Email Address"/>
+            <FIELD name="EMAIL" select="attribute[Email Address]" type="STRING" sixw="ds6wg:Email Address"/>
+            <FIELD name="LICENSEDHOURS" select="attribute[Licensed Hours]" type="NUM" sixw="ds6wg:Licensed Hours"/>
+        <FIELD name="WorkPhoneNumber" select="attribute[Work Phone Number]" type="STRING" sixw="ds6w:phoneNumber"/>
+        <FIELD name="User Name" select="name" type="STRING" sixw="ds6wg:name" hidden="true" />
+        <FIELD name="Company" select="to[Employee].from.attribute[Organization Name]" type="STRING" sixw="ds6w:company"/>
+            <FIELD name="ASSIGNED_SECURITY_CONTEXT" select="from[Assigned Security Context].to.name" type="STRING" hidden="true"/>
+			<FIELD name="ASSIGNED_GROUP_SECURITY_CONTEXT" select="to[Group Member].from.from[Group Assigned Security Context].to.name" type="STRING" hidden="true"/>
+            <FIELD name="FullName" select="execute[emxPerson -method getFullName 'name']" type="STRING" sixw="ds6wg:fullname"/>
+        <!--<FIELD name="Role" select="program[emxPerson -method getRoleForPerson '${OBJECTID}']" type="STRING" sixw="ds6w:role"/>-->
+        	<FIELD name="PERSONSYNCSTATE" select="attribute[PersonSyncState]" sixw="ds6wg:PersonSyncState" type="NUM"/>
+        </BOTYPEFIELDS>
+		
+        <BOTYPEFIELDS name="address">
+            <FIELD name="CITY" select="attribute[City]" type="STRING,PARAMETRIC" sixw="ds6w:city"/>
+            <FIELD name="STATE_REGION" select="attribute[State/Region]" type="STRING,PARAMETRIC" sixw="ds6w:state"/>
+            <FIELD name="POSTAL_CODE" select="attribute[Postal Code]" type="STRING,PARAMETRIC" sixw="ds6w:postalCode"/>
+            <FIELD name="COUNTRY" select="attribute[Country]" type="STRING,PARAMETRIC" sixw="ds6w:country"/>
+        </BOTYPEFIELDS>
+		
+        <BOTYPEFIELDS name="plant">
+            <FIELD name="PLANT_ID" select="attribute[Plant ID]" type="STRING" sixw="ds6wg:Plant ID"/>
+        </BOTYPEFIELDS>
+
+    <BOTYPEFIELDS name="OrgContactDetails">
+      <FIELD name="PhoneNumber" select="attribute[Organization Phone Number]" type="STRING" sixw="ds6w:phoneNumber"/>
+      <FIELD name="FaxNumber" select="attribute[Organization Fax Number]" type="STRING" sixw="ds6w:faxNumber"/>
+      <FIELD name="WebSite" select="attribute[Web Site]" type="STRING" sixw="ds6w:webSite"/>
+    </BOTYPEFIELDS>
+
+    

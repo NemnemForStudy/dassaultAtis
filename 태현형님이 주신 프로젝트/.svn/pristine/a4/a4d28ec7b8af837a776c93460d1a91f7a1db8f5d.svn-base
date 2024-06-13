@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<derivedformatmanagement xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="DerivedFormatDeclarative.xsd">
+    <!-- first official version for R2023x Beta2 and R2022x FD04  -->
+	<converter name="AutoCAD" synchronous="true"  nlsFile="emxDerivedFormatManagementAutoCADStringResource" comment="conversion managed synchronously at save by AutoCAD PowerBy connector">
+      <datasources>
+		<datasource name="AUTOCAD" >    
+			<source name="DWG" type ="Drawing">
+				<target name="pdf"      inputStreamId="authoring" outputStreamId="PDF" />
+				<target name="image_jpg" inputStreamId="authoring" outputStreamId="JPG" />
+				<target name="dxf"      inputStreamId="authoring" outputStreamId="DXF" />
+				<target name="dwf"      inputStreamId="authoring" outputStreamId="DWF" />
+				<target name="stl"      inputStreamId="authoring" outputStreamId="STL" />
+			</source>
+	
+			<events>       
+				<event name="onXCADSave" type="interactiveUpdate" />
+			</events>
+		</datasource>
+	  </datasources>
+	</converter>
+
+</derivedformatmanagement>

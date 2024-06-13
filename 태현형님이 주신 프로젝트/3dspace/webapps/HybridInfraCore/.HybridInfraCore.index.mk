@@ -1,0 +1,11 @@
+m|HybridInfraCoreWeb\HybridInfraCore.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.0.22078|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\HybridInfraCore\HybridInfraCore.js|1647691975|7840
+s|HybridInfraCoreWeb\HybridInfraCore.mweb\src\HybridApp.js|1602161559|33264
+t|win_b64\webapps\HybridInfraCore\internetError.html|1647691975|2306
+s|HybridInfraCoreWeb\HybridInfraCore.mweb\src\internetError.html|1527522848|2306
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

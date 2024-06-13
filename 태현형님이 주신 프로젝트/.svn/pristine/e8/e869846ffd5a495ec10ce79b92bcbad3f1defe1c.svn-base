@@ -1,0 +1,1 @@
+define("DS/MMPrint/MMPrint_cs",{});define("DS/MMPrint/assets/nls/MMPrint",{printErrorTitle:"Chyba tisku",printRealSizeError:"Tisk v reálné velikosti není podporován"});

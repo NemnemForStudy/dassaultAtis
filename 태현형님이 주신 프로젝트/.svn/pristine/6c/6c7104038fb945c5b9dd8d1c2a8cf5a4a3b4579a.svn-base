@@ -1,0 +1,15 @@
+{
+  "version": "1.0.0",
+  "summary": "Přepne sekvenční tok na příslušný výstupní řídicí port po výsledku porovnání mezi <doc-idp-NAME TRANSLATE=no>TestValue</doc-idp-NAME> a ostatními vstupními daty.",
+  "description": "Tento blok je dynamický a počet vstupních datových portů lze tedy změnit v okně konfigurace bloku.<br>Počet výstupních řídicích portů je synchronizován s počtem vstupních řídicích portů.<br>Datové porty zpracovávají všechny typy.<br>Tento blok přepne sekvenční tok na výstupní řídicí port <doc-ocp-name translate=no>ParameterK</doc-ocp-name>, jestliže <doc-idp-name translate=no>TestValue</doc-idp-name> = <doc-idp-name translate=no>ValueK</doc-idp-name>.",
+  "dataPorts": {
+    "TestValue": "testovaný parametr.",
+    "Value1": "odkaz na první parametr."
+  },
+  "controlPorts": {
+    "In": "vyvolá spuštění bloku.",
+    "None": "aktivuje se, jestliže se <doc-idp-name translate=no>TestValue</doc-idp-name> neshoduje s kterýmkoli jiným vstupním parametrem.",
+    "Parameter1": "aktivuje se, jestliže hodnota <doc-idp-name translate=no>TestValue</doc-idp-name> je shodná s hodnotou <doc-idp-name translate=no>Value1</doc-idp-name>."
+  },
+  "example": null
+}

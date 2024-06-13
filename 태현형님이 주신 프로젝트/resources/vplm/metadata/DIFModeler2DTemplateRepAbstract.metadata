@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<!-- ENOVIA DICTIONARY FOR DIF2DTemplateRepAbstact          -->
+<!-- COPYRIGHT DASSAULT SYSTEMES 2014, All rights reserved -->
+<Package xmlns="PLMDictionaryUnified"
+         ModelerType="Top"
+         Name="DIFModeler2DTemplateRepAbstract"
+         Uuid="7FCFE3F7-F464-45CC-9377-DA1BC3AE03FA"
+         BelongsToModeler="DIFModeler2DTemplate"
+         UseNames="PLMCORE"
+         CustomerExposition="Programmer">
+
+  <CAAComment>
+    <ShortRole>DIF Abstract model for 2D Template reps</ShortRole>
+    <Role>This package describes the DIF Abstract model for 2D Template reps built on top of PLMCore</Role>
+  </CAAComment>
+
+  <Comment>last update 2019-02-14-8.00.00</Comment>
+
+  <!-- DIFModeler2DTemplateRepAbstract provides :            -->
+  <!-- DIF2DTemplateRepAbstract        PLMCoreRepReference   -->
+
+  <!-- ******************************************* -->
+  <!-- *  DIF2DTemplateRepAbstract (PLMCoreRepReference)    * -->
+  <!-- ******************************************* -->
+  <!-- CustomerExposition: whether Type projected in the KWE dictionary -->
+  <Class Name="DIF2DTemplateRepAbstract"
+         Uuid="B4EB7823-0AD3-4F20-8751-C3D2E5831E74"
+         Abstract="Yes"
+         SuperName="PLMCoreRepReference"
+         CustomerExposition="Programmer">
+
+    <CAAComment>
+      <ShortRole>DIF 2D Template abstract Rep Reference Object</ShortRole>
+      <Role>DIF 2D Template abstractView Reference Object</Role>
+    </CAAComment>
+
+    <!-- Collaborative Space Applicability -->
+    <Property Name="NewMinorRevisionAvailability" Value="Yes"/>
+
+	<!-- Change Management support -->
+	<Property Name="ChangeManagementSupport" Value="Yes"/>
+
+	<!-- New Branching system support Not activated yes-->
+	<!--<Property Name="NonLinearVersioningAvailability" Value="ALL"/> -->
+
+    <Simple Name="V_DIFStandardClass"
+            Uuid="AA1C487D-AE20-4BFE-BAC9-5A7D2F78FF7A"
+            Type="String"
+            MaxLength="255"
+            Protection="External"
+            CAAExposition="L0"
+            DefaultValue="ISO">
+      <Range>
+        <Equal>ISO</Equal>
+        <Equal>ASME</Equal>
+        <Equal>JIS</Equal>
+      </Range>
+    </Simple>
+
+    <Simple Name="V_DIFStandardVersion"
+            Uuid="4DAD98FC-3A5E-4AE2-BC72-E4F5642208D5"
+            Type="Integer"
+            DefaultValue="0"
+            Protection="Internal"/>
+
+    <Simple Name="V_DIFAnnType"
+            Uuid="A3DE1E51-9672-4E2F-AEA4-8748C5593E24"
+            Type="String"
+            Protection="External"
+            MaxLength="512"
+            CAAExposition="L0"
+            DefaultValue=""/>     
+
+      <!-- Export -->
+    <Method ImplementationType="None">
+      <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+    </Method>
+ 
+  </Class>
+
+</Package>

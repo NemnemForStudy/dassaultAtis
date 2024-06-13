@@ -1,0 +1,12 @@
+m|InstantMessagingAPI\VueUserPresenceAPI.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.3.23052|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\VueUserPresenceAPI\VueUserPresenceAPI.css|1677016424|4170
+s|InstantMessagingAPI\VueUserPresenceAPI.mweb\src\VueUserPresenceAPI.css|1677008094|5787
+t|win_b64\webapps\VueUserPresenceAPI\VueUserPresenceAPI.js|1662165829|955
+s|InstantMessagingAPI\VueUserPresenceAPI.mweb\src\VueUserPresenceAPI.js|1662153912|1248
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240
+u|win_b64\code\toolcmds\yuicompressor-2.4.9.bat|1647654585|205

@@ -1,0 +1,1 @@
+define("DS/WAfrExecutionContext/WAfrExecutionContext_ja",{});define("DS/WAfrExecutionContext/assets/nls/Transition",{"WAfrTransitionLaunched.title":"開始しています "});

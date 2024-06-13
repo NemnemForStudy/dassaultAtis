@@ -1,0 +1,1 @@
+define("DS/SimReview/SimReview",["DS/3DPlay/3DPlay"],function(e){"use strict";return console.error("This module is deprecated. use DS/3DPlay/3DPlay instead of DS/SimReview/SimReview"),e});

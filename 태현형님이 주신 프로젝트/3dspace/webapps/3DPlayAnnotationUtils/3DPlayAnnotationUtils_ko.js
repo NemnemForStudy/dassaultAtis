@@ -1,0 +1,1 @@
+define("DS/3DPlayAnnotationUtils/3DPlayAnnotationUtils_ko",{});define("DS/3DPlayAnnotationUtils/assets/nls/3DPlayAnnotation",{PlaceHolder:"새 텍스트",ClickToLaunchText:"보기를 클릭하여 새 텍스트 상자 생성",cancelText:"취소",validateText:"검증",nextText:"다음"});

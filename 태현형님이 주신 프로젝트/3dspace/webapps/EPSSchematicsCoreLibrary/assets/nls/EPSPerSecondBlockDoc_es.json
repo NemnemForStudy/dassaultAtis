@@ -1,0 +1,14 @@
+{
+  "version": "1.0.0",
+  "summary": "Interpola el valor de datos de entrada en cada paso de ejecución durante un segundo, teniendo en cuenta el tiempo transcurrido desde el paso de ejecución anterior.",
+  "description": "Este bloque puede ser muy útil para obtener <b>animaciones basadas en fotogramas</b>. Garantizará una velocidad de animación constante independientemente de la potencia informática utilizada.<br><br>Un objeto animado <b>basado en el tiempo</b> se moverá del <b>punto A</b> al <b>punto B</b> en la <b>misma cantidad de tiempo</b> independientemente de la velocidad de fotogramas de la película. Cuanto más lenta sea la velocidad de fotogramas, <b>más lejos moverá el objeto cada fotograma</b> para mantener la misma velocidad.<br><br>Por otro lado, si la animación<b> se basa en la velocidad de fotogramas</b>, el objeto tardará siempre <b>el mismo número de fotogramas</b> para llegar del <b>punto A</b> al <b>punto B</b>. Cuanto más lenta sea la velocidad de fotogramas, más tiempo tardará porque la distancia recorrida en cada fotograma no cambia.<br><br>En una muestra, a medida que la velocidad de fotogramas se ralentiza, la animación basada en fotogramas <b>también se ralentiza</b> y la animación basada en tiempo <b>se entrecorta</b>.<br>La animación basada en tiempo también se conoce como \"independencia de velocidad de fotogramas\".",
+  "dataPorts": {
+    "Input": "corresponde al valor de entrada que se va a interpolar durante un segundo.",
+    "Output": "corresponde al valor de salida donde <doc-odp-name translate=no>Output</doc-odp-name> = <doc-idp-name translate=no>Input</doc-idp-name> * Tiempo transcurrido (en segundos).<br>El tiempo transcurrido representa la duración de un paso de ejecución."
+  },
+  "controlPorts": {
+    "In": "activa la ejecución del bloque.",
+    "Out": "se activa cuando se completa el proceso."
+  },
+  "example": null
+}

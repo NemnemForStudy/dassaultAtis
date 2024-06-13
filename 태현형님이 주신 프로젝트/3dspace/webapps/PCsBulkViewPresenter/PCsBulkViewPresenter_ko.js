@@ -1,0 +1,1 @@
+define("DS/PCsBulkViewPresenter/PCsBulkViewPresenter_ko",{});define("DS/PCsBulkViewPresenter/assets/nls/PCsBulkViewPresenter",{TotalVariability:"총 파생",TotalProductConfigurations:"총 제품 사양"});

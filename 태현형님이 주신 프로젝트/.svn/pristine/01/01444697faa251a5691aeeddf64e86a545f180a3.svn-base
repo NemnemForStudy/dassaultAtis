@@ -1,0 +1,138 @@
+/* Define constants*/
+/* Variables for the object type */
+Let CopyFromObject(SystemModel)
+Let ModelingType(Type)
+Let ModelingTypeName(String)
+Let AbbreviatedBaseTypeName(String)
+Let RealType(Type)
+Let RealTypeName(String)
+Let OldRealTypeName(String)
+Let TypeTitle(STRING)
+
+/* Variables for naming */
+Let Separator(String)
+Let NamingTypePrefix(STRING)
+Let SiteAffix(STRING)
+Let NamingTypeSuffix(STRING)
+Let ID(STRING)
+Let IDNumber(STRING)
+Let IDVNumber(STRING)
+Let NumberAlignment(INTEGER)
+Let UserPrefix(String)
+Let TitleWas(STRING)
+Let Title(STRING)
+Let AttrTitle(STRING)
+Let AttrUUID(STRING)
+Let UUID(STRING)
+Let AttrContentType(STRING)
+Let ContentType(STRING)
+
+/* Retrieve OOTB and real type names */
+ModelingType = ThisObject.ModelerType
+if (ModelingType<>NULL){
+   ModelingTypeName=ModelingType.Name 
+}
+TypeTitle=ModelingType.UserName
+if ( (TypeTitle == "") or (TypeTitle == NULL) ) {
+   TypeTitle="$$$"
+}
+
+RealType = ThisObject.PrimaryType
+if (RealType<>NULL){
+   RealTypeName=RealType.Name 
+}
+
+/* Retrieve BL Params */
+if ( Parameters->HasAttribute("IdCloningString") == true ) { /* Cloning/SaveAsNew */
+    UserPrefix = Parameters->GetAttributeString("IdCloningString")
+    if (UserPrefix == NULL) UserPrefix = ""
+}
+if ( UserPrefix == "" and Parameters->HasAttribute("IdString") == true ) {
+    UserPrefix = Parameters->GetAttributeString("IdString")
+    if (UserPrefix == NULL) UserPrefix = ""
+}
+if ( Parameters->HasAttribute("CopyFrom") == true ) {  /* Cloning/SaveAsNew */
+     set CopyFromObject=Parameters->GetAttributeObject("CopyFrom") 
+}
+
+/* Init some variables */
+AbbreviatedBaseTypeName="sysmod"
+NumberAlignment=8
+Separator="-"
+SiteAffix=""
+
+/* Retrieve Naming parameters */
+RetrieveNamingParametersWithSeparator(ModelingTypeName,NamingTypePrefix,SiteAffix,NamingTypeSuffix,Separator,AbbreviatedBaseTypeName)
+
+/* Retrieve associated counter */
+/* For a counter to be specific to each type including subtypes, replace AbbreviatedBaseTypeName by RealTypeName */
+STAutoNumbers(AbbreviatedBaseTypeName, NumberAlignment, IDNumber, IDVNumber)
+
+/* Management of Common Abbreviation requires the ModelingTypeName to be rerouted*/
+if (ModelingTypeName <> AbbreviatedBaseTypeName) {
+   NumberAlignment=NumberAlignment+1 
+}
+
+/* Build the final name */
+ID=NamingTypePrefix
+
+if (SiteAffix<>"") ID=ID+Separator+SiteAffix
+
+ID=ID+Separator+IDNumber
+
+if (NamingTypeSuffix<>"") ID=ID+Separator+NamingTypeSuffix
+
+ThisObject.name = ID
+
+/* Object title setup*/
+
+AttrTitle = ModelingTypeName+".Title"
+if ( ThisObject->HasAttribute(AttrTitle) == false ) {
+   AttrTitle = "Title"
+}
+
+TitleWas=""
+if ( CopyFromObject <> NULL ) {
+   OldRealTypeName = CopyFromObject.PrimaryType.Name
+   if (CopyFromObject->HasAttribute(AttrTitle) == true) {
+      TitleWas=CopyFromObject->GetAttributeString(AttrTitle)
+   }
+}
+
+Title=""
+if ((TitleWas =="") or (TitleWas==NULL)) {
+   Title=UserPrefix+TypeTitle+IDNumber
+}
+else { 
+   /*case cloning, import....*/
+   Title=UserPrefix+TitleWas
+}
+
+if ( ThisObject->HasAttribute(AttrTitle) == true ) {
+   if (Title.Length()>100) {
+   Title=Title.Extract(0,96)+ "..."
+   }
+   ThisObject->SetAttributeString(AttrTitle,Title)
+}
+
+/* Reset UUID for CATIA Magic duplicates, to remove when a modeler opening is avalaible */
+
+AttrUUID = ModelingTypeName+".UUID"
+if ( ThisObject->HasAttribute(AttrUUID) == false ) {
+   AttrUUID = "UUID"
+}
+
+AttrContentType = ModelingTypeName+".SystemContentType"
+if ( ThisObject->HasAttribute(AttrContentType) == false ) {
+   AttrContentType = "SystemContentType"
+}
+
+ContentType = ""
+if ( CopyFromObject <> NULL and CopyFromObject->HasAttribute(AttrContentType) == true ) {
+   ContentType=CopyFromObject->GetAttributeString(AttrContentType)
+   UUID = ""
+   if ( ThisObject->HasAttribute(AttrUUID) == true
+        and ( ContentType == "CATIA Magic" or ContentType == "CATIA Magic Profile" )) {
+      ThisObject->SetAttributeString(AttrUUID,UUID)
+   }
+}

@@ -1,0 +1,9 @@
+m|StudioCreativeCntModelRTWeb\StuPictureResource.mweb
+b|j|n,u
+b|c|c,m
+v|6.425.0.22078|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\StuPictureResource\StuPictureResource.js|1614009815|1661
+s|StudioCreativeCntModelRTWeb\StuPictureResource.mweb\src\StuPictureResource.js|1614009815|1661
+t|win_b64\webapps\StuPictureResource\StuPictureResourceDefine.js|1614009815|289
+s|StudioCreativeCntModelRTWeb\StuPictureResource.mweb\src\StuPictureResourceDefine.js|1614009815|289

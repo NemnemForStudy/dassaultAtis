@@ -1,0 +1,20 @@
+#####################################################################################################
+# Created by jonghunlee
+# Create Date : 2023-05-11
+# Name : decEWPReleaseActual
+#####################################################################################################
+#del attribute 'decEWPReleaseActual';
+add attribute 'decEWPReleaseActual'
+    description ''
+    type        'date'
+    notmultiline
+    nothidden
+    property 'original name'    value 'decEWPReleaseActual'
+    property 'version'          value 'R2018X'
+    property 'installed date'   value '2023-05-11'
+;
+add property attribute_decEWPReleaseActual on program 'eServiceSchemaVariableMapping.tcl' to attribute 'decEWPReleaseActual';
+#jhlee Add 2023-05-25
+mod attribute decEWPReleaseActual
+	add trigger modify check emxTriggerManager input "AttributeDecEWPReleaseActualModifyCheck"
+;

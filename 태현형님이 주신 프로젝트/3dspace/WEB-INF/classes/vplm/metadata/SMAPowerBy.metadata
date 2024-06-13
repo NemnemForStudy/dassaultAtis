@@ -1,0 +1,63 @@
+<?xml version="1.0" ?>
+
+<!-- SIMULIA PowerBy Dictionary  -->
+<!-- COPYRIGHT DASSAULT SYSTEMES 2018, All rights reserved -->
+
+<Package xmlns="PLMDictionaryUnified" 
+    ModelerType="Top" 
+    Name="SMAPowerBy"
+    Uuid="bb3fb4cc-3f44-42e5-b895-b63f6913974f"
+    UseNames="PRODUCTCFG SIMObjSimulationV5Generic SIMObjSimulationGeneric"
+    BelongsToModeler="SMAPowerBy" 
+    CustomerExposition="Programmer">
+
+    <CAAComment>
+        <ShortRole>SIMULIA PowerBy Modeler Package</ShortRole>
+        <Role>This package includes IRPC extensions for SIMULIA PowerBy modeler.</Role>
+    </CAAComment>
+
+  <!-- File Tree Representation Extension -->
+  <Extension Name="SMAFileTreeRepExtension" 
+      Uuid="d1359732-c847-4af4-a26d-fb866b5726cc"
+      CustomerExposition="ProgrammerOnly"
+      ScopeNames="VPMRepReference;SIMObjSimulationV5RepReferenceGeneric;SIMObjSimulationRepReferenceGeneric"
+	  Specializable="No"
+      Searchable="No" >
+  
+    <!-- File Tree Manifest -->
+    <Simple Name="Manifest"
+      Uuid="9c565d44-97c8-4fd7-92fd-59ab44c338e4"
+      Type="String"
+      Protection="External"
+      MultiValuated="No"
+      UIAccess="None"
+      Faceted="No"  >
+    </Simple>
+
+  </Extension>
+
+
+  <!-- Purpose: For adding an origin app to a Product. -->
+  <!-- Basically, a substitute for V_Usage. -->
+  <!-- Intended for Simpack, for Wizard projects. -->
+  <Extension Name="SMAOriginExtension" 
+      Uuid="a1f6c0ba-f197-4884-b26f-2137039f8c6c"
+      CustomerExposition="ProgrammerOnly"
+      ScopeNames="VPMReference"
+	  Specializable="No"
+      Searchable="No" >
+  
+    <!-- The origin app (i.e., Simpack -->
+    <Simple Name="V_OriginApp"
+      Uuid="6fe43fd6-6a2a-4eda-9c76-cb3a80f75353"
+      Type="String"
+      Protection="External"
+      MultiValuated="No"
+      Faceted="Yes"  >
+	  <Property Name="SIXW" Value="ds6w:kind" />
+	  <Property Name="ExtraCD" Value="Yes" />
+    </Simple>
+  
+  </Extension>
+
+</Package>

@@ -1,0 +1,62 @@
+<?xml version="1.0" ?>
+<!-- COPYRIGHT DASSAULT SYSTEMES 2021, All rights reserved -->
+
+<!-- SIMULIA DesignSight Dictionary  -->
+
+<Package xmlns="PLMDictionaryUnified" 
+    ModelerType="Top" 
+    Name="SMADesignSightModelER"
+    Uuid="354d6e90-7ac2-49e4-a441-63b1c89582e7"
+    UseNames="ERCoreModeler"
+    CustomerExposition="Programmer"
+	Architecture="All"
+    >
+
+    <Comment>
+        SIMULIA DesignSight Modeler
+        Defines entities that support SIMULIA DesignSight.
+    </Comment>
+    <!--
+       - This file is a companion to the metadata file that defines the DesignSight type. VPMDictionary\\SIMObjSimulationGenericSpecialization.metadata.
+       - The RelationClass defined here cannot be defined in VPMDictionary.
+       - - See the Architecture in the above package declaration.
+    -->
+
+
+   <!-- Intent: Provides a mechanism to set a cleanup policy on a DesignSight MSR. 
+   -->
+   <RelationClass Name="SMADSCleanupPolicy" 
+		Uuid="6859848a-1709-4346-9b77-630c16ef0d00" 
+		SuperName="RelationType"
+		Abstract="No" 
+		RelationNature="Pointer"
+		CustomerExposition="Programmer"
+		Specializable="No"
+		CustomerExtensible="No"
+		>
+
+		<SubClause Name="from"  TargetName="DesignSight"
+					propagateconnection="No"  propagatemodify="No"
+					cardinality="One" clone="none"  minorrevision="none"  />
+		<SubClause Name="to"    TargetName="DesignSight"
+					propagateconnection="No"  propagatemodify="No" 
+					cardinality="One" clone="none"  minorrevision="none" />
+		
+		<!-- Cleanup spec -->
+		<!-- Defined as a string so that the cleanup app can store any value -->
+		<!-- ResetOnCloning and ResetOnNewVersion should not be necessary - default to No. -->
+		<Simple Name="CleanupSpec"
+			Uuid="5832ba1b-deb6-4072-a2fc-0713664d4c36"
+			Type="String"
+			Protection="External"
+            MultiValuated="No"
+            Faceted="No"  >
+			<Property Name="ExtraCD" Value="Yes" />
+		</Simple>
+
+        <Method ImplementationType="None">
+          <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+        </Method>
+   </RelationClass>
+
+</Package>

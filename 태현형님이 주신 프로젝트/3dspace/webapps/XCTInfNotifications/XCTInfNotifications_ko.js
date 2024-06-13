@@ -1,0 +1,1 @@
+define("DS/XCTInfNotifications/XCTInfNotifications_ko",{});define("DS/XCTInfNotifications/assets/nls/XCTInfNotifications",{Notifications:{Error:"오류",Information:"정보",Succes:"성공",Warning:"경고"}});

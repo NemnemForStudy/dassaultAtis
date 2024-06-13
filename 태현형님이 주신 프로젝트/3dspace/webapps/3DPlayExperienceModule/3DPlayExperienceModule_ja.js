@@ -1,0 +1,1 @@
+define("DS/3DPlayExperienceModule/3DPlayExperienceModule_ja",{});define("DS/3DPlayExperienceModule/assets/nls/3DPlayExperienceModule",{auto:"自動",automaticQualityAdaptation:"自動品質適応を許可",base:"高品質",displayCandidateQueue:"ロード ボックスを表示",DROP_MSG_LP:"コンテンツをここにドロップします",high:"図面用の高品質",index:"低品質 (利用可能時)",Label:"3DSpace 形状の優先品質",UDL_NoThumbnail:"サムネイルなし"});

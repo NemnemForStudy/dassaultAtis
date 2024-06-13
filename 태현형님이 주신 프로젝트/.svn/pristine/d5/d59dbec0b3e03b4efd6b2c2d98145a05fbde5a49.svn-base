@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <meta name="author" content="Dassault Systèmes" />
+    <meta name="description" content="widget" />
+	<meta name="brand" content="ENOVIA" />
+    <meta name="autoRefresh" content="0" />
+
+   	<title></title>
+	<link rel="icon" type="image/png" href="assets/icons/16/ENOVIA_WIDGET_Favicon.png"/>
+
+    <script type="text/javascript" src="../AmdLoader/AmdLoader.js"></script>
+    <script type="text/javascript" src="../WebappsUtils/WebappsUtils.js"></script>
+    <!-- link rel="stylesheet" type="text/css" href="../c/UWA/assets/css/standalone.css" / -->
+    <link rel="stylesheet" type="text/css" href="../ENOBaseLifeCycleWintop/ENOBaseLifeCycleWintop.css" />
+    <style>
+        .hidden, [hidden] {
+		    display: none!important;
+		}
+	</style>
+    <script type="text/javascript" src="../c/UWA/js/UWA_Standalone_Alone.js"></script>
+
+    <!-- <script type="text/javascript" src="../UIKIT/UIKIT.js"></script> -->
+    <!-- <link rel="stylesheet" type="text/css" href="../UIKIT/UIKIT.css" /> -->
+    <!-- <link rel="stylesheet" type="text/css" href="../common/styles/emxUIList.css" /> -->
+    <!-- <link rel="stylesheet" type="text/css" href="../common/styles/emxUIDefault.css" /> -->
+    <!-- <link rel="stylesheet" type="text/css" href="../csmCentral/style/csStyle.css" /> -->
+
+    <!-- <script type="text/javascript" src="../WebUX/WebUX.js"></script> -->
+
+    <script>
+    
+    	"use strict";
+    	
+	    require([
+	        'UWA/Utils',
+	        'DS/LifecycleServices/LifecycleServicesSettings',
+	        'DS/CompareCommon/WidgetPreferences',
+	        'DS/CompareWidget/CompareWidget',
+	        'i18n!DS/CompareWidget/assets/nls/CompareWidget'
+	    ], function(
+	        UWAUtils,
+	        LifecycleServicesSettings,
+	        WidgetPreferences,
+	        CompareWidget,
+	        NLS
+	    ) {
+	        // parse URL arguments
+	        var url = window.location.href,
+	            tenant = UWAUtils.getQueryString(url, 'tenant'),
+	            selectedItems = UWAUtils.getQueryString(url, 'selectedItems');
+	
+	        window.console.log(
+	            'Loaded CompareWidgetSimuliaWebInWin.html'
+	            + ' with query parameters'
+	            + ' tenant=' + tenant + ','
+	            + ' selectedItems=' + selectedItems.toString()
+	        );
+	        
+			widget.addEvents({
+				
+                onLoad : function(event) {
+                	var LifecycleServicesSettingsOptions = {
+   						'wintop' : true,
+   						'platform_services' :  [{
+   	                        "3DSpace": url.substr(0,url.indexOf('/webapps/CompareWidget/')),
+   	                        "platformId": tenant,
+   	                      }]
+   					};
+   					LifecycleServicesSettings.getInstance(LifecycleServicesSettingsOptions);
+   					var input = {
+   						  "envId": tenant,
+   						  "protocol": "3DXContent",
+   						  "version": "1.0",
+   						  "source": "CMPWIW_AP",
+   						  "widgetId": "9YOMkMGA1YhzAK3dI01M",
+   						  "data": {
+   						    "items": []
+   						  }
+   						};
+   					
+   					var items = selectedItems.split(',');
+   					for (var i=0; i<items.length; i++){
+   						var obj = {
+					        "objectId": items[i],
+					        "idType": "modelID",
+					        "commands": null,
+					        "envId": tenant,
+					        "serviceId": "3DSpace",
+					        "contextId": "",
+					        "displayName": "",
+					        "path": ""
+					      }
+   						input.data.items.push(obj);
+   					}
+   					
+   					widget.setValue('x3dPlatformId', tenant);
+   					widget.setValue("X3DContentId", JSON.stringify(input));
+   					widget.appId = "CompareWidgetSimuliaWebInWin";
+   					widget.isWebInWin = true;
+   					
+   					widget.addEvent( 'ENOLCM/CompareWidget/endLoadingWidget', function() {
+   					    var newPref = {
+   	                            type: 'boolean',
+   	                            name: 'doPLMUpdate',
+   	                            label: NLS['doPLMUpdate'],
+   	                            defaultValue: true
+   	                        };
+   					    var pos = widget.preferences.length - 2;
+   					    widget.preferences.splice(pos, 0, newPref);
+                    });
+   					
+   					// preferences
+   					WidgetPreferences.setDefaults({"openness_revisions":true,"openness_duplicates":true,"useIndex":false,"viewer_display_mode":"select","doPLMUpdate":true});
+   					WidgetPreferences.load(function(){
+   						CompareWidget.onLoad.call(null);   						
+   					});
+                },
+                
+                onViewChange : function(event) {
+                    CompareWidget.onViewChange.call(null, event);
+                },
+
+                onRefresh : function(event) {
+                        CompareWidget.onRefresh.call(null, event);
+                },
+                
+                onResize : function(event) {
+                        CompareWidget.onResize.call(null, arguments);
+                },
+
+                onEdit : function(event) {
+                        CompareWidget.onEdit.apply(null, arguments);
+                },
+
+                endEdit : function(event) {
+                    if (event.submitted) {  // IR-752327. If not submitted, nothing should be applied
+                        CompareWidget.endEdit.apply(null, arguments);
+                    }
+                }
+            });
+	    });
+
+    </script>
+
+</head>
+<body></body>
+</html>

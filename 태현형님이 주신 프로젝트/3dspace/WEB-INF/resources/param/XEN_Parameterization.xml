@@ -1,0 +1,42 @@
+<?xml version="1.0" ?>
+<OOTBParameterization regSuite="XEngineer">
+
+    <Domain id="XENManagement">
+        <Family id="PartNumberMapping">
+            <Parameter id="XENManagement" implementation="com.dassault_systemes.content.parameterization.handler.PartNumberXPHandler">
+            </Parameter>
+        </Family>
+    </Domain>
+    <Domain id="ENGDefinationManagement">
+        <Family id="PartNumberAdminConfigurations">
+            <Parameter id="UniquenessCheckRequired" implementation="com.dassault_systemes.content.parameterization.impl.partnumbermanagement.PartNumberIOtbParameterizationImpl">
+                <Argument id="Argument" type="string" input="checkbox" default="Disabled"/>
+            </Parameter>
+            <Parameter id="AllRevisionsPartNumberSameCheckRequired" implementation="com.dassault_systemes.content.parameterization.impl.partnumbermanagement.PartNumberIOtbParameterizationImpl">
+                <Argument id="Argument" type="string" input="checkbox" default="Disabled"/>
+            </Parameter>
+            <Parameter id="AllowManualInput" implementation="com.dassault_systemes.content.parameterization.impl.partnumbermanagement.PartNumberIOtbParameterizationImpl">
+                <Argument id="Argument" type="string" input="checkbox" default="Disabled"/>
+            </Parameter>
+            <Parameter id="PrefferedEINGenerator" implementation="com.dassault_systemes.content.parameterization.impl.partnumbermanagement.PartNumberIOtbParameterizationImpl">
+                <Argument id="GenerationOfEnterpriseItemNumber" type="string" input="combobox" default="Automatic" maxLength="123">
+                            <Value id = "None"/>
+                            <Value id = "Formula"/>
+                            <Value id = "BusinessLogicScript"/>
+                            <Value id = "ExternalSystem"/>
+                            <Value id = "Automatic"/>
+                </Argument>
+            </Parameter>
+        </Family>
+        <Family id="AlternateSubstituteManagement">
+            <Parameter id="AlternateMgtWorkUnderChange" implementation="com.dassault_systemes.content.parameterization.impl.alternatesubstitutemanagement.AltSubIOtbParameterizationImpl">
+                <Argument id="Argument" type="string" input="checkbox" default="Disabled"/>
+            </Parameter>
+
+            <Parameter id="AlternateForbidParentRevision" implementation="com.dassault_systemes.content.parameterization.impl.alternatesubstitutemanagement.AltSubIOtbParameterizationImpl">
+                <Argument id="Argument" type="string" input="checkbox" default="Disabled"/>
+            </Parameter>
+        </Family>
+    </Domain>
+</OOTBParameterization>
+

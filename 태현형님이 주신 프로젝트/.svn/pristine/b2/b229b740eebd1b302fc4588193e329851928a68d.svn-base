@@ -1,0 +1,34 @@
+################################################################################################
+# Created By thok : 2023. 05. 15
+# Admin Type : command
+# Name : decProjectSpaceProperties
+################################################################################################
+#delete command decProjectSpaceProperties;
+add command 'decProjectSpaceProperties' 
+	description 'Project Properties Command Object' 
+	alt 'emxFramework.Command.Properties' 
+	label 'emxFramework.Command.Properties' 
+	href '${COMMON_DIR}/decemxProjectDetailsViewFormDialogFS.jsp?mode=view'
+	setting 'Target Location' 'content' 
+	setting 'Registered Suite' 'ProgramCentral' 
+	setting 'Image' '${COMMON_DIR}/images/I_SmallProperties16.png' 
+	user all 
+	property application value 'ProgramManagementBase' 
+	property version value '10-0-1-0' 
+	property installer value 'ENOVIAEngineering' 
+	property 'installed date' value '05-15-2023' 
+	property 'original name' value 'decProjectSpaceProperties'
+;	
+add property command_decProjectSpaceProperties on program eServiceSchemaVariableMapping.tcl to command 'decProjectSpaceProperties'
+;
+
+# Modified By thok : 2023. 08. 01
+mod command 'decProjectSpaceProperties' 
+	alt 'emxProgramCentral.Label.Overview' 
+	label 'emxProgramCentral.Label.Overview' 
+;
+
+# Modified by hslee on 2023.09.14 (req by gyugon kim)
+mod command decProjectSpaceProperties
+	label 'PJ Overview'
+;

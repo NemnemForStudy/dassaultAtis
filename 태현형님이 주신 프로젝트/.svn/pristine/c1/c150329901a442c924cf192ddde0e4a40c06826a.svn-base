@@ -1,0 +1,1 @@
+Proj4js.defs["EPSG:6349"] = "+proj=longlat +ellps=GRS80 +geoidgrids=g2012a_conus.gtx,g2012a_alaska.gtx,g2012a_guam.gtx,g2012a_hawaii.gtx,g2012a_puertorico.gtx,g2012a_samoa.gtx +vunits=m +no_defs";

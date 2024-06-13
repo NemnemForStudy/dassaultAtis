@@ -1,0 +1,3 @@
+window.top.performance.mark("PIM_jsAppLoad"),
+/*!  Copyright 2021 Dassault Systemes. All rights reserved. */
+define("DS/PIMwebI3Sapp/PIMwebI3SappInit",["DS/PIMwebI3Dapp/PIMwebI3DappInitAdapt"],function(n){"use strict";return n.extend({setUp:function(n){this._parent(n,"I3S")},dispose:function(n){this._parent(n,"I3S")},onWillEnter:function(n){return this._parent(n,"I3S")},onWillLeave:function(n){return this._parent(n,"I3S")}})});

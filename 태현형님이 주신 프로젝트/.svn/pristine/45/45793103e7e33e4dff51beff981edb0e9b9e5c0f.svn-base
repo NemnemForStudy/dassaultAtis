@@ -1,0 +1,1 @@
+define("DS/MPFCompanyUboModel/MPFCompanyUboModel_en",{});define("DS/MPFCompanyUboModel/assets/nls/CompanyUboModel",{isInvalid:"{0} is invalid",idNumber:"ID number"});

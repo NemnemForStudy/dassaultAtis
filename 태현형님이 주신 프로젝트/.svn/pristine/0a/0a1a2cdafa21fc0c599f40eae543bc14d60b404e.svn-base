@@ -1,0 +1,1 @@
+define("DS/3DPlayAnnotationUtils/3DPlayAnnotationUtils_it",{});define("DS/3DPlayAnnotationUtils/assets/nls/3DPlayAnnotation",{PlaceHolder:"Nuovo testo",ClickToLaunchText:"Fare clic nella visualizzazione per creare una nuova casella di testo",cancelText:"Annulla",validateText:"Convalida",nextText:"Avanti"});

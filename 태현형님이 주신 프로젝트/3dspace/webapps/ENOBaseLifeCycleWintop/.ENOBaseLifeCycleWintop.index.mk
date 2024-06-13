@@ -1,0 +1,10 @@
+m|ENOCollaborativeServicesWebUI\ENOBaseLifeCycleWintop.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.3.23059|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\ENOBaseLifeCycleWintop\ENOBaseLifeCycleWintop.css|1669240367|367
+s|ENOCollaborativeServicesWebUI\ENOBaseLifeCycleWintop.mweb\src\ENOBaseLifeCycleWintop.css|1572554834|540
+t|win_b64\webapps\ENOBaseLifeCycleWintop\ENOBaseLifeCycleWintop.html|1677621400|13815
+s|ENOCollaborativeServicesWebUI\ENOBaseLifeCycleWintop.mweb\src\ENOBaseLifeCycleWintop.html|1676647925|13815
+u|win_b64\code\toolcmds\yuicompressor-2.4.9.bat|1647654585|205

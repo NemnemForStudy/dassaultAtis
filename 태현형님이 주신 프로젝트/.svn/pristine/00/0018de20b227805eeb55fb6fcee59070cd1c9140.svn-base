@@ -1,0 +1,48 @@
+### 230418 Created by CMG
+
+#delete command decVPDocumentStatusCommand;
+
+
+add command decVPDocumentStatusCommand
+	label "emxFramework.Command.decVendorPrintStatusCommand"
+	href '${COMMON_DIR}/emxIndentedTable.jsp?program=decInterfaceDV:findVPDocumentObject&table=decVPDocumentStatusTable&editLink=true&selection=multiple&sortColumnName=Name&submitAction=refreshCaller&HelpMarker=emxhelpprogramlist&sortDirection=ascending&slideinFilter=true&freezePane=DOC_NO,REVISION'
+	setting "Registered Suite" "Framework"
+	setting "Target Location" "content"
+	property "installer" value "ENOVIAEngineering"
+	property "application" value "Framework"
+	property "original name" value "decVPDocumentStatusCommand"
+;
+
+mod menu type_ProjectSpace add command decVPDocumentStatusCommand;
+
+
+add property command_decVPDocumentStatusCommand on program eServiceSchemaVariableMapping.tcl to command decVPDocumentStatusCommand;
+
+
+
+# Modified by hslee on 2023.07.31
+mod command decVPDocumentStatusCommand
+	add setting 'Access Expression' 'type == "Project Space" && attribute[decProjectType] == ongoing' 
+;
+
+# Modified by hslee on 2023.08.01
+mod command decVPDocumentStatusCommand
+	add setting 'Access Expression' '(type == "Project Space" && attribute[decProjectType] == ongoing) || (type == "Phase" && attribute[decWBSType] == "Unit" && to[Project Access Key].from.from[Project Access List].to.attribute[decProjectType] == ongoing)' 
+;
+
+# Modified by choimingi on 2023.08.01
+mod command decVPDocumentStatusCommand href '${COMMON_DIR}/emxIndentedTable.jsp?program=decInterfaceDV:findVPDocumentObject&table=decVPDocumentStatusTable&editLink=true&selection=multiple&sortColumnName=Name&submitAction=refreshCaller&HelpMarker=emxhelpprogramlist&sortDirection=ascending&slideinFilter=true&freezePane=DOC_NO,REVISION&pageSize=300';
+
+
+# Modified by choimingi on 2023.09.06
+mod command decVPDocumentStatusCommand
+ href '${COMMON_DIR}/emxIndentedTable.jsp?program=decInterfaceDV:findVPDocumentObject&table=decVPDocumentStatusTable&editLink=true&selection=multiple&sortColumnName=Name&submitAction=refreshCaller&HelpMarker=emxhelpprogramlist&sortDirection=ascending&pageSize=300&slideinFilter=true&filterParam=codeMaster:Discipline,PO_No:true,Doc_Issued:true';
+
+# Modified by choimingi on 2023.09.06
+mod command decVPDocumentStatusCommand  href '${COMMON_DIR}/emxIndentedTable.jsp?program=decInterfaceDV:findVPDocumentObject&toolbar=decVPDStatusToolbar&table=decVPDocumentStatusTable&selection=multiple&sortColumnName=Name&submitAction=refreshCaller&HelpMarker=emxhelpprogramlist&sortDirection=ascending&pageSize=300&slideinFilter=true&filterParam=codeMaster:Discipline,PO_No:true,Doc_Issued:true'
+;  
+
+# Modified by thok on 2023.11.01
+mod command decVPDocumentStatusCommand
+	add setting 'Access Expression' '(type == "Project Space") || (type == "Phase" && attribute[decWBSType] == "Unit" && to[Project Access Key].from.from[Project Access List].to.attribute[decProjectType] == ongoing)' 
+;

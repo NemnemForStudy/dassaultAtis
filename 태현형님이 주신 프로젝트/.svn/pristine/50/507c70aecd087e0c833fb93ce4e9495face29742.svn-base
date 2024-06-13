@@ -1,0 +1,1 @@
+define("DS/VCXWebSMGApp/VCXWebSMGApp_fr",{});define("DS/VCXWebSMGApp/assets/nls/VCXWebSMGApp",{VCXOpenCmd:"Ouvrir"});

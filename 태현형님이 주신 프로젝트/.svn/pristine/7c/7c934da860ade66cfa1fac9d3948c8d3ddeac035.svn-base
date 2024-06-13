@@ -1,0 +1,9 @@
+m|SNResultUX\AfrWebInWinLeftPanel.mweb
+b|j|n,u
+b|c|n,u
+v|6.425.0.22078|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\AfrWebInWinLeftPanel\AfrWebInWinLeftPanel.html|1647691600|3552
+s|SNResultUX\AfrWebInWinLeftPanel.mweb\src\AfrWebInWinLeftPanel.html|1591614452|3552
+t|win_b64\webapps\AfrWebInWinLeftPanel\AfrWebInWinLeftPanelMgr.js|1592960996|5137
+s|SNResultUX\AfrWebInWinLeftPanel.mweb\src\AfrWebInWinLeftPanelMgr.js|1592960996|5137

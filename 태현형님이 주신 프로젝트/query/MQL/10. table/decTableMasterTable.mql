@@ -1,0 +1,22 @@
+###230418 Created By CMG
+
+#delete table decTableMasterTable system;
+
+
+add table decTableMasterTable system
+column 
+ name 'Name'
+ bus '$<name>'
+ href "${COMMON_DIR}/emxRefreshChannel.jsp?channel=decTableDetailChannel&portal=decTableMasterPortal"
+ label 'emxFramework.JavaScript.Name'
+ setting 'Registered Suite' 'Framework'
+ setting 'Update Function' 'codemasterNameVal'
+ setting 'Update Program' 'decTableMaster'
+column
+ name 'Description'
+ bus '$<description>'
+ label 'emxFramework.JavaScript.Description'
+ setting 'Registered Suite' 'Framework'
+ setting 'Field Type' 'basic'
+ setting 'Admin Type' 'attribute'
+ setting 'Editable' true; 

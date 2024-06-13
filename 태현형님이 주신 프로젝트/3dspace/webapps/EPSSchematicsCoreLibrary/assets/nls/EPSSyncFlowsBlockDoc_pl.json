@@ -1,0 +1,11 @@
+{
+  "version": "1.0.0",
+  "summary": "Ten blok ułatwia synchronizację kontroli i przepływu danych. Wyjściowy port kontrolny zostanie uaktywniony natychmiast po uaktywnieniu wszystkich wejściowych portów kontrolnych. W przypadku bardziej skomplikowanego scenariusza (na przykład w przypadku wielokrotnego wykonywania tego bloku) zapoznaj się z poniższym szczegółowym opisem.",
+  "description": "Każdy wejściowy port kontrolny ma wewnętrzny licznik, który zostaje podwyższony po aktywacji i zmniejszeniu portu, gdy blok wychodzi przez wyjściowy port kontrolny <doc-ocp-name translate=no>Out</doc-ocp-name>. Przy każdej aktywacji wejściowego portu kontrolnego blok jest uruchamiany i wychodzi przez wyjściowy port kontrolny <doc-ocp-name translate=no>Out</doc-ocp-name> tylko wtedy, gdy wszystkie wewnętrzne liczniki wejściowego portu kontrolnego są większe niż 0.",
+  "controlPorts": {
+    "In1": "wyzwala wykonanie bloku i zwiększa licznik wewnętrzny skojarzony z tym portem.",
+    "In2": "wyzwala wykonanie bloku i zwiększa licznik wewnętrzny skojarzony z tym portem.",
+    "Out": "zostaje aktywowany tylko wtedy, gdy wszystkie liczniki wewnętrzne wejściowego portu kontrolnego są większe niż 0. Spowoduje to zmniejszenie wszystkich wewnętrznych liczników wejściowego portu kontrolnego."
+  },
+  "example": null
+}

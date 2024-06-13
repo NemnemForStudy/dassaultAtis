@@ -1,0 +1,177 @@
+.wux-layouts-treeview-icons .wux-layouts-datagridview-icon[icon-type='css'] {
+  height: 19px;
+  width: 19px;
+}
+.dlg_cmd_input_container > text {
+  font-weight: bold;
+}
+.command_dialog.floatingPanelComponent.multiSel .wux-layouts-header,
+.command_dialog.floatingPanelComponent .revise_popup .wux-layouts-header {
+  margin-bottom: 5px;
+}
+/* 
+ comment as we aim to use css grid on the same 
+ div the only thing is that on duplicate it is the child of this div the one that is assigned the css grid
+  .command_dialog.floatingPanelComponent.multiSel .dlg_cmd_content {
+  position: relative !important;
+  display: inline-flex !important;
+  flex-direction: column;
+} */
+
+.multiSel .dlg_cmd_input_container {
+  /* Reduced CSS specificity to simplify override when NOT wanted */
+  margin-top: 7px;
+  overflow: unset;
+}
+
+#dgvContainer {
+  height: 100%;
+  position: relative;
+}
+
+#dgvContainer .wux-controls-expander-body {
+  display: none;
+}
+#dgvContainer .wux-controls-expander-body.wux-controls-expander-body-toggle {
+  display: block;
+  height: inherit;
+  position: static;
+}
+#dgvContainer.hasExpander .wux-windows-immersive-frame {
+  position: absolute;
+  overflow: hidden;
+  top: 30px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+#dgvContainer .wux-controls-abstract.wux-controls-expander-placeholder {
+  height: 100% !important;
+}
+#dgvContainer
+  .wux-controls-expander-placeholder
+  .wux-controls-expander-container.wux-controls-expander-toggle {
+  position: static;
+  height: 100%;
+}
+
+#dgvContainer
+  .wux-controls-expander-placeholder
+  .wux-controls-expander-container.wux-controls-expander-filled-separate
+  > .wux-controls-expander-header {
+  border: unset;
+}
+
+#dgvContainer
+  .wux-controls-expander-placeholder
+  .wux-controls-expander-container.wux-controls-expander-filled-separate
+  > .wux-controls-expander-header,
+.wux-controls-expander-placeholder
+  .wux-controls-expander-container.wux-controls-expander-filled-group
+  > .wux-controls-expander-header {
+  background-color: unset;
+}
+#dgvContainer
+  .wux-controls-expander-placeholder
+  .wux-controls-expander-container.wux-controls-expander-filled-separate
+  > .wux-controls-expander-header:hover,
+.wux-controls-expander-placeholder
+  .wux-controls-expander-container.wux-controls-expander-filled-group
+  > .wux-controls-expander-header:hover {
+  background-color: unset;
+}
+
+#dgvContainer
+  .wux-controls-expander-placeholder
+  .wux-controls-expander-container.wux-controls-expander-filled-separate
+  > .wux-controls-expander-header:hover {
+  border: unset;
+}
+
+
+/* Command agnostic (NR, NB and Duplicate) styles start   */
+/* Todo: find central location where to put the css common to all lifecycle commands NR, NB and Duplicate */
+
+div.command_dialog.multiSel:not(.advanced-mode) .css_grid_container {   
+  display: grid;
+  flex-grow: 1; 
+  grid-auto-rows: minmax(min-content, max-content);
+  grid-gap: 5px;
+  max-height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  align-items: self-start;
+}
+
+div.webinwin_lc_command_dialog.multiSel:not(.advanced-mode) .css_grid_container {   
+  display: grid;
+  flex-grow: 1; 
+  grid-auto-rows: minmax(min-content, max-content);
+  grid-gap: 5px;
+  max-height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  align-items: self-start;
+}
+
+.css_grid_container #dgvContainer.hasExpander, .moduleContent.touch .css_grid_container #dgvContainer.hasExpander{
+	min-height: unset;
+} 
+
+.css_grid_container #dgvContainer{
+  min-height: 90px;
+  margin-bottom: 5px;
+}
+.css_grid_container #dgvContainer.hasExpander.open, .moduleContent.touch .css_grid_container #dgvContainer.hasExpander.open {
+	min-height: 127px;
+}
+
+.firstcol  {
+  grid-column-start: 1;
+}
+
+.command_dialog.multiSel .css_grid_container {
+  grid-template-rows: 1fr;
+  height: 100%;
+  margin-top: 3px;
+  padding-bottom: 8px;
+}
+
+.webinwin_lc_command_dialog.multiSel .css_grid_container {
+  grid-template-rows: 1fr;
+  height: 100%;
+  margin-top: 3px;
+  padding-bottom: 8px;
+}
+
+@media only screen and (min-width: 430px){
+  div.command_dialog:not(.advanced-mode) .css_grid_container{
+    grid-template-columns: minmax(100px, 207px) 1fr;
+   }
+   div.webinwin_lc_command_dialog:not(.advanced-mode) .css_grid_container{
+    grid-template-columns: minmax(100px, 207px) 1fr;
+   }
+  #dgvContainer {
+    grid-column: 1 / 3;    
+  }
+  #enolcm-dup-simple-expander {
+    grid-column: 2 / 3;
+  }
+}
+@media only screen and (max-width: 429px){
+  div.command_dialog:not(.advanced-mode) .css_grid_container{
+    grid-template-columns: minmax(0, 1fr);
+   }
+   div.webinwin_lc_command_dialog:not(.advanced-mode) .css_grid_container{
+    grid-template-columns: minmax(0, 1fr);
+   }
+   .moduleContent.touch .css_grid_container #dgvContainer:not(.hasExpander) {
+    min-height: 130px;
+  }
+  
+  .dlg_cmd_content.hasExpander .css_grid_container{
+	  grid-template-rows: none!important;
+  }
+
+}
+/* Command agnostic styles end */

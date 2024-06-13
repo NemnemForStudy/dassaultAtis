@@ -1,0 +1,186 @@
+Let CopyFromObject(PlmParameter)
+Let ProjectUsage = ""
+Let NameWas = ""
+Let TitleWas = ""
+Let ItemName(STRING)
+Let IsCreatingNewObject(BOOLEAN)
+
+Let ParamType(STRING)
+
+Let Operation(STRING)
+Let TypeTitle(STRING)
+Let UserPrefix = ""
+Let TypePrefix(STRING)
+Let TypeAbbreviation(STRING)
+
+Let Title = ""
+Let Name = ""
+Let Description = ""
+
+Let ID(STRING)
+Let IDNumber(STRING)
+Let IDVNumber(STRING)
+Let IDType(STRING)
+Let IDSite(STRING)
+
+Let NameSize = 0
+Let IDSize = 0
+Let TitleSize = 0
+
+/* variable set-up */
+Operation=Parameters->GetAttributeString("OperationId")
+/* IR-386417 : ParamType is PARParameter and not PlmParameter */
+ParamType = "PARParameter"
+TypeTitle = "Parameter"
+
+/*standard case of this BL is creation of new object*/
+IsCreatingNewObject=true
+
+CopyFromObject=NULL
+
+//if (Parameters->HasAttribute("FirstImport") == true ) {  /* BriefcaseImport or FBDIImport */
+	/*synchronization operation only (update) for ThisObject, =>no creation*/
+	//IsCreatingNewObject = Parameters.GetAttributeBoolean("FirstImport")
+//} 
+
+if ( Parameters->HasAttribute("Project") == true ) {
+	ProjectUsage=Parameters->GetAttributeString("Project")
+}
+
+if (Parameters->HasAttribute("IdCloningString") == true) {
+	UserPrefix = Parameters->GetAttributeString("IdCloningString")
+}
+
+if (UserPrefix == "" and Parameters->HasAttribute("IdString") == true ) {
+    UserPrefix = Parameters->GetAttributeString("IdString")
+    if (UserPrefix == NULL) UserPrefix = ""
+}
+
+//if (IsCreatingNewObject == false) {
+	//UserPrefix = ""
+//}
+
+if ( Parameters->HasAttribute("CopyFrom") == true ) {  /* Cloning/SaveAsNew */
+    set CopyFromObject = Parameters->GetAttributeObject("CopyFrom")
+	if ((CopyFromObject <> NULL) and (CopyFromObject->HasAttribute("name") == true)) {
+		NameWas = CopyFromObject->GetAttributeString("name")
+	}
+}
+
+/*former name defined?*/
+if  ((NameWas == "") and (ThisObject->HasAttribute("name") == true)) {
+    NameWas = ThisObject->GetAttributeString("name")
+}
+
+if (ThisObject->HasAttribute("Title") == true) {
+	TitleWas = ThisObject->GetAttributeString("Title")
+}
+if ((TitleWas == "") and (CopyFromObject <> NULL) and (CopyFromObject->HasAttribute("Title") == true)) {
+	TitleWas = CopyFromObject->GetAttributeString("Title")
+}
+if ((TitleWas == "") and (CopyFromObject <> NULL) and (CopyFromObject->HasAttribute("name") == true)) {
+	TitleWas = CopyFromObject->GetAttributeString("name")
+}
+
+TypeAbbreviation=""
+TypeAbbreviation=BuildMessageNLS(ParamType,ParamType+".Abbreviation")
+if ( (TypeAbbreviation == "") or (TypeAbbreviation == NULL) ) {
+   TypeAbbreviation="PAR"
+}
+
+TypePrefix="" 
+TypePrefix=BuildMessageNLS(ParamType,ParamType+".Prefix")
+if ( (TypePrefix == "") or (TypePrefix == NULL) ) {
+   TypePrefix="PAR"
+}
+
+/* Apply business logic  for Creation */ 
+
+/*IDNumber=STAutoNumber(ParamType,7)*/
+STAutoNumbers(ParamType, 7, IDNumber, IDVNumber)
+
+/* object naming setup*/
+if ((NameWas <> "") or (UserPrefix <> "")) {
+	Name = UserPrefix + NameWas + IDNumber
+} else {
+	Name = UserPrefix + TypePrefix + IDNumber
+}
+
+/* IR-386417 : if UserPrefix is empty unicity of Name is ensured by IDNumber otherwise Name=NameWas */
+//if ((NameWas =="") or (NameWas==NULL) or (UserPrefix == "") or (UserPrefix == NULL)) {
+   //Name=UserPrefix+TypePrefix+IDNumber
+//}
+//else { 
+   /*case cloning, import, partfamily, ....*/
+   //Name=UserPrefix+NameWas+IDNumber
+//}
+
+if ( ThisObject->HasAttribute("name") == true ) {
+   /* IR-IR-095936V6R2012 */
+   NameSize=Name.Length()
+   if (NameSize>100) {
+		IDSize=IDNumber.Length()
+		Name=Name.Extract(0,96-IDSize)+ "..." + IDNumber
+   }
+   ThisObject->SetAttributeString("name",Name)
+}
+
+/*set the Title attribute*/
+if ((TitleWas=="") or (TitleWas==NULL)) {
+	//Title=UserPrefix+TypeTitle+"-"+IDVNumber
+	Title=TypeTitle+"-"+IDVNumber
+} else {
+	//Title=UserPrefix+TitleWas
+	Title=TitleWas
+}
+
+if (ThisObject->HasAttribute("Title") == true) {
+	TitleSize=Title.Length()
+	if (TitleSize>100) {
+		Title=Title.Extract(0,96)+"..."
+	}
+
+	ThisObject->SetAttributeString("Title", Title)
+}
+
+/*set description but do not cover unseting description */
+if ( Description <> "" and ThisObject->HasAttribute("description") == true) {
+   ThisObject->SetAttributeString("description",Description)
+}
+
+/*identification setup*/
+if ((NameWas == "") or (NameWas == NULL)) {
+	/* define P/S depending on project:  kind of standard or not */ 
+	IDType=""
+	if ( STStandardProject(ProjectUsage) == true ) {
+		IDType="S"+TypeAbbreviation
+	}
+	else {
+		IDType=TypeAbbreviation
+	}
+
+	/*get Site number or Site string*/ 
+    IDSite=STSiteNumber()
+
+	ID=IDType+"-"
+	if (IDSite<>"") ID=ID+IDSite+"-"
+	ID=ID+IDNumber
+
+	if ( ThisObject->HasAttribute("name") == true ) {
+	    ThisObject->SetAttributeString("name",ID)
+	}
+
+	if (CopyFromObject <> NULL) { /* set id cloning chain */
+		if (CopyFromObject->HasAttribute("name") == true){
+			NameWas=CopyFromObject->GetAttributeString("name")
+		}
+        if (CopyFromObject->HasAttribute("version") == true ) { 
+            ItemName=CopyFromObject->GetAttributeString("version")
+            NameWas=NameWas + " " + ItemName
+        }
+
+		if ( ThisObject->HasAttribute("E_fromName") == true ) {
+			ThisObject->SetAttributeString("E_fromName",NameWas)
+		}
+	}   
+}

@@ -1,0 +1,22 @@
+################################################################################################
+# Created By thok : 2023. 05. 15
+# Admin Type : command
+# Name : decProjectSpacePropertiesPowerView
+################################################################################################
+#delete command decProjectSpacePropertiesPowerView;
+add command 'decProjectSpacePropertiesPowerView' 
+	description 'PropertiesPowerView Command' 
+	label 'emxProgramCentral.Common.Details' 
+	href '${COMMON_DIR}/emxPortal.jsp?portal=decProjectPropertiesPortal&showPageHeader=false&HelpMarker=emxhelpprojectdetails' 
+	setting 'Registered Suite' 'ProgramCentral' 
+	setting 'Licensed Product' 'ENO_PGE_TP'
+	setting 'Access Expression' 'false'
+	user all 
+	property application value 'ProgramManagementBase' 
+	property version value '216' 
+	property installer value 'ENOVIAEngineering' 
+	property 'installed date' value '05-15-2023' 
+	property 'original name' value 'decProjectSpacePropertiesPowerView'
+;
+add property command_decProjectSpacePropertiesPowerView on program eServiceSchemaVariableMapping.tcl to command 'decProjectSpacePropertiesPowerView'
+;

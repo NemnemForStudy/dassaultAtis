@@ -1,0 +1,194 @@
+/* THUMBNAILS */
+.ThumbnailThumbContainer {
+  padding: 5px;
+  display: inline-block;
+  text-align: left;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Chrome/Safari/Opera */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none;
+}
+
+.ThumbnailThumbMainDiv {
+  overflow: hidden;
+  position: relative;
+  background-color: rgb(252, 252, 252);
+  outline: 1px solid #e2e4e3;
+}
+
+.ThumbnailThumbMainDiv:hover {
+  background-color: rgba(245, 245, 245, 1);
+  cursor: pointer;
+}
+
+.ThumbnailThumbMainDiv:active {
+  background-color: rgba(235, 235, 235, 1);
+  cursor: pointer;
+}
+
+.ThumbnailThumbMainDiv[selected-mode="true"] {
+	border: 3px solid #368ec4;
+}
+
+.ThumbnailThumbMainDiv[selected-mode="2"] {
+	border: 3px solid #77797c;
+}
+
+.DELBaseThumbnail[active-mode="true"] {
+	border: 2px solid #368ec4;
+}
+
+/*
+.ThumbnailThumbMainDiv[active-mode="true"] .thumbnail-active {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  border-bottom: 30px solid transparent;
+  border-left: 30px solid #368ec4;
+  opacity: 0.7;
+  z-index: 10;
+}
+*/
+
+.ThumbnailThumbMainDiv[active-mode="true"] .thumbnail-active::after {
+  content: "";
+  position: absolute;
+  left: -18px;
+  top: -20px;
+  border-left: 1px solid #e2e4e3;
+  width: 40px;
+  height: 44px;
+  transform: rotate(45deg);
+  background-color: #368ec4;
+  z-index: 100;
+}
+
+.ThumbnailThumbMainDiv[active-mode="false"] .thumbnail-active {
+  display: none;
+}
+
+.ThumbnailThumbMainDiv[active-mode="false"] .thumbnail-active::after {
+  display: none;
+}
+
+.ThumbnailDisabledDiv {
+  background-color: rgba(245, 245, 245, 0.5);
+  width: 100%;
+  height: 100%;
+  transition: visibility 0s linear 0.3s, opacity 0.2s linear;
+}
+
+.ThumbnailPreviewDiv {
+  background-color: #f4f5f6;
+  background-position: center center;
+  background-repeat: no-repeat;
+  position: relative;
+  top:5px;
+  left:5px;
+  display: inline-block;
+}
+
+.ThumbnailPreviewThumbDiv {
+  width: calc(100% - 10px);
+  height: calc(100% - 10px);
+}
+
+.ThumbnailPreviewTileDiv {
+  width: 74px;
+  height: 74px;
+}
+
+.ThumbnailTileContentDiv {
+  width: 190px;
+  display: inline-block;
+  position: relative;
+  vertical-align: top;
+  top: 5px;
+  left: 10px;
+}
+
+.ThumbnailThumbContentDiv {
+  background-color: rgba(255, 255, 255, 0.9);
+  position: absolute;
+  width: 100%;
+  border-top: 1px solid #e2e4e3;
+  transition: top 0.2s;
+}
+
+.ThumbnailTextDiv{
+  margin: 0;
+  vertical-align: top;
+  display: inline-block;
+}
+
+.ThumbnailText{
+  color: #368ec4;
+  font-size: 14px;
+  width:100%;
+  word-wrap: break-word;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+  margin: 6px 0;
+  position: relative;
+}
+
+.DELBaseTitle {
+  color: #368ec4;
+  font-size: 14px;
+  margin: 6px 0px;
+  -webkit-user-select: auto;
+}
+
+.ThumbnailSubtitle {
+  color: #77797C;
+  font-size: 12px;
+}
+
+.ThumbnailAddText {
+  color: #000000;
+  font-size: 12px;
+}
+
+.ThumbnailIcon {
+  background-position: center top;
+  background-size: 22px 22px;
+  background-repeat: no-repeat;
+  height: 100%;
+  width:22px;
+  margin:5px 5px 0px 8px;
+  display:inline-block;
+}
+
+.ThumbnailColorDiv {
+  width: 5px;
+  height: 100%;
+  position: absolute;
+  z-Index: 1;
+}
+
+.ThumbnailSpinner {
+  height:20px;
+  position: absolute;
+  top: calc(50% - 14px);
+  left: calc(50% - 16px);
+}
+
+.ThumbnailCheckBoxDiv {
+  position: absolute;
+  top: 0px;
+  width: 30px;
+  height: 30px;
+}
+
+.ThumbnailCheckDiv {
+  position: relative;
+  top: 6px;
+  left: 8px;
+  min-width: 14px;
+  min-height: 14px;
+  width: 14px;
+  height: 14px;
+}

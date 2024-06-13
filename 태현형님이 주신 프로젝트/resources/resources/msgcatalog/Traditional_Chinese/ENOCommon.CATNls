@@ -1,0 +1,91 @@
+<meta charset="UTF-8"/>
+//---------------------------------------------------------------------------
+// Path_CustomSchemaDir
+//---------------------------------------------------------------------------
+Path_CustomSchemaDir.Title="自訂架構路徑";
+Path_CustomSchemaDir.Label1="指定自訂架構檔案存在的目錄。";
+Path_CustomSchemaDir.Resume="自訂架構路徑：/p1";
+Path_CustomSchemaDir.Resume.Title="自訂架構路徑";
+StudioInstall.Path_CustomSchemaDir.Resume.Title="自訂架構路徑";
+
+//---------------------------------------------------------------------------
+// Path_CustomSchemaDir
+//---------------------------------------------------------------------------
+CustomSchemaDir.Title="自訂架構路徑";
+CustomSchemaDir.Label1="指定自訂架構檔案存在的目錄。";
+CustomSchemaDir.Resume="自訂架構路徑：/p1";
+//---------------------------------------------------------------------------
+// Check_SchemaToInstall
+//---------------------------------------------------------------------------
+Check_SchemaToInstall.Title="架構選擇器";
+Check_SchemaToInstall.Label1="指定要安裝的架構。";
+Check_SchemaToInstall.Label2="按一下「下一步」以繼續。";
+//---------------------------------------------------------------------------
+// Specify Schema Types 
+//---------------------------------------------------------------------------
+Check_SchemaToInstall.KeyNone="無";
+Check_SchemaToInstall.KeyAll="全部";
+Check_SchemaToInstall.Resume="架構類型：/p1";
+
+
+//---------------------------------------------------------------------------
+// An UIGroup contains Text_DataTBS and Text_IndexTBS
+// Text_DataTBS
+//---------------------------------------------------------------------------
+Text_DataTBS.Title="生產資料保險箱詳細資料";
+Text_DataTBS.Label1="指定 eService 生產資料保險箱的資料和索引表格空間。";
+Text_DataTBS.Label2="若要使用資料庫的預設儲存區域，請將欄位留白。";
+Text_DataTBS.Label3="\n";
+Text_DataTBS.Label4="資料表格空間";
+Text_DataTBS.Resume="資料表格空間：/p1";
+//---------------------------------------------------------------------------
+// Text_IndexTBS
+//---------------------------------------------------------------------------
+Text_IndexTBS.Label1="\n";
+Text_IndexTBS.Label2="索引表格空間";
+Text_IndexTBS.Resume="索引表格空間：/p1";
+
+
+//---------------------------------------------------------------------------
+// BOOL_UpdateDB
+//---------------------------------------------------------------------------
+
+BOOL_UpdateDB.Title="資料庫更新選項";
+BOOL_UpdateDB.Label1="是否要更新資料庫？";
+BOOL_UpdateDB.Label2="若取消核取，資料庫將不會更新";
+BOOL_UpdateDB.Label3="您必須手動執行產生的 TCL 程式";
+BOOL_UpdateDB.CheckButton="更新資料庫";
+BOOL_UpdateDB.Resume.true="資料庫將會更新";
+BOOL_UpdateDB.Resume.false="資料庫將不會更新";
+
+
+//---------------------------------------------------------------------------
+// Text_SuperUserName
+//---------------------------------------------------------------------------
+Text_SuperUserName.Title="進階使用者//密碼";
+Text_SuperUserName.Label1="指定擁有企業和系統管理權限的使用者名稱。";
+Text_SuperUserName.Resume="進階使用者名稱：/p1";
+
+//---------------------------------------------------------------------------
+// Text_SuperUserPwd
+//---------------------------------------------------------------------------
+Text_SuperUserPwd.Title="進階使用者//密碼";
+Text_SuperUserPwd.Label1="指定擁有企業和系統管理權限的使用者密碼。";
+
+//---------------------------------------------------------------------------
+// Hot Fix installer - Creator password check
+//---------------------------------------------------------------------------
+ConnectionCreatorFailed.Title="進階使用者的資料庫連線錯誤";
+ConnectionCreatorFailed.Text="已回報下列錯誤：\n/p1";
+//---------------------------------------------------------------------------
+// IR-240244V6R2014: Check that there is no trace to Stdout activated (otherwise error message and Quit/Retry buttons only, see InsCommonInstallerOnly.xml)
+//---------------------------------------------------------------------------
+tracesToStdoutDetected.Title="Stdout MQL 追蹤偵測";
+tracesToStdoutDetected.Text="部分 Stdout 的 MQL 追蹤已啟動。\n可能會使安裝無法成功完成。\n請停用 MQL 追蹤，或將其重新導向至檔案。";
+
+//---------------------------------------------------------------------------
+// IR-431459: Check that there are no SLF4J duplicate bindings in MX_CLASSPATH (otherwise error message and Quit/Retry buttons only)
+//---------------------------------------------------------------------------
+SLF4JCheckerJarTempCopy_failed.Text="無法將 SLF4J 檢查的 jar\n從 /P1\n複製至 /P2\n(rc = /P3)。\n/P4\n/P5\n請啟用複製，然後按一下「重試」。";
+SLF4JCheck_failed.Title="SLF4J 檢查";
+SLF4JCheck_failed.Text="SLF4J 初始化失敗：\n/P1\n可能會使安裝無法成功完成。\n請更正 SLF4J 狀態 (至少在安裝時間內)，然後按一下「重試」。";

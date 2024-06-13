@@ -1,0 +1,1 @@
+define("DS/DMUComment/DMUComment_ru",{});define("DS/DMUComment/assets/nls/DMUComment",{highlightCommentPrefix:"Выделение комментария",positionedCommentPrefix:"Комментарий размещен",commentPrefix:"Комментарий",commentCreationLabel:"Выберите точку, маркер или текст, чтобы связать с ними новый комментарий"});

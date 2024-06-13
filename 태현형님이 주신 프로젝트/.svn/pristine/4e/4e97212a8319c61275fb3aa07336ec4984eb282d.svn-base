@@ -1,0 +1,9 @@
+m|DELWebViewerController\DELWebViewerProxyManager.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.3.23065|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\DELWebViewerProxyManager\DELWebViewerProxyManager.js|1678138804|11965
+s|DELWebViewerController\DELWebViewerProxyManager.mweb\src\ProxyManager.js|1677820506|88567
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

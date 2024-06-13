@@ -1,0 +1,10 @@
+m|UWPClient\FrameLayout.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.1.22327|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\FrameLayout\FrameLayout.css|1669240408|416
+s|UWPClient\FrameLayout.mweb\src\frame-layout.css|1467894167|574
+t|win_b64\webapps\FrameLayout\frame-layout.html|1647691965|20848
+s|UWPClient\FrameLayout.mweb\src\frame-layout.html|1518529004|20848
+u|win_b64\code\toolcmds\yuicompressor-2.4.9.bat|1647654585|205

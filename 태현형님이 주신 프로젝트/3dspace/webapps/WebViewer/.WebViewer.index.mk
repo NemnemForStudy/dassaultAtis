@@ -1,0 +1,10 @@
+m|WebViewers\WebViewer.mweb
+b|j|c,m
+b|c|n,m
+v|6.425.0.22078|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\WebViewer\WebViewer.js|1647692329|3102
+s|WebViewers\WebViewer.mweb\src\SceneGraphHelper.js|1574674283|8857
+u|WebViewers\WebViewer.mweb\src\WebViewer.js|1595654492|0
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

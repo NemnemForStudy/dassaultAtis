@@ -1,0 +1,1228 @@
+<!doctype html>
+<!--Add refresh correspondences -->
+<html lang="en">
+<head>
+	<title>Camera Calibration</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<link rel=stylesheet href="css/base.css"/>
+	<style>  
+		body {
+			
+			text-align:center;
+		}
+		#info {
+				color: white; /*black;*/
+				position: absolute;
+				top: 0px; width: 100%;
+				padding: 5px;
+				z-index: 100;
+				font-size:200%
+			}
+		#status {
+			color: skyblue;
+			position: absolute;
+			bottom: 0px; width: 100%;
+			padding: 5px;
+			z-index: 100;
+			border-radius: 5px;
+		} 
+		#GenStudySolution {
+            background-color: skyblue;
+            position: absolute;
+            top : 0px;
+			right:0px;
+            padding: 5px;
+            width: 200px;
+            z-index: 100;
+            border-radius: 10px;
+        }
+        #BuildModel {
+            background-color: skyblue;
+            position: absolute;
+            bottom: 0px;
+			right:0px;
+            padding: 5px;
+            width: 200px;
+            z-index: 100;
+            border-radius: 10px;
+        }
+        #GA_Dialog {
+            text-align: left;
+        }
+        input[type=number]{
+    		width: 50px;
+		} 
+        
+		a {
+			color: #0080ff;
+		}
+
+		b { color: lightgreen }
+        
+
+	</style>
+	<script>
+		function Init() { /*
+			$(window).on("orientationchange",function(event){
+			  alert("Orientation is: " + window.orientation);
+			}); */
+		}
+	</script>
+</head>
+<body onload="Init()">
+
+<p id="errorMessage"></p>
+
+<video id="monitor" autoplay width="160" height="120" style="visibility: hidden; float:left;"></video>
+<canvas id="videoImage" width="160" height="120" style="visibility: hidden; float:left;"></canvas>
+
+
+<script>
+navigator.getUserMedia = navigator.webkitGetUserMedia || navigator.getUserMedia;
+window.URL = window.URL || window.webkitURL;
+
+
+var camvideo = document.getElementById('monitor');
+
+	if (!navigator.getUserMedia) 
+	{
+		document.getElementById('errorMessage').innerHTML = 
+			'Sorry. <code>navigator.getUserMedia()</code> is not available.';
+		//return;
+	}
+	navigator.getUserMedia({video: true}, gotStream, noStream);
+
+function gotStream(stream) 
+{
+	if (window.URL) 
+	{   camvideo.src = window.URL.createObjectURL(stream);   } 
+	else // Opera
+	{   camvideo.src = stream;   }
+
+	camvideo.onerror = function(e) 
+	{   stream.stop();   };
+
+	stream.onended = noStream;
+}
+
+function noStream(e) 
+{
+	var msg = 'No camera available.';
+	if (e.code == 1) 
+	{   msg = 'User denied access to use camera.';   }
+	document.getElementById('errorMessage').textContent = msg;
+}
+</script> 
+<script src="js/Three58.js"></script>
+<script src="js/Detector.js"></script>
+<!--script src="js/Stats.js"></script-->
+<!--script src="js/OrbitControls.js"></script-->
+<script src="js/THREEx.KeyboardState.js"></script>
+<script src="js/THREEx.FullScreen.js"></script>
+<script src="js/THREEx.WindowResize.js"></script>
+
+<!-- jQuery code to display an information button and box when clicked. -->
+<!--script src="js/jquery-1.9.1.js"></script>
+<script src="js/jquery-ui.js"></script-->
+<script src="../../../../../../JavascriptMVC-3.3/can/lib/jquery.1.9.1.js"></script>
+<script src="../../../../../../jQueryUI/js/jquery-ui-1.11.2.js"></script>
+<link rel=stylesheet href="css/jquery-ui.css" />
+<link rel=stylesheet href="css/info.css"/>
+<script src="js/info.js"></script>
+<script src="../../../../../../numeric.js-1.2.6/numeric-1.2.6.js"></script>
+<script src="../../num_util.js"></script>
+<script src="../../../MetaHueristicSearch/MetaHueristicSearch.js"></script>
+<script src="../../../MetaHueristicSearch/Examples/TestGA_Sphere.js"></script>
+<script src="../../GA_Position.js"></script>
+<script src="../../GA_Orientation.js"></script>
+<script src="../../GA_CamCalibration.js"></script>
+<script src="../../CameraCalibrationAPIs.js"></script>
+<!--script src="Geolocation_JScript.js" > </script-->
+
+<div id="infoButton"></div>
+<div id="infoBox" title="Demo Information">
+Movement controls: <br/>
+<ul>
+<li>W/S: Translate Forward/Backward
+<li>A/D: Rotate Left/Right
+<li>Q/E: Translate Left/Right
+</ul>
+This three.js demo is part of a collection at
+<a href="http://stemkoski.github.io/Three.js/">http://stemkoski.github.io/Three.js/</a>
+</div>
+<div id="info"><br/>
+<!--b>O</b> orthographic <b>P</b> perspective <br/> 
+<b>ZRotation(alpha)</b> <span id="ZRotation"></span> <br/> 
+<b>XRotation(beta)</b> <span id="XRotation"></span> <br/>
+<b>YRotation(gamma)</b> <span id="YRotation"></span> <br/>
+<b>window width</b> <span id="WinWidth"> </span> <br/>
+<b>window height</b> <span id="WinHeight"> </span> <br/>
+<b>window orientation</b> <span id="WinOrientation"> </span> <br/-->
+</div>
+
+<div id="status">    
+  
+  <a download="JSONData.txt" id="downloadlink" style="display: none">Download Data</a>
+</div>
+ 
+<div id="BuildModel">
+ <input type="file" id="file_input" class="foo" /></br>
+  <form id="stdDevCutOffForm"> 
+    Noise Deviation<input type="number" name="stdDevValue" min="0" value="0"><br>
+    <input type="button" value="+" id="plus" onclick="javascript:increase()">
+    <input type="button" value="-" id="minus" onclick="javascript:decrease()">
+     <!-- Neighbours input type="number" name="Neibhors" min="1" value="2"> 
+	<input type="button" value="+" id="plus" onclick="javascript:increaseCutOff()">
+    <input type="button" value="-" id="minus" onclick="javascript:decreaseCutOff()"><br> 
+	Iteration Limit<input type="number" name="IterationLimit" min="50" value="100">
+    <input type="button" value="+" id="plus" onclick="javascript:increaseIterationLimit()">	
+    <input type="button" value="-" id="minus" onclick="javascript:decreaseIterationLimit()"-->
+  </form>
+  <button type="button" id="refresh_points_btn">Clear Key Points</button></br>
+  <hr>
+  Target  <input type="radio" name="target_window" value="0" checked="checked">Top W
+  <input type="radio" name="target_window" value="1">Buttom W</br>
+  <button type="button" id="evaluate_target_cam_btn">Evaluate Camera</button></br>
+  <!--input type="checkbox" id="3DSolEval">3D Sol. Eval<br-->
+  Sols.<button type="button" id="go_to_next_sol_btn">>></button>
+  <button type="button" id="go_to_prev_sol_btn"><<</button><br>
+  Gens.<button type="button" id="go_to_next_gen_btn">>></button>
+  <button type="button" id="go_to_prev_gen_btn"><<</button><br>
+  <!--button type="button" id="toggle_btn_for_sequencing_btn">Activate Sequencing</button><br-->
+</div>
+<div id="GenStudySolution">  
+  <button type="button" id="calibration_btn">Calibration</button></br> 
+  <input type="radio" name="UseGA_DLT" value = "DLT">DLT,
+  <input type="radio" name="UseGA_DLT" value = "GA" checked="checked">GA</br>
+  <button type="button" id="settingGA_options">Set GA options</button>
+  <!--input type="checkbox" id="FindP" checked="checked">Position 
+  <input type="checkbox" id="FindR" checked="checked"> Orientation
+  X min: <input type="number" id="PosiRangeXmin" min="-500" max="500" value="-500">, X max: <input type="number" id="PosiRangeXmax" min="-500" max="500" value="500"></br>
+  Y min: <input type="number" id="PosiRangeYmin" min="-500" max="500" value="-10">, Y max: <input type="number" id="PosiRangeYmax" min="-500" max="500" value="500"></br>
+  Z min: <input type="number" id="PosiRangeZmin" min="-500" max="500" value="-500">, Z max: <input type="number" id="PosiRangeZmax" min="-500" max="500" value="500"></br>
+  <input type="checkbox" id="UseInitSol">Use Buttom Camera as Initial Sol.</br>
+  Position Radius <input type="number" id="BSF_Posi_Radius"  value="100"> </br>
+  Y Angle (degree) <input type="number" id="BSF_Y_Angle" value="60" > </br>
+  Z Angle (degree) <input type="number" id="BSF_Z_Angle" value="60">
+</br>  
+<hr>  
+<input type="checkbox" id="selectionRepetationAllowed">Selection Repetation Allowed </br>
+*Parent1 Selection Rule:</br>
+<input type="radio" name="parent1SelectionRule" value="Random"> Random</br>
+<input type="radio" name="parent1SelectionRule" value="EvalProportional" checked="checked">Proportion to Eval. 
+</br>
+*Parent2 Selection Rule: </br>
+<input type="radio" name="parent2SelectionRule" value="Random"> Random</br>
+<input type="radio" name="parent2SelectionRule" value="EvalProportional"checked="checked">Proportion to Eval. </br>
+<input type="radio" name="parent2SelectionRule" value="MatchingToMate">Matching to Parent1  </br> 
+
+*Crossover Rule: </br>
+<input type="radio" name="crossoverRule" value="Even">Evenly </br>
+<input type="radio" name="crossoverRule" value="EvalProportional" checked="checked">Proportional</br-->  
+
+</div> 
+<div id="GA_Dialog">
+        <ul>
+            <li><a href="#GA_General">General</a></li>
+            <li><a href="#Looping">Looping Control</a></li>
+            <li><a href="#FilterKeyPoints">Filter Keypoints</a></li> 
+            <li><a href="#CrossOver">CrossOver</a></li>
+            <li><a href="#Mutation">Mutation</a></li>
+            <li class="ui-tab-dialog-close"></li>
+        </ul>
+        <div>
+            <div id="GA_General"> 
+              Scope: <input type="checkbox" id="FindP" checked="checked">Position,  <input type="checkbox" id="FindR" checked="checked">Orientation </br>
+              <hr>
+              Ranges: </br>
+              X min: <input type="number" id="PosiRangeXmin" min="-500" max="500" value="-500">, 
+              Y min: <input type="number" id="PosiRangeYmin" min="-500" max="500" value="-500">,
+              Z min: <input type="number" id="PosiRangeZmin" min="-500" max="500" value="-500"> </br>
+              X max: <input type="number" id="PosiRangeXmax" min="-500" max="500" value="500">, 
+              Y max: <input type="number" id="PosiRangeYmax" min="-500" max="500" value="500">, 
+              Z max: <input type="number" id="PosiRangeZmax" min="-500" max="500" value="500"></br>
+              <hr>
+              <input type="checkbox" id="UseInitSol">Use Current Solution as Initial Point</br>
+              Position Radius <input type="number" id="BSF_Posi_Radius"  value="300">,
+              Y Angle (d) <input type="number" id="BSF_Y_Angle" value="60" >,
+              Z Angle (d) <input type="number" id="BSF_Z_Angle" value="60"> </br>
+              <input type="checkbox" id="debug_flag">console out for debuging </br>
+            </div>  
+            <div id="Looping">  
+                ** Unit Loop Termination: Iteration Limit: <input type="number" id="IterationLimit" min="10"  value="100"></br>   
+                ** Global Loop Termination ** </br> 
+                  <input type="checkbox" id="UseHigherLoopOnGA" checked="checked">Use Higer level Loop</br>
+                  Iteration Limit for resetting when no improvement: <input type="number" id="ResetIterationLimitForNoImprovement"  value="3"> (negative value for ne reset) </br> 
+                  Target Evaluation Value: <input type="number" id="TargetEvaluationValue"  value=-1> (error normalized 2D window [-1,1] * [-1,1])(negative value for no target)</br> 
+                  Time Out Limit: <input type="number" id="TimeOutLimit" min="0.5"  value="1"> sec. (negative value for no time out)</br> 
+            </div>
+            <div id="FilterKeyPoints">
+               <input type="checkbox" id="SelectKeyPoints" checked="checked"> Select Keypoints </br>
+               ** Noise Filtering ** </br>
+               Outlier Removing Theshold: <input type="number" id="OutlierThesholdSigmaN" min="-1" max="3" value="-1"> * standard deviation of image offsets.
+               (negative value for no outlier filtering out)</br> 
+            </div>
+
+            <div id="CrossOver">
+                <input type="checkbox" id="selectionRepetationAllowed">Selection Repeat Allowed </br>
+                -- Parent1 Rule: 
+                <input type="radio" name="parent1SelectionRule" value="Random"> Random, 
+                <input type="radio" name="parent1SelectionRule" value="EvalProportional" checked="checked">Proportion to Eval. 
+                </br>
+                -- Parent2 Rule: 
+                <input type="radio" name="parent2SelectionRule" value="Random"> Random,
+                <input type="radio" name="parent2SelectionRule" value="EvalProportional"checked="checked">Proportion to Eval.,
+                <input type="radio" name="parent2SelectionRule" value="MatchingToMate">Matching to Parent1  </br> 
+                -- Parents Influence Ratio: 
+                <input type="radio" name="crossoverRule" value="Even">Evenly,
+                <input type="radio" name="crossoverRule" value="EvalProportional" checked="checked">Proportional
+            </div>
+            <div id="Mutation">
+                -- High Level GA -- </br>
+                -- Minimum Ratio: <input type="number" id="MutationHLMinRatio" min="0" max="100" value="10"> %,
+                   Maximum Ratio: <input type="number" id="MutationHLMaxRatio" min="0" max="100" value="60"> %</br>
+                -- Ratio Control Policy: 
+                <input type="radio" name="MutationHLRatioPolicy" value="Static" checked="checked">Fixed,  
+                <input type="radio" name="MutationHLRatioPolicy" value="Increasing"> Increasing, 
+                <input type="radio" name="MutationHLRatioPolicy" value="Descreasing"> Decreasing </br>
+                -- Mutation Base: 
+                <input type="radio" name="MutationHLBasedOn" value="EachSolution">Each sol.,  
+                <input type="radio" name="MutationHLBasedOn" value="GBestSolution" checked="checked"> Global Best sol., 
+                <input type="radio" name="MutationHLBasedOn" value="Random"> Random
+                <hr>
+                -- Low Level GA -- </br>
+                -- Minimum Ratio: <input type="number" id="MutationLLMinRatio" min="0" max="100" value="10"> %,
+                   Maximum Ratio: <input type="number" id="MutationLLMaxRatio" min="0" max="100" value="60"> %</br>
+                -- Ratio Control Policy: 
+                <input type="radio" name="MutationLLRatioPolicy" value="Static" checked="checked">Fixed,  
+                <input type="radio" name="MutationLLRatioPolicy" value="Increasing"> Increasing, 
+                <input type="radio" name="MutationLLRatioPolicy" value="Descreasing"> Decreasing </br>
+                -- Mutation Base: 
+                <input type="radio" name="MutationLLBasedOn" value="EachSolution">Each sol.,  
+                <input type="radio" name="MutationLLBasedOn" value="LBestSolution" checked="checked"> Local Best, 
+                <input type="radio" name="MutationLLBasedOn" value="GBestSolution"> Global Best, 
+                <input type="radio" name="MutationLLBasedOn" value="Random"> Random  
+            </div>
+        </div>
+</div>
+<!-- ------------------------------------------------------------ -->
+<div id="debugOut">
+
+</div>
+
+<div id="ThreeJS" style="position: absolute; left:0px; top:0px"></div>
+<script>
+$.fn.tabbedDialog = function () {
+    this.tabs(); 
+    this.dialog({width:200,height:220, draggable:true, closeOnEscape:true}); 
+    //$("#GA_Dialog").dialog().data("dialog").uiDialog.draggable("option","containment",false);
+    //this.uiDialog.draggable("option", "containment", false);
+    //this.find('.ui-tab-dialog-close').append($('a.ui-dialog-titlebar-close'));
+    //this.find('.ui-tab-dialog-close').css({'position':'absolute','right':'0', 'top':'23px'});
+    //this.find('.ui-tab-dialog-close > a').css({'float':'none','padding':'0'});
+    var tabul = this.find('ul:first');
+    this.parent().addClass('ui-tabs').prepend(tabul).draggable('option','handle',tabul); 
+    this.siblings('.ui-dialog-titlebar').remove();
+    tabul.addClass('ui-dialog-titlebar');
+}
+$('#GA_Dialog').tabbedDialog();
+
+$( "#settingGA_options" ).click(function() { 
+   $('#GA_Dialog').dialog("open");
+}); 
+  
+
+function increase() {
+    var myCurrentNumber = parseInt(stdDevCutOffForm.elements["stdDevValue"].value);
+    stdDevCutOffForm.elements["stdDevValue"].value = myCurrentNumber + 1;
+    //clearCorespondingPointParis_Marks();
+}
+
+function decrease() {
+    var myCurrentNumber = parseInt(stdDevCutOffForm.elements["stdDevValue"].value);
+    if(myCurrentNumber <= 0) {
+        alert("Cannot be less than 0.");
+    }
+    else{
+	    stdDevCutOffForm.elements["stdDevValue"].value = myCurrentNumber - 1;
+	    //clearCorespondingPointParis_Marks()
+    }
+}
+
+function increaseCutOff() {
+    var myCurrentNumber = parseInt(stdDevCutOffForm.elements["Neibhors"].value);
+    stdDevCutOffForm.elements["Neibhors"].value = myCurrentNumber + 1; 
+}
+
+function decreaseCutOff() {
+    var myCurrentNumber = parseInt(stdDevCutOffForm.elements["Neibhors"].value);
+    if(myCurrentNumber <= 0) {
+        alert("Cannot be less than 0.");
+    }
+    else{
+	    stdDevCutOffForm.elements["Neibhors"].value = myCurrentNumber - 1; 
+    }
+}
+
+function increaseIterationLimit() {
+    var myCurrentNumber = parseInt(stdDevCutOffForm.elements["IterationLimit"].value);
+    stdDevCutOffForm.elements["IterationLimit"].value = myCurrentNumber + 10; 
+}
+
+function decreaseIterationLimit() {
+    var myCurrentNumber = parseInt(stdDevCutOffForm.elements["IterationLimit"].value);
+    if(myCurrentNumber <= 50) {
+        alert("Cannot be less than 50.");
+    }
+    else{
+	    stdDevCutOffForm.elements["IterationLimit"].value = myCurrentNumber - 10; 
+    }
+}
+
+var PickingMarkers=[];
+PickingMarkers.push([]); PickingMarkers.push([]); 
+
+function addPickingMarker(sindex, x, y, z) {
+	var Geom =  new THREE.CubeGeometry(3,3,3);  
+	var material = new THREE.MeshBasicMaterial( {color: 0xff0000} );
+	var mesh = new THREE.Mesh( Geom, material );  
+	mesh.position.set(x, y, z);  
+	PickingMarkers[sindex].push(mesh);
+	scenes[sindex].add(mesh);  // to draw 
+}
+
+function addPickingMarkerNew(sindex, x, y, z) {
+	var Geom =  new THREE.CubeGeometry(3,3,3);  
+	var material = new THREE.MeshBasicMaterial( {color: 0x00b233} );
+	var mesh = new THREE.Mesh( Geom, material ); 
+	//console.log("3D point of World coordinate with noise: P=[" + x + ", " + y + ", " + z + "]");
+	mesh.position.set(x, y, z);  
+	PickingMarkers[sindex].push(mesh);
+	scenes[sindex].add(mesh);  // to draw 
+}
+
+function clearPickingMarkers(sindex) {
+	var length = PickingMarkers[sindex].length;
+	for(var ii=0; ii<length; ii++) { 
+		scenes[sindex].remove(PickingMarkers[sindex][ii]); 
+	}	
+	PickingMarkers[sindex]=[]; // clear 
+} 
+
+function clearCorespondingPointParis_Marks()
+{
+	correspondingPointPairs=[]; 
+	clearPickingMarkers(0);
+} 
+
+$( "#refresh_points_btn" ).click(function() { 
+	clearCorespondingPointParis_Marks(); 
+}); 
+
+$( "#evaluate_target_cam_btn" ).click(function() { 
+    if(G_Solutions && G_Solutions.length>0) {
+        var bsf_sol = G_Solutions[G_sol_index];
+        console.log("solution index="+G_sol_index);
+        var camera_index = parseInt($('input:radio[name=target_window]:checked').val());
+        var c = camera[camera_index];
+        var eval = 
+            evaluate_in_nomalized_window(THREE, bsf_sol.P, bsf_sol.Q, c.projectionMatrix, c.matrixWorldInverse, GWIDTH, GHEIGHT)
+        var eval_2D =  
+            evaluate_in_nomalized_window2(bsf_sol.P, bsf_sol.Q, c.projectionMatrix.elements, c.matrixWorldInverse.elements, GWIDTH, GHEIGHT, c.near);
+        console.log("eval_2D="+eval_2D); 
+    }
+  
+}); 
+
+var Sequencing = false;
+$( "#toggle_btn_for_sequencing_btn" ).click(function() { 
+	 if(Sequencing) Sequencing = false;
+     else Sequencing = true; 
+     if(Sequencing)
+        $("#toggle_btn_for_sequencing_btn").text("Deactivate Sequencing");
+     else
+        $("#toggle_btn_for_sequencing_btn").text("Activate Sequencing");
+});
+
+function getIndexFromPairs(p, correspondingPointPairs) {
+	for(var i=0; i<correspondingPointPairs.length; i++) {
+		var pi = correspondingPointPairs[i][1]; // 1 is P 
+		if(compare_two_vectors(p, pi)==0)
+			return i;
+	} 
+	return -1; // not found 
+}
+
+function addP_QtoScene(P, Q, correspondingPointPairs) { 
+    //var inserted_no = 0;
+	clearPickingMarkers(1);
+	console.log("|P|="+P.length, ", |correPs|=" + correspondingPointPairs.length);
+    for(var i=0; i<P.length; i++) {  
+		var index = getIndexFromPairs(P[i], correspondingPointPairs);
+        var p = P[i];
+        //console.log("P[i]="+p[0]+","+p[1]+","+p[2]+","+p[3]);
+        try{
+            var Pe = correspondingPointPairs[index][3]; // error 3D point projected; 
+            addPickingMarker(1, P[i][0], P[i][1], P[i][2]);
+            addPickingMarkerNew(1, Pe[0], Pe[1], Pe[2]);
+        }
+		catch(error) {
+            console.log(error+"index="+index);
+        }
+	}
+}
+
+var G_sol_index = 0;
+var G_Solutions=[];
+
+
+$( "#go_to_next_sol_btn" ).click(function() {
+	if(!G_Solutions || G_Solutions.length==0)
+		return; 
+	G_sol_index++;
+	if(G_sol_index>=G_Solutions.length)
+		G_sol_index = 0;
+    displaySolIndex();
+	setSolution(G_Solutions, G_sol_index); 
+});
+
+$( "#go_to_prev_sol_btn" ).click(function() {
+	if(!G_Solutions || G_Solutions.length==0)
+		return;
+	G_sol_index--;
+	if(G_sol_index < 0)
+		G_sol_index = G_Solutions.length-1;
+    displaySolIndex();
+	setSolution(G_Solutions, G_sol_index);	 
+});
+
+
+var G_Generations = [];
+var G_gen_index = 0;
+$( "#go_to_next_gen_btn" ).click(function() {
+	if(!G_Generations || G_Generations.length==0)
+		return; 
+	G_gen_index++;
+	if(G_gen_index>=G_Generations.length)
+		G_gen_index = 0;
+    displayGenIndex();
+	setGenerationSolution(G_Generations, G_gen_index); 
+});
+
+$( "#go_to_prev_gen_btn" ).click(function() {
+	if(!G_Generations || G_Generations.length==0)
+		return;
+	G_gen_index--;
+	if(G_gen_index < 0)
+		G_gen_index = G_Generations.length-1;
+    displayGenIndex();
+	setGenerationSolution(G_Generations, G_gen_index);	 
+});
+
+function displaySolIndex( ) {
+  var idx_PN = G_sol_index + "/" + G_Solutions.length;
+   $("#go_to_next_sol_btn").text(idx_PN+">>");
+   $("#go_to_prev_sol_btn").text("<<"+idx_PN); 
+}
+function displayGenIndex( ) {
+  var idx_PN = G_gen_index + "/" + G_Generations.length;
+   $("#go_to_next_gen_btn").text(idx_PN+">>");
+   $("#go_to_prev_gen_btn").text("<<"+idx_PN); 
+}
+function setGenerationSolution(G_Generations, G_gen_index) {
+    G_Solutions = G_Generations[G_gen_index];
+    G_gen_index = 0;
+    setSolution(G_Solutions, G_gen_index);
+}
+
+function setSolution(Solutions, s_index) {
+   var bsf_sol = Solutions[s_index];
+   console.log("solution index="+s_index);
+   setCameraPositionOrientation(camera[1], bsf_sol, THREE); 
+   addP_QtoScene(bsf_sol.P, bsf_sol.Q, correspondingPointPairs); 
+   
+    var c = camera[1];   
+    var matrixWorldInverse = getThreeMatrix4(THREE,  bsf_sol.RRT); 
+    var eval_2D = //evaluate_in_nomalized_window(sol.P, sol.Q, c.projectionMatrix, matrixWorldInverse, GWIDTH, GHEIGHT);
+              evaluate_in_nomalized_window2(bsf_sol.P, bsf_sol.Q, c.projectionMatrix.elements, matrixWorldInverse.elements, GWIDTH, GHEIGHT, c.near);
+    console.log("eval="+eval_2D);
+   //var eval_2d = evaluate_in_nomalized_window(THREE, bsf_sol.P, bsf_sol.Q, c.projectionMatrix, MtxWorldInverse, GWIDTH, GHEIGHT);
+   //var eval_3d = evaulate_sol_by_3D_points(THREE, bsf_sol, pickingObjects, c.fov, c.aspect, c.near, c.far, GWIDTH, GHEIGHT) ; 
+} 
+
+function set_3D_evaluations(Solutions, camera){
+	var N = Solutions.length;
+	var c = camera;
+	for(var ii=0; ii<N; ii++) {
+		var sol = Solutions[ii];
+		var eval_3d = evaulate_sol_by_3D_points(THREE, sol, pickingObjects, c.fov, c.aspect, c.near, c.far, GWIDTH, GHEIGHT) ;
+		sol["eval_3D"] = eval_3d;
+	}
+}
+
+function set_2D_evaluations(Solutions, camera){
+	var N = Solutions.length;
+	var c = camera;
+	for(var ii=0; ii<N; ii++) {
+		var sol = Solutions[ii]; 
+		var matrixWorldInverse = getThreeMatrix4(THREE,  sol.RRT); 
+		var eval_2D = //evaluate_in_nomalized_window(sol.P, sol.Q, camera.projectionMatrix, matrixWorldInverse, GWIDTH, GHEIGHT);
+					  evaluate_in_nomalized_window2(sol.P, sol.Q, camera.projectionMatrix.elements, matrixWorldInverse.elements, GWIDTH, GHEIGHT, c.near);
+		sol["eval"] = eval_2D;
+	}
+}
+
+function sortSolutions(Solutions, camera) {
+	var checked = $('#3DSolEval').is(':checked');
+	if(checked ){
+		set_3D_evaluations(Solutions, camera);
+		Solutions.sort( function(a,b){ return a.eval_3D - b.eval_3D; } );
+	} else {
+		set_2D_evaluations(Solutions, camera);
+		Solutions.sort( function(a,b){ return a.eval_2D - b.eval_2D; } ); //{ return a.eval - b.eval; } );
+	}
+}
+
+$('#3DSolEval').change(function() {
+    if(this.checked) { 
+		set_3D_evaluations( G_Solutions, camera[0]);
+		G_Solutions.sort( function(a,b){ return a.eval_3D - b.eval_3D; } );
+	} else {
+		set_2D_evaluations(G_Solutions, camera[0]);
+		G_Solutions.sort( function(a,b){ return a.eval_2D - b.eval_2D; } ); //{ return a.eval - b.eval; } );
+	}
+	G_sol_index = 0; 
+	setSolution(G_Solutions, G_sol_index);
+	displaySolIndex();
+});
+  
+$( "#calibration_btn" ).click(function() {
+    //alert( "Compute [R|T] matrix." ); 
+	if(correspondingPointPairs.length == 0) {
+		alert("No key points!");
+	}
+	else 
+	{ 
+        time_object.StartTiming();
+        //var _log = window.console.log;
+        //window.console.log = function(str){};
+        
+		//var Solutions = getAnalyticSolutions(correspondingPointPairs, Sequencing, GWIDTH, GHEIGHT, true);  
+        //var Solutions = getSolutionsByLeastSquare(correspondingPointPairs); 
+		var NoOfNeighbor = 2; // parseInt(stdDevCutOffForm.elements["Neibhors"].value);
+		var iteration_limit = parseFloat($('#IterationLimit').val()); //  parseInt(stdDevCutOffForm.elements["IterationLimit"].value);
+		
+        var GA_DLT = $('input:radio[name=UseGA_DLT]:checked').val()
+        if(GA_DLT == "GA") {
+            var maxSols = 40;
+            var camMtx = new THREE.Matrix4().copy(camera[1].matrixWorld);  
+            var PosiRanges = [[parseFloat($('#PosiRangeXmin').val()), parseFloat($('#PosiRangeXmax').val())],
+                              [parseFloat($('#PosiRangeYmin').val()), parseFloat($('#PosiRangeYmax').val())],
+                              [parseFloat($('#PosiRangeZmin').val()), parseFloat($('#PosiRangeZmax').val())]];
+            
+            var Ox = camMtx.elements[12], Oy = camMtx.elements[13]; Oz = camMtx.elements[14];
+            var UseInitSol = $('#UseInitSol').is(':checked');
+			var prjMtx = new THREE.Matrix4().copy(camera[1].projectionMatrix);  
+            var parent1SelectionRule =  $('input:radio[name=parent1SelectionRule]:checked').val();
+            var parent2SelectionRule =  $('input:radio[name=parent2SelectionRule]:checked').val();
+            var selectionRepetationAllowed = $('#selectionRepetationAllowed').is(':checked');
+            var crossoverRule =  $('input:radio[name=crossoverRule]:checked').val();
+            var posi_radius = parseFloat($('#BSF_Posi_Radius').val());
+            var y_angle = parseFloat($('#BSF_Y_Angle').val());
+            var z_angle = parseFloat($('#BSF_Z_Angle').val());
+            var debug_flag = $('#debug_flag').is(':checked');
+ //           var mutationOptions = getMutationOptions();
+            var TargetEvaluationValue = parseFloat($('#TargetEvaluationValue').val()) ;
+            var TimeOutLimit = parseFloat($('#TimeOutLimit').val()) ;
+            var UseHigherLoopOnGA = $('#UseHigherLoopOnGA').is(':checked');
+            var ResetIterationLimitForNoImprovement = parseInt($('#ResetIterationLimitForNoImprovement').val()) ;
+            var useAllKeypoints = false;
+            var OutlierThesholdSigmaN = parseFloat($('#OutlierThesholdSigmaN').val()) ;
+            if($('#FindP').is(':checked') && !$('#FindR').is(':checked'))  {
+                if(UseInitSol) {
+                    camMtx = new THREE.Matrix4().copy(camera[0].matrixWorld);  // replace orientation as camera[0] 
+                    camMtx.elements[12]=Ox;  camMtx.elements[13]=Oy;   camMtx.elements[14]=Oz; // the position is remain as camera[1]
+                }
+                PosiRanges = [[Ox-200, Ox+200], [Oy-200, Oy+200], [Oz-200, Oz+200]]; // position is known. 
+                G_Generations = searchGASolutionsFromArray(correspondingPointPairs, iteration_limit, maxSols, 
+								     prjMtx.elements, camMtx.elements, PosiRanges, GWIDTH, GHEIGHT, UseInitSol,
+                                     parent1SelectionRule,parent2SelectionRule, selectionRepetationAllowed, crossoverRule, debug_flag, useAllKeypoints, 
+                                     TargetEvaluationValue/*no threshold*/, TimeOutLimit, posi_radius);
+                G_gen_index = G_Generations.length-1;
+                G_Solutions = G_Generations[G_gen_index];
+            } 
+            else if(!$('#FindP').is(':checked') && $('#FindR').is(':checked')) { 
+               if(UseInitSol) {
+                    var cam0Mtx = new THREE.Matrix4().copy(camera[0].matrixWorld);  // replace translation as camera[0] 
+                    camMtx.elements[12]=cam0Mtx.elements[12]; camMtx.elements[13]=cam0Mtx.elements[13]; camMtx.elements[14]=cam0Mtx.elements[14]; 
+                }
+                PosiRanges = [[Ox, Ox], [Oy, Oy], [Oz, Oz]]; // position is known. 
+                G_Generations =searchGARotationFromArray(correspondingPointPairs,  iteration_limit,  maxSols, 
+							 	     prjMtx.elements, camMtx.elements, PosiRanges, GWIDTH, GHEIGHT, camera[1].near, UseInitSol,
+                                     parent1SelectionRule, parent2SelectionRule, selectionRepetationAllowed, crossoverRule, debug_flag,useAllKeypoints, 
+                                     TargetEvaluationValue/*no threshold*/, TimeOutLimit, y_angle, z_angle);
+                G_gen_index = G_Generations.length-1;searchGARotationFromArray
+                G_Solutions = G_Generations[G_gen_index];
+            }
+            else if($('#FindP').is(':checked') && $('#FindR').is(':checked')) {  
+                if(UseInitSol)
+                    PosiRanges = [[Ox-200, Ox+200], [Oy-200, Oy+200], [Oz-200, Oz+200]]; // position is known. 
+                G_Generations =searchGACamCalibrationFromArray(correspondingPointPairs, iteration_limit,  maxSols, 
+							 	     prjMtx.elements, camMtx.elements, PosiRanges, GWIDTH, GHEIGHT, camera[1].near, UseInitSol,
+                                     parent1SelectionRule, parent2SelectionRule, selectionRepetationAllowed, crossoverRule, debug_flag,useAllKeypoints, 
+                                     TargetEvaluationValue/*no threshold*/, TimeOutLimit, posi_radius, y_angle, z_angle, OutlierThesholdSigmaN ); 
+                G_gen_index = G_Generations.length-1;
+                G_Solutions = G_Generations[G_gen_index];
+            }
+            else {
+                G_Generations = [];
+                alert("select what do you want to search by GA!");
+            } 
+		} 
+        else {
+			var camMtxElem = (camMtx)? camMtx.elements: null;
+            G_Generations = [];
+			G_Solutions = searchAprxSolutionsFromArray(correspondingPointPairs, NoOfNeighbor, iteration_limit, maxSols, camMtxElem); 
+		}
+            
+		//var World_from_Camera = cam.matrixWorld;  
+ 		
+		if( !G_Solutions || G_Solutions.length == 0) { 
+			alert("No solution searched");
+			//alert("No valide solution found.");
+			//clearCorespondingPointParis_Marks();
+		}
+		else{ 
+           //sortSolutions(G_Solutions);
+           //printoutRRT_Ks(G_Solutions); 
+		   sortSolutions(G_Solutions, camera[0]);
+		   G_sol_index = 0; 
+           setSolution(G_Solutions, G_sol_index);
+		  
+           //console.log("GW="+GWIDTH+"/GH="+GHEIGHT+"="+GWIDTH/GHEIGHT); 
+		} 
+        time_object.EndTiming();
+        //window.console.log = _log;
+         
+		console.log("Elapsed Time:"+time_object.this_time_difference + " (secs)");
+	}// else |same point|>4
+	
+	var textFile = null,
+	makeTextFile = function (text) {
+		var data = new Blob([text], {type: 'text/plain'});
+
+		//If we are replacing a previously generated file we need to
+		//manually revoke the object URL to avoid memory leaks.
+		if (textFile !== null) {
+		  window.URL.revokeObjectURL(textFile);
+		}
+
+		textFile = window.URL.createObjectURL(data);
+
+		return textFile;
+	};
+	var textContainer = {Points: correspondingPointPairs,  
+	                     camera_position: camera[0].position, 
+						 camera_rotation:{x: camera[0].rotation.x,
+						                  y: camera[0].rotation.y, z: camera[0].rotation.z}}; 
+	var textContainerString = JSON.stringify(textContainer);
+	//var cameraData = [];
+	//cameraData.push(camera[0].position, camera[0].rotation);
+	//camera[0].position.set(50,50,50);
+	//camera[0].lookAt(new THREE.Vector3(0,50,-100));
+	var link = document.getElementById('downloadlink');
+	link.href = makeTextFile(textContainerString);
+	//link.href = makeTextFile(myJsonString);
+	//link.href = makeTextFile(myJsonString + '/n' + cameraString);
+	link.style.display = 'block';  
+});
+
+/*
+	Three.js "tutorials by example"
+	Author: Lee Stemkoski
+	Date: July 2013 (three.js v59dev)
+*/
+	
+// MAIN
+// standard global variables
+var container;
+var keyboard = new THREEx.KeyboardState();
+var clock = new THREE.Clock(); 
+var players = []; 
+
+// SCENE
+var	scenes = []  
+
+var camera=[]
+var topCamera=[]
+var renderers=[];
+ 
+var normW = new THREE.Vector2(); // for ray-casting 
+var pickingObjects = []; // candidate of ray-casting 
+var correspondingPointPairs = []; // {(2Dp, 3Dp)} 
+
+init(scenes, 0);
+init(scenes, 1);
+animate(scenes);
+
+// FUNCTIONS 		
+function init(scenes, index) { 
+	scenes[index] = new THREE.Scene();
+	// CAMERA
+	var SCREEN_WIDTH = window.innerWidth, SCREEN_HEIGHT = window.innerHeight;
+	var VIEW_ANGLE = 45, ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 1.0, FAR = 20000;
+	camera[index] = new THREE.PerspectiveCamera( VIEW_ANGLE, ASPECT, NEAR, FAR);
+	scenes[index].add(camera[index]);
+	camera[index].position.set(0,50,0); // 0,0,400);
+	camera[index].lookAt(new THREE.Vector3(0,50,-100)); // scenes[index].position);	
+	// RENDERER
+	if ( Detector.webgl )
+		renderers[index] = new THREE.WebGLRenderer( { antialias:true } );
+	else
+		renderers[index] = new THREE.CanvasRenderer(); 
+	renderers[index].setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+	container = document.createElement( 'div' );
+	// CSS added so the hidden HTML elements do not reposition this one
+	container.style.cssText = "position:absolute;top:0px;left:0px;";
+	document.body.appendChild( container );
+	container.appendChild( renderers[index].domElement );
+	THREEx.WindowResize(renderers[index], camera[index]);
+	THREEx.FullScreen.bindKey({ charCode : 'm'.charCodeAt(0) }); 
+	
+	document.addEventListener( 'mousedown', onDocumentMouseDown, false ); // raycasting 
+	
+	// LIGHT
+	var light = new THREE.PointLight(0xffffff);
+	light.position.set(0,250,0);
+	scenes[index].add(light);
+	// FLOOR
+	var floorTexture = new THREE.ImageUtils.loadTexture( 'images/checkerboard.jpg' );
+	floorTexture.wrapS = floorTexture.wrapT = THREE.RepeatWrapping; 
+	floorTexture.repeat.set( 10, 10 );
+	var floorMaterial = new THREE.MeshBasicMaterial( { map: floorTexture, side: THREE.DoubleSide } );
+	var floorGeometry = new THREE.CircleGeometry(500, 20);
+	// var floorGeometry = new THREE.PlaneGeometry(1000, 1000, 10, 10);
+	var floor = new THREE.Mesh(floorGeometry, floorMaterial); 
+	
+	floor.position.y = -10;//-0.5;
+	floor.rotation.x = Math.PI / 2;
+	scenes[index].add(floor);
+	if(index==0) pickingObjects.push(floor);
+	
+	// SKYBOX/FOG
+	var materialArray = []; 
+	materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'images/dawnmountain-xpos.png' ) }));
+	materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'images/dawnmountain-xneg.png' ) }));
+	materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'images/dawnmountain-ypos.png' ) }));
+	materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'images/dawnmountain-yneg.png' ) }));
+	materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'images/dawnmountain-zpos.png' ) }));
+	materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'images/dawnmountain-zneg.png' ) })); 
+	for (var i = 0; i < 6; i++)
+	   materialArray[i].side = THREE.BackSide;
+	var skyboxMaterial = new THREE.MeshFaceMaterial( materialArray ); 
+	//var skyboxMaterial = new THREE.MeshPhongMaterial( { color: 0xffff00, specular: 0x009900, shininess: 30, shading: THREE.FlatShading, side: THREE.BackSide });
+	var skyboxGeom = new THREE.CubeGeometry( 5000, 5000, 5000, 1, 1, 1 );
+	var skybox = new THREE.Mesh( skyboxGeom, skyboxMaterial );
+	scenes[index].add( skybox );
+	if(index==0) pickingObjects.push(skybox);
+	
+	
+	players[index] = new THREE.Object3D();
+	scenes[index].add( players[index] ); 
+	
+	var movieMaterial = new THREE.MeshBasicMaterial( {overdraw: true, side:THREE.DoubleSide } );
+	// the geometry on which the movie will be displayed;
+	var movieGeometry = new THREE.PlaneGeometry( 100, 100, 1, 1 );
+	// attach video to a mesh that will move with the camera[index]
+	//this.movieScreen = new THREE.Mesh( movieGeometry, movieMaterial );
+
+	// add a frame to the image.
+	var frameGeo = new THREE.CubeGeometry(120, 120, 20);
+	var frameMat = new THREE.MeshLambertMaterial( {color:0x888888, emissive:0x000011} );
+	this.frameMesh = new THREE.Mesh( frameGeo, frameMat );
+	
+	// "attach" player to camera[index] 
+	players[index].position = camera[index].position;
+	players[index].rotation = camera[index].rotation;
+	//player.add( movieScreen );
+	players[index].add( frameMesh );
+	// position the movieScreen so it is attached
+	//   to the front and center of the frameMesh
+	//movieScreen.position.y = 5;
+	//movieScreen.position.z = -12; 
+	
+	///////////////////
+	// Mirror Sphere //
+	///////////////////
+	/*
+	var sphereGeom =  new THREE.SphereGeometry( 50, 64, 32 ); // radius, segmentsWidth, segmentsHeight 
+	var mirrorSphereMaterial = new THREE.MeshPhongMaterial( { emissive: 0x8888aa, color:0x999999  } );
+	mirrorSphere = new THREE.Mesh( sphereGeom, mirrorSphereMaterial ); 
+	mirrorSphere.position.set(0, 50, 0); 
+	scenes[index].add(mirrorSphere);
+	if(index==0) pickingObjects.push(mirrorSphere);
+	*/
+	var CubeGeom =  new THREE.CubeGeometry(100, 100, 100); // radius, segmentsWidth, segmentsHeight   
+	var EastYellowCube = new THREE.Mesh(CubeGeom, new THREE.MeshPhongMaterial( { color: 0xffff00, specular: 0x009900, shininess: 30, shading: THREE.FlatShading } )); 
+	EastYellowCube.position.set(300, 50, 0); // X is East 
+	scenes[index].add(EastYellowCube);
+	if(index==0) pickingObjects.push(EastYellowCube);
+	
+	var NorthGreenCube = new THREE.Mesh(CubeGeom, new THREE.MeshPhongMaterial( { color: 0x00ff00,specular: 0x009900, shininess: 30, shading: THREE.FlatShading } ));
+	NorthGreenCube.position.set(0, 50, 300); // Z is South 
+	scenes[index].add(NorthGreenCube);
+	if(index==0) pickingObjects.push(NorthGreenCube);
+	
+	var SouthPurpleCube = new THREE.Mesh(CubeGeom, new THREE.MeshPhongMaterial( { color: 0xff00ff,specular: 0x009900, shininess: 30, shading: THREE.FlatShading } ));
+	SouthPurpleCube.position.set(0, 50, -300); // Z is South 
+	scenes[index].add(SouthPurpleCube);
+	if(index==0) pickingObjects.push(SouthPurpleCube);
+	
+	var WestBlueCube = new THREE.Mesh(CubeGeom, new THREE.MeshPhongMaterial( { color: 0x0000ff,specular: 0x009900, shininess: 30, shading: THREE.FlatShading } )); 
+	WestBlueCube.position.set(-300, 50, 0); // -X is West   
+	scenes[index].add(WestBlueCube);
+	if(index==0) pickingObjects.push(WestBlueCube);
+	
+	//camera[index].position.set(114,50,-61);
+	//camera[index].rotation.set(3.14, 0.875, 3.14);
+	
+	//////////////////////
+	// Secondary camera[index] //
+	//////////////////////
+	//this.topCamera[index] 
+	topCamera[index] = new THREE.PerspectiveCamera( VIEW_ANGLE*1.5, ASPECT, NEAR, FAR );
+	scenes[index].add(topCamera[index]);
+	topCamera[index].position.set(0, 600, 600); // 0,200+50,550+200);
+	topCamera[index].lookAt(scenes[index].position);
+	
+	// other camera[index] stuff
+	renderers[index].setSize( SCREEN_WIDTH, SCREEN_HEIGHT );
+	renderers[index].setClearColor( 0x000000, 1 );
+	renderers[index].autoClear = false;
+}
+
+function animate(scenes) {
+    var moving_camera_index = $('input:radio[name=target_window]:checked').val();
+    moving_camera_index = (moving_camera_index)?moving_camera_index:0;
+    
+	updateMovingCamera(camera[moving_camera_index], players[moving_camera_index]); 
+	var Width = window.innerWidth/2.0, Height = window.innerHeight/2.0
+	render(camera[0], topCamera[0], scenes[0], renderers[0], 1, 1+ Height, Width, Height);
+	render(camera[1], topCamera[1], scenes[1], renderers[1], 1, 1, Width, Height);	
+    requestAnimationFrame( function() {
+		animate(scenes);
+	});
+}
+
+function updateMovingCamera(moving_camera, player) {	 
+	/*if ( keyboard.pressed("p") ) // pause webcam
+		video.pause();
+	if ( keyboard.pressed("r") ) // resume webcam
+		video.play();
+	*/
+	
+	var delta = clock.getDelta(); // seconds.
+	var moveDistance = 100 * delta; // 100 pixels per second
+	var rotateAngle = Math.PI / 2 * delta;   // pi/2 radians (90 degrees) per second
+
+	var previousPosition = moving_camera.position.clone();
+	var previousRotation = moving_camera.rotation.clone();
+	
+	var bCRT_Changed = false;
+	// move forwards/backwards/left/right (local coordinates)
+	/*if ( keyboard.pressed("W") )
+		camera[0].translateZ( -moveDistance );
+	if ( keyboard.pressed("S") )
+		camera[0].translateZ(  moveDistance );
+	if ( keyboard.pressed("Q") )
+		camera[0].translateX( -moveDistance );
+	if ( keyboard.pressed("E") )
+		camera[0].translateX(  moveDistance );	*/
+	
+	if ( keyboard.pressed("X") && keyboard.pressed("J") ) { 
+		moving_camera.translateX( -moveDistance ); bCRT_Changed = true;
+	}
+	if ( keyboard.pressed("X") && keyboard.pressed("L") ) {
+		moving_camera.translateX(  moveDistance );	bCRT_Changed = true;
+	}
+	if ( keyboard.pressed("Z") && keyboard.pressed("J") ) {
+		moving_camera.translateZ( -moveDistance ); bCRT_Changed = true;
+	}
+	if ( keyboard.pressed("Z") && keyboard.pressed("L") ) {
+		moving_camera.translateZ(  moveDistance );	bCRT_Changed = true;
+	}
+	if ( keyboard.pressed("Y") && keyboard.pressed("J") ) {
+		moving_camera.translateY( -moveDistance ); bCRT_Changed = true;
+	}
+	if ( keyboard.pressed("Y") && keyboard.pressed("L") ) {
+		moving_camera.translateY(  moveDistance );	 bCRT_Changed = true;
+	}
+	// rotate left/right along the rotate_axis 
+	var rotate_axis = new THREE.Vector3(0,1,0); // default rotation axis: Y
+	if(keyboard.pressed("Z") )
+		rotate_axis = new THREE.Vector3(0,0,1); // rotation axis: Z
+	else if(keyboard.pressed("X") )
+		rotate_axis = new THREE.Vector3(1,0,0); // rotation axis: X 
+		
+	if ( keyboard.pressed("A") ) {
+		moving_camera.rotateOnAxis( rotate_axis, rotateAngle); bCRT_Changed = true;
+	}
+	if ( keyboard.pressed("D") ) {
+		moving_camera.rotateOnAxis( rotate_axis, -rotateAngle); bCRT_Changed = true;
+	}
+	
+	var d = moving_camera.position.distanceTo( new THREE.Vector3(0,0,0) ); // mirrorSphere.position );
+	if ( d > 500) { // || d < 60 ) {
+		moving_camera.position = previousPosition;
+		moving_camera.rotation = previousRotation;
+		player.position = moving_camera.position;
+		player.rotation = moving_camera.rotation;
+	} else if(bCRT_Changed) {
+        var cam_index = $('input:radio[name=target_window]:checked').val();
+        if(cam_index == 0)
+            clearCorespondingPointParis_Marks(); 
+	}
+}
+
+function render(rcamera, tcamera, scene, renderer, Left, Top, Width, Height ) {	 
+	// update cameras
+	rcamera.aspect = Width / Height;
+	rcamera.updateProjectionMatrix();
+	tcamera.aspect = Width / Height;
+	tcamera.updateProjectionMatrix(); 
+	
+	// left side with right camera 
+	renderer.setViewport( Left, Top,  Width - 2, Height - 2 );  
+	/*
+	if(SELECTEDOBJ != null) {
+		try{
+			if(rcamera == camera[0]) 
+				SELECTEDOBJ.object.material.color.setHex( 0xff0000 ); 
+			else
+				SELECTEDOBJ.object.material.color.setHex( materialColorMap[SELECTEDOBJ.object.id] ); 
+		}
+		catch(Err) {
+			console.log(Err);
+		} 
+	} 
+	*/
+	renderer.render( scene, rcamera ); 
+
+	// right side with top camera 
+	renderer.setViewport( Left + Width, Top, Width - 2, Height - 2 );
+	renderer.render( scene, tcamera );	
+} 
+
+//-- global variables for width and height of the view port. 
+var GWIDTH=1;
+var GHEIGHT=1;
+
+function onDocumentMouseDown( event ) {  
+    //-- setting the global variables 
+	GWIDTH = window.innerWidth/2.0;
+	GHEIGHT = window.innerHeight / 2.0;
+	//$("#eventX").html(event.clientX); $("#eventY").html(event.clientY); 
+	if(event.clientX < GWIDTH && event.clientY < GHEIGHT) {  
+        event.preventDefault();
+        
+        var normW = {x:( event.clientX / GWIDTH ) * 2 - 1, y: - ( event.clientY / GHEIGHT ) * 2 + 1}; 
+        //$("#WinWidth").html(window.innerWidth); $("#WinHeight").html(window.innerHeight);
+        $("#MouseX").html(normW.x); 
+        $("#MouseY").html(normW.y);
+        
+        // create a Ray with origin at the normW position
+        //   and direction into the scene (camera direction)
+        var vector = new THREE.Vector3( normW.x, normW.y, 1); // camera[0].near); // 0.5 );
+        var	projector = new THREE.Projector();
+        projector.unprojectVector( vector, camera[0] );
+        //-- copy from Mouse-Click.html
+        // camera[0] is the camera used to generate the left top corner scene.
+        var raycaster = new THREE.Raycaster( camera[0].position, vector.sub( camera[0].position ).normalize() ); 
+        //raycaster.setFromCamera( normW, camera[0] ); // depreciated 
+
+            
+        var intersects = raycaster.intersectObjects( pickingObjects ); 
+        if ( intersects.length > 0 ) { 
+            var SELECTEDOBJ = intersects[ 0 ];  
+            var P = SELECTEDOBJ.point;
+            addPickingMarker(0, P.x, P.y, P.z);  
+            
+            // -- visualization test 
+            var CamCalibrationMtx = new THREE.Matrix4();
+            CamCalibrationMtx.multiplyMatrices( camera[0].projectionMatrix, camera[0].matrixWorldInverse ); //  
+            var ProjectedP = new THREE.Vector3(P.x, P.y, P.z); 
+            ProjectedP.applyProjection( CamCalibrationMtx); //To visualization test,  
+            var normP = new THREE.Vector3(ProjectedP.x/ProjectedP.z,ProjectedP.y/ProjectedP.z,ProjectedP.z/ProjectedP.z);
+            console.log("Projected P="+normP.x+","+normP.y+","+normP.z); 
+            var mouse = new THREE.Vector3( normW.x, normW.y, 1);
+            console.log("   Origin P="+mouse.x+","+mouse.y+","+mouse.z);
+            console.log("   distance="+mouse.distanceTo(normP));
+    
+                // check ProjectedP = K * RT * WorldP;   
+            /*
+            var cam = camera[0]; 
+            var Viewport_from_Camera = cam.projectionMatrix; // K
+            var Camera_from_Viewport = cam.projectionMatrixInverse.getInverse( Viewport_from_Camera );
+            var World_from_Camera = cam.matrixWorld; 
+            var Camera_from_World = cam.matrixWorldInverse.getInverse( World_from_Camera ); // RT
+            var CamCal = new THREE.Matrix4().multiplyMatrices(Viewport_from_Camera, Camera_from_World );
+            */
+          
+            /*
+            var Pc = new THREE.Vector3(P.x, P.y, P.z).applyMatrix4(Camera_from_World);// 3D point of camera coordinate 
+            console.log("3D point of camera coordinate Pc =["+Pc.x+", "+Pc.y+", "+Pc.z+"]");
+            var Pv = new THREE.Vector3(Pc.x, Pc.y, Pc.z).applyMatrix4(Viewport_from_Camera); // 
+            var Pc2 = new THREE.Vector3(Pv.x, Pv.y, Pv.z).applyMatrix4(Camera_from_Viewport);
+            console.log("3D point of camera coordinate Pc2=["+Pc2.x+", "+Pc2.y+", "+Pc2.z+"]");  
+            
+            console.log("3D point of viewport          Pv =["+Pv.x+", "+Pv.y+", "+Pv.z+"]");
+            var Pv2 = new THREE.Vector3(P.x, P.y, P.z).applyMatrix4(CamCal);// Pv: point of Viewport 
+            console.log("3D point of viewport          Pv2=["+Pv2.x+", "+Pv2.y+", "+Pv2.z+"]");
+            console.log("2D normalized point           Pv3=["+Pv2.x/Pv2.z+", "+Pv2.y/Pv2.z+"]");
+
+            var e = CamCal.elements; 
+
+            var CW_trans = [[e[0],e[4], e[8],e[12]],
+                            [e[1],e[5], e[9],e[13]],
+                            [e[2],e[6],e[10],e[14]],
+                            [e[3],e[7],e[11],e[15]]];  
+            var q = numeric.dot(CW_trans, [P.x, P.y, P.z, 1]);  
+            console.log("Pv == [q[0],q[1],q[2]].\n"); 
+            */
+            console.log("2D screen point                S =["+event.clientX+", "+event.clientY+"]\n");
+            //var P2D={x:event.clientX-GWIDTH/2, y:-(event.clientY-GHEIGHT/2)};
+            //console.log("2D screen point              P2D =["+P2D.x+", "+P2D.y+"]\n");
+            console.log("2D normW point                 M =["+normW.x+", "+normW.y+"]\n"); 
+            console.log("3D point of World coordinate   P =["+P.x+", "+P.y+", "+P.z+"]"); 
+            
+            //var pair=[[normW.x, normW.y, 1], [P.x, P.y, P.z, 1]];
+            //var pair=[[P2D.x, P2D.y, 1], [P.x, P.y, P.z, 1]];
+            var myStdDeviation = parseInt(stdDevCutOffForm.elements["stdDevValue"].value);
+            
+            //These two variables are our generated Gaussian noise values
+            var temp1 = generateGaussianNoise(0, myStdDeviation);
+            var temp2 = generateGaussianNoise(0, myStdDeviation);
+            
+            //alert(temp1);
+            //alert(temp2);
+            
+            //noisyX and noisyY are our new values after applying the noise
+            //var noisyX = P2D.x + Math.round(temp1);
+            //var noisyY = P2D.y + Math.round(temp2);
+            //alert(noisyX);
+            //alert(noisyY);
+            
+            //console.log("Original Point        OP =[" + P2D.x + " " + P2D.y + "]\n");
+            //console.log("2D Noise Point        NP =["+noisyX+", "+noisyY+"]\n"); 
+            
+            //transform variables are converting from 2D Scene
+            //	points into 2D normW points so that we can convert
+            //	the 2D normW point into a raytrace and place a 
+            //	box on the screen
+            var transformBackX = ( (event.clientX + Math.round(temp1)) / GWIDTH ) * 2 - 1;//((noisyX + GWIDTH/2)/GWIDTH)*2-1;
+            var transformBackY= - ( (event.clientY + Math.round(temp2)) / GHEIGHT ) * 2 + 1;//-(((GHEIGHT/2)-noisyY)/GHEIGHT)*2+1;//-((((-GHEIGHT/2)-noisyY)/GHEIGHT)*2+1);
+          
+            // create a Ray with origin at the normW position + noise
+            //   and direction into the scene (camera direction)
+            var vector2 = new THREE.Vector3( transformBackX, transformBackY, 1); // camera[0].near); // 0.5 );
+            var	projector2 = new THREE.Projector();
+            projector2.unprojectVector( vector2, camera[0] );
+            //-- copy from Mouse-Click.html
+            // camera[0] is the camera used to generate the left top corner scene.
+            var raycaster2 = new THREE.Raycaster( camera[0].position, vector2.sub( camera[0].position ).normalize() ); 
+            //raycaster.setFromCamera( normW, camera[0] ); // depreciated 
+        
+            var intersects2 = raycaster2.intersectObjects( pickingObjects ); 
+            if ( intersects2.length > 0 ) { 
+                var SELECTEDOBJ2 = intersects2[ 0 ];  
+                var P2 = SELECTEDOBJ2.point;
+                addPickingMarkerNew(0, P2.x, P2.y, P2.z); 
+                //pair is our stored 2D and 3D point. The 2D point has the noise applied
+                //	and the 3D point is the original clicked point without applying the 
+                //	noise.
+                var pair2 = [[transformBackX, transformBackY, 1], [P.x, P.y, P.z, 1], [normW.x, normW.y, 1], [P2.x, P2.y, P2.z, 1]];
+                correspondingPointPairs.push(pair2); 
+            } 
+        }   
+    }
+
+}
+    //This function monitors and updates when a file is uploaded
+    $(document).ready(function() {
+        //Monitor the id file_input for changes
+        $('#file_input').on('change', function(e) {
+			//var res = readFile(this.files[0]); 
+            var reader = new FileReader(); 
+            reader.readAsText(this.files[0], "UTF-8"); 
+			$("#info").html(this.files[0].name);
+            reader.onload = loaded;
+			
+            function loaded(evt) {
+                // Obtain the read file data    
+                var fileString = evt.target.result;
+                // Handle UTF-16 file dump
+                var fileData = JSON.parse(fileString);
+                
+                //Catch any errors with parsing the data and alert them
+                try {
+                    var pointData = fileData.Points; //fileData[0];
+                    //var cameraMatrixData = fileData[1];
+                    var cameraPositionData = fileData.camera_position; // fileData[2];
+                    var cameraRotationData = fileData.camera_rotation; // fileData[3]; 
+                    //console.log(myJSONObj);
+                }catch(e) {
+                    alert(e);
+                }
+                
+                //camera[0].matrixWorld.elements = cameraMatrixData;
+                camera[0].position.set(cameraPositionData.x, cameraPositionData.y, cameraPositionData.z);
+                camera[0].rotation.set(cameraRotationData.x, cameraRotationData.y, cameraRotationData.z);
+                //camera[0].updateMatrixWorld(true);z
+                //var mw = camera[0].matrixWorld;
+                //camera[0].matrixWorldInverse.getInverse(mw);
+                
+                //var SELECTEDOBJ = intersects[ 0 ];  
+				//var P = SELECTEDOBJ.point;
+				
+				clearCorespondingPointParis_Marks();
+				correspondingPointPairs = pointData;
+					
+				for(var i = 0; i < pointData.length; ++i){
+					//var P is our 3D original point
+					var P = {
+						x: pointData[i][1][0],
+						y: pointData[i][1][1],
+						z: pointData[i][1][2],
+					};
+					console.log("P: " + P);
+					addPickingMarker(0, P.x, P.y, P.z);
+					//var P is our 3D noisy point
+					var Pnoise = {
+						x: pointData[i][3][0],
+						y: pointData[i][3][1],
+						z: pointData[i][3][2],
+					};
+					console.log("Pnoise: " + Pnoise);
+					addPickingMarkerNew(0, Pnoise.x, Pnoise.y, Pnoise.z); 
+				} 
+            } 
+        });
+    });
+    /*
+    //Function to read the file and return the result of the file
+    function readFile(file) {
+        var reader = new FileReader(),
+            result = 'empty';
+
+        reader.onload = function(e) {
+            result = e.target.result;
+        };
+
+        reader.readAsText(file);
+
+        return result;
+    }
+    */
+    
+</script>

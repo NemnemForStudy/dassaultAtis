@@ -1,0 +1,35 @@
+<!-- numeric.js & num_util test example. Author: qif  -->
+<html>
+<head>
+<script src="../../../../../../numeric.js-1.2.6/numeric-1.2.6.js"></script>
+<script src="../../num_util.js"></script>
+</head>
+<body> 
+<div id="out"></div>
+<script> 
+
+
+var s = document.getElementById("out");
+s.innerHTML += "";
+s.innerHTML +=
+"<samp>"+
+"<br/> Ax = b,"+
+"<br/></samp>" + 
+"<br/>To solve A from x^t * A^t = b^t. <br/> " 
+ 
+  var xtrans = [[5,6],[7,8]];
+  var btrans = [[17,39],[23,53]];
+  s.innerHTML += "x^t="+M2DtoTable(xtrans);
+  s.innerHTML += "b^t="+M2DtoTable(btrans); 
+  
+  var A=[];
+  for(var ii=0; ii<btrans[0].length; ii++) {
+	A.push(numeric.solve(xtrans, getColumn(btrans,ii)/*[17,23]*/ ));   // which is b[ii], ii<b.length;  
+	//A.push(numeric.solve(xtrans,getColumn(btrans,1)/*[39,53]*/)); 
+  }
+  s.innerHTML  += "<br/>A="+M2DtoTable(A);  
+  s.innerHTML += "<br/><a href='SolveAfromx_b2.html'>Go to another example.</a>";
+</script>
+ 
+</body>
+</html>

@@ -1,0 +1,1 @@
+define("DS/CATWebUXTIC/CATWebUXTIC_ko",{});define("DS/CATWebUXTIC/assets/nls/CATWebUXTICCmdAdapt",{caOK:"Change Action이 정상적으로 생성되었습니다.",caKO:"Change Action을 생성하지 못했습니다.",issueOK:"문제가 정상적으로 생성되었습니다.",issueKO:"문제 생성에 실패했습니다.",caAttached:"Change Action이 상위 문제에 연결되었습니다.",caNotAttached:"Change Action이 상위 문제에 연결되지 않았습니다."});

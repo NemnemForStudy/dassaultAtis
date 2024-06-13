@@ -1,0 +1,597 @@
+################################################################################################
+# Created by jonghunlee
+# Create Date : 2023. 08. 09
+# Admin Type : WebForm
+# Name : decPMCProjectCWPTaskViewForm
+################################################################################################
+
+#del form "decPMCProjectCWPTaskViewForm";
+add form "decPMCProjectCWPTaskViewForm" web
+    field
+        name        "CWPNo"
+        label       "ProgramCentral.Label.CWP_No"
+        businessobject "$<name>"
+        alt         ""
+        range       ""
+        update      ""
+        setting    'Editable'                "false"
+        setting    'Field Type'              "basic"
+        setting    'Registered Suite'        "ProgramCentral"
+        setting    'Validate'                "validateWBSTaskName"
+        setting    'Group Name'              '1row'
+    field
+        name        "ProjectSpaceName"
+        label       "ProgramCentral.Label.Project"
+        alt         ""
+        range       ""
+        update      ""
+        setting    'Access Expression'       '(to[$<relationship_ProjectAccessKey>].from.from[$<relationship_ProjectAccessList>].to.type == "Project Space")'
+        setting    'Editable'                "false"
+        setting    'Field Type'              "programHTMLOutput"
+        setting    'Registered Suite'        "ProgramCentral"
+        setting    'function'                "getProjectName"
+        setting    'program'                 "emxProgramCentralUtilBase"
+        setting    'Group Name'              '1row'
+    field
+        name        "CWPDesc"
+        label       "ProgramCentral.Label.CWP_Desc"
+        businessobject "$<description>"
+        alt         ""
+        range       ""
+        update      ""
+        setting    'Editable'                "true"
+        setting    'Field Type'              "basic"
+        setting    'Input Type'              "textarea"
+        setting    'Registered Suite'        "ProgramCentral"
+        setting    'Validate Type'           "Basic"
+        setting    'function'                "getDescription"
+        setting    'program'                 "emxProjectTemplate"
+    field
+        name        "Discipline"
+        label       "ProgramCentral.Label.Discipline2"
+        businessobject "$<attribute[attribute_decDiscipline].value>"
+        alt         ""
+        range       ""
+        update      ""
+        setting    'Editable'                "true"
+        setting    'Input Type'              "combobox"
+        setting    'Range Function'          "getCodeMasterDescRange"
+        setting    'Range Program'           "decCodeMaster"
+        setting    'program'	             "decCodeMaster"
+        setting    'function'                "getCodeDetailDesc"
+        setting    'Field Type'              "program"
+        setting    'Registered Suite'        "ProgramCentral"
+        setting    'Update Program'          'emxTask'
+        setting    'Update Function'         'updateFormAttrValue'
+        setting    'MasterName' 'Discipline'
+        setting    'DetailType' 'Discipline'
+        setting    'attribute'               'decDiscipline'
+        setting    'Admin Type'              'attribute_decDiscipline'
+        setting    'Group Name'              '3row'
+    field
+        name    'Activity Type Desc'
+        label    'ProgramCentral.Label.Activity_Type_Desc'
+        businessobject "$<attribute[attribute_decCWPActivityType].value>"
+        setting    'Editable'                "true"
+        setting    'Input Type'              "combobox"
+        setting    'Range Function'          "getCodeMasterDescRange"
+        setting    'Range Program'           "decCodeMaster"
+        setting    'program'	             "decCodeMaster"
+        setting    'function'                "getCodeDetailDesc"
+        setting    'Field Type'              "program"
+        setting    'Registered Suite'        "ProgramCentral"
+        setting    'Update Program'          'emxTask'
+        setting    'Update Function'         'updateFormAttrValue'
+        setting    'MasterName' 'CWP Activity Type'
+        setting    'DetailType' 'CWP Activity Type'
+        setting    'attribute'               'decCWPActivityType'
+        setting    'Admin Type'              'attribute_decCWPActivityType'
+        setting    'Group Name'              '3row'
+    field
+    	name        "decStage"
+    	label       "emxProgramCentral.Label.decDocStage"
+        businessobject "$<attribute[attribute_decStage].value>"
+        setting    'Registered Suite'        "ProgramCentral"
+        setting    'Admin Type'   'attribute_decStage'
+        setting    'Field Type'   'attribute'
+        setting    'Editable'                "false"
+        setting    'Group Name'              '4row'
+    field
+        name        "Status"
+        label       "emxProgramCentral.Common.Status"
+        businessobject "$<current>"
+        alt         ""
+        range       ""
+        update      ""
+        setting    'Edit Access Program'     'emxTask'
+        setting    'Edit Access Function'    'canEditTaskState'
+        setting    'Update Program'          'emxTask'
+        setting    'Update Function'         'updateTaskState'
+        setting    'Range Program'           'emxTask'
+        setting    'Range Function'          'getCWPTaskManagementStateRange'
+        setting    'function'                'getTaskFormStateName'
+        setting    'program'                 'emxTask'
+        setting    'Editable'                "true"
+        setting    'Field Type'              "program"
+        setting    'Input Type'              "combobox"
+        setting    'Registered Suite'        "ProgramCentral"
+        setting    'Group Name'              '4row'
+    field
+    	name       "Priority Group"
+    	label      'ProgramCentral.Label.Priority_Group'
+        businessobject "$<attribute[attribute_decPriorityGroup].value>"
+        setting    'Editable'                "true"
+        setting    'Input Type'              "combobox"
+        setting    'Range Function'          "getCodeMasterRange"
+        setting    'Range Program'           "decCodeMaster"
+        setting    'program'	             "decCodeMaster"
+        setting    'function'                "getCodeDetailName"
+        setting    'Field Type'              "program"
+        setting    'Registered Suite'        "ProgramCentral"
+        setting    'MasterName' 'Priority Group'
+        setting    'DetailType' 'Priority Group'
+        setting    'Update Program'          'emxTask'
+        setting    'Update Function'         'updateFormAttrValue'
+        setting    'attribute'               'decPriorityGroup'
+        setting    'Admin Type'              'attribute_decPriorityGroup'
+        setting    'Group Name'              '5row'
+    field
+    	name       "Priority No"
+    	label      'ProgramCentral.Label.Priority_No'
+        businessobject "$<attribute[attribute_decPriorityNo].value>"
+        setting    'Editable'                "true"
+        setting    'Input Type'              "combobox"
+        setting    'Range Function'          "getCodeMasterRange"
+        setting    'Range Program'           "decCodeMaster"
+        setting    'program'	             "decCodeMaster"
+        setting    'function'                "getCodeDetailName"
+        setting    'Field Type'              "program"
+        setting    'Registered Suite'        "ProgramCentral"
+        setting    'MasterName' 'Priority Number'
+        setting    'DetailType' 'Priority Number'
+        setting    'Update Program'          'emxTask'
+        setting    'Update Function'         'updateFormAttrValue'
+        setting    'attribute'               'decPriorityNo'
+        setting    'Admin Type'              'attribute_decPriorityNo'
+        setting    'Group Name'              '5row'
+    field
+    	name       "EWPNo"
+    	label      "ProgramCentral.Label.EWP_No"
+    	businessobject  "$<from[decEWPRel].to.name>"
+        setting    'Editable'                "true"
+        setting    'Input Type'              "combobox"
+        setting    'Range Function'          "getEWPRange"
+        setting    'Range Program'           "emxTask"
+        setting    'Update Program'          'emxTask'
+        setting    'Update Function'         'connectEWP'
+        setting    'Registered Suite'        "ProgramCentral"
+        setting    'Group Name'              '6row'
+    field
+    	name       "SequentialNo"
+    	label      "ProgramCentral.Label.Sequential_No"
+        businessobject "$<attribute[attribute_decSequentialNo].value>"
+        setting    'Registered Suite'        "ProgramCentral"
+        setting    'Admin Type'   'attribute_decSequentialNo'
+        setting    'Field Type'   'attribute'
+        setting    'Editable'                "true"
+        setting    'On Change Handler'        'validateNumericSequentialNo'
+        setting    'Group Name'              '6row'
+    field
+    	name       "Sub-Con"
+    	label      'ProgramCentral.Label.Sub-Con'
+        businessobject "$<attribute[attribute_decSubConNo].value>"
+        setting    'Editable'                "true"
+        setting    'Input Type'              "combobox"
+        setting    'Range Function'          "getCodeMasterCodeRange"
+        setting    'Range Program'           "decCodeMaster"
+        setting    'program'	             "decCodeMaster"
+        setting    'function'                "getCodeDetailCode"
+        setting    'Field Type'              "program"
+        setting    'Registered Suite'        "ProgramCentral"
+        setting    'MasterName' 'Sub-Con'
+        setting    'DetailType' 'Sub-Con'
+        setting    'Update Program'          'emxTask'
+        setting    'Update Function'         'updateFormAttrValue'
+        setting    'attribute'               'decSubConNo'
+        setting    'Admin Type'              'attribute_decSubConNo'
+        setting    'Group Name'              '7row'
+    field
+    	name       "Sub-Con2"
+    	label      'ProgramCentral.Label.Sub-Con2'
+        businessobject "$<attribute[attribute_decSubConNo2].value>"
+        setting    'Editable'                "true"
+        setting    'Input Type'              "combobox"
+        setting    'Range Function'          "getCodeMasterCodeRange"
+        setting    'Range Program'           "decCodeMaster"
+        setting    'program'	             "decCodeMaster"
+        setting    'function'                "getCodeDetailCode"
+        setting    'Field Type'              "program"
+        setting    'Registered Suite'        "ProgramCentral"
+        setting    'MasterName' 'Sub-Con'
+        setting    'DetailType' 'Sub-Con'
+        setting    'Update Program'          'emxTask'
+        setting    'Update Function'         'updateFormAttrValue'
+        setting    'attribute'               'decSubConNo2'
+        setting    'Admin Type'              'attribute_decSubConNo2'
+        setting    'Group Name'              '7row'
+    field
+    	name       "DesignOffice"
+    	label      "ProgramCentral.Label.Design_Office"
+        businessobject "$<attribute[attribute_decDesignOffice].value>"
+        setting    'Registered Suite'        "ProgramCentral"
+        setting    'Admin Type'   'attribute_decDesignOffice'
+        setting    'Field Type'   'attribute'
+        setting    'Editable'                "true"
+        setting    'Group Name'              '8row'
+    field
+    	name       "ConstOffice"
+    	label      "ProgramCentral.Label.Const_Office"
+        businessobject "$<attribute[attribute_decConstOffice].value>"
+        setting    'Registered Suite'        "ProgramCentral"
+        setting    'Admin Type'   'attribute_decConstOffice'
+        setting    'Field Type'   'attribute'
+        setting    'Editable'                "true"
+        setting    'Group Name'              '8row'
+    field
+    	name       "Engineer"
+    	label      "ProgramCentral.Label.Assignments_-_Engineer"
+        businessobject "$<attribute[attribute_decEngineer].value>"
+        setting    'Registered Suite'        "ProgramCentral"
+        setting    'Admin Type'   'attribute_decEngineer'
+        setting    'Field Type'   'attribute'
+        setting    'Editable'                "true"
+        setting    'Group Name'              '9row'
+    field
+    	name       "Planner"
+    	label      "ProgramCentral.Label.Assignments_-_Planner"
+        businessobject "$<attribute[attribute_decPlanner].value>"
+        setting    'Registered Suite'        "ProgramCentral"
+        setting    'Admin Type'   'attribute_decPlanner'
+        setting    'Field Type'   'attribute'
+        setting    'Editable'                "true"
+        setting    'Group Name'              '9row'
+    field
+    	name       "Superintendent"
+    	label      "ProgramCentral.Label.Assignments_-_Superintendent"
+        businessobject "$<attribute[attribute_decSuperintendent].value>"
+        setting    'Registered Suite'        "ProgramCentral"
+        setting    'Admin Type'   'attribute_decSuperintendent'
+        setting    'Field Type'   'attribute'
+        setting    'Editable'                "true"
+        setting    'Group Name'              '10row'
+    field
+    	name       "Foreman"
+    	label      "ProgramCentral.Label.Assignments_-_Foreman"
+        businessobject "$<attribute[attribute_decForeman].value>"
+        setting    'Registered Suite'        "ProgramCentral"
+        setting    'Admin Type'   'attribute_decForeman'
+        setting    'Field Type'   'attribute'
+        setting    'Editable'                "true"
+        setting    'Group Name'              '10row'
+    field
+        name        "EstimatedDuration"
+        label       "ProgramCentral.Label.TaskEstimatedDuration"
+        businessobject "$<attribute[attribute_TaskEstimatedDuration].value>"
+        alt         ""
+        range       ""
+        update      ""
+        setting    'Editable'                "false"
+        setting    'Field Type'              "attribute"
+        setting    'Group Name'              '11row'
+        setting    'Registered Suite'        "ProgramCentral"
+    field
+        name        "ActualDuration"
+        label       "emxProgramCentral.Common.TaskActualDuration"
+        alt         ""
+        range       ""
+        update      ""
+        setting    'Editable'                "false"
+        setting    'Field Type'              "program"
+        setting    'Group Name'              '11row'
+        setting    'Registered Suite'        "ProgramCentral"
+        setting    'function'                "getActualDuration"
+        setting    'program'                 "emxTask"
+    field
+        name        "EstimatedStartDate"
+        label       "ProgramCentral.Label.TaskEstimatedStartDate"
+        businessobject "$<attribute[attribute_TaskEstimatedStartDate].value>"
+        alt         ""
+        range       ""
+        update      ""
+        setting    'Calendar Function'       "getCompanyNonWorkingDays"
+        setting    'Calendar Program'        "emxTask"
+        setting    'Editable'                "true"
+        setting    'Admin Type'   'attribute_TaskEstimatedStartDate'
+        setting    'On Change Handler'        "validateStartEndDate"
+        setting    'Registered Suite'        "ProgramCentral"
+        setting    'Show Clear Button'       "true"
+        setting    'Field Type'              "attribute"
+        setting    'format'                  "date"
+        setting    'Group Name'              '12row'
+    field
+        name        "EstimatedEndDate"
+        label       "ProgramCentral.Label.TaskEstimatedFinishDate"
+        businessobject "$<attribute[attribute_TaskEstimatedFinishDate].value>"
+        alt         ""
+        range       ""
+        update      ""
+        setting    'Calendar Function'       "getCompanyNonWorkingDays"
+        setting    'Calendar Program'        "emxTask"
+        setting    'Editable'                "true"
+        setting    'Admin Type'   'attribute_TaskEstimatedFinishDate'
+        setting    'On Change Handler'        "validateStartEndDate"
+        setting    'Registered Suite'        "ProgramCentral"
+        setting    'Show Clear Button'       "true"
+        setting    'Field Type'              "attribute"
+        setting    'format'                  "date"
+        setting    'Group Name'              '12row'
+    field
+        name        "decTaskForecastStartDate"
+        label       "ProgramCentral.Label.TaskForecastStartDate"
+        businessobject "$<attribute[attribute_decTaskForecastStartDate].value>"
+        alt         ""
+        range       ""
+        update      ""
+        setting    'Calendar Function'       "getCompanyNonWorkingDays"
+        setting    'Calendar Program'        "emxTask"
+        setting    'Editable'                "true"
+        setting    'Admin Type'   'attribute_decTaskForecastStartDate'
+        setting    'On Change Handler'        "validateStartEndDate"
+        setting    'Registered Suite'        "ProgramCentral"
+        setting    'Show Clear Button'       "true"
+        setting    'Field Type'              "attribute"
+        setting    'format'                  "date"
+        setting    'Group Name'              '13row'
+    field
+        name        "decTaskForecastEndDate"
+        label       "ProgramCentral.Label.TaskForecastFinishDate"
+        businessobject "$<attribute[attribute_decTaskForecastFinishDate].value>"
+        alt         ""
+        range       ""
+        update      ""
+        setting    'Calendar Function'       "getCompanyNonWorkingDays"
+        setting    'Calendar Program'        "emxTask"
+        setting    'Editable'                "true"
+        setting    'Admin Type'   'attribute_decTaskForecastFinishDate'
+        setting    'On Change Handler'        "validateStartEndDate"
+        setting    'Registered Suite'        "ProgramCentral"
+        setting    'Show Clear Button'       "true"
+        setting    'Field Type'              "attribute"
+        setting    'format'                  "date"
+        setting    'Group Name'              '13row'
+    field
+        name        "ActualStartDate"
+        label       "emxProgramCentral.Common.TaskActualStartDate"
+        businessobject "$<attribute[attribute_TaskActualStartDate].value>"
+        alt         ""
+        range       ""
+        update      ""
+        setting    'Access Expression'       "$<(to[relationship_ProjectAccessKey].from.from[relationship_ProjectAccessList].to.type.kindOf[type_ProjectSpace]==true)>"
+        setting    'Editable'                "true"
+        setting    'Admin Type'   'attribute_TaskActualStartDate'
+        setting    'Field Type'              "attribute"
+        setting    'IgnoreTimeZone'          "true"
+        setting    'Registered Suite'        "ProgramCentral"
+        setting    'format'                  "date"
+        setting    'Group Name'              '14row'
+    field
+        name        "ActualEndDate"
+        label       "emxProgramCentral.Common.TaskActualFinishDate"
+        businessobject "$<attribute[attribute_TaskActualFinishDate].value>"
+        alt         ""
+        range       ""
+        update      ""
+        setting    'Access Expression'       "$<(to[relationship_ProjectAccessKey].from.from[relationship_ProjectAccessList].to.type.kindOf[type_ProjectSpace]==true)>"
+        setting    'Editable'                "true"
+        setting    'Admin Type'   'attribute_TaskActualFinishDate'
+        setting    'Field Type'              "attribute"
+        setting    'IgnoreTimeZone'          "true"
+        setting    'Registered Suite'        "ProgramCentral"
+        setting    'format'                  "date"
+        setting    'Group Name'              '14row'
+    field
+        name    'CWP Release - Plan'
+        label    'ProgramCentral.Label.ReleasePlan'
+        businessobject '$<attribute[attribute_decReleasePlan].value>'
+        setting 'Registered Suite'   'ProgramCentral'
+        setting 'Admin Type'   'attribute_decReleasePlan'
+        setting 'Field Type'   'attribute'
+        setting 'format'   'date'
+        setting 'Editable'   'true'
+        setting    'Group Name'              '15row'
+    field
+        name    'Engineering Schedule - Last Plan'
+        label    'ProgramCentral.Label.EngineeringLastPlan'
+        businessobject '$<attribute[attribute_decIFCLastPlanDate].value>'
+        setting 'Registered Suite'   'ProgramCentral'
+        setting 'Admin Type'   'attribute_decIFCLastPlanDate'
+        setting 'Field Type'   'attribute'
+        setting 'format'   'date'
+        setting 'Editable'   'false'
+        setting    'Group Name'              '15row'
+    field
+        name    'CWP Release - Forecast'
+        label    'ProgramCentral.Label.ReleaseForecast'
+        businessobject '$<attribute[attribute_decReleaseForecast].value>'
+        setting 'Registered Suite'   'ProgramCentral'
+        setting 'Admin Type'   'attribute_decReleaseForecast'
+        setting 'Field Type'   'attribute'
+        setting 'format'   'date'
+        setting 'Editable'   'true'
+        setting    'Group Name'              '16row'
+    field
+        name    'Engineering Schedule - Last Forecast'
+        label    'ProgramCentral.Label.EngineeringLastForecast'
+        businessobject '$<attribute[attribute_decIFCLastForecastDate].value>'
+        setting 'Registered Suite'   'ProgramCentral'
+        setting 'Admin Type'   'attribute_decIFCLastForecastDate'
+        setting 'Field Type'   'attribute'
+        setting 'format'   'date'
+        setting 'Editable'   'false'
+        setting    'Group Name'              '16row'
+    field
+        name    'CWP Release - Actual'
+        label    'ProgramCentral.Label.ReleaseActual'
+        businessobject '$<attribute[attribute_decReleaseActual].value>'
+        setting 'Registered Suite'   'ProgramCentral'
+        setting 'Admin Type'   'attribute_decReleaseActual'
+        setting 'Field Type'   'attribute'
+        setting 'format'   'date'
+        setting 'Editable'   'true'
+    	setting    'Width'  '120'
+        setting    'Group Name'              '17row'
+    field
+        name    'Engineering Schedule - Last Actual'
+        label    'ProgramCentral.Label.EngineeringLastActual'
+        businessobject '$<attribute[attribute_decIFCLastActualDate].value>'
+        setting 'Registered Suite'   'ProgramCentral'
+        setting 'Admin Type'   'attribute_decIFCLastActualDate'
+        setting 'Field Type'   'attribute'
+        setting 'format'   'date'
+        setting 'Editable'   'false'
+        setting    'Group Name'              '17row'
+    field
+        name    'Procurement Schedule - Start'
+        label    'ProgramCentral.Label.ProcurementStart'
+        businessobject '$<attribute[attribute_decMaterialDeliveryStartDate].value>'
+        setting 'Registered Suite'   'ProgramCentral'
+        setting 'Admin Type'   'attribute_decMaterialDeliveryStartDate'
+        setting 'Field Type'   'attribute'
+        setting 'format'   'date'
+        setting 'Editable'   'false'
+        setting    'Group Name'              '18row'
+    field
+        name    'Procurement Schedule - Finish'
+        label    'ProgramCentral.Label.ProcurementFinish'
+        businessobject '$<attribute[attribute_decMaterialDeliveryFinishDate].value>'
+        setting 'Registered Suite'   'ProgramCentral'
+        setting 'Admin Type'   'attribute_decMaterialDeliveryFinishDate'
+        setting 'Field Type'   'attribute'
+        setting 'format'   'date'
+        setting 'Editable'   'false'
+        setting    'Group Name'              '18row'
+    field
+        name    'Procurement Schedule - RAS'
+        label    'ProgramCentral.Label.Procurement_Schedule_-_RAS'
+        businessobject '$<attribute[attribute_decMaterialRAS].value>'
+        setting 'Registered Suite'   'ProgramCentral'
+        setting 'Admin Type'   'attribute_decMaterialRAS'
+        setting 'Field Type'   'attribute'
+        setting 'format'   'date'
+        setting 'Editable'   'true'
+        setting    'Group Name'              '19row'
+    field
+    	name    'Last Modified'
+    	label   'ProgramCentral.Label.Modified'
+    	businessobject '$<modified>'
+        setting 'Registered Suite'   'ProgramCentral'
+        setting 'format'   'date'
+        setting 'Editable'   'false'
+        setting    'Group Name'              '19row'
+    field
+        name    'KeyQtyType'
+        label    'ProgramCentral.Label.CWPKeyQtyItem'
+        businessobject '$<attribute[attribute_decKeyQuantityType].value>'
+        setting 'Registered Suite'   'ProgramCentral'
+        setting 'Admin Type'   'attribute_decKeyQuantityType'
+        setting 'Editable'   'false'
+        setting    'program'	             "decCodeMaster"
+        setting    'function'                "getCodeDetailDesc"
+        setting    'Field Type'              "program"
+        setting    'Registered Suite'        "ProgramCentral"
+        setting    'MasterName' 'BOQ Key Item'
+        setting    'DetailType' 'BOQ Key Item'
+        setting    'attribute'               'decKeyQuantityType'
+        setting    'Group Name'              '20row'
+    field
+        name    'KeyQtyUOM'
+        label    'ProgramCentral.Label.KeyQtyUOM'
+        businessobject '$<attribute[attribute_decKeyQuantityUOM].value>'
+        setting 'Registered Suite'   'ProgramCentral'
+        setting 'Admin Type'   'attribute_decKeyQuantityUOM'
+        setting 'Editable'   'false'
+        setting    'program'	             "decCodeMaster"
+        setting    'function'                "getCodeDetailDesc"
+        setting    'Field Type'              "program"
+        setting    'Registered Suite'        "ProgramCentral"
+        setting    'MasterName' 'BOQ Key Item'
+        setting    'DetailType' 'UOM'
+        setting    'attribute'               'decKeyQuantityUOM'
+        setting    'Group Name'              '20row'
+    field
+        name    'KeyQtyTotal'
+        label    'ProgramCentral.Label.KeyQtyTotal'
+        businessobject '$<attribute[attribute_decKeyQuantityTotal].value>'
+        setting 'Registered Suite'   'ProgramCentral'
+        setting 'Admin Type'   'attribute_decKeyQuantityTotal'
+        setting 'Field Type'   'attribute'
+        setting    'Group Name'              '21row'
+        setting 'Editable'   'true'
+        setting    'On Change Handler'        'validateNumericTotal'
+        setting    'Edit Access Program'     'emxProjectSpace'
+        setting    'Edit Access Function'    'isAccessEditIWPInfoForm'
+    field
+        name    'KeyQtyCompleted'
+        label    'ProgramCentral.Label.KeyQtyCompleted'
+        businessobject '$<attribute[attribute_decKeyQuantityCompleted].value>'
+        setting 'Registered Suite'   'ProgramCentral'
+        setting 'Admin Type'   'attribute_decKeyQuantityCompleted'
+        setting 'Field Type'   'attribute'
+        setting    'Group Name'              '21row'
+        setting 'Editable'   'false'
+    field
+        name    'HeldUpActionEngineering'
+        label    'ProgramCentral.Label.CWP_Key_Qty_-_Held_up_-_action_Engineering'
+        businessobject '$<attribute[attribute_decEngineeringHeldupAction].value>'
+        setting 'Registered Suite'   'ProgramCentral'
+        setting 'Admin Type'   'attribute_decEngineeringHeldupAction'
+        setting 'Field Type'   'attribute'
+        setting 'Editable'   'true'
+        setting    'Group Name'              '22row'
+        setting    'On Change Handler'        'validateNumericHeldUpActionEngineering'
+    field
+        name    'HeldUpActionProcurement'
+        label    'ProgramCentral.Label.CWP_Key_Qty_-_Held_up_-_action_Procurement'
+        businessobject '$<attribute[attribute_decProcurementHeldupAction].value>'
+        setting 'Registered Suite'   'ProgramCentral'
+        setting 'Admin Type'   'attribute_decProcurementHeldupAction'
+        setting 'Field Type'   'attribute'
+        setting 'Editable'   'true'
+        setting    'Group Name'              '22row'
+        setting    'On Change Handler'        'validateNumericHeldUpActionProcurement'
+	field
+        name    'NoofIWPs'
+        label    'ProgramCentral.Label.No_of_IWPs'
+        businessobject '$<attribute[attribute_decIWPCounts].value>'
+        setting 'Registered Suite'   'ProgramCentral'
+        setting 'Admin Type'   'attribute_decIWPCounts'
+        setting 'Field Type'   'attribute'
+        setting 'Editable'   'true'
+        setting    'Group Name'              '23row'
+        setting    'On Change Handler'        'validateNumericNoofIWPs'
+	field
+        name    'CrewCompositionpPerIWP'
+        label    'ProgramCentral.Label.Crew_Composition_per_IWP'
+        businessobject '$<attribute[attribute_decIWPCrewComposition].value>'
+        setting 'Registered Suite'   'ProgramCentral'
+        setting 'Admin Type'   'attribute_decIWPCrewComposition'
+        setting 'Field Type'   'attribute'
+        setting 'Editable'   'true'
+        setting    'Group Name'              '23row'
+        setting    'On Change Handler'        'validateNumericCrewCompositionpPerIWP'
+	field
+        name    'Remark'
+        label    'ProgramCentral.Label.Remark'
+        businessobject '$<attribute[attribute_decRemark].value>'
+        setting 'Registered Suite'   'ProgramCentral'
+        setting 'Admin Type'   'attribute_decRemark'
+        setting 'Field Type'   'attribute'
+        setting 'Editable'   'true'
+        setting    'Input Type'              "textarea"
+    property    'application'        value "ProgramManagementBase"
+    property    'installed date'     value "06-01-2023"
+    property    'installer'          value "ENOVIAEngineering"
+    property    'original name'      value "decPMCProjectCWPTaskViewForm"
+    property    'version'            value "R425.HF1"
+;
+add property 'form_decPMCProjectCWPTaskViewForm' on prog eServiceSchemaVariableMapping.tcl to form 'decPMCProjectCWPTaskViewForm';

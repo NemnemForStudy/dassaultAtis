@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:widget="http://www.netvibes.com/ns/" data-rec-id="DMUWebInWinSlidePanel">
+<head>
+  <link rel="stylesheet" type="text/css" href="../c/UWA/assets/css/standalone.css" />
+  <style>
+    html, body {
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      overflow-y: hidden;
+    }
+  </style>
+  <script type="text/javascript" src="../../AmdLoader/AmdLoader.js"></script>
+  <script type="text/javascript">
+    /*
+     * Published events:
+     * - onTopBarDoubleClick
+     * - onSlideDisplayed
+     * - onSlidePreselected
+     * - onSlideSelected
+     * - onSlideUpdateRequired
+     * - onSlideNameChanged
+     * - onSlideCtxMenuRequired
+     * - onReviewEditProperties
+     * - onReviewActiveFlagChanged
+     * - onMarkupCtxMenuRequired
+     * - onNewSlideCreated
+     */
+    var _slidePanelProto;
+
+    function buildPanel(iData) {
+      require(['DS/DMUBaseUIWebInWin/DMUWebInWinSlidePanel'], function (DMUWebInWinSlidePanel) {
+        var slidePanel = new DMUWebInWinSlidePanel({
+          container: document.body,
+          allowReplies: iData.allowReplies
+        });
+        _slidePanelProto = slidePanel.getSlidePanelObject();
+      });
+    }
+    function cleanPanel(iData) { if (_slidePanelProto) _slidePanelProto.cleanPanel(iData); _slidePanelProto = null; }
+
+    function addMarkup(iData) { if (_slidePanelProto) _slidePanelProto.addMarkup(iData); }
+    function removeMarkup(iData) { if (_slidePanelProto) _slidePanelProto.removeMarkup(iData); }
+    function updateMarkup(iID, iData) { if (_slidePanelProto) _slidePanelProto.updateMarkup(iID, iData); }
+
+    function addReply(iData) { if (_slidePanelProto) _slidePanelProto.addReply(iData); }
+    function removeReply(iData) { if (_slidePanelProto) _slidePanelProto.removeReply(iData); }
+
+    function addSlide(iData) { if (_slidePanelProto) _slidePanelProto.addSlide(iData); }
+    function removeSlide(iData) { if (_slidePanelProto) _slidePanelProto.removeSlide(iData); }
+    function updateSlide(iID, iData) { if (_slidePanelProto) _slidePanelProto.updateSlide(iID, iData); }
+    function setActiveSlide(iData) { if (_slidePanelProto) _slidePanelProto.setActiveSlide(iData); }
+    function setListOfVisibleSlides(iData) { if (_slidePanelProto) _slidePanelProto.setListOfVisibleSlides(iData); }
+    function resetSlideDisplayHistory() { if (_slidePanelProto) _slidePanelProto.resetSlideDisplayHistory(); }
+    function setSlideUpdateRequiredFlag(iID, iData) { if (_slidePanelProto) _slidePanelProto.setSlideUpdateRequiredFlag(iID, iData); }
+    function removeSlideUpdateRequiredFlags() { if (_slidePanelProto) _slidePanelProto.removeSlideUpdateRequiredFlags(); }
+    function setSlideTitleVisibleFlag(iData) { if (_slidePanelProto) _slidePanelProto.setSlideTitleVisibleFlag(iData); }
+
+    function setDragContent(iData) { if (_slidePanelProto) _slidePanelProto.setDragContent(iData); }
+    function getColumnMinimumWidth() { return _slidePanelProto ? _slidePanelProto.getColumnMinimumWidth() : 0; }
+    function getColumnWidthStep() { return _slidePanelProto ? _slidePanelProto.getColumnWidthStep() : 0; }
+    function resizePanel(iData) { if (_slidePanelProto) _slidePanelProto.resizePanel(iData); }
+    function setPanelTitle(iData) { if (_slidePanelProto) _slidePanelProto.setPanelTitle(iData); }
+    function setFilteringAllowedFlag(iFlag) { if (_slidePanelProto) _slidePanelProto.setFilteringAllowedFlag(iFlag); }
+    function setReadOnlyFlag(iData) { if (_slidePanelProto) _slidePanelProto.setReadOnlyFlag(iData); }
+    function setPanelActiveFlag(iData) {
+      if (_slidePanelProto) {
+        _slidePanelProto.setPanelActiveFlag(iData);
+        _slidePanelProto.setReviewVisuCheckFlag(iData);
+      }
+    }
+
+  </script>
+</head>
+<body>
+</body>
+</html>

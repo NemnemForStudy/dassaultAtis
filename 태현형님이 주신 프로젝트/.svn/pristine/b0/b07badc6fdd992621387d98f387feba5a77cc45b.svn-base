@@ -1,0 +1,1 @@
+define("DS/VCXWebVolatileGhosting/VCXWebVolatileGhosting_zh",{});define("DS/VCXWebVolatileGhosting/assets/nls/VCXWebVolatileGhosting",{VCXVolatileGhostingCmd:"虚影"});

@@ -1,0 +1,36 @@
+### 230418 Created by CMG
+
+
+#delete policy decCodeMaster;
+
+add policy decCodeMaster
+	description "decCodeMaster,decCodeDetail Policy"
+	type "decCodeMaster"
+	type "decCodeDetail"
+	format all
+	state Active
+	 revision false
+	 promote true
+	 public all
+	 #user all
+	 owner all
+	state Inactive
+	 revision true
+	 promote false
+	 public all
+	 #user all
+	 owner all;
+		
+add property policy_decCodeMaster on program eServiceSchemaVariableMapping.tcl to policy decCodeMaster;
+		
+# Modified by hslee on 2023.07.13
+mod policy decCodeMaster
+	property "state_Active" value "Active"
+	property "state_Inactive" value "Inactive"
+;
+
+# Modified by hslee on 2023.07.26
+mod policy decCodeMaster
+	add type decCodeMasterTemplate
+;
+

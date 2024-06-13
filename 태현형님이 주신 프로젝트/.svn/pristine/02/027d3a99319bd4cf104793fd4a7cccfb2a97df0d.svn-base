@@ -1,0 +1,1 @@
+Proj4js.defs["EPSG:7852"] = "+proj=utm +zone=52 +south +ellps=GRS80 +units=m +no_defs";

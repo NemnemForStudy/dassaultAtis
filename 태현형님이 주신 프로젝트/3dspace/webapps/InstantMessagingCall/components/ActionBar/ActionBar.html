@@ -1,0 +1,220 @@
+<div class="im-call-bar">
+
+  <!-- Duration -->
+  <span
+    class="oncall-item"
+    v-if="!!date_start"
+  >
+    {{ durationString }}
+  </span>
+
+  <!-- Volume -->
+  <im-call-bar-item
+    class="fonticon-sound-off oncall-item" 
+    v-show="$store.getters.isVolumeOFF && !isOnHold"
+    @click.native="volumeOFF(false)"
+    :label="$store.getters.nls('soundOn')"
+  />
+  <im-call-bar-item
+    class="fonticon-sound oncall-item"
+    v-show="!$store.getters.isVolumeOFF && !isOnHold"
+    @click.native="volumeOFF(true)"
+    :label="$store.getters.nls('soundOff')"
+  />
+
+  <!-- Microphone -->
+  <im-call-bar-item
+    class="fonticon-microphone-off oncall-item" 
+    v-show="(!isLocalAudio || isLocalAudioMuted) && !isOnHold"
+    @click.native="activeTrack('audio')"
+    :label="$store.getters.nls('unmuteAudio')"
+  />
+  <im-call-bar-item
+    class="fonticon-microphone oncall-item"
+    v-show="isLocalAudio && !isLocalAudioMuted && !isOnHold"
+    @click.native="muteTrack('audio')"
+    :label="$store.getters.nls('muteAudio')"
+  />
+
+  <!-- Camera -->
+  <im-call-bar-item
+    class="fonticon-videocamera-off oncall-item"
+    v-if="!isSip && !isOnHold"
+    v-show="!isLocalVideo || isLocalVideoMuted"
+    @click.native="activeTrack('video')"
+    :label="$store.getters.nls('unmuteVideo')"
+  />
+  <im-call-bar-item
+    class="fonticon-videocamera oncall-item"
+    v-if="!isSip && !isOnHold"
+    v-show="isLocalVideo && !isLocalVideoMuted"
+    @click.native="muteTrack('video')"
+    :label="$store.getters.nls('muteVideo')"
+  />
+
+  <im-call-bar-item
+    class="white-space oncall-item"
+  />
+
+  <!-- Pickup -->
+  <im-call-bar-item
+    class="fonticon-check pickup"
+    @click.native="acceptCall"
+    :label="$store.getters.nls('acceptCall')"
+  />
+
+  <!-- ScreenShare -->
+  <im-call-bar-item
+    v-if="!isSip"
+    v-show="!isLocalScreenDisplayed && !isScreenDisplayed && !isOnHold"
+    class="fonticon-monitor oncall-item"
+    @click.native="!screenSharingDisabled && (!runningScreenSharingFeature && activeTrack('screen') || switchToCallSpeaker())"
+    :class="{
+      'im-call-bar-item-disabled': screenSharingDisabled,
+      'fonticon-blue': !!runningScreenSharingFeature
+    }"
+    :label="screenSharingDisabled ? $store.getters.nls('screenSharingUnavailable') : $store.getters.nls('startShareScreen')"
+  />
+  <im-call-bar-item
+    v-if="!isSip"
+    v-show="(isLocalScreenDisplayed || isScreenDisplayed) && !isOnHold"
+    class="fonticon-monitor fonticon-red-off oncall-item"
+    @click.native="isLocalScreenDisplayed && stopTrack('screen') || removeSpeaker()"
+    :label="$store.getters.nls('endShareScreen')"
+  />
+
+  <!-- ODE -->
+  <vu-dropdownmenu
+    :items="ODEitems"
+    ref="imddm"
+    @update:show="window.setTimeout(() => { $refs.imddm.setPosition({dropUp: true}); $refs.imddm.$refs.content.style.top='unset'; $refs.imddm.$refs.content.style.bottom='40px'; console.log($refs.imddm) }, 10)"
+    :attach="document.body"
+    v-if="isODESupported"
+    v-show="!isODE && !runningODEFeature && !isOnHold"
+    class="im-call-bar-item oncall-item"
+    :class="{ 
+      'im-call-bar-item-disabled': collabDisabled
+    }"
+    v-tooltip.body.top="collabDisabled ? $store.getters.nls('ODEUnavailable') : $store.getters.nls('ODE')"
+  >
+    <span class="im-call-bar-item fonticon fonticon-doc oncall-item"></span>
+  </vu-dropdownmenu>
+  <im-call-bar-item
+    v-if="isODESupported"
+    v-show="isODE && !isOnHold"
+    class="fonticon-doc fonticon-red-off oncall-item"
+    @click.native="stopFeatures('ODE')"
+    :label="$store.getters.nls('endODE')"
+  />
+  <im-call-bar-item
+    v-if="isODESupported"
+    v-show="!isODE && !!runningODEFeature && !isOnHold"
+    class="fonticon-doc oncall-item fonticon-blue"
+    :class="{ 
+      'im-call-bar-item-disabled': collabDisabled
+    }"
+    @click.native="joinODE()"
+    :label="$store.getters.nls('ODE')"
+  />
+
+  <!-- Whiteboard -->
+  <im-call-bar-item
+    v-if="isWhiteboardSupported"
+    v-show="!isWhiteboard && !isOnHold"
+    class="fonticon-app-whiteboard oncall-item"
+    @click.native="!collabDisabled && activeWhiteboard()"
+    :class="{
+      'im-call-bar-item-disabled': collabDisabled,
+      'fonticon-blue': !!runningWhiteboardFeature
+    }"
+    :label="collabDisabled ? $store.getters.nls('WhiteboardUnavailable') : $store.getters.nls('Whiteboard')"
+  />
+  <im-call-bar-item
+    v-if="isWhiteboardSupported"
+    v-show="isWhiteboard && !isOnHold"
+    class="fonticon-app-whiteboard fonticon-red-off oncall-item"
+    @click.native="stopFeatures('whiteboard')"
+    :label="$store.getters.nls('endWhiteboard')"
+  />
+  
+  
+  <!-- Confetti -->
+  <im-call-bar-item
+    v-if="isConfettiSupported"
+    v-show="!isConfetti && !isOnHold"
+    class="fonticon-chart-scatter-plot oncall-item"
+    @click.native="!collabDisabled && activeConfetti()"
+    :class="{
+      'im-call-bar-item-disabled': collabDisabled,
+      'fonticon-blue': !!runningConfettiFeature
+    }"
+    :label="'Start confetti'"
+  />
+  <im-call-bar-item
+    v-if="isConfettiSupported"
+    v-show="isConfetti && !isOnHold"
+    class="fonticon-chart-scatter-plot fonticon-red-off oncall-item"
+    @click.native="stopFeatures('confetti')"
+    :label="'Stop confetti'"
+  />
+
+  <!-- 3DPlay -->
+  <im-call-bar-item
+    v-if="is3DPlaySupported"
+    v-show="!is3DPlay && !isOnHold"
+    class="fonticon-compass-play oncall-item"
+    @click.native="!collabDisabled && active3DPlay()"
+    :class="{
+      'im-call-bar-item-disabled': collabDisabled,
+      'fonticon-blue': !!running3DPlayFeature
+    }"
+    :label="'3DPlay'"
+  />
+  <im-call-bar-item
+    v-if="is3DPlaySupported"
+    v-show="is3DPlay && !isOnHold"
+    class="fonticon-compass-play fonticon-red-off oncall-item"
+    @click.native="stopFeatures('3dplay')"
+    :label="'Stop 3DPlay'"
+  />
+
+  <!-- Dialer -->
+  <!--
+  <im-call-bar-item
+    v-if="isTelephonySupported && isSip"
+    v-show="!isDialerON"
+    class="fonticon-numeric-keypad oncall-item"
+    @click.native="displayDialer()"
+    :label="$store.getters.nls('displayDialer')"
+  />
+  <im-call-bar-item
+    v-if="isTelephonySupported && isSip"
+    v-show="isDialerON"
+    class="fonticon-numeric-keypad fonticon-red-off oncall-item"
+    @click.native="hideDialer()"
+    :label="$store.getters.nls('hideDialer')"
+  />
+  -->
+
+  <!-- Hold -->
+  <im-call-bar-item
+    class="fonticon-pause oncall-item" 
+    v-show="!isOnHold"
+    @click.native="holdCall()"
+    :label="$store.getters.nls('holdCall')"
+  />
+  <im-call-bar-item
+    class="fonticon-play fonticon-blue"
+    v-show="isOnHold"
+    @click.native="resumeCall()"
+    :label="$store.getters.nls('resumeCall')"
+  />
+
+  <!-- Hangup -->
+  <im-call-bar-item
+    class="fonticon-cancel hangup fonticon-red-off"
+    @click.native="endCall"
+    :label="$store.getters.nls('refuseCall')"
+  />
+
+</div>

@@ -1,0 +1,93 @@
+#POI-manager-div .annotationStyle p.annotationStyleSpan {
+    border-radius: 3px;
+    border: 1px solid rgba(181, 181, 181, 0.9);
+    background-color: rgba(247, 247, 247, 0.8);
+    color: #3d3d3d;
+    font-family: Arial;
+    font-size: 12px;
+    font-weight: bold;
+    box-shadow: none;
+    padding: 3px;
+}
+
+#POI-manager-div .annotationStyle p.annotationStyleSpan:hover, #POI-manager-div .annotationStyle.annotationStyleOver p.annotationStyleSpan {
+    border: 1px solid rgba(247, 247, 247, 0.9);
+    background-color: rgba(54, 142, 196, 0.8);
+    color: #ffffff;
+}
+
+#POI-manager-div .annotationStyle.annotationStyleOver .POIDescription.empty-description {
+    display: none;
+}
+
+#POI-manager-div .annotationStyle::before {
+    content: "";
+    position: absolute;
+    top: -40px;
+    height: 64px;
+    width: 1px;
+    cursor: pointer;
+    background-color: rgba(181, 181, 181, 0.9);
+    left: calc(100%/2);
+}
+
+#POI-manager-div .annotationStyle .annotationStyleSpan {
+	text-align: center;
+	margin-top: -65px;
+}
+
+#POI-manager-div .annotationStyle:hover::before, #POI-manager-div .annotationStyle.annotationStyleOver::before {
+    background-color: rgba(247, 247, 247, 0.9);
+}
+
+/* Description Animation */
+@keyframes descriptionanim {
+	0%   {
+		opacity: 0;
+		height: 0px;
+	}
+	100% {
+		opacity: 1;
+		height: auto;
+	}
+
+}
+
+#POI-manager-div .annotationStyle.annotationStyleOver .POIDescription {
+    display: block;
+    border-radius: 3px;
+    border: 1px solid rgba(247, 247, 247, 0.9);
+    background-color: rgba(54, 142, 196, 0.8);
+    color: #ffffff;
+    font-family: Arial;
+    font-size: 12px;
+    font-weight: normal;
+    box-shadow: none;
+    overflow: hidden;
+    position: absolute;
+    left: calc(100% + 10px);
+    bottom: 0px;
+    width: 300px;
+    padding: 10px;
+    text-align: justify;
+    animation-name: descriptionanim;
+    animation-duration: 0.3s;
+}
+
+#POI-manager-div .annotationStyle .POIDescription {
+    display: none;
+}
+
+#POI-manager-div .PoiSpan, .annotationStyleSpan {
+	cursor: pointer;
+	white-space: nowrap;
+}
+
+#POI-manager-div .annotationStyle {
+	margin-top: -20px;
+}
+
+.annotation .xcity-marker-description {
+    max-height: none;
+    pointer-events: auto;
+}

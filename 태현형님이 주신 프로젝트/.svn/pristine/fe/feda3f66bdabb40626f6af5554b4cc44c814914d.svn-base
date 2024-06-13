@@ -1,0 +1,47 @@
+<?xml version="1.0" ?>
+<!-- CATIA DICTIONARY  -->
+<!-- COPYRIGHT DASSAULT SYSTEMES 2021, All rights reserved -->
+
+<Package xmlns="PLMDictionaryUnified"
+    ModelerType="Top"
+    BelongsToModeler="PRODUCT"
+    Name="CATVPMPositionER"
+    UseNames="ERCoreModeler"
+	Architecture="All" 
+    Uuid="2AF2C0FF-7841-4A9A-8E89-B648F9401880"
+    CustomerExposition="Programmer">
+    
+    <!-- 
+        Link from VPMReferenceExtPos to root of position axis tree 
+    -->
+    <RelationClass Name="PositioningArch"
+        Uuid="8a8d9bb2-ba19-42f4-a2d1-66d190b49212"
+        Abstract="No"
+        SuperName="RelationType"
+        CustomerExposition="Programmer"
+        Specializable="No"
+        CustomerExtensible="No">
+
+        <SubClause Name="from" TargetName="VPMReferenceExtPos" 
+            cardinality="One" 
+            clone="replicate"
+            minorrevision="replicate"
+            propagatemodify="Yes" 
+            propagateconnection="Yes"/>
+        <SubClause Name="to" TargetName="VPMReference" 
+            cardinality="Many"
+            clone="none"
+            minorrevision="none"
+            propagatemodify="No" 
+            propagateconnection="No"/>
+
+        <Property Name="Filtrable" Value="No"/>
+        <Property Name="Searchable" Value="No"/>
+        
+        <!-- PROCEDURES Declaration for ExportScope -->
+        <Method ImplementationType="None">
+            <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+            <!-- Do nothing -->
+        </Method>
+    </RelationClass>
+</Package>

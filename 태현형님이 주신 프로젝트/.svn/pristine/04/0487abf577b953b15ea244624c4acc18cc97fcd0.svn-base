@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:widget="http://www.netvibes.com/ns/">
+<head>
+
+
+    <title>Logical Product Definition</title>
+
+	<!-- Application Metas -->
+    <meta name="autoRefresh" content="false" />
+    <meta name="debugMode" content="true" />
+    <meta name="noSearchInWidgetUI" content="true" />
+    <meta name="author" content="FLE Team" />
+    <meta name="description" content="FL Cockpit Widget" />
+    <meta name="brand" content="ENOVIA" />
+
+    <!-- AMDLoader -->
+    <script type="text/javascript" src="../AmdLoader/AmdLoader.js"></script>
+    <script type="text/javascript" src="../WebappsUtils/WebappsUtils.js"></script>
+
+    <!-- UWA -->
+    <link rel="stylesheet" type="text/css" href="../c/UWA/assets/css/standalone.css" />
+    <script type="text/javascript" src="../c/UWA/js/UWA_Standalone_Alone.js"></script>
+
+    <!--  CSS -->
+    <link rel="stylesheet" type="text/css" href="../c/UWA/assets/css/iframe.css" />
+    <link rel="stylesheet" type="text/css" href="../UIKIT/UIKIT.css" />
+
+    <!-- Web Fundamentals -->
+    <script type="text/javascript" src="../WebUX/WebUX.js"></script>
+
+    <!-- Sample code -->
+    <script>
+    	/* global widget, require, define */
+    	require(['DS/CATFLCockpitWidget/CATFLCockpitWidgetMain'], function(CATFLCockpitWidget) {
+
+    		'use strict';
+
+    		widget.addEvents({
+    			//The onLoad() function is the first one,
+    			//it will be triggered by widget "onLoad" event.
+    			onLoad : function(event) {
+    				CATFLCockpitWidget.onLoad.call(null,event);
+    			},
+    			onRefresh: function(event) {
+    				CATFLCockpitWidget.onRefresh.call(null,event);
+    			},
+    			onResize: function(event) {
+    				//CATFLCockpitWidget.onResize.call(null,event);
+    			},
+    			onUpdateBody: function(event) {
+    				//CATFLCockpitWidget.onUpdateBody.call(null,event);
+    			},
+    			onContextChange: function(event) {
+    				//CATFLCockpitWidget.onContextChange.call(null,event);
+    			},
+    			endEdit: function(event) {
+    				//CATFLCockpitWidget.onEndEdit.call(null,event);
+    			}
+    		});
+
+    	});
+    </script>
+    <!-- Application JS End -->
+</head>
+
+<body>
+</body>
+
+</html>

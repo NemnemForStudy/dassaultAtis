@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:widget="http://www.netvibes.com/ns/">
+<!-- Copyright 2018 , Dassault Systemes. All rights reserved. -->
+
+<head>
+    <title>Document Preview</title>
+    <!-- Application Metas Start -->
+    <meta name="description" content="Preview" />
+    <meta name="keywords" content="Preview" />
+    <meta name="debugMode" content="false" />
+    <meta name="strictMode" content="true" />
+    <meta name="autoRefresh" content="-1" />
+    <!-- Application Metas End -->
+    <!-- AMDLoader -->
+    <script type="text/javascript" src="../AmdLoader/AmdLoader.js"></script>
+    <script type="text/javascript" src="../WebappsUtils/WebappsUtils.js"></script>
+    <!-- UWA -->
+    <link rel="stylesheet" type="text/css" href="../c/UWA/assets/css/standalone.css" />
+    <script type="text/javascript" src="../c/UWA/js/UWA_Standalone_Alone.js"></script>
+    <!-- Web Fundamentals -->
+    <script type="text/javascript" src="../WebUX/WebUX.js"></script>
+    <link rel="stylesheet" type="text/css" href="../UIKIT/UIKIT.css" />
+    <!-- Added static prefernce to enable not to load the preference edit during widget refresh-->
+    <widget:preferences>
+    </widget:preferences>
+    <!-- Application JS Start -->
+    <script type="text/javascript">
+        //<![CDATA[
+
+        //This DocumentPreview.html needs to be registered as 3rd Party Widget. And the APP-ID needs to be replaced in ctxPreview of DS/ENOXAttachmentsUX/utils/Menus
+        'use strict';
+        require([
+            'DS/DocumentPreview/PreviewComponent',
+        ],
+            function (Preview) {
+                var preview = new Preview({ x3dcontent: JSON.parse(widget.getValue('X3DContentId')) });
+                widget.addEvents({
+                    onLoad: function () {
+                        widget.body.empty();
+                        preview.inject(widget.body)
+                    }
+                });
+            });
+
+
+
+      //]]>
+
+    </script>
+    <!-- Application JS End -->
+</head>
+
+<body>
+</body>
+
+</html>

@@ -1,0 +1,1 @@
+define("DS/ENOX3DSpaceAttributesMgt/ENOX3DSpaceAttributesMgt_cs",{});define("DS/ENOX3DSpaceAttributesMgt/assets/nls/ENOXAttributesMgtNls",{isCellEditableColumns:{title:"Lze upravit z pohledu"},attributeForEditingColumns:{title:"Atribut pro úpravu buňky"},Classification:{title:"Klasifikace"},instance:"Instance"});

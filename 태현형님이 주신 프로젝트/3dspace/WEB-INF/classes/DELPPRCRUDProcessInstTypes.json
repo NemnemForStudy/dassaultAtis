@@ -1,0 +1,82 @@
+[
+    {
+        "ParsingVersion": "2.0",
+        "DeclarativeTypes": [
+            {
+                "ConceptualName": "dsprcs:MfgProcessInstance",
+                "ParentType": "PLMInstance",
+                "IsAbstract": true,
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "DELLmiPPRSystemInstance",
+                        "Behavior": "CUSTOM",
+                        "Class": "com.dassault_systemes.delmia.crud.process.bytype.threed_space.impl.DELMIACRUDPPRSystemInstanceExecutionImpl"
+                    },
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "DELLmiPPRSystemInstance",
+                        "Behavior": "INSTANCE"
+                    }
+                ],
+                "Dependencies": [
+                    [
+                        {
+                            "ConceptualName": "dsprcs:MfgProcess",
+                            "DependentAttributes": [
+                                "From_IDs",
+                                "TO_IDs"
+                            ]
+                        }
+                    ]
+                ],
+                "Attributes": [
+                    {
+                        "ConceptualName": "From_IDs",
+                        "State": "MANDATORY",
+                        "Checkers": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.tools.checkers.AttributeNotNullAndUniqueValueChecker"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "TO_IDs",
+                        "State": "MANDATORY",
+                        "Checkers": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.tools.checkers.AttributeNotNullAndUniqueValueChecker"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "remoteObjectInfo",
+                        "Transforms": [
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.transforms.DELCRUDProcIndexRemoteObjectTransform"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "kind",
+                        "Checkers": [
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.tools.checkers.AttributeDefaultChecker"
+                            }
+                        ],
+                        "Getters": [
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.getters.MfgProductionPlanningKindGetter"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]

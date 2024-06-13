@@ -1,0 +1,35 @@
+<div 
+  id="im-call-confetti"
+>
+<span
+  v-if="IAmMaster"
+  id="im-call-confetti-green"
+>
+  Your turn to play
+</span>
+<span
+  v-else
+>
+  Turn to play : {{ masterUsername }}
+</span>
+<div id="im-call-confetti-table">
+  <div
+    class="im-call-confetti-row"
+    v-for="(i) in [0, 1, 2, 3, 4, 5, 6]"
+  >
+    <div
+      class="im-call-confetti-cell"
+      v-for="(j) in [0, 1, 2, 3, 4, 5, 6, 7]"
+      @click="sendConfetti(i, j)"
+      :id="genId(i, j)"
+    >
+      <vu-rtuserpresence
+        v-if="feature && feature.featureData.confettis[genId(i, j)]"
+        class="normal bgInherit noPresence"
+        :login="$store.getters.user(feature.featureData.confettis[genId(i, j)]).login"
+        :tenantId="$store.getters.tenant"
+      />
+    </div>
+  </div>
+</div>
+</div>

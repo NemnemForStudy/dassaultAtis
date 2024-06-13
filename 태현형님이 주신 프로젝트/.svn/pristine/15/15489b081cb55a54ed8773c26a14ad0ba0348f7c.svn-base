@@ -1,0 +1,110 @@
+.sch-controls-valuetypecombo {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%; }
+  .sch-controls-valuetypecombo .sch-controls-valuetypecombo-input {
+    box-sizing: border-box;
+    width: 100%;
+    flex-grow: 1;
+    outline: none;
+    border: 0px;
+    color: #3d3d3d;
+    margin: 0px;
+    padding: 2px 7px 2px 7px;
+    font-size: 12px;
+    resize: none; }
+  .sch-controls-valuetypecombo .sch-controls-valuetypecombo-button {
+    box-sizing: border-box;
+    width: 22px;
+    min-width: 22px;
+    padding: 0px;
+    background: #f1f1f1;
+    border: 1px solid white;
+    outline: none;
+    color: #3d3d3d;
+    cursor: pointer; }
+    .sch-controls-valuetypecombo .sch-controls-valuetypecombo-button > span {
+      pointer-events: none;
+      font-size: 10px; }
+    .sch-controls-valuetypecombo .sch-controls-valuetypecombo-button:hover {
+      background: #d9d9d9; }
+    .sch-controls-valuetypecombo .sch-controls-valuetypecombo-button.sch-controls-valuetypecombo-button-typelibrary > span {
+      font-size: 12px; }
+  .sch-controls-valuetypecombo[focused]:not(:active):not([disabled]) .sch-controls-valuetypecombo-button:not([hasHoverPrevented]) {
+    color: #368ec4; }
+
+.sch-controls-valuetypecombo-list-container {
+  box-sizing: border-box;
+  position: absolute;
+  z-index: 40000;
+  max-height: 245px;
+  min-width: 150px;
+  box-shadow: 0 1px 2px #b4b6ba;
+  display: flex;
+  flex-direction: column; }
+  .sch-controls-valuetypecombo-list-container .sch-controls-valuetypecombo-createtype-container {
+    box-sizing: border-box;
+    position: relative;
+    width: 100%;
+    background-color: #f1f1f1;
+    text-align: center;
+    padding: 5px; }
+    .sch-controls-valuetypecombo-list-container .sch-controls-valuetypecombo-createtype-container .wux-controls-button > * {
+      pointer-events: none; }
+  .sch-controls-valuetypecombo-list-container .sch-controls-valuetypecombo-list {
+    box-sizing: border-box;
+    position: relative;
+    width: 100%;
+    box-shadow: none;
+    flex-grow: 1;
+    max-height: 200px;
+    line-height: 20px;
+    font-family: Arial, Helvetica;
+    background: white;
+    margin: 0px;
+    padding: 0px;
+    border: 0px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    user-select: none;
+    scrollbar-width: thin;
+    scrollbar-color: #77797c transparent; }
+    .sch-controls-valuetypecombo-list-container .sch-controls-valuetypecombo-list::-webkit-scrollbar {
+      width: 7px; }
+    .sch-controls-valuetypecombo-list-container .sch-controls-valuetypecombo-list::-webkit-scrollbar-thumb {
+      background: #77797c; }
+    .sch-controls-valuetypecombo-list-container .sch-controls-valuetypecombo-list .sch-controls-valuetypecombo-list-element {
+      box-sizing: border-box;
+      display: block;
+      margin: 0px;
+      font-size: 12px;
+      padding: 3px;
+      list-style-type: none;
+      cursor: pointer;
+      white-space: nowrap;
+      border-top: 1px solid #dadada; }
+      .sch-controls-valuetypecombo-list-container .sch-controls-valuetypecombo-list .sch-controls-valuetypecombo-list-element.selected {
+        background: #f1f1f4;
+        border-top-color: #368ec4; }
+        .sch-controls-valuetypecombo-list-container .sch-controls-valuetypecombo-list .sch-controls-valuetypecombo-list-element.selected + li {
+          border-top-color: #368ec4; }
+          .sch-controls-valuetypecombo-list-container .sch-controls-valuetypecombo-list .sch-controls-valuetypecombo-list-element.selected + li.separator {
+            border-top-style: solid; }
+      .sch-controls-valuetypecombo-list-container .sch-controls-valuetypecombo-list .sch-controls-valuetypecombo-list-element:not(.selected) {
+        border-top-color: white; }
+      .sch-controls-valuetypecombo-list-container .sch-controls-valuetypecombo-list .sch-controls-valuetypecombo-list-element.preselected {
+        background: #368ec4;
+        color: white; }
+      .sch-controls-valuetypecombo-list-container .sch-controls-valuetypecombo-list .sch-controls-valuetypecombo-list-element.separator:not(.selected) {
+        border-top: 1px dashed #368ec4; }
+      .sch-controls-valuetypecombo-list-container .sch-controls-valuetypecombo-list .sch-controls-valuetypecombo-list-element:not(.preselected) .highlighted {
+        font-weight: bold;
+        color: #368ec4; }
+      .sch-controls-valuetypecombo-list-container .sch-controls-valuetypecombo-list .sch-controls-valuetypecombo-list-element:last-of-type {
+        border-bottom: 1px solid #dadada; }
+        .sch-controls-valuetypecombo-list-container .sch-controls-valuetypecombo-list .sch-controls-valuetypecombo-list-element:last-of-type.selected {
+          border-bottom-color: #368ec4; }
+      .sch-controls-valuetypecombo-list-container .sch-controls-valuetypecombo-list .sch-controls-valuetypecombo-list-element > * {
+        pointer-events: none; }

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns:widget="http://www.netvibes.com/ns/">
+<head>
+
+    <title>Web Notes</title>
+    <meta name="author" content="Netvibes" />
+    <meta name="description" content="Netvibes Webnote Widget" />
+    <meta name="apiVersion" content="1.3" />
+    <meta name="inline" content="true" />
+    <meta name="autoRefresh" content="20" />
+    <meta name="debugMode" content="false" />
+
+    <!-- Widget Preferences -->
+    <widget:preferences>
+        <widget:preference name="title" type="text" label="Title_html" defaultValue="" />
+        <widget:preference name="text" type="hidden" label="Text" defaultValue="" />
+        <widget:preference name="font" type="list" label="Font_html" defaultValue="'Arial Black', Arial, sans-serif" onchange="changeStyle">
+            <widget:option value="'Arial Black', Arial, sans-serif" label="Arial Black" />
+            <widget:option value="Century Gothic" label="Century Gothic" />
+            <widget:option value="Comic Sans MS" label="Comic Sans MS" />
+            <widget:option value="Courier New" label="Courier New" />
+            <widget:option value="cursive" label="Cursive" />
+            <widget:option value="Impact" label="Impact" />
+            <widget:option value="monospace" label="Monospace" />
+            <widget:option value="Tahoma" label="Tahoma" />
+            <widget:option value="Times New Roman" label="Times New Roman" />
+            <widget:option value="Trebuchet MS" label="Trebuchet MS" />
+            <widget:option value="Verdana" label="Verdana" />
+        </widget:preference>
+        <widget:preference name="fontSize" type="list" label="FontSize_html" defaultValue="1.2em" onchange="changeStyle">
+            <widget:option value="0.8125em" label="Small_html" />
+            <widget:option value="1.2em" label="Medium_html" />
+            <widget:option value="1.6em" label="Big_html" />
+        </widget:preference>
+    </widget:preferences>
+
+    <script type="text/javascript">
+
+    /*global require, widget*/
+    require([
+            "DS/WebNoteWdg/WebNote"
+        ],
+        function (WebNote) {
+
+            /* UWA Widget events */
+            widget.addEvents({
+                onLoad:  WebNote.load,
+
+                onRefresh: WebNote.load,
+
+                onResize: WebNote.resize,
+
+                onViewChange: WebNote.onViewChange
+            });
+
+            widget.changeStyle = WebNote.setStyles;
+        }
+    );
+</script>
+</head>
+<body>
+</body>
+</html>

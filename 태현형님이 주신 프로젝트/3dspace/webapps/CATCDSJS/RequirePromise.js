@@ -1,0 +1,1 @@
+define(function(){return{load:function(n,t,f,i){t([n],function(n){n.then(function(n){f(n)})})}}});

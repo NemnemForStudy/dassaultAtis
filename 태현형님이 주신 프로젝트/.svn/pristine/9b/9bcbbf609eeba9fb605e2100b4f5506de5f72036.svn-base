@@ -1,0 +1,26 @@
+################################################################################################
+# Added by thok on 2023.10.19
+# Admin Type : Command
+# Name : decMaterialStatusCommand5
+################################################################################################
+# delete command decMaterialStatusCommand5;
+add command decMaterialStatusCommand5
+	label 'Others'
+	description 'Material Status Discipline Others'
+	href '${COMMON_DIR}/emxIndentedTable.jsp?table=decMaterialStatus&program=emxProjectSpace:getMaterialStatusList&toolbar=decProjectMaterialStatusLinkToolBar&header=ProgramCentral.Label.Procurement_Schedule_-_Material_Status&parallelLoading=true&maxCellsToDraw=2000&scrollPageSize=50&pageSize=300&showPaginationToggle=false&decExport=true&exportMode=MaterialStatus&slideinFilter=true&Discipline=Others&filterParam=codeMaster:Discipline,codeMaster:Sub-Con,codeMaster:Item Group,codeMaster:Group,Fab Category:true,Material Delay:true,Status_Updated:true,CWP_Plan:true'
+	setting 'Access Expression' 'type == "Project Space" && attribute[decProjectType] == "ongoing"'
+	setting 'Registered Suite' 'ProgramCentral'
+	setting 'Target Location' 'content'
+;
+add property command_decMaterialStatusCommand5 on prog eServiceSchemaVariableMapping.tcl to command decMaterialStatusCommand5
+;
+
+# Modified by jhlee on 2023.10.19
+mod command decMaterialStatusCommand5
+	href '${COMMON_DIR}/emxIndentedTable.jsp?table=decMaterialStatus&program=emxProjectSpace:getMaterialStatusList&toolbar=decProjectMaterialStatusLinkToolBar&header=ProgramCentral.Label.Procurement_Schedule_-_Material_Status&parallelLoading=true&maxCellsToDraw=2000&scrollPageSize=50&pageSize=300&showPaginationToggle=false&decExport=true&exportMode=MaterialStatus&slideinFilter=true&Discipline=Others&filterParam=codeMaster:Discipline.Discipline>Discipline.Group,codeMaster:Sub-Con,codeMaster:Item Group,Fab Category:true,Material Delay:true,Status_Updated:true,CWP_Plan:true'
+;
+
+# Modified by thok on 2023.11.01
+mod command decMaterialStatusCommand5
+	add setting 'Access Expression' 'type == "Project Space"'
+;

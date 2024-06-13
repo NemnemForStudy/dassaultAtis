@@ -1,0 +1,1 @@
+define("DS/VideoGalleryWdg/VideoGalleryWdg_de",{});define("DS/VideoGalleryWdg/assets/nls/VideoGallery",{NoInternet:"Ihre Internetverbindung scheint deaktiviert zu sein"});

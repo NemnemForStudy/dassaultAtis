@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:widget="http://www.netvibes.com/ns/">
+    <head>
+        <title>WidgetPreview Tests</title>
+        <!-- Application Metas -->
+        <meta name="author" content="MNH1" />
+        <meta name="description" content="Run WidgetPreview functional tests" />
+
+        <link rel="stylesheet" type="text/css" href="../UIKIT/UIKIT.css" />
+        <script type="text/javascript" src="../UIKIT/UIKIT.js"></script>
+
+        <widget:preferences>
+            <widget:preference name="preference" type="text" label="preference" defaultValue="preference"></widget:preference>
+        </widget:preferences>        
+
+        <!-- Application JavaScript Source -->
+        <script type="text/javascript">
+
+            /* Launch widget preview tests
+             * Console Line : 
+             * 
+             * var Transient = require('DS/TransientWidget/TransientWidget');
+             * Transient.showWidget('https://lw5-mnh1-dsy.dsone.3ds.com:9000/wap/resources/0/en/webapps/WidgetPreview/Test/widgetpreview.html','My Widget Preview',{"previewWidgetData": true})
+             * Transient.showWidget('https://lw5-mnh1-dsy.dsone.3ds.com:9000/wap/resources/0/en/webapps/WidgetPreview/Test/widgetpreview.html','My Widget Preview',{"previewWidgetData": true}, {"mode":"panel"})
+            */
+
+            require(
+            [
+                'UWA/Core',
+                'DS/PubSub/PubSub',
+                'DS/TopBarProxy/TopBarProxy'
+            ],
+            function (UWA, PubSub, TopBarProxy){ 
+
+                var that = this,
+                    htmlTests;
+
+                
+                document.body.innerHTML = '';
+
+                // Utils
+                function assert (message, expr) {
+                    var htmlMsg = '<p>' + message;
+                    if(expr){
+                        htmlMsg += ' <span class="preview-icon fonticon fonticon-check" style="color:green;"></span></p>';
+                    }
+                    else {
+                        htmlMsg += ' <span class="preview-icon fonticon fonticon-cancel" style="color:red;"></span></p>';
+                    }
+                    htmlTests += htmlMsg;
+                }
+                ////////
+
+                // Tests
+                function assertIsMaximized() {
+                    return widget.getView().type === 'maximized';               
+                }
+
+                function assertOnTopBarProxy() {
+                    that.topBarProxy = new TopBarProxy({
+                        'id': widget.id
+                    }); 
+                    that.topBarProxy.setContent({
+                        profile: [{
+                            label: 'My Profile',
+                            onExecute: function(){}
+                        }, {
+                            label: 'Sign Out',
+                            onExecute: function(){}
+                        },
+                        {
+                            label: 'My Profile Custom',
+                            onExecute: function(){}
+                        }]                        
+                    }); 
+
+                    return that.topBarProxy.toJSON().profile.length === 3;                                   
+                }                
+   
+                function assertGetDatas() {
+                    return !!widget.getValue('previewWidgetData');
+                }  
+
+                function assertGetPreference() {
+                    return !!widget.getValue('preference');
+                }     
+
+                function assertGetInsideDatas() {
+                    widget.setValue('PreviewDatas','datas');
+                    return !!widget.getValue('PreviewDatas');
+                }    
+
+                function assertStaticTitleName(){
+                    return widget.getTitle() === 'WidgetPreview Tests';
+                }    
+                       
+
+
+                function assertAllTest() {
+                    assert('IsMaximized', assertIsMaximized());
+                    assert('getPreference', assertGetPreference());
+                    assert('getInsideData', assertGetInsideDatas());
+                    assert('staticTitleName', assertStaticTitleName());
+                    assert('getDatas', assertGetDatas());
+                    assert('AddToTopBarProxy', assertOnTopBarProxy());
+                }
+                ////////
+
+                // UWA events functions
+                function onLoad() {
+                    htmlTests = '';
+                    assert('onLoad ', true);
+                    assertAllTest();
+                    htmlTests += '</br></br>';
+                    document.body.innerHTML += htmlTests; 
+                }
+
+                function onRefresh() {
+                    htmlTests = '';                    
+                    assert('onRefresh ', true);
+                    assertAllTest();
+                    htmlTests += '</br></br>';                    
+                    document.body.innerHTML += htmlTests; 
+                }
+
+                function onSearch() {
+                    htmlTests = '';                       
+                    assert('onSearch ', true);
+                    assertAllTest();
+                    htmlTests += '</br></br>';                    
+                    document.body.innerHTML += htmlTests;                     
+                }     
+                
+                function onResetSearch() {
+                    htmlTests = '';                       
+                    assert('onResetSearch ', true);
+                    assertAllTest();
+                    htmlTests += '</br></br>';                    
+                    document.body.innerHTML += htmlTests;                     
+                }  
+                ////////
+
+                widget.addEvents({
+                    onLoad: onLoad,
+                    onRefresh: onRefresh,
+                    onSearch : onSearch,
+                    onResetSearch: onResetSearch
+                });
+
+            });    
+
+        </script>
+      </head>
+      <body>
+            <p>Loading...</p>
+      </body>
+</html>

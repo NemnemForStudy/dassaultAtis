@@ -1,0 +1,1 @@
+define("DS/OSLCConsumer/OSLCConsumer_cs",{});define("DS/OSLCConsumer/assets/nls/OSLCConsumerNls",{selectRepository:"Úložiště:",selectProvider:"Poskytovatel:",selectSingleObject:"Před odesláním dialogového okna vyberte pouze jeden artefakt.",processing:"Probíhá zpracování..."});

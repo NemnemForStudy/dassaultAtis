@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<derivedformatmanagement xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="DerivedFormatDeclarative.xsd">
+    <!-- first official version for R2023x Beta2 and R2022x FD04  -->
+	<converter name="CREO" synchronous="true"  nlsFile="emxDerivedFormatManagementCREOStringResource" comment="conversion managed synchronously at save by CREO PowerBy connector">
+      <datasources>
+		<datasource name="CREO" >    
+			<source name="PRT,XPR" type ="CREOPart">
+				<target name="image_jpg" inputStreamId="authoring" outputStreamId="JPG" />
+				<target name="tif"       inputStreamId="authoring" outputStreamId="TIF" />
+				<target name="iges"      inputStreamId="authoring" outputStreamId="IGES"/>
+				<target name="png"       inputStreamId="authoring" outputStreamId="PNG"/>
+				<target name="step"      inputStreamId="authoring" outputStreamId="STEP" />
+			</source>
+					
+			<source name="DRW" type ="Drawing">
+				<target name="image_jpg" inputStreamId="authoring" outputStreamId="JPG" />
+				<target name="postscript" inputStreamId="authoring" outputStreamId="PS" />
+				<target name="dxf"      inputStreamId="authoring" outputStreamId="DXF"/>
+				<target name="iges"     inputStreamId="authoring" outputStreamId="IGES"/>
+				<target name="cgm"      inputStreamId="authoring" outputStreamId="CGM"/>				
+				<target name="pdf"      inputStreamId="authoring" outputStreamId="PDF"/>
+				<target name="dwg"      inputStreamId="authoring" outputStreamId="DWG"/>
+			</source>
+			
+			<events>       
+				<event name="onXCADSave" type="interactiveUpdate" />
+			</events>
+		</datasource>
+	  </datasources>
+	</converter>
+
+</derivedformatmanagement>

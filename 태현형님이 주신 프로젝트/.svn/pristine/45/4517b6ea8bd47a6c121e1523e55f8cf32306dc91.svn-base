@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:widget="http://www.netvibes.com/ns/">
+<head>
+
+
+    <title>Set Architecture Number - Web In Win</title>
+
+    <!-- App icon set to blue CATIA icon -->
+	<!-- <link rel="icon" type="image/png" href="assets/icons/16/iconCATIA.png" /> -->
+
+	<!-- Application Metas -->
+	<meta name="autoRefresh" content="false" />
+	<meta name="debugMode" content="true" />
+    <meta name="author" content="FLE Team" />
+    <meta name="description" content="FL Cockpit Widget" />
+
+    <!-- AMDLoader -->
+    <script type="text/javascript" src="../AmdLoader/AmdLoader.js"></script>
+    <script type="text/javascript" src="../WebappsUtils/WebappsUtils.js"></script>
+
+    <!-- UWA -->
+    <script type="text/javascript" src="../c/UWA/js/UWA_Standalone_Alone.js"></script>
+
+    <!--  CSS -->
+    <link rel="stylesheet" type="text/css" href="../UIKIT/UIKIT.css" />
+    <link rel="stylesheet" type="text/css" href="CATFLCockpitWidget.css" />
+
+    <!-- Web Fundamentals -->
+    <script type="text/javascript" src="../WebUX/WebUX.js"></script>
+
+    <!-- Sample code -->
+    <script>
+        // Expose global method here
+      window.createLogicalReferencesFromDiagram = function (options) {
+          require([
+          	'DS/CATFLCockpitWidget/components/WIWItemCreationModal/WIWItemCreationModal',
+              'UWA/Core',
+              'DS/CATFLCockpitWidget/services/logitem.service',
+              'DS/CATFLCockpitWidget/services/model.service',
+              'DS/CATFLCockpitWidget/services/common.service',
+              'DS/CATFLCockpitWidget/utils/common.util',
+              'i18n!DS/CATFLCockpitWidget/assets/nls/CATFLCockpitWidget',
+              'css!DS/CATFLCockpitWidget/CATFLCockpitWidget'
+          ], function (WIWItemCreationModal, UWA, LogItemService, ModelService, CommonService, CommonUtil, NLS) {
+
+            let instanceCount = 0;
+            if ( options.ListSelectedInstances ) {
+              instanceCount = options.ListSelectedInstances.length;
+            }
+            let discId = options.SelectionContext.ReferenceContext;
+            let itemId = options.SelectionContext.LinkedSystem;
+
+            LogItemService.getlogRefDiagramProposal(options).then((proposalResp) => {
+              // set the title of WIW Create from diagram page
+              let titleOfWIW = document.getElementsByClassName('title');
+              if(titleOfWIW && titleOfWIW.length == 1){
+                  titleOfWIW[0].innerText = NLS.create_from_diagram + proposalResp.SelectionContext.LinkedSystemTitle;
+              }
+
+              // add information to proposal response
+              proposalResp.instanceCount = instanceCount;
+              proposalResp.winInfo = {
+                action: 'createLogRefFromDiagram',
+                title: NLS.create_from_diagram + proposalResp.SelectionContext.LinkedSystemTitle,
+                submitBtn: NLS.action_create
+              };
+
+              let parentDiv = UWA.createElement('div');
+              parentDiv.setStyles({
+                width : '100%',
+                height: '100%'
+              });
+              widget.body.empty();
+              widget.body.appendChild(parentDiv);
+
+              // copying all configuration related data
+              let cfgCtxInfo = {};
+              if (proposalResp.configurationInfo) {
+                cfgCtxInfo.bCopyEff = proposalResp.configurationInfo.canCopyEffectivity;
+                cfgCtxInfo.bApplyConfig = proposalResp.configurationInfo.canApplyConfiguration;
+
+                let models = proposalResp.configurationInfo.models;
+                let itemCtx = proposalResp.configurationInfo.itemModels;
+                cfgCtxInfo.itemModels = [];
+                models.forEach((modelInfo) => {
+                  if (itemCtx.indexOf(modelInfo.physicalid) >= 0) {
+                    cfgCtxInfo.itemModels.push(modelInfo);
+                  }
+                });
+              }
+
+              // save Work Under change if not any or none on item
+              if (proposalResp.changeControlInfo) {
+                let itemChangeControl = proposalResp.changeControlInfo.itemChangeControl;
+                if (itemChangeControl !== "none" && itemChangeControl !== "any") {
+                  proposalResp.changecontrol = itemChangeControl;
+                }
+              }
+
+              // if copy effectivity is true then fetch effectivity details to display in table
+              if (cfgCtxInfo.bCopyEff) {
+                let instIds = options.ListSelectedInstances.map((item) => item.instanceID);
+                ModelService.getEffectivityInfo(instIds).then((effResp) => {
+                  cfgCtxInfo.effectivityResponse = effResp;
+                  cfgCtxInfo.instIds = instIds;
+                  WIWItemCreationModal.init(parentDiv, proposalResp, cfgCtxInfo);
+                });
+              } else {
+                WIWItemCreationModal.init(parentDiv, proposalResp, cfgCtxInfo);
+              }
+
+              let moduleFooter = document.getElementsByClassName('moduleFooter')
+              if(moduleFooter && moduleFooter.length == 1){
+               moduleFooter[0].setStyle('display', 'none')
+              }
+            }, function (errors){
+                  CommonUtil.displayError(errors, null, null, NLS.msg_generic_error_get_failed);
+            });
+          });
+      };
+
+      // The ReferenceContext(Discipline) should be implemented by the LinkedSystem(Item) to do create from diagram
+      // All the model versions of the models attached to linked system will be available in the Applied Configuration option
+      // var options = {
+      // 	"SelectionContext":{
+      // 		// "ReferenceContext":"9E578256754C00006298B4F20019FF89", // source
+      // 		// "LinkedSystem":"9E578256754C00006298B515000A3A2B", //with Model // destination
+      // 		// "title":"Item1",
+      //       // "ReferenceContext":"C732B05634F8340063077441000368EF", // source
+      // 		// "LinkedSystem":"C732B05634F834006307744F0014757D", //with Model // destination
+      // 		// "title":"SysA",
+      //       "ReferenceContext":"82A3B0566C1F0000633D8239000A034F", // source
+      // 		"LinkedSystem":"82A3B0566C1F0000633D82610009E381", //with Model // destination
+      // 		"title":"Sys1",
+      // 	},
+      // 	"ListSelectedInstances":[
+      //       {"referenceID":"82A3B0566C1F0000633D8239000A034F","instanceID": "82A3B0566C1F0000633D8239001B650D" },
+      //     //{"referenceID":"62EB82565137000060F69044000BCDF3","instanceID": "62EB82561A6A000060FAE79E000C67CD" },
+      //     //{"referenceID":"62EB82565137000060F690530018426D","instanceID": "62EB82561A6A000060FAE79E00162D1D" },
+      //     //{"referenceID":"62EB82565137000060F6904C001D6C95","instanceID": "62EB82561A6A000060FAE79F00011047" },
+      //     // {"referenceID":"62EB8256BA7B00005FBF8976000C593B","instanceID": "62EB8256BA7B00005FBF897600150243", "logicalRefType":"log_customType1_1"},
+		//   // {"referenceID":"62EB8256BA7B00005FBF8B400006186D","instanceID": "62EB8256BA7B00005FBF8B40000C90FD", "logicalRefType":"log_customType1"},
+      //     // {"referenceID":"C732B05634F8340063077441000368EF","instanceID": "C732B05634F83400630774410019ECD1" },
+      //     // {"referenceID":"8182B056BD591000630CB6C500026D85","instanceID": "8182B056BD591000630CB6C5000A0A23" },
+      // 	]
+      // }
+      //
+      // createLogicalReferencesFromDiagram(options);
+
+/* var jsonDataDummy = {
+   "columnNames":[
+      "instance",
+      "reference",
+      "revision",
+      "newValue",
+	  "cc1",
+	  "cc2"
+   ],
+   "columns":{
+      "instance":{
+         "key":"instance",
+         "label":"Instance",
+         "editable":false,
+         "required":false,
+         "format":"string",
+         "architectureIdColumn":false
+      },
+      "reference":{
+         "key":"reference",
+         "label":"Reference",
+         "editable":false,
+         "required":false,
+         "format":"string",
+         "architectureIdColumn":false
+      },
+      "revision":{
+         "key":"revision",
+         "label":"Revision",
+         "editable":false,
+         "required":false,
+         "format":"string",
+         "architectureIdColumn":false
+      },
+      "newValue":{
+         "key":"newValue",
+         "label":"Architecture Number",
+         "editable":true,
+         "required":true,
+         "format":"string",
+         "architectureIdColumn":true
+      },
+	  "cc1":{
+         "key":"cc1",
+         "label":"CC1",
+         "editable":true,
+         "required":true,
+         "architectureIdColumn":true,
+		 "range": ["va11", "val2", "val3"],
+		 "defaultValue": "val2",
+		 "format":"enum"
+      },
+	  "cc2":{
+         "key":"cc2",
+         "label":"CC2",
+         "editable":true,
+         "required":true,
+         "architectureIdColumn":true,
+		 "range": ["va11", "val2", "val3"],
+		 "rangeLabel": ["Lso11", "Lsol2", "Lsol3"],
+		 "format":"enum"
+      }
+   },
+   "rows":[
+      {
+         "reference":"Pump",
+         "newValue":"",
+         "instance":"Pump.1",
+         "instanceID":"62EB82561A6A000060FAE79E000C67CD",
+         "referenceID":"62EB82565137000060F69044000BCDF3",
+         "revision":"A.1",
+		 "cc1":"",
+		 "cc2":"va11"
+      },
+      {
+         "reference":"Valve",
+         "newValue":"",
+         "instance":"Valve.1",
+         "instanceID":"62EB82561A6A000060FAE79E00162D1D",
+         "referenceID":"62EB82565137000060F690530018426D",
+         "revision":"A.1",
+		 "cc1":"",
+		 "cc2":"val2"
+      },
+      {
+         "reference":"Motor",
+         "newValue":"",
+         "instance":"Motor.1",
+         "instanceID":"62EB82561A6A000060FAE79F00011047",
+         "referenceID":"62EB82565137000060F6904C001D6C95",
+         "revision":"A.1",
+		 "cc1":"val3",
+		 "cc2":"val3"
+      }
+   ],
+   "AN_ACTION":"CREATE_ITEM",
+   "showBulkRecomputation":true,
+   "showRowLevelRecomputation":"true",
+   "SelectionContext":{
+      "ReferenceContext":"62EB82565137000060F69002000E36F3",
+      "LinkedSystem":"62EB82569B7B000060FEA5EF00111FEB",
+      "LinkedSystemTitle":"PIPE_SYS"
+   }
+ };*/
+ //
+    </script>
+    <!-- Application JS End -->
+</head>
+
+<body>
+</body>
+
+</html>

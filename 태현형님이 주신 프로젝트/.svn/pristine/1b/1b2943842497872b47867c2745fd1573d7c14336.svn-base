@@ -1,0 +1,42 @@
+#
+# Server-side Error messages for Login Ticket services
+#
+Exception.InvalidTicketFormat= Bilet logowania [{0}] ma nieprawidłowy format
+Exception.TicketDoesNotExist= Bilet logowania [{0}] nie istnieje
+Exception.TicketAlreadyExist= Bilet logowania [{0}] już istnieje
+Exception.TicketNotYetActive= Bilet logowania [{0}] jeszcze nie jest aktywny
+Exception.TicketHasExpired= Bilet logowania [{0}] wygasł
+Exception.TicketHasClientRestriction= Bilet logowania [{0}] nie jest autoryzowany dla klienta [{1}]
+Exception.TicketHasInvalidUseCount= Bilet logowania [{0}] ma nieprawidłową liczbę użytkowników: {1}
+Exception.TicketMaxUseLimit= Bilet logowania [{0}] osiągnął maksimum liczby użytkowników ({1})
+Exception.TicketPrincipalIsNotCurrent= Obiekt główny biletu logowania [{0}] nie pasuje do obecnego użytkownika ({1})
+Exception.TicketWithMaxUseCannotBeInvalidated= Nie można unieważnić biletu [{0}] mającego górny limit użycia - unieważniać można tylko bilety poniżej górnego limitu użycia
+#
+Exception.TicketQueryFailed= Nie można wykonać kwerendy o bilet logowania [{0}]
+Exception.TicketCreateFailed= Nie można utworzyć biletu logowania [{0}]
+Exception.TicketModifyFailed= Nie można zmodyfikować biletu logowania [{0}]
+Exception.TicketRemoveFailed= Nie można usunąć biletu logowania [{0}]
+Exception.CouldNotGetPrincipalContexts= Nie można pobrać listy kontekstów zabezpieczeń obiektu głównego {1} biletu [{0}]
+Exception.UserIsNotAssignedToContext= Użytkownik {0} nie jest przypisany do kontekstu {1}
+Exception.TicketAuthenticationFailed= Nie udało się uwierzytelnić użytkownika [{0}] biletu logowania
+Exception.TicketAuthenticationFailedEx= Nie udało się uwierzytelnić użytkownika [{0}] biletu logowania
+Exception.CouldNotDecryptPwd= Nie można odszyfrować hasła biletu logowania
+
+# - 2015x ticket creation UI
+
+emxLTCreate.title= Tworzenie biletu logowania
+
+emxLTCreate.created.title= Tworzenie biletu z parametrami
+emxLTCreate.created.value= Wygenerowany bilet
+
+emxLTCreate.created.error.InvalidNegativeNumber= Nieprawidłowa liczba ujemna w wartości parametru "maxuse" w bilecie logowania
+emxLTCreate.created.error.InvalidNumber= Nieprawidłowa liczba w wartości parametru "maxuse" w bilecie logowania
+emxLTCreate.created.error.UnsupportedType= Nieobsługiwany parametr typu biletu logowania
+
+emxLTCreate.user= Użytkownik
+emxLTCreate.ctx= Kontekst zabezpieczeń
+emxLTCreate.type= Typ biletu
+emxLTCreate.type.infinite= Nieskończona
+emxLTCreate.type.once= Raz
+emxLTCreate.type.number= Liczba
+emxLTCreate.button.create= Utwórz

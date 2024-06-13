@@ -1,0 +1,57 @@
+@import "./variables";
+@import "./mixins.uikit";
+
+@mixin m-loading-bar($background: $grey-4, $bar-color: $blue-3) {
+  .loader {
+    width: 100%;
+    padding: 1px; // Loader bar height
+    background: $background;
+    position: relative;
+
+    .loader-bar {
+      position: absolute;
+      right: 100%;
+      bottom: 0;
+      top: 0;
+      left: 0;
+      width: 0;
+      background: $bar-color;
+      animation: borealisBar 2s linear infinite;
+    }
+  }
+}
+
+@mixin m-note-itm-ctn {
+  position: relative;
+  padding: 0 4px 0 24px;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+}
+
+@mixin m-scrollbar {
+  $scroll-bg-color: rgba(255, 255, 255, 0.5);
+  $scroll-raduis: 15px;
+  $scroll-size-x: 8px;
+  $scroll-size-y: 6px;
+
+  // Specific for FireFox:
+  scrollbar-color: $grey-3 $scroll-bg-color;
+  scrollbar-width: thin;
+
+  // Specific for webkit:
+  &::-webkit-scrollbar-track {
+    border-radius: $scroll-raduis;
+    background-color: $scroll-bg-color;
+  }
+  &::-webkit-scrollbar {
+    border-radius: $scroll-raduis;
+    width: $scroll-size-y;
+    height: $scroll-size-x;
+    background-color: $scroll-bg-color;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: $scroll-raduis;
+    background-color: $grey-4;
+  }
+}

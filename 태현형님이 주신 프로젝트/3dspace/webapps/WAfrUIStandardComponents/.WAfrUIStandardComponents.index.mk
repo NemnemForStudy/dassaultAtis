@@ -1,0 +1,15 @@
+m|WAfrUI\WAfrUIStandardComponents.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.1.22302|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\WAfrUIStandardComponents\WAfrUIStandardComponents.js|1667006169|23647
+s|WAfrUI\WAfrUIStandardComponents.mweb\src\mod_HandlerProxyUtilities.js|1613980841|6394
+u|WAfrUI\WAfrUIStandardComponents.mweb\src\NotificationManager.js|1615561279|3172
+u|WAfrUI\WAfrUIStandardComponents.mweb\src\UIFrame.js|1620838455|11157
+u|WAfrUI\WAfrUIStandardComponents.mweb\src\WAfrUIStandardComponents.js|1499703924|3
+u|WAfrUI\WAfrUIStandardComponents.mweb\src\mod_TreeModel.js|1596121316|9265
+u|WAfrUI\WAfrUIStandardComponents.mweb\src\mod_UIComponent.js|1634203645|34360
+u|WAfrUI\WAfrUIStandardComponents.mweb\src\mod_UIInterpreter.js|1659529256|12001
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

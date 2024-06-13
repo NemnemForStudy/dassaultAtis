@@ -1,0 +1,1 @@
+define("DS/3DPlayAppHybrid/3DPlayAppHybrid_ja",{});define("DS/3DPlayAppHybrid/assets/nls/3DPlayHybrid",{StatusOnline:"接続",StatusOffline:"切断"});define("DS/3DPlayAppHybrid/assets/nls/MyXAppHomePage",{"App.Title":"3DPlay","App.Motto":"指先で操作","Open.Title":"ローカル モデルを開く","Mru.Title":"最新の使用リスト","Sample.Title":"サンプル モデルを開く","Search.Title":"検索","SocialLink.Title":"ENOVIA ソーシャル リンク"});

@@ -1,0 +1,1 @@
+define("DS/CATW3DMoveManager/CATW3DMoveManager_ja",{});define("DS/CATW3DMoveManager/assets/nls/CATW3DMoveReferent",{title:"移動",allowDirectManipulation:"直接操作を許可",moveSection:"3D 形状をドラッグする場合は移動",first:"最初のアセンブリー レベル",leaf:"リーフ パーツ"});

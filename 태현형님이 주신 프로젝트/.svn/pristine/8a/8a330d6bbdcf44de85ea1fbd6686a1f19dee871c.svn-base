@@ -1,0 +1,22 @@
+################################################################################################
+# Create By jhlee 2023. 05. 02
+# Admin Type : command
+# Name : decProjectSpaceUnitImageList
+################################################################################################
+
+#del command 'decProjectSpaceUnitImageList';
+add command 'decProjectSpaceUnitImageList'
+	description 'decProjectSpaceUnitImageList'
+	label 'ProgramCentral.Command.decProjectSpaceUnitImageList'
+	href '${COMMON_DIR}/decCustomIndentedTable.jsp?table=decProjectSpaceUnitImageListTable&program=emxProjectSpace:getProjectSpaceUnitImage'
+	alt 'ProgramCentral.Command.decProjectSpaceUnitImageList'
+	setting 'Registered Suite' 'ProgramCentral'
+	setting 'Target Location' 'content'
+	setting 'Submit' 'true'
+;
+add property 'command_decProjectSpaceUnitImageList' on prog eServiceSchemaVariableMapping.tcl to command 'decProjectSpaceUnitImageList';
+mod command decProjectSpaceUnitImageList
+	add setting 'hasAccess' 'PIM'
+	add setting 'Access Program' 'decAccess'
+	add setting 'Access Function' 'hasAccess'
+;

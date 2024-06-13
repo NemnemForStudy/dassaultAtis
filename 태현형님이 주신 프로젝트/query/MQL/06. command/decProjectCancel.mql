@@ -1,0 +1,25 @@
+################################################################################################
+# Created By thok : 2023. 05. 17
+# Admin Type : command
+# Name : decProjectCancel
+################################################################################################
+#delete command decProjectCancel;
+add command 'decProjectCancel' 
+	description 'Command to Cancel Project'
+	alt 'emxProgramCentral.ProjectSpace.Cancel.Alt' 
+	label 'emxProgramCentral.ProjectSpace.Cancel.Alt' 
+	href '${COMMON_DIR}/decProjectCancelReasonDialogFS.jsp'
+	setting 'Confirm Message' 'emxProgramCentral.ProjectSpace.Cancel' 
+	setting 'Image' '${COMMON_DIR}/images/iconActionCancel.png'
+	setting 'Registered Suite' 'ProgramCentral'
+	setting 'Target Location' slidein
+	setting 'Popup Modal' true
+	setting 'Access Expression' '(current.access[modify] == true) && (current!=Complete) && (attribute[decProjectType]==bidding) && (current!=Cancel) && (admin_platform==context.user || owner==context.user)'
+;
+add property command_decProjectCancel on program eServiceSchemaVariableMapping.tcl to command 'decProjectCancel'
+;
+
+# Modified by thok on 2023.07.26 
+mod command decProjectCancel
+	add setting 'Access Expression' '(attribute[decProjectStatus]==Bidding) && (context.user.isassigned[decSystemAdmin] || owner==context.user)'
+;

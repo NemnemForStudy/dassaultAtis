@@ -1,0 +1,1 @@
+define("DS/CommonReportingPanel/CommonReportingPanel_ko",{});define("DS/CommonReportingPanel/assets/nls/CommonCommandDialog",{okButton:"확인",cancelButton:"취소"});define("DS/CommonReportingPanel/assets/nls/CommonReportingPanelNls",{TotalRecords:"총 기록: ",ReportTitle:"보고서"});

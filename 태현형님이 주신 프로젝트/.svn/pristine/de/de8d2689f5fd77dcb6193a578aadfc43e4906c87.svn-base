@@ -1,0 +1,1 @@
+define("DS/WebDocumentVisualizationUI/WebDocumentVisualizationUI_cs",{});define("DS/WebDocumentVisualizationUI/assets/nls/WebDocumentVisualizationUI",{bookmarksPanel:{title:"Záložky",expandOrCollapseAll:"Přepnout volbu Rozbalit a Sbalit vše"}});

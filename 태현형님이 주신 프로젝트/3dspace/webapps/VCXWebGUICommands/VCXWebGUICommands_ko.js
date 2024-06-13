@@ -1,0 +1,1 @@
+define("DS/VCXWebGUICommands/VCXWebGUICommands_ko",{});define("DS/VCXWebGUICommands/assets/nls/VCXWebGUICommands",{VCXSetVisibilityAllChexkBoxCmd:"편집 모드로 전환"});

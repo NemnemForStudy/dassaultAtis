@@ -1,0 +1,14 @@
+{
+  "version": "1.0.0",
+  "summary": "Interpolates the input data value at every execution step over a second, taking into account the time elapsed since the previous execution step.",
+  "description": "This block might be really useful to obtain <b>frame-based animations</b>. It will guarantee a constant animation speed whatever the computing power used.<br><br>An object animated <b>based on time</b> will move from <b>point A</b> to <b>point B</b> in the <b>same amount of time</b> regardless of the frame rate of the movie. The slower the frame rate, the <b>farther the object moves each frame</b> in order to maintain the same speed.<br><br>On the other hand, if the animation is <b>based on the frame rate</b>, the object will always take the <b>same number of frames</b> to get from <b>point A</b> to <b>point B</b>. The slower the frame rate, the longer it will take because the distance moved each frame doesn't change.<br><br>In a sample, as frame rate slows, frame-based animation <b>also slows</b> and time-based animation gets <b>choppy</b>.<br>Time-based animation is also known as 'frame-rate independence'.",
+  "dataPorts": {
+    "Input": "corresponds to the input value to interpolate over a second.",
+    "Output": "corresponds to the output value where <doc-odp-name translate=no>Output</doc-odp-name> = <doc-idp-name translate=no>Input</doc-idp-name> * Elapsed Time (in seconds).<br>The elapsed time respresents the duration of one execution step."
+  },
+  "controlPorts": {
+    "In": "triggers the block execution.",
+    "Out": "is activated when the process is completed."
+  },
+  "example": null
+}

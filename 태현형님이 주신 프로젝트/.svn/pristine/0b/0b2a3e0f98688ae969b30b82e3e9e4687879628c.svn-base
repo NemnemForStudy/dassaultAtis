@@ -1,0 +1,12 @@
+m|WebVisualization\Mesh.mweb
+b|j|n,m
+b|c|c,m
+v|6.425.3.23056|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\Mesh\Mesh.js|1675495465|98405
+s|WebVisualization\Mesh.mweb\src\Mesh.js|1673969668|272836
+t|win_b64\webapps\Mesh\MeshUtils.js|1650572917|13833
+s|WebVisualization\Mesh.mweb\src\MeshUtils.js|1648450670|42506
+t|win_b64\webapps\Mesh\ThreeJS_Base.js|1677295776|61209
+s|WebVisualization\Mesh.mweb\src\ThreeJS_Base.js|1676449883|123187
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

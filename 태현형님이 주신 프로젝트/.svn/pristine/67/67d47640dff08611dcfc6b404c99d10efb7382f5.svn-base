@@ -1,0 +1,17 @@
+################################################################################################
+# Created By jhlee : 2023. 09. 08
+# Admin Type : command
+# Name : decSampleExcelDownloadCmdIWP
+################################################################################################
+#del command decSampleExcelDownloadCmdIWP;
+add command decSampleExcelDownloadCmdIWP
+	label 'ProgramCentral.Label.SampleExcelDownload' 
+	href '${COMMON_DIR}/decSampleExcelDownload.jsp?type=IWP'
+	alt 'ProgramCentral.Label.SampleExcelDownload' 
+	setting 'Registered Suite' ProgramCentral
+	setting 'Target Location' listHidden
+	setting 'Submit' true
+	setting 'Image' "${COMMON_DIR}/images/I_ImportFromFile_32.png"
+;
+add property 'command_decSampleExcelDownloadCmdIWP' on program 'eServiceSchemaVariableMapping.tcl' to command 'decSampleExcelDownloadCmdIWP'
+;

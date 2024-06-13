@@ -1,0 +1,1 @@
+define("DS/ENOXEngineerCommonUtils/ENOXEngineerCommonUtils_ko",{});define("DS/ENOXEngineerCommonUtils/assets/nls/XENCommonNls",{loading:"로드 중...","eng.ui.button.ok":"확인","eng.ui.button.cancel":"취소","app.failure":"앱에 예기치 않은 오류가 발생했습니다. 관리자에게 지원을 요청하십시오."});

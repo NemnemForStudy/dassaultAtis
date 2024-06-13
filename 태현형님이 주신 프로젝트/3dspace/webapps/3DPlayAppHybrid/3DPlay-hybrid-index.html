@@ -1,0 +1,593 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <!-- Disable webview zoom -->
+        <meta name="viewport" content="width=device-width, height=device-height,initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
+
+        <!-- App Title -->
+        <title>3DPlay</title>
+
+        <!-- UWA bypass to use the RequireJS AMD loader  -->
+        <script type="text/javascript" src="../AmdLoader/AmdLoader.js"></script>
+        <script type="text/javascript" src="../WebappsUtils/WebappsUtils.js"></script>
+        <!-- UWA standalone widget -->
+        <link rel="stylesheet" type="text/css" href="../c/UWA/assets/css/standalone.css" />
+        <script type="text/javascript" src="../c/UWA/js/UWA_Standalone_Alone.js"></script>
+        <link rel="stylesheet" type="text/css" href="../Controls/nv-patch.css" />
+
+        <!-- CSS -->
+        <style type="text/css" media="screen">
+            /* Main app style */
+            html, body {
+                height: 100%;
+                width: 100%; 
+            }
+            body {
+                position: relative;
+                overflow: hidden;
+                padding-bottom: 0px 0px 0px 0px;
+                color: white;
+                background-color: transparent;
+            }
+            #PlayWeb-Container {
+                height: 100%;
+                width: 100%;
+            }/* Standalone TopBar (with 3DPlay) */
+            #topbar + div {
+                --top: 0px;
+                --top: constant(safe-area-inset-top);
+                --top: env(safe-area-inset-top);
+                height: calc(100% - 43px - var(--top)) !important; 
+            }
+            #topbar {
+                --top: 0px;
+                --top: constant(safe-area-inset-top);
+                --top: env(safe-area-inset-top);
+                height: calc(43px + var(--top)) !important;
+                padding-top: var(--top) !important;
+            }
+            @media screen and (max-width:639px) {
+                body:not(.addinmode) #compass_ctn.topbar-compass {
+                    --top: 0px;
+                    --top: constant(safe-area-inset-top);
+                    --top: env(safe-area-inset-top);
+                    top: calc(44px + var(--top)) !important;
+                }
+                .column.left.shown {
+                    --top: 0px;
+                    --top: constant(safe-area-inset-top);
+                    --top: env(safe-area-inset-top);
+                    top: var(--top) !important;
+                }
+            }
+            /* Publish to Communities - Reduce modal size */
+            .base64-image-container img {
+	            width: 50%;
+            }
+            .offlineContainer {
+                width: 100%; 
+                position: absolute; 
+                top: 0px;
+                z-index: 9999999;
+            }
+            .offlineItem {
+                text-align: center;
+                padding: 5px;
+                margin: 5px;
+                background: #005686;
+                border-radius: 3px;
+                color: white;
+                font-weight: 900;
+                font-size: 18px;
+            }
+        </style>
+    </head>
+
+<body>
+
+<div id="PlayWeb-Container">
+<div id="NetworkLoss" class="offlineContainer" hidden="true" >
+    <div class="offlineItem">
+        OFFLINE
+    </div>
+</div>
+</div>
+
+
+
+<script type="text/javascript" async defer>
+(function () {
+
+    'use strict';
+
+    // ===================================================================
+    // Enable Offline thanks to service worker
+    // ===================================================================
+    // if ('serviceWorker' in navigator) {
+    //     navigator.serviceWorker.register('3DPlay-hybrid-service-worker.js')
+    //         .then(() => console.log('3DPlay service worker installed'))
+    //         .catch(err => console.log('3DPlay service worker error', err));
+    // }
+    // else if (false === window.isSecureContext) {
+    //     console.warn('Use secure domain (https) or localhost in order to user service worker');
+    // }
+    // else {
+    //     console.warn('Service worker is not available on the browser');
+    // }
+
+    // ! \\ Active this mode for each hybrid app (allow specific cases in 3DPlay web)
+    window.localStorage['3DPlayHybridApp'] = true;  // release <= FD01 only
+
+    // Remove warning relative to the browser
+    window.localStorage['3DPlay.DemoEnv'] = true;
+    window.localStorage['3DPlay.SkipTestBrowser'] = true;
+
+    // Avoid Tree display - IR-555212-3DEXPERIENCER2018x
+    window.localStorage["3DPlay.SpecTree.Disabled"] = true;
+
+    // Disable the new landing page
+    //window.localStorage['3DPlay.LandingPage.disable'] = true;
+
+    // Blindage utilisation de Intl dans VCXWebPropertyModel/VCXWebUnits.mweb/src/VCXUnitManager.js (non supporté par safari)
+    if (undefined === window.Intl){ window.Intl = {NumberFormat: ''};}
+
+    window.MODEL_NAME = 'SeatStructure.3dxml';
+    window.__player = null;
+    window.__mobileTopBar = null;
+
+    window.SetWindowSize = function(size) {
+        window.innerWidth = size.width;
+        window.innerHeight = size.height;
+        var resizeEvent = new Event("resize");
+        if (typeof window.onresize === "function") {
+            window.onresize.call(this, resizeEvent);
+        }
+    };
+
+    // By-Pass des erreurs de console
+    require(['DS/UWPClientCode/PublicAPI', 'DS/MessageBus/MessageBus'], function () { });
+    // \ By-Pass des erreurs de console
+
+    require([
+        'DS/3DPlayAppHybrid/3DPlay-hybrid-services',
+        'DS/HybridInfraCore/HybridApp',
+        'DS/WebappsUtils/WebappsUtils',
+    ],
+    function (PlayerServices, HybridApp, WebappsUtils) {
+
+        HybridApp.onDeviceReady(function (args) {
+
+            // Start 3DPlay
+            // ===================================================================
+            PlayerServices.startPlayerWithAsset(WebappsUtils.getWebappsBaseUrl() + '3DPlayAppHybrid/assets/models/' + MODEL_NAME);
+            var userData = {
+                username : 'T4E',
+                firstName: 'Thomas',
+                lastName: 'LECONTE',
+            }
+            
+            // Init plugins
+            // HybridApp.interactiveLogin(PlayerServices._myAppsURL).then(function (userDatas) {
+                PlayerServices.getPlatformServices().then(function(platform) {
+                    console.log('3DPLAY CONNECTED WITH PLATFORMS ', platform);
+                    displayTopBar(userData, platform)
+                }, function(error) {
+                    console.log('3DPLAY OFFLINE');
+                });
+            // }, console.error);
+
+        });
+        
+        // Events from native
+        // ===================================================================
+        document.addEventListener("CONNECTION_INFO", function (data) {
+            console.log('========================================================');
+            if ("Connected" == data.detail) {
+                console.log("Online again");
+                document.getElementById("NetworkLoss").hidden = true;
+                // Make commands available again
+                var dependencies = [ 'DS/ApplicationFrame/CommandsManager', 'DS/CoreEvents/Events' ];
+                require(dependencies,  function ( CommandsManager, Events) {
+                    var commands = CommandsManager.getCommands('Default');
+                    for (cmd in commands) {
+                        commands[cmd].enable();
+                    }
+                    // Force action bar refresh
+                    Events.publish({ "event": "3DPLAY/2DEXP/MAB/SCROLL/NAVIGATIONSTATEUPDATE" });
+                });
+            }
+            else if ("Disconnected" == data.detail) {
+                console.log("Offline");
+                document.getElementById("NetworkLoss").hidden = false;
+                // Disable commands
+                var dependencies = [ 'DS/ApplicationFrame/CommandsManager', 'DS/CoreEvents/Events' ];
+                require(dependencies,  function ( CommandsManager, Events) {
+                    var commands = CommandsManager.getCommands('Default');
+                    for (cmd in commands) {
+                        commands[cmd].disable();
+                    }
+                    // Force action bar refresh
+                    Events.publish({ "event": "3DPLAY/2DEXP/MAB/SCROLL/NAVIGATIONSTATEUPDATE" });
+                });
+            }
+            console.log('========================================================');
+        });
+        document.addEventListener("APP_STATE_CHANGE", function (data) {
+            var detail = event.detail;
+            var id = detail.id;
+            console.log('========================================================');
+            console.log('App state change -> ' + detail.id, detail.args);
+            var args = detail.args;
+            if (args) {
+                // Open a file from app inbox
+                if (args.webFileUrl) {
+                    var webFileUrl = args.webFileUrl;
+                    console.log('Open model from -> ' + webFileUrl);
+                    PlayerServices.openLocalFile(webFileUrl, args.appSource);
+                }
+                // // Open a file from POD
+                // //args.appSource === 'com.apple.mobilesafari'
+                // else if (args.Cas && args.passportURL && args.MyAppsURL && args.object) {
+                //     // Blindage bug compass : "-Cas=_CASTGC=TGT-1234862-BAiYd2LImZufPuFS2Bd7x6BCjZzUxjuBB45lyQ99JmI5RGoPPS-cas_"
+                //     // --> remove all '_'
+                //     args.Cas = args.Cas.replace(/_/g, '');
+                //     console.log('Open model from -> ' + args.MyAppsURL);
+                //     open3DExpFile(args);
+                // }
+                else {
+                    console.log('Cannot open file -> arguments are missing', args);
+                }
+            }
+            console.log('========================================================');
+        });
+        document.addEventListener("APP_SYSTEM_CALL", function (data) {
+            var detail = data.detail;
+            console.log('========================================================');
+            console.log('App system call -> ' + detail.id);
+            detail.args && console.log(detail.args);
+            console.log('========================================================');
+        });
+        document.addEventListener("APP_WINDOW_ORIENTATION", function (data) {
+            var detail = data.detail;
+            console.log('========================================================');
+            console.log('App system call -> ' + detail.id);
+            detail.args && console.log(detail.args);
+            console.log('========================================================');
+        });
+
+        // For debug
+        // ===================================================================
+        window.PlayerServices = PlayerServices;
+        // ===================================================================
+
+
+        function getPlatformById(platformServices, serviceID) {
+            var retServiceURL = null;
+            for (let index = 0; index < platformServices.length; index++) {
+                const element = platformServices[index];
+                if (element.id === serviceID) {
+                    retServiceURL = element.url;
+                    break;
+                }
+            }
+            // Blindage passport
+            if ("3dpassport" === serviceID) retServiceURL = retServiceURL.replace("/cas", "");
+            return retServiceURL
+        };
+
+        // DisplayTopBar
+        function displayTopBar(userData, platform) {
+            require([
+                // JS
+                'DS/TopFrame/TopFrame', 'DS/TopBar/TopBar', 'DS/TopBarProxy/TopBarProxy',
+                // Test JS        
+                'DS/SNSearchUX/SearchUX_TopBar', 'DS/SNInfraUX/SearchCom', 'DS/3DPlayUtils/PublishToSwym',
+                // CSS
+                'css!TopFrame/TopFrame.css', 'css!i3DXCompass/i3DXCompass.css', 'css!TopBar/TopBar.css'
+            ],
+            function (TopFrame, TopBar, TopBarProxy, SearchTopBar, SearchCom, PublishToSwym) {
+                // Create TopFrame
+                var options = {
+                    userId: userData.username,
+                    userName: userData.firstName + " " + userData.lastName,
+                    envId: platform.id,
+                    tenant: platform.id,
+                    startupParams: {
+                        "instantMessaging": [{
+                            "id": platform.id,
+                            "displayName": platform.id,
+                            "url": getPlatformById(platform.services, "rtc")
+                        }],
+                        "swym": [{
+                            "id": platform.id,
+                            "displayName": platform.id,
+                            "url": getPlatformById(platform.services, "swym")
+                        }],
+                        "search": [{
+                            "id": platform.id,
+                            "displayName": platform.id,
+                            "url": getPlatformById(platform.services, "3dsearch")
+                        }],
+                        "cstorage": [{
+                            "id": platform.id,
+                            "displayName": platform.id,
+                            "url": getPlatformById(platform.services, "distributedfilestore")
+                        }],
+                        "tagger": [{
+                            "id": platform.id,
+                            "displayName": platform.id,
+                            "url": getPlatformById(platform.services, "tagger")
+                        }],
+                    },
+                    brand: "CATIA",
+                    appId: "3DPlay",
+                    application: "3DPlay",
+                    lang: 'en',
+                    // transparentMode: true,
+                    // baseImgPath: "../plugins/Compass/html/",
+                    baseImgPath: "../../webapps/i3DXCompass/assets/images",
+                    baseHtmlPath: "../plugins/Compass/images/",
+                    baseAppletPath: "../../WebClient/",
+                    // addinMode: false,
+                    activateInstantMessaging : false,
+                    passportUrl: getPlatformById(platform.services, "3dpassport"),
+                    // proxyTicketUrl: proxyTicketURL,
+                    tagsServerUrl: getPlatformById(platform.services, "tagger"),
+                    myAppsBaseURL: window.myAppsURL,
+                    // picture: personImageUrl,
+                    
+
+                    //3DSearch
+                    // searchParams: {
+                    //     enable_search: true,
+                    //     enable_similar_search: false,
+                    //     enable_advanced_search: true,
+                    //     enable_search_in_this_tab: true,
+                    //     enable_my_content: true,
+                    //     enable_tenant_selection: false,
+                    //     enable_favorite_searches: false,
+                    //     enable_predefined_query: false,
+                    //     //filter_nls: Nls.get('SearchInThisPage'),
+                    //     search_settings: {
+                    //         //IR-542241
+                    //         results_perpage: 20,
+                    //         multiSel: false,
+                    //         neverCheckbox: true,
+                    //         neverAction: true
+                    //     },
+                    //     //function called by the search infra to set the source correctly. In beta mode, the search is multi-source
+                    //     getSources: function () {
+                    //         //return SwymSearchUtils.isBetaEnabled() ? undefined : ['swym'];
+                    //         console.log("Search getSources");
+                    //     }
+                    // },  
+                    activateNewSearch: true,
+                    activateFederatedSearch: true,  
+                    searchParams: {
+                        enable_search: true,
+                        enable_search_in_this_tab : false,
+                        enable_my_content: true,
+                        enable_advanced_search: false,
+                        enable_tenant_selection: false,
+                        open: function (openOptions) {
+                            console.log('TopFrameSearch :: open', openOptions);
+                            require(['DS/SNResultUX/SNResultMgt', 'DS/SNInfraUX/SearchSettings', 'DS/SNInfraUX/SearchUtils', 
+                                    'DS/SNInfraUX/SearchCom', 'DS/SNInfraUX/SearchRessources', 'DS/UIKIT/Modal',
+                                    'DS/TagNavigator/TagNavigator'
+                                    // 'DS/SNInfraUX/SearchRessources',
+                                    // 'DS/SNInfraUX/SearchSettings',
+                                    // 'DS/SNInfraUX/PredicatesNLS'
+                            ], function (SNResultMgt, SearchSettings, SearchUtils, SearchCom, SearchRessources, Modal, TagNavigator) {
+
+                                SearchSettings.initialize(openOptions.url_settings);
+                                var preferences_wdg = openOptions.preferences_wdg;
+                                var options_search = SearchUtils.getResultInitArgs({
+                                    'preferences_wdg': preferences_wdg
+                                });
+                                var resources = preferences_wdg.search_ressources;
+                                var widget_id = UWA.Utils.getUUID();
+
+                                // var panel = document.createElement("div");
+
+                                window.modal = new Modal({
+                                    className: 'site-reset',
+                                    closable: true,
+                                    header: '<h4>Search results</h4>',
+                                    footer: '<button type="button" class="btn btn-primary">Open</button> '
+                                }).inject(document.querySelector('#PlayWeb-Container'));
+
+                                // Adding the onclick handler to buttons inside the modal
+                                window.modal.getContent().getElements('.btn').forEach(function (element) {
+                                    element.addEvent('click', function () {
+                                        // Check if data has been selected
+                                        require(["DS/i3DXCompass/X3DContent"], function (X3DContent) {
+                                            // Get the selected data
+                                            var selectedData = X3DContent.getX3DContent().data.items[0];
+                                            console.log("Selected Data", selectedData);
+                                            if (undefined === selectedData.objectId) {
+                                                console.log('No physicalid \nOpen default visu');
+                                                __player.load({ input: { asset: '' } });
+                                            }
+                                            else {
+                                                var asset = {
+                                                    requiredAuth: 'passport',
+                                                    physicalid: selectedData.objectId,
+                                                    tenant: selectedData.envId,
+                                                    // requestsOptions: 
+                                                    type: selectedData.objectType,
+                                                    dtype: selectedData.objectType,
+                                                    myAppsUrl: window.myAppsURL,
+                                                    _3DPlayDatas: {
+                                                        myAppsUrl: window.myAppsURL
+                                                    },
+                                                    serverurl: (selectedData.serviceId.toLowerCase() == '3ddrive') ? getPlatformById(platform.services, 'drive') : getPlatformById(platform.services, 'space'),
+                                                    provider: (selectedData.serviceId.toLowerCase() == '3ddrive') ? '3DDRIVE' : 'EV6',
+                                                };
+                                                console.log("Prepared asset", asset);
+                                                start3DPlayWith(asset);
+                                            }
+                                        });
+                                        // Destroy modal
+                                        window.modal.destroy();
+                                        window.modal = null;
+                                    });
+                                });
+
+                                new SearchRessources(resources, function() {
+                                    UWA.merge(options_search, {
+                                        tagnavigatorproxy: options_search.tagnavigatorproxy,
+                                        tagger_context_id: 'context_search',
+                                        renderTo: window.modal.getBody(),
+                                        widget_id: widget_id,
+                                        resources: this,
+                                        events: {
+                                            onReady: function (data) {
+                                                window.modal.show();
+                                                var tagger = TagNavigator.get6WTagger("context_search");
+                                                tagger.setAsCurrent();
+                                            }
+                                        }
+                                    });
+                                    window.searchResultMgt = new SNResultMgt(options_search);
+                                    var client_socket_id = UWA.Utils.getUUID();
+                                    var searchcom_socket = SearchCom.createSocket({
+                                        socket_id: client_socket_id
+                                    });
+
+                                    searchcom_socket.addListener('search', function (params) {
+                                        console.log('TopFrameSearch :: search', params);
+                                        // //leave advanced search mode
+                                        // Context.getInstance().set({
+                                        //     x3dsearchOptions: {
+                                        //         searchRequestFromTopbar: true
+                                        //     }
+                                        // });
+                                        // //redirect to global search page
+                                        // Navigation.goToUrl('search:' + encodeURIComponent(params.searchStringToDisplayInSearchField || params.value));
+                                    });
+                                    searchcom_socket.dispatchEvent('onWdgCreation', {  }, ['searchtopbar_socket_id']);
+                                    searchcom_socket.addListener('onSearchWdgUpd', function (search_options) {
+                                        console.log('TopFrameSearch :: onSearchWdgUpd', search_options);
+                                        if (searchResultMgt) {
+                                            var options_search = SearchUtils.getResultUpdateArgs({
+                                                'options': search_options
+                                            });
+                                            searchResultMgt.onSearch(options_search);
+                                        }
+                                    });
+                                    searchcom_socket.dispatchEvent('toggleProxyFocus', {
+                                        'maximized': true
+                                    });	
+                                });
+                            });
+                        },
+                        isOpen: function (option) {
+                            return (null != window.modal && window.modal.isVisible);
+                        },
+                        close: function(option) {
+                            console.log('TopFrameSearch :: close', option);
+                        }
+                    },
+                    // activateInstantMessaging: false,
+                    // is3DDriveEnabled: false,
+                    // isNotificationsEnabled: false,
+                    // showCoachmark: true,
+                    // useTagger: true,
+                    // URLs
+                    //loginUrl: "https://dsqal053-euw1-22qna10610-iam.3dx-staging.3ds.com/cas/login?service=http://lp5-t4e-dsy.dsone.3ds.com:8176/3DPlayApp_Web/indexDebugBrowser.html",
+                    // legalTenantId: platform.id,
+                    // passportUrl: getPlatformById(platform.services, "3dpassport"),
+                    // myAppsBaseUrl: window.myAppsURL,
+                    // cStorageService: getPlatformById(platform.services, "distributedfilestore"),
+                    // taggerService: getPlatformById(platform.services, "tagger"),
+                    // tenant: platform.id,
+                    // Menus
+                    //topMenus: {
+                    //    // Display top menu (boolean)
+                    //    profile: false, share: false, home: false, // 'profile', 'home', 'share', 'add', 'help', 'content', 'notification', 'social'
+                    //    // If function, there is no submenus
+                    //    //help: function () {
+                    //    //    console.log("Help menu");
+                    //    //},
+                    //    help: false,
+                    //    add: function () {
+                    //        alert("Add Menu");
+                    //    }
+                    //},
+                    topMenus: {
+                        notification: false,
+                        profile: true,
+                        add: function () {
+                            console.log("Import button clicked");
+                            importFile();
+                        },
+                        share: true,
+                        home: false,
+                        help: true
+                    },
+                    events: {
+                        tagger: function (parameters) {
+                            console.log("Tagger launched with " + parameters.value);
+                        },
+                        search: function (parameters) {
+                            console.log("Search launched with " + parameters.value);
+                        },
+                        clearSearch: function () {
+                            console.log("Clear Search");
+                        }
+                    },
+                    onRightPanelMinimize: function () {
+                        console.log("onRightPanelMinimize");
+                    },
+                };
+                TopFrame.init(options);
+                var topBarProxy = new TopBarProxy({ 'id': 'CommandProvider1'/*, 'widget': this.widget*/ });
+                topBarProxy.setContent({
+                    share: [
+                        {
+                            label: 'Publish to Communities',
+                            onExecute: function () {
+                                console.log("Publish to Communities");
+                                // Hack for 'DS/VENCKEditor'
+                                require.config({
+                                    paths: {
+                                        'DS/VENCKEditor': "file:///android_asset/VENCKEditor/4.11.4/ckeditor"
+                                    }
+                                });
+                                // Call publish to swyms
+                                var options = { ctx: __player.getCtx() };
+                                setTimeout(function () {
+                                    new PublishToSwym(options);
+                                }, 1000);
+                            }
+                        },
+                        {
+                            label: 'Share as Picture',
+                            onExecute: function () {
+                                console.log("Share as Picture");
+                                var options = {
+                                    onSuccess: function (iDataUrl) {
+                                        var base64Data = iDataUrl.replace("data:image/png;base64,", "");
+                                        console.log("screenshot succeed!", base64Data);
+                                    },
+                                    onFail: function () {
+                                        console.log('screenshot failed!');
+                                    }
+                                };
+                                __player.getExperience().getScreenShot(options);
+                            }
+                        }
+                    ]
+                });
+                TopBar.MainMenuBar.setActiveMenuProviders('CommandProvider1');
+            });
+        };
+
+    });
+})();
+</script>
+
+</body>
+</html>

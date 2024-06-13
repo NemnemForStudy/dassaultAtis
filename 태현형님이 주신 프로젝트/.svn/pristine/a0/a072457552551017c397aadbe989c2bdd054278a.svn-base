@@ -1,0 +1,1 @@
+define("DS/DMUSlideEdition/DMUSlideEdition_zh",{});define("DS/DMUSlideEdition/assets/nls/DMUSlideEdition",{normalSlideTitle:"幻灯片",createSlideMessage:"已创建",normalFormatTitle:"格式",formatGenerated:"格式已成功生成",formatGenerationError:"在格式生成期间出现意外错误",generateAndEditLabel:"关闭并编辑",generateFormatTitle:"生成格式"});

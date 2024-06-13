@@ -1,0 +1,1 @@
+define("DS/NativeLauncherWdg/NativeLauncherWdg_pl",{});define("DS/NativeLauncherWdg/assets/nls/NativeLauncher",{Play:"Odtwórz"});

@@ -1,0 +1,290 @@
+<?xml version="1.0"?>
+<!-- COPYRIGHT DASSAULT SYSTEMES 2017, All rights reserved -->
+<Package xmlns="PLMDictionaryUnified"
+	ModelerType="Top"
+	Name="XCADExtension"
+	Uuid="b5ad2fbc-1254-425e-8f26-a012bde34861"
+	UseNames="PRODUCTCFG XCADAssembly XCADModeler XCADModelAndItemsModeler"
+	CustomerExposition="Programmer" 
+	Architecture="All"
+	BelongsToModeler="XCADModeler"
+>
+
+	<CAAComment>
+		<ShortRole>Unified Product Structure XCAD Extension Modeler Package</ShortRole>
+		<Role>This package includes all the entities and relations involved in the XCAD Support in Unified Product Structure.</Role>
+	</CAAComment>
+
+	<Comment>last update 2020-07-03</Comment>
+
+	<!-- Extension on XCAD Representation -->
+	<Extension Name="XCADGenericRepExtension" 
+		    Uuid="11ab01d3-7549-422c-883c-378f194cbc5a"
+	        ScopeNames="VPMRepReference;XCADAssemblyRepReference;XCADNonPSBaseRepReference;XCADModelRepReference"
+			Specializable="No"
+			CustomerExposition="Programmer">
+	  
+	  <!-- This defined the CAD File Version -->
+	  <Simple Name="V_CADFileVersion"
+	     Uuid="41b5f316-467f-4225-b8ee-212dcb3883f2"
+	     Type="String"
+	     MaxLength="32"
+		 DefaultValue=""
+	     Protection="External"
+	     UIAccess="ReadOnly" >
+	  </Simple>
+	  
+	  <!-- This defined the CAD Version used to save the file -->
+	  <Simple Name="V_CADVersion"
+	     Uuid="7b9cbec4-4f88-44ad-bf2f-7e9583c6b3db"
+	     Type="String"
+	     MaxLength="32"
+		 DefaultValue=""
+	     Protection="External"
+	     UIAccess="ReadOnly" >
+	  </Simple>
+	  
+	</Extension>
+	
+	<!-- Extension on XCAD Reference -->
+	<Extension Name="XCADGenericRefExtension" 
+		    Uuid="8c2a20ee-382c-11ed-a261-0242ac120002" 
+			ScopeNames="VPMReference"
+			Specializable="No"			
+			CustomerExposition="ProgrammerOnly"> 
+	  <!-- Global bit mask attribute  -->
+	  <Simple Name="V_XCADGlobalMask"
+		Uuid="be8637a8-382c-11ed-a261-0242ac120002"
+		MultiValuated="No"
+		Type="Integer"
+		Protection="Internal"/>
+	
+	<!-- The attribut streaminfo identifies the stream info  -->
+      <Simple Name="V_XCADVirtualStreamInfo" 
+			Uuid="d19eff5a-382c-11ed-a261-0242ac120002" 
+			MultiValuated="No"
+			Type="String" 
+			MaxLength="255" 
+			ResetOnCloning="No" 
+			ResetOnNewVersion="No" 
+			Protection="Internal"/>
+
+	</Extension>
+	
+	<!-- Extension on XCAD VPMInstance -->
+	<Extension Name="XCADGenericInstExtension"
+			Uuid="d37e7f6a-382e-11ed-a261-0242ac120002"
+			ScopeNames="VPMInstance"
+			CustomerExposition="Programmer"> 
+   
+	  <!-- The attribute for ballooning info on instance -->
+	  <Simple Name="V_XCADBallooningInfo"
+			Uuid="12b6baf8-382f-11ed-a261-0242ac120002"
+			MultiValuated="No"
+			Type="String"
+			MaxLength="255"
+			ResetOnCloning="No"
+			ResetOnNewVersion="No"
+			Protection="External"
+			UIAccess="ReadOnly"/>
+	</Extension>
+	  
+	<Extension  Name="XCAD_ePlan_Ext" 
+		    Uuid="a721fab1-84ab-45cf-8990-17be34596c7f"
+		    ScopeNames="VPMReference"
+		    Specializable="No"
+		    CustomerExposition="Programmer">
+
+	  <Simple Name="V_PartNumber"
+		  Uuid="1ff066d9-e405-4b16-8cfb-8269e27aebeb"
+		  Type="String"
+                  MaxLength="255"
+		  DefaultValue=""
+		  ResetOnCloning="No"
+		  ResetOnNewVersion="No"			
+		  Protection="External"
+		  MultiValuated="No">
+	  </Simple>
+	  <Simple Name="V_Description1"
+		  Uuid="7236c609-4a72-40d2-aefc-3e90a0562adb"
+		  Type="String"
+		  DefaultValue=""
+		  ResetOnCloning="No"
+		  ResetOnNewVersion="No"			
+		  Protection="External"
+		  MultiValuated="No">
+	  </Simple>
+	  <Simple Name="V_TypeNumber"
+		  Uuid="5037a04d-62ff-4986-8945-1404dc579794"
+		  Type="String"
+                  MaxLength="255"
+		  DefaultValue=""
+		  ResetOnCloning="No"
+		  ResetOnNewVersion="No"			
+		  Protection="External"
+		  MultiValuated="No">
+	  </Simple>
+	  <Simple Name="V_ManufacturerShortName"
+		  Uuid="5ffe910f-a0c1-4829-af31-d4cc07faaf04"
+		  Type="String"
+                  MaxLength="30"
+		  DefaultValue=""
+		  ResetOnCloning="No"
+		  ResetOnNewVersion="No"			
+		  Protection="External"
+		  MultiValuated="No">
+	  </Simple>
+	  <Simple Name="V_OrderNumber"
+		  Uuid="faf6acf9-4e2f-428c-8c38-791ec73d7011"
+		  Type="String"
+                  MaxLength="255"
+		  DefaultValue=""
+		  ResetOnCloning="No"
+		  ResetOnNewVersion="No"			
+		  Protection="External"
+		  MultiValuated="No">
+	  </Simple>
+	</Extension>
+
+	<Extension  Name="XCAD_Altium_Ext" 
+		    Uuid="126c5f0a-301a-4f75-b969-216ed6aa24ed"
+		    ScopeNames="VPMReference"
+		    Specializable="No"
+		    CustomerExposition="Programmer">
+
+	  <Simple Name="V_CADToolName"
+		  Uuid="a1205ff7-478f-472f-aca7-069405ec3be0"
+		  Type="String"
+                  MaxLength="32"
+		  DefaultValue=""
+		  ResetOnCloning="No"
+		  ResetOnNewVersion="No"			
+		  Protection="External"
+		  MultiValuated="No">
+	  </Simple>
+	  <Simple Name="V_CADProperties"
+		  Uuid="68d82ea8-3f59-449c-af6f-e36fa21140aa"
+		  Type="Clob"
+		  DefaultValue=""
+		  ResetOnCloning="No"
+		  ResetOnNewVersion="No"			
+		  Protection="Internal"
+		  MultiValuated="No">
+	  </Simple>
+	  <Simple Name="V_CADId"
+		  Uuid="3cd5d104-328c-46cc-93aa-5675656a7e7e"
+		  Type="String"
+                  MaxLength="255"
+		  DefaultValue=""
+		  ResetOnCloning="No"
+		  ResetOnNewVersion="No"			
+		  Protection="External"
+		  MultiValuated="No">
+	  </Simple>
+	  <Simple Name="V_CADCategory"
+		  Uuid="70a73282-5ccf-4895-b59d-804da69d954d"
+		  Type="String"
+                  MaxLength="255"
+		  DefaultValue=""
+		  ResetOnCloning="No"
+		  ResetOnNewVersion="No"			
+		  Protection="External"
+		  MultiValuated="No">
+	  </Simple>
+	</Extension>
+
+	<Extension  Name="XCAD_CadenceAllegro_Ext" 
+		    Uuid="e03011aa-8529-4c72-81f9-2c810c0b24e7"
+		    ScopeNames="VPMReference"
+		    Specializable="No"
+		    CustomerExposition="Programmer">
+
+	  <Simple Name="V_CADToolName"
+		  Uuid="74ff038c-c211-4c82-8801-49a0ea215ef5"
+		  Type="String"
+                  MaxLength="32"
+		  DefaultValue=""
+		  ResetOnCloning="No"
+		  ResetOnNewVersion="No"			
+		  Protection="External"
+		  MultiValuated="No">
+	  </Simple>
+	  <Simple Name="V_CADProperties"
+		  Uuid="e9484229-4daf-4f94-9f65-8219102521fe"
+		  Type="Clob"
+		  DefaultValue=""
+		  ResetOnCloning="No"
+		  ResetOnNewVersion="No"			
+		  Protection="Internal"
+		  MultiValuated="No">
+	  </Simple>
+	  <Simple Name="V_CADId"
+		  Uuid="ab6106bb-9c50-4203-b354-832168e2b005"
+		  Type="String"
+                  MaxLength="255"
+		  DefaultValue=""
+		  ResetOnCloning="No"
+		  ResetOnNewVersion="No"			
+		  Protection="External"
+		  MultiValuated="No">
+	  </Simple>
+	  <Simple Name="V_CADCategory"
+		  Uuid="b81dc9e1-e303-42dc-9e45-bdf30531ba3b"
+		  Type="String"
+                  MaxLength="255"
+		  DefaultValue=""
+		  ResetOnCloning="No"
+		  ResetOnNewVersion="No"			
+		  Protection="External"
+		  MultiValuated="No">
+	  </Simple>
+	</Extension>
+	
+	<Extension  Name="XCADExposedPLMParameterSet" 
+		    Uuid="f0a7697e-8cab-41c4-be4b-c8096724a48a"
+		    ScopeNames="VPMReference"
+		    Specializable="No"
+		    CustomerExposition="Programmer">
+
+	  <Simple Name="V_Definition"
+		  Uuid="ee098d20-ee1a-4279-aa54-5effdb9aed95"
+		  Type="Clob"
+		  DefaultValue=""
+		  ResetOnCloning="No"
+		  ResetOnNewVersion="No"			
+		  Protection="Internal"
+		  MultiValuated="No">
+	  </Simple>
+	</Extension>
+	
+	<Extension  Name="XCADPublication" 
+		    Uuid="59f1e430-dcec-4caa-96af-85c15f68c665"
+		    ScopeNames="VPMPort"
+		    Specializable="No"
+		    CustomerExposition="Programmer">
+
+	  <Simple Name="V_CADPublicationId"
+		  Uuid="54f4fceb-5449-40cf-a9e9-d4d8c1929b87"
+		  Type="String"
+				  MaxLength="255"
+		  DefaultValue=""
+		  ResetOnCloning="No"
+		  ResetOnNewVersion="No"			
+		  Protection="External"
+		  MultiValuated="No">
+			  <Comment>UUID of Spec Object of Publication</Comment>
+	  </Simple>
+	  
+	  <Simple Name="V_CADTargetId"
+		  Uuid="158fe5b1-9a1c-4a9d-b219-f1909f8a97c5"
+		  Type="String"
+				  MaxLength="255"
+		  DefaultValue=""
+		  ResetOnCloning="No"
+		  ResetOnNewVersion="No"			
+		  Protection="External"
+		  MultiValuated="No">
+			  <Comment>UUID of Spec Object of Target of Publication</Comment>
+	  </Simple>
+	</Extension>
+</Package>

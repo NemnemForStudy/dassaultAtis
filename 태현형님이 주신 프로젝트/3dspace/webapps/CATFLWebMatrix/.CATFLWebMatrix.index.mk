@@ -1,0 +1,15 @@
+m|CATFLEditorWEBMatrix\CATFLWebMatrix.mweb
+b|j|n,m
+b|c|n,m
+v|6.425.1.22327|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\CATFLWebMatrix\ExcelExporter.js|1647691685|2470
+s|CATFLEditorWEBMatrix\CATFLWebMatrix.mweb\src\ExcelExporter.js|1558012364|4817
+t|win_b64\webapps\CATFLWebMatrix\TraceabilityMatrix.js|1647691686|32173
+s|CATFLEditorWEBMatrix\CATFLWebMatrix.mweb\src\TraceabilityMatrix.js|1616586954|64721
+t|win_b64\webapps\CATFLWebMatrix\css\TraceabilityMatrix.css|1669240344|4711
+s|CATFLEditorWEBMatrix\CATFLWebMatrix.mweb\src\css\TraceabilityMatrix.css|1574442343|5901
+t|win_b64\webapps\CATFLWebMatrix\jQueryPlugin.js|1647691685|641
+s|CATFLEditorWEBMatrix\CATFLWebMatrix.mweb\src\jQueryPlugin.js|1557761900|1758
+u|win_b64\code\toolcmds\terser.bat|1647654585|240
+u|win_b64\code\toolcmds\yuicompressor-2.4.9.bat|1647654585|205

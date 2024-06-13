@@ -1,0 +1,25 @@
+################################################################################################
+# Create By jhlee 2023. 04. 17
+# Admin Type : command
+# Name : decConstructionKPICompareExcel
+################################################################################################
+
+#del command 'decConstructionKPICompareExcel';
+add command 'decConstructionKPICompareExcel'
+	description 'decConstructionKPICompareExcel'
+	label 'emxProgramCentral.Common.Import'
+	alt 'emxProgramCentral.Common.Import'
+	setting 'Registered Suite' 'ProgramCentral'
+	setting 'Target Location' 'popup'
+	setting 'Image' "${COMMON_DIR}/images/I_ImportFromFile_32.png"
+	setting 'Submit' 'true'
+;
+add property 'command_decConstructionKPICompareExcel' on prog eServiceSchemaVariableMapping.tcl to command 'decConstructionKPICompareExcel';
+mod command 'decConstructionKPICompareExcel'
+	href '${COMMON_DIR}/decTaskCompareExcelDialogFS.jsp?type=KPI'
+	add setting 'hasAccess' 'PIM,CM'
+	add setting 'Access Program' 'emxProjectSpace'
+	add setting 'Access Function' 'isAccessPMCUpdate'
+	label ProgramCentral.Label.ImportKPI
+	alt ProgramCentral.Label.ImportKPI
+;

@@ -1,0 +1,235 @@
+################################################################################################
+# Create By choimingi : 2023. 07 . 19
+# Admin Type : form
+# Name : decVPDocumentPropertiesEditForm
+################################################################################################
+#delete form decVPDocumentPropertiesEditForm;
+add form decVPDocumentPropertiesEditForm web 
+	field
+		name 'Name'
+		label 'emxProgramCentral.Label.decDeliverableName' 
+		businessobject 'name'
+		setting 'Field Type' 'basic' 
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Group Name' 'NameProjectCode'
+		setting 'Editable' 'false'
+	field
+		name 'ProjectCode'
+		label 'ProgramCentral.Common.ProjectCode' 
+		setting 'Field Type' 'program'
+		setting 'Input Type' 'textbox'
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'program' 'decInterfaceDV'
+  	    setting 'function' 'getProjectName'
+  	    setting 'Group Name' 'NameProjectCode'
+  	    setting 'Editable' 'false'
+	field
+		name 'Description'
+		label 'emxProgramCentral.Label.decDescription' 
+		businessobject 'Description'
+		setting 'Field Type' 'basic' 
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Editable' 'false'
+	field
+	    name decDiscipline
+ 	    label 'emxProgramCentral.Label.decReivision'
+        bus '$<attribute[decDiscipline]>'
+        setting 'Field Type' 'basic' 
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Group Name' 'DisRev'
+		setting 'Editable' 'false'
+	field
+		name 'Revision'
+		label 'emxProgramCentral.Label.decDescription' 
+		businessobject 'Revision'
+		setting 'Field Type' 'basic' 
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Group Name' 'DisRev'
+		setting 'Editable' 'false'
+	field
+	    name decSubDocNo
+ 	    label 'emxProgramCentral.Label.decSubDocNo'
+        bus '$<attribute[decSubDocNo]>'
+        setting 'Field Type' 'basic' 
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Group Name' 'SDNDT'
+		setting 'Editable' 'false'
+	field
+	    name decDocType
+ 	    label 'emxProgramCentral.Label.decDocType'
+        bus '$<attribute[decDocType]>'
+        setting 'Field Type' 'basic' 
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Group Name' 'SDNDT'
+		setting 'Editable' 'false'
+	field
+	    name decAddDocNo
+ 	    label 'emxProgramCentral.Label.decAddDocNo'
+        bus '$<attribute[decAddDocNo]>'
+        setting 'Field Type' 'basic' 
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Group Name' 'decAddDocNodecUnitNmDoc'
+		setting 'Editable' 'false'
+	field
+	    name decUnitNmDoc
+ 	    label 'emxProgramCentral.Label.decUnitNmDoc'
+        bus '$<attribute[decUnitNmDoc]>'
+        setting 'Field Type' 'basic' 
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Group Name' 'decAddDocNodecUnitNmDoc'
+		setting 'Editable' 'false'
+	field
+	    name decTagNumber
+ 	    label 'emxProgramCentral.Label.decTagNumber'
+        bus '$<attribute[decTagNumber]>'
+        setting 'Field Type' 'basic' 
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Group Name' 'decTagNumberdecDwgAreaNmDoc'
+		setting 'Editable' 'false'	
+	field
+	    name decDwgAreaNmDoc
+ 	    label 'emxProgramCentral.Label.decDwgAreaNmDoc'
+        bus '$<attribute[decDwgAreaNmDoc]>'
+        setting 'Field Type' 'basic' 
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Group Name' 'decTagNumberdecDwgAreaNmDoc'
+		setting 'Editable' 'false'
+	field
+	    name decDocStage
+ 	    label 'emxProgramCentral.Label.decDocStage'
+        bus '$<attribute[decDocStage]>'
+        setting 'Field Type' 'basic' 
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Group Name' 'decDocStagedecPO_No'
+		setting 'Editable' 'false'
+	field
+	    name decPO_No
+ 	    label 'emxProgramCentral.Label.decPO_No'
+        bus '$<attribute[decPO_No]>'
+        setting 'Field Type' 'basic' 
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Group Name' 'decDocStagedecPO_No'
+		setting 'Editable' 'false'
+	field
+	    name decWorkFlow
+ 	    label 'emxProgramCentral.Label.decWorkFlow'
+        bus '$<attribute[decWorkFlow]>'
+        setting 'Field Type' 'basic' 
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Group Name' 'decWorkFlowdecPlanDate'
+		setting 'Editable' 'false'
+	field
+	    name decPlanDate
+ 	    label 'emxProgramCentral.Label.decPlanDate'
+        bus '$<attribute[decPlanDate]>'
+        setting 'Field Type' 'basic' 
+        setting "format" "date" 
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Group Name' 'decWorkFlowdecPlanDate'
+		setting 'Editable' 'false'
+	field
+	    name decTurnover_YN
+ 	    label 'emxProgramCentral.Label.decTurnover_YN'
+        bus '$<attribute[decTurnover_YN]>'
+        setting 'Field Type' 'attribute' 
+        setting 'Input Type' 'combobox'
+        setting 'Registered Suite' 'ProgramCentral'
+        setting 'Group Name' 'decTurnover_YNdecForecastDate'
+        setting "Range Function" "getTurnOverYN"
+        setting "Range Program" "decInterfaceDV"
+	field
+	    name decForecastDate
+ 	    label 'emxProgramCentral.Label.decForecastDate'
+        bus '$<attribute[decForecastDate]>'
+        setting 'Field Type' 'basic'
+        setting "format" "date"  
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Group Name' 'decTurnover_YNdecForecastDate'
+		setting 'Editable' 'false'
+	field
+	    name decCustomSBMT_YN
+ 	    label 'emxProgramCentral.Label.decCustomSBMT_YN'
+        bus '$<attribute[decCustomSBMT_YN]>'
+        setting 'Field Type' 'basic' 
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Group Name' 'decCustomSBMT_YNdecActualDate'
+		setting 'Editable' 'false'	
+	field
+	    name decActualDate
+ 	    label 'emxProgramCentral.Label.decActualDate'
+        bus '$<attribute[decActualDate]>'
+        setting 'Field Type' 'basic'
+        setting "format" "date" 
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Group Name' 'decCustomSBMT_YNdecActualDate'
+		setting 'Editable' 'false'
+	field
+	    name decIMPTDoc_YN
+ 	    label 'emxProgramCentral.Label.decIMPTDoc_YN'
+        bus '$<attribute[decIMPTDoc_YN]>'
+        setting 'Field Type' 'basic' 
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Group Name' 'decIMPTDoc_YNdecIWPNumber'
+		setting 'Editable' 'false'
+	field
+	    name decIWPNumber
+ 	    label 'emxProgramCentral.Label.decIWPNumber'
+        bus '$<attribute[decIWPNumber]>'
+        setting 'Field Type' 'basic' 
+        setting 'Registered Suite' 'ProgramCentral'
+        setting 'Group Name' 'decIMPTDoc_YNdecIWPNumber'
+        setting 'Editable' 'false'
+	field
+	    name decDESDoc_YN
+ 	    label 'emxProgramCentral.Label.decDESDoc_YN'
+        bus '$<attribute[decDESDoc_YN]>'
+        setting 'Field Type' 'basic'
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Group Name' 'decDESDoc_YNdecLatestIFDate'
+		setting 'Editable' 'false'
+	field
+	    name decLatestIFDate
+ 	    label 'emxProgramCentral.Label.decLatestIFDate'
+        bus '$<attribute[decLatestIFDate]>'
+        setting 'Field Type' 'basic'
+        setting "format" "date" 
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Group Name' 'decDESDoc_YNdecLatestIFDate'
+		setting 'Editable' 'false'
+	field
+	    name decEXCWKDoc_YN
+ 	    label 'emxProgramCentral.Label.decEXCWKDoc_YN'
+        bus '$<attribute[decEXCWKDoc_YN]>'
+        setting 'Field Type' 'basic' 
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Group Name' 'decEXCWKDoc_YNdecNextAction'
+		setting 'Editable' 'false'	
+	field
+	    name decNextAction
+ 	    label 'emxProgramCentral.Label.decNextAction'
+        bus '$<attribute[decNextAction]>'
+        setting 'Field Type' 'basic' 
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Group Name' 'decEXCWKDoc_YNdecNextAction'
+		setting 'Editable' 'false'
+	field
+	    name decReviseDate
+ 	    label 'emxProgramCentral.Label.decReviseDate'
+        bus '$<attribute[decReviseDate]>'
+        setting 'Field Type' 'basic'
+        setting "format" "date"  
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Group Name' 'decReviseDatedecNextActionPlanDate'
+		setting 'Editable' 'false'
+	field
+	    name decNextActionPlanDate
+ 	    label 'emxProgramCentral.Label.decNextActionPlanDate'
+        bus '$<attribute[decNextActionPlanDate]>'
+        setting 'Field Type' 'basic'
+        setting "format" "date"  
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Group Name' 'decReviseDatedecNextActionPlanDate'
+		setting 'Editable' 'false';	
+
+add property 'form_decVPDocumentPropertiesEditForm' on program 'eServiceSchemaVariableMapping.tcl' to form 'decVPDocumentPropertiesEditForm'
+;

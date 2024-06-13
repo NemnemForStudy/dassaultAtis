@@ -1,0 +1,1 @@
+define("DS/MutatorWdg/MutatorWdg_cs",{});define("DS/MutatorWdg/assets/nls/mutator",{errorUrl:"Je nám líto, ale widget nelze načíst",errorApi:"Není zadáno ID API widgetu"});

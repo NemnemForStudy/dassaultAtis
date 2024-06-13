@@ -1,0 +1,394 @@
+{
+  "version": "2.0",
+  "description1": [
+    "The viewSetThreePlus is the viewSet that is used when 3 or more",
+    " objects are being compared"
+  ],
+
+
+  "viewSetThreePlus": {
+    "viewSetMod": "DS/CompareWidget2/ViewDefModules/DefaultViewDefs_V2",
+    "viewSetName": "PROPS_ONLY",
+    "MainToolbarConfig": [
+      {
+        "Location": "DS/CompareWidget2/assets/config/MainToolBarConfig.json",
+        "DoNotInclude": [
+          "mainToolbarDisplayViews",
+          "mainToolbarSwap",
+          "mainToolbarExport",
+          "mainToolbarLeftObjectColor",
+          "mainToolbarLeftObjectString",
+          "mainToolbarRightObjectColor",
+          "mainToolbarRightObjectString",
+          "compareSettings.includeFacets.externalRelations",
+          "mainToolbarRestoreLayout"
+
+        ]
+      }
+    ]
+  },
+  
+  
+  "description2": [
+    "Each entry in 'viewSetSelectorArray' gives:",
+    "     the path of a view definition set (AMD) module file,",
+    "     the name of a view def set (within that file),",
+    "     optionally, a description of the case",
+    "     the conditions (UseCases) under which this viewSet is to be used ",
+    " ",
+    " Conditions will likely evolve over time.  For now we use:",
+    "     app      -- the name of the application we want to use (compare, merge,...)",
+    "     role     -- (can be '*') the role a person should be using (more of a placeholder for the moment)",
+    "     svcType0 -- (can be '*') one obj's type (including service name and type on that service) for the operation",
+    "     svcType1 -- (can be '*') the other obj's type",
+    "",
+    " *NOTE* The svcTypes no longer designate one for the baseline and one for the comparison, but rather",
+    "        simply two svcTypes, as the matching can now be done 'either way' (as of 23x FD02)"
+  ],
+
+  "viewSetSelectorArray": [
+   
+    {
+      "viewSetMod": "DS/CompareWidget2/ViewDefModules/DefaultViewDefs_V2",
+      "viewSetName": "STANDARD",
+      "UseCases": [
+        {
+          "app": "COMPARE",
+          "role": "*",
+          "svcType0": "3DSpace.PLMReference",
+          "svcType1": "3DSpace.PLMReference"
+        }
+      ],
+      "MainToolbarConfig": [
+        {
+          "Location": "DS/CompareWidget2/assets/config/MainToolBarConfig.json",
+          "DoNotInclude": []
+        }
+      ]
+    },
+    
+    
+    {
+      "viewSetMod": "DS/CompareWidget2/ViewDefModules/DefaultViewDefs_V2",
+      "viewSetName": "PROPS_ONLY",
+      "UseCases": [
+        {
+          "app": "COMPARE",
+          "role": "*",
+          "svcType0": "*",
+          "svcType1": "*"
+        }
+      ],
+      "MainToolbarConfig": [
+        {
+          "Location": "DS/CompareWidget2/assets/config/MainToolBarConfig.json",
+          "DoNotInclude": [
+            "mainToolbarDisplayViews",
+            "mainToolbarExport",
+            "compareSettings.includeFacets.externalRelations",
+            "mainToolbarRestoreLayout"
+          ]
+        }
+      ]
+    },
+    
+    
+    {
+      "viewSetMod": "DS/CompareWidget2/ViewDefModules/DefaultViewDefs_V2",
+      "viewSetName": "PROPS_AND_STRUCT",
+      "UseCases": [
+        {
+          "app": "COMPARE",
+          "role": "*",
+          "svcType0": "3DSpace.RFLVPMLogicalReference",
+          "svcType1": "3DSpace.RFLVPMLogicalReference"
+        },
+        {
+          "app": "COMPARE",
+          "role": "*",
+          "svcType0": "3DSpace.Workspace",
+          "svcType1": "3DSpace.Workspace"
+        },
+        {
+          "app": "COMPARE",
+          "role": "*",
+          "svcType0": "3DSpace.Workspace Vault",
+          "svcType1": "3DSpace.Workspace Vault"
+        },
+        {
+          "app": "COMPARE",
+          "role": "*",
+          "svcType0": "3DSpace.RFLPLMFunctionalReference",
+          "svcType1": "3DSpace.PLMReference"
+        },
+        {
+          "app": "COMPARE",
+          "role": "*",
+          "svcType0": "3DSpace.RFLPLMFunctionalReference",
+          "svcType1": "*"
+        },
+        {
+          "app": "COMPARE",
+          "role": "*",
+          "svcType0": "3DSpace.RFLVPMLogicalReference",
+          "svcType1": "3DSpace.PLMReference"
+        },
+        {
+          "app": "COMPARE",
+          "role": "*",
+          "svcType0": "3DSpace.RFLVPMLogicalReference",
+          "svcType1": "*"
+        },
+        {
+          "app": "COMPARE",
+          "role": "*",
+          "svcType0": "3DSpace.DELLmiGeneralSystemReference",
+          "svcType1": "3DSpace.DELLmiGeneralSystemReference"
+        },        
+                
+        {
+          "app": "COMPARE",
+          "role": "*",
+          "svcType0": "3DSpace.DELLmiGeneralSystemReference",
+          "svcType1": "3DSpace.PLMReference"
+        },        
+        {
+          "app": "COMPARE",
+          "role": "*",
+          "svcType0": "3DSpace.DELLmiGeneralSystemReference",
+          "svcType1": "*"
+        }       
+      ],
+
+      "MainToolbarConfig": [
+        {
+          "Location": "DS/CompareWidget2/assets/config/MainToolBarConfig.json",
+          "DoNotInclude": [
+            
+          ]
+        }
+      ]
+    },
+    
+    
+    {
+      "viewSetMod": "DS/CompareWidget2/ViewDefModules/DefaultViewDefs_V2",
+      "viewSetName": "PROPS_STRUCT_INSTANCE",
+      "UseCases": [
+        {
+          "app": "COMPARE",
+          "role": "*",
+          "svcType0": "3DSpace.CreateAssembly",
+          "svcType1": "3DSpace.CreateAssembly"
+        }
+      ],
+      "MainToolbarConfig": [
+        {
+          "Location": "DS/CompareWidget2/assets/config/MainToolBarConfig.json"
+        }
+      ]
+    },
+
+
+    {
+      "viewSetMod": "DS/CompareWidget2/ViewDefModules/RequirementSpecViewDef",
+      "viewSetName": "STANDARD_REQ",
+      "UseCases": [
+        {
+          "app": "COMPARE",
+          "role": "*",
+          "svcType0": "3DSpace.Requirement Specification",
+          "svcType1": "3DSpace.Requirement Specification"
+        },
+        {
+          "app": "COMPARE",
+          "role": "*",
+          "svcType0": "3DSpace.Requirement",
+          "svcType1": "3DSpace.Requirement"
+        }
+      ],
+      "MainToolbarConfig": [
+        {
+          "Location": "DS/CompareWidget2/assets/config/MainToolBarConfig.json",
+          "DoNotInclude": [
+            "compareSettings.includeFacets.externalRelations"
+          ]
+        }
+      ]
+    },
+
+   
+    {
+      "viewSetMod": "DS/CompareWidget2/ViewDefModules/MergeViewDefs",
+      "viewSetName": "MERGE_VIEW",
+      "UseCases": [
+        {
+          "app": "MERGE",
+          "role": "*",
+          "svcType0": "*",
+          "svcType1": "*"
+        }
+      ],
+      "MainToolbarConfig": [
+        {
+          "Location": "DS/CompareWidget2/assets/config/MainToolBarMergeConfig.json",
+          "DoNotInclude": [
+            "mainToolbarSwap",
+            "mainToolbarExport"
+          ]
+        }
+      ]
+    },
+    
+    {
+      "viewSetMod": "DS/CompareWidget2/ViewDefModules/MergeRFLViewDefs",
+      "viewSetName": "MERGE_AND_PROPS_HORIZ",
+      "UseCases": [
+        {
+          "app": "MERGE",
+          "role": "*",
+          "svcType0": "3DSpace.RFLVPMLogicalReference",
+          "svcType1": "3DSpace.PLMReference"
+        },
+        {
+          "app": "MERGE",
+          "role": "*",
+          "svcType0": "3DSpace.RFLVPMLogicalReference",
+          "svcType1": "*"
+        },
+        {
+          "app": "MERGE",
+          "role": "*",
+          "svcType0": "3DSpace.RFLPLMFunctionalReference",
+          "svcType1": "3DSpace.PLMReference"
+        },
+        {
+          "app": "MERGE",
+          "role": "*",
+          "svcType0": "3DSpace.RFLPLMFunctionalReference",
+          "svcType1": "*"
+        },
+        {
+          "app": "MERGE",
+          "role": "*",
+          "svcType0": "3DSpace.DIFLayout",
+          "svcType1": "3DSpace.DIFLayout"
+        },
+        {
+          "app": "MERGE",
+          "role": "*",
+          "svcType0": "3DSpace.DIFSheet",
+          "svcType1": "3DSpace.DIFSheet"
+        },
+        {
+          "app": "MERGE",
+          "role": "*",
+          "svcType0": "3DSpace.DIFView",
+          "svcType1": "3DSpace.DIFView"
+        }
+        
+      ],
+      "MainToolbarConfig": [
+        {
+          "Location": "DS/CompareWidget2/assets/config/MainToolBarMergeConfig.json",
+          "DoNotInclude": [
+            "mainToolbarSwap",
+            "mainToolbarExport"
+          ]
+        }
+      ]
+    },
+
+    {
+      "viewSetMod": "DS/CompareWidget2/ViewDefModules/ProductsViewDefs_V2",
+      "viewSetName": "PRODUCTS_PROPS_AND_STRUCT",
+      "UseCases": [
+        {
+          "app": "COMPARE",
+          "role": "*",
+          "svcType0": "3DSpace.Products",
+          "svcType1": "3DSpace.Products"
+        }
+      ],
+      "MainToolbarConfig": [
+        {
+          "Location": "DS/CompareWidget2/assets/config/MainToolBarConfig.json",
+          "DoNotInclude": [
+            "compareSettings.includeFacets.externalRelations"
+          ]
+        }
+      ]
+    },
+
+    {
+      "viewSetMod": "DS/CompareWidget2/ViewDefModules/PartViewDefs_V2",
+      "viewSetName": "STANDARD",
+      "UseCases": [
+        {
+          "app": "COMPARE",
+          "role": "*",
+          "svcType0": "3DSpace.Part",
+          "svcType1": "3DSpace.Part"
+        }
+      ],
+      "MainToolbarConfig": [
+        {
+          "Location": "DS/CompareWidget2/assets/config/MainToolBarConfig.json",
+          "DoNotInclude": [
+            "compareSettings.includeFacets.externalRelations"
+          ]
+        }
+      ]
+    },
+
+    {
+      "viewSetMod": "DS/CompareWidget2/ViewDefModules/DocumentViewDefs_V2",
+      "viewSetName": "STANDARD",
+      "UseCases": [
+        {
+          "app": "COMPARE",
+          "role": "*",
+          "svcType0": "3DSpace.Document",
+          "svcType1": "3DSpace.Document"
+        }
+      ],
+      "MainToolbarConfig": [
+        {
+          "Location": "DS/CompareWidget2/assets/config/MainToolBarConfig.json",
+          "DoNotInclude": [
+            "compareSettings.includeFacets.externalRelations"
+          ]
+        }
+      ]
+    },
+
+    {
+      "viewSetMod": "DS/CompareWidget2/ViewDefModules/PortfolioViewDefs_V2",
+      "viewSetName": "PORTFOLIO_STANDARD",
+      "UseCases": [
+        {
+          "app": "COMPARE",
+          "role": "*",
+          "svcType0": "3dportfolio.dsxpfl:PortfolioVersion",
+          "svcType1": "3dportfolio.dsxpfl:PortfolioVersion"
+        },
+        {
+          "app": "COMPARE",
+          "role": "*",
+          "svcType0": "3dportfolio.dscpfl:SellableItem",
+          "svcType1": "3dportfolio.dscpfl:SellableItem"
+        }
+      ],
+      "MainToolbarConfig": [
+        {
+          "Location": "DS/CompareWidget2/assets/config/MainToolBarConfig.json",
+          "DoNotInclude": [
+            
+            "compareSettings.includeFacets.externalRelations"
+          ]
+        }
+      ]
+    }
+
+  ]
+}

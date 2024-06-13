@@ -1,0 +1,27 @@
+################################################################################################
+# Create By choimingi 2023. 09 . 15
+# Admin Type : command
+# Name : decProjectDocumentInterfaceLogView
+################################################################################################
+
+#delete command decProjectDocumentInterfaceLogView;
+
+add command decProjectDocumentInterfaceLogView
+	label "emxFramework.Command.decProjectDocumentInterfaceLogView"
+	href '${COMMON_DIR}/emxPortal.jsp?portal=decDILogViewPortal&showPageHeader=false'
+	setting "Registered Suite" "Framework"
+	setting "Target Location" "content"
+	property "installer" value "ENOVIAEngineering"
+	property "application" value "Framework"
+	property "installed date" value "09-15-2023"
+	property "original name" value "decProjectDocumentInterfaceLogView"
+;
+
+add property command_decProjectDocumentInterfaceLogView on program eServiceSchemaVariableMapping.tcl to command decProjectDocumentInterfaceLogView;
+
+mod command decProjectDocumentInterfaceLogView
+	add setting 'hasAccess' 'PIM,AWP,WFP'  
+	add setting 'Access Program' 'decAccess'
+	add setting 'Access Function' 'hasAccess'
+;
+

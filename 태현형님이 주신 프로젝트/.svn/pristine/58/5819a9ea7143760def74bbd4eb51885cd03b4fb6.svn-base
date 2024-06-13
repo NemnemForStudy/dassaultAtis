@@ -1,0 +1,1 @@
+define("DS/WarningWidget/WarningWidget_zh-TW",{});define("DS/WarningWidget/assets/nls/langWW",{"DefaultMessage:":"繼續？",Cancel:"取消",Continue:"繼續",WARNING:"警告"});

@@ -1,0 +1,249 @@
+<?xml version="1.0"?>
+
+<!-- ENOVIA DICTIONARY for E/E Editor -->
+<!-- COPYRIGHT DASSAULT SYSTEMES 2012, all rights reserved -->
+
+<Package Name="SoftwareArchitecture"
+    Uuid="38D7540B-C946-4250-9C1D-7297F2E875F4"
+    xmlns="PLMDictionaryUnified"
+    ModelerType="Top"
+    BelongsToModeler="SoftwareArchitecture"
+	CustomerExposition="Programmer"
+	UseNames="RFLVPMLogical" >
+
+	<CAAComment>
+        <ShortRole>Software Architecture Package</ShortRole>
+        <Role>This package describes the PLM Software Architecture package on top of RFLVPMLogical Modeler.</Role>
+	</CAAComment>
+	<Comment>Initial creation: A58 Feb 2012</Comment>
+	<Property Name="OptionalInstallation" Value="Yes" /> 
+
+<!-- ************************** -->
+<!-- AtomicComponentType : RFLVPMLogicalReference -->
+<!-- ************************** -->
+	<Class 
+		Name="EEAtomicComponentType"
+		Uuid="9BDA3EA6-F096-4c4f-9C56-1AD14F5A6DEF"
+		Abstract="No"
+		Specializable="Yes"
+		CustomerExposition="Programmer"
+		CustomerExtensible="Yes"
+		Discipline="Yes"
+		SuperName="RFLVPMLogicalReference"
+		CreateInstName="EEComponentPrototype"
+		Abbreviation="eeact">
+		<Property Name="IconName" Value="EEAtomicComponentType"/>
+		<Property Name="Newable" Value="All"/>
+		<Property Name="Searchable" Value="Yes"/>
+		<Property Name="Configurable" Value="Yes"/>
+		<Property Name="KweNew_InstanciationMethod" Value="CATELogDelegateInstanciation"/>
+	  <Property Name="KweNew_ReturnedType" Value="EEComponentPrototype"/>
+		<Simple Name="handleTerminationAndRestart"
+			Uuid="2D3137D4-1409-416c-B483-4F35D23AFA95" 
+			Protection="Free"
+			Type="Integer" 
+			DefaultValue="1">
+			<Property Name="RangeAsEnumName" Value="HandleTerminationAndRestartEnum"/>
+			<Property Name="RangeAsEnumAuthorizedValues" Value="noSupport;canBeTerminated;canBeTerminatedAndRestarted"/>
+			<Range>
+				<Equal>1</Equal>
+				<Equal>2</Equal>
+				<Equal>3</Equal>
+			</Range>
+		</Simple>
+		<Method ImplementationType="AsFather">
+			<RealizeMethodType href="ExportScope.meth#ExportScope"/>
+		</Method>
+	</Class>
+<!-- **************************************************** -->
+<!-- *  EEComponentPrototype :  RFLVPMLogicalInstance  * -->
+<!-- **************************************************** -->
+	<RelationClass 
+		Name="EEComponentPrototype"
+		Uuid="23F952F8-951C-491a-A7A7-445943EB3F06"
+		Abstract="No"
+		Specializable="Yes"
+		CustomerExposition="Programmer"
+		CustomerExtensible="Yes"
+		Discipline="Yes"
+		SuperName="RFLVPMLogicalInstance">
+		<Property Name="IconName" Value="EEComponentPrototype"/>
+		<Property Name="Newable" Value="Insert"/>
+		<Property Name="Searchable" Value="Yes"/>
+		<Property Name="Filtrable" Value="Yes"/>
+		<Property Name="KweNew_InstanciationMethod" Value="CATELogDelegateInstanciation"/>
+		<Property Name="KweNew_ReturnedType" Value="EEComponentPrototype"/>
+	</RelationClass>
+<!-- **************************************************** -->
+<!-- *  EEAtomicComponentTypeRep :  RFLVPMLogicalRepReference  * -->
+<!-- **************************************************** -->
+	<Class Name="EEAtomicComponentTypeRep" 
+		Uuid="7E57EEEE-A477-4E4E-A2AA-D67BA48E15AA" 
+		SuperName="RFLVPMLogicalRepReference" 
+		Specializable="Yes"
+		CreateInstName="RFLVPMLogicalRepInstance"
+		CustomerExposition="Programmer"
+		InstantiationOwnerTypes="EEAtomicComponentType"
+		Discipline="Yes"
+		Abbreviation="eeacr">
+		<CAAComment>
+			<ShortRole>AtomicComponentType Rep Reference Object</ShortRole>
+			<Role>AtomicComponentType Rep Reference Object</Role>
+		</CAAComment>
+		<Property Name="KweNew_InstanciationMethod" Value="CATELogDelegateInstanciation"/>
+	   	<Property Name="KweNew_ReturnedType" Value="RFLVPMLogicalRepInstance"/>
+	</Class>
+	
+<!-- ************************** -->
+<!-- EEApplication : RFLVPMLogicalReference -->
+<!-- ************************** -->
+	<Class 
+		Name="EEApplication"
+		Uuid="1448E363-4ACC-4690-949B-592A05852949"
+		Abstract="No"
+		Specializable="Yes"
+		Discipline="Yes"
+		CustomerExposition="Programmer"
+		CustomerExtensible="Yes"
+		SuperName="RFLVPMLogicalReference"
+		CreateInstName="EEApplicationPrototype"
+		Abbreviation="eeapp">
+		<Property Name="IconName" Value="EEApplication"/>
+		<Property Name="Newable" Value="All"/>
+		<Property Name="Searchable" Value="Yes"/>
+		<Property Name="Configurable" Value="Yes"/>
+		<Property Name="KweNew_InstanciationMethod" Value="CATELogDelegateInstanciation"/>
+	  <Property Name="KweNew_ReturnedType" Value="EEApplicationPrototype"/>
+	</Class>
+
+<!-- **************************************************** -->
+<!-- *  EEApplicationPrototype :  RFLVPMLogicalInstance  * -->
+<!-- **************************************************** -->
+	<RelationClass 
+		Name="EEApplicationPrototype"
+		Uuid="4FC207D8-E8D1-4A6D-AEF0-8F2E48875FED"
+		Abstract="No"
+		Specializable="Yes"
+		CustomerExposition="Programmer"
+		CustomerExtensible="Yes"
+		Discipline="Yes"
+		SuperName="RFLVPMLogicalInstance">
+		<Property Name="IconName" Value="EEApplicationPrototype"/>
+		<Property Name="Newable" Value="Insert"/>
+		<Property Name="Searchable" Value="Yes"/>
+		<Property Name="Filtrable" Value="Yes"/>
+		<Property Name="KweNew_InstanciationMethod" Value="CATELogDelegateInstanciation"/>
+		<Property Name="KweNew_ReturnedType" Value="EEApplicationPrototype"/>
+	</RelationClass>
+	
+<!-- ************************** -->
+<!-- EEPartition : RFLVPMLogicalReference -->
+<!-- ************************** -->
+	<Class 
+		Name="EEPartition"
+		Uuid="C0430296-94B8-4947-B25F-98D29AB34C63"
+		Abstract="No"
+		Specializable="Yes"
+		CustomerExposition="Programmer"
+		CustomerExtensible="Yes"
+		Discipline="Yes"
+		SuperName="RFLVPMLogicalReference"
+		CreateInstName="EEPartitionPrototype"
+		Abbreviation="eepar">
+		<Property Name="IconName" Value="EEPartition"/>
+		<Property Name="Newable" Value="All"/>
+		<Property Name="Searchable" Value="Yes"/>
+		<Property Name="Configurable" Value="Yes"/>
+		<Property Name="KweNew_InstanciationMethod" Value="CATELogDelegateInstanciation"/>
+		<Property Name="KweNew_ReturnedType" Value="EEPartitionPrototype"/>
+	</Class>
+	
+<!-- **************************************************** -->
+<!-- *  EEPartitionPrototype :  RFLVPMLogicalInstance  * -->
+<!-- **************************************************** -->
+	<RelationClass 
+		Name="EEPartitionPrototype"
+		Uuid="4CA83F31-9C36-4F10-B56A-B50DC9ADDD80"
+		Abstract="No"
+		Specializable="Yes"
+		CustomerExposition="Programmer"
+		CustomerExtensible="Yes"
+		Discipline="Yes"
+		SuperName="RFLVPMLogicalInstance">
+		<Property Name="IconName" Value="EEPartitionPrototype"/>
+		<Property Name="Newable" Value="Insert"/>
+		<Property Name="Searchable" Value="Yes"/>
+		<Property Name="Filtrable" Value="Yes"/>
+		<Property Name="KweNew_InstanciationMethod" Value="CATELogDelegateInstanciation"/>
+		<Property Name="KweNew_ReturnedType" Value="EEPartitionPrototype"/>
+		<Simple
+			Name="V_EE_ipAddress"
+			Uuid="5c066f41-338f-417d-9908-fa0f2006d3e8"
+			Type="String"
+			DefaultValue=""
+			MultiValuated="No"
+			Protection="Free"/>
+	</RelationClass>
+	
+<!-- ************************** -->
+<!-- EEConfigurationTable : RFLVPMLogicalReference -->
+<!-- ************************** -->
+	<Class 
+		Name="EEConfigurationTable"
+		Uuid="6BDFF898-76BE-4661-B864-FB0F78FA24E2"
+		Abstract="No"
+		Specializable="Yes"
+		CustomerExposition="Programmer"
+		CustomerExtensible="Yes"
+		Discipline="Yes"
+		SuperName="RFLVPMLogicalReference"
+		CreateInstName="EEConfigurationTablePrototype"
+		Abbreviation="eecnt">
+		<Property Name="IconName" Value="EEConfigurationTable"/>
+		<Property Name="Newable" Value="All"/>
+		<Property Name="Searchable" Value="Yes"/>
+		<Property Name="Configurable" Value="Yes"/>
+		<Property Name="KweNew_InstanciationMethod" Value="CATELogDelegateInstanciation"/>
+		<Property Name="KweNew_ReturnedType" Value="EEConfigurationTablePrototype"/>
+	</Class>
+
+<!-- **************************************************** -->
+<!-- *  EEConfigurationTableRep :  RFLVPMLogicalRepReference  * -->
+<!-- **************************************************** -->
+	<Class Name="EEConfigurationTableRep" 
+		Uuid="C2196F9A-3477-490A-B496-FB120CBEE3A2" 
+		SuperName="RFLVPMLogicalRepReference" 
+		Specializable="Yes"
+		CreateInstName="RFLVPMLogicalRepInstance"
+		CustomerExposition="Programmer"
+		InstantiationOwnerTypes="EEConfigurationTable"
+		Discipline="Yes"
+		Abbreviation="eectr">
+		<CAAComment>
+			<ShortRole>ConfigurationTableRep Reference Object</ShortRole>
+			<Role>ConfigurationTableRep Reference Object</Role>
+		</CAAComment>
+		<Property Name="KweNew_InstanciationMethod" Value="CATELogDelegateInstanciation"/>
+	   	<Property Name="KweNew_ReturnedType" Value="RFLVPMLogicalRepInstance"/>
+	</Class>
+
+<!-- **************************************************** -->
+<!-- *  EEConfigurationTablePrototype :  RFLVPMLogicalInstance  * -->
+<!-- **************************************************** -->
+	<RelationClass 
+		Name="EEConfigurationTablePrototype"
+		Uuid="7A9EE589-9575-4F83-9392-60A475135D26"
+		Abstract="No"
+		Specializable="Yes"
+		CustomerExposition="Programmer"
+		CustomerExtensible="Yes"
+		Discipline="Yes"
+		SuperName="RFLVPMLogicalInstance">
+		<Property Name="IconName" Value="EEConfigurationTablePrototype"/>
+		<Property Name="Newable" Value="Insert"/>
+		<Property Name="Searchable" Value="Yes"/>
+		<Property Name="Filtrable" Value="Yes"/>
+		<Property Name="KweNew_InstanciationMethod" Value="CATELogDelegateInstanciation"/>
+		<Property Name="KweNew_ReturnedType" Value="EEConfigurationTablePrototype"/>
+	</RelationClass>
+</Package>

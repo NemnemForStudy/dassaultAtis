@@ -1,0 +1,1 @@
+define("DS/CAT3DWRichLinksUI/CAT3DWRichLinksUI_ja",{});define("DS/CAT3DWRichLinksUI/assets/nls/CAT3DWLinkFullHtmlView",{authorPrep:"担当者",communityPrep:"in"});define("DS/CAT3DWRichLinksUI/assets/nls/CAT3DWLinkPlaceholderHtmlView",{processingMsg:"コンテンツをロードしています..."});define("DS/CAT3DWRichLinksUI/assets/nls/CAT3DWRichLinkHtmlView",{authorPrep:"方法",communityPrep:"-"});

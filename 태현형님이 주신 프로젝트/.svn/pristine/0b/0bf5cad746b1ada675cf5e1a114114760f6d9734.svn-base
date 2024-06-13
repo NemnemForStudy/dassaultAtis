@@ -1,0 +1,1 @@
+define("DS/ENOXSplitView/ENOXSplitView_ko",{});define("DS/ENOXSplitView/assets/nls/ENOXSplitView",{minimize:"최소화",maximize:"최대화"});

@@ -1,0 +1,13 @@
+m|MPFModels\MPFSoftwareProductModel.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.1.22330|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\MPFSoftwareProductModel\MPFSoftwareProductModel.js|1669432483|2545
+s|MPFModels\MPFSoftwareProductModel.mweb\src\MPFSoftwareProductModel.js|1669417588|0
+u|MPFModels\MPFSoftwareProductModel.mweb\src\SoftwareProductCollection.js|1669417588|2074
+u|MPFModels\MPFSoftwareProductModel.mweb\src\SoftwareProductDataProxy.js|1669417588|2113
+u|MPFModels\MPFSoftwareProductModel.mweb\src\SoftwareProductFactory.js|1669417588|3054
+u|MPFModels\MPFSoftwareProductModel.mweb\src\SoftwareProductModel.js|1669417588|2912
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

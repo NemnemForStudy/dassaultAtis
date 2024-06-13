@@ -1,0 +1,1133 @@
+1. table
+# del table Table2024 system;
+add table Table2024 system
+column
+	name 'Id2024'
+	setting Width 5
+	setting 'Column Type' checkbox
+column
+	name 'No2024'
+	label 'emxFramework.label.No2024'
+	bus '$<name>'
+	href '${COMMON_DIR}/emxTree.jsp'
+	setting Width 15
+	setting 'Target Location' content
+	setting 'Registered Suite' 'Framework'
+column
+	name 'Name2024'
+	label 'emxFramework.label.Name2024'
+	bus '$<attribute[Name2024]>'
+	setting 'Field Type' attribute
+	setting 'Admin Type' attribute_Name2024
+	setting 'Registered Suite' 'Framework'
+column
+	name 'Type2024'
+	label 'emxFramework.label.Type'
+	bus '$<attribute[Type2024]>'
+	setting 'Field Type' attribute
+	setting 'Admin Type' attribute_Type2024
+	setting 'Registered Suite' 'Framework'
+column
+	name Indicator2024
+	label 'emxFramework.label.Indicator2024'
+	bus '$<attribute[Indicator2024]>'
+	setting 'Field Type' attribute
+	setting 'Admin Type' attribute_Indicator2024
+	setting 'Registered Suite' 'Framework'
+column
+	name Estimated2024
+	label 'emxFramework.label.Estimated2024'
+	bus '$<attribute[Estimated2024]>'
+	setting 'format' date
+	setting 'Display Time' false
+	setting 'Field Type' attribute
+	setting 'Admin Type' attribute_Estimated2024
+	setting 'Registered Suite' 'Framework'
+column
+	name Actual2024
+	label 'emxFramework.label.Actual2024'
+	bus '$<attribute[Actual2024]>'
+	setting 'format' date
+	setting 'Display Time' false
+	setting 'Field Type' attribute
+	setting 'Admin Type' attribute_Actual2024
+	setting 'Registered Suite' 'Framework'
+column
+	name Delay2024
+	label 'emxFramework.label.Delay2024'
+	setting 'program' project2024
+	setting 'function' showDelay
+	setting 'Column Type' programHTMLOutput
+	setting 'Registered Suite' 'Framework'
+column
+	name Assignees2024
+	label 'emxFramework.label.Assignees2024'
+	setting 'program' project2024
+	setting 'function' Assignee
+	setting 'Column Type' program
+	setting 'Registered Suite' 'Framework'
+column
+	name State2024
+	label 'emxFramework.label.State2024'
+	bus '$<current>'
+	setting 'Admin Type' 'State'
+	setting 'Registered Suite' 'Framework'
+column
+	name 'newWindow'
+	href '${COMMON_DIR}/emxTree.jsp'
+	setting 'Column Icon' 'images/iconNewWindow.gif'
+	setting 'Column Type' icon
+	setting 'Target Location' popup
+;
+
+지연여부 나중에 추가
+
+
+2. command 생성
+# del command project2024;
+add command project2024
+	label 'emxFramework.label.project2024'
+	href '${COMMON_DIR}/emxIndentedTable.jsp?program=project2024:findDocument&table=Table2024&freezePane=Id2024, No2024&toolbar=Toolbar2024'
+	setting 'Target Location' content
+	setting 'Registered Suite' 'Framework'
+;
+add property command_project2024 on prog eServiceSchemaVariableMapping.tcl to command project2024
+;
+
+3. eclipse file 생성
+4. JPO 등록
+add prog project2024 java;
+
+5. menu에 command 추가
+mod menu 'My Enovia'
+	add command project2024
+;
+
+6. attribute 만들기
+add attribute Indicator2024
+	description 'Indicator2024'
+	type String
+	range value Director
+	range value ResearchInstitute
+	range value Executive
+	range value TeamLeader
+	default Executive
+;
+add property attribute_Indicator2024 on prog eServiceSchemaVariableMapping.tcl to attribute Indicator2024
+;
+
+add attribute Estimated2024
+	description 'Estimated2024'
+	type date
+;
+add property attribute_Estimated2024 on prog eServiceSchemaVariableMapping.tcl to attribute Estimated2024
+;
+
+add attribute Actual2024
+	description 'Actual2024'
+	type date
+;
+add property attribute_Actual2024 on prog eServiceSchemaVariableMapping.tcl to attribute Actual2024
+;
+
+add attribute Name2024
+	description 'Name2024'
+	type String
+;
+add property attribute_Name2024 on prog eServiceSchemaVariableMapping.tcl to attribute Name2024
+;
+
+add attribute Category2024
+	description Category2024
+	type String
+	range value ExecuteMeeting
+	range value TeamReaderMeeting
+	range value Report
+	range value Competitor
+	range value NewProduct
+	range value FutureTechnology
+	range value IndustrialTrends
+	default ExecuteMeeting
+;
+add property attribute_Category2024 on prog eServiceSchemaVariableMapping.tcl to attribute Category2024
+;
+
+add attribute Type2024
+	description 'Type2024'
+	type string
+	range value Technical
+	range value Schedult
+	range value Cost
+	range value Quality
+	range value Project
+	default Technical
+;
+add property attribute_Type2024 on prog eServiceSchemaVariableMapping.tcl to attribute Type2024
+;
+
+add attribute No2024
+	description 'No2024'
+	type string
+;
+add property attribute_No2024 on prog eServiceSchemaVariableMapping.tcl to attribute No2024
+;
+
+7. type 생성
+add type Type2024
+	description Type2024
+	attribute Indicator2024
+	attribute Estimated2024
+	attribute Actual2024
+	attribute Name2024
+	attribute Type2024
+	attribute Originator2024
+	attribute Category2024
+;
+add property type_Type2024 on prog eServiceSchemaVariableMapping.tcl to type Type2024
+;
+
+mod type Type2024
+	add attribute Complete2024
+;
+
+8. 상세 조회 사용할 메뉴 생성
+add menu type_Type2024
+	description type_Type2024
+	label '$<name> [$<revision>]'
+	href '${COMMON_DIR}/emxForm.jsp?editLink=true&form=OrderDetailForm2024&formHeader=Indicator2024:$<name> ($<revision>)'
+;
+add property menu_type_Type2024 on prog eServiceSchemaVariableMapping.tcl to menu type_Type2024
+;
+
+8-1. create, delete 툴바 추가
+del command CreateToolbar2024;
+add command CreateToolbar2024
+	label 'emxFramework.label.Toolbar2024'
+	href 'emxCreate.jsp?type=type_Type2024&form=CreateToolbarForm2024&nameField=auto&policy=Policy2024&vaultChooser=true&submitAction=treeContent'
+	setting Image ${COMMON_DIR}/images/iconActionCreate.png
+	setting 'Registered Suite' 'Framework'
+	setting 'Target Location' popup
+;
+add property command_CreateToolbar2024 on prog eServiceSchemaVariableMapping.tcl to command CreateToolbar2024
+;
+
+mod command CreateToolbar2024
+	href 'emxCreate.jsp?type=type_Type2024&form=CreateToolbarForm2024&nameField=auto&policy=Policy2024&vaultChooser=true&submitAction=treeContent'
+;
+
+8-2. Business type 메뉴 등록
+mod menu Tree add menu type_Type2024;
+
+9. 새 메뉴 추가
+del menu Toolbar2024;
+add menu Toolbar2024
+	command CreateToolbar2024
+	command AEFGenericDelete
+;
+add property menu_2024Toolbar on prog eServiceSchemaVariableMapping.tcl to menu Toolbar2024
+;
+
+10. policy 생성
+add policy Policy2024
+	description Policy2024
+	sequence '1,2,3,...'
+	store STORE
+	type Type2024
+	format all
+	defaultformat generic
+	state Create
+		version true
+		revision false
+		promote true
+		checkouthistory false
+		owner all
+	state Active
+		version true
+		revision false
+		promote true
+		checkouthistory false
+		owner read, show, viewform, checkout, demote, promote
+	state Complete
+		version true
+		revision true
+		checkouthistory false
+		owner read, show, viewform, checkout, demote
+		public read, show, viewform, checkout
+	property "state_Create" value "Create"
+	property "state_Active" value "Active"
+	property "state_Complete" value "Complete"
+;
+add property policy_Policy2024 on prog eServiceSchemaVariableMapping.tcl to policy Policy2024
+;
+
+11. CreateToolbarForm2024 만들기
+del form CreateToolbarForm2024;
+add form CreateToolbarForm2024 web
+field
+	name Name
+	label 'Order No'
+	bus '$<name>'
+	setting 'Field Type' basic
+	setting 'Registered Suite' 'Framework'
+field
+	name Name2024
+	label 'emxFramework.Common.Name2024'
+	bus '$<attribute[Name2024]>'
+	setting 'Field Type' attribute
+	setting 'Input Type' textbox
+	setting 'Registered Suite' 'Framework'
+	setting 'Admin Type' attribute_Name2024
+	setting Required true
+	setting Editable true
+field
+	name IndicatorName2024
+	label 'emxFramework.Common.IndicatorName2024'
+	bus '$<attribute[Indicator2024]>'
+	setting 'Field Type' attribute
+	setting 'Input Type' combobox
+	setting 'Admin Type' attribute_Name2024
+	setting 'Registered Suite' 'Framework'
+	setting Required true
+	setting Editable true
+field
+	name Category2024
+	label 'emxFramework.Common.Category2024'
+	bus '$<attribute[Category2024]>'
+	setting 'Field Type' attribute
+	setting 'Input Type' combobox
+	setting 'Admin Type' attribute_Category2024
+	setting 'Registered Suite' 'Framework'
+	setting Required true
+	setting Editable true
+field
+	name OrderType2024
+	label 'emxFramework.Common.Type2024'
+	bus '$<attribute[Type2024]>'
+	setting 'Field Type' attribute
+	setting 'Input Type' combobox
+	setting 'Admin Type' attribute_Type2024
+	setting 'Registered Suite' 'Framework'
+	setting Required true
+	setting Editable true
+field
+	name Estimated2024
+	label 'emxFramework.Common.Estimated2024'
+	bus '$<attribute[Estimated2024]>'
+	setting 'Field Type' attribute
+	setting 'Input Type' textbox
+	setting 'Admin Type' attribute_Estimated2024
+	setting 'format' date
+	setting 'Registered Suite' 'Framework'
+	setting Required true
+	setting Editable true
+field
+	name Assignee2024
+	label 'emxFramework.Common.Assignee2024'
+	bus '$<from[Assignee2024].to.name>'
+	range '${COMMON_DIR}/emxIndentedTable.jsp?program=project2024:findPerson&table=PersonTable2024&selection=multiple&submitURL=../DocSubmit2024.jsp'
+	setting 'Input Type' textbox
+	setting 'Registered Suite' 'Framework'
+field
+	name description2024
+	label 'emxFramework.Common.description2024'
+	bus '$<description>'
+	setting 'Field Type' basic
+	setting 'Input Type' textarea
+	setting 'Registered Suite' 'Framework'
+	setting Editable true
+	setting Required true
+;
+add property form_CreateToolbarForm2024 on prog eServiceSchemaVariableMapping.tcl to form CreateToolbarForm2024
+;
+
+mod form CreateToolbarForm2024
+	field mod name Assignee2024
+	range '${COMMON_DIR}/emxIndentedTable.jsp?program=project2024:findPerson&table=PersonTable2024&selection=multiple&submitURL=../DocSubmit2024.jsp'
+;
+
+12. AutoName Object자동 생성 코드
+add bus 'eService Object Generator' 'type_Type2024' ''
+	policy 'eService Object Generator'
+	vault 'eService Administration'
+	'eService Name Prefix' '2024-'
+	'eService Processing Time Limit' 60
+	'eService Retry Count' 1
+	'eService Retry Delay' 1000
+	'eService Safety Policy' policy_Policy2024
+	'eService Safety Vault' vault_eServiceProduction
+;
+
+13. Number 자동 생성
+add bus 'eService Number Generator' 'type_Type2024' ''
+	policy 'eService Object Generator'
+	vault 'eService Administration'
+	'eService Next Number' 000001
+;
+
+14. 릴레이션 연결
+add connection 'eService Number Generator'
+	from 'eService Object Generator' 'type_Type2024' ''
+	to 'eService Number Generator' 'type_Type2024' ''
+;
+
+15. personTable 만들기
+add table PersonTable2024 system
+column
+	name 'Id'
+	setting 'Column Type' checkbox
+column
+	name 'DocNo.'
+	label 'No.'
+	bus '$<name>'
+	href '${COMMON_DIR}/emxTree.jsp'
+	setting 'Target Location' content
+column
+	name 'City'
+	label 'City'
+	bus '$<attribute[City]>'
+column
+	name 'Country'
+	label 'Country'
+	bus '$<attribute[Country]>'
+;
+
+16. 이클립스에서 findPerson
+
+17. DocSubmit2024.jsp
+
+18. Assignees2024 만들기
+add relationship Assignee2024
+	description Assignee2024
+	nothidden
+	preventduplicates
+	from
+		type Type2024
+		meaning Type2024Relationship
+		cardinality many
+		revision replicate
+		clone replicate
+	to
+		type Person
+		meaning Person
+		cardinality many
+		revision replicate
+		clone replicate
+;
+add property relationship_Assignee2024 on prog eServiceSchemaVariableMapping.tcl to relationship Assignee2024
+;
+
+19. connectPerson 작성
+
+20. 상세 조회 시 form 생성
+
+
+# field, column 등 remove 할 때 사용.
+mod form OrderDetailForm2024
+	field mod name 'Complete2024'
+	remove setting 'Access Program'
+	remove setting 'Access Function'
+;
+
+del form OrderDetailForm2024;
+add form OrderDetailForm2024 web
+field
+	name Name
+	label 'emxFramework.label.OrderNo'
+	bus '$<name>'
+	setting 'Field Type' basic
+	setting 'Registered Suite' 'Framework'
+	setting Editable false
+field
+	name Name2024
+	label 'emxFramework.label.Name2024'
+	bus '$<attribute[Name2024]>'
+	setting 'Field Type' attribute
+	setting 'Admin Type' attribute_Name2024
+	setting 'Registered Suite' 'Framework'
+field
+	name Indicator2024
+	label 'emxFramework.label.Indicator2024'
+	bus '$<attribute[Indicator2024]>'
+	setting 'Input Type' combobox
+	setting 'Field Type' attribute
+	setting 'Admin Type' attribute_Type2024
+	setting 'Registered Suite' 'Framework'
+field
+	name Category2024
+	label 'emxFramework.label.Category2024'
+	bus '$<attribute[Category2024]>'
+	setting 'Input Type' combobox
+	setting 'Field Type' attribute
+	setting 'Admin Type' attribute_Category2024
+	setting 'Registered Suite' 'Framework'
+field
+	name Type2024
+	label 'emxFramework.label.Type2024'
+	bus '$<attribute[Type2024]>'
+	setting 'Input Type' combobox
+	setting 'Field Type' attribute
+	setting 'Admin Type' attribute_Type2024
+	setting 'Registered Suite' 'Framework'
+field 
+	name Originated2024
+	label 'emxFramework.label.OriginatedDate'
+	bus '$<Originated>'
+	setting 'format' date
+	setting 'Field Type' basic
+	setting 'Registered Suite' 'Framework'
+field
+	name Assignee2024
+	label 'emxFramework.label.Assignee'
+	bus '$<from[Assignee2024].to.name>'
+	range        ${COMMON_DIR}/emxIndentedTable.jsp?program=project2024:findPerson&table=PersonTable2024&selection=multiple&submitURL=../ResolutionDocSubmit.jsp
+	setting 'Update Program' project2024
+	setting 'Update Function' connectPerson
+	setting 'Registered Suite' 'Framework'
+field
+	name description
+	label 'emxFramework.label.description'
+	bus '$<description>'
+	setting 'Field Type' basic
+	setting 'Registered Suite' 'Framework'
+;
+add property form_OrderDetailForm2024 on prog eServiceSchemaVariableMapping.tcl to form OrderDetailForm2024
+;
+
+mod form OrderDetailForm2024
+	field mod name 'Assignee2024'
+	remove setting 'Field Type'
+;
+
+21. properties command 생성
+add command Properties2024
+	label 'emxFramework.label.Properties2024'
+	href '${COMMON_DIR}/emxForm.jsp?editLink=true&form=OrderDetailForm2024'
+	setting 'Registered Suite' 'Framework'
+	setting 'Target Location' popup
+;
+add property command_Properties2024 on prog eServiceSchemaVariableMapping.tcl to command Properties2024
+;
+
+22. type_Type2024 menu에 필요한 command들 추가
+mod menu type_Type2024
+	add command AEFLifecycle
+	add command AEFHistory
+	add command Properties2024
+;
+
+23. Lifecycle이 Complete가 될 때 actualFinish값이 생성되는 trigger 생성
+mod policy Policy2024
+	state Active
+	add trigger
+	promote
+	check
+	emxTriggerManager input PolicyChangeComplete
+;
+
+24. 각각의 Trigger 생성
+add bus 'eService Trigger Program Parameters' PolicyChangeComplete policyChangeComplete
+	policy 'eService Trigger Program Policy'
+	vault 'eService Administration'
+	'eService Program Name' project2024
+	'eService Method Name' policyChangeComplete
+	'eService Sequence Number' 1
+	'eService Program Argument 1' ${OBJECTID}
+;
+Promote bus 'eService Trigger Program Parameters' PolicyChangeComplete policyChangeComplete
+;
+
+mod policy Policy2024
+	state Active
+		owner read, show, viewform, checkout, promote, demote, modify
+;
+
+24-2. completeYN이 Y일 때 Active -> Complete로 Auto Promote
+mod policy ResolutionPolicy2024
+	state Review
+	add trigger promote action
+	emxTriggerManager input CheckCompleteYN
+;
+
+add bus 'eService Trigger Program Parameters' CheckCompleteYN checkCompleteYN
+	policy 'eService Trigger Program Policy'
+	vault 'eService Administration'
+	'eService Program Name' project2024
+	'eService Method Name' checkYN
+	'eService Sequence Number' 1
+	'eService Program Argument 1' ${OBJECTID}
+;
+Promote bus 'eService Trigger Program Parameters' CheckCompleteYN checkCompleteYN
+;
+
+delete bus 'eService Trigger Program Parameters' CheckCompleteYN checkCompleteYN
+
+mod policy Policy2024
+	state Active remove trigger promote action
+;
+
+25. 1번에서 showDelay넣고 이클립스에서 showDelay 넣어주기
+
+26. Assignees2024, Resolution2024 command를 각각 만들어주자
+add command Assignees2024
+	label 'emxFramework.label.Assignees2024'
+	href '${COMMON_DIR}/emxIndentedTable.jsp?program=project2024:findPerson&table=PersonTable2024'
+	setting 'Registered Suite' 'Framework'
+	setting 'Target Location' content
+;
+add property command_Assignees2024 on prog eServiceSchemaVariableMapping.tcl to command Assignees2024
+;
+
+mod menu type_Type2024
+	add command Assignees2024
+;
+
+add command Resolution2024
+	label 'emxFramework.label.Resolution2024'
+	href '${COMMON_DIR}/emxIndentedTable.jsp?program=project2024:findResolution&table=ResolutionTable2024&toolbar=ResolutionToolbar2024'
+	setting 'Registered Suite' 'Framework'
+	setting 'Target Location' content
+;
+add property command_Resolution2024 on prog eServiceSchemaVariableMapping.tcl to command Resolution2024
+;
+
+27. menu에 command 추가
+mod menu type_Type2024
+	add command Resolution2024
+;
+
+28. ResolutionTable2024 만들기
+del table ResolutionTable2024 system;
+add table ResolutionTable2024 system
+column
+	name 'Id'
+	setting 'Column Type' checkbox
+column
+	name 'ResolutionNo.'
+	label 'emxFramework.label.ResolutionNo'
+	bus '$<name>'
+	href '${COMMON_DIR}/emxTree.jsp'
+	setting 'Target Location' content
+	setting 'Registered Suite' 'Framework'
+column
+	name ResolutionIndicator2024
+	label 'emxFramework.label.ResolutionIndicator2024'
+	setting 'Column Type' program
+	setting 'program' project2024
+	setting 'function' findIndicator
+column
+	name ResolutionDescription2024
+	label 'emxFramework.label.ResolutionDescription2024'
+	bus '$<description>'
+column
+	name ResolutionState2024
+	label 'emxFramework.label.ResolutionState2024'
+	bus '$<current>'
+	setting 'Admin Type' state
+column
+	name newWindow
+	href '${COMMON_DIR}/emxTree.jsp'
+	setting 'Column Icon' 'images/iconNewWindow.gif'
+	setting 'Column Type' icon
+	setting 'Target Location' popup
+;
+
+29. Resolution에서 사용할 type, attribute 생성
+add attribute Complete2024
+	description Complete2024
+	type string
+;
+add property attribute_Complete2024 on prog eServiceSchemaVariableMapping.tcl to attribute Complete2024
+;
+
+add type ResolutionType2024
+	description ResolutionType2024
+	attribute Indicator2024
+	attribute Category2024
+	attribute Type2024
+	attribute Name2024
+	attribute Originator
+	attribute Complete2024
+;
+add property type_ResolutionType2024 on prog eServiceSchemaVariableMapping.tcl to type ResolutionType2024
+;
+
+30. ResolutionTable2024에 toolbar 달아주기
+add command ResolutionCreateToolbar2024
+	label 'emxFramework.label.ResolutionCreateToolbar2024'
+	href 'emxCreate.jsp?type=type_ResolutionType2024&form=ResolutionCreateForm2024&nameField=auto&policy=ResolutionPolicy2024&vaultChooser=true&submitAction=treeContent'
+	setting Image ${COMMON_DIR}/images/iconActionCreate.png
+	setting 'Registered Suite' 'Framework'
+	setting 'Target Location' popup
+;
+add property command_ResolutionCreateToolbar2024 on prog eServiceSchemaVariableMapping.tcl to command ResolutionCreateToolbar2024
+;
+
+mod command ResolutionCreateToolbar2024
+	href 'emxCreate.jsp?type=type_ResolutionType2024&form=ResolutionCreateForm2024&nameField=auto&policy=ResolutionPolicy2024&vaultChooser=true&submitAction=treeContent'
+;
+
+31. menu 생성 후 add command
+add menu ResolutionToolbar2024
+	command ResolutionCreateToolbar2024
+	command AEFGenericDelete
+;
+add property menu_ResolutionToolbar2024 on prog eServiceSchemaVariableMapping.tcl to menu ResolutionToolbar2024
+;
+
+32. ResolutionCreateForm2024 생성
+del form ResolutionCreateForm2024;
+add form ResolutionCreateForm2024 web
+field
+	name resolutionNo
+	label 'emxFramework.label.resolutionNo'
+	bus '$<name>'
+	setting 'Field Type' basic
+	setting 'Input Type' textbox
+	setting 'Access Expression' false
+	setting 'Registered Suite' 'Framework'
+field
+	name description
+	label 'emxFramework.label.ParentDescription'
+	setting 'Field Type' program
+	setting 'program' project2024
+	setting 'function' showDes
+	setting Editable false
+	setting 'Registered Suite' 'Framework'
+field
+	name parentAssignees
+	label 'emxFramework.label.parentAssignees'
+	range '${COMMON_DIR}/emxIndentedTable.jsp?program=project2024:findPerson&table=PersonTable2024&selection=multiple&submitURL=../ResolutionDocSubmit.jsp'
+	setting 'Field Type' program
+	setting 'program' project2024
+	setting 'function' showAssignee
+	setting 'Update Program' project2024
+	setting 'Update Function' connectResolution
+	setting 'Registered Suite' 'Framework'
+field
+	name secondDescription
+	label 'emxFramework.label.description'
+	bus '$<description>'
+	setting 'Input Type' textarea
+	setting Editable true
+	setting Required true
+	setting 'Registered Suite' 'Framework'
+;
+add property form_ResolutionCreateForm2024 on prog eServiceSchemaVariableMapping.tcl to form ResolutionCreateForm2024
+;
+
+33. Resolution에서 만들 때 이름이 자동적으로 만들어지게 해주자
+add relationship ResolutionRel2024
+	description ResolutionRel2024
+	nothidden
+	preventduplicates
+	from
+		type Type2024
+		meaning Type2024
+		cardinality one
+		revision replicate
+		clone replicate
+	to
+		type ResolutionType2024
+		meaning ResolutionType2024
+		cardinality many
+		revision replicate
+		clone replicate
+;
+add property relationship_ResolutionRel2024 on prog eServiceSchemaVariableMapping.tcl to relationship ResolutionRel2024
+;
+
+34. policy 생성
+add policy ResolutionPolicy2024
+	description ResolutionPolicy2024
+	sequence '1,2,3,...'
+	store STORE
+	type ResolutionType2024
+	format all
+	defaultformat generic
+	state Create
+		version true
+		revision false
+		promote true
+		checkouthistory false
+		owner all
+	state Review
+		version true
+		revision false
+		promote true
+		checkouthistory false
+		owner read, show, viewform, checkout, modify, promote, demote
+	state Complete
+		version true
+		revision true
+		promote false
+		checkouthistory false
+		owner read, show, viewform, checkout, demote
+		public read, show, viewform, checkout, demote
+	property 'state_Create' value 'Create'
+	property 'state_Review' value 'Review'
+	property 'state_Complete' value 'Complete'
+;
+add property policy_ResolutionPolicy2024 on prog eServiceSchemaVariableMapping.tcl to policy ResolutionPolicy2024
+;
+
+35. Object 자동 생성
+add bus 'eService Object Generator' 'type_ResolutionType2024' ''
+	policy 'eService Object Generator'
+	vault 'eService Administration'
+	'eService Name Prefix' 'R-'
+	'eService Processing Time Limit' 60
+	'eService Retry Count' 1
+	'eService Retry Delay' 1000
+	'eService Safety Policy' policy_ResolutionPolicy2024
+	'eService Safety Vault' vault_eServiceProduction
+;
+
+add bus 'eService Number Generator' 'type_ResolutionType2024' ''
+	policy 'eService Object Generator'
+	vault 'eService Administration'
+	'eService Next Number' 000001
+;
+
+add connection 'eService Number Generator'
+	from 'eService Object Generator' 'type_ResolutionType2024' ''
+	to 'eService Number Generator' 'type_ResolutionType2024' ''
+;
+
+36. portal을 만들어보자
+각각의 channel 만들어주기
+add channel ResolutionPropertiesChannel2024
+	description ResolutionPropertiesChannel2024
+	command Properties2024
+;
+add property channel_ResolutionPropertiesChannel2024 on prog eServiceSchemaVariableMapping.tcl to channel ResolutionPropertiesChannel2024
+;
+
+add channel ResolutionAssigneesChannel2024
+	description ResolutionAssigneesChannel2024
+	command Assignees2024
+;
+add property channel_ResolutionAssigneesChannel2024 on prog eServiceSchemaVariableMapping.tcl to channel ResolutionAssigneesChannel2024
+;
+
+add channel ResolutionChannel2024
+	command Resolution2024
+;
+add property channel_ResolutionChannel2024 on prog eServiceSchemaVariableMapping.tcl to channel ResolutionChannel2024
+;
+
+37. portal 생성
+add portal Portal2024
+	description 'portal'
+	channel 'ResolutionPropertiesChannel2024', 'ResolutionAssigneesChannel2024'
+	channel 'ResolutionChannel2024'
+;
+add property portal_Portal2024 on prog eServiceSchemaVariableMapping.tcl to portal Portal2024
+;
+
+38. portal command 생성
+add command Portal2024
+	description Portal2024
+	label 'emxFramework.label.Portal2024'
+	href '${COMMON_DIR}/emxPortal.jsp?portal=Portal2024'
+;
+add property command_Portal2024 on prog eServiceSchemaVariableMapping.tcl to command Portal2024
+;
+
+39. menu에 href및 command추가
+mod menu type_Type2024
+	href '${COMMON_DIR}/emxPortal.jsp?portal=Portal2024'
+;
+
+40. Resolution에서 만들어진 화면 연결해주기
+add menu type_ResolutionType2024
+	description type_ResolutionType2024
+	label '$<name> [$<revision>]'
+	href '${COMMON_DIR}/emxForm.jsp?editLink=true&form=ResolutionDetailForm2024'
+	command AEFLifecycle
+	command AEFHistory
+;
+add property menu_type_Resolution2024 on prog eServiceSchemaVariableMapping.tcl to menu type_ResolutionType2024
+;
+
+mod menu type_ResolutionType2024
+	href '${COMMON_DIR}/emxForm.jsp?editLink=true&form=ResolutionDetailForm2024'
+;
+
+41. type_Resolution2024을 menu에 등록
+mod menu Tree add menu type_ResolutionType2024;
+
+mod form ResolutionDetailForm2024
+	field mod name 'description2024'
+	bus '$<to[ResolutionRel2024].from.description>'
+	       to[ResolutionRel2024].from.description
+;
+
+mod form ResolutionDetailForm2024
+	field mod name 'description2024'
+	remove setting 'Field Type'
+;
+
+mod form ResolutionDetailForm2024
+	field mod name 'parentDescription2024'
+	setting 'Update Function' changeParentDescription
+;
+
+42. ResolutionDetailForm2024 생성
+del form ResolutionDetailForm2024;
+add form ResolutionDetailForm2024 web
+field
+	name ResolutionNo
+	label 'emxFramework.label.ResolutionNo'
+	bus '$<name>'
+	setting 'Field Type' basic
+	setting 'Registered Suite' 'Framework'
+	setting Editable false
+field
+	name parentDescription2024
+	label 'emxFramework.label.description2024'
+	bus '$<to[ResolutionRel2024].from.description>'
+	setting 'Input Type' textarea
+	setting 'Registered Suite' 'Framework'
+	setting 'Update Program' project2024
+	setting 'Update Function' changeParentDescription
+	setting Required false
+field
+	name Assignee2024
+	label 'emxFramework.label.Assignee2024'
+	setting 'Field Type' program
+	setting 'Program' project2024
+	setting 'Function' parentAssignees
+field
+	name Originated2024
+	label 'emxFramework.label.Originated2024'
+	bus '$<Originated>'
+	setting 'Field Type' basic
+	setting 'Input Type' textbox
+	setting 'Registered Suite' 'Framework'
+	setting Required false
+field
+	name state
+	label 'emxFramework.label.State'
+	bus '$<current>'
+	setting 'Field Type' basic
+	setting 'Input Type' textbox
+	setting 'Registered Suite' 'Framework'
+	setting Required false
+field
+	name Complete2024
+	label 'emxFramework.label.Complete2024'
+	bus '$<attribute[Complete2024]>'
+	setting 'Input Type' text
+	setting 'Field Type' attribute
+	setting 'Admin Type' attribute_Complete2024
+	setting Editable true
+	setting 'Access Program' project2024
+	setting 'Access Function' reviewCheck
+field
+	name description2024
+	label 'emxFramework.label.description2024'
+	bus '$<description>'
+	setting 'Input Type' textarea
+	setting 'Update Program' project2024
+	setting 'Update Function' showDescription
+	setting 'Registered Suite' 'Framework'
+	setting Required false
+;
+add property form_ResolutionDetailForm2024 on prog eServiceSchemaVariableMapping.tcl to form ResolutionDetailForm2024
+;
+
+mod form ResolutionDetailForm2024
+	field delete name 'description2024'
+;
+
+field mod name 'Complete2024'
+mod form ResolutionDetailForm2024
+	field delete name 'Complete2024'
+;
+
+지시사항 review 되면 edit 불가
+삭제는 Create 상태일때 삭제 가능
+Assignee가 Create상태에서만 수정 가능
+Closed 여부 Y or N으로 Resolution 상태가 Complete 경우에만 수정 가능
+
+43. 조치사항 완료 시 State 수정 위한 트리거 생성
+mod policy ResolutionPolicy2024
+	state 'Review'
+	add trigger 
+	promote
+	action
+	emxTriggerManager input ResolutionPolicyAction2024
+;
+
+# policy trigger 삭제 시 
+mod policy ResolutionPolicy2024
+	state 'Review'
+	remove trigger promote action
+;
+
+add bus 'eService Trigger Program Parameters' ResolutionPolicyAction2024 changeComplete
+	policy 'eService Trigger Program Policy'
+	vault 'eService Administration'
+	'eService Program Name' project2024
+	'eService Method Name' changeComplete
+	'eService Sequence Number' 1
+	'eService Program Argument 1' ${OBJECTID}
+;
+promote bus 'eService Trigger Program Parameters' ResolutionPolicyAction2024 changeComplete
+;
+
+# 05-24
+44. ResolutionPolicy에서 State값을 다 가져와서 모두 Complete일 때 부모 Lifecycle이 Complete로 변경되게 하기
+mod policy ResolutionPolicy2024
+	state Review 
+	add trigger promote action emxTriggerManager input ValidationPromoteActionComplete
+;
+
+add bus 'eService Trigger Program Parameters' ValidationPromoteActionComplete validationPromoteActionComplete
+	policy 'eService Trigger Program Policy'
+	vault 'eService Administration'
+	'eService Program Name' project2024
+	'eService Method Name' validationPromoteActionComplete
+	'eService Sequence Number' 1
+	'eService Program Argument 1' ${OBJECTID}
+;
+promote bus 'eService Trigger Program Parameters' ValidationPromoteActionComplete validationPromoteActionComplete
+;
+
+45. Assignee가 Create 상태에서만 수정 가능하게 하기
+mod policy Policy2024
+	state Create
+	add trigger
+	promote
+	action
+	emxTriggerManager input PolicyValidation2024
+;
+
+add bus 'eService Trigger Program Parameters' PolicyValidation2024 validationAssignee
+policy 'eService Trigger Program Policy'
+	vault 'eService Administration'
+	'eService Program Name' project2024
+	'eService Method Name' validationAssignee
+	'eService Sequence Number' 1
+	'eService Program Argument 1' ${OBJECTID}
+;
+promote bus 'eService Trigger Program Parameters' PolicyValidation2024  validationAssignee
+;
+
+46. 지시사항에 담당자 배정 안될 시 promote 못하게 막자.
+
+47. Active일때만 Resolution에 Create가 생기게 해주자
+ResolutionToolbar2024
+
+아래에 command를 지우고 다시 추가해서 ㄱ
+
+add command ResolutionCreateToolbar2024
+	label 'emxFramework.label.ResolutionCreateToolbar2024'
+	href 'emxCreate.jsp?type=type_ResolutionType2024&form=ResolutionCreateForm2024&nameField=auto&policy=ResolutionPolicy2024&vaultChooser=true&submitAction=treeContent'
+	setting Image ${COMMON_DIR}/images/iconActionCreate.png
+	setting 'Access Program' project2024
+	setting 'Access Function' showActiveButton
+	setting 'Registered Suite' 'Framework'
+	setting 'Target Location' popup
+;
+add property command_ResolutionCreateToolbar2024 on prog eServiceSchemaVariableMapping.tcl to command ResolutionCreateToolbar2024
+;
+
+mod menu ResolutionToolbar2024
+	remove command AEFGenericDelete
+;
+add menu ResolutionToolbar2024
+	command ResolutionCreateToolbar2024
+	command AEFGenericDelete
+;
+add property menu_ResolutionToolbar2024 on prog eServiceSchemaVariableMapping.tcl to menu ResolutionToolbar2024
+;
+
+add menu ResolutionToolbar2024
+
+48. 코드를 적용시키고 Create를 하려고 하니 fromconnect에러가 뜬다. active에 fromconnect를 추가해주자
+mod policy Policy2024
+	state Active
+	version true
+	revision false
+	promote true
+	checkouthistory false
+	owner read, show, viewform, checkout, demote, promote, modify, fromconnect
+;
+
+49. Complete가 Y이면 지시사항도 Complete로 Auto Promote 시키기.
+
+50. 상태가 Create 시에만 수정이 가능하게 해야하니 Review, Complete에서 수정 못하게 
+	ResolutionPolicy2024 수정
+mod policy ResolutionPolicy2024
+	state Review
+	owner read, checkout, promote, demote, viewform, show, modify
+;
+
+mod policy ResolutionPolicy2024
+	state Complete
+	owner read, checkout, promote, demote, viewform, show
+;
+
+51. Assignee 테이블에 있는 인원이 전체인원이 아니라, 할당된 인원만 나오게
+table = PersonTable2024
+
+print table PersonTable2024 system;
+
+portal, channel 확인
+print channel ResolutionAssigneesChannel2024;
+
+print command Assignees2024 !hist;
+
+add command Assignees2024
+	label 'emxFramework.label.Assignees2024'
+	href '${COMMON_DIR}/emxIndentedTable.jsp?program=project2024:findRelatedPerson&table=PersonTable2024'
+	setting 'program' project2024
+	setting 'function' showPerson
+	setting 'Update Program' project2024
+	setting 'Update Function' changePerson
+	setting 'Registered Suite' 'Framework'
+	setting 'Target Location' content
+;
+add property command_Assignees2024 on prog eServiceSchemaVariableMapping.tcl to command Assignees2024
+;
+
+mod command Assignees2024
+	href '${COMMON_DIR}/emxIndentedTable.jsp?program=project2024:findRelatedPerson&table=PersonTable2024&postProcessURL=emxNavigatorContentLoad.jsp'
+;
+
+
+mod command Assignees2024
+	remove setting 'Update Program'
+	remove setting 'Update Function'
+;
+
+52. Delete기능 만들기
+새로운 command 만들어서 맨처음 toolbar에 붙이자
+mod menu Toolbar2024
+	add command deleteFunction
+;
+add command deleteFunction
+	description deleteFunction
+	label 'emxFramework.label.deleteFunction'
+	href '${COMMON_DIR}/deleteFunctionProcess.jsp'
+	alt 'emxFramework.label.deleteFunction'
+	setting 'Row Select' multi
+	setting Submit true
+	setting 'Target Location' listHidden
+	setting Image '${COMMON_DIR}/images/buttonDialogCancel.gif'
+	setting 'Confirm Message' 'emxFramework.GenericDelete.confirmMessage'
+;
+
+mod command deleteFunction
+	add setting 'Registered Suite' 'Framework'
+;
+
+mod policy Policy2024
+	state Active
+	owner read,modify,delete,checkout,promote,demote,fromconnect,fromdisconnect,viewform,show,toconnect,todisconnect
+;
+
+mod command Properties2024
+	href '${COMMON_DIR}/emxForm.jsp?editLink=true&form=OrderDetailForm2024&postProcessURL=informationSubitURL.jsp'
+;

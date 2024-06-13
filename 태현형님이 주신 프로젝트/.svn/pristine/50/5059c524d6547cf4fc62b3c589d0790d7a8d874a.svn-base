@@ -1,0 +1,71 @@
+<vu-lightbox
+  id="im-call-lightbox"
+  :class="{ 
+    isRightPanel: !!currentPanel,
+    actionBarClosed: !displayActionBar,
+    minimized: minimized,
+    backgroundImage: backgroundImage
+  }"
+  :show="true"
+  :title="labelArray.toString().replaceAll(',', ', ')"
+  :customSideActions="true"
+  :customActions="true"
+  :primaryActions="actions_array"
+  :sideActions="sideActions"
+  :disableCompass="true"
+  :panels="[panel]"
+  @click-members="togglePanel('members')"
+  @click-timeline="togglePanel('timeline')"
+  @close-panel-right="closePanel"
+  @close="confirmEndCall().then((result) => result && endCall())"
+  @click-list_at_top="userListAction('list_at_top')"
+  @click-list_at_right="userListAction('list_at_right')"
+  @click-remove_list="userListAction('remove_list')"
+  @click-add_list="userListAction('add_list')"
+  @click-remove_list_from_top="userListAction('remove_list_from_top')"
+  @click-add_list_at_top="userListAction('add_list_at_top')"
+  @click-display_action_bar="openActionBar"
+  @click-minimize="minimize(true)"
+>
+  <template v-slot:lightbox-content>
+    <!--<div
+      id="im-call-mask"
+      v-if="minimized"
+      @click="minimize(false, $event)"
+      @mouseover="hoverMask = true"
+      @mouseleave="hoverMask = false"
+    >
+      <span
+        class="fonticon fonticon-resize-fullscreen" 
+        v-show="hoverMask"
+      />
+    </div>-->
+
+    <im-call-content
+      :room="room"
+      :isRightPanel="!!currentPanel"
+      :showUserList="showUserList"
+      :userlist_at_top="currentListPosition=='top'"
+      :showSelfView="showSelfView"
+      :backgroundImage="backgroundImage"
+      :minimized="minimized"
+
+    />
+  </template>
+
+  <template v-slot:lightbox-panel-right>
+    <im-call-timeline 
+      v-show="currentPanelComponent=='im-call-timeline'"
+    />
+    <im-call-members 
+      v-show="currentPanelComponent=='im-call-members'"
+    />
+  </template>
+
+  <template v-slot:lightbox-bar__object-type>
+    <im-call-type
+      :logins="logins"
+    />
+  </template>
+
+</vu-lightbox>

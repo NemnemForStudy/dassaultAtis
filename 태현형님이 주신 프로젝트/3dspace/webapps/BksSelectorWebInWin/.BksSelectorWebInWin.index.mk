@@ -1,0 +1,10 @@
+m|FolderNGUX\BksSelectorWebInWin.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.1.23004|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\BksSelectorWebInWin\BksSelectorWebInWin.js|1672866761|4126
+s|FolderNGUX\BksSelectorWebInWin.mweb\src\BksSelectorWebInWin.js|1665652548|2778
+u|FolderNGUX\BksSelectorWebInWin.mweb\src\FolderSelectorWebInWin.js|1671798647|5897
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

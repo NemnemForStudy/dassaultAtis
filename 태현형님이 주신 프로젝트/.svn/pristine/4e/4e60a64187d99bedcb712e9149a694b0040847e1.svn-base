@@ -1,0 +1,15 @@
+m|VCXWebKernel\VCXWebStyles.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.3.23045|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\VCXWebStyles\VCXWebStyles.js|1676410188|6756
+s|VCXWebKernel\VCXWebStyles.mweb\src\VCXComponentStyle.js|1516013188|1182
+t|win_b64\webapps\VCXWebStyles\assets\styles\style_blue.json|1647692278|437
+s|VCXWebKernel\VCXWebStyles.mweb\src\assets\styles\style_blue.json|1516113449|437
+t|win_b64\webapps\VCXWebStyles\assets\styles\style_red.json|1647692278|434
+s|VCXWebKernel\VCXWebStyles.mweb\src\assets\styles\style_red.json|1516113439|434
+u|VCXWebKernel\VCXWebStyles.mweb\src\VCXModifiableStyle.js|1655201976|4748
+u|VCXWebKernel\VCXWebStyles.mweb\src\VCXStylesManager.js|1675837601|13563
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

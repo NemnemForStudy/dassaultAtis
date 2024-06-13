@@ -1,0 +1,98 @@
+{
+  "expandV2": {
+      "batch": {
+          "expands": [{
+                  "label": "ProgressiveExpand_For_Install_BoundingBox",
+                  "root": {
+                      "physical_id": ""
+                  },
+                  "filter": {
+                      "all": 1
+                  }
+              }
+          ]
+      },
+      "outputs": {
+          "select_object": ["physicalid", "ds6w:label"],
+          "hits": {
+              "predefined_computation": ["boundingbox"]
+          }
+      }
+  },
+  "publicVolumeFilterSpec": {
+      "rootID": "",
+      "rootAlias": "",
+      "specification": {
+          "title": "Filter.VolumeFilter.DisplayName",
+          "description": "",
+          "referencedObject": {
+              "identifier": ""
+          },
+          "filter": {
+              "combinationOfSpecification": "union",
+              "keepChildren": true,
+              "filterSpecifications": [{
+                      "filterCriteria": [{
+                              "criteriaType": "volume",
+                              "allVolumes": [{
+                                      "combination": "all",
+                                      "allVolumes": [{
+                                              "parameters": {
+                                                  "root_path_physicalid": [
+                                                      [
+                                                          ""
+                                                      ]
+                                                  ],
+                                                  "type": "box",
+                                                  "intersection_mode": "partly_in",
+                                                  "corner_min": [
+                                                      "0.0",
+                                                      "0.0",
+                                                      "0.0"
+                                                  ],
+                                                  "corner_max": [
+                                                      "0",
+                                                      "0",
+                                                      "0"
+                                                  ],
+                                                  "transformation_matrix": [
+                                                      1,
+                                                      0,
+                                                      0,
+                                                      0,
+                                                      1,
+                                                      0,
+                                                      0,
+                                                      0,
+                                                      1,
+                                                      0,
+                                                      0,
+                                                      0
+                                                  ]
+                                              },
+                                              "displayName": "Volume With Offset"
+                                          }
+                                      ]
+                                  }
+                              ]
+                          }
+                      ]
+                  }
+              ]
+          }
+      },
+      "applyFilter": 1,
+      "displayFilter": 0
+  },
+  "volumeFilter": {
+      "parameters": {
+          "root_path_physicalid": [[""]],
+          "type": "box",
+          "intersection_mode": "partly_in",
+          "corner_min": ["0.0", "0.0", "0.0"],
+          "corner_max": ["0", "0", "0"],
+          "transformation_matrix": [1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0]
+      },
+      "displayName": "Filter.VolumeFilter.DisplayName"
+  }
+}

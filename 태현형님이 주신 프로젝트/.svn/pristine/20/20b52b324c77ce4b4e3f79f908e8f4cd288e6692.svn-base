@@ -1,0 +1,10 @@
+m|MPFModels\MPFConstraintModel.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.1.22330|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\MPFConstraintModel\MPFConstraintModel.js|1669432464|2229
+s|MPFModels\MPFConstraintModel.mweb\src\ConstraintModel.js|1669417586|4980
+u|MPFModels\MPFConstraintModel.mweb\src\MPFConstraintModel.js|1669417586|0
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

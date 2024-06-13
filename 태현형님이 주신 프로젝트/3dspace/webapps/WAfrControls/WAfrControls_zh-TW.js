@@ -1,0 +1,1 @@
+define("DS/WAfrControls/WAfrControls_zh-TW",{});define("DS/WAfrControls/assets/nls/controls",{NLS_TaskProgressBarCloseButtonDefaultTooltip:"取消"});

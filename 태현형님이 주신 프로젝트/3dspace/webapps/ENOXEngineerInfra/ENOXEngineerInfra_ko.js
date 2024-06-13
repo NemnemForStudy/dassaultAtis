@@ -1,0 +1,1 @@
+define("DS/ENOXEngineerInfra/ENOXEngineerInfra_ko",{});define("DS/ENOXEngineerInfra/assets/nls/xAppCore",{"error.on.startup":"애플리케이션 시작 시 문제가 발생했습니다! 관리자에게 문의하십시오."});

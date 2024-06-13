@@ -1,0 +1,1 @@
+define("DS/NotificationAPI/NotificationAPI_de",{});define("DS/NotificationAPI/assets/nls/feed",{permissionBannerTitle:"Benachrichtigung über neue Nachrichten erhalten",permissionBannerText:"Desktop-Benachrichtigungen aktivieren"});

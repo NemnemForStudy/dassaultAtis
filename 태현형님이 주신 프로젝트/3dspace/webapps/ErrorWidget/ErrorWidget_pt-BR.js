@@ -1,0 +1,1 @@
+define("DS/ErrorWidget/ErrorWidget_pt-BR",{});define("DS/ErrorWidget/assets/nls/langEW",{"Server issue":"Não é possível realizar a comunicação com o servidor","Forbidden access":"Você não possui autorização de acesso ao servidor"});

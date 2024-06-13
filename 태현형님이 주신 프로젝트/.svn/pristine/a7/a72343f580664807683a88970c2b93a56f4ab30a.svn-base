@@ -1,0 +1,10 @@
+EXPAND 
+	T0.PLMID,
+	T0.PLM_ExternalID,
+	T1.PLMID,
+	T1.PLM_ExternalID	
+FROM 
+	DIFModeler01/DIFAttachedPresentation T0,
+	DIFModeler03/DIFIsAPresentationOf T1	
+FROM_ROOTS  [?1?]
+DEPTH=1;

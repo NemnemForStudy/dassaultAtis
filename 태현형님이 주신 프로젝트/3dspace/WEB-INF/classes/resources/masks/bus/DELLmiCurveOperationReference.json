@@ -1,0 +1,128 @@
+{
+    "Write": {
+        "attributes": [
+            {
+                "name": "type",
+                "status": "RO"
+            },
+            {
+                "name": "V_Name",
+                "status": "RW"
+            },
+            {
+                "name": "PLM_ExternalID",
+                "status": "RO"
+            },
+            {
+                "name": "revision",
+                "status": "RO"
+            },
+            {
+                "name": "V_description",
+                "status": "RW"
+            },
+            {
+                "name": "V_versionComment",
+                "status": "RW"
+            },
+            {
+                "name": "V_EstimatedTime",
+                "status": "RW"
+            },
+            {
+                "name": "V_MeasuredTime",
+                "status": "RW"
+            },
+            {
+                "name": "V_EstimatedTime_AddedValueRatio",
+                "status": "RW"
+            },
+            {
+                "name": "V_TimeMode",
+                "status": "RW"
+            },
+            {
+                "name": "V_FasteningRate",
+                "status": "RW"
+            },
+            {
+                "name": "V_Execution_template_name",
+                "status": "RW"
+            },
+            {
+                "name": "V_IsTimeProportionalToQty",
+                "status": "RW"
+            },
+            {
+                "name": "originated",
+                "status": "RO"
+            },
+            {
+                "name": "V_fromExternalID",
+                "status": "RO"
+            },
+            {
+                "name": "modified",
+                "status": "RO"
+            },
+            {
+                "name": "current",
+                "status": "RO"
+            },
+            {
+                "name": "policy",
+                "status": "RO"
+            },
+            {
+                "name": "owner",
+                "status": "RO"
+            },
+            {
+                "name": "organization",
+                "status": "RO"
+            },
+            {
+                "name": "project",
+                "status": "RO"
+            }
+        ]
+    },
+    "details": {
+        "attributes": {
+            "owner": {
+                "mandatory": true
+            },
+            "V_Name": {
+                "mandatory": true
+            },
+            "PLM_ExternalID": {
+                "forbiddenChar": "\\/:*?\"<>|#$@%,[]",
+                "mandatory": true
+            },
+            "V_TimeMode": {
+                "authorized_required": true,
+                "authorizedValues": [
+                    "EstimatedTime",
+                    "AnalysedTime",
+                    "SimulatedTime",
+                    "WorkInstruction",
+                    "UserDefinedTime",
+                    "MeasuredTime"
+                ]
+            },
+            "V_Execution_template_name": {
+                "authorized_required": true,
+                "authorizedValues": [
+                    "None",
+                    "Kitting",
+                    "Assembly",
+                    "Electrical Assembly",
+                    "Inspection",
+                    "Hydraulics Assembly",
+                    "Painting"
+                ]
+            }
+        }
+    },
+    "revision": "0"
+}

@@ -1,0 +1,1 @@
+define("DS/WebNoteWdg/WebNoteWdg_ru",{});define("DS/WebNoteWdg/assets/nls/webNote",{Title_html:"Название",typeText:"Введите текст",Font_html:"Шрифт",FontSize_html:"Размер шрифта",Small_html:"Маленький",Medium_html:"Средний",Big_html:"Большой"});

@@ -1,0 +1,17 @@
+{
+  "version": "1.0.0",
+  "summary": "Определяет, содержит ли строка другую строку.",
+  "description": "Символы в строке индексируются слева направо.<br>Индекс первого символа равен <doc-value translate=no>0</doc-value>, индекс последнего символа строки под названием <doc-value translate=no>stringName</doc-value> равен <doc-value translate=no>stringName.length - 1</doc-value>.<br>При поиске строк учитывается регистр.",
+  "dataPorts": {
+    "Input String": "ссылка на значение строки.",
+    "Searched String": "значение строки для поиска.",
+    "From Index": "целое число, представляющее индекс для начала поиска. Значение по умолчанию равно <doc-value translate=no>0</doc-value>.<br>Для значений <doc-idp-name translate=no>From Index</doc-idp-name> меньше <doc-value translate=no>0</doc-value> или больше длины <doc-idp-name translate=no>Input String</doc-idp-name> поиск начинается с индекса <doc-value translate=no>0</doc-value> и длины <doc-idp-name translate=no>Input String</doc-idp-name> соответственно.",
+    "Found Index": "индекс первого вхождения <doc-idp-name translate=no>Searched String</doc-idp-name> или <doc-value translate=no>-1</doc-value>, если это значение не найдено.<br>Пустая строка <doc-idp-name translate=no>Searched String</doc-idp-name> будет соответствовать любому индексу между <doc-value translate=no>0</doc-value> и длиной <doc-idp-name translate=no>Input String</doc-idp-name>."
+  },
+  "controlPorts": {
+    "In": "запускает выполнение блока.",
+    "True": "активируется, если строковое значение <doc-idp-name translate=no>Input String</doc-idp-name> содержит значение строки поиска <doc-idp-name translate=no>Searched String</doc-idp-name>.",
+    "False": "активируется, если строковое значение <doc-idp-name translate=no>строки ввода</doc-idp-name> не содержит значение строки поиска <doc-idp-name translate=no>Searched String</doc-idp-name>."
+  },
+  "example": null
+}

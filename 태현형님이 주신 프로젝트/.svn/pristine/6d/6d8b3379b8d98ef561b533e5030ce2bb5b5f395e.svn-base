@@ -1,0 +1,1 @@
+define("DS/NotificationAPI/NotificationAPI_pl",{});define("DS/NotificationAPI/assets/nls/feed",{permissionBannerTitle:"Otrzymuj powiadomienia o nowych wiadomościach",permissionBannerText:"Włącz powiadomienia na pulpicie"});

@@ -1,0 +1,25 @@
+<div class="Realized-activities-container">
+    <div class="Realized-activities">
+        <div class="Realized-activitues-header">
+        <div class="Realized-activities-chevron Realized-icon-class" id="activities-chevron-' + this.activityIdx + '">
+                <div>
+                <div class="Realized-action-icon-wrapper"><span class="fonticon fonticon-2x fonticon-expand-down" id={{@index}}></span></div>
+                </div>
+            </div>
+            <div class="Real-activities-counter"><span class="realized-counter"> {{RealizedactivityNls}}</span> <span class="realized-counter-num"> {{activityNum}} </span></div>
+        <div class="RealizedActivities-actions"></div>
+        <div class="RealizedActivities-activitiesMultisel"></div>
+        </div>
+        <div class="Realized-activity-content">
+            {{#each activities}}
+                <div class="Realized-activity-individual" id="Realized-activity-individual-{{id}}">
+                <!--div class="Realized-activity-name-container"><div class="act-chk-container"><input type="checkbox" class="chkbox-act hidden" id="act-chk-{{id}}"></div-->
+                <div class="Realized-activity-name-container"><div class="act-chk-container">{{#isValidForSelection id}} {{/isValidForSelection}}</div>
+                <div class="Realized-activity-name"> {{activityDesc}}</div></div>
+                <div class="Realized-activity-individual-details"> {{#getActivityDetails Details}}{{/getActivityDetails}}</div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,1 @@
+define("DS/ENODOUtilsServices/ENODOUtilsServices_cs",{});define("DS/ENODOUtilsServices/assets/nls/enodo_notifications",{error:{title:"Chyba",security_context_fail:"Požadavek serveru nelze odeslat : nepodařilo se načíst kontext zabezpečení."}});

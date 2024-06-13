@@ -1,0 +1,17 @@
+<div 
+  v-if="!$store.getters.isAccepted"
+  class="im-call-bar-item fonticon"
+>
+</div>
+<div 
+  v-else-if="rightTooltip"
+  class="im-call-bar-item fonticon"
+  v-tooltip.body.right="label"
+>
+</div>
+<div 
+  v-else
+  class="im-call-bar-item fonticon"
+  v-tooltip.body.top="label"
+>
+</div>

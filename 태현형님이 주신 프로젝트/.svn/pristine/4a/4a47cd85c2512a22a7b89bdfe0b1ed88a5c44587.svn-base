@@ -1,0 +1,1 @@
+define("DS/DMUComment/DMUComment_zh-TW",{});define("DS/DMUComment/assets/nls/DMUComment",{highlightCommentPrefix:"評論強調顯示",positionedCommentPrefix:"定位的評論",commentPrefix:"評論",commentCreationLabel:"選取一個點，一個標記或一些文字，以連結新的評論"});

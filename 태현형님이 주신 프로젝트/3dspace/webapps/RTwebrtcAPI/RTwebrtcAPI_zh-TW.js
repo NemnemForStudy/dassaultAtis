@@ -1,0 +1,1 @@
+define("DS/RTwebrtcAPI/RTwebrtcAPI_zh-TW",{});define("DS/RTwebrtcAPI/assets/nls/feed",{Call:"通話",notCompatible:"您目前的瀏覽器或裝置不支援此功能"});

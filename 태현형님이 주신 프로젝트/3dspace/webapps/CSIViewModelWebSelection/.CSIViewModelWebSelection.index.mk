@@ -1,0 +1,10 @@
+m|CSIViewModelWeb\CSIViewModelWebSelection.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.1.22302|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\CSIViewModelWebSelection\CSIViewModelWebSelection.js|1667006121|276
+s|CSIViewModelWeb\CSIViewModelWebSelection.mweb\src\CSIViewModelWebSelection.js|1463554956|0
+u|CSIViewModelWeb\CSIViewModelWebSelection.mweb\src\CSIViewModelWebSelectionObjectFactory.js|1661327851|442
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

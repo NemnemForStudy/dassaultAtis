@@ -1,0 +1,369 @@
+<?xml version="1.0" ?>
+
+<!-- CATIA Cyber Systems - System Modeler -->
+<!-- COPYRIGHT DASSAULT SYSTEMES 2021, All rights reserved -->
+
+<Package xmlns="PLMDictionaryUnified"
+	Name="SystemModeler"
+    ModelerType="Top"
+    Uuid="da08b1f6-7c29-11eb-9439-0242ac130002"
+    UseNames="ERCoreModeler"
+	Architecture="Web"
+    CustomerExposition="Programmer">
+	
+	<Comment>last update 2022-05-04</Comment>
+
+	<!-- SystemModel -->
+	<Class Name="SystemModel"
+		Uuid="55ac91cc-7c2c-11eb-9439-0242ac130002"
+		Abstract="No"
+		CustomerExposition="Programmer"
+		SuperName="BusinessType"
+		Specializable="No"
+		CustomerExtensible="No"
+		Searchable="Yes"
+		Abbreviation="sysmod"> 
+		
+		<Property Name="IconName" Value="I_SystemModel"/>
+		<Property Name="NewMajorRevisionAvailability" Value="Yes"/>
+		<Property Name="ChangeMaturityAvailability" Value="Yes"/>
+		<Property Name="DeleteAvailability" Value="Yes"/>
+		<Property Name="LockUnlockAvailability" Value="Yes"/>
+		<Property Name="TransferOwnershipAvailability" Value="Yes"/>
+		<Property Name="DuplicateAvailability" Value="Yes"/>
+		<Property Name="EditPropertiesAvailability" Value="Yes"/>
+		<Property Name="SaveAsNewAvailability" Value="Yes"/>
+		<Property Name="EvolutionAvailability" Value="Yes"/>
+		<Property Name="NewMinorRevisionAvailability"  Value="No"/>
+		<Property Name="ChangeCollaborativeSpaceAvailability"  Value="Yes"/>
+		<Property Name="ObjectNature" Value="Independent"/>
+		<Property Name="RelationNature"  Value="No"/>
+		<Property Name="IterationAvailability"  Value="No"/>
+		<Property Name="CarryPointers"  Value="No"/>
+		<Property Name="CarryStreams"  Value="Yes"/>
+		<Property Name="AggregatesComponents"  Value="Yes"/>
+		<Property Name="IsSynchronizable"  Value="No"/>
+		<Property Name="ShareBetweenProjectsAvailability"  Value="No"/>
+		<Property Name="ManageAccessAvailability"  Value="No"/>
+		
+		<Simple Name="Title"
+			Uuid="0434d97c-7d07-11eb-9439-0242ac130002"
+			Type="String"
+			MaxLength="256"
+			MultiValuated="No"
+			Protection="Free">
+		</Simple>
+
+		<Simple Name="UUID"
+			Uuid="ba6a5254-b17c-11eb-8529-0242ac130003"
+			Type="String"
+			MaxLength="256"
+			MultiValuated="No"
+			Protection="ExternalIN">
+		</Simple>
+		
+		<Simple Name="SystemContentType"
+			Uuid="4965b5f2-d13b-42d0-8e5b-547b4ea7df2a"
+			Type="String"
+			MultiValuated="No"
+			ResetOnCloning="No"
+			ResetOnNewVersion="No"
+			Protection="External"
+			DefaultValue="CATIA Magic"
+			Faceted="Yes"		
+			UIAccess="ReadOnly" >
+			
+			<Property Name="SIXW" Value="ds6w:kind"/>
+		</Simple>
+		
+		<Simple Name="SystemContentVersion"
+			Uuid="74118f77-9372-44ea-9606-7c22c1587c5c"
+			Type="String"
+			MaxLength="256"
+			Protection="ExternalIN"
+			UIAccess="ReadOnly">
+		</Simple>
+
+		<!-- Export-Exchange-->
+		<Method ImplementationType="None">
+			<RealizeMethodType href="ExportScope.meth#ExportScope"/>
+		</Method>
+
+	</Class>
+	
+	<!-- SystemEntity -->
+	<Class Name="SystemEntity"
+		Uuid="fbf6a6ac-7d09-11eb-9439-0242ac130002"
+		Abstract="No"
+		CustomerExposition="Programmer"
+		SuperName="BusinessType"
+		Specializable="No"
+		CustomerExtensible="No"
+		Searchable="No"
+		Abbreviation="sysent">
+		
+		<Property Name="IconName" Value="I_SystemEntity"/>
+		<Property Name="NewMajorRevisionAvailability" Value="Yes"/>
+		<Property Name="ChangeMaturityAvailability" Value="Yes"/>
+		<Property Name="DeleteAvailability" Value="Yes"/>
+		<Property Name="LockUnlockAvailability" Value="Yes"/>
+		<Property Name="TransferOwnershipAvailability" Value="Yes"/>
+		<Property Name="DuplicateAvailability" Value="Yes"/>
+		<Property Name="EditPropertiesAvailability" Value="Yes"/>
+		<Property Name="SaveAsNewAvailability" Value="Yes"/>
+		<Property Name="EvolutionAvailability" Value="Yes"/>
+		<Property Name="NewMinorRevisionAvailability"  Value="No"/>
+		<Property Name="ChangeCollaborativeSpaceAvailability"  Value="Yes"/>
+		<Property Name="ObjectNature" Value="Independent"/>
+		<Property Name="RelationNature"  Value="No"/>
+		<Property Name="IterationAvailability"  Value="No"/>
+		<Property Name="CarryPointers"  Value="No"/>
+		<Property Name="CarryStreams"  Value="Yes"/>
+		<Property Name="AggregatesComponents"  Value="Yes"/>
+		<Property Name="IsSynchronizable"  Value="No"/>
+		<Property Name="ShareBetweenProjectsAvailability"  Value="No"/>
+		<Property Name="ManageAccessAvailability"  Value="No"/>
+		
+		<Simple Name="Title"
+			Uuid="16791c7e-7d0c-11eb-9439-0242ac130002"
+			Type="String"
+			MaxLength="256"
+			MultiValuated="No"
+			Protection="Free">
+		</Simple>
+
+		<Simple Name="UUID"
+			Uuid="ce1391a8-b17c-11eb-8529-0242ac130003"
+			Type="String"
+			MaxLength="256"
+			MultiValuated="No"
+			Protection="ExternalIN">
+		</Simple>
+
+		<Simple Name="Type"
+			Uuid="ef3df706-8d7d-11eb-8dcd-0242ac130003"
+			Type="String"
+			MaxLength="256"
+			MultiValuated="No"
+			Protection="ExternalIN">
+		</Simple>
+
+		<Simple Name="Content"
+			Uuid="e7cbcf6a-a665-11eb-bcbc-0242ac130002"
+			Type="Clob"
+			MultiValuated="No"
+			Protection="Internal">
+		</Simple>
+
+		<Simple Name="ContainedElementUUIDs"
+			Uuid="6fec1220-a665-11eb-bcbc-0242ac130002"
+			Type="String"
+			MultiValuated="Yes"
+			Protection="ExternalIN">
+		</Simple>
+		
+		<!-- Export-Exchange-->
+		<Method ImplementationType="None">
+			<RealizeMethodType href="ExportScope.meth#ExportScope"/>
+		</Method>
+		
+	</Class>
+
+	<!-- SystemBinaryContainer -->
+	<Class Name="SystemBinaryContainer"
+		Uuid="1e29f654-a666-11eb-bcbc-0242ac130002"
+		Abstract="No"
+		CustomerExposition="Programmer"
+		SuperName="BusinessType"
+		Specializable="No"
+		CustomerExtensible="No"
+		Searchable="No"
+		Abbreviation="sysbin">
+	
+		<Property Name="IconName" Value="I_SystemBinaryContainer"/>
+		<Property Name="NewMajorRevisionAvailability" Value="Yes"/>
+		<Property Name="ChangeMaturityAvailability" Value="Yes"/>
+		<Property Name="DeleteAvailability" Value="Yes"/>
+		<Property Name="LockUnlockAvailability" Value="Yes"/>
+		<Property Name="TransferOwnershipAvailability" Value="Yes"/>
+		<Property Name="DuplicateAvailability" Value="Yes"/>
+		<Property Name="EditPropertiesAvailability" Value="Yes"/>
+		<Property Name="SaveAsNewAvailability" Value="Yes"/>
+		<Property Name="EvolutionAvailability" Value="Yes"/>
+		<Property Name="NewMinorRevisionAvailability"  Value="No"/>
+		<Property Name="ChangeCollaborativeSpaceAvailability"  Value="Yes"/>
+		<Property Name="ObjectNature" Value="Independent"/>
+		<Property Name="RelationNature"  Value="No"/>
+		<Property Name="IterationAvailability"  Value="No"/>
+		<Property Name="CarryPointers"  Value="No"/>
+		<Property Name="CarryStreams"  Value="Yes"/>
+		<Property Name="AggregatesComponents"  Value="Yes"/>
+		<Property Name="IsSynchronizable"  Value="No"/>
+		<Property Name="ShareBetweenProjectsAvailability"  Value="No"/>
+		<Property Name="ManageAccessAvailability"  Value="No"/>
+		
+		<Simple Name="Title"
+			Uuid="24739128-a666-11eb-bcbc-0242ac130002"
+			Type="String"
+			MaxLength="256"
+			MultiValuated="No"
+			Protection="Free">
+		</Simple>
+		
+		<Simple Name="UUID"
+			Uuid="ef5cdf2c-b17c-11eb-8529-0242ac130003"
+			Type="String"
+			MaxLength="256"
+			MultiValuated="No"
+			Protection="ExternalIN">
+		</Simple>
+		
+		<Simple Name="Type"
+			Uuid="f7d70759-6e71-4093-9ffc-544552b82648"
+			Type="String"
+			MaxLength="256"
+			MultiValuated="No"
+			Protection="ExternalIN">
+		</Simple>
+
+		<Simple Name="Content"
+			Uuid="287b15b6-a666-11eb-bcbc-0242ac130002"
+			Type="Clob"
+			MultiValuated="No"
+			Protection="Internal">
+		</Simple>
+
+		<!-- Export-Exchange-->
+		<Method ImplementationType="None">
+			<RealizeMethodType href="ExportScope.meth#ExportScope"/>
+		</Method>
+		
+	</Class>
+	
+	<!-- SystemModelUsage -->
+	<RelationClass Name="SystemModelUsage"
+		Uuid="76992c21-a96a-4ed2-9e42-7c0e258a938a"
+		Abstract="No"
+		SuperName="RelationType"
+		CustomerExposition="Programmer"
+		Specializable="No"
+		CustomerExtensible="No">
+		
+		<Property Name="Searchable" Value="Yes"/>
+		<Property Name="NewMajorRevisionAvailability" Value="No"/>
+		<Property Name="ChangeMaturityAvailability" Value="No"/>
+		<Property Name="DeleteAvailability" Value="Yes"/>
+		<Property Name="LockUnlockAvailability" Value="Yes"/>
+		<Property Name="TransferOwnershipAvailability" Value="Yes"/>
+		<Property Name="DuplicateAvailability" Value="No"/>
+		<Property Name="EditPropertiesAvailability" Value="Yes"/>
+		<Property Name="SaveAsNewAvailability" Value="No"/>
+		<Property Name="EvolutionAvailability" Value="No"/>
+		<Property Name="NewMinorRevisionAvailability"  Value="No"/>
+		<Property Name="ObjectNature" Value="No"/>
+		<Property Name="RelationNature"  Value="Pointer"/>
+		<Property Name="IterationAvailability"  Value="No"/>
+		<Property Name="CarryPointers"  Value="No"/>
+		<Property Name="CarryStreams"  Value="No"/>
+		<Property Name="AggregatesComponents"  Value="No"/>
+		<Property Name="IsSynchronizable"  Value="No"/>
+		<Property Name="ChangeCollaborativeSpaceAvailability"  Value="No"/>
+		<Property Name="ShareBetweenProjectsAvailability"  Value="No"/>
+		<Property Name="ManageAccessAvailability"  Value="No"/>
+
+		<SubClause Name="from"
+				TargetName="SystemModel" 
+				minorrevision="replicate"
+				clone="replicate" 
+				propagatemodify="No" 
+				propagateconnection="No" 
+				cardinality="Many"/>
+
+		<SubClause Name="to"
+				TargetName="SystemModel" 
+				minorrevision="none"
+				clone="none"
+				propagatemodify="No" 
+				propagateconnection="No" 
+				cardinality="Many"/>
+				
+		<Simple Name="Tag"
+			Uuid="6a60fde8-662e-48f1-999b-9df7f0931fb2"
+			Type="String"
+			MaxLength="256"
+			MultiValuated="No"
+			Protection="ExternalIN">
+		</Simple>
+
+		<!-- Export-Exchange-->
+		<Method ImplementationType="None">
+			<RealizeMethodType href="ExportScope.meth#ExportScope"/>
+		</Method>
+
+   </RelationClass>
+	
+	<!-- SystemBinary -->
+	<RelationClass Name="SystemBinary"
+		Uuid="6ec42b0e-a669-11eb-bcbc-0242ac130002"
+		Abstract="No"
+		SuperName="RelationType"
+		CustomerExposition="Programmer"
+		Specializable="No"
+		CustomerExtensible="No">
+		
+		<Property Name="NewMajorRevisionAvailability" Value="No"/>
+		<Property Name="Searchable" Value="No"/>
+		<Property Name="ChangeMaturityAvailability" Value="No"/>
+		<Property Name="DeleteAvailability" Value="Yes"/>
+		<Property Name="LockUnlockAvailability" Value="Yes"/>
+		<Property Name="TransferOwnershipAvailability" Value="Yes"/>
+		<Property Name="DuplicateAvailability" Value="No"/>
+		<Property Name="EditPropertiesAvailability" Value="Yes"/>
+		<Property Name="SaveAsNewAvailability" Value="No"/>
+		<Property Name="EvolutionAvailability" Value="No"/>
+		<Property Name="NewMinorRevisionAvailability"  Value="No"/>
+		<Property Name="ObjectNature" Value="No"/>
+		<Property Name="RelationNature"  Value="Pointer"/>
+		<Property Name="IterationAvailability"  Value="No"/>
+		<Property Name="CarryPointers"  Value="No"/>
+		<Property Name="CarryStreams"  Value="No"/>
+		<Property Name="AggregatesComponents"  Value="No"/>
+		<Property Name="IsSynchronizable"  Value="No"/>
+		<Property Name="ChangeCollaborativeSpaceAvailability"  Value="No"/>
+		<Property Name="ShareBetweenProjectsAvailability"  Value="No"/>
+		<Property Name="ManageAccessAvailability"  Value="No"/>
+
+		<SubClause Name="from"
+				TargetName="SystemEntity" 
+				minorrevision="replicate"
+				clone="replicate" 
+				propagatemodify="No" 
+				propagateconnection="No" 
+				cardinality="Many"/>
+
+		<SubClause Name="from"
+				TargetName="SystemModel" 
+				minorrevision="replicate"
+				clone="replicate" 
+				propagatemodify="No" 
+				propagateconnection="No" 
+				cardinality="One"/>
+
+		<SubClause Name="to"
+				TargetName="SystemBinaryContainer" 
+				minorrevision="none"
+				clone="none"
+				propagatemodify="No" 
+				propagateconnection="No" 
+				cardinality="Many"/>
+
+		<!-- Export-Exchange-->
+		<Method ImplementationType="None">
+			<RealizeMethodType href="ExportScope.meth#ExportScope"/>
+		</Method>
+
+   </RelationClass>
+
+</Package>
+
+

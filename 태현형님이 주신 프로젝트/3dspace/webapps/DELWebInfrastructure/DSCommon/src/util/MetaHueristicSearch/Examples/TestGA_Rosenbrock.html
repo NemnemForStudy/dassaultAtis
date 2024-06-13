@@ -1,0 +1,54 @@
+<!-- Author: qif  -->
+<html>
+<head> 
+<script src="../MetaHueristicSearch.js"></script> 
+<script src="TestGA_Sphere.js"></script>
+<script src="TestGA_Rosenbrock.js"></script>
+<script src="../../../../../JavascriptMVC-3.3/can/lib/jquery.1.9.1.js"></script>
+<script src="../../../../../jQueryUI/js/jquery-ui-1.11.2.js"></script>
+</head> 
+<body>
+    Parent Selection:
+    <input type="radio" name="parentSelectionRule" value="Random" checked="checked">Random
+    <input type="radio" name="parentSelectionRule" value="EvalProportional">Eval. Proportional 
+    <input type="checkbox" id="selectionRepetationAllowed">Repetation Allowed</br>
+   
+    Crossover and Mutation: 
+    <input type="radio" name="crossoverRule" value="Even" checked="checked">Evenly
+    <input type="radio" name="crossoverRule" value="EvalProportional">Eval. Proportional</br> 
+ 
+  <button type="button" id="go_btn">Go</button></br>
+<div id="out"></div> 
+<script>   
+$( "#go_btn" ).click(function() { 
+    var GA_Tester = new TestGA_Rosenbrock();
+    GA_Tester.debug_flag = true;
+    GA_Tester.parentSelectionRule =  $('input:radio[name=parentSelectionRule]:checked').val();
+     GA_Tester.repetationAllowed =  $('#selectionRepetationAllowed').is(':checked');
+    GA_Tester.crossoverRule =  $('input:radio[name=crossoverRule]:checked').val();
+    
+    var s = document.getElementById("out"); 
+    s.innerHTML += GA_Tester.getInfo() + "<br/> "  
+    // record start time
+    for(var ii=0; ii<15; ii++) {
+        var startTime = new Date(); 
+        var maxIteration = 5000, populationSize = 50, offspringSize = 30, mutationProbability = 0.4; 
+        var Gens = GA_Tester.run(maxIteration, populationSize, offspringSize, mutationProbability); 
+        var sols = Gens[Gens.length-1];
+        s.innerHTML += /*"f("+sols[0].val[0]+"," +  sols[0].val[1] +"," +  sols[0].val[2]+")="+*/sols[0].eval + "<br/>"; 
+        var endTime = new Date(); 
+        // time difference in ms
+        var timeDiff = endTime - startTime;
+        // strip the ms
+        timeDiff /= 1000;
+
+        // get seconds (Original had 'round' which incorrectly counts 0:28, 0:29, 1:30 ... 1:59, 1:0) 
+        console.log("elapsed time (insecond)="+timeDiff);
+
+        console_out_solutions(sols);
+    }
+}); 
+</script>
+ 
+</body>
+</html>

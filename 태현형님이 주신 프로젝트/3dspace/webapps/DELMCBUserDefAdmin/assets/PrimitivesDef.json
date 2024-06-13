@@ -1,0 +1,357 @@
+[
+  {
+    "id": "expandEBOM",
+    "xclass": "ExpandPrimitives",
+    "arg2": "TEXT",
+    "input1": "Product",
+    "returntype": "Product",
+    "pattern1": "^[0-9_A-Z]+(,\\s*([0-9_A-Z]+|([0-9]+\\[[0-9]+\\])))*$",
+    "pattern2": "^[0-9]+$"
+  },
+  {
+    "id": "I3DexpandEBOM",
+    "xclass": "DELPPRExpandPrimitive",
+    "arg2": "TEXT",
+    "returntype": "Product",
+    "pattern1": "^[0-9_A-Z]+(,\\s*([0-9_A-Z]+|([0-9]+\\[[0-9]+\\])))*$",
+    "pattern2": "^[0-9]+$"
+  },
+  {
+    "id": "expandMBOM",
+    "xclass": "ExpandPrimitives",
+    "arg2": "TEXT",
+    "input1": "Process",
+    "returntype": "Process",
+    "pattern1": "^[0-9_A-Z]+(,\\s*([0-9_A-Z]+|([0-9]+\\[[0-9]+\\])))*$",
+    "pattern2": "^[0-9]+$"
+  },
+  {
+    "id": "I3DexpandMBOM",
+    "xclass": "DELPPRExpandPrimitive",
+    "arg2": "TEXT",
+    "input1": "Process",
+    "returntype": "Process",
+    "pattern1": "^[0-9_A-Z]+(,\\s*([0-9_A-Z]+|([0-9]+\\[[0-9]+\\])))*$",
+    "pattern2": "^[0-9]+$"
+  },
+  {
+    "id": "expandSystem",
+    "xclass": "ExpandPrimitives",
+    "arg2": "TEXT",
+    "input1": "System,Workplan",
+    "returntype": "IdentifyFromInput",
+    "pattern1": "^[0-9_A-Z]+(,\\s*([0-9_A-Z]+|([0-9]+\\[[0-9]+\\])))*$",
+    "pattern2": "^[0-9]+$"
+  },
+  {
+    "id": "expandResource",
+    "xclass": "ExpandPrimitives",
+    "arg2": "TEXT",
+    "input1": "Resource",
+    "returntype": "Resource",
+    "pattern1": "^[0-9_A-Z]+(,\\s*([0-9_A-Z]+|([0-9]+\\[[0-9]+\\])))*$",
+    "pattern2": "^[0-9]+$"
+  },
+  {
+    "id": "expandMultiRoot",
+    "xclass": "ExpandPrimitives",
+    "arg2": "TEXT",
+    "input1": "Any",
+    "returntype": "IdentifyFromInput",
+    "pattern1": "^[0-9_A-Z]+(,\\s*([0-9_A-Z]+|([0-9]+\\[[0-9]+\\])))*$",
+    "pattern2": "^[0-9]+$"
+  },
+  {
+    "id": "keepRoot",
+    "xclass": "ExpandPrimitives",
+    "returntype": "IdentifyFromInput",
+    "pattern1": "^[0-9_A-Z]+(,\\s*([0-9_A-Z]+|([0-9]+\\[[0-9]+\\])))*$"
+  },
+  {
+    "id": "I3DRetrieveContext",
+    "xclass": "PrimitiveContext3D",
+    "arg2": "NAVSET",
+    "arg3": "NAVSET",
+    "input1": "Product",
+    "input2": "Process",
+    "input3": "Process",
+    "returntype": "Array",
+    "pattern1": "^[0-9_A-Z]+(,\\s*([0-9_A-Z]+|([0-9]+\\[[0-9]+\\])))*$",
+    "pattern2": "^[0-9_A-Z]+(,\\s*([0-9_A-Z]+|([0-9]+\\[[0-9]+\\])))*$",
+    "pattern3": "^[0-9_A-Z]+(,\\s*([0-9_A-Z]+|([0-9]+\\[[0-9]+\\])))*$"
+  },
+  {
+    "id": "getFirstUpperScopeFromMBOMToEBOM",
+    "xclass": "PrimitiveScope",
+    "input1": "Process",
+    "returntype": "Array",
+    "pattern1": "^[0-9_A-Z]+(,\\s*([0-9_A-Z]+|([0-9]+\\[[0-9]+\\])))*$"
+  },
+  {
+    "id": "navigateFromMBOMToEBOM",
+    "xclass": "NavigationPrimitives",
+    "arg2": "TEXT",
+    "input1": "Process",
+    "returntype": "Product",
+    "pattern1": "^[0-9_A-Z]+(,\\s*([0-9_A-Z]+|([0-9]+\\[[0-9]+\\])))*$",
+    "pattern2": "^\\[(true|false)(,(\\s)*(true|false)){2}\\]$"
+  },
+  {
+    "id": "navigateFromEBOMToMBOM",
+    "xclass": "NavigationPrimitives",
+    "arg2": "TEXT",
+    "input1": "Product",
+    "returntype": "Process",
+    "pattern1": "^[0-9_A-Z]+(,\\s*([0-9_A-Z]+|([0-9]+\\[[0-9]+\\])))*$",
+    "pattern2": "^\\[(true|false)(,(\\s)*(true|false)){2}\\]$"
+  },
+  {
+    "id": "fastenersAnalysisBothSides",
+    "xclass": "FsxNavigationPrimitives",
+    "input1": "Product",
+    "returntype": "Product",
+    "pattern1": "^[0-9_A-Z]+(,\\s*([0-9_A-Z]+|([0-9]+\\[[0-9]+\\])))*$"
+  },
+  {
+    "id": "fastenersAnalysisBothSidesLegacy",
+    "xclass": "NavigationPrimitives",
+    "input1": "Product",
+    "returntype": "Product",
+    "pattern1": "^[0-9_A-Z]+(,\\s*([0-9_A-Z]+|([0-9]+\\[[0-9]+\\])))*$"
+  },
+  {
+    "id": "getEBOMThroughMBOMAssignmentFilter",
+    "xclass": "NavigationPrimitives",
+    "arg2": "TEXT",
+    "input1": "Process",
+    "returntype": "Product",
+    "pattern1": "^[0-9_A-Z]+(,\\s*([0-9_A-Z]+|([0-9]+\\[[0-9]+\\])))*$",
+    "pattern2": "^(true|false)$"
+  },
+  {
+    "id": "getMBOMPredecessors",
+    "xclass": "NavigationPrimitives",
+    "arg2": "TEXT",
+    "input1": "Process",
+    "returntype": "Process",
+    "pattern1": "^[0-9_A-Z]+(,\\s*([0-9_A-Z]+|([0-9]+\\[[0-9]+\\])))*$",
+    "pattern2": "^[0-9]+$"
+  },
+  {
+    "id": "getResultingProductFromMBOM",
+    "xclass": "NavigationPrimitives",
+    "returntype": "Product",
+    "input1": "Process",
+    "pattern1": "^[0-9_A-Z]+(,\\s*([0-9_A-Z]+|([0-9]+\\[[0-9]+\\])))*$"
+  },
+  {
+    "id": "navigateFromWorkPlanToMBOM",
+    "xclass": "NavigationPrimitives",
+    "arg2": "TEXT",
+    "input1": "Workplan",
+    "returntype": "Process",
+    "pattern1": "^[0-9_A-Z]+(,\\s*([0-9_A-Z]+|([0-9]+\\[[0-9]+\\])))*$",
+    "pattern2": "^\\[(true|false)(,(\\s)*(true|false))\\]$"
+  },
+  {
+    "id": "navigateFromMBOMToWorkPlan",
+    "xclass": "NavigationPrimitives",
+    "arg2": "TEXT",
+    "input1": "Process",
+    "returntype": "Workplan",
+    "pattern1": "^[0-9_A-Z]+(,\\s*([0-9_A-Z]+|([0-9]+\\[[0-9]+\\])))*$",
+    "pattern2": "^\\[(true|false)(,(\\s)*(true|false))\\]$"
+  },
+  {
+    "id": "navigateFromProcessToMBOM",
+    "xclass": "NavigationPrimitives",
+    "arg2": "TEXT",
+    "input1": "System,Workplan",
+    "returntype": "Process",
+    "pattern1": "^[0-9_A-Z]+(,\\s*([0-9_A-Z]+|([0-9]+\\[[0-9]+\\])))*$",
+    "pattern2": "^\\[(true|false)(,(\\s)*(true|false))\\]$"
+  },
+  {
+    "id": "I3DnavigateFromProcessToMBOM",
+    "xclass": "I3DNavigationPrimitives",
+    "arg2": "TEXT",
+    "input1": "System,Workplan",
+    "returntype": "Process",
+    "pattern1": "^[0-9_A-Z]+(,\\s*([0-9_A-Z]+|([0-9]+\\[[0-9]+\\])))*$",
+    "pattern2": "^\\[(true|false)(,(\\s)*(true|false))\\]$"
+  },
+  {
+    "id": "navigateFromMBOMToSystem",
+    "xclass": "NavigationPrimitives",
+    "arg2": "TEXT",
+    "input1": "Process",
+    "returntype": "System",
+    "pattern1": "^[0-9_A-Z]+(,\\s*([0-9_A-Z]+|([0-9]+\\[[0-9]+\\])))*$",
+    "pattern2": "^\\[(true|false)(,(\\s)*(true|false))\\]$"
+  },
+  {
+    "id": "navigateFromSystemToWorkPlan",
+    "xclass": "NavigationPrimitives",
+    "arg2": "TEXT",
+    "input1": "System",
+    "returntype": "Workplan",
+    "pattern1": "^[0-9_A-Z]+(,\\s*([0-9_A-Z]+|([0-9]+\\[[0-9]+\\])))*$",
+    "pattern2": "^\\[(true|false)(,(\\s)*(true|false))\\]$"
+  },
+  {
+    "id": "navigateFromWorkPlanToSystem",
+    "xclass": "NavigationPrimitives",
+    "arg2": "TEXT",
+    "input1": "Workplan",
+    "returntype": "System",
+    "pattern1": "^[0-9_A-Z]+(,\\s*([0-9_A-Z]+|([0-9]+\\[[0-9]+\\])))*$",
+    "pattern2": "^\\[(true|false)(,(\\s)*(true|false))\\]$"
+  },
+  {
+    "id": "navigateFromProcessToResource",
+    "xclass": "NavigationPrimitives",
+    "arg2": "TEXT",
+    "input1": "System,Workplan",
+    "returntype": "Resource",
+    "pattern1": "^[0-9_A-Z]+(,\\s*([0-9_A-Z]+|([0-9]+\\[[0-9]+\\])))*$",
+    "pattern2": "^\\[(true|false)(,(\\s)*(true|false)){3}\\]$"
+  },
+  {
+    "id": "navigateFromResourceToSystem",
+    "xclass": "NavigationPrimitives",
+    "arg2": "TEXT",
+    "input1": "Resource",
+    "returntype": "System",
+    "pattern1": "^[0-9_A-Z]+(,\\s*([0-9_A-Z]+|([0-9]+\\[[0-9]+\\])))*$",
+    "pattern2": "^\\[(true|false)(,(\\s)*(true|false)){3}\\]$"
+  },
+  {
+    "id": "navigateFromResourceToWorkplan",
+    "xclass": "NavigationPrimitives",
+    "arg2": "TEXT",
+    "input1": "Resource",
+    "returntype": "Workplan",
+    "pattern1": "^[0-9_A-Z]+(,\\s*([0-9_A-Z]+|([0-9]+\\[[0-9]+\\])))*$",
+    "pattern2": "^\\[(true|false)(,(\\s)*(true|false)){3}\\]$"
+  },
+  {
+    "id": "getAllProcessPredecessors",
+    "xclass": "NavigationPrimitives",
+    "input1": "System,Workplan",
+    "returntype": "IdentifyFromInput",
+    "pattern1": "^[0-9_A-Z]+(,\\s*([0-9_A-Z]+|([0-9]+\\[[0-9]+\\])))*$"
+  },
+  {
+    "id": "getCapableRscLinkInContextFromProcess",
+    "xclass": "NavigationPrimitives",
+    "arg2": "TEXT",
+    "input1": "System,Workplan",
+    "returntype": "Resource",
+    "pattern1": "^[0-9_A-Z]+(,\\s*([0-9_A-Z]+|([0-9]+\\[[0-9]+\\])))*$",
+    "pattern2": "^\\[(true|false)(,(\\s)*(true|false))\\]$"
+  },
+  {
+    "id": "getAssetRscLinkFromWorkplan",
+    "xclass": "NavigationPrimitives",
+    "arg2": "TEXT",
+    "input1": "Workplan",
+    "returntype": "Resource",
+    "pattern1": "^[0-9_A-Z]+(,\\s*([0-9_A-Z]+|([0-9]+\\[[0-9]+\\])))*$",
+    "pattern2": "^\\[(true|false)(,(\\s)*(true|false))\\]$"
+  },
+  {
+    "id": "getCapableRscLinkFromProcess",
+    "xclass": "NavigationPrimitives",
+    "arg2": "TEXT",
+    "input1": "System,Workplan",
+    "returntype": "capableResource",
+    "pattern1": "^[0-9_A-Z]+(,\\s*([0-9_A-Z]+|([0-9]+\\[[0-9]+\\])))*$",
+    "pattern2": "^\\[(true|false)(,(\\s)*(true|false)){2}\\]$"
+  },
+  {
+    "id": "ModifyContextWithProximityVolume",
+    "xclass": "DELPPRFilterPrimitive",
+    "arg2": "TEXT",
+    "arg3": "TEXT",
+    "input1": "Product",
+    "returntype": "None",
+    "pattern1": "^[0-9_A-Z]+(,\\s*([0-9_A-Z]+|([0-9]+\\[[0-9]+\\])))*$",
+    "pattern2": "^[0-9]+$",
+    "pattern3": "^[A-za-b]+$"
+  },
+  {
+    "id": "ModifyContextWithBoundingBoxVolume",
+    "xclass": "DELPPRFilterPrimitive",
+    "arg2": "TEXT",
+    "arg3": "TEXT",
+    "input1": "Product",
+    "returntype": "None",
+    "pattern1": "^[0-9_A-Z]+(,\\s*([0-9_A-Z]+|([0-9]+\\[[0-9]+\\])))*$",
+    "pattern2": "^[0-9]+$",
+    "pattern3": "^[A-za-b]+$"
+  },
+  {
+    "id": "compact",
+    "xclass": "FilterServices",
+    "input1": "Any",
+    "returntype": "IdentifyFromInput",
+    "pattern1": "^[0-9_A-Z]+(,\\s*([0-9_A-Z]+|([0-9]+\\[[0-9]+\\])))*$"
+  },
+  {
+    "id": "merge",
+    "xclass": "FilterServices",
+    "input1": "Any",
+    "returntype": "IdentifyFromInput",
+    "pattern1": "^[0-9_A-Z]+(,\\s*([0-9_A-Z]+|([0-9]+\\[[0-9]+\\])))+$"
+  },
+  {
+    "id": "cutLeafOccurrences",
+    "xclass": "FilterServices",
+    "input1": "Any",
+    "returntype": "IdentifyFromInput",
+    "pattern1": "^[0-9_A-Z]+(,\\s*([0-9_A-Z]+|([0-9]+\\[[0-9]+\\])))*$"
+  },
+  {
+    "id": "cutOccurrences",
+    "xclass": "FilterServices",
+    "arg2": "TEXT",
+    "input1": "Any",
+    "returntype": "IdentifyFromInput",
+    "pattern1": "^[0-9_A-Z]+(,\\s*([0-9_A-Z]+|([0-9]+\\[[0-9]+\\])))*$",
+    "pattern2": "[\\S]+"
+  },
+  {
+    "id": "removeOccurrences",
+    "xclass": "FilterServices",
+    "arg2": "TEXT",
+    "input1": "Any",
+    "returntype": "IdentifyFromInput",
+    "pattern1": "^[0-9_A-Z]+(,\\s*([0-9_A-Z]+|([0-9]+\\[[0-9]+\\])))*$",
+    "pattern2": "[\\S]+"
+  },
+  {
+    "id": "insert",
+    "xclass": "FilterServices",
+    "arg2": "NAVSET",
+    "input1": "Any",
+    "input2": "Any",
+    "returntype": "IdentifyFromInput",
+    "pattern1": "^[0-9_A-Z]+(,\\s*([0-9_A-Z]+|([0-9]+\\[[0-9]+\\])))*$",
+    "pattern2": "^[0-9_A-Z]+(,\\s*([0-9_A-Z]+|([0-9]+\\[[0-9]+\\])))*$"
+  },
+  {
+    "id": "filterOnLeaves",
+    "xclass": "FilterServices",
+    "arg2": "TEXT",
+    "input1": "Any",
+    "returntype": "IdentifyFromInput",
+    "pattern1": "^[0-9_A-Z]+(,\\s*([0-9_A-Z]+|([0-9]+\\[[0-9]+\\])))*$",
+    "pattern2": "[\\S]+"
+  },
+  {
+    "id": "Open",
+    "returntype": "None",
+    "input1": "Any",
+    "pattern1": "^[0-9_A-Z]+(,\\s*([0-9_A-Z]+|([0-9]+\\[[0-9]+\\])))*$"
+  }
+]

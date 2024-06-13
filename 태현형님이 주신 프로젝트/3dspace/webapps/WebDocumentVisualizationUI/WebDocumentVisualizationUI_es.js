@@ -1,0 +1,1 @@
+define("DS/WebDocumentVisualizationUI/WebDocumentVisualizationUI_es",{});define("DS/WebDocumentVisualizationUI/assets/nls/WebDocumentVisualizationUI",{bookmarksPanel:{title:"Marcadores",expandOrCollapseAll:"Alternar Expandir y Contraer todo"}});

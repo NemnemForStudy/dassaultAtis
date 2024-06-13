@@ -1,0 +1,1 @@
+define("DS/RTPresenceAPI/RTPresenceAPI_zh-TW",{});define("DS/RTPresenceAPI/assets/nls/feed",{Contact:"聯絡人"});

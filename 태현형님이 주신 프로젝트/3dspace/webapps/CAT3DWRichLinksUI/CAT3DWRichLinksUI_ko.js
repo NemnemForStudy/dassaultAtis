@@ -1,0 +1,1 @@
+define("DS/CAT3DWRichLinksUI/CAT3DWRichLinksUI_ko",{});define("DS/CAT3DWRichLinksUI/assets/nls/CAT3DWLinkFullHtmlView",{authorPrep:"사용자",communityPrep:"위치"});define("DS/CAT3DWRichLinksUI/assets/nls/CAT3DWLinkPlaceholderHtmlView",{processingMsg:"콘텐츠 로드 중..."});define("DS/CAT3DWRichLinksUI/assets/nls/CAT3DWRichLinkHtmlView",{authorPrep:"-",communityPrep:":"});

@@ -1,0 +1,1 @@
+define("DS/DELWeb3DUtils/DELWeb3DUtils_fr",{});define("DS/DELWeb3DUtils/assets/nls/Messages",{"Warn.Timeout.Message":"La demande de service Web a expiré, veuillez augmenter le délai ou réessayer ultérieurement"});

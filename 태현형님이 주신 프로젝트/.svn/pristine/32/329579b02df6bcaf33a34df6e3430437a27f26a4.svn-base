@@ -1,0 +1,1 @@
+define("DS/ENOXModelListView/ENOXModelListView_en",{});define("DS/ENOXModelListView/assets/nls/ModelListView",{_collapse_content:"Collapse Content",_expand_content:"Expand Content",_groupByAction:"Group",_color:"Color",_model:"Model",_action:"Action",_dataGridView:"Data Grid View",_tileView:"Tile View",_thumbnailView:"Thumbnail View",_largeTileView:"Large Tile View"});

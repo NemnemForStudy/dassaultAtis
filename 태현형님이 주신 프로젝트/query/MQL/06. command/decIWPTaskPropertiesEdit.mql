@@ -1,0 +1,33 @@
+################################################################################################
+# Created by jonghunlee
+# Create Date : 2023. 08. 10
+# Admin Type : command
+# Name : decIWPTaskPropertiesEdit
+################################################################################################
+
+#del command 'decIWPTaskPropertiesEdit';
+add command 'decIWPTaskPropertiesEdit'
+    description "Edit Project Task Properties"
+    label       ""
+    href        "${COMMON_DIR}/emxForm.jsp?mode=edit&form=decPMCProjectIWPTaskViewForm&formHeader=emxProgramCentral.Common.Edit&PrinterFriendly=true&HelpMarker=emxhelpwbstaskedit&findMxLink=false&submitAction=doNothing&portalCmdName=PMCWBS&Export=false&showTabHeader=true&postProcessURL=../programcentral/emxProjectManagementUtil.jsp?mode=refreshAfterEdit"
+    alt         "emxProgramCentral.Button.Edit"
+    code        ""
+    setting    'Access Function'         "canEditIWPTaskProperties"
+    setting    'Access Program'          "emxTask"
+    setting    'Image'                   "${COMMON_DIR}/images/iconActionEdit.png"
+    setting    'Registered Suite'        "ProgramCentral"
+    setting    'Submit'                  "true"
+    setting    'Target Location'         "self"
+    property    'application'        value "ProgramManagementBase"
+    property    'installed date'     value "06-01-2023"
+    property    'installer'          value "ENOVIAEngineering"
+    property    'original name'      value "decIWPTaskPropertiesEdit"
+    property    'version'            value "R424.HF2"
+;
+add property 'command_decIWPTaskPropertiesEdit' on prog eServiceSchemaVariableMapping.tcl to command 'decIWPTaskPropertiesEdit';
+
+mod command decIWPTaskPropertiesEdit
+	add setting 'hasAccess' 'PIM,AWP,WFP'
+    add setting    'Access Function'         "canEditIWPTaskProperties"
+    add setting    'Access Program'          "emxTask"
+;

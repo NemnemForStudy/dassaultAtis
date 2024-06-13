@@ -1,0 +1,58 @@
+### 230418 Created by CMG
+
+#delete menu decManagerDesk;
+
+add menu decManagerDesk
+ label  "emxFramework.Menu.decManagerDesk"
+ command decDeskCodeMaster
+ command decDeskTableMaster
+ property "installer" value "ENOVIAEngineering"  
+ property "application" value "Framework"  
+ property "original name" value "decManagerDesk"  
+;
+mod  menu "My Enovia" add menu decManagerDesk;
+mod  menu "My Desk" add menu decManagerDesk;
+
+# Moved by hslee on 2023.06.09
+mod menu decManagerDesk add command decDailyLoginStatusCommand
+;
+# Moved by hslee on 2023.06.09
+mod menu decManagerDesk add command decDeskTableMaster
+;
+# Moved by hslee on 2023.06.09
+#mod menu decManagerDesk add command decTableMasterCommand
+;
+
+# Modified by hslee on 2023.06.09
+mod menu decManagerDesk
+	add command decKeyQtyReportMgmtCmd
+;
+
+# Modified by thok on 2023.06.29
+mod menu decManagerDesk
+	add command decRequestList
+;
+
+# Modified by hslee on 2023.07.26
+mod menu decManagerDesk
+	add setting 'Licensed Product' 'ENO_PGE_TP'
+;
+
+# Modified by chomingi on 2023.08.16
+mod menu decManagerDesk
+	add command decDocumentInterfaceLogView
+;
+
+# Modified by hslee on 2023.09.11
+mod menu decManagerDesk
+	remove command decGetDeliverableTest
+;
+
+mod menu decManagerDesk
+	add setting   'Access Expression'   'context.user.isassigned[decSystemAdmin]'  ;
+;
+
+# Modified by hslee on 2023.09.14
+mod menu decManagerDesk
+	add command decVieMyCompanyMemberLink
+;

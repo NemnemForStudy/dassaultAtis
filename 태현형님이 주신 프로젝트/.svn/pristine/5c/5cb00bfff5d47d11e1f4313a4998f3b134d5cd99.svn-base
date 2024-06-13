@@ -1,0 +1,1 @@
+define("DS/NotificationManager/NotificationManager_ja",{});define("DS/NotificationManager/assets/nls/feed",{openInNewTab:"新しいタブで開く",close:"閉じる"});

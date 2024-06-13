@@ -1,0 +1,146 @@
+{
+  "example": {
+    "objectReferences": [
+      {
+        "source": "$3DSpace",
+        "type": "CreateAssembly",
+        "identifier": "MfgItemRefID1",
+        "relativePath": "resource/v1/dsmfg/dsmfg:MfgItem/MfgItemRefID1"
+      }
+    ],
+    "searchCriteria": {
+      "title": "My title",
+      "type": "My type",
+      "name": "My name",
+      "description": "My description",
+      "revision": "My revision",
+      "state": "My state",
+      "owner": "My owner",
+      "organization": "My organization",
+      "collabspace": "My collabspace"
+    },
+    "navigateTo": [
+      "dsmfg:MfgItemInstance"
+    ]
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "objectReferences": {
+          "type": "array",
+          "description": "List of Manufacturing Item objectReferences and number of entries passed is limited to 10. <br>  Note: The request payload 'objectReferences' could also be alised as 'mfgItems' to be compatiable with previous version",
+          "items": {
+            "type": "object",
+            "properties": {
+              "source": {
+                "type": "string",
+                "example": "$3DSpace"
+              },
+              "type": {
+                "type": "string",
+                "example": "CreateAssembly"
+              },
+              "identifier": {
+                "type": "string",
+                "example": "MfgItemRefID1"
+              },
+              "relativePath": {
+                "type": "string",
+                "example": "resource/v1/dsmfg/dsmfg:MfgItem/MfgItemRefID1"
+              }
+            }
+          }
+        },
+        "searchCriteria": {
+          "type": "object",
+          "description": "Attributes supported is limited to attributes defined in  default mask dsmfg:MfgItemMask.Default. The Value of the attribute also supports the wild character * search as well.",
+          "properties": {
+            "title": {
+              "type": "string",
+              "example": "My title",
+              "description": "Object title value"
+            },
+            "type": {
+              "type": "string",
+              "example": "My type",
+              "description": "Object type value"
+            },
+            "name": {
+              "type": "string",
+              "example": "My name",
+              "description": "Object name value"
+            },
+            "description": {
+              "type": "string",
+              "example": "My description",
+              "description": "Object description value"
+            },
+            "revision": {
+              "type": "string",
+              "example": "My revision",
+              "description": "Object revision value"
+            },
+            "state": {
+              "type": "string",
+              "example": "My state",
+              "description": "Object state value"
+            },
+            "owner": {
+              "type": "string",
+              "example": "My owner",
+              "description": "Object owner value"
+            },
+            "organization": {
+              "type": "string",
+              "example": "My organization",
+              "description": "Object organization value"
+            },
+            "collabspace": {
+              "type": "string",
+              "example": "My collabspace",
+              "description": "Object collabspace value"
+            }
+          }
+        },
+        "navigateTo": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "example": [
+            "dsmfg:MfgItemInstance"
+          ],
+          "description": "specify requested type"
+        }
+      }
+    },
+    {
+      "properties": {
+        "mfgItems": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "source": {
+                "type": "string",
+                "example": "$3DSpace"
+              },
+              "type": {
+                "type": "string",
+                "example": "CreateAssembly"
+              },
+              "identifier": {
+                "type": "string",
+                "example": "MfgItemRefID1"
+              },
+              "relativePath": {
+                "type": "string",
+                "example": "resource/v1/dsmfg/dsmfg:MfgItem/MfgItemRefID1"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

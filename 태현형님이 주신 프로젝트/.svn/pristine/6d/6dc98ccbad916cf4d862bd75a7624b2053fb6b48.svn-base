@@ -1,0 +1,1 @@
+define("DS/FeedReaderWdg/FeedReaderWdg_zh",{});define("DS/FeedReaderWdg/assets/nls/feed",{loading:"正在加载",placeHolderEnterFeed:"输入一个信息源 URL",submitFeedBtn:"添加",Title_html:"信息源标题",Url_html:"信息源 URL",View_html:"查看",errorURL:"发生错误。请尝试其他信息源 URL。",emptyFeedWarning:"此信息源中无新闻。",goToWebsite:"转至网站",details:"详细信息",shareArticle:"共享文章"});

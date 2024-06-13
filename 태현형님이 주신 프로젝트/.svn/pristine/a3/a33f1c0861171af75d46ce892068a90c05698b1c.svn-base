@@ -1,0 +1,86 @@
+{
+    "dseng:EngItem": {
+        "isPublic":true,
+        "kindOf": "root",
+        "beType": "type_VPMReference",
+        "patchCSRF":true,
+        "search":true,
+        "contentLinks": ["dseng:EngInstance", "dseng:MakeFrom", "dseng:Alternate"],
+        "extensionLinks": [ "dseng:EnterpriseReference"
+                           ,"dseno:EnterpriseAttributes"
+                           ,"dslc:changeControl"
+                           ,"dscfg:Configured"
+                           ,"dsxcad:PCBPhysicalComponent"
+                           ,"dsxcad:PCB3DPackage"
+                           ,"dsxcad:PCBPackageWrap"
+                           ,"dsxcad:CBDBoard"
+                           ,"dsxcad:CBDPanel"
+                           ,"dsxcad:CBDAssembly"],
+        "attributeMappingClass": "com.dassault_systemes.enovia.xapps.dseng.V1.dictionaries.dsengEngItemAttributeDictionary",
+        "cestamp":true,
+        "customizationSupport":true,
+        "optionCheck" : {
+        	"modify"      : true,
+        	"produce"     : true,
+        	"navigate"    : false
+        }
+    },
+    "dseng:EngInstance": {
+        "isPublic":true,
+        "kindOf": "content",
+        "beType": "relationship_VPMInstance",
+        "patchCSRF":true,
+        "extensionLinks": ["dscfg:Filterable"],
+        "attributeMappingClass": "com.dassault_systemes.enovia.xapps.dseng.V1.dictionaries.dsengEngInstanceAttributeDictionary",
+        "cestamp":true,
+        "customizationSupport":true,
+        "optionCheck" : {
+        	"modify"      : true,
+        	"produce"     : true,
+        	"navigate"    : false
+        }
+    },
+    "dseng:EnterpriseReference": {
+        "isPublic":true,
+        "kindOf": "extension",
+        "beType": "interface_EnterpriseExtension",
+        "patchCSRF":true,
+        "defaultMask": "dsmveng:EnterpriseReference.Details",
+        "attributeMappingClass": "com.dassault_systemes.enovia.xapps.dseng.V1.dictionaries.dsengEnterpriseReferenceAttributeDictionary",
+        "optionCheck" : {
+        	"modify"      : true,
+        	"produce"     : true,
+        	"navigate"    : false
+        }
+    },
+    "dseng:position": {
+        "isPublic":true,
+        "kindOf": "extension",
+        "beType": "virtual_PositionMatrix",
+        "patchCSRF":true,
+        "defaultMask": "dsmveng:EngInstanceMask.Position",
+        "implementationClass": "com.dassault_systemes.enovia.xapps.dseng.V1.implementations.InstancePositionMatrixService",
+        "optionCheck" : {
+        	"modify"      : true,
+        	"produce"     : true,
+        	"navigate"    : false
+        }
+    },
+    "dseng:Alternate": {
+        "isPublic":true,
+        "kindOf": "content",
+        "beType": "type_AlternateReference",
+        "patchCSRF":true,
+        "cestamp":true,
+        "defaultMask": "dsmveng:AlternateMask.Default",
+        "customizationSupport":true,
+        "optionCheck" : {
+            "modify"      : true,
+            "produce"     : true,
+            "navigate"    : false
+        },
+        "publicResourceURI": "/resources/v1/modeler/dseng/dseng:EngItem/{pid}/dseng:Alternate/{pid}"
+    }
+}
+
+

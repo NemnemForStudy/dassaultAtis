@@ -1,0 +1,1 @@
+define("DS/DELWebCommonCmds/DELWebCommonCmds_en",{});define("DS/DELWebCommonCmds/assets/nls/DELWeb3DFilterCmd",{"Dialog.Title":"Confirmation","Dialog.FilterCancelled.Message":"Add filter cancelled, do you want to add root object without filter?","Dialog.okButtonText":"OK","Dialog.koButtonText":"Cancel"});

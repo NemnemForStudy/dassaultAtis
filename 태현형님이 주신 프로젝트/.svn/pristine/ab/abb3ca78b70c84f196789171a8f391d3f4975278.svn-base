@@ -1,0 +1,22 @@
+################################################################################################
+# Create By jhlee : 2023. 06. 23
+# Admin Type : trigger
+# Name : TypedecCWPTaskModifyAttributeCheck
+################################################################################################
+#del bus 'eService Trigger Program Parameters' 'TypedecCWPTaskModifyAttributeCheck' 'insertChangeHistory';
+add bus 'eService Trigger Program Parameters' 'TypedecCWPTaskModifyAttributeCheck' 'insertChangeHistory'
+    Vault 'eService Administration'
+    Policy 'eService Trigger Program Policy'
+    owner 'creator'
+    current 'Active'
+    Description ''
+    'eService Sequence Number' '1'
+    'eService Program Argument 1' '${OBJECTID}'
+    'eService Program Argument 2' '${ATTRNAME}'
+    'eService Program Argument 3' '${ATTRVALUE}'
+    'eService Program Argument 4' '${NEWATTRVALUE}'
+    'eService Method Name' insertChangeHistory
+    'eService Program Name' emxTask
+    'eService Error Type' Error
+    'eService Run In Background' FALSE
+;

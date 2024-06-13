@@ -1,0 +1,1 @@
+define("DS/ApplicationFrame/ApplicationFrame_zh-TW",{});define("DS/ApplicationFrame/assets/nls/ApplicationFrameActionBar",{hideActionBar:"隱藏動作列",showActionBar:"顯示動作列"});

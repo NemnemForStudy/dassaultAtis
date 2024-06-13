@@ -1,0 +1,10 @@
+m|DELPPWModules\DELPPWInsertCmdModule.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.1.22344|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\DELPPWInsertCmdModule\DELPPWInsertCmdModule.js|1670641171|8419
+s|DELPPWModules\DELPPWInsertCmdModule.mweb\src\InsertCmdModule.js|1670510011|21457
+u|DELPPWModules\DELPPWInsertCmdModule.mweb\src\InsertUI.js|1662655521|14690
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

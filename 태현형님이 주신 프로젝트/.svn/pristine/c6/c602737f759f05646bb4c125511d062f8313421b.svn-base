@@ -1,0 +1,1 @@
+define("DS/CAT3DAnnotationWidget/CAT3DAnnotationWidget_de",{});define("DS/CAT3DAnnotationWidget/assets/nls/CAT3DAnnotationWidget",{customApp:"App anpassen",prefs:"Voreinstellungen",difAnnotSet:"Anmerkungssets öffnen"});

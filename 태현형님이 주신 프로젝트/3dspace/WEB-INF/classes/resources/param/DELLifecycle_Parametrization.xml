@@ -1,0 +1,43 @@
+<?xml version="1.0" ?>
+<OOTBParameterization>
+	<Domain id="DELLifecycleCouplingManagement"> 
+		<Parameter id="DELLifecycleCouplingParam_MBOM" implementation="com.dassault_systemes.delmia.lifecycle.param.impl.DELLifecycleOtbParameterImpl">
+			<Argument id="typeSelect" type="string" input="comboboxmultiselect" default="CreateAssembly,Fasten" maxLength="123">
+				<Value id="Provide"/>
+				<Value id="CreateAssembly"/>
+				<Value id="Fasten"/>
+				<Value id="ElementaryEndItem"/>
+				<Value id="RemoveMaterial"/>
+				<Value id="Predrill"/>
+				<Value id="Drill"/>
+				<Value id="NoDrill"/>
+				<Value id="ContinuousProcessProvide"/>
+				<Value id="ContinuousProcessCreateMaterial"/>
+				<Value id="Transform"/>
+				<Value id="CreateKit"/>
+				<Value id="Installation"/>
+				<Value id="ServicePart"/>
+				<Value id="ServiceKit"/>
+				<Value id="ServiceAssembly"/>
+				<Value id="Machining"/>
+				<Value id="Marking"/>
+				<Value id="Split"/>
+				<Value id="Beveling"/>
+				<Value id="Cutting"/>
+				<Value id="Grinding"/>
+			</Argument>
+			<Family id="Rules">
+				<Argument id="ResultingProduct" type="boolean" input="checkbox" default="Disabled"/>
+				<Argument id="SpecDoc" type="boolean" input="checkbox" default="Disabled"/>
+				<Argument id="ChildTransform" type="boolean" input="checkbox" default="Disabled"/>
+			</Family>
+			<Family id="Commands">
+				<Argument id="Revise" type="boolean" input="checkbox" default="Disabled"/>
+				<Argument id="Change Status" type="boolean" input="checkbox" default="Disabled"/>
+				<Argument id="Duplicate" type="boolean" input="checkbox" default="Disabled"/>
+				<Argument id="Delete" type="boolean" input="checkbox" default="Disabled"/>
+				<Argument id="NewBranch" type="boolean" input="checkbox" default="Disabled"/>
+			</Family>
+		</Parameter>
+	</Domain>
+</OOTBParameterization>

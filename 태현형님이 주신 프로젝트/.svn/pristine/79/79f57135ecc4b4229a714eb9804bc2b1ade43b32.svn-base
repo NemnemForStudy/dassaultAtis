@@ -1,0 +1,1 @@
+define("DS/CATWebUXCVS/CATWebUXCVS_ja",{});define("DS/CATWebUXCVS/assets/nls/CATWebUXCVS",{valStateChange:{dlgTitle:"検証",closeBtn:"閉じる",inProgress:"進行中",passed:"成功",failed:"失敗"}});

@@ -1,0 +1,213 @@
+<div class="Realized-activities-container">
+    <div class="Realized-activities">
+        <div class="Realized-activitues-header">
+            <div class="Realized-activities-chevron Realized-icon-class" id="activities-chevron-' + this.activityIdx + '">
+                <div>
+                    <div class="Realized-action-icon-wrapper"><span class="fonticon fonticon-2x fonticon-expand-down" id={{@index}}></span></div>
+                </div>
+            </div>
+            <div class="Real-activities-counter"><span class="realized-counter"> {{RealizedactivityNls}}</span> <span class="realized-counter-num"> {{activityNum}} </span></div>
+            <div class="RealizedActivities-activitiesMultisel"></div>
+        </div>
+        <div class="Realized-activity-content">
+            {{#ifGreater this.sameWhereActivites}}
+                <div class="realized-activity-same-as-where">
+                {{#each this.sameWhereActivites}}
+                    {{#ifborderclass this.Details id false @index}}{{/ifborderclass}}
+                    <div class="realized-activity-info-container">
+                        <div class="Realized-activity-name-container">
+                            <div class="act-chk-container">{{#isMultiSelAvailable id}} {{/isMultiSelAvailable}}</div>
+                            <div class="Realized-activity-name"> {{this.activityDesc}}</div>
+                        </div>
+                        <div class="Realized-activity-individual-details"> 
+                            <div class="realized-activity-before-after-object">
+                                {{#if this.Details.BeforeExists}}
+                                <div class="Realized-activity-Before">
+                                    <div class="Realized-activity-Before-Grammer">{{this.Details.BeforeGrammar}}</div>
+                                    <div class="Activity-box Accesstrue">
+										{{#ifDeleted this.Details.Before.objectType}}
+                                        <div class="Realized-activity-Before-icon-div">
+                                            <img class="Realized-activity-Before-icon" src={{this.Details.Before.icon}} />
+                                        </div>
+										{{/ifDeleted}}
+                                        <div class="Realized-activity-desc-Before">{{this.Details.Before.title}}</div>
+                                        <div class="Realized-activity-revision-Before">{{this.Details.Before.revision}}</div>
+                                        {{#if this.Details.Before.instanceName}}
+                                        <div class="Realized-activity-desc-Before">({{this.Details.Before.instanceName}})</div>
+                                        {{/if}}
+										{{#ifDeleted this.Details.Before.objectType}}
+                                        <div class="Realized-activity-action-open fonticon fonticon-2x fonticon-down-open" id="Realized-activity-action-open-{{this.Details.Before.id}}"></div>
+										{{/ifDeleted}}
+                                    </div>
+                                </div>
+                                {{/if}}
+                                {{#if this.Details.AfterExists}}
+                                    <div class="Realized-activity-After">
+                                        <div class="Realized-activity-After-Grammar">{{this.Details.AfterGrammar}}</div>
+                                        {{#if this.Details.AfterMaturity}}
+                                        <div class="Realized-activity-After-Maturity">{{this.Details.AfterMaturity}}</div>
+                                        {{else}}
+                                        <div class="Activity-box Accesstrue">
+											{{#ifDeleted this.Details.After.objectType}}
+                                            <div class="Realized-activity-After-icon-div">
+                                                <img class="Realized-activity-After-icon" src={{this.Details.After.icon}} />
+                                            </div>
+											{{/ifDeleted}}
+                                            <div class="Realized-activity-desc-After">{{this.Details.After.title}}</div>
+                                            <div class="Realized-activity-revision-After">{{this.Details.After.revision}}</div>
+                                            {{#if this.Details.After.instanceName}}
+                                            <div class="Realized-activity-desc-After">({{this.Details.After.instanceName}})</div>
+                                            {{/if}}
+											{{#ifDeleted this.Details.After.objectType}}
+                                            <div class="Realized-activity-action-open fonticon fonticon-2x fonticon-down-open" id="Realized-activity-action-open-{{this.Details.After.id}}"></div>
+											{{/ifDeleted}}
+                                        </div>
+                                        {{/if}}
+                                    </div>
+                                {{/if}}
+                            </div>
+                        </div>
+                        {{#unless this.Details.sameAsPrev}} 
+                        <div class="realized-activity-flowdown-info">
+                            <div class="Realized-flowdown-info-text-1 ">
+                                <div class="Realized-samewhere-flowdown-status-{{@index}} flowdown-status-container">
+                                    <span class="selected-proposed-label">{{../this.flowdownStatusTitle}}</span>
+                                    <div class="samewhere-status-{{@index}} status-combo-box" id="{{id}}"></div>
+                                    {{#if this.Details.isTransferred}}
+                                        <span class="fonticon fonticon-attention attention-superscript" title="{{this.Details.transferredText}}"></span>
+                                    {{/if}}
+                                    <!--span class="samewhere-status-action-{{@index}} context-actions-container">
+                                        <span class="action-icon-wrapper">
+                                            <span class="flowdown-status-dropdown fonticon fonticon-2x fonticon-down-open" id="flowdown-status-{{id}}"></span>
+                                        </span>
+                                    </span-->
+                                </div>
+                            </div>
+                            <div class="Realized-flowdown-info-text-1">
+                                <div class="realized-samewhere-flowdown-selected-proposed-{{@index}} selected-proposed-container" id="realized-samewhere-{{@index}}">
+                                    {{#fillSelectedProposed this.Details id @index}}{{/fillSelectedProposed}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {{#if this.Details.launchREAccess}}
+                    <div class="Realized-activity-individual-action realized-activity-action-icon"> 
+                        <span 
+                            class="Realized-operation-related-object fonticon fonticon-2x fonticon-down-open realized-samewhere-{{@index}}" 
+                            id="realized-activity-samewhere-contexual-{{@index}}-{{this.Details.RELaunchInfo.REId}}" 
+                            info="{{this.Details.RELaunchInfo.REDisplayName}}"
+                            whereInfo="{{this.Details.RELaunchInfo.WhereId}}~{{this.Details.RELaunchInfo.WhereDisplayName}}"
+                        >
+                        </span>
+                    </div>
+                    {{/if}}
+                    {{/unless}}
+                    </div>  
+                </div>
+                {{/each}}
+                </div>
+            {{/ifGreater}}
+            {{#ifGreater this.notSameWhereActivities}}
+                <!--div class="realized-activity-not-same-as-where"-->
+                {{#each this.notSameWhereActivities}}
+                    {{#ifborderclass this.Details id false @index}}{{/ifborderclass}}
+                    <div class="realized-activity-info-container">
+                        <div class="Realized-activity-name-container">
+                            <div class="act-chk-container">{{#isMultiSelAvailable id}} {{/isMultiSelAvailable}}</div>
+                            <div class="Realized-activity-name"> {{this.activityDesc}}</div>
+                        </div>
+                        <div class="Realized-activity-individual-details"> 
+                            <div class="realized-activity-before-after-object">
+                                {{#if this.Details.BeforeExists}}
+                                <div class="Realized-activity-Before">
+                                    <div class="Realized-activity-Before-Grammer">{{this.Details.BeforeGrammar}}</div>
+                                    <div class="Activity-box Accesstrue">
+										{{#ifDeleted this.Details.Before.objectType}}
+                                        <div class="Realized-activity-Before-icon-div">
+                                            <img class="Realized-activity-Before-icon" src={{this.Details.Before.icon}} />
+                                        </div>
+										{{/ifDeleted}}
+                                        <div class="Realized-activity-desc-Before">{{this.Details.Before.title}}</div>
+                                        <div class="Realized-activity-revision-Before">{{this.Details.Before.revision}}</div>
+                                        {{#if this.Details.Before.instanceName}}
+                                        <div class="Realized-activity-desc-Before">({{this.Details.Before.instanceName}})</div>
+                                        {{/if}}
+										{{#ifDeleted this.Details.Before.objectType}}
+                                        <div class="Realized-activity-action-open fonticon fonticon-2x fonticon-down-open" id="Realized-activity-action-open-{{this.Details.Before.id}}"></div>
+										{{/ifDeleted}}
+                                    </div>
+                                </div>
+                                {{/if}}
+                                {{#if this.Details.AfterExists}}
+                                    <div class="Realized-activity-After">
+                                        <div class="Realized-activity-After-Grammar">{{this.Details.AfterGrammar}}</div>
+                                        {{#if this.Details.AfterMaturity}}
+                                        <div class="Realized-activity-After-Maturity">{{this.Details.AfterMaturity}}</div>
+                                        {{else}}
+                                        <div class="Activity-box Accesstrue">
+											{{#ifDeleted this.Details.After.objectType}}
+                                            <div class="Realized-activity-After-icon-div">
+                                                <img class="Realized-activity-After-icon" src={{this.Details.After.icon}} />
+                                            </div>
+											{{/ifDeleted}}
+                                            <div class="Realized-activity-desc-After">{{this.Details.After.title}}</div>
+                                            <div class="Realized-activity-revision-After">{{this.Details.After.revision}}</div>
+                                            {{#if this.Details.After.instanceName}}
+                                            <div class="Realized-activity-desc-After">({{this.Details.After.instanceName}})</div>
+                                            {{/if}}
+											{{#ifDeleted this.Details.After.objectType}}
+                                            <div class="Realized-activity-action-open fonticon fonticon-2x fonticon-down-open" id="Realized-activity-action-open-{{this.Details.After.id}}"></div>
+											{{/ifDeleted}}
+                                        </div>
+                                        {{/if}}
+                                    </div>
+                                {{/if}}
+                            </div>
+                        </div>
+                        {{#unless this.Details.sameAsPrev}}
+                        <div class="realized-activity-flowdown-info">
+                            <div class="Realized-flowdown-info-text-1 ">
+                                <div class="Realized-notsamewhere-flowdown-status-{{@index}} flowdown-status-container">
+                                    <span class="selected-proposed-label">{{../this.flowdownStatusTitle}}</span>
+                                    <div class="notsamewhere-status-{{@index}} status-combo-box" id="{{id}}"></div>
+                                    {{#if this.Details.isTransferred}}
+                                        <span class="fonticon fonticon-attention attention-superscript" title="{{this.Details.transferredText}}"></span>
+                                    {{/if}}
+                                    <!--span class="notsamewhere-status-action-{{@index}} context-actions-container">
+                                        <span class="action-icon-wrapper">
+                                            <span class="flowdown-status-dropdown fonticon fonticon-2x fonticon-down-open" id="flowdown-status-{{id}}"></span>
+                                        </span>
+                                    </span-->
+                                </div>
+                            </div>
+                            <div class="Realized-flowdown-info-text-1">
+                                <div class="realized-flowdown-notsamewhere-selected-proposed-{{@index}} selected-proposed-container" id="realized-notsamewhere-{{@index}}"></div>
+                            </div>
+                        </div>
+                    </div>
+                    {{#if this.Details.launchREAccess}}
+                    <div class="Realized-activity-individual-action realized-activity-action-icon"> 
+                        <span 
+                            class="Realized-operation-related-object fonticon fonticon-2x fonticon-down-open realized-notsamewhere-{{@index}}" 
+                            id="realized-activity-notsamewhere-contexual-{{@index}}-{{this.Details.RELaunchInfo.REId}}" 
+                            info="{{this.Details.RELaunchInfo.REDisplayName}}"
+                            whereInfo="{{this.Details.RELaunchInfo.WhereId}}~{{this.Details.RELaunchInfo.WhereDisplayName}}"
+                        >
+                        </span>
+                    </div>
+                    {{/if}}
+                    {{/unless}}
+                    </div> 
+                {{/each}}
+                <!--/div-->
+            {{/ifGreater}}
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+

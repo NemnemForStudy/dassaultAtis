@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<!-- please do not change a single char in this file without notifying PPN. thnks -->
+  
+  <xs:complexType name="sourceType">
+    <xs:sequence>
+      <xs:element type="targetType" name="target" maxOccurs="unbounded" minOccurs="1"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" 		name="name"		use="required"/>
+    <xs:attribute type="sourceTypeType" name="type" 	use="required"/>
+    <xs:attribute type="partExtensionType" name="partExtension" use="optional"/> <!-- for eCAD, only applies to 'Part' -->
+    <xs:attribute type="subTypeType" 	name="subtype" 	use="optional"/> <!-- for eCAD, only applies to 'Part', but used also for 'Document' -->
+   </xs:complexType>
+ 
+<!--  list of possible values for the type attr of a source -->
+<xs:simpleType name="sourceTypeType">
+  <xs:restriction base="xs:string">
+    <!-- Start with the IRPC types of 3DSpace -->
+    <xs:enumeration value="Part"/>
+    <xs:enumeration value="IPart"/>       <!-- IPART is used by Inventor for Part and iPart -->
+    <xs:enumeration value="SEComponent"/> <!-- SEComponent is used by SolidEdge for Part and SheetMetal -->
+    <xs:enumeration value="Drawing"/>
+    <xs:enumeration value="3DShape"/>
+    <xs:enumeration value="SIMShape"/>
+	<xs:enumeration value="Material"/>
+    <xs:enumeration value="Assembly"/>
+    <xs:enumeration value="Analysis"/>
+    <xs:enumeration value="Process"/>
+    <xs:enumeration value="CREOPart"/>
+	<!-- below one matches for CVS Document (ER model) of 3DSpace -->
+    <xs:enumeration value="Document"/>
+    <!-- Temporary addition for CATIAV5 Converter, should be managed by subType-->
+    <xs:enumeration value="CATShape"/>
+    <xs:enumeration value="Model"/>
+    <xs:enumeration value="cgr"/>
+  </xs:restriction>
+</xs:simpleType>   
+
+<!--  list of possible values for the partExtension attr of a source -->
+<xs:simpleType name="partExtensionType">
+  <xs:restriction base="xs:string">
+    <!-- subtypes of Part for eCAD -->
+    <xs:enumeration value="CBDBoard"/>               <!-- Printed Circuit Board -->
+    <xs:enumeration value="PLMPCBPackageFootprint"/> <!-- Footprint -->
+    <xs:enumeration value="PLMPCBPackageWrap"/>      <!-- PackageWrap -->
+ </xs:restriction>
+</xs:simpleType>   
+
+ <!--  list of possible values for the subtypes attr of a source -->
+<xs:simpleType name="subTypeType">
+  <xs:restriction base="xs:string">
+    <!-- subtypes of Part for eCAD -->
+    <xs:enumeration value="CBDBoard"/>               <!-- Printed Circuit Board -->
+    <xs:enumeration value="PLMPCBPackageFootprint"/> <!-- Footprint -->
+    <xs:enumeration value="PLMPCBPackageWrap"/>      <!-- PackageWrap -->
+   <!-- subtypes of Part for CV5 -->
+    <xs:enumeration value="CATShape"/>
+    <xs:enumeration value="model"/>
+    <xs:enumeration value="cgr"/>
+	<!-- subtypes of Document , only Office Doc for now-->
+    <xs:enumeration value="config"/>
+	<!-- subtypes of Document , only Office Doc for now-->
+    <xs:enumeration value="WordProcessed"/>
+    <xs:enumeration value="Spreadsheet"/>
+    <xs:enumeration value="Presentation"/>
+    <xs:enumeration value="email"/>
+    <xs:enumeration value="CSV"/>
+ 	<!-- subtypes of Document , for Image -->
+    <xs:enumeration value="raster"/>
+    <xs:enumeration value="vectorial"/>
+ </xs:restriction>
+</xs:simpleType>   
+ 
+  <xs:complexType name="targetType" mixed="true">
+    <xs:sequence>
+      <xs:element type="parameterType" name="parameter" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute name="name"           type="xs:string"          use="required" />
+	<xs:attribute name="inputStreamId"  type="inputstreamIdType"  use="required" />
+    <xs:attribute name="outputStreamId" type="outputstreamIdType" use="required" />
+    <xs:attribute name="downloadable"   type="xs:boolean"         use="optional" default="true"/>
+    <xs:attribute name="conversionService" type="xs:boolean"      use="optional" default="false"/>
+    <xs:attribute name="cloudOnly"      type="xs:boolean"         use="optional" default="false"/>
+  </xs:complexType>
+  
+  <xs:complexType name="parameterType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="name" use="required"/>
+        <xs:attribute type="xs:string" name="values" use="required"/>
+        <xs:attribute type="xs:string" name="type" use="required"/>
+        <xs:attribute type="xs:string" name="range" use="optional"/>  <!-- only for int/double/numerical value...not et supported -->
+        <xs:attribute type="xs:string" name="default" use="optional"/>
+        <xs:attribute type="xs:string" name="description" use="optional"/>
+        <xs:attribute type="xs:boolean" name="mandatory" use="optional"/> <!-- default is False if not present -->
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  
+  
+<!--  list of possible values for INPUT streamId -->
+<xs:simpleType name="inputstreamIdType">
+  <xs:restriction base="xs:string">
+    <xs:enumeration value="authoring"/>
+    <xs:enumeration value="authoringvisu"/>
+    <xs:enumeration value="linkable"/>
+	<!-- cases with 'DO' prefix means the input in in a stream of DerivedOutputEntity -->
+    <xs:enumeration value="DWG"/>
+    <xs:enumeration value="DXF"/>
+    <xs:enumeration value="STEP"/> <!-- formats may be stp, step, stpZ -->
+	</xs:restriction>
+</xs:simpleType>
+
+<!--  list of possible values for OUTPUT streamId -->
+<xs:simpleType name="outputstreamIdType">
+  <xs:restriction base="xs:string">
+	<!-- first formats for internal DS (not downloadable) -->
+	<xs:enumeration value="authoringvisu"/> <!-- CGR, UDL, and ConvService is using 'vizualisation' for 3DXML/UDL -->
+	<xs:enumeration value="linkable"/>
+	<xs:enumeration value="catiav5"/>
+	<xs:enumeration value="XCADPivot"/>
+	<xs:enumeration value="acis_powerby"/>
+	<xs:enumeration value="visualization"/>
+	<!-- and below formats for exchange -->
+	<xs:enumeration value="STEP"/>
+	<xs:enumeration value="STEP_AP203"/>
+	<xs:enumeration value="STEP_AP214"/>
+	<xs:enumeration value="STEP_AP242"/>
+	<xs:enumeration value="PDF"/>
+	<xs:enumeration value="PDF/A"/>
+	<xs:enumeration value="TIF"/>
+	<xs:enumeration value="DWG"/>
+	<xs:enumeration value="DWF"/>
+	<xs:enumeration value="DXF"/>
+	<xs:enumeration value="CGR"/>
+	<xs:enumeration value="cgrv5"/>  <!-- light version of catiav5, only tesselation-->
+	<xs:enumeration value="HCG"/>
+	<xs:enumeration value="MODEL"/>
+	<xs:enumeration value="SVG"/>
+	<xs:enumeration value="PNG"/>    <!-- PNG includes PNG and BMP, aka lossless raster images -->
+	<xs:enumeration value="CGM"/>
+	<xs:enumeration value="PS"/>     <!--PostScript-->
+	<xs:enumeration value="JPG"/>
+	<xs:enumeration value="GIF"/>
+	<xs:enumeration value="IG2"/>
+	<xs:enumeration value="GL2"/>
+	<xs:enumeration value="VPS"/>
+	<xs:enumeration value="STL"/>
+	<xs:enumeration value="IGES"/>
+	<xs:enumeration value="WRL"/>
+	<xs:enumeration value="3DMAP"/>
+	<xs:enumeration value="3DXML"/>
+	<xs:enumeration value="CATALOG"/>
+	<!-- GEOVIA SURPAC from 23xFD01 -->
+	<xs:enumeration value="SDM"/>
+	<xs:enumeration value="OMF"/>
+	<!-- XCV from 23xFD01 -->
+	<xs:enumeration value="XCV"/>
+	<!-- special * value is used when the outputStreamId is computed from mandatory attributes -->
+	<xs:enumeration value="*"/>
+	<!-- case not supported by DS, but by partners :Elysium, TSystems, Theorem -->
+	<xs:enumeration value="XVL"/>
+	<xs:enumeration value="ICAD"/>
+	<xs:enumeration value="PRT"/>
+	<xs:enumeration value="NX"/>
+	<xs:enumeration value="CREO"/>
+	<xs:enumeration value="JT"/>
+	<xs:enumeration value="x_t"/>
+	<xs:enumeration value="x_b"/>
+	<xs:enumeration value="3DPDF"/>
+
+  </xs:restriction>
+</xs:simpleType>   
+  
+  <xs:complexType name="eventType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="eventNameType" name="name" use="required"/>
+        <xs:attribute type="eventTypeType" name="type" use="optional"/>
+        <xs:attribute type="xs:string" name="maturityGraph" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+ 
+<!--  list of supported event name -->
+<xs:simpleType name="eventNameType">
+  <xs:restriction base="xs:string">
+    <xs:enumeration value="checkin"/>
+    <xs:enumeration value="promote"/>
+    <xs:enumeration value="demote"/>
+    <xs:enumeration value="ondemand"/>
+    <xs:enumeration value="onXCADSave"/>
+  </xs:restriction>
+</xs:simpleType> 
+  
+ <!--  list of supported event type -->
+<xs:simpleType name="eventTypeType">
+  <xs:restriction base="xs:string">
+    <xs:enumeration value="Trigger"/>
+    <xs:enumeration value="interactiveUpdate"/>
+	
+  </xs:restriction>
+</xs:simpleType>   
+
+  <xs:complexType name="eventsType">
+    <xs:sequence>
+      <xs:element type="eventType" name="event" maxOccurs="unbounded" minOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <!-- each CAD supports a list of data, and a list of event . ultimately, the list of event should be 'independant' from CAD-->
+  <xs:complexType name="datasourceType">
+    <xs:sequence>
+      <xs:element type="sourceType" name="source" maxOccurs="unbounded" minOccurs="1"/>
+      <xs:element type="eventsType" name="events" maxOccurs="1" minOccurs="1"/>
+    </xs:sequence>
+    <xs:attribute type="dataSourceNameType" name="name" use="required"/>
+  </xs:complexType>
+  
+   <!--  list of supported "CAD" -->
+    <xs:simpleType name="dataSourceNameType">
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="3DEXPERIENCE"/>
+        <xs:enumeration value="CATIAV5"/>
+        <xs:enumeration value="SOLIDWORKS"/>
+        <xs:enumeration value="CREO"/>
+        <xs:enumeration value="NX"/>
+        <xs:enumeration value="INVENTOR"/>
+        <xs:enumeration value="SOLIDEDGE"/>
+        <xs:enumeration value="AUTOCAD"/>
+        <xs:enumeration value="DRAFTSIGHT"/>
+        <!-- CAD supported by Elysium -->
+        <xs:enumeration value="ICAD"/>
+        <!-- OC only from 22XFD01 -->
+        <xs:enumeration value="MicrosoftOffice"/>
+        <!-- and now ECAD, from 22XFD04 -->
+        <xs:enumeration value="CADENCEALLEGRO"/>
+        <xs:enumeration value="ALTIUM"/>
+        <xs:enumeration value="CADENCEPULSE"/>
+        <xs:enumeration value="ZUKENDSCR"/>
+        <xs:enumeration value="XPEDITIONEDM"/>
+        <!-- GEOVIA, from 23XFD01 -->
+        <xs:enumeration value="SURPAC"/>
+        <!-- Image, from 23XFD02 -->
+        <xs:enumeration value="Image"/>
+		<!-- REVIT, from 23xFD01 -->
+        <xs:enumeration value="REVIT"/>
+        <!-- SIMULALIEN, from 22xFD07 to test ALF Conversion through CAA Converters -->
+        <xs:enumeration value="SIMULALIEN"/>
+      </xs:restriction>
+    </xs:simpleType> 
+
+  
+  <!-- each converter may manage different CAD -->
+  <xs:complexType name="datasourcesType">
+    <xs:sequence>
+      <xs:element type="datasourceType" name="datasource" maxOccurs="unbounded" minOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <!-- Converter : use different files for different converters, they are then agregated-->
+  <xs:complexType name="converterType">
+    <xs:sequence>
+      <xs:element type="datasourcesType" name="datasources" maxOccurs="1" minOccurs="1"/>
+    </xs:sequence>
+    <xs:attribute type="converterNameType" name="name" use="required"/>
+    <xs:attribute type="xs:string" name="nlsFile" use="required"/>
+    <xs:attribute type="xs:boolean" name="synchronous" use="required"/>
+    <xs:attribute type="xs:string" name="comment" use="optional"/>
+  </xs:complexType>
+ 
+    <!--  list of supported converterNameType -->
+    <xs:simpleType name="converterNameType">
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="3DEXPERIENCE"/>
+        <xs:enumeration value="CATIAV5"/>
+        <xs:enumeration value="SOLIDWORKS"/>
+        <xs:enumeration value="CREO"/>
+        <xs:enumeration value="NX"/>
+        <xs:enumeration value="Inventor"/>
+        <xs:enumeration value="SolidEdge"/>
+        <xs:enumeration value="AutoCAD"/>
+        <xs:enumeration value="Elysium"/>
+        <xs:enumeration value="ODC"/>
+        <xs:enumeration value="3DS"/>
+      </xs:restriction>
+    </xs:simpleType> 
+
+ 
+  <!-- root level of dDerivedouputDeclarative*.xml files -->
+  <xs:complexType name="derivedformatmanagementType">
+    <xs:sequence>
+      <xs:element type="converterType" name="converter" maxOccurs="1" />
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:element name="derivedformatmanagement" type="derivedformatmanagementType"/>
+  
+</xs:schema>
+

@@ -1,0 +1,1 @@
+define("DS/NotificationManager/NotificationManager_ru",{});define("DS/NotificationManager/assets/nls/feed",{openInNewTab:"Открыть в новой вкладке",close:"Закрыть"});

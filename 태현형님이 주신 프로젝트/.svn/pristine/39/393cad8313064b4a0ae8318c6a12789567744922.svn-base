@@ -1,0 +1,29 @@
+################################################################################################
+# Created By thok : 2023. 06. 07
+# Admin Type : menu
+# Name : decProjectSafetyStaticsToolbarActions
+################################################################################################
+#delete menu decProjectSafetyStaticsToolbarActions;
+add menu 'decProjectSafetyStaticsToolbarActions' 
+	label 'ProgramCentral.Toolbar.Actions' 
+	command 'decProjectSafetyStaticsCreate' 
+	setting 'Registered Suite' 'ProgramCentral' 
+	setting 'Image' '${COMMON_DIR}/images/iconActionActions.png'
+	property application value 'ProgramManagementBase' 
+	property version value 'R423.HF7' 
+	property installer value 'ENOVIAEngineering' 
+	property 'installed date' value '06-07-2023' 
+	property 'original name' value 'decProjectSafetyStaticsToolbarActions'
+;
+add property menu_decProjectSafetyStaticsToolbarActions on program eServiceSchemaVariableMapping.tcl to menu 'decProjectSafetyStaticsToolbarActions'
+;
+
+mod menu 'decProjectSafetyStaticsToolbarActions' add command decProjectSafetyStaticsDelete
+;
+
+# Modified By thok : 2023. 09. 09
+mod menu decProjectSafetyStaticsToolbarActions
+	add setting 'hasAccess' 'PIM'
+	add setting 'Access Program' 'decAccess' 
+	add setting 'Access Function' 'hasAccess'
+;

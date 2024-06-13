@@ -1,0 +1,1 @@
+define("DS/WAfrUndoRedo/WAfrUndoRedoFlushAction",[],function(){"use strict";var e=Object.create(null);return e.FlushStack=function(e,n){var o=n.executionContext;o.getComponent("AFR_CSComponent").flushUndoRedoStacks(),o.getComponent("AFR_AvailabilityModesComponent").publish({mode:"WAFR_UNDO_REDO",value:"NO_UNDO_REDO"}),e()},e});

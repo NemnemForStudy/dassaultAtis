@@ -1,0 +1,17 @@
+################################################################################################
+# Created By thok : 2023. 09. 06
+# Admin Type : command
+# Name : decProjectMaterialComparison
+################################################################################################
+#delete command decProjectMaterialComparison;
+add command decProjectMaterialComparison 
+	alt 'emxProgramCentral.Label.ProjectMaterialComparison' 
+	label 'emxProgramCentral.Label.ProjectMaterialComparison' 
+	href '${COMMON_DIR}/decemxProjectComparisonSelectionCheck.jsp'
+	setting 'Image' '${COMMON_DIR}/images/iconProjectCompare.png'
+	setting 'Target Location' listHidden
+	setting 'Submit' 'true'
+	setting 'Registered Suite' ProgramCentral
+;
+add property command_decProjectMaterialComparison on program eServiceSchemaVariableMapping.tcl to command 'decProjectMaterialComparison'
+;

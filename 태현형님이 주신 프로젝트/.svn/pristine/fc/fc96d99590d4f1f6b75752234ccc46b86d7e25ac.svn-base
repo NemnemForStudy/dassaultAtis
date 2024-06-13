@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="DS_DELPPWConfiguration"
+	xmlns:tns="DS_DELPPWConfiguration"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified">
+	<xs:element name="DisplayAttributeDescriptionList">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Type"  maxOccurs="unbounded" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Attribute" maxOccurs="unbounded" minOccurs="0">
+								<xs:complexType>
+									<xs:attribute name="name" type="xs:string" use="required"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="name" type="xs:string" use="required"/>
+						<xs:attribute name="separator" type="xs:string"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Relation"  maxOccurs="unbounded" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Attribute" maxOccurs="unbounded" minOccurs="0">
+								<xs:complexType>
+									<xs:attribute name="name" type="xs:string" use="required"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="linkName" type="xs:string" use="required"/>
+						<xs:attribute name="separator" type="xs:string"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="Title" type="xs:string" use="optional"/>
+			<xs:attribute name="Description" type="xs:string" use="optional"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

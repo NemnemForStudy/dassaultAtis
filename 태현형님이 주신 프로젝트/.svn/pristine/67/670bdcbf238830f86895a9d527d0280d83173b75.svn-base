@@ -1,0 +1,368 @@
+{
+  "version": "2.0.4",
+  "model": {
+    "definition": {
+      "uid": "c839f268-7348-4a4c-9d3f-7a08dbb90f59"
+    },
+    "name": "Graph",
+    "dataPorts": [
+      {
+        "name": "DataLocal1",
+        "portType": 2,
+        "valueType": "Boolean",
+        "override": false,
+        "value": false,
+        "dataPorts": []
+      }
+    ],
+    "controlPorts": [
+      {
+        "name": "Start",
+        "portType": 0
+      }
+    ],
+    "settings": [
+      {
+        "name": "CastLevel",
+        "valueType": "ECastLevel",
+        "override": false,
+        "value": 1
+      }
+    ],
+    "nodeIdSelectors": [],
+    "blocks": [
+      {
+        "definition": {
+          "uid": "4b949047-55ff-45a1-9549-41a09969f97d"
+        },
+        "name": "Waiter",
+        "dataPorts": [
+          {
+            "name": "Delay",
+            "portType": 0,
+            "valueType": "Double",
+            "override": true,
+            "value": 3000,
+            "dataPorts": []
+          }
+        ],
+        "controlPorts": [
+          {
+            "name": "In",
+            "portType": 0
+          },
+          {
+            "name": "Out",
+            "portType": 1
+          }
+        ],
+        "settings": []
+      },
+      {
+        "definition": {
+          "uid": "6f0fb6a2-c669-4825-9c64-fc9e8a268e79"
+        },
+        "name": "If",
+        "dataPorts": [
+          {
+            "name": "Condition",
+            "portType": 0,
+            "valueType": "Boolean",
+            "override": false,
+            "value": false,
+            "dataPorts": []
+          }
+        ],
+        "controlPorts": [
+          {
+            "name": "In",
+            "portType": 0
+          },
+          {
+            "name": "True",
+            "portType": 1
+          },
+          {
+            "name": "False",
+            "portType": 1
+          }
+        ],
+        "settings": []
+      },
+      {
+        "definition": {
+          "uid": "8dc81190-2eb2-4e20-a595-8939ff534f29"
+        },
+        "name": "Set Value",
+        "dataPorts": [
+          {
+            "name": "ValueIn1",
+            "portType": 0,
+            "valueType": "Boolean",
+            "override": true,
+            "value": true,
+            "dataPorts": []
+          },
+          {
+            "name": "ValueOut1",
+            "portType": 1,
+            "valueType": "Boolean",
+            "dataPorts": []
+          }
+        ],
+        "controlPorts": [
+          {
+            "name": "In",
+            "portType": 0
+          },
+          {
+            "name": "Out",
+            "portType": 1
+          }
+        ],
+        "settings": []
+      },
+      {
+        "definition": {
+          "uid": "8dc81190-2eb2-4e20-a595-8939ff534f29"
+        },
+        "name": "Set Value",
+        "dataPorts": [
+          {
+            "name": "ValueIn1",
+            "portType": 0,
+            "valueType": "Boolean",
+            "override": false,
+            "value": false,
+            "dataPorts": []
+          },
+          {
+            "name": "ValueOut1",
+            "portType": 1,
+            "valueType": "Boolean",
+            "dataPorts": []
+          }
+        ],
+        "controlPorts": [
+          {
+            "name": "In",
+            "portType": 0
+          },
+          {
+            "name": "Out",
+            "portType": 1
+          }
+        ],
+        "settings": []
+      },
+      {
+        "definition": {
+          "uid": "381afc55-87e9-4663-9211-59abab491c7e"
+        },
+        "name": "Notify",
+        "dataPorts": [
+          {
+            "name": "Title",
+            "portType": 0,
+            "valueType": "String",
+            "override": false,
+            "value": "",
+            "dataPorts": []
+          },
+          {
+            "name": "Message",
+            "portType": 0,
+            "valueType": "String",
+            "override": true,
+            "value": "The condition is true!",
+            "dataPorts": []
+          }
+        ],
+        "controlPorts": [
+          {
+            "name": "In",
+            "portType": 0
+          },
+          {
+            "name": "Out",
+            "portType": 1
+          }
+        ],
+        "settings": [
+          {
+            "name": "Severity",
+            "valueType": "ESeverity",
+            "override": false,
+            "value": 0
+          }
+        ]
+      },
+      {
+        "definition": {
+          "uid": "381afc55-87e9-4663-9211-59abab491c7e"
+        },
+        "name": "Notify",
+        "dataPorts": [
+          {
+            "name": "Title",
+            "portType": 0,
+            "valueType": "String",
+            "override": false,
+            "value": "",
+            "dataPorts": []
+          },
+          {
+            "name": "Message",
+            "portType": 0,
+            "valueType": "String",
+            "override": true,
+            "value": "The condition is false!",
+            "dataPorts": []
+          }
+        ],
+        "controlPorts": [
+          {
+            "name": "In",
+            "portType": 0
+          },
+          {
+            "name": "Out",
+            "portType": 1
+          }
+        ],
+        "settings": [
+          {
+            "name": "Severity",
+            "valueType": "ESeverity",
+            "override": false,
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "dataLinks": [
+      {
+        "startPort": "$ref:$.blocks[2].dataPorts[1]",
+        "endPort": "$ref:$.dataPorts[0]"
+      },
+      {
+        "startPort": "$ref:$.dataPorts[0]",
+        "endPort": "$ref:$.blocks[1].dataPorts[0]"
+      },
+      {
+        "startPort": "$ref:$.blocks[3].dataPorts[1]",
+        "endPort": "$ref:$.dataPorts[0]"
+      }
+    ],
+    "controlLinks": [
+      {
+        "startPort": "$ref:$.controlPorts[0]",
+        "endPort": "$ref:$.blocks[2].controlPorts[0]",
+        "waitCount": 0
+      },
+      {
+        "startPort": "$ref:$.blocks[2].controlPorts[1]",
+        "endPort": "$ref:$.blocks[1].controlPorts[0]",
+        "waitCount": 0
+      },
+      {
+        "startPort": "$ref:$.blocks[0].controlPorts[1]",
+        "endPort": "$ref:$.blocks[3].controlPorts[0]",
+        "waitCount": 0
+      },
+      {
+        "startPort": "$ref:$.blocks[3].controlPorts[1]",
+        "endPort": "$ref:$.blocks[1].controlPorts[0]",
+        "waitCount": 0
+      },
+      {
+        "startPort": "$ref:$.blocks[1].controlPorts[1]",
+        "endPort": "$ref:$.blocks[4].controlPorts[0]",
+        "waitCount": 0
+      },
+      {
+        "startPort": "$ref:$.blocks[4].controlPorts[1]",
+        "endPort": "$ref:$.blocks[0].controlPorts[0]",
+        "waitCount": 0
+      },
+      {
+        "startPort": "$ref:$.blocks[1].controlPorts[2]",
+        "endPort": "$ref:$.blocks[5].controlPorts[0]",
+        "waitCount": 0
+      }
+    ]
+  },
+  "ui": {
+    "graphLeft": 0,
+    "graphTop": 0,
+    "width": 1000,
+    "height": 400,
+    "blocks": [
+      {
+        "top": 100,
+        "left": 640,
+        "dataPorts": []
+      },
+      {
+        "top": 200,
+        "left": 250,
+        "dataPorts": []
+      },
+      {
+        "top": 200,
+        "left": 60,
+        "dataPorts": []
+      },
+      {
+        "top": 100,
+        "left": 820,
+        "dataPorts": []
+      },
+      {
+        "top": 100,
+        "left": 460,
+        "dataPorts": []
+      },
+      {
+        "top": 240,
+        "left": 460,
+        "dataPorts": []
+      }
+    ],
+    "dataPorts": [
+      {
+        "dataPorts": []
+      }
+    ],
+    "controlPorts": [
+      {
+        "offset": 210
+      }
+    ],
+    "dataLinks": [
+      {},
+      {},
+      {}
+    ],
+    "controlLinks": [
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {}
+    ],
+    "shortcuts": []
+  },
+  "templates": {
+    "model": {
+      "graphs": {},
+      "scripts": {}
+    },
+    "ui": {
+      "graphs": {},
+      "scripts": {}
+    }
+  }
+}

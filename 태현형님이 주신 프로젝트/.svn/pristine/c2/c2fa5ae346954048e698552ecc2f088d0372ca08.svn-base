@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Styles xmlns:syp="http://www.3ds.com/xsd/SYP">
+
+      <Template syp:name="ENOLibrariesHeaders" Target="CATCmdHeadersList">
+            <CATCmdHeadersList>
+				  <CATCommandHeader ID="ImportLibrary" ClassName="DS/ClassificationEditor/commands/ActionBar_ImportLibraryStructureCmd" ResourceFile="ClassificationEditor/ENOLibrary" Available="1"/>
+                  <CATCommandHeader ID="ExportAttributes" ClassName="DS/ClassificationEditor/commands/ActionBar_ExportClassificationAttributes" Available="1"/>
+                  <CATCommandHeader ID="ExportLibrary" ClassName="DS/ClassificationEditor/commands/ActionBar_ExportLibraryStructureCmd" ResourceFile="ClassificationEditor/ENOLibrary" Available="1"/>
+                  <CATCommandHeader ID="AddExistingAttributes" ClassName="DS/ClassificationEditor/commands/ActionBar_AddExistingAttributesCmd" ResourceFile="ClassificationEditor/ENOLibrary" Available="1"/>
+                  <CATCommandHeader ID="RemoveAttributes" ClassName="DS/ClassificationEditor/commands/ActionBar_RemoveAttributesCmd" ResourceFile="ClassificationEditor/ENOLibrary" Available="1"/>
+                  <CATCommandHeader ID="AddToFavorites" ClassName="DS/ClassificationEditor/commands/ActionBar_AddToFavoritesCmd" ResourceFile="ClassificationEditor/ENOLibrary" Available="1" Behavior="CATAfrHeaderCheck" />
+                  <CATCommandHeader ID="ActionBar_Attributes" ClassName="DS/ENOCollabSharingCmds/commands/EditPropCmd/ActionBar_EditPropCmd" ResourceFile="ENOCollabSharingCmds/CollabSharing_Workbench" Available="1" />
+                  <CATCommandHeader ID="treeview" ClassName="DS/IPClassifyNav/commands/xNavActionBarCmds" ResourceFile="IPClassifyNav/IPClassifyNav" Available="1"/>
+                  <CATCommandHeader ID="tileview" ClassName="DS/IPClassifyNav/commands/xNavActionBarCmds" ResourceFile="IPClassifyNav/IPClassifyNav" Available="1"/>
+                  <CATCommandHeader ID="thumbnailview" ClassName="DS/IPClassifyNav/commands/xNavActionBarCmds" ResourceFile="IPClassifyNav/IPClassifyNav" Available="1"/>
+                  <CATCommandHeader ID="ExpandAll" ClassName="DS/ClassificationEditor/commands/ActionBar_ExpandAllCmd" ResourceFile="ClassificationEditor/ENOLibrary" Available="1" />
+                  <CATCommandHeader ID="ExpandN" ClassName="DS/ClassificationEditor/commands/ActionBar_ExpandNCmd" ResourceFile="ClassificationEditor/ENOLibrary" Available="1" />
+                  <CATCommandHeader ID="CollapseAll" ClassName="DS/ClassificationEditor/commands/ActionBar_CollapseAllCmd" ResourceFile="ClassificationEditor/ENOLibrary" Available="1" />
+                  <CATCommandHeader ID="SelectAll" ClassName="DS/IPClassifyNav/commands/xNavActionBarCmds" ResourceFile="IPClassifyNav/IPClassifyNav" Available="1"/>
+                  <CATCommandHeader ID="SelectInversion" ClassName="DS/IPClassifyNav/commands/xNavActionBarCmds" ResourceFile="IPClassifyNav/IPClassifyNav" Available="1"/>
+                  <CATCommandHeader ID="SelectSiblings" ClassName="DS/IPClassifyNav/commands/xNavActionBarCmds" ResourceFile="IPClassifyNav/IPClassifyNav" Available="1"/>
+				  <CATCommandHeader ID="CreateNewLibrary" ClassName="DS/ClassificationEditor/commands/ClassificationIconBar_CreateLibrary" ResourceFile="ClassificationEditor/ENOLibrary" Available="1"/>
+		          <CATCommandHeader ID="DeleteLibrary" ClassName="DS/ClassificationEditor/commands/ClassificationIconBar_DeleteLibrary" ResourceFile="ClassificationEditor/ENOLibrary" Available="1"/>
+				  <CATCommandHeader ID="CreateNewClass" ClassName="DS/ClassificationEditor/commands/ClassificationIconBar_CreateClass" ResourceFile="ClassificationEditor/ENOLibrary" Available="1"/>
+				  <CATCommandHeader ID="DeleteClass" ClassName="DS/ClassificationEditor/commands/ClassificationIconBar_DeleteClass" ResourceFile="ClassificationEditor/ENOLibrary" Available="1"/>			 
+				  <CATCommandHeader ID="MoveClass" ClassName="DS/ClassificationEditor/commands/ClassificationIconBar_MoveClass" ResourceFile="ClassificationEditor/ENOLibrary" Available="1"/>
+				  <CATCommandHeader ID="MaturityHdr" ClassName="DS/LifecycleCmd/MaturityCmd" ResourceFile="LifecycleWidget/LifecycleCmd" Available="1" />
+			      <CATCommandHeader ID="ActionBar_AccessRightCmd" ClassName="DS/ENOCollabSharingCmds/commands/AccessRightCmd/ActionBar_AccessRightCmd" ResourceFile="ENOCollabSharingCmds/langSharingCmds" Available="1" /> 
+			</CATCmdHeadersList>
+      </Template>
+
+      <Template syp:name="ENOLibrariesWkbAccess" Target="CATCmdWorkbench">
+            <CATCmdWorkbench Name="ENOLibrariesWkb">
+                  <CATCmdContainer Name="Library" RepresentationType="AfrActionBarSection">
+                        <CATCmdStarter Name="Add to Favorites" Command="AddToFavorites" />
+                        <CATCmdStarter Name="Attributes" Command="ActionBar_Attributes" />
+                  </CATCmdContainer>
+          		  <CATCmdContainer Name="View" RepresentationType="AfrActionBarSection">
+						<CATCmdContainer Name="SwitchView" RepresentationType="AfrActionBarDropDown">
+							<CATCmdStarter Name="Grid View" Command="treeview" />
+							<CATCmdStarter Name="Tile View" Command="tileview" />
+							<CATCmdStarter Name="Thumbnail View" Command="thumbnailview" />
+						</CATCmdContainer>
+						<CATCmdContainer Name="PADExpand" RepresentationType="AfrActionBarDropDown">
+							<CATCmdStarter Name="Expand All" Command="ExpandAll" />
+							<CATCmdStarter Name="Expand N Levels" Command="ExpandN" />
+							<CATCmdStarter Name="Collapse All" Command="CollapseAll" />
+						</CATCmdContainer>
+						<CATCmdContainer Name="PADSelect" RepresentationType="AfrActionBarDropDown">
+							<CATCmdStarter Name="Select All" Command="SelectAll" />
+							<CATCmdStarter Name="Select Inversion" Command="SelectInversion" />
+							<CATCmdStarter Name="Select Siblings" Command="SelectSiblings" />
+						</CATCmdContainer>
+                  </CATCmdContainer>
+                   <CATCmdContainer Name="AttributesMgm" RepresentationType="AfrActionBarSection">
+                        <CATCmdStarter Name="Export Attributes" Command="ExportAttributes" />
+                  </CATCmdContainer>
+            </CATCmdWorkbench>
+      </Template>
+</Styles>

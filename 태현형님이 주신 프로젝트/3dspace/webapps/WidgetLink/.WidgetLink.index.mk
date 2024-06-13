@@ -1,0 +1,13 @@
+m|IFWEClient\WidgetLink.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.3.23076|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\WidgetLink\WidgetLink.js|1679097142|5882
+s|IFWEClient\WidgetLink.mweb\src\AbstractWidgetLink.js|1678463891|9149
+u|IFWEClient\WidgetLink.mweb\src\ExternalWidgetLink.js|1666165173|7392
+u|IFWEClient\WidgetLink.mweb\src\WidgetLink.js|1634123443|4423
+u|IFWEClient\WidgetLink.mweb\src\WidgetLinkData.js|1634123444|2233
+u|IFWEClient\WidgetLink.mweb\src\WidgetLinkView.js|1634123445|1594
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

@@ -1,0 +1,20 @@
+################################################################################################
+# Created By thok : 2023. 08. 10
+# Admin Type : command
+# Name : decRequestResponse
+################################################################################################
+#delete command decRequestResponse;
+add command 'decRequestResponse' 
+	description 'Request Response' 
+	alt 'emxProgramCentral.Label.RequestResponse' 
+	label 'emxProgramCentral.Label.RequestResponse' 
+	href '${COMMON_DIR}/decRequestDialogFS.jsp?mode=response'
+	setting 'Submit' 'true' 
+	setting 'Target Location' 'slideInFrame'
+	setting 'Registered Suite' 'ProgramCentral' 
+	setting 'Image' '${COMMON_DIR}/images/iconActionCreate.png'
+	setting 'Access Function' 'isRequestResponseAvailable' 
+	setting 'Access Program' 'decRequest'
+;
+add property command_decRequestResponse on program eServiceSchemaVariableMapping.tcl to command 'decRequestResponse'
+;

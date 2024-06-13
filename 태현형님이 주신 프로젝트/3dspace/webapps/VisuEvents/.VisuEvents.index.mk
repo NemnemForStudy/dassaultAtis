@@ -1,0 +1,14 @@
+m|WebVisualization\VisuEvents.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.3.23035|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\VisuEvents\VisuEvents.js|1675495535|39456
+s|WebVisualization\VisuEvents.mweb\src\EventsManager.js|1674206675|82979
+u|WebVisualization\VisuEvents.mweb\src\KeyboardEvent.js|1426168430|1665
+u|WebVisualization\VisuEvents.mweb\src\MouseEvent.js|1615794671|5546
+u|WebVisualization\VisuEvents.mweb\src\ScreenEvent.js|1674040732|13569
+u|WebVisualization\VisuEvents.mweb\src\TouchEvent.js|1647422325|6490
+u|WebVisualization\VisuEvents.mweb\src\VisuEvents.js|1425399973|1
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

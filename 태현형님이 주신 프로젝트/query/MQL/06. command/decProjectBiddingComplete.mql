@@ -1,0 +1,25 @@
+################################################################################################
+# Created By thok : 2023. 07. 26
+# Admin Type : command
+# Name : decProjectBiddingComplete
+################################################################################################
+#delete command decProjectBiddingComplete;
+add command 'decProjectBiddingComplete' 
+	description 'Command to Complete Bidding Project'
+	alt 'emxProgramCentral.ProjectSpace.Complete.Alt' 
+	label 'emxProgramCentral.ProjectSpace.Complete.Alt' 
+	href '${COMMON_DIR}/decProjectStatusControl.jsp?projectStatus=Win' 
+	setting 'Confirm Message' 'emxProgramCentral.ProjectSpace.Complete.alert.Bidding' 
+	setting 'Image' '${COMMON_DIR}/images/iconActionApprove.png'
+	setting 'Registered Suite' 'ProgramCentral'
+	setting 'Target Location' 'hiddenFrame'
+	setting 'Submit' true
+	setting 'Access Expression' '(attribute[decProjectStatus]==Bidding) && (context.user.isassigned[decSystemAdmin] || owner==context.user)'
+;
+add property command_decProjectBiddingComplete on program eServiceSchemaVariableMapping.tcl to command 'decProjectBiddingComplete'
+;
+
+# Modified By thok : 2023. 07. 27
+mod command 'decProjectBiddingComplete'
+	add setting 'Access Expression' '(attribute[decProjectType]==bidding) && (attribute[decProjectStatus]=="In-Progress") && (context.user.isassigned[decSystemAdmin] || owner==context.user)'
+;

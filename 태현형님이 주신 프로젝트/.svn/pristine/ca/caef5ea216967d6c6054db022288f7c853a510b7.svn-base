@@ -1,0 +1,42 @@
+{
+  "dslogeqt:Equipment":{
+    "kindOf":"root",
+    "beType":"type_EnsLogicalEquipment",
+    "contentLinks":["dslognet:ShellConnector", "dslognet:Connector", "dslognet:Pin", "dslognet:GroundPin"],
+    "parentType": "dslog:LogItem",
+    "defaultMask":"dsmvlogeqt:EquipmentMask",
+    "patchCSRF":true,
+    "search":true,
+    "extensionLinks": ["dscfg:Configured"],
+    "customerAttribute":true,
+    "cestamp":true,
+    "attributeMappingClass":"com.dassault_systemes.catia.xapps.dslogeqt.V%1.dictionaries.ENOXdslogeqtDictionary",
+    "isPublic": true, 
+    "optionCheck":{
+        "modify":true,
+        "navigate":true,
+        "produce": true
+    }
+  },
+  
+  "dslogeqt:EquipmentInst":{
+    "kindOf":"content",
+    "beType":"relationship_EnsLogicalEquipmentInst",
+    "extensionLinks": ["dscfg:Filterable"],
+    "parentType":"dslog:LogInstance",
+    "rootLinks":["dslog:LogItem","dslog:LogItemPRIVATE"],
+    "inheritanceType": "explicit",
+    "defaultMask":"dsmvlogeqt:EquipmentInstMask",
+    "patchCSRF":true,
+    "customerAttribute":true,
+    "cestamp":true,
+    "attributeMappingClass":"com.dassault_systemes.catia.xapps.dslogeqt.V%1.dictionaries.ENOXdslogeqtEquipmentInstDictionary",
+    "isPublic": true,
+    "optionCheck":{
+        "modify":true,
+        "navigate":true,
+        "produce": true
+    }
+  }
+
+}

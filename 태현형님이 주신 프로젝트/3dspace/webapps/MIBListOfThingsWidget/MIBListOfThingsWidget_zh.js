@@ -1,0 +1,1 @@
+define("DS/MIBListOfThingsWidget/MIBListOfThingsWidget_zh",{});define("DS/MIBListOfThingsWidget/assets/nls/MIBListOfThingsWidgetNls",{CommandDialogTitle:"物品清单",BtnOK:"确定",BtnCancel:"取消"});

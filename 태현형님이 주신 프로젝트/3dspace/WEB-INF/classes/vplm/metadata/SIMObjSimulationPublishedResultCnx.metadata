@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!-- ENOVIA DICTIONARY  -->
+<!-- COPYRIGHT DASSAULT SYSTEMES 2008, All rights reserved -->
+
+<Package Name="SIMObjSimulationPublishedResultCnx"  Uuid="ebe5a070-51fa-4c6a-b89d-82d06f0afd83"  xmlns="PLMDictionaryUnified"
+         ModelerType="Top"  BelongsToModeler="SIMObjSimulation"  UseNames="SIMObjSimulation"
+         CustomerExposition="Programmer" >
+
+    <Property Name="FormerTypingLegacy" Value="Yes"/>
+
+    <Class Name="SIMObjectSimulationPublishedResultCnx"  Uuid="5ca80b70-af4f-42fa-b9c4-872afaab65d6"
+           SuperName="SIMObjSimulationConnection"  Abstract="No"
+           CustomerExposition="Programmer" Specializable="No" CustomerExtensible="No" >
+
+      <Property Name="Searchable" Value="No"/>
+      <Property Name="Configurable" Value="No" />
+      <Property Name="Filtrable" Value="No" />
+
+      <Comment>A published result includes a 3DShape and/or a document (Word doc).
+               PublishConnectionIN points to the Result Rep.
+               PublishConnectionOUT points to a (generated) 3DShape.
+               PublishConnectionNEUTRAL points to a PLM document.
+      </Comment>
+
+      <Method ImplementationType="None">
+        <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+      </Method>
+
+      <Path Name="PublishConnectionIN"  Uuid="9dcae571-3b23-4545-b659-86c05881ebce"  Type="SemanticRelation" 
+            RoleName="SIM_PublishedCnxIN" Semantics="Reference3"
+            MultiValuated="No"
+            AdaptativeToMinor="No"  SynchroSensitivity="PathAndLast"  RerouteOnEffectivityChange="No"  Orientation="In" />
+
+      <Path Name="PublishConnectionOUT"  Uuid="50552665-e814-40db-a033-c2f0bca54850"  Type="SemanticRelation"
+            RoleName="SIM_PublishedCnxOUT"  Semantics="Reference5"
+            MultiValuated="Yes"
+            AdaptativeToMinor="No"  SynchroSensitivity="Last"  RerouteOnEffectivityChange="No"  Orientation="Out" />
+
+      <Path Name="PublishConnectionNEUTRAL"  Uuid="e285b019-0040-4bbc-9bea-677b4741001c"  Type="SemanticRelation"
+            RoleName="SIM_PublishedCnxNEUTRAL"  Semantics="Reference2"  Protection="Internal"  
+            MultiValuated="Yes"
+            AdaptativeToMinor="No"  SynchroSensitivity="None"  RerouteOnEffectivityChange="No" />
+      <!-- Why is this Reference2 (neutral, internal)? -->
+
+    </Class>
+
+</Package>

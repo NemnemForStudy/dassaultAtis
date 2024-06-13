@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" data-rec-id="CATDMUGenerateChangeActionHtml">
+<head>
+  <script type="text/javascript" src="../AmdLoader/AmdLoader.js"></script>
+  <script type='text/javascript' src='../c/UWA/js/UWA_Standalone_Alone.js'></script>
+  <link rel='stylesheet' type='text/css' href='../c/UWA/assets/css/standalone.css' />
+  <script type="text/javascript" src="../WebappsUtils/WebappsUtils.js"></script>
+  <link rel="stylesheet" type="text/css" href="../UIKIT/UIKIT.css" />>
+  <link rel="stylesheet" type="text/css" href="../Controls/nv-patch.css" /> <!--widget full screen-->
+  <style>
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0px;
+      display: inline-flex;
+    }
+  </style>
+
+  <script type="text/javascript">
+    var initDone = false;
+    function initChangeActionInWin(valueFromNative) {
+      if (initDone)
+        return;
+      initDone = true;
+      require(['DS/CATWebUXInWin/CATDMUGenerateChangeActionInWin'], function (CATDMUGenerateChangeActionInWin) {
+        CATDMUGenerateChangeActionInWin.createPanel(valueFromNative);
+      });
+    }
+  </script>
+</head>
+<body>
+</body>
+</html>

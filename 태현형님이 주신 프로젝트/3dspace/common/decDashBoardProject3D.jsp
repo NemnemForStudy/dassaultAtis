@@ -1,0 +1,142 @@
+
+<%@page import="com.dec.util.DecStringUtil"%>
+<%@page import="com.dec.util.DecDateUtil"%>
+<%@page import="com.matrixone.apps.domain.DomainObject"%>
+<%@page import="com.dec.util.DecConstants"%>
+<%@include file = "../common/emxNavigatorTopErrorInclude.inc"%>
+
+<%@include file = "../emxUICommonHeaderBeginInclude.inc" %>
+<%@include file = "../emxUICommonAppInclude.inc"%>
+<%@include file = "../common/emxUIConstantsInclude.inc"%>
+
+
+<%@include file = "../emxUICommonHeaderEndInclude.inc" %>
+<%
+	String sLang = request.getHeader("Accept-Language");
+	String sObjectId = DecConstants.EMPTY_STRING;
+	String sPhaseName = DecConstants.EMPTY_STRING;
+	String sPhaseDesc = DecConstants.EMPTY_STRING;
+	String sWBSType = DecConstants.EMPTY_STRING;
+	String sImgSource = DecConstants.EMPTY_STRING;
+	String sDecImageHolderId = DecConstants.EMPTY_STRING;
+	String sDecImageSource = DecConstants.EMPTY_STRING;
+	String sProjectCode = emxGetParameter(request,"projectCode");
+	
+	StringList slProjectParam = new StringList();
+	slProjectParam.add(DecConstants.SELECT_ID);
+	slProjectParam.add(DecConstants.SELECT_NAME);
+
+	StringList slPhaseParam = new StringList();
+	slPhaseParam.add(DecConstants.SELECT_ATTRIBUTE_DECWBSTYPE);
+	slPhaseParam.add(DecConstants.SELECT_DESCRIPTION);
+	slPhaseParam.add("to[" + DecConstants.RELATIONSHIP_DECIMAGEHOLDER + "|from." + DecConstants.SELECT_ATTRIBUTE_DECIMAGETYPE + "=='3D'].from.id");
+	slPhaseParam.addAll(slProjectParam);
+	
+	MapList mlProject = DomainObject.findObjects(context, DecConstants.TYPE_PROJECT_SPACE, "*", DecConstants.SELECT_NAME + "=='" + sProjectCode + "'", slProjectParam);
+	MapList mlPhase = new MapList();
+	Map mProject = null;
+	Map mPhase = null;
+	Map mArgs = new HashMap();
+	Map paramMap = new HashMap();
+	if(mlProject != null && !mlProject.isEmpty()){
+		mProject = (Map)mlProject.get(0);
+		sObjectId = (String)mProject.get(DecConstants.SELECT_ID);
+		DomainObject doPS = DomainObject.newInstance(context, sObjectId);
+		// 프로젝트에 연결된 Phase
+    	mlPhase = doPS.getRelatedObjects(context,
+										DecConstants.RELATIONSHIP_SUBTASK, //pattern to match relationships
+										DecConstants.TYPE_PHASE, //pattern to match types
+										slPhaseParam, //the eMatrix StringList object that holds the list of select statement pertaining to Business Obejcts.
+										null, //the eMatrix StringList object that holds the list of select statement pertaining to Relationships.
+										false, //get To relationships
+										true, //get From relationships
+										(short)0, //the number of levels to expand, 0 equals expand all.
+										DecConstants.EMPTY_STRING, //where clause to apply to objects, can be empty ""
+										DecConstants.EMPTY_STRING,
+										0); //where clause to apply to relationship, can be empty ""
+	}
+%>
+<script>
+	$(function (){
+		var comboTD = document.getElementById('comboTD');
+	    window.onresize = function() {
+	    	imgResize();
+	    }
+	});
+	function setImageSource(obj, divId){
+		var imgSource = "";
+		if(obj == null && document.getElementById('phaseSelect').length > 0){
+			imgSource = document.getElementById('phaseSelect')[0].value;
+		}else{
+			imgSource = obj.value;
+		}
+		var imgDiv = document.getElementById(divId);
+		imgDiv.innerHTML = imgSource;
+		var img = document.getElementById('divDropPrimaryImage');
+		img.onload = function(){
+			imgResize();
+		};
+	}
+	function imgResize(){
+		document.getElementById('imgDiv').style.height = (document.body.clientHeight - comboTD.clientHeight - 15) + 'px';
+		var img = document.getElementById('divDropPrimaryImage');
+		// 원본 이미지 사이즈 저장
+		var width = img.clientWidth;
+		var height = img.clientHeight + 61;
+	
+		// 가로, 세로 최대 사이즈 설정
+		var maxWidth = document.body.clientWidth;   // 원하는대로 설정. 픽셀로 하려면 maxWidth = 400
+		var maxHeight = document.body.clientHeight;   // 원래 사이즈 * 0.5 = 50%
+	
+	
+		if(width > maxWidth && height > maxHeight){
+			img.style.width = '100%';
+			img.style.height = 'auto';
+		}else if(width > maxWidth){
+			img.style.width = '100%';
+			img.style.height = 'auto';
+		}else if(height > maxHeight){
+			img.style.width = 'auto';
+			img.style.height = '100%';
+		}
+	}
+</script>
+<style>
+	body{
+		height:100%;
+	}
+</style>
+<link rel="stylesheet" href="../webapps/UIKIT/UIKIT.css" type="text/css" />
+<body onload="setImageSource(null, 'imgDiv');">
+ 	<table>
+    	<tbody>
+     	<tr>
+       		<td id="comboTD" class="label" style="text-align:center;">
+       			<select onchange="setImageSource(this, 'imgDiv');" id="phaseSelect" name="phaseSelect" class="form-control">
+       		<%
+    		for(Object o : mlPhase) {
+    			mPhase = (Map)o;
+    			sObjectId = (String)mPhase.get(DecConstants.SELECT_ID);
+    			sPhaseName = (String)mPhase.get(DecConstants.SELECT_NAME);
+    			sPhaseDesc = (String)mPhase.get(DecConstants.SELECT_DESCRIPTION);
+    			sWBSType = (String)mPhase.get(DecConstants.SELECT_ATTRIBUTE_DECWBSTYPE);
+    			if(DecStringUtil.equalsAnyIgnoreCase(sWBSType, "Unit")){
+	    			paramMap.put("objectId", sObjectId);
+	    			paramMap.put("imageType", "3D");
+	    			paramMap.put("style", "width:100%;");
+	    			mArgs.put("paramMap", paramMap);
+	    			sDecImageSource = JPO.invoke(context, "emxProjectSpace", null, "getDecImageSource", JPO.packArgs(mArgs), String.class);
+       		%>
+       				<option value="<%=sDecImageSource%>"><%=sPhaseName%> <%=sPhaseDesc%></option>
+       		<%}	} %>
+       			</select>
+       		</td>
+    	</tr>
+    	<tr>
+       		<td class="label" style="text-align:center;">
+       			<div id="imgDiv"></div>
+       		</td>
+    	</tr>
+    	</tbody>
+	</table>
+</body>

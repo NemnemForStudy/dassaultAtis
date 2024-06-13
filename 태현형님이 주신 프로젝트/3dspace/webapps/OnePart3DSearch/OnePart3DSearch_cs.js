@@ -1,0 +1,1 @@
+define("DS/OnePart3DSearch/OnePart3DSearch_cs",{});define("DS/OnePart3DSearch/assets/nls/onepart",{facet:{properties:{title:"Vlastnosti"}},action:{openInOnePart:{title:"Otevřít v aplikaci OnePart..."}},error:{cannotRetrieveAppInfo:"Chyba při načítání informací o aplikaci"}});

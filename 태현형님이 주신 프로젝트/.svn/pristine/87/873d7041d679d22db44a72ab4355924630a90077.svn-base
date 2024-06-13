@@ -1,0 +1,1 @@
+define("DS/DMUComment/DMUComment_cs",{});define("DS/DMUComment/assets/nls/DMUComment",{highlightCommentPrefix:"ZvýrazněníKomentáře",positionedCommentPrefix:"PolohaKomentáře",commentPrefix:"Poznámka",commentCreationLabel:"Vyberte bod, značku nebo nějaký text k propojení nového komentáře"});

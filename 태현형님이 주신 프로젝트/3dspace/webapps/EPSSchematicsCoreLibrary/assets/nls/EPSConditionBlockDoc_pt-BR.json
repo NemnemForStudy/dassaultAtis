@@ -1,0 +1,18 @@
+{
+  "version": "1.0 0",
+  "summary": "Compara o valor de vários dados de entrada seguindo a expressão de configuração fornecida.",
+  "description": "Esse bloco é dinâmico, portanto, a contagem de dados de entrada pode ser alterada usando a caixa de diálogo de configuração de bloco.<br>A porta de dados controla todos os tipos de valor.<br>O nome da variável gravado na configuração <doc-setting-name translate=no>Expression</doc-setting-name> deve corresponder ao nome dos dados de entrada, senão a expressão será considerada inválida.<br><br>O valor da expressão de configuração controla a comparação avançada da expressão:<ul><li><doc-value translate=no>&quot;Value1 === Value2&quot;</doc-value>: verifica se <doc-idp-name translate=no>Value1</doc-idp-name> é igual a <doc-idp-name translate=no>Value2</doc-idp-name>.</li><li><doc-value translate=no>&quot;Value3 > Value3 && Value3 < Value2&quot;</doc-value>: checks that <doc-idp-name translate=no>Value3</doc-idp-name> está entre <doc-idp-name translate=no>Value1</doc-idp-name> e <doc-idp-name translate=no>Value2</doc-idp-name> (<doc-idp-name translate=no>Value1</doc-idp-name>, <doc-idp-name translate=no>Value2</doc-idp-name> e <doc-idp-name translate=no>Value3</doc-idp-name> sendo números).</li><li><doc-value translate=no>&quot;Value1 !== Value2 || Value1 !== Value3&quot;</doc-value>: verifica se <doc-idp-name translate=no>Value1</doc-idp-name> é diferente de <doc-idp-name translate=no>Value2</doc-idp-name> ou <doc-idp-name translate=no>Value3</doc-idp-name>.</li></ul>",
+  "dataPorts": {
+    "Value1": "é o primeiro valor a ser comparado.",
+    "Value2": "é o segundo valor a ser comparado."
+  },
+  "controlPorts": {
+    "In": "dispara a execução do bloco.",
+    "True": "é ativado quando o resultado da expressão preenchida por cada valor de dados de entrada é positivo.",
+    "False": "é ativado quando o resultado da expressão preenchida por cada valor de dados de entrada é negativo."
+  },
+  "settings": {
+    "Expression": "o valor da expressão que descreve a comparação dos valores de dados de entrada."
+  },
+  "example": null
+}

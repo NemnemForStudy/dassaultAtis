@@ -1,0 +1,1 @@
+define("DS/DMUReplyAndComments/DMUReplyAndComments_ko",{});define("DS/DMUReplyAndComments/assets/nls/DMUReplyAndComments",{replyTo:"회신 ",commentPrefix:"코멘트"});

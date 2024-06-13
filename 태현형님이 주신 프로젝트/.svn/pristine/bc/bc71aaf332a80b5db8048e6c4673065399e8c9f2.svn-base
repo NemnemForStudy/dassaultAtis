@@ -1,0 +1,33 @@
+#Prog ProductionSystem_ExchangeXPDM_Execution (iPLMIDSet :  #In PLMIDSet,oPLMIDSet :  #Out PLMIDSet) : VoidType
+{
+  let PLMRouteSetExpandWithScope (PLMRouteSet)
+
+  let PLMIDSetRootRef (PLMIDSet)
+  let PLMIDSetRootWithScope (PLMIDSet)
+  let PLMIDSetExpandWithScope (PLMIDSet)
+  let PLMIDSetExpandWithoutScopeOnMBOM (PLMIDSet)
+  let PLMIDSetExpandWithoutScopeFromRes (PLMIDSet)
+  let PLMIDAll (PLMIDSet)
+  let PLMIDSetForXPDM2 (PLMIDSet)
+
+  PLMIDSetRootRef = Restrict(iPLMIDSet, "DELLmiProductionSystem/DELLmiProductionSystemReference") + Restrict(iPLMIDSet, "DELLmiProductionHeaderProcessAbstract/DELLmiPPRHeaderProcessReferenceAbstract") 
+  
+  /* get root with scope */
+  PLMIDSetRootWithScope = ExecuteJavaProcedure("com.dassault_systemes.platform.model.process.procedures.ProcedureCalls_GetSystemWithScope", PLMIDSetRootRef)
+
+  /* expand the root with scope system/operation/workinstruction/Time Analysis */
+  PLMRouteSetExpandWithScope = ExecutePLMFunction("DELLmiProductionSystemAbstract", "ENOPsm_ProductionSystem_expandForExecution", PLMIDSetRootWithScope)
+  PLMIDSetExpandWithScope = Ids(PLMRouteSetExpandWithScope,"all") 
+
+  /* get root with no scope on MBOM, expand, and comlete with path of implementing operations with no scope on MBOM*/
+  PLMIDSetExpandWithoutScopeOnMBOM = ExecuteJavaProcedure("com.dassault_systemes.platform.model.process.procedures.ProcedureCalls_GetSystemWithoutScope", PLMIDSetRootRef)
+
+  /* get root with no scope from Resource, expand, and comlete with path of implemented operations with no scope from Resource*/
+  PLMIDSetExpandWithoutScopeFromRes = ExecuteJavaProcedure("com.dassault_systemes.platform.model.process.procedures.ProcedureCalls_GetSystemWithoutResourceScope", PLMIDSetRootRef)
+
+  /* Launch XPDM2 completion*/
+  PLMIDSetForXPDM2 = iPLMIDSet + PLMIDSetExpandWithScope + PLMIDSetExpandWithoutScopeOnMBOM + PLMIDSetExpandWithoutScopeFromRes
+  PLMIDAll = ExecutePLMProcedure( "ProductionSystem_ExchangeXPDM_XPDM2", PLMIDSetForXPDM2 )
+
+  oPLMIDSet = PLMIDSetForXPDM2 + PLMIDAll 
+}

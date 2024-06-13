@@ -1,0 +1,28 @@
+################################################################################################
+# Create By thok 2023. 06. 07
+# Admin Type : command
+# Name : decProjectSafetyStaticsView
+################################################################################################
+#del command 'decProjectSafetyStaticsView';
+add command 'decProjectSafetyStaticsView'
+	description 'ProjectSafetyStaticsView'
+	label 'emxProgramCentral.Label.safetyStaticsView'
+	href '${COMMON_DIR}/emxIndentedTable.jsp?pageSize=300&program=emxProjectSpace:getProjectSelect&table=decProjectSafetyStaticsList&header=emxProgramCentral.Label.safetyStaticsView&toolbar=decProjectSafetyStaticsToolbar&HelpMarker=emxhelpprogramlist&Export=true&sortColumnName=CutOffWeek&sortDirection=descending&StringResourceFileId=emxProgramCentralStringResource&select=Project.selectSafetyStatics&editLink=true&freezePane=Empty,CutOffWeek,Date'
+	alt 'emxProgramCentral.Label.viewSafetyStatics'
+	setting 'Registered Suite' 'ProgramCentral'
+	setting 'Target Location' 'content'
+;
+add property 'command_decProjectSafetyStaticsView' on prog eServiceSchemaVariableMapping.tcl to command 'decProjectSafetyStaticsView'
+;
+
+# Modified By thok : 2023. 09. 09
+mod command decProjectSafetyStaticsView
+	add setting 'hasAccess' 'PIM'
+	add setting 'Access Program' 'decAccess' 
+	add setting 'Access Function' 'hasAccess'
+;
+
+# Modified By thok : 2023. 10. 11
+mod command decProjectSafetyStaticsView
+	href '${COMMON_DIR}/emxIndentedTable.jsp?pageSize=300&program=emxProjectSpace:getProjectSelect&table=decProjectSafetyStaticsList&header=emxProgramCentral.Label.safetyStaticsView&toolbar=decProjectSafetyStaticsToolbar&HelpMarker=emxhelpprogramlist&Export=true&sortColumnName=Date&sortDirection=descending&StringResourceFileId=emxProgramCentralStringResource&select=Project.selectSafetyStatics&editLink=true&freezePane=Empty,CutOffWeek,Date'
+;

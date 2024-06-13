@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:widget="http://www.netvibes.com/ns/">
+<!-- Copyright 2018 , Dassault Systemes. All rights reserved. -->
+<head>
+
+    <title>3DSearch & 6WTags Control Center</title>
+
+    <!-- Application Metas Start -->
+    <meta name="description" content="Search control center settings " />
+    <!-- Prevent autoRefresh -->
+    <meta name="autoRefresh" content="0" />
+    <!-- Application Metas End -->
+    <!-- Application Standalone emulation files -->
+    <link rel="stylesheet" type="text/css" href="../c/UWA/assets/css/standalone.css" />
+    <link rel="stylesheet" type="text/css" href="../UIKIT/UIKIT.css" />
+
+    <script type="text/javascript" src="../c/UWA/js/UWA_Standalone_Alone.js"></script>
+    <script type="text/javascript" src="../AmdLoader/AmdLoader.js"></script>
+    <script type="text/javascript" src="../WebappsUtils/WebappsUtils.js"></script>
+
+    <!-- Application JS Start -->
+    <script type="text/javascript">
+        /* global widget */
+        'use strict';
+
+        require([
+            'DS/SearchControlCenter/scripts/SearchControlCenterWidget'
+        ],
+        function ( SearchControlCenterWidget ) {
+            /*
+            * Widget events
+            */
+            widget.addEvents({
+                onLoad: function () {
+                    SearchControlCenterWidget.onLoad();
+                },
+                onRefresh: function () {
+                    SearchControlCenterWidget.onRefresh();
+                },
+                onViewChange: function () {
+                    SearchControlCenterWidget.onViewChange();
+                }
+            });
+        });
+
+    </script>
+    <!-- Application JS End -->
+</head>
+<body>
+    <p>Loading...</p>
+</body>
+
+</html>

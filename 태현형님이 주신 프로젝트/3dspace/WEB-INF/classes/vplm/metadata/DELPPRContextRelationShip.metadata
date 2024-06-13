@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+
+<!-- ENOVIA DICTIONARY FOR DELMIA Production System Application -->
+<!-- COPYRIGHT DASSAULT SYSTEMES 2008, All rights reserved -->
+<Package xmlns="PLMDictionaryUnified"
+         ModelerType="Top"
+         Name="DELPPRContextRelationShip"
+	       Uuid="423FE120-3ADC-4F5C-95FE-4669E34082BB"
+         BelongsToModeler="DELPPRContextModel"
+	       UseNames="ERCoreModeler"
+         CustomerExposition="Programmer"
+         Architecture="All">
+
+  <CAAComment>
+    <ShortRole>Serialization model </ShortRole>
+    <Role>This package describes the Serialization model</Role>
+  </CAAComment>
+
+ 
+  <RelationClass Name="DELIsFilteredBy"
+		     Uuid="1495720A-DF4D-41AC-B1FD-E766790A9D80"
+		     Abstract="No"
+    		 SuperName="RelationType"
+         CustomerExposition="ProgrammerOnly" 
+         Specializable="No"
+		     CustomerExtensible="No"
+         DeleteAvailability="No">
+
+    <Property Name="LockUnlockAvailability"    Value="No"/>
+    <Property Name="TransferOwnerShipAvailability"    Value="No"/>
+    <Property Name="EditPropertiesAvailability"    Value="No"/>
+    <Property Name="SaveAsNewAvailability"    Value="No"/>
+    <Property Name="ChangeManagementSupport"    Value="No"/>
+    <Property Name="ChangeManagementReferential"    Value="No"/>
+    <Property Name="ChangeManagementContext"    Value="No"/>
+    <Property Name="Configurable"    Value="No"/>
+    <Property Name="NewMinorRevisionAvailability"    Value="No"/>
+    <Property Name="NewMajorRevisionAvailability"    Value="No"/>
+    <Property Name="EvolutionAvailability"    Value="No"/>
+    <Property Name="IterationAvailability"    Value="No"/>
+    <Property Name="ManageAccessAvailability"    Value="No"/>
+    <Property Name="ShareBetweenProjectsAvailability"    Value="No"/>
+    <Property Name="DuplicateAvailability"    Value="Yes"/>
+    <Property Name="ChangeMaturityAvailability"    Value="No"/>
+
+    <SubClause Name="fromrel"   TargetName="VPMInstance"/>
+    <SubClause Name="from"   TargetName="PPRContextProcessCnxDisc"/>
+    <SubClause Name="from"   TargetName="PPRContextSystemCnxDisc"/>
+    <SubClause Name="to"   TargetName="BusinessType"/>
+
+    <Method ImplementationType="None">
+      <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+    </Method>
+    <Method ImplementationType="None">
+      <RealizeMethodType href="ExchangeScope.meth#ExchangeScope"/>
+    </Method>
+
+  </RelationClass>
+
+</Package>

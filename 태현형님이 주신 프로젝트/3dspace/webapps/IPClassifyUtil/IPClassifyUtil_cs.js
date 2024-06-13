@@ -1,0 +1,1 @@
+define("DS/IPClassifyUtil/IPClassifyUtil_cs",{});define("DS/IPClassifyUtil/assets/nls/IPClassifyUtil",{msg_InfoAction_Timeout:"Ze spuštěné akce nebyla během časového limitu přijata žádná odpověď, její provedení může trvat déle. Výsledek může být viditelný za okamžik po ruční aktualizaci"});

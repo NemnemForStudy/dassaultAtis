@@ -1,0 +1,238 @@
+###230418 Created By CMG
+
+#delete table decVPDocumentStatusTable system;
+add table decVPDocumentStatusTable system
+column 
+    name 'DOC_NO'
+    label 'emxFramework.Label.Docno'
+    setting 'Registered Suite' 'Framework'
+    setting 'Target Location' 'popup'
+    setting 'Width' '240'
+    setting "Auto Filter" false
+    setting "Sortable" false
+    setting "Printer Friendly" false
+    setting "Column Type" "programHTMLOutput"
+    setting 'function' 'findDeliverableDocFilePreview'
+    setting 'program' 'decInterfaceDV'
+column
+    name 'REVISION'
+    bus '$<revision>'
+    label 'emxFramework.Label.Rev'
+    setting 'Registered Suite' 'Framework'
+    setting "Field Type" "policy"
+    setting 'Width' '80'
+column
+    name 'DOC_TITLE'
+    bus '$<description>'
+    label 'emxFramework.Label.DOC_TITLE'
+    setting 'Registered Suite' 'Framework'
+    setting "Field Type" "basic"
+column
+    name 'DCPLN_NM'
+    bus '$<attribute[decDiscipline]>'
+    label 'emxFramework.Label.DCPLN_NM'
+    setting 'Registered Suite' 'Framework'
+    setting 'Admin Type' 'basic'
+    setting "Field Type" "attribute"
+column
+    name 'UNIT_NM_DOC'
+    bus '$<attribute[decUnitNmDoc]>'
+    label 'emxFramework.Label.DOC_DWG_AREA_NM'
+    setting 'Registered Suite' 'Framework'
+    setting 'Admin Type' 'basic'
+    setting "Field Type" "attribute"
+column
+    name 'DWG_AREA_NM_DOC'
+    bus '$<attribute[decDwgAreaNmDoc]>'
+    label 'emxFramework.Label.UNIT_NM_DOC'
+    setting 'Registered Suite' 'Framework'
+    setting 'Admin Type' 'basic'
+    setting "Field Type" "attribute"
+column
+    name 'PO_NO'
+    bus '$<attribute[decPO_No]>'
+    label 'emxFramework.Label.PO_NO'
+    setting 'Registered Suite' 'Framework'
+    setting 'Admin Type' 'basic'
+    setting "Field Type" "attribute"
+    setting 'Width' '120'
+column
+    name 'DOC_TYPE_NM'
+    bus '$<attribute[decDocType]>'
+    label 'emxFramework.Label.DOC_TYPE_NM'
+    setting 'Registered Suite' 'Framework'
+    setting 'Admin Type' 'basic'
+    setting "Field Type" "attribute"
+    setting 'Width' '150'
+column
+    name 'SUB_DOCNO'
+    bus '$<attribute[decSubDocNo]>'
+    label 'emxFramework.Label.SUB_DOCNO'
+    setting 'Registered Suite' 'Framework'
+    setting 'Admin Type' 'basic'
+    setting "Field Type" "attribute"
+    setting 'Width' '150'
+column
+    name 'ADD_DOCNO'
+    bus '$<attribute[decAddDocNo]>'
+    label 'emxFramework.Label.ADD_DOCNO'
+    setting 'Registered Suite' 'Framework'
+    setting 'Admin Type' 'basic'
+    setting "Field Type" "attribute"
+    setting 'Width' '150'
+column 
+    name 'newWindow'
+    href '${COMMON_DIR}/emxTree.jsp'
+    setting 'Auto Filter' false
+    setting 'Registered Suite' 'Framework'
+    setting 'Column Icon' 'images/iconSmallNewWindow.png'
+    setting 'Column Type' 'icon'
+    setting 'Target Location' 'popup'
+    setting 'Sortable' 'false'
+column
+    name 'Download'
+    label 'emxFramework.Label.Download'
+    setting 'Registered Suite' 'Framework'
+    setting "Auto Filter" false
+    setting "Sortable" false
+    setting "Printer Friendly" false
+    setting "Column Type" "programHTMLOutput"
+    setting 'function' 'findDeliverableDocFileDownload'
+    setting 'program' 'decInterfaceDV'
+    setting 'Width' '100'
+column
+    name 'TITLE_GRP'
+    bus '$<attribute[decTagNumber]>'
+    label 'emxFramework.Label.TITLE_GRP'
+    setting 'Registered Suite' 'Framework'
+    setting 'Admin Type' 'basic'
+    setting "Field Type" "attribute"
+    setting 'Width' '80'
+column
+    name 'CUST_SBMT_YN'
+    bus '$<attribute[decCustomSBMT_YN]>'
+    label 'emxFramework.Label.CUST_SBMT_YN'
+    setting 'Registered Suite' 'Framework'
+    setting 'Field Type' 'basic'
+    setting 'Target Location' 'popup'
+    setting 'Admin Type' 'attribute'    
+column
+    name 'IMPT_DOC_YN'
+    bus '$<attribute[decIMPTDoc_YN]>'
+    label 'emxFramework.Label.IMPT_DOC_YN'
+    setting 'Registered Suite' 'Framework'
+    setting 'Field Type' 'basic'
+    setting 'Admin Type' 'attribute'
+column
+    name 'DES_DOC_YN'
+    bus '$<attribute[decDESDoc_YN]>'
+    label 'emxFramework.Label.DES_DOC_YN'
+    setting 'Registered Suite' 'Framework'
+    setting 'Field Type' 'basic'
+    setting 'Admin Type' 'attribute'
+column
+    name 'EXCWK_DOC_YN'
+    bus '$<attribute[decEXCWKDoc_YN]>'
+    label 'emxFramework.Label.EXCWK_DOC_YN'
+    setting 'Registered Suite' 'Framework'
+    setting 'Field Type' 'basic'
+    setting 'Admin Type' 'attribute'
+column
+    name 'REVISN_REG_YMD'
+    bus '$<attribute[decReviseDate]>'
+    label 'emxFramework.Label.REVISN_REG_YMD'
+    setting 'Registered Suite' 'Framework'
+    setting 'format' date
+    setting 'Field Type' 'basic'
+    setting 'Admin Type' 'attribute'
+column
+    name 'WORKFLOW'
+    bus '$<attribute[decWorkFlow]>'
+    label 'emxFramework.Label.WORKFLOW'
+    setting 'Registered Suite' 'Framework'
+    setting 'Field Type' 'basic'
+    setting 'Admin Type' 'attribute'
+    setting 'Width' '100'
+column
+    name 'PLAN'
+    bus '$<attribute[decPlanDate]>'
+    label 'emxFramework.Label.PLAN'
+    setting 'Registered Suite' 'Framework'
+    setting 'format' date
+    setting 'Admin Type' 'attribute'
+column
+    name 'FORECAST'
+    bus '$<attribute[decForecastDate]>'
+    label 'emxFramework.Label.FORECAST'
+    setting 'Registered Suite' 'Framework'
+    setting 'format' date
+    setting 'Admin Type' 'attribute'
+column
+    name 'ACTUAL'
+    bus '$<attribute[decActualDate]>'
+    label 'emxFramework.Label.ACTUAL'
+    setting 'Registered Suite' 'Framework'
+    setting 'format' date
+    setting 'Admin Type' 'attribute'
+column
+    name 'NEXT_ACTION'
+    bus '$<attribute[decNextAction]>'
+    label 'emxFramework.Label.NEXT_ACTION'
+    setting 'Registered Suite' 'Framework'
+    setting 'Field Type' 'basic'
+    setting 'Admin Type' 'attribute'
+column
+    name 'NEXT_ACTION_PLAN'
+    bus '$<attribute[decNextActionPlanDate]>'
+    label 'emxFramework.Label.NEXT_ACTION_PLAN'
+    setting 'Registered Suite' 'Framework'
+    setting 'Admin Type' 'attribute'
+column
+    name 'TURNOVER(Y/N)'
+    bus '$<attribute[decTurnover_YN]>'
+    label 'emxFramework.Label.TURNOVER(Y/N)'
+    setting 'Registered Suite' 'Framework'
+    setting 'Admin Type' 'attribute'
+    setting 'Input Type' 'combobox'
+    setting 'Field Type' 'attribute'
+    setting 'Range Program' 'decInterfaceDV'
+    setting 'Range Function' 'getTurnOverYN'
+    setting 'Editable' true
+    setting 'Width' '140'
+column
+    name 'CWP_NO'
+    label 'emxFramework.Label.CWP_NO'
+    setting 'Registered Suite' 'Framework'
+    setting "Column Type" "programHTMLOutput"
+    setting 'function' 'popupTree'
+    setting 'program' 'decInterfaceDV'   
+    setting 'Width' '100'
+column
+    name 'EWP_NO.'
+    bus '$<attribute[decEWPNo]>'
+    label 'emxFramework.Label.EWP_NO'
+    setting 'Registered Suite' 'Framework'
+    setting 'Field Type' 'basic'
+    setting 'Admin Type' 'attribute'
+    setting 'Width' '120'
+column
+    name 'IWP NO.' 
+    bus '$<attribute[decIWPNumber]>'
+    label 'emxFramework.Label.IWP_NO'
+    href "${COMMON_DIR}/emxTree.jsp"
+    setting 'Registered Suite' 'Framework'
+    setting 'Input Type' 'combobox'
+    setting 'Field Type' 'attribute'
+    setting 'Access Function' 'accessColumnIwpNumber'
+    setting 'Access Program' 'decInterfaceDV'	   
+    setting 'Range Program' 'decInterfaceDV'
+    setting 'Range Function' 'getIWPNumber'
+    setting 'Update Program' 'decInterfaceDV'
+    setting 'Update Function' 'updateIWPNumberCheck'
+    setting 'Editable' true
+    setting 'Width' '200'
+    setting 'Alternate OID expression' 'to[Task Deliverable].from[decIWPTask].id' 
+;
+
+mod table decVPDocumentStatusTable system column  mod name 'IWP NO.' setting 'Edit Access Program'  'decInterfaceDV';
+mod table decVPDocumentStatusTable system column  mod name 'IWP NO.' setting 'Edit Access Function' 'isCWPTable';

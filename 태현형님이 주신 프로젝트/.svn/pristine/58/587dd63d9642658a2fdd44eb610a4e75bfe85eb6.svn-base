@@ -1,0 +1,16 @@
+{
+  "version": "1.0.0",
+  "summary": "Active le port de contrôle de sortie dès que l'un des ports de contrôle d'entrée a été activé. Cette activation ne se produit qu'une seule fois. Lorsque les autres ports de contrôle d'entrée sont activés par la suite, rien ne se produit. Renvoie la valeur de données d'entrée correspondante, en fonction du port de contrôle d'entrée activé.",
+  "description": "Ce bloc étant dynamique, le nombre de données d'entrée peut être modifié à l'aide de la boîte de dialogue de configuration du bloc.<br>Le nombre de ports de contrôle d'entrée est synchronisé sur le nombre de ports de données d'entrée.<br>Le port de données traite tous les types de valeur.<br><br>Si <doc-icp-name translate=no>In1</doc-icp-name> est activé, la valeur des données de sortie <doc-odp-name translate=no>SelectedValue</doc-odp-name> sera définie sur <doc-idp-name translate=no>Value1</doc-idp-name>.<br>Si <doc-icp-name translate=no>In2</doc-icp-name> est activé, la valeur des données de sortie <doc-odp-name translate=no>SelectedValue</doc-odp-name> sera définie sur <doc-idp-name translate=no>Value2</doc-idp-name>.<br>, etc.<br>De manière générale, si <doc-icp-name translate=no>InK</doc-icp-name> est activé, la valeur des données de sortie <doc-odp-name translate=no>SelectedValue</doc-odp-name> sera définie sur <doc-idp-name translate=no>ValueK</doc-idp-name>.",
+  "dataPorts": {
+    "Value1": "la première valeur des données d'entrée.",
+    "Value2": "la deuxième valeur des données d'entrée.",
+    "SelectedValue": "la valeur des données sélectionnée."
+  },
+  "controlPorts": {
+    "In1": "déclenche l'exécution du bloc.",
+    "In2": "déclenche l'exécution du bloc.",
+    "Out": "est activé lorsque le processus est terminé."
+  },
+  "example": null
+}

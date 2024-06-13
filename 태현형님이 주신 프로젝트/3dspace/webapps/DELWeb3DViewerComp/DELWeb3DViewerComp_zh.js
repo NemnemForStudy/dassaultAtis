@@ -1,0 +1,1 @@
+define("DS/DELWeb3DViewerComp/DELWeb3DViewerComp_zh",{});define("DS/DELWeb3DViewerComp/assets/nls/messages",{"Error.InvalidInput.Message":"提供的输入无效","Error.Viewer.NotInitialized":"查看器部件未初始化","Warn.WKIFailed.Message":"没有要显示的工作指令视图","Facet.work_instructions.Text":"工作指令"});

@@ -1,0 +1,1 @@
+define("DS/VCXWebVolatileGhosting/VCXWebVolatileGhosting_en",{});define("DS/VCXWebVolatileGhosting/assets/nls/VCXWebVolatileGhosting",{VCXVolatileGhostingCmd:"Ghosting"});

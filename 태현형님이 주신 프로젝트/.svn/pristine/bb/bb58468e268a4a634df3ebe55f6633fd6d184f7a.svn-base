@@ -1,0 +1,175 @@
+.search-preview-ctx-actions-dropdown-container.dropdown-menu.dropdown-menu-root.dropdown.dropdown-root {
+  //z-index: 10000 !important;
+  @media screen and (max-width: 639px) {
+    top: 41px;
+  }
+}
+.dropdown-menu.dropdown-menu-root.bottom-left, .dropdown-menu.dropdown-menu-root.bottom-right {
+  //z-index: 10000 !important;
+}
+// OLC not happy with that but no choice with 3DSpace web app, search=>z-index=1300, topbar=>1301, lightbox=>1302 
+// but conflict with z-index 1302 set by BPS in their CSS for dropdown, tooltip, popover,...
+// so had to increment their z-index to be able to put lightbox in between
+body .dropdown, body .drop-down-actions-container, body .tooltip, body .popover, body .modal, body ul.icon-dropdown, body .dropdown-menu {
+  z-index: 1303 !important;
+
+  @media screen and (max-width: 480px) { //FUN129157 - Calibrate behavior for Mobile/tablet/desktop
+    /*transform: translateX(100vw) !important;*/
+  }
+  @media screen and (min-width: 767px) and (max-width: 1024px) { //FUN129157 - Calibrate behavior for Mobile/tablet/desktop
+    transform: translateX(0vw) !important;
+  }
+  @media screen and (orientation:landscape) { //FUN129157 - Calibrate behavior for Mobile/tablet/desktop
+    transform: translateX(0vw) !important;
+  }
+}
+
+#search-lightbox .wux-layouts-lightbox-overlay {
+  z-index: inherit !important;
+}
+
+.fav-search-popover {
+  z-index: 1303 !important;
+}
+
+.lightbox-bar__compass.lightbox-bar__compass--disabled {
+  pointer-events: none;
+}
+
+
+#search-lightbox {
+  z-index: 1302;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+
+  .vu-lightbox {
+    z-index: inherit !important;
+
+    .vu-lightbox-bar {
+      .thumbnail-section {
+        width: 36px;
+        height: 100%;
+        background-repeat: no-repeat;
+        background-size: 36px;
+        background-position: center;
+      }
+    }
+    // Content viewer
+    .lightbox__content {
+      overflow: auto;
+
+      #lightbox--content {
+        width: 100%;
+        height: 100%;
+
+        .wux-layouts-carousel-header {
+          display: none;
+        }
+
+        div.wux-layouts-carousel-rel {
+          height: 100% !important;
+        }
+
+        .preview-img {
+          text-align: center;
+          width: 100%;
+          height: 100%;
+          background-position: center;
+          background-repeat: no-repeat;
+          font-family: '3ds'
+        }
+
+        .preview-img .preview-img__title {
+          position: absolute;
+          bottom: 3em;
+          width: 100%;
+          font-size: x-large;
+          color: #77797c;
+          user-select: none
+        }
+
+        .preview-img .preview-img__description {
+          position: absolute;
+          bottom: 2em;
+          width: 100%;
+          font-size: large;
+          font-style: italic;
+          opacity: .5;
+          color: #77797c;
+          user-select: none
+        }
+      }
+    }
+    // Information panel
+    .vu-panel.lightbox__panel.column {
+      .moduleWrapper {
+        height: 100%;
+      }
+
+      .panel__content.vu-dynamic-panel-wrap-information {
+        height: 100%;
+
+        .searchPreviewProperties.EditProp_MasterContain.editProp_all {
+          padding-top: 20px;
+
+          .IDCardTopTableContainer {
+            display: none;
+          }
+        }
+
+        #lightbox--information-panel {
+          height: 100%;
+
+          .searchSignatureZone {
+            margin: 10px 10px 0 10px;
+            line-height: 38px;
+            max-height: 38px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+            display: flex;
+
+            .user-picture-view-container {
+              background: linear-gradient(90deg, white 50%, transparent 50%);
+              display: inline-block;
+              min-width: 38px;
+
+              .e-nopicture {
+                width: 38px !important;
+                margin-top: -2px;
+                border-radius: 50%;
+                height: auto;
+                border: none;
+              }
+            }
+
+            .user-subtitle {
+              margin-left: 10px;
+              font-size: 14px;
+              font-family: arial;
+              text-align: left;
+              margin-bottom: 4px;
+              color: #77797c;
+              text-overflow: ellipsis;
+              overflow: hidden;
+              white-space: nowrap;
+              user-select: none;
+
+              .labelOnAttributeString {
+                display: none;
+              }
+            }
+          }
+
+          .searchPreviewInformationZone {
+            height: calc(100% - 38px);
+
+            .lightbox__preview-properties {
+              height: 100%;
+            }
+          }
+        }
+      }
+    }
+  }
+}

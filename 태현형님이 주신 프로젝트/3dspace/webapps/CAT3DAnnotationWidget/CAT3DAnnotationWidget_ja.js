@@ -1,0 +1,1 @@
+define("DS/CAT3DAnnotationWidget/CAT3DAnnotationWidget_ja",{});define("DS/CAT3DAnnotationWidget/assets/nls/CAT3DAnnotationWidget",{customApp:"アプリケーションをカスタマイズ",prefs:"プリファレンス",difAnnotSet:"注釈セットを開く"});

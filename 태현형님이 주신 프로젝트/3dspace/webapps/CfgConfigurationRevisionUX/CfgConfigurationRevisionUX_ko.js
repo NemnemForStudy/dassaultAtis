@@ -1,0 +1,1 @@
+define("DS/CfgConfigurationRevisionUX/CfgConfigurationRevisionUX_ko",{});define("DS/CfgConfigurationRevisionUX/assets/nls/CfgConfigurationRevisionUX",{CFG_REV_ACTION_OK:"확인",CFG_REV_ACTION_CANCEL:"취소",CFG_REV_WARNING_DIALOG_HEADER:"경고",CFG_REV_RESET_MESSAGE:"저장하지 않은 사양 리비전 변경 내용이 제거됩니다.",CFG_REV_RESET_QUESTION:"계속 진행하시겠습니까?",CFG_REV_LOADER_LABEL:"로드 중..."});

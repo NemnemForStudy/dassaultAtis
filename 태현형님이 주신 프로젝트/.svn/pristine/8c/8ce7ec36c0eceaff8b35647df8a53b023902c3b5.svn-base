@@ -1,0 +1,1 @@
+define("DS/3DPlayWidgetModel/3DPlayWidgetModel_zh-TW",{});define("DS/3DPlayWidgetModel/assets/nls/prefs",{Label:"3DSpace 幾何的偏好品質",auto:"自動",base:"高品質",index:"低品質",displayCandidateQueue:"顯示載入方塊"});

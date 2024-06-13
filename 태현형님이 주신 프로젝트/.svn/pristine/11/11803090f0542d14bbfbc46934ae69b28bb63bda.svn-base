@@ -1,0 +1,42 @@
+# Added by hslee on 2023.07.25
+# del attribute decProjectStatus;
+add attribute decProjectStatus
+	type string
+	range value 'In-Progress'
+	range value 'Win'
+	range value 'Withdraw'
+	range value 'Exclude'
+	range value 'Fail'
+	range value 'Completed'
+	range value 'Hold'
+;
+add property attribute_decProjectStatus on program eServiceSchemaVariableMapping.tcl to attribute 'decProjectStatus'
+;
+
+# Modified by thok on 2023.09.04
+mod attribute decProjectStatus
+	add range value ''
+;
+
+# Modified by thok on 2023.09.04
+mod attribute decProjectStatus
+	remove range value ''
+	remove range value 'In-Progress'
+	remove range value 'Win'
+	remove range value 'Withdraw'
+	remove range value 'Exclude'
+	remove range value 'Fail'
+	remove range value 'Completed'
+	remove range value 'Hold'
+;
+
+mod attribute decProjectStatus
+	add range value ''
+	add range value 'In-Progress'
+	add range value 'Win'
+	add range value 'Withdraw'
+	add range value 'Exclude'
+	add range value 'Fail'
+	add range value 'Completed'
+	add range value 'Hold'
+;

@@ -1,0 +1,1 @@
+define("DS/ENORIPE/ENORIPE_NavColumn_cs",{});define("DS/ENORIPE_NavColumn/assets/nls/ENORIPE_NavColumn",{hasNONPS:"Má související objekty"});

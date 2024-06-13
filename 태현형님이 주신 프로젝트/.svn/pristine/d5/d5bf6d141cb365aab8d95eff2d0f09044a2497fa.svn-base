@@ -1,0 +1,9 @@
+m|SWXWebPlatformApi\SWXWebPlatformSearchApi.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.0.22078|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\SWXWebPlatformSearchApi\SWXWebPlatformSearchApi.js|1647692229|1182
+s|SWXWebPlatformApi\SWXWebPlatformSearchApi.mweb\src\SWXWebSearchFilterApi.js|1507578463|3321
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

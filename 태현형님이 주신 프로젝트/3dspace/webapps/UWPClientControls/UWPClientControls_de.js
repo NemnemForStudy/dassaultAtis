@@ -1,0 +1,1 @@
+define("DS/UWPClientControls/UWPClientControls_de",{});define("DS/UWPClientControls/assets/nls/tooltips",{menu:"Menü",addTab:"Registerkarte hinzufügen"});

@@ -1,0 +1,39 @@
+### 230428 created by cmg
+
+### print form  PMCCreateProjectFromFileForm !hist;
+
+delete form decFileImportForm;
+
+add form decFileImportForm web
+ field
+  name 'FilePath'
+  label 'emxFramework.Form.decCodeMastserImport'
+  setting "Field Type" 'programHTMLOutput'
+  setting 'Input Type' 'textbox'
+  setting 'Registered Suite' 'Framework'
+  setting "function" "getImportField"
+  setting "program" "decCodeMaster"
+ field
+  name TypeActualDisplay
+  bus 'type'
+  setting 'Admin Type' Type
+  setting 'Field Type' basic
+  setting 'Registered Suite' 'Framework'
+  setting "Access Expression" "false"
+field
+ name Name
+ label 'emxProgramCentral.Common.Name'
+ bus 'name'
+ setting "Field Type" "basic"
+ setting 'Registered Suite' 'Framework'
+ setting "Access Expression" "false"
+field
+ name Policy
+ bus 'policy'
+ label 'emxProgramCentral.Common.Policy'
+ setting "Field Type" "basic"
+ setting 'Registered Suite' 'Framework'
+ setting "Access Expression" "false";
+ 
+   range '${COMMON_DIR}/decCodeMasterImport.jsp'
+ 

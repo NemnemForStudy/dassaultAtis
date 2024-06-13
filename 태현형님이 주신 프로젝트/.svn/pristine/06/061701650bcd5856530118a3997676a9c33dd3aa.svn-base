@@ -1,0 +1,1 @@
+define("DS/WAfrControls/WAfrControls_it",{});define("DS/WAfrControls/assets/nls/controls",{NLS_TaskProgressBarCloseButtonDefaultTooltip:"Annulla"});

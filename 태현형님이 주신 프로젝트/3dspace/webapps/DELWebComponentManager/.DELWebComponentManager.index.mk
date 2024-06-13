@@ -1,0 +1,16 @@
+m|DELWebUIComponents\DELWebComponentManager.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.3.23044|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\DELWebComponentManager\DELWebComponentManager.js|1676326045|9157
+s|DELWebUIComponents\DELWebComponentManager.mweb\src\DELWebComponent.js|1666005283|1505
+t|win_b64\webapps\DELWebComponentManager\assets\json\StandardComponents.json|1676090244|304
+s|DELWebUIComponents\DELWebComponentManager.mweb\src\assets\json\StandardComponents.json|1674215924|304
+u|DELWebUIComponents\DELWebComponentManager.mweb\src\DELWebComponentManager.js|1674212112|11223
+u|DELWebUIComponents\DELWebComponentManager.mweb\src\DELWebLinkManager.js|1670324681|9261
+u|DELWebUIComponents\DELWebComponentManager.mweb\src\DELWebModel.js|1674466762|3066
+u|DELWebUIComponents\DELWebComponentManager.mweb\src\DELWebTypesUtil.js|1675776932|2812
+u|DELWebUIComponents\DELWebComponentManager.mweb\src\XSOManager.js|1655882554|1648
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

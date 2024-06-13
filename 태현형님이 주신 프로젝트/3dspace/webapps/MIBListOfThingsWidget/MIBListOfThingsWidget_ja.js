@@ -1,0 +1,1 @@
+define("DS/MIBListOfThingsWidget/MIBListOfThingsWidget_ja",{});define("DS/MIBListOfThingsWidget/assets/nls/MIBListOfThingsWidgetNls",{CommandDialogTitle:"事物のリスト",BtnOK:"OK",BtnCancel:"キャンセル"});

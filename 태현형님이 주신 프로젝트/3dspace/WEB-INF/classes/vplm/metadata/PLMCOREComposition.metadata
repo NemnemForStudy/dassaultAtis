@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!-- COPYRIGHT DASSAULT SYSTEMES 2021, All rights reserved -->
+
+<Package xmlns="PLMDictionaryUnified" Name="PLMCOREComposition"
+    Uuid="652BD2AA-3B24-4B6E-B76E-1A7D12AA7867"
+    UseNames="ERCoreModeler"
+    CustomerExposition="Programmer"
+    ModelerType="Top"
+	Architecture="All">
+ 
+	<RelationClass
+	Uuid="778FCE48-A6B5-4855-B172-B72519265DD9"
+    Name="PLMCoreRepComposition"
+    SuperName="RelationType"
+	CustomerExposition="ProgrammerOnly"
+    Abstract="No"
+	Specializable="No"
+	CustomerExtensible="No"
+	RelationNature="Aggregation">
+		<Property Name="IsSynchronizable" Value="No"/>
+		<Property Name="LockUnlockAvailability" Value="No"/>
+		<Property Name="TransferOwnershipAvailability" Value="No"/>
+		<SubClause Name="from" TargetName="PLMCoreReference"/>
+		<SubClause Name="to" TargetName="CAATechnologicalRepresentation"/>
+		<SubClause Name="to" TargetName="XCADAssemblyRepReference"/>
+	    <Method ImplementationType="None">
+		    <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+	    </Method>
+    </RelationClass>
+</Package>
+

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:widget="http://www.netvibes.com/ns/">
+<head>
+
+    <!-- Application Metas -->
+    <title>Web Page Reader</title>
+    <meta name="version" content="1.1" />
+    <meta name="apiVersion" content="1.4" />
+    <meta name="debugMode" content="false" />
+    <meta name="autoRefresh" content="0" />
+    <meta name="noSearchInWidgetUI" content="true" />
+
+    <script type="text/javascript" src="../UIKIT/UIKIT.js"></script>
+    <link rel="stylesheet" href="../UIKIT/UIKIT.css" type="text/css" />
+
+    <script type="text/javascript" src="../AmdLoader/AmdLoader.js"></script>
+    <link rel="stylesheet" type="text/css" href="../c/UWA/assets/css/standalone.css" />
+
+    <script type="text/javascript" src="../c/UWA/js/UWA_Standalone_Alone.js"></script>
+
+    <widget:preferences>
+        <widget:preference name="title" type="text" label="Title_html" defaultValue="" />
+        <widget:preference name="x3dTitleShowAppName" type="boolean" label="displayAppName_html" defaultValue="true" />
+        <widget:preference name="webUrl" type="text" label="WebURL_html" defaultValue="" />
+        <widget:preference name="scrolling" type="list" label="Scrolling_html" defaultValue="auto">
+            <widget:option value="no" label="No_html" />
+            <widget:option value="auto" label="Auto_html" />
+        </widget:preference>
+        <widget:preference name="suppressMessages" type="boolean" label="SuppressMessages_html" defaultValue="false" />
+        <widget:preference name="suppressBookmarklet" type="boolean" label="SuppressBookmarklet_html" defaultValue="false"/>
+    </widget:preferences>
+
+    <script type="text/javascript">
+        /*global require, widget*/
+        require([ 'WebPageWdg/WebPage' ], function(WebPage) {
+            'use strict';
+
+            widget.addEvents({
+                onLoad: WebPage.load,
+                onRefresh: WebPage.load
+            });
+        }
+    );
+    </script>
+</head>
+ <body></body>
+</html>

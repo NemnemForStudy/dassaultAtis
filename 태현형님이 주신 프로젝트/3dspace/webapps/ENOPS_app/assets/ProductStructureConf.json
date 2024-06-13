@@ -1,0 +1,176 @@
+{
+    "settings": {
+        "readOnlyApp": {
+            "value": false
+        },
+        "WSAccessV2": {
+            "value": true
+        },
+        "intent": {
+            "value": "explore_2D"
+        },
+        "activateWP": {
+            "value": true
+        },
+        "dgvOptions": {
+            "value": {
+                "viewMode": "comfortable",
+                "rowsHeader": true,
+                "dgv": {
+                    "defaultColumnDef": {
+                        "width": "auto",
+                        "typeRepresentation": "string"
+                    },
+                    "showContextualMenuColumnFlag": false,
+                    "showRowBorderFlag": true,
+                    "cellDragEnabledFlag": true,
+                    "rowDragEnabledFlag": true,
+                    "rowReorderEnabledFlag": true,
+                    "alternateBackgroundFlag": false,
+                    "showRowIndexFlag": false,
+                    "rowSelection": "multiple",
+                    "cellSelection": "none",
+                    "showSelectionCheckBoxesFlag": true,
+                    "rowGroupingOptions": {
+                        "depth": 1,
+                        "hideGroupedColumns": false
+                    },
+                    "treeNodeCellOptions": {
+                        "buildLinks": true,
+                        "expanderStyle": "classic",
+                        "depthIncrement": 25
+                    },
+                    "selectionBehavior": {
+                        "canInteractiveMultiselectWithCheckboxClick": true,
+                        "canMultiSelect": true,
+                        "enableFeedbackForActiveCell": true,
+                        "enableShiftSelection": true,
+                        "toggle": false,
+                        "unselectAllOnEmptyArea": true
+                    },
+                    "placeholder": "",
+                    "columns": []
+                },
+                "dgvLayout": {
+                    "rowsHeader": true,
+                    "useLastColumnWidthAutoFlag": true
+                },
+                "useAsyncPreExpand": true,
+                "activateFilterView": true,
+                "columnsDefaultfilterDefinition": {
+                    "excluded": ["ds6w:reserved", "ds6w:reserved-Instance", "ds6w:created", "ds6w:created-Instance", "ds6w:modified", "ds6w:modified-Instance"],
+                    "set": ["ds6w:responsible", "ds6wg:revision", "ds6w:cadMaster", "ds6w:type-Instance", "ds6w:type", "ds6w:status", "ds6w:status-Instance"],
+                    "keyWithTranslation": ["ds6w:type", "ds6w:status", "ds6w:type-Instance", "ds6w:status-Instance"]
+                }
+            }
+        },
+        "columnViews": {
+            "value": [{
+                    "dataIndex": "hide_show",
+                    "AMD": "DS/ENXNav/views/customize_views/commands"
+                }, {
+                    "dataIndex": "findinctx",
+                    "AMD": "DS/ENXNav/views/customize_views/commands"
+                }, {
+                    "dataIndex": "thumbnail",
+                    "AMD": "DS/ENXNav/views/customize_views/commands"
+                }, {
+                    "dataIndex": "positionMatrix-Instance",
+                    "AMD": "DS/ENXNav/views/customize_views/positionMatrix"
+                }, {
+                    "dataIndex": "ds6w:cadMaster",
+                    "AMD": "DS/ENXNav/views/private/externalColumnsViews/cadMaster"
+                }, {
+                    "dataIndex": "ds6w:reserved",
+                    "AMD": "DS/ENXNav/views/private/externalColumnsViews/lifecycleCols"
+                }, {
+                    "dataIndex": "ds6wg:PLMReference.V_isLastVersion",
+                    "AMD": "DS/ENXNav/views/private/externalColumnsViews/lifecycleCols"
+                }, {
+                    "dataIndex": "ds6w:isLastRevision",
+                    "AMD": "DS/ENXNav/views/private/externalColumnsViews/lifecycleCols"
+                }, {
+                    "dataIndex": "ds6w:isLastRevisionPerState",
+                    "AMD": "DS/ENXNav/views/private/externalColumnsViews/lifecycleCols"
+                }, {
+                    "dataIndex": "ds6w:status",
+                    "AMD": "DS/ENXNav/views/private/externalColumnsViews/lifecycleCols"
+                }, {
+                    "dataIndex": "ds6wg:revision",
+                    "AMD": "DS/ENXNav/views/private/externalColumnsViews/lifecycleCols"
+                },
+                {
+                    "dataIndex": "ds6w:bookmarks",
+                    "AMD": "DS/ENXNav/views/private/externalColumnsViews/classification"
+                }, {
+                    "dataIndex": "ds6w:responsible",
+                    "AMD": "DS/ENXNav/views/private/externalColumnsViews/responsible"
+                },
+                {
+                    "dataIndex": "ds6w:reserved-Instance",
+                    "AMD": "DS/ENXNav/views/private/externalColumnsViews/lifecycleCols"
+                }
+            ]
+		},
+		"roleBased": {
+			"_note": "It is a object ot prevent dupes in an array",
+			"value": {
+				"attributes": {
+					"ds6wg:EXC_PROTECTION_EXISTS": {
+						"enabled": true,
+						"kind": "boolean",
+						"minWidth": 50,
+						"width": 50,
+						"isDraggable": true,
+						"typeRepresentation": "boolean",
+						"alignment": "center",
+						"_text": "Process Access Classification",
+						"customisation": {
+							"exportable": {
+								"lock": false,
+								"value": true
+							},
+							"layout": {
+								"removable": false
+							}
+						},
+						"roles": ["IPA","IPS"]
+					}
+				}
+			}
+		}
+    },
+    "columnsCusto": {
+        "default": true,
+        "baseTypes": ["VPMReference", "VPMRepReference", "3DShape"],
+        "baseInstanceTypes": ["VPMInstance"],
+        "selectedTypes": ["VPMReference", "VPMInstance", "VPMRepReference", "3DShape"],
+        "selectedExtensions": ["XCADExtension", "EnterpriseExtension", "MaterialUsageExtension"],
+        "order": ["tree", "ds6w:label-Instance", "positionMatrix-Instance", "ds6wg:revision", "ds6w:type", "ds6w:description", "ds6w:responsible", "ds6w:identifier", "ds6w:reserved", "ds6wg:PLMReference.V_isLastVersion", "ds6w:status", "ds6w:cadMaster", "ds6wg:EnterpriseExtension.V_PartNumber", "hide_show", "findinctx"],
+        "attributesToIgnore": ["ds6w:globalType", "ds6wg:EXC_PROTECTION_EXISTS"],
+        "attributes": [{
+            "dataIndex": "positionMatrix-Instance",
+            "ds6wFrom": "rel",
+            "ds6w": "matrixtxt",
+            "kind": "functionIcon"
+        }, {
+            "ds6w": "ds6w:cadMaster",
+            "kind": "image",
+            "width": 40
+        }, {
+            "ds6w": "ds6w:identifier"
+        }, {
+            "ds6w": "ds6wg:PLMReference.V_isLastVersion",
+            "kind": "functionIcon"
+        }, {
+            "ds6w": "ds6w:reserved",
+            "kind": "functionIcon"
+        }, {
+            "ds6w": "ds6w:status"
+        }, {
+            "ds6w": "ds6wg:EnterpriseExtension.V_PartNumber"
+        }],
+        "commandColumns": [],
+        "typeRepresentations": {}
+    }
+}

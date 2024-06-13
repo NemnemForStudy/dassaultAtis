@@ -1,0 +1,1 @@
+define("DS/ENOGantt/Custom/CustomPattern",[],function(){return{pattern:["cal4","cal5"]}});

@@ -1,0 +1,24 @@
+################################################################################################
+# Created By thok : 2023. 07. 04
+# Admin Type : attribute
+# Name : decRequestStatus
+################################################################################################
+#del attribute 'decRequestStatus';
+add attribute 'decRequestStatus'
+    description ''
+    type        'String'
+	range = 'Request'
+	range = 'Accept'
+	range = 'Confirm'
+	range = 'Finish'
+	default 'Request'
+    notmultiline
+    nothidden
+    property 'application' value 'EngineeringCentral'
+    property 'installed date' value '07-04-2023'
+    property 'installer' value 'ATIS'
+    property 'original name' value 'decRequestStatus'
+    property 'version' value 'R2023x'
+;
+add property attribute_decRequestStatus on program 'eServiceSchemaVariableMapping.tcl' to attribute 'decRequestStatus'
+;

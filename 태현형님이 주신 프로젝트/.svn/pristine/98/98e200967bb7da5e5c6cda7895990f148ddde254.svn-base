@@ -1,0 +1,46 @@
+start trans;
+############################## DO NOT EDIT ABOVE
+
+# Modified by hslee on 2023.10.26
+mod menu decProjectMyDesk
+	label 'Common'
+;
+# Modified by jhlee on 2023.10.25
+mod menu type_TaskManagement 
+	add menu decTaskWorkPackageCategoryMenu
+	add menu decTaskMaterialCategoryMenu
+	remove command decCwpPlanList
+	remove command decCwpSummaryList
+	remove command decIWPExcutionList
+	remove command decCwpChangeHistoryList
+	remove command decProjectMaterialStatusLink
+	remove command decCWPMaterialStatusLink
+;
+add menu decTaskWorkPackageCategoryMenu
+	label 'emxProgramCentral.Label.WorkPackage'
+	command 'decCwpPlanList'
+	command 'decCwpSummaryList'
+	command 'decIWPExcutionList'
+	command 'decCwpChangeHistoryList'
+	setting 'showAsSubMenu' 'True'
+	setting 'Registered Suite' 'ProgramCentral'
+;
+add menu decTaskMaterialCategoryMenu
+	label 'emxProgramCentral.Label.Material'
+	command 'decProjectMaterialStatusLink'
+	command 'decCWPMaterialStatusLink'
+	setting 'showAsSubMenu' 'True'
+	setting 'Registered Suite' 'ProgramCentral'
+;
+
+# Modified by jhlee on 2023.10.25
+mod menu decProjectWorkPackageCategoryMenu
+	add command decCwpPlanList
+	order command decCwpPlanList 2
+;
+
+mod menu type_TaskManagement
+	label 'Detail'
+;
+############################## DO NOT EDIT BELOW
+commit trans;

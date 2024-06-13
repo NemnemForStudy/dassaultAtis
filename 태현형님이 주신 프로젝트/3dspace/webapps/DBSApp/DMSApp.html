@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:widget="http://www.netvibes.com/ns/">
+
+<head>
+  <widget:preferences>
+    <widget:preference name="DisplayOption" type="list" label="UserPrefDisplayOpt" defaultValue="NLSOption">
+      <widget:option label="UserPrefInternalName" value="NFirst"></widget:option>
+      <widget:option label="UserPrefNLSName" value="NLSOption"></widget:option>
+    </widget:preference>
+    <!-- BMN2 03/11/2020 : We decide to hide this option,
+     in future it can be available.
+    S63 02/05/2022 : TSK8560273 instance field now available : show by default-->
+    <widget:preference name="instField" type="list" label="Instance Field" defaultValue="show">
+      <widget:option label="Show" value="show"></widget:option>
+      <widget:option label="Hide" value="hide"></widget:option>
+    </widget:preference>
+  
+    <!--
+    <widget:preference name="multiValueWarning" type="list" label="Multi Value Warning" defaultValue="show">
+      <widget:option label="Show" value="show"></widget:option>
+      <widget:option label="Hide" value="hide"></widget:option>
+    </widget:preference>-->
+  </widget:preferences>
+  <!-- Application Metas -->
+  <title>DMS App</title>
+  <meta name="description" content="widget base for DMS App" />
+  <!-- Parameter to avoid the auto refresh of the widget -->
+  <meta name="autoRefresh" content="0" />
+  
+  <!-- les d�pendances sont inject�es par 3DDashboard!! -->
+  
+  <!-- AMDLoader - to replace curl loader in UWA... 
+  <script type="text/javascript" src="../AmdLoader/AmdLoader.js"></script>
+  <script type="text/javascript" src="../WebappsUtils/WebappsUtils.js"></script>
+   -->
+
+  <!-- 3DEXPERIENCE UWA Framework 
+  <link rel="stylesheet" type="text/css" href="../c/UWA/assets/css/standalone.css" />
+  <script type="text/javascript" src="../c/UWA/js/UWA_Standalone_Alone.js"></script>
+  -->
+  
+  <!-- 3DEXPERIENCE UIKIT  
+  <link rel="stylesheet" type="text/css" href="../UIKIT/UIKIT.css" />
+  <script type="text/javascript" src="../UIKIT/UIKIT.js"></script>
+  -->
+  
+  <!-- Skeleton 
+  <link rel="stylesheet" type="text/css" href="../W3DXComponents/W3DXComponents.css" />
+  <script type="text/javascript" src="../W3DXComponents/W3DXComponents.js"></script>
+  -->
+  
+  <!-- Services
+  <script type="text/javascript" src="../i3DXCompassPlatformServices/i3DXCompassPlatformServices.js"></script>
+  <script type="text/javascript" src="../FedDictionaryAccess/FedDictionaryAccess.js"></script>
+  -->
+  
+  <!-- 
+  <script type="text/javascript" src="../c/UWA/js/UWA_W3C_Alone.js"></script>
+  <script type="text/javascript" src="../WebUX/WebUX.js"></script>
+   -->
+  
+  <!-- Netvibes Application Standalone emulation files  
+  <link rel="stylesheet" type="text/css" href="//uwa.netvibes.com/lib/c/UWA/assets/css/standalone.css" />
+  <script type="text/javascript" src="//uwa.netvibes.com/lib/c/UWA/js/UWA_Standalone_Alone.js"></script>
+  -->
+
+  <!-- Application JavaScript Source -->
+  <script>
+    /* global widget */
+    require([
+        'UWA/Core',
+        'UWA/Class/View',
+        'DS/UIKIT/Alert',
+        'WebappsUtils/WebappsUtils',
+        'DS/DBSApp/Utils/URLHandler',
+        'DS/i3DXCompassPlatformServices/i3DXCompassPlatformServices',
+        'DS/UWPClientCode/PublicAPI', 
+        'DS/DBSApp/DMSSkeleton',
+        'DS/DBSApp/Utils/dictionaryJSONHandler',
+        'DS/DBSApp/Utils/DMSWebServices',
+        'i18n!DS/DBSApp/assets/nls/DMSAppNLS',
+        'css!DS/DBSApp/DBSApp'
+      ],
+      function(UWA, View, Alert, WebappsUtils, URLHandler, i3DXCompassPlatformServices, PublicAPI, dmsSkeleton, dicoHandler, WebServices, myNls) {
+        
+        function invokeAll(requests, callback) {
+          var results = []
+          var count = 0;
+          for(let i=0;i<requests.length;i++) {
+            WebServices[requests[i]].call(WebServices, 
+              function onComplete(resp) {
+                results[i]=[resp, null];
+                if(++count==requests.length) callback.apply(null, results);
+              }, 
+              function onError(resp) {
+                results[i]=[null, resp];
+                if(++count==requests.length) callback.apply(null, results);
+              }
+            );
+          }
+        }
+
+        function find3DSpaceURL(callback) {
+          return function() {
+            var tenantID = widget.getValue('x3dPlatformId');
+            var webappsUrl = globalThis.dsDefaultWebappsBaseUrl.replace(/\/+webapps\/*$/,"");
+            var myAppsBaseUrl = (PublicAPI.getApplicationConfiguration('app.urls.myapps') || '').replace(/\/$/g, ''); // Remove trailing '/' if existing
+            UWA.log("i3DXCompassPlatformServices::" + tenantID + "::" + webappsUrl);
+            /*
+            if(!myAppsBaseUrl) {
+              UWA.log("Retrieve 3DSpace URL from widget webapp url " + webappsUrl);
+              callback(webappsUrl, tenantID); 
+              return;
+            }
+            //*/
+            i3DXCompassPlatformServices.getServiceUrl({
+              serviceName: '3DSpace',
+                platformId: tenantID,
+                //myAppsBaseUrl: myAppsBaseUrl, 
+                onFailure: function(result) {
+                  UWA.log("Failed to retrieve 3DSpace URL from Passport (" + myAppsBaseUrl + ") - Retrieve 3DSpace URL from widget webapp url " + webappsUrl);
+                  callback(webappsUrl, tenantID); 
+                },
+                onComplete: function(urlData) {
+                  if (typeof urlData == "object") {
+                    UWA.log("Retrieve 3DSpace URL (" + urlData[0].url + ") from MyApps (" + myAppsBaseUrl + ")");
+                    callback(urlData[0].url, tenantID);
+                  } else if(!!urlData) {
+                    UWA.log("Retrieve 3DSpace URL (" + urlData + ") from MyApps (" + myAppsBaseUrl + ")");
+                    callback(urlData, tenantID);
+                  } else {
+                    UWA.log("Failed to retrieve 3DSpace URL from Passport (" + myAppsBaseUrl + ") - Retrieve 3DSpace URL from widget webapp url " + webappsUrl);
+                    callback(webappsUrl, tenantID); 
+                  }
+                }
+            })
+          }
+        }
+        
+        /*
+            The "onLoad" event is the very first event triggered when
+            the widget is fully loaded or when the preferences are validated.
+            Here, we add MyWidget.onLoad() function as "onLoad" event
+            listener on the widget.
+         */
+        widget.addEvent('onLoad', find3DSpaceURL(function(spaceURL, tenantID) {
+          URLHandler.setURL(spaceURL);
+          URLHandler.setTenant(tenantID);
+          WebServices.isDMSAccessible(
+            function onComplete(result) {
+              //UWA.log("URLHandler URL "+URLHandler.getURL());
+              var withBanner = result['result']['staging']==="No" && result['result']['authoring']==="Yes";
+              dicoHandler.isAuthoring = (result['result']['authoring']==="Yes");
+              dicoHandler.isAOLI = (result['result']['AOLI']==="Yes");
+              dicoHandler.hasDef = (result['result']['hasDefault']==="Yes");
+
+              invokeAll([
+                "getDicoJson",
+                "getCustoDicoWithNLSUptoDate",
+                "getPredicates",
+                "getDimensions"
+              ], function(
+                promiseOOTB,
+                promiseCUSTO,
+                promisePRED,
+                promiseDIMS
+              ) {
+                var resultOOTB  = promiseOOTB[0];
+                var errorOOTB   = promiseOOTB[1];
+                var resultCUSTO = promiseCUSTO[0];
+                var errorCUSTO  = promiseCUSTO[1];
+                var resultPRED  = promisePRED[0];
+                var errorPRED   = promisePRED[1];
+                var resultDIMS  = promiseDIMS[0];
+                var errorDIMS   = promiseDIMS[1];
+
+                if(errorOOTB) UWA.log(errorOOTB);
+                if(errorCUSTO) UWA.log(errorCUSTO);
+                if(errorPRED) UWA.log(errorPRED);
+                if(errorDIMS) UWA.log(errorDIMS);
+
+                if(errorOOTB) {
+                  widget.body.setText("...");
+                  var alert = new Alert({
+                    visible: true,
+                    closeOnClick: true,
+                    renderTo: widget.body,
+                    messageClassName: 'error',
+                    messages: myNls.get('loadingError')
+                  }); //.inject(widget.body);
+                } else {
+                  dicoHandler.startup(resultCUSTO || {}, resultOOTB, resultPRED || {}, resultDIMS.results || {}, widget.lang);
+
+                  widget.body.setContent(dmsSkeleton.render());
+                  if(withBanner) UWA.createElement('div', {
+                    'class': 'staging-corner-ribbon fonticon fonticon-attention',
+                    'html': [
+                      {
+                        'tag': 'p',
+                        'text': 'Not a Staging Environment!! Authoring features unlocked by the internal DS license.'
+                      }
+                    ]
+                  }).inject(widget.body)
+                }
+              });
+            },
+            function onError(result) {
+              widget.body.setText("...");
+              var alert = new Alert({
+                visible: true,
+                //autoHide: true,
+                //hideDelay: 3000
+                //closable: false,
+                closeOnClick: true,
+                renderTo: widget.body,
+                messageClassName: 'warning',
+                messages: myNls.get('DMSAccessUnavailable')
+              }); //.inject(widget.body);
+              UWA.log(result);
+            });
+        }));
+      });
+  </script>
+</head>
+
+<body>
+</body>
+
+</html>

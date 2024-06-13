@@ -1,0 +1,127 @@
+/*
+**  emxAEFCollectionBase
+**
+**  Copyright (c) 1992-2020 Dassault Systemes.
+**  All Rights Reserved.
+**  This program contains proprietary and trade secret information of MatrixOne,
+**  Inc.  Copyright notice is precautionary only
+**  and does not evidence any actual or intended publication of such program
+**
+**   This JPO contains the implementation of emxAEFCollectionBase
+*/
+
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
+
+import org.apache.ibatis.session.SqlSession;
+
+import com.daewooenc.mybatis.main.decSQLSessionFactory;
+import com.matrixone.apps.domain.DomainConstants;
+import com.matrixone.apps.domain.DomainObject;
+import com.matrixone.apps.domain.util.MapList;
+import com.matrixone.apps.domain.util.MqlUtil;
+
+import matrix.db.Context;
+import matrix.util.StringList;
+
+/**
+ * The <code>emxAEFCollectionBase</code> class contains methods for the
+ * "Collection" Common Component.
+ *
+ * @version AEF 10.0.Patch1.0 - Copyright (c) 2003, MatrixOne, Inc.
+ */
+
+public class decDailyLoginStatus_mxJPO {
+
+	
+	public void mxMain(Context context, String[] args) throws Exception {
+	
+		
+		try{
+			List<Map<String, String>> loginUserList = new ArrayList<>();
+			
+			LocalDate yesterday3 = LocalDate.now().minusDays(1);
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+		    String yesterDay2 = yesterday3.format(formatter); // mql 접속기록에 일치하는 데이터형태
+		    System.out.println("info yesterday :"+yesterDay2);
+		//     DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("M/d/yyyy h:mm:ss a");
+		    DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("M/d/yyyy h:mm:ss a", Locale.US);
+		    DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		    SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		    
+		    
+		    
+		    String lastLoginTime = MqlUtil.mqlCommand(context,
+					"temp query bus $1 $2 $3 select $4 dump $5","Person","*","*","attribute[Last Login Date].value","|"); 	 
+			//System.out.println(lastLoginTime);
+			System.out.println("lastLoginTime:"+lastLoginTime);
+			String sSplitArr[] = lastLoginTime.split("Person");
+			int firstIndex = 0;
+			int secondIndex = 0;
+			int lastIndex = 0;
+			int lastIndex2 = 0;
+			int count = 0;
+			String lastTime = "";
+			for(int i = 0; i<sSplitArr.length; i++) {
+				System.out.println("--------유저 ------- ");
+				String arr = sSplitArr[i];
+				Map insertMap = new HashMap();
+				System.out.println(sSplitArr[i]);
+				firstIndex  = sSplitArr[i].indexOf("|");
+				secondIndex = sSplitArr[i].indexOf("|", firstIndex + 1);
+				
+				lastIndex = sSplitArr[i].lastIndexOf("|")+1;
+				lastIndex2 = sSplitArr[i].indexOf("\n");
+				if(firstIndex!=-1 && secondIndex!=-1 && lastIndex!=-1) {
+				String userName = sSplitArr[i].substring(firstIndex + 1, secondIndex);
+				if(lastIndex2==-1){
+					lastTime = sSplitArr[i].substring(lastIndex);
+				}else{
+					lastTime = sSplitArr[i].substring(lastIndex,lastIndex2);
+				}
+				System.out.println("파싱해야할 lastTime "+lastTime);
+					if(lastTime!="") {
+					LocalDateTime dateTime = LocalDateTime.parse(lastTime, inputFormatter); // date로 바꿔준다음
+					String inputStringDate = dateTime.format(outputFormatter); //형식을 db에 맞게 바꿔준다
+					Date inputDbDate = dateFormatter.parse(inputStringDate);
+					System.out.println("lastTime "+lastTime);
+						if(arr.contains(yesterDay2)) {
+							count++;
+							System.out.println("DB에 삽입할 데이터: "+arr);
+							// DB에 넣자
+								try ( SqlSession sqlSession = decSQLSessionFactory.getSession() ){
+								insertMap.put("LOGIN_DATE",inputDbDate);
+								insertMap.put("PERSON_NAME",userName);
+								loginUserList.add(insertMap);
+								System.out.println("add user:"+userName);
+								int insertedRow = sqlSession.insert("Project.insertDailyLoginStatus", insertMap);
+								sqlSession.commit();
+								}						
+						}
+					}
+				}
+			
+			}
+			
+			System.out.println(loginUserList);
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+				throw e;
+			} finally {
+			}
+			
+		
+		
+		
+		//return loginUserList;
+		
+	// insert program C:/workspace_test/customFD02/jpo/decDailyLoginStatus_mxJPO.java;
+	// compile prog decDailyLoginStatus force update;	
+	// execute program decDailyLoginStatus -method mxMain;
+    //	mql -c "set cont user creator;execute program decDailyLoginStatus -method mxMain;"
+	}
+}

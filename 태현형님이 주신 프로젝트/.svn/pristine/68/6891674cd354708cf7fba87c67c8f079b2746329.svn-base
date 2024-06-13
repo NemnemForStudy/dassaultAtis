@@ -1,0 +1,40 @@
+<?xml version="1.0" ?>
+
+<!-- ENOVIA DICTIONARY  -->
+<!-- COPYRIGHT DASSAULT SYSTEMES 2020, All rights reserved -->
+
+<Package xmlns="PLMDictionaryUnified"
+    ModelerType="Top"
+    BelongsToModeler="RFLVPMLogical"
+    Name="ArchitectureReference"
+    Uuid="a0f287ba-a370-4431-9e33-a2d9d7a89703"
+    UseNames="PRODUCTCFG;RFLVPMLogical;RFLPLMFunctional"  
+    CustomerExposition="Programmer" >
+  
+  
+  
+  <!-- Extension on Logical/functional/Physical Reference    -->
+
+  <Extension
+    Name="ArchitectureExtension"
+    Uuid="0b5086a0-ade1-4105-87ac-8ce0a6d358f7"
+    CustomerExposition="Programmer"
+    ScopeNames="RFLPLMFunctionalReference RFLVPMLogicalReference VPMReference"  
+    Searchable="Yes" >
+ 
+       
+    <!-- Used to define Architecture Number / mask to protect edit prop-->
+    <Simple
+      Name="V_ArchitectureNumber"
+      Uuid="9988c0af-4db1-48b6-a13c-d77a11787a24"
+      Type="String"
+      Protection="External"
+      MaxLength="256"
+      ResetOnCloning="Yes"
+      ResetOnNewVersion="No"
+	  Faceted = "No">
+    
+    </Simple>
+  </Extension>
+
+</Package>

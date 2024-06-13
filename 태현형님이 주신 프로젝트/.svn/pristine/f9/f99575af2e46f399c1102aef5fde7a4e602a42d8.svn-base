@@ -1,0 +1,57 @@
+{
+    "fetchCapableResource": {
+        "url": "/cvservlet/navigate?SecurityContext=preferred",
+        "method": "POST",
+        "payload": {
+            "label": "Navigate",
+            "input_physical_ids": [],
+            "version": 3,
+            "primitives": [{
+                    "navigate_to_sr": {
+                        "id": 1,
+                        "filter": {
+                            "role": [
+                                "490"
+                            ]
+                        },
+                        "mode": "path"
+                    }
+                }
+            ],
+            "patterns": {
+                "resourceArea_pathSR": [{
+                        "id": 1
+                    }
+                ]
+            },
+            "attributes": [
+                "ds6w:label",
+                "physicalid",
+                "ds6w:type",
+                "pathsr"
+            ]
+        }
+    },
+    "getContextScope": {
+        "url": "/resources/v1/modeler/dsprcs/invoke/dsprcs:getScopeContext",
+        "method": "POST",
+        "payload": {
+            "refid": "",
+            "stopDAG": "MBOM",
+            "firstParentScope": false
+        }
+    },
+    "getMfgItemInstallDependencies": {
+        "url": "/resources/v1/modeler/dsmfg/invoke/dsmfg:getMfgItemInstallDependencies",
+        "method": "POST",
+        "payload": {
+            "assemblyid": "",
+            "installinstids": [
+            ],
+            "predecessor": true,
+            "successor": false,
+            "nodependency": false,
+            "graphconstraint": false
+        }
+    }
+}

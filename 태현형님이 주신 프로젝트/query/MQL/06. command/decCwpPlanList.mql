@@ -1,0 +1,35 @@
+################################################################################################
+# Create By jhlee 2023. 05. 22
+# Admin Type : command
+# Name : decCwpPlanList
+################################################################################################
+
+#del command 'decCwpPlanList';
+add command 'decCwpPlanList'
+	description 'decCWPPlanList'
+	label 'ProgramCentral.Command.decCwpPlanList'
+	href '${COMMON_DIR}/emxIndentedTable.jsp?program=emxProjectSpace:getCWPTask&table=decCwpPlanTable&header=ProgramCentral.Command.decCwpPlanList&toolbar=decCwpPlanListToolBar&HelpMarker=emxhelpprogramlist&Export=true&sortColumnName=Name&sortDirection=ascending&StringResourceFileId=emxProgramCentralStringResource&selection=multiple&editLink=true&postProcessJPO=emxTask:postProcessRefresh'
+	alt 'ProgramCentral.Command.decCwpPlanList'
+	setting 'Registered Suite' 'ProgramCentral'
+	setting 'Target Location' 'content'
+;
+add property 'command_decCwpPlanList' on prog eServiceSchemaVariableMapping.tcl to command 'decCwpPlanList';
+
+mod command 'decCwpPlanList'
+	href '${COMMON_DIR}/emxIndentedTable.jsp?program=emxProjectSpace:getCWPTask&table=decCwpPlanTable&header=ProgramCentral.Command.decCwpPlanList&toolbar=decCwpPlanListToolBar&HelpMarker=emxhelpprogramlist&Export=true&sortColumnName=Name&sortDirection=ascending&StringResourceFileId=emxProgramCentralStringResource&selection=multiple&editLink=true&parallelLoading=true&massPromoteDemote=true&slideinFilter=true&postProcessJPO=emxTask:decUpdateScheduleChanges&freezePane=CWP No,CWP Desc&pageSize=300'
+;
+
+# Modified by hslee on 2023.07.28
+mod command decCwpPlanList
+	href '${COMMON_DIR}/emxIndentedTable.jsp?program=emxProjectSpace:getCWPTask&table=decCwpPlanTable&header=ProgramCentral.Command.decCwpPlanList&toolbar=decCwpPlanListToolBar&HelpMarker=emxhelpprogramlist&Export=true&sortColumnName=Name&sortDirection=ascending&StringResourceFileId=emxProgramCentralStringResource&selection=multiple&editLink=true&parallelLoading=true&massPromoteDemote=true&slideinFilter=true&postProcessJPO=emxTask:decUpdateScheduleChanges&freezePane=CWP No,CWP Desc&pageSize=300&slideinFilter=true&codeMaster=Discipline|Priority Group|Priority Number|CWP/IWP Stage|CWP/IWP Status|SUBCON&Material Delay=true&&CWP_Plan=true'
+;
+
+# Modified by jhlee on 2023.08.23
+mod command decCwpPlanList
+	href '${COMMON_DIR}/emxIndentedTable.jsp?program=emxProjectSpace:getCWPTask&table=decCwpPlanTable&header=ProgramCentral.Command.decCwpPlanList&toolbar=decCwpPlanListToolBar&HelpMarker=emxhelpprogramlist&Export=true&sortColumnName=Name&sortDirection=ascending&StringResourceFileId=emxProgramCentralStringResource&selection=multiple&parallelLoading=true&massPromoteDemote=true&slideinFilter=true&postProcessJPO=emxTask:decUpdateScheduleChanges&freezePane=CWP No,CWP Desc&pageSize=300&slideinFilter=true&filterParam=Material Delay:true,CWP_Plan:true,codeMaster:Discipline,codeMaster:Priority Group,codeMaster:Priority Number,codeMaster:CWP/IWP Stage,codeMaster:CWP/IWP Status,codeMaster:Sub-Con,codeMaster:BOQ Key Item>BOQ Key Item.UOM'
+;
+
+# Modified by jhlee on 2023.11.06
+mod command decCwpPlanList
+	href '${COMMON_DIR}/emxIndentedTable.jsp?program=emxProjectSpace:getCWPTask&table=decCwpPlanTable&header=ProgramCentral.Command.decCwpPlanList&toolbar=decCwpPlanListToolBar&HelpMarker=emxhelpprogramlist&Export=true&sortColumnName=Name&sortDirection=ascending&StringResourceFileId=emxProgramCentralStringResource&selection=multiple&parallelLoading=true&massPromoteDemote=true&slideinFilter=true&postProcessJPO=emxTask:decUpdateScheduleChanges&freezePane=CWP No,CWP Desc&pageSize=300&slideinFilter=true&filterParam=Material Delay:true,CWP_Plan:true,codeMaster:Discipline,codeMaster:Priority Group,codeMaster:Priority Number,codeMaster:CWP/IWP Stage,codeMaster:CWP/IWP Status,codeMaster:Sub-Con,codeMaster:BOQ Key Item'
+;

@@ -1,0 +1,1 @@
+define("DS/CATWebUXComponents/CATWebUXComponents_cs",{});define("DS/CATWebUXComponents/assets/nls/CATWebUXComponents",{validationPanelOk:"OK",validationPanelCancel:"Zrušit",replyButtonLabel:"Odpovědět",addButtonLabel:"Nový komentář",pointedPageRemoved:"Stránka byla odstraněna"});

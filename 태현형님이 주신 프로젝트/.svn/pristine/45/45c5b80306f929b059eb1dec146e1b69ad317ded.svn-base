@@ -1,0 +1,35 @@
+### 230418 Created by CMG
+
+#delete command decCodeMasterCreateCommand;
+
+add command decCodeMasterCreateCommand
+	label "emxFramework.Label.decCodeMasterCreateCommand"
+	href "${COMMON_DIR}/emxCreate.jsp?type=decCodeMaster&header=emxFramework.Label.decCodeMasterCreateCommand&policy=decCodeMaster&form=decCodeMasterCreateForm&createJPO=decCodeMaster:createCodeMaster&submitAction=refreshCaller"
+	setting "Registered Suite" "Framework"
+	setting "Image" "${COMMON_DIR}/images/iconActionCreate.png"
+	setting "Popup Modal" true
+	setting "Target Location" "slidein"
+	setting "Submit" true
+	property "installer" value "ENOVIAEngineering"
+	property "application" value "Framework"
+	property "original name" value "decCodeMasterCreateCommand"
+;
+
+#mod menu decCodeMasterToolbar add command decCodeMasterCreateCommand;
+
+# Modified by hslee on 2023.07.24
+mod command decCodeMasterCreateCommand
+	href "${COMMON_DIR}/emxCreate.jsp?type=decCodeMaster&header=emxFramework.Label.decCodeMasterCreateCommand&policy=decCodeMaster&form=decCodeMasterCreateForm&createJPO=decCodeMaster:createCodeMaster&submitAction=refreshCaller&masterType=Code"
+;
+
+# Modified by hslee on 2023.07.24
+mod command decCodeMasterCreateCommand
+	add setting 'Access Expression' 'context.user.isassigned[decSystemAdmin]==true && type != "Project Space"'
+;
+
+# Modified by choimingi on 2023.09.09
+mod command decCodeMasterCreateCommand
+	add setting 'hasAccess' 'PIM' 
+	add setting 'Access Program' 'decAccess'
+	add setting 'Access Function' 'hasAccess'
+;

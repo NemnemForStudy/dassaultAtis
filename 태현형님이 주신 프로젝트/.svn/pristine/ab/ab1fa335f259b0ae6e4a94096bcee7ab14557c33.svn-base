@@ -1,0 +1,42 @@
+#
+# Server-side Error messages for Login Ticket services
+#
+Exception.InvalidTicketFormat         = O tíquete de logon [{0}] tem um formato inválido
+Exception.TicketDoesNotExist          = O tíquete de logon [{0}] não existe
+Exception.TicketAlreadyExist          = O tíquete de logon [{0}] já existe
+Exception.TicketNotYetActive          = O tíquete de logon [{0}] ainda não está ativo
+Exception.TicketHasExpired            = O tíquete de logon [{0}] expirou
+Exception.TicketHasClientRestriction  = O tíquete de logon [{0}] não está autorizado ao cliente [{1}]
+Exception.TicketHasInvalidUseCount    = O tíquete de logon [{0}] tem uma contagem de uso inválida: {1}
+Exception.TicketMaxUseLimit           = O tíquete de logon [{0}] atingiu o limite máximo de uso ({1})
+Exception.TicketPrincipalIsNotCurrent = A entidade do tíquete de logon [{0}] não corresponde ao usuário atual ({1})
+Exception.TicketWithMaxUseCannotBeInvalidated = Não é possível invalidar um tíquete [{0}] com limite de uso - somente tíquetes 'sem limite de uso' podem ser invalidados
+#
+Exception.TicketQueryFailed             = Não foi possível consultar o tíquete de logon [{0}]
+Exception.TicketCreateFailed            = Não foi possível criar o tíquete de logon [{0}]
+Exception.TicketModifyFailed            = Não foi possível modificar o tíquete de logon [{0}]
+Exception.TicketRemoveFailed            = Não foi possível remover o tíquete de logon [{0}]
+Exception.CouldNotGetPrincipalContexts  = Não foi possível obter a lista [{0}] principal {1} do tíquete do contexto de segurança
+Exception.UserIsNotAssignedToContext    = O usuário {0} não está atribuído ao contexto {1}
+Exception.TicketAuthenticationFailed    = Falha ao autenticar tíquete de login do usuário [{0}]
+Exception.TicketAuthenticationFailedEx  = Falha ao autenticar tíquete de login do usuário [{0}]
+Exception.CouldNotDecryptPwd            = Não foi possível descriptografar a senha do tíquete\' de logon
+
+# - 2015x ticket creation UI
+
+emxLTCreate.title         = Criação de tíquete de logon
+
+emxLTCreate.created.title = Como criar um tíquete com parâmetros
+emxLTCreate.created.value = Tíquete gerado
+
+emxLTCreate.created.error.InvalidNegativeNumber = Número negativo inválido para o parâmetro de tíquete de logon 'maxuse'
+emxLTCreate.created.error.InvalidNumber         = Número inválido para o parâmetro de tíquete de logon "maxuse"
+emxLTCreate.created.error.UnsupportedType       = Parâmetro de tipo de tíquete de logon não aceito
+
+emxLTCreate.user          = Usuário
+emxLTCreate.ctx           = Contexto de Segurança
+emxLTCreate.type          = Tipo de tíquete
+emxLTCreate.type.infinite = Infinito
+emxLTCreate.type.once     = Uma vez
+emxLTCreate.type.number   = Número
+emxLTCreate.button.create = Criar

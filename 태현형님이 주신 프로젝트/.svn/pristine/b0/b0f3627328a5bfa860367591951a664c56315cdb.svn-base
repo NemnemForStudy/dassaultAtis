@@ -1,0 +1,24 @@
+# Added by hslee on 2023.08.07
+# del command decCWPMaterialCommand1;
+add command decCWPMaterialCommand1
+	label 'Pipe'
+	href '${COMMON_DIR}/emxIndentedTable.jsp?table=decCWPMaterialSummary&program=emxProjectSpace:getCWPMaterialList&editLink=false&parallelLoading=true&maxCellsToDraw=2000&scrollPageSize=50&pageSize=300&decExport=true&exportMode=MaterialStatus&slideinFilter=true&Discipline=PP&freezePane=UNIT_NM,CWA_NO,CWP_NO&filterParam=codeMaster:Sub-Con,Material Delay:true,codeMaster:Construction Item Type,Fab Category:true,CWP_Plan:true'
+	setting 'Target Location' 'content'
+	setting 'Registered Suite' 'ProgramCentral'
+	setting 'Access Expression' '(type == "Project Space" && attribute[decProjectType] == ongoing) || (type == "decCWPTask" && to[Project Access Key].from.from[Project Access List].to.attribute[decProjectType] == ongoing)'
+;
+
+# Modified by jhlee on 2023.08.23
+mod command decCWPMaterialCommand1
+	href '${COMMON_DIR}/emxIndentedTable.jsp?table=decCWPMaterialSummary&program=emxProjectSpace:getCWPMaterialList&editLink=false&parallelLoading=true&maxCellsToDraw=2000&scrollPageSize=50&pageSize=300&decExport=true&exportMode=MaterialStatus&slideinFilter=true&Discipline=PP&freezePane=UNIT_NM,CWA_NO,CWP_NO&codeMaster=Discipline|Sub-Con'
+;
+
+# Modified by hslee on 2023.09.13
+mod command decCWPMaterialCommand1
+	href '${COMMON_DIR}/emxIndentedTable.jsp?table=decCWPMaterialSummary&program=emxProjectSpace:getCWPMaterialList&editLink=false&parallelLoading=true&maxCellsToDraw=2000&scrollPageSize=50&pageSize=300&decExport=true&exportMode=MaterialStatus&slideinFilter=true&Discipline=PP&freezePane=UNIT_NM,CWA_NO,CWP_NO&filterParam=codeMaster:Sub-Con,Material Delay:true,codeMaster:Construction Item Type,Fab Category:true,CWP_Plan:true'
+;
+
+# Modified by thok on 2023.11.01
+mod command decCWPMaterialCommand1
+	add setting 'Access Expression' '(type == "Project Space") || (type == "decCWPTask" && to[Project Access Key].from.from[Project Access List].to.attribute[decProjectType] == ongoing)'
+;

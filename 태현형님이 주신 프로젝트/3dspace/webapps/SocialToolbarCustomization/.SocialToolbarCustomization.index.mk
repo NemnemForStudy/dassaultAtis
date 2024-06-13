@@ -1,0 +1,10 @@
+m|SocialUIComponents\SocialToolbarCustomization.mweb
+b|j|n,m
+b|c|c,m
+v|6.425.1.22330|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\SocialToolbarCustomization\script\abstract.js|1669432511|323
+s|SocialUIComponents\SocialToolbarCustomization.mweb\src\script\abstract.js|1669417436|1563
+t|win_b64\webapps\SocialToolbarCustomization\script\source\swym.js|1669432512|233
+s|SocialUIComponents\SocialToolbarCustomization.mweb\src\script\source\swym.js|1669417436|446
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

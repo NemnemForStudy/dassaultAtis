@@ -1,0 +1,1 @@
+define("DS/ENOXEngineerInfra/ENOXEngineerInfra_cs",{});define("DS/ENOXEngineerInfra/assets/nls/xAppCore",{"error.on.startup":"Při spuštění aplikace došlo k problému! Kontaktujte svého správce."});

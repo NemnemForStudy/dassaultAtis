@@ -1,0 +1,214 @@
+<?xml version="1.0"?>
+<!-- ENOVIA DICTIONARY  -->
+<!-- COPYRIGHT DASSAULT SYSTEMES 2008, All rights reserved -->
+<Package xmlns="PLMDictionaryUnified" Name="PLMSIMULIADisciplines2" UseNames="PRODUCTCFG;CATMCXAssembly" Uuid="e78577bb-f741-4408-89a6-7c01f3789691" ModelerType="Top" CustomerExposition="Programmer" >
+
+<!-- FEMREP  -->
+  <Class Name="FEM"
+       Uuid="8ccef4a8-659a-4c1e-942a-d2c2f5e59117"
+       CustomerExposition="Programmer"
+       SuperName="VPMRepReference"
+       Discipline="Yes"
+       Abstract="No"
+       Specializable="Yes"
+       CustomerExtensible="Yes"
+       Abbreviation="fem">
+    <Property Name="Searchable" Value="Yes"/>
+    <Property Name="KweNew_InstanciationMethod" Value="CATEFmtFEMRepInstanciate"/>
+    <Property Name="KweNew_ReturnedType" Value="VPMRepInstance"/>
+    <Property Name="Newable" Value="Insert"/>
+    <Property Name="3DIconName" Value="I_FemRep.cgr"/>
+    <Property Name="IconName" Value="I_CATFmtRep"/>
+    <Property Name="IterationAvailability"  Value="No"/>
+    <!--Property Name="NonLinearVersioningAvailability" Value="All"/-->
+    <Method ImplementationType="AsFather">
+      <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+    </Method>
+    <Simple
+        Name="V_SolverId"
+        Uuid="b550c6f8-ca31-4af0-8b03-dd9cd816a2ba"
+        Type="String"
+        Protection="External"
+        CAAExposition="L1"
+        Faceted="Yes"
+        SetOnlyOnce="Later"
+        PLMImpacting="No">
+    </Simple>
+	<Simple
+        Name="V_Physics"
+        Uuid="805b45fd-2eaa-4f2e-8d4f-171312b95168"
+        Type="String"
+        Protection="External"
+        CAAExposition="L1"
+        Faceted="Yes"
+        SetOnlyOnce="Later"
+        PLMImpacting="No">
+    </Simple>
+	<Simple
+        Name="V_ExtendedData"
+		Uuid="0DB88215-93BD-4083-9056-2FF6027DF022"
+        Type="Clob"
+        Protection="Internal"
+        Faceted="No"
+        SetOnlyOnce="No"
+        PLMImpacting="No">
+    </Simple>
+  </Class>
+
+<!-- TYPE SPECIALIZATIONS  -->
+  <Class Name="FluidRep"
+       Uuid="fc4ccbb5-f2e6-4aa9-b6f1-31084da46af0"
+       CustomerExposition="Programmer"
+       SuperName="FEM"
+       Discipline="Yes"
+       Abstract="No"
+       Specializable="Yes"
+       CustomerExtensible="Yes"
+       Abbreviation="cfd">
+    <Property Name="Searchable" Value="Yes"/>
+    <!--Property Name="Newable" Value="Insert"/-->
+    <Property Name="KweNew_InstanciationMethod" Value="CATEFmtFEMRepInstanciate"/>
+    <Property Name="KweNew_ReturnedType" Value="VPMRepInstance"/>
+    <Property Name="3DIconName" Value="I_FluidRep.cgr"/>
+    <Property Name="IconName" Value="I_CATFmtFluidRep"/>
+    <Method ImplementationType="AsFather">
+      <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+    </Method>
+  </Class>
+  <Class Name="MOTMechanismRep"
+       Uuid="772048ce-423b-43a6-b297-524ab8a41667"
+       CustomerExposition="Programmer"
+       SuperName="FEM"
+       Discipline="Yes"
+       Abstract="No"
+       Specializable="Yes"
+       CustomerExtensible="Yes"
+       Abbreviation="mch">
+    <Property Name="Searchable" Value="Yes"/>
+	<!--Property Name="Newable" Value="Insert"/-->
+    <Property Name="KweNew_InstanciationMethod" Value="CATEFmtFEMRepInstanciate"/>
+    <Property Name="KweNew_ReturnedType" Value="VPMRepInstance"/>
+    <Property Name="3DIconName" Value="I_MOTMechanismRep.cgr"/>
+    <Property Name="IconName" Value="I_MOTMechanismRep"/>
+    <Method ImplementationType="AsFather">
+      <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+    </Method>
+  </Class>
+  <Class Name="EMAGRep"
+       Uuid="da2a6fbe-9380-4243-9316-8e6f46ff4367"
+       CustomerExposition="Programmer"
+       SuperName="FEM"
+       Discipline="Yes"
+       Abstract="No"
+       Specializable="Yes"
+       CustomerExtensible="Yes"
+       Abbreviation="emag">
+    <Property Name="Searchable" Value="Yes"/>
+	<!--Property Name="Newable" Value="Insert"/-->
+    <Property Name="KweNew_InstanciationMethod" Value="CATEFmtFEMRepInstanciate"/>
+    <Property Name="KweNew_ReturnedType" Value="VPMRepInstance"/>
+   <Property Name="3DIconName" Value="I_EMAGRep.cgr"/>
+    <Property Name="IconName" Value="I_EMAGRep"/>
+    <Method ImplementationType="AsFather">
+      <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+    </Method>
+  </Class>
+
+<!-- XREP  -->
+  <Class Name="XRep"
+       Uuid="34f8805a-a939-443a-97c6-72f4fb04f7ac"
+       CustomerExposition="Programmer"
+       SuperName="VPMRepReference"
+       Discipline="Yes"
+       Abstract="No"
+       Specializable="Yes"
+       CustomerExtensible="Yes"
+       Abbreviation="xrep">
+    <Property Name="Searchable" Value="Yes"/>
+    <Property Name="KweNew_InstanciationMethod" Value="CATEFmtXRepInstanciate"/>
+    <Property Name="KweNew_ReturnedType" Value="VPMRepInstance"/>
+    <Property Name="Newable" Value="Insert"/>
+    <Property Name="3DIconName" Value="I_EmptyXRep.cgr"/>
+    <Property Name="IconName" Value="I_CATFmtXRep"/>
+    <Property Name="IterationAvailability"  Value="No"/>
+    <!--Property Name="NonLinearVersioningAvailability" Value="All"/-->
+    <Method ImplementationType="AsFather">
+      <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+    </Method>
+  </Class>
+  
+<!-- Abstraction Shape  -->
+  <Class Name="SIMShape"
+       Uuid="76d9168d-3df0-4f1a-acb9-ad8a4feb9e6e"
+       CustomerExposition="Programmer"
+       SuperName="VPMRepReference"
+       Discipline="Yes"
+       Abstract="No"
+       Specializable="Yes"
+       CustomerExtensible="Yes"
+       Abbreviation="ash">
+    <Property Name="Searchable" Value="Yes"/>
+    <Property Name="KweNew_InstanciationMethod" Value="CATEFmtSIMShapeInstanciate"/>
+    <Property Name="KweNew_ReturnedType" Value="VPMRepInstance"/>
+    <Property Name="Newable" Value="Insert"/>
+    <Property Name="3DIconName" Value="I_CATFmtAsh.cgr"/>
+    <Property Name="IconName" Value="I_CATFmtAsh"/>
+    <!--Property Name="NonLinearVersioningAvailability" Value="All"/-->
+    <Method ImplementationType="AsFather">
+      <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+    </Method>
+  </Class>
+  
+<!-- SIMConnection  -->
+  <Class Name="SIMConnection"
+        Uuid="3225f05e-47a4-44be-a8eb-8a2270e3ab4c"
+        Abstract="No"
+        Discipline="Yes"
+        Structured="Yes"
+        CarryStreams="Yes"
+        SuperName="CATMCXMechanicalConnection"
+        Specializable="No"
+        CustomerExtensible="No"
+        CustomerExposition="Programmer">
+    <Method ImplementationType="None">
+      <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+    </Method>
+  </Class>
+
+<!-- PLM Extension to optionnally store (non-3D) dimension -->
+  <Extension Name="SimulationRepDimension"
+            Uuid="3d591edc-3289-423d-89b2-1b5bfbd04ff1"
+            ScopeNames="FEM"
+            CAAExposition="L1"
+            CustomerExposition="Programmer">                    
+    <Simple Name="V_Dimension"
+        Uuid="47CA2774-1C28-4360-B638-A1C00864B722"
+        Type="String"
+		DefaultValue="Undefined"
+        Protection="External"
+        CAAExposition="L1"
+        Faceted="Yes"
+        PLMImpacting="Yes">
+        <Range>
+            <Equal>Undefined</Equal>
+            <Equal>3D</Equal>
+            <Equal>2D</Equal>
+            <Equal>Axisymmetric</Equal>
+            <Equal></Equal>
+        </Range>
+    </Simple>	
+	<Simple Name="V_Fidelity"
+        Uuid="177FC941-8DAF-48B3-A42F-97ADA51E2645"
+        Type="String"
+		DefaultValue="Undefined"
+        Protection="External"
+        CAAExposition="L1"
+        Faceted="Yes"
+        PLMImpacting="Yes">
+    </Simple>
+
+  </Extension>
+  
+  
+  
+</Package>

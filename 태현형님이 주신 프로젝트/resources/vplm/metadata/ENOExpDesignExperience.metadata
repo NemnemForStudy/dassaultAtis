@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ENOVIA DICTIONARY  -->
+<!-- COPYRIGHT DASSAULT SYSTEMES 2022, All rights reserved -->
+<Package xmlns="PLMDictionaryUnified" ModelerType="Top" Name="ENOExpDesignExperience" Uuid="131ebdec-a12d-4c1f-862283c69b90488e" UseNames="PLMExp3DExperience" CustomerExposition="Programmer" Architecture="All">
+  <!-- ***************************************** -->
+  <!-- * ENOExpDesignExperience (3DExperience) * -->
+  <!-- ***************************************** -->
+  <Class Name="ENOExpDesignExperience" Uuid="6a9d80e6-dc35-4887-8dee6693d9484cdc" Abstract="No" SuperName="3DExperience" Abbreviation="rtexp" CustomerExposition="Programmer">
+    <CAAComment>
+      <ShortRole>Design Experience object</ShortRole>
+      <Role>This object captures the scene of a working area</Role>
+    </CAAComment>
+      <Property Name="NewMajorRevisionAvailability"  Value="Yes"/>
+      <Property Name="ChangeMaturityAvailability"    Value="Yes"/>
+      <Property Name="DeleteAvailability"            Value="Yes"/>
+      <Property Name="LockUnlockAvailability"        Value="Yes"/>
+      <Property Name="TransferOwnershipAvailability" Value="Yes"/>
+      <Property Name="DuplicateAvailability"         Value="Yes"/>
+      <Property Name="EditPropertiesAvailability"    Value="Yes"/>
+      <Property Name="SaveAsNewAvailability"         Value="Yes"/>
+      <Property Name="EvolutionAvailability"         Value="No"/>
+      <Property Name="NewMinorRevisionAvailability"  Value="No"/>
+      <Property Name="Searchable"                    Value="Yes"/>
+      <Property Name="IconName"                      Value="I_DesignExperience"/>
+      <Property Name="3DIconName"                    Value="DesignExperience.cgr"/>
+      <Property Name="Configurable"                  Value="No" />
+      <Property Name="Filtrable"                     Value="No" />
+    <Method ImplementationType="AsFather">
+      <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+    </Method>
+    <!-- ***************************************** -->
+    <!-- *    SUBRELATIONSHIPS DECLARATIONS      * -->
+    <!-- ***************************************** -->
+    <Path  Name="V_DEtoContextAsset"
+         Uuid="fbd8d315-c0ec-4811-9c0be39c5640db80"
+         MultiValuated="Yes"
+         RoleName="DEtoContextAsset"		Type="SemanticRelation" AdaptativeToMinor="No"
+		SynchroSensitivity="None"
+		RerouteOnEffectivityChange="No"
+         Semantics="Reference"  />
+
+    <Path  Name="V_DEtoWIPAsset"
+       Uuid="96de1ca6-c627-4740-8d8a078c0f9060c8"
+       MultiValuated="Yes"
+       RoleName="DEtoWIPAsset"		Type="SemanticRelation" AdaptativeToMinor="No"
+		SynchroSensitivity="None"
+		RerouteOnEffectivityChange="No"
+       Semantics="Reference"  />
+
+    <Path  Name="V_DEtoCOW"
+       Uuid="4b5c0977-9d73-4dd0-8763a3167097caf2"
+       MultiValuated="No"
+       RoleName="DEtoCoW" Type="SemanticRelation" AdaptativeToMinor="No"
+		SynchroSensitivity="None"
+		RerouteOnEffectivityChange="No"
+       Protection="Internal"
+       Semantics="Reference2"  />
+    </Class>
+  </Package>
+
+

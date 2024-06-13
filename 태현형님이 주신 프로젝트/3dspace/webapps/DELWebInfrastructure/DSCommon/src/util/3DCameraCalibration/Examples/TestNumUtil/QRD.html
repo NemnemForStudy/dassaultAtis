@@ -1,0 +1,45 @@
+<!-- numeric.js & num_util test example. Author: qif  -->
+<html>
+<head>
+<script src="../../../../../../numeric.js-1.2.6/numeric-1.2.6.js"></script>
+<script src="../../num_util.js"></script>
+</head>
+<body> 
+<div id="out"></div>
+<script> 
+var s = document.getElementById("out");
+s.innerHTML += "";
+s.innerHTML +=
+"<samp>"+
+"   A = Q R<br/>"+ 
+"</samp>"  
+  var Arow = [[1,1,0],[1,0,1],[0,1,1]];
+  var Acol = numeric.transpose(Arow);
+  s.innerHTML  += "<br/>A="+M2DtoTable(Arow); 
+  var sol = getQR(Acol);
+  var Q = sol["Q"];
+  s.innerHTML  += "<br/>Q="+ColMtoTable(Q);
+  R = sol["R"];
+  s.innerHTML  += "<br/>R="+M2DtoTable(R);  
+  var QRrow = numeric.dot(numeric.transpose(Q),R); // numeric dot of two row-vector matrices.  
+  s.innerHTML  += "<br/>QR="+M2DtoTable(QRrow);    
+  
+  var Arow = [[12,-51,4],[6,167,-68],[-4,24,-41]];
+  var Acol = numeric.transpose(Arow);
+  s.innerHTML  += "<br/>A="+M2DtoTable(Arow); 
+  var B = [[6/7,-69/175, -58/175],
+           [3/7, 158/175, 6/175],
+		   [-2/7, 6/35, -33/35]];
+  s.innerHTML  += "<br/>Wiki Q="+M2DtoTable(B);		
+  var sol = getQR(Acol);
+  var Q = sol["Q"];
+  s.innerHTML  += "<br/>Q="+ColMtoTable(Q);
+    
+  R = sol["R"];
+  s.innerHTML  += "<br/>R="+M2DtoTable(R);   
+  var QRrow = numeric.dot(numeric.transpose(Q),R); //  numeric dot of two row-vector matrices.  
+  s.innerHTML  += "<br/>QR="+M2DtoTable(QRrow);     
+</script>
+</body>
+</html>
+

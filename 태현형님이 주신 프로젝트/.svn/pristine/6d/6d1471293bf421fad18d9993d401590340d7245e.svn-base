@@ -1,0 +1,23 @@
+################################################################################################
+# Create By jhlee 2023. 04. 17
+# Admin Type : menu
+# Name : decCwpMasterListActionsToolBar
+################################################################################################
+
+#del menu "decCwpMasterListActionsToolBar";
+add menu "decCwpMasterListActionsToolBar"
+	description ''
+	setting 'Registered Suite' 'ProgramCentral'
+;
+mod menu "decCwpMasterListActionsToolBar"
+	add command 'decCwpTaskCompareExcel'
+	add command 'decCwpTaskDelete'
+;
+mod menu "decCwpMasterListActionsToolBar"
+	add command decCWPTaskNoCompareExcel
+	order command decCWPTaskNoCompareExcel 2
+;
+
+mod menu "decCwpMasterListActionsToolBar"
+	remove command decCWPTaskNoCompareExcel
+;

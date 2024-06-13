@@ -1,0 +1,1 @@
+define("DS/NotificationAPI/NotificationAPI_ru",{});define("DS/NotificationAPI/assets/nls/feed",{permissionBannerTitle:"Получать уведомления о новых сообщениях",permissionBannerText:"Включить уведомления на рабочем столе"});

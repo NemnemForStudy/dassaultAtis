@@ -1,0 +1,16 @@
+m|MPFCore\MPFDataProxy.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.1.22330|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\MPFDataProxy\MPFDataProxy.js|1669432465|3197
+s|MPFCore\MPFDataProxy.mweb\src\AppsConnector.js|1669417581|283
+u|MPFCore\MPFDataProxy.mweb\src\Connector.js|1669417581|259
+u|MPFCore\MPFDataProxy.mweb\src\DataProxy.js|1669417581|8306
+u|MPFCore\MPFDataProxy.mweb\src\EchoConnector.js|1669417581|287
+u|MPFCore\MPFDataProxy.mweb\src\MPFDataProxy.js|1669417581|0
+u|MPFCore\MPFDataProxy.mweb\src\MarketplaceConnector.js|1669417581|327
+u|MPFCore\MPFDataProxy.mweb\src\NoConnector.js|1669417581|276
+u|MPFCore\MPFDataProxy.mweb\src\NoDataProxy.js|1669417581|854
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

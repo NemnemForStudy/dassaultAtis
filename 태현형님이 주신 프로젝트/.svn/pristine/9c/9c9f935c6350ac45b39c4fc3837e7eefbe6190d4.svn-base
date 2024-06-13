@@ -1,0 +1,134 @@
+<form class="form-group-basic-param-parent">
+	<div class="form-group-basic">
+		<table class="table" id="dfm-derivedformatform-table">
+			<tbody>
+				<tr>
+					<td class="dfm-derivedformatform-column" colspan="3">
+						<div class="form-group" id="derivedformatfield-converter-container">
+							<label for="connector">{{ this.labels.converter }}</label> 
+							<div id="test-conventerandinfo">
+								<select id="derivedformatfield-converter" class="form-control" {{#if disableFields}} disabled=true {{/if}}>
+	                                {{#each this.converters}}
+	                                    <option value="{{this.value}}" {{#if this.selected}} selected {{/if}} class="form-control">{{this.label}}</option>
+	                                {{/each}}
+	                            </select>
+							</div>
+						</div>
+					</td>
+				</tr>
+				
+				<tr>
+					<td class="dfm-derivedformatform-column" colspan="3">
+						<div class="form-group" id="derivedformatfield-connector-container">
+							<label for="connector">{{ this.labels.connector }}</label> 
+							<select id="derivedformatfield-connector" class="form-control" {{#if disableFields}} disabled=true {{/if}}>
+								{{#each this.connectors}}
+								    <option value="{{this.value}}" {{#if this.selected}} selected {{/if}} class="form-control result-option">{{this.label}}</option>
+								{{/each}}
+							</select>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td class="dfm-derivedformatform-column" width="47.5%">
+						<div class="form-group" id="derivedformatfield-source-container">
+							<label for="type">{{ this.labels.type }}</label> 
+							<select id="derivedformatfield-source" class="form-control"  {{#if disableFields}} disabled=true {{/if}}>
+								{{#each this.sources}}
+								    <option value="{{this.value}}" {{#if this.selected}} selected {{/if}} data-type="{{this.type}}" data-partExtension="{{this.partExtension}}" class="form-control">{{this.label}}</option>
+								{{/each}}
+							</select>
+						</div>
+					</td>
+
+					<td class="dfm-derivedformatform-column" width="4%">
+						<div class="form-group" >
+						</div>
+					</td>
+
+					<td class="dfm-derivedformatform-column" width="47.5%">
+						<div class="form-group" id="derivedformatfield-sourceFormat-container">
+							<label for="type">{{ this.labels.typeFormat }}</label> 
+							<input type="text" id="derivedformatfield-sourceFormat" value="{{this.sourceFormat}}" class="form-control" disabled=true>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td class="dfm-derivedformatform-column" width="47.5%">
+						<div class="form-group" id="derivedformatfield-target-container">
+							<label for="format">{{ this.labels.format }}</label> 
+							<select id="derivedformatfield-target" class="form-control uk-select"  {{#if disableFields}} disabled=true {{/if}}>
+								{{#each this.targets}}
+								    <option value="{{this.value}}" {{#if this.selected}} selected {{/if}} class="form-control">{{this.label}}</option>
+								{{/each}}
+							</select>
+							<input type="text" id="derivedformatfield-inputStreamId" value="{{this.inputStreamId}}" class="form-control" disabled hidden>
+						</div>
+					</td>
+
+					<td class="dfm-derivedformatform-column" id="dfm-derivedformatform-column-warning-icon-id" width="4%" style="vertical-align: bottom">
+						<div class="form-group" id="derivedformatfield-warning-icon"  >
+							
+						</div>
+					</td>
+
+					<td class="dfm-derivedformatform-column" width="47.5">
+                        <div class="form-group" id="derivedformatfield-target-container">
+                            <label for="format">{{ this.labels.alias }}</label> 
+                            <input type="text" id="derivedformatfield-outputStreamId" value="{{this.outputStreamId}}" class="form-control" disabled>
+                        </div>
+                    </td>
+				</tr>
+				<tr>
+					<td class="dfm-derivedformatform-column" colspan="3">
+						<div class="form-group-add-parameters">
+							<div class="form-group derivedformatfield-formatparams" id="derivedformatfield-formatparams"></div>
+						</div>
+					 </td>
+				 </tr>
+				 <tr>
+					<td class="dfm-derivedformatform-column" width="47.5%">
+						<div class="form-group" id="derivedformatfield-event-container">
+							<label for="event">{{ this.labels.event }}</label> 
+							<select id="derivedformatfield-event" class="form-control uk-select"  {{#if disableFields}} disabled=true {{/if}}>
+								{{#each this.events}}
+								    <option value="{{this.value}}" lifecycle="{{this.lifecycle}}" {{#if this.selected}} selected {{/if}} class="form-control">{{this.label}}</option>
+								{{/each}}
+							</select>
+						</div>
+					</td>
+					<td class="dfm-derivedformatform-column" width="5%">
+						<div class="form-group" >
+						</div>
+					</td>
+					<td class="dfm-derivedformatform-column" width="47.5%">
+						<div class="form-group" id="derivedformatfield-activation-container">
+							<label for="event">{{ this.labels.activation }}</label> 
+							<select id="derivedformatfield-activation" class="form-control uk-select"  {{#if disableFields}} disabled=true {{/if}}>
+								{{#each this.activation}}
+								    <option value="{{this.value}}" {{#if this.selected}} selected {{/if}} class="form-control">{{this.label}}</option>
+								{{/each}}
+							</select>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td class="dfm-derivedformatform-column" colspan="3">
+						<div class="form-group" id="derivedformatfield-state-container">
+							<label for="state">{{ this.labels.targetState }}</label> 
+							<select id="derivedformatfield-state" class="form-control uk-select"  {{#if disableFields}} disabled=true {{/if}}>
+								{{#each this.states}}
+								    <option value="{{this.value}}" {{#if this.selected}} selected {{/if}} class="form-control">{{this.label}}</option>
+								{{/each}}
+							</select>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</form>
+<div class="modal-footer" style="margin-left:-15px;margin-right:-15px;margin-bottom:-15px;">
+			<button id="btnActionSubmit" class="btn btn-primary floatRight">{{ this.buttons.ok }}</button>
+			<button id="btnActionCancel" class="btn btn-default floatRight mrgnLeft10">{{ this.buttons.cancel }}</button>
+</div>

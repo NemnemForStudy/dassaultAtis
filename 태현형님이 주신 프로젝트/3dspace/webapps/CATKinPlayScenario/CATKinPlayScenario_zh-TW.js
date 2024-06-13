@@ -1,0 +1,1 @@
+define("DS/CATKinPlayScenario/CATKinPlayScenario_zh-TW",{});define("DS/CATKinPlayScenario/assets/nls/CATKinPlayRegister",{CATKinPlayRegister_Title:"運動學",CATKinPlayRegister_Description:"註冊「播放動畫」",Animation_Title:"動畫播放器",Animation_Description:"重新播放動畫"});

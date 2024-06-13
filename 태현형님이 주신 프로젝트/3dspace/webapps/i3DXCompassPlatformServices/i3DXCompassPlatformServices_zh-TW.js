@@ -1,0 +1,1 @@
+define("DS/i3DXCompassPlatformServices/i3DXCompassPlatformServices_zh-TW",{});define("DS/i3DXCompassPlatformServices/assets/nls/openWith",{OpenWith:"開啟檔案",no_install_compatible:"請先安裝應用程式",moreApps:"更多應用程式"});

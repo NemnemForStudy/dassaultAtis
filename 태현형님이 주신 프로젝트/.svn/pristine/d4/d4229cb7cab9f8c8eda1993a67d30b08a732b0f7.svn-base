@@ -1,0 +1,1 @@
+define("DS/NativeLauncherWdg/NativeLauncherWdg_ko",{});define("DS/NativeLauncherWdg/assets/nls/NativeLauncher",{Play:"재생"});

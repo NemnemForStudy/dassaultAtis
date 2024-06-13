@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<!-- ENOVIA DICTIONARY  -->
+<!-- COPYRIGHT DASSAULT SYSTEMES 2020, All rights reserved -->
+
+<Package xmlns="PLMDictionaryUnified" ModelerType="Top" CustomerExposition="Programmer"
+         BelongsToModeler="PLMSystems3DArchitecture"
+         Name="PLMSystems3DArchi_Inst" Uuid="5634340f-da78-4eeb-8443-87ad2f259393"
+         UseNames="PRODUCTCFG" >
+
+         <!--Preqreqs: ERCoreModeler;LPABSTRACT;LPABSTRACT3DREP;PHYSICALABSTRACT;PLMABSTRACT;PLMCORE;PLMSystems3DArchitecture;PRODUCTCFG-->
+
+  <Comment>[V6R021x] 10/6/2020 Created from PLMSystemsArchitecture split to solve Move Instance issue</Comment>
+
+  <RelationClass Name="Sys3D_AbstractVolumeInst"
+         Uuid="f4cadcf9-55e9-48fa-92ba-eb01728fd61d"
+         Abstract="Yes"
+         CustomerExposition="Programmer"
+         SuperName="VPMInstance"
+         Discipline="Yes" >
+                  
+  </RelationClass>
+
+  <RelationClass Name="Sys3D_IntegrationVolumeInst"
+         Uuid="10d9f972-2fa6-4f47-bf69-38c8eec440db"
+         Abstract="Yes"
+         CustomerExposition="Programmer"
+         SuperName="Sys3D_AbstractVolumeInst"
+         Discipline="Yes" >
+
+    <Simple Name="V_MaxSignalNumber"
+        Uuid="ad6505c2-d301-489a-aa54-3deedb04f5b6"
+        Type="Integer" Protection="Free"
+        MultiValuated="No" DefaultValue="-1">
+    </Simple>
+
+  </RelationClass>
+  
+  <RelationClass Name="Sys3D_DerivationVolumeInst"
+         Uuid="fd02c425-6196-479f-9e74-87f5c037776e"
+         CustomerExposition="Programmer"
+         SuperName="Sys3D_IntegrationVolumeInst"
+         Discipline="Yes" >
+                  
+  </RelationClass>
+   
+  <RelationClass Name="Sys3D_InterfaceVolumeInst"
+         Uuid="660f4a70-5b02-4f8a-a779-5ef4e92fa725"
+         CustomerExposition="Programmer"
+         SuperName="Sys3D_IntegrationVolumeInst"
+         Discipline="Yes" >
+                  
+  </RelationClass>
+
+  <RelationClass Name="Sys3D_ComponentVolumeInst"
+         Uuid="31a75439-f091-4631-9884-525fae886883"
+         CustomerExposition="Programmer"
+         SuperName="Sys3D_AbstractVolumeInst"
+         Discipline="Yes" >
+
+  </RelationClass>
+   
+  <RelationClass Name="Sys3D_PathwayGeometryInst"
+       Uuid="cbd107ae-1f52-4c53-a72b-1cb7a08c6cd0"
+       CustomerExposition="Programmer"
+       SuperName="VPMInstance"
+       Discipline="Yes" 
+       Specializable="Yes"
+       CustomerExtensible="Yes" >
+    
+		<Property Name="KweNew_InstanciationMethod" Value="CATESys3DDelegateInstanciationPathway"/>
+    
+  </RelationClass>
+
+  <RelationClass Name="Sys3D_RouteInst"
+                 Uuid="000a58af-e4b9-4db9-af1c-466c08e6ebb0"
+                 CustomerExposition="Programmer"
+                 SuperName="VPMInstance"
+                 Discipline="Yes"
+                 Specializable="Yes"
+                 CustomerExtensible="Yes" >
+
+		<Property Name="KweNew_InstanciationMethod" Value="CATESys3DDelegateInstanciationRoute"/>
+    
+  </RelationClass>
+  
+</Package>

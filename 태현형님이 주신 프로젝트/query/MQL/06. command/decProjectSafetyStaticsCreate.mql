@@ -1,0 +1,17 @@
+################################################################################################
+# Created By thok : 2023. 06. 02
+# Admin Type : command
+# Name : decProjectSafetyStaticsCreate
+################################################################################################
+#delete command decProjectSafetyStaticsCreate;
+add command decProjectSafetyStaticsCreate 
+	alt 'emxProgramCentral.Label.createSafetyStatics' 
+	label 'emxProgramCentral.Label.createSafetyStatics' 
+	href '${COMMON_DIR}/decProjectSafetyStaticsCreateDialogFS.jsp'
+	setting 'Image' '${COMMON_DIR}/images/iconActionCreate.png'
+	setting 'Target Location' slidein
+	setting 'Popup Modal' true
+	setting 'Registered Suite' ProgramCentral
+;
+add property command_decProjectSafetyStaticsCreate on program eServiceSchemaVariableMapping.tcl to command 'decProjectSafetyStaticsCreate'
+;

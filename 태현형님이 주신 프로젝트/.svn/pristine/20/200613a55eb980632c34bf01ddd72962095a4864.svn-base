@@ -1,0 +1,1 @@
+define("DS/CATWebUXComponents/CATWebUXComponents_es",{});define("DS/CATWebUXComponents/assets/nls/CATWebUXComponents",{validationPanelOk:"Aceptar",validationPanelCancel:"Cancelar",replyButtonLabel:"Responder",addButtonLabel:"Nuevo comentario",pointedPageRemoved:"Se ha eliminado la página apuntada"});

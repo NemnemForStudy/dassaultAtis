@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:widget="http://www.netvibes.com/ns/">
+<head>
+
+<!-- Application Metas -->
+<title>Media Reader - 3DEXPERIENCE platform Welcome</title>
+<meta name="version" content="1.0" />
+<meta name="noSearchInWidgetUI" content="true" />
+
+<link rel="stylesheet" type="text/css" href="../c/UWA/assets/css/standalone.css" />
+<link rel="stylesheet" href="../UIKIT/UIKIT.css" type="text/css" />
+
+<script type="text/javascript" src="../c/UWA/js/UWA_Standalone_Alone.js"></script>
+
+<style>
+    .welcome-body {
+        position: relative;
+        padding-bottom: 345px;
+        background-size: 946px;
+        background-repeat: no-repeat;
+        background-position: center center;
+        overflow: hidden;
+    }
+
+    .welcome-banner {
+        position: absolute;
+        width: 100%;
+        margin-top: 75px;
+        padding: 16px;
+        background-color: rgba(255, 255, 255, 0.85);
+        color: #8a8a8a;
+        font: normal 22px '3ds';
+        text-align: center;
+        box-shadow: 0 0 5px rgba(60, 126, 161, 0.13);
+    }
+</style>
+
+<script type="text/javascript">
+require([
+    'UWA/Core',
+    'i18n!WelcomeWdg/assets/nls/welcome',
+    'DS/WebappsUtils/WebappsUtils'
+], function (UWA, i18n, WebappsUtils) {
+    'use strict';
+
+    function bold3DExp (str) {
+        str = str || '';
+        return str.replace('3DEXPERIENCE', '<b>3D</b>EXPERIENCE');
+    }
+
+    function onLoad () {
+        var imagePath = WebappsUtils.getWebappsAssetUrl('WelcomeWdg', 'images/3DEXPERIENCE_Welcome.png');
+
+        widget.body.getElement('.welcome-body').setStyle('background-image', 'url(\'{0}\')'.format(imagePath));
+        widget.body.getElement('.welcome-banner').setContent(bold3DExp(i18n.welcomeMessage));
+    }
+
+    widget.addEvents({
+        onLoad: onLoad,
+        onRefresh: onLoad
+    });
+});
+</script>
+
+</head>
+
+<body>
+    <div class="welcome-body">
+        <div class="welcome-banner"></div>
+    </div>
+</body>
+</html>

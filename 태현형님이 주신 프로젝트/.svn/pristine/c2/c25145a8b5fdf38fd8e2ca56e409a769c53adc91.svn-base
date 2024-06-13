@@ -1,0 +1,44 @@
+{{#if title}}<div class="tuto-title">{{title}}</div>{{/if}}
+<div class="tuto-bubble-menu">
+    {{#if isEditable}}
+    <a class="tuto-bubble-menu-item tuto-edit">
+        <span class="fonticon fonticon-pencil"></span>
+    </a>
+    {{/if}}
+    <a class="tuto-bubble-menu-item tuto-close">
+        <span class="fonticon fonticon-close"></span>
+    </a>
+</div>
+<div class="tuto-pagination{{#if isIntro}} tuto-pagination-intro{{/if}}">
+    <ul role="tablist">
+        {{#times stepSize}}
+            {{#ifcond this ../stepNumber}}
+                <li role="presentation"><a role="button" class="active" data-stepnumber="{{this}}">&nbsp;</a></li>
+            {{else}}
+                <li role="presentation"><a role="button" data-stepNumber="{{this}}">&nbsp;</a></li>
+            {{/ifcond}}
+        {{/times}}
+    </ul>
+</div>
+<div class="tuto-bubble">  
+    <div class="tuto-bubble-content{{#if isIntro}} tuto-bubble-content-intro{{/if}}">
+        <p>{{content}}</p>
+    </div>
+    <div class="tuto-bubble-previous-next">
+        {{#unless isIntro}}
+            <a class="btn btn-info tuto-nav-button tuto-prevbutton" role="button">
+                <span class="fonticon fonticon-chevron-left"></span><span class="back">{{Nls.back}}</span>
+            </a>
+        {{/unless}}
+        {{#if isLast}}
+        <a class="btn btn-info tuto-nav-button tuto-finishbutton" role="button">
+            <span>{{Nls.finish}}</span>
+        </a>
+        {{else}}
+            <a class="btn btn-info tuto-nav-button tuto-nextbutton" role="button">
+                <span class="fonticon fonticon-chevron-right"></span><span>{{Nls.next}}</span>
+            </a>
+        {{/if}}
+    </div>
+</div>
+

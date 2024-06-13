@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<derivedformatmanagement xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="DerivedFormatDeclarative.xsd">
+    <!-- first official version for R2023x Beta2 and R2022x FD04  -->
+	<converter name="SolidEdge" synchronous="true"  nlsFile="emxDerivedFormatManagementSolidEdgeStringResource" comment="conversion managed synchronously at save by SolidEdge PowerBy connector">
+      <datasources>
+		<datasource name="SOLIDEDGE" >    
+			<source name="PAR,PSM" type ="SEComponent">  <!-- SEComponent is a key word specific to SolidEdge. look at this key in nlsFile file -->
+				<target name="image_jpg"    inputStreamId="authoring"   outputStreamId="JPG" />
+				<target name="step"         inputStreamId="authoring"   outputStreamId="STEP"/>
+				<target name="pdf"          inputStreamId="authoring"   outputStreamId="PDF" />
+			</source>
+					
+			<source name="DFT" type ="Drawing">
+				<target name="image_jpg"    inputStreamId="authoring"   outputStreamId="JPG" />
+				<target name="pdf"          inputStreamId="authoring"   outputStreamId="PDF" />
+			</source>
+			
+			<events>       
+				<event name="onXCADSave" type="interactiveUpdate" />
+			</events>
+		</datasource>
+	  </datasources>
+	</converter>
+
+</derivedformatmanagement>

@@ -1,0 +1,10 @@
+m|VisuContentAccessWebClient\ViscaURLServicesJS.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.0.22078|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\ViscaURLServicesJS\ViscaURLServicesJS.js|1647692289|4549
+s|VisuContentAccessWebClient\ViscaURLServicesJS.mweb\src\ViscaURLServices.js|1614696858|4746
+u|VisuContentAccessWebClient\ViscaURLServicesJS.mweb\src\VisuRepServices.js|1620726949|5405
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

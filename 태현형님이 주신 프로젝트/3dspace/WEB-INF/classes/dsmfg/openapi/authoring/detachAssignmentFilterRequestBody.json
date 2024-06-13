@@ -1,0 +1,48 @@
+{
+  "properties": {
+    "dsmfg:AssignmentFilter": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "specifiedOccurrence": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "instancePosition",
+                "identifier"
+              ],
+              "properties": {
+                "instancePosition": {
+                  "type": "integer",
+                  "example": 0
+                },
+                "identifier": {
+                  "type": "string",
+                  "example": "EngInstanceId",
+                  "description": "The Physical ID of the dseng:EngInstance."
+                },
+                "source": {
+                  "description": "source",
+                  "type": "string",
+                  "example": "https://server_name.dsone.3ds.com:443/3DSpace"
+                },
+                "relativePath": {
+                  "type": "string",
+                  "example": "/resources/v1/modeler/dseng/dseng:EngItem/{EngItemId}/dseng:EngItemInstance/{EngInstanceId}",
+                  "description": "relativePath."
+                },
+                "type": {
+                  "description": "type",
+                  "type": "string",
+                  "example": "VPMInstance"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

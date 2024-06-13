@@ -1,0 +1,28 @@
+{
+	"dssrc:ManufacturerEquivalentItem": {
+		"kindOf": "root",
+        "beType": "type_VPMReference",
+		"patchCSRF":true,
+		"search":true,
+		"defaultMask": "dsmvsrc:ManufacturerEquivalentItem.Details",
+        "attributeMappingClass": "com.dassault_systemes.enovia.xapps.dssrc.V1.dictionaries.dssrcMEIReferenceAttributeDictionary",
+		"classesWhere":"interface[ManufacturerEquivalentItemExtension] == true",
+		"indexClassesWhere":"flattenedtaxonomies:\"interfaces/ManufacturerEquivalentItemExtension\"",
+		"cestamp":true
+    },
+    "dssrc:ManufacturerEquivalentItems": {
+		"kindOf": "root",
+        "beType": "virtual_ManufacturerEquivalentItemExtension",
+		"patchCSRF":true,
+		"defaultMask": "dssrc:ManufacturerEquivalentItems.Basic",
+		"rootLinks": ["dseng:EngItem"],
+        "attributeMappingClass": "com.dassault_systemes.enovia.xapps.dssrc.V%1.dictionaries.dssrcMEIPublicReferenceAttrDictionary",
+        "implementationClass": "com.dassault_systemes.enovia.xapps.dssrc.V%1.implementations.dssrcMEIImplementation",
+		"cestamp":true,
+		"optionCheck" : {
+        	"modify"      : true,
+        	"produce"     : true,
+        	"navigate"    : false
+        }
+    }
+}

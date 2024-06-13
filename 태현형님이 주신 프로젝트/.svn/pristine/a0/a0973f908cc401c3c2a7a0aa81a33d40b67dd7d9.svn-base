@@ -1,0 +1,1 @@
+define("DS/CATFLWidgetProperties/CATFLWidgetProperties_it",{});define("DS/CATFLWidgetProperties/assets/nls/CATFLProperties",{msg_not_supported_selection:"Selezione non supportata",msg_facet_no_available:"Questo facet non è disponibile"});

@@ -1,0 +1,42 @@
+<div class="gdpr-update-intro">
+    {{{updateBody}}}
+</div>
+<div class="gdpr-cookie-section necessary-cookie-section">
+    <div class="cookie-form">
+        <b class="cookie-name">{{necessaryCookies}}</b>
+        <div class="toggle toggle-switch">
+            <input type="checkbox" id="necessary" checked disabled>
+            <label class="control-label" for="necessary">{{accept}}</label>
+        </div>
+    </div>
+    <div class="cookie-desc">
+        {{{updateBodyNecessaryCookies}}}
+    </div>
+</div>
+<div class="gdpr-cookie-section functional-cookie-section">
+    <div class="cookie-form">
+        <b class="cookie-name">{{functionalCookies}}</b>
+        <div class="toggle toggle-switch">
+            <input class="cookie" type="checkbox" id="functional" value="functional" {{#if functional}}checked{{/if}}>
+            <label class="control-label" for="functional">{{accept}}</label>
+        </div>
+    </div>
+    <div class="cookie-desc">
+        {{{updateBodyFunctionalCookies}}}
+    </div>
+</div>
+<div class="gdpr-cookie-section ads-cookie-section">
+    <div class="cookie-form">
+        <b class="cookie-name">{{adsCookies}}</b>
+        <div class="toggle toggle-switch">
+            <input class="cookie" type="checkbox" id="advertising" value="advertising" {{#if advertising}}checked{{/if}}>
+            <label class="control-label" for="advertising">{{accept}}</label>
+        </div>
+    </div>
+    <div class="cookie-desc">
+        {{updateBodyAdvertisingCookies}}
+    </div>
+    <div class="cookie-usage">
+        {{{seeListCookiesUsage}}}
+    </div>
+</div>

@@ -1,0 +1,107 @@
+#Prog VPMEditor_TSO_VPMReferenceVPMRepReference (iPLMIDSet :  #In PLMIDSet,oPLMIDSet :  #Out PLMIDSet) : VoidType
+{
+  let rsRelatedPrivateReps(PLMRouteSet)
+  let rs3DPartShapes(PLMRouteSet)
+  let rs3DPartRefs(PLMRouteSet)
+  let rsEngineeringConnections(PLMRouteSet)
+  let rsFastenerConnections(PLMRouteSet)
+  let rsCATAsmPatternConnections(PLMRouteSet)
+  let rsMaterialConnections(PLMRouteSet)
+  let rsRawMaterialConnections(PLMRouteSet)
+  let rsPorts(PLMRouteSet)
+  let rsXCADRepRepInst(PLMRouteSet)
+
+  let idsInputRefs(PLMIDSet)
+  let idsInputReps(PLMIDSet)
+  let idsSourceForPorts(PLMIDSet)
+  let idsRefsForPorts(PLMIDSet)
+  let idsRepsForPorts(PLMIDSet)
+  let idsRefsRepsForPorts(PLMIDSet)
+
+  let idsXCADComposition(PLMIDSet)
+  let idsXCADNonPS(PLMIDSet)
+  let idsXCADDependencies(PLMIDSet)
+  let idsDocument(PLMIDSet)
+
+  /*              */
+  /* Filter Input */ 
+  /*              */
+
+  idsInputRefs = Restrict(iPLMIDSet, "PRODUCTCFG/VPMReference")
+  idsInputReps = Restrict(iPLMIDSet, "PRODUCTCFG/VPMRepReference")
+
+  /*                      */
+  /* Enrich Ref with XCAD */ 
+  /*                      */
+  idsXCADComposition =  ExecutePLMProcedure("XCAD_CompleteItems", idsInputRefs)
+  idsInputRefs = idsInputRefs + Restrict(idsXCADComposition, "PRODUCTCFG/VPMReference")
+
+  /*                              */
+  /* Enrich Rep with XCAD Non PS  */ 
+  /*                              */ 
+  idsXCADNonPS =  ExecutePLMProcedure("XCAD_CompleteNonPS", idsInputRefs)
+  idsXCADDependencies = Restrict(idsXCADNonPS, "RelationClass/XCADBaseDependency")
+
+  /*           */
+  /* Ref stuff */ 
+  /*           */
+
+  /* Complete with related PrivateReps */
+  rsRelatedPrivateReps = ExecutePLMFunction("PRODUCTCFG", "ProductCfg_AddLPPrivateRepForReference", idsInputRefs)
+
+  /* Complete with 3DPart Shape */
+  rs3DPartShapes = ExecutePLMFunction("PRODUCTCFG", "ProductCfg_Add3DPartRepresentation", idsInputRefs)
+
+  /*Completes with Engineering Connections */
+  rsEngineeringConnections = ExecutePLMFunction("CATMCXAssembly", "CATMCXAssembly_AddAllAggregatedMCX", idsInputRefs)
+
+  /* Completes with Fastener Connections */
+  rsFastenerConnections = ExecutePLMFunction("PLMFst_Fasteners", "PLMFst_Fasteners_AddAllAggregatedCNX", idsInputRefs)
+
+  /*Completes with CATAsmPattern Connections */
+  rsCATAsmPatternConnections = ExecutePLMFunction("CATAsmPattern", "CATAsmPattern_AddAllAsmPattern", idsInputRefs)
+
+  /* Completes with XCADRepRepInsts */
+  rsXCADRepRepInst = ExecutePLMFunction("XCADAssembly", "XcadAssembly_ExpandVPMRefToXCADRepRepInst", idsInputRefs)
+
+  /*Completes with Material Connections */
+  rsMaterialConnections = ExecutePLMFunction("CATMaterial", "mat_retrieveMatCnxUnderProduct", idsInputRefs)
+
+  /*Completes with Material Connections */
+  rsRawMaterialConnections =  ExecutePLMFunction("RawMaterialSpecification","RawMat_retrieveAllAppliedRawMaterial", idsInputRefs)
+
+  /*           */
+  /* Rep stuff */ 
+  /*           */
+
+  /* Complete with 3DPart Reference */
+  rs3DPartRefs = ExecutePLMFunction("PRODUCTCFG", "ProductCfg_Add3DPartReference", idsInputReps)
+  /* FUN118425 - Expand Document associated  products */
+  idsDocument = ExecutePLMProcedure("DocumentCompletion_allRelationshipCompletion", idsInputRefs)
+
+  /*           */
+  /* Ports     */ 
+  /*           */
+
+  /* Complete with Ports on Reps and 3DPart Refs */
+  idsSourceForPorts = idsInputRefs + idsInputReps + Ids(rs3DPartShapes) + Ids(rs3DPartRefs)
+  idsRefsForPorts = Restrict(idsSourceForPorts, "PRODUCTCFG/VPMReference")
+  idsRepsForPorts = Restrict(idsSourceForPorts, "PRODUCTCFG/VPMRepReference")
+  idsRefsRepsForPorts = idsRepsForPorts + idsRefsForPorts
+  
+  rsPorts = ExecutePLMFunction("PRODUCTCFG", "ProductCfg_AddVPMPorts", idsRefsRepsForPorts)
+
+  /*                              */
+  /* Related connections / models */ 
+  /*                              */
+
+  /* Other connection exclusively related to an aggregating reference (not only aggregated) */
+  /* Config not handled for now (risk of desynchro between effectivities and model) */
+
+  /*        */
+  /* Output */ 
+  /*        */
+
+  oPLMIDSet = iPLMIDSet + Ids(rsRelatedPrivateReps) + Ids(rs3DPartShapes) + Ids(rsEngineeringConnections) + Ids(rsFastenerConnections) + Ids(rsCATAsmPatternConnections) + Ids(rsXCADRepRepInst) + Ids(rsMaterialConnections) +Ids(rsRawMaterialConnections)  + Ids(rs3DPartRefs) + Ids(rsPorts)  + idsXCADDependencies + idsXCADComposition + idsDocument
+
+}

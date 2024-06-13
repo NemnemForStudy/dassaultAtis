@@ -1,0 +1,1 @@
+define("DS/CAT3DAnnotControllerForReview/CAT3DAnnotControllerForReview_ko",{});define("DS/CAT3DAnnotControllerForReview/assets/nls/CAT3DAnnotControllerForReview",{errorWhileSettingAppCtx:"슬라이드 주석이 올바르게 표시되지 않았습니다. 슬라이드를 다시 적용하십시오."});

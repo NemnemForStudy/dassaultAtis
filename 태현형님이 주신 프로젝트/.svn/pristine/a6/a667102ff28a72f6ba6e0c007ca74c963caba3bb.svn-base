@@ -1,0 +1,10 @@
+### 230421 created by CMG
+### state active->inactive
+
+
+#delete command decCodeDetailActiveCommand;
+
+copy command APPActivateMemberListActionLink decCodeDetailActiveCommand;
+
+mod command decCodeDetailActiveCommand href '${COMMON_DIR}/decCodeMasterUtil.jsp?action=Active&submitAction=refreshCaller';
+mod command decCodeDetailActiveCommand property 'original name' value 'decCodeDetailActiveCommand';

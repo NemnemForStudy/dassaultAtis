@@ -1,0 +1,13 @@
+m|ENOCfgBaseUX\CfgSpecificationsViewUX.mweb
+b|j|c,m
+b|c|n,u
+v|6.425.1.22323|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\CfgSpecificationsViewUX\CfgSpecificationsViewTest.html|1647691756|1400
+s|ENOCfgBaseUX\CfgSpecificationsViewUX.mweb\src\CfgSpecificationsViewTest.html|1606456644|1400
+t|win_b64\webapps\CfgSpecificationsViewUX\CfgSpecificationsViewUX.js|1668832446|1513
+s|ENOCfgBaseUX\CfgSpecificationsViewUX.mweb\src\scripts\CfgSpecificationsView.js|1668427311|4780
+t|win_b64\webapps\CfgSpecificationsViewUX\styles\CfgSpecificationsView.css|1606235980|783
+s|ENOCfgBaseUX\CfgSpecificationsViewUX.mweb\src\styles\CfgSpecificationsView.css|1606235980|783
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

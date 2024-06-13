@@ -1,0 +1,1 @@
+define("DS/MIBListOfThingsWidget/MIBListOfThingsWidget_ko",{});define("DS/MIBListOfThingsWidget/assets/nls/MIBListOfThingsWidgetNls",{CommandDialogTitle:"항목 목록",BtnOK:"확인",BtnCancel:"취소"});

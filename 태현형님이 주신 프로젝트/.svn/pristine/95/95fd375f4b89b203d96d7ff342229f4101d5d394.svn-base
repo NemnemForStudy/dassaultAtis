@@ -1,0 +1,1 @@
+define("DS/ReviseFromWidget/ReviseFromWidget_cs",{});define("DS/ReviseFromWidget/assets/nls/ReviseFromPrefsDlg",{SettingsTitle:"Nastavení",CopyTitleFromSource:"Kopírovat název ze zdroje",WarningNoRevise:"Zobrazit varování, pokud přístupová oprávnění neumožňují revizi"});

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Styles xmlns:syp="http://www.3ds.com/xsd/SYP">
+
+  <Template syp:name="GlobeViewerAfrWorkshopInterface" Target="CATCmdInterface">
+    <CATCmdInterface  WkbInterface= "CATIGlobeViewerAfrWorkshopConfiguration"/>
+  </Template>
+
+  <Template syp:name="GlobeViewerAfrWorkshopHeaders" Target="CATCmdHeadersList">
+    <CATCmdHeadersList>
+      <!-- <CATCommandHeader ID = "ColorArea"             ClassName = "DS/SocialGlobe/CmdColorArea"             SharedLibraryName = "ShareUI" ResourceFile = "SocialGlobe/GlobeViewer" />
+      <CATCommandHeader ID = "DeleteArea"            ClassName = "DS/SocialGlobe/CmdDeleteArea"            SharedLibraryName = "ShareUI" ResourceFile = "SocialGlobe/GlobeViewer" /> -->
+      <CATCommandHeader ID = "CreateArea"             ClassName = "DS/SocialGlobe/CmdCreateArea"             SharedLibraryName = "ShareUI" ResourceFile = "SocialGlobe/GlobeViewer" />
+      <CATCommandHeader ID = "EditArea"            ClassName = "DS/SocialGlobe/CmdEditArea"            SharedLibraryName = "ShareUI" ResourceFile = "SocialGlobe/GlobeViewer" />
+    </CATCmdHeadersList>
+  </Template>
+
+  <Template syp:name="GlobeViewerAfrWorkshopAccess" Target="CATCmdWorkbench">
+    <CATCmdWorkbench Name="GlobeViewerWorkbench">
+
+
+      <CATCmdContainer Name = "Areas"          Visibility = "1" RepresentationType="AfrActionBarSection">
+        <CATCmdStarter Name = "CreateArea"     Command = "CreateArea" />
+        <CATCmdStarter Name = "EditArea"    Command = "EditArea" />
+        <!--CATCmdSeparator Name="BasicManip_Separator" />
+        <CATCmdStarter Name = "Help"          Command = "Help" /-->
+      </CATCmdContainer>
+
+    </CATCmdWorkbench>
+  </Template>
+</Styles>

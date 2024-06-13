@@ -1,0 +1,127 @@
+{
+  "relations": [
+    { 
+      "name" : "v6_designTable_to",	  
+      "queries" :  [ 
+        { "definition":[{"navigationType" : "SR","qualityFilter" : {"role" : "31","semantics" : "6"}, "direction" : "to"}] }
+      ]
+    },
+    { 
+      "name" : "v6_designTable_from",	  
+      "queries" :  [ 
+        { "definition":[{"navigationType" : "SR","qualityFilter" : {"role" : "31","semantics" : "6"}, "direction" : "from"}] }
+      ]
+    },
+    { 
+      "name" : "v6_parametricRelation_to",
+      "queries" :  [ 
+        { "definition":[{"navigationType" : "SR","qualityFilter" : {"role" : "30","semantics" : "6"}, "direction" : "to"}] }
+      ]
+    },
+    { 
+      "name" : "v6_parametricRelation_from",	  
+      "queries" :  [
+        { "definition":[{"navigationType" : "SR","qualityFilter" : {"role" : "30","semantics" : "6"}, "direction" : "from"}] }
+      ]
+    }, 
+    { 
+      "name" : "v6_importKnowledgeware_to",	  
+      "queries" :  [ 
+        { "definition":[{"navigationType" : "SR","qualityFilter" : {"role" : "5","semantics" : "6"}, "direction" : "to"}] }
+      ]
+    },
+    { 
+      "name" : "v6_importKnowledgeware_from",
+      "queries" :  [ 
+        { "definition":[{"navigationType" : "SR","qualityFilter" : {"role" : "5","semantics" : "6"}, "direction" : "from"}] }
+      ]
+    },
+    {
+      "name": "ComponentsFamilyGeneric_to",
+			"en": "Generic Model",
+      "queries": [
+				{ "definition": [
+          {"navigationType": "relation","qualityFilter": {"rel_type": "VPLMrel/PLMConnection/V_Owner"},"direction": "to"},
+					{"navigationType": "SR","qualityFilter": {"role": "283","semantics": "1"},"direction": "to"}] 
+        }
+			]
+    },
+    {
+      "name": "ComponentsFamilyGeneric_from",
+			"queries": [
+        {"definition": [
+          {"navigationType": "SR","qualityFilter": {"role": "283","semantics": "1"},"direction": "from"},
+					{"navigationType": "relation","qualityFilter": {"rel_type": "VPLMrel/PLMConnection/V_Owner"},"direction": "from"}]
+				}
+			]
+    },
+    {
+      "name": "ComponentsFamilyParemetric_to",
+			"queries": [
+				{"definition": [
+          {"navigationType": "relation","qualityFilter": {"rel_type": "VPLMrel/PLMConnection/V_Owner"},"direction": "to"},
+					{"navigationType": "SR","qualityFilter": {"role": "284","semantics": "1"},"direction": "to"}]
+				}
+			]
+    },
+    {
+      "name": "ComponentsFamilyParemetric_from",
+			"queries": [
+				{"definition": [
+          {"navigationType": "SR","qualityFilter": {"role": "284","semantics": "1"},"direction": "from"},
+					{"navigationType": "relation","qualityFilter": {"rel_type": "VPLMrel/PLMConnection/V_Owner"},"direction": "from"}]
+				}
+			]
+    },
+    {
+      "name": "ComponentsFamilyResolvedItem_to",
+			"queries": [
+				{"definition": [
+          {"navigationType": "relation","qualityFilter": {"rel_type": "VPLMrel/PLMConnection/V_Owner"},"direction": "to"},
+					{"navigationType": "SR","qualityFilter": {"role": "285","semantics": "1"},"direction": "to"}]
+				}
+			]
+    },
+    {
+      "name": "ComponentsFamilyResolvedItem_from",
+			"queries": [
+				{"definition": [
+            {"navigationType": "SR","qualityFilter": {"role": "285","semantics": "1"},"direction": "from"},
+						{"navigationType": "relation","qualityFilter": {"rel_type": "VPLMrel/PLMConnection/V_Owner"},"direction": "from"}]
+				}
+			]
+    },
+    {
+      "name" : "EngineeringTemplate_to",
+			"queries" :  [ 
+				{ "definition":[{"navigationType" : "SR","qualityFilter" : {"role" : "126","semantics" : "4"}, "direction" : "to"}] }
+			]
+    },
+    { 
+      "name" : "EngineeringTemplate_from",
+			"queries" :  [ 
+				{ "definition":[{"navigationType" : "SR","qualityFilter" : {"role" : "126","semantics" : "4"}, "direction" : "from"}] }
+			]
+    },
+    {
+      "name": "TableDocument_to",
+			"queries": [
+				{"definition": [
+          {"navigationType": "relation","qualityFilter": {"rel_type": "VPLMrel/PLMConnection/V_Owner"},"direction": "to"},
+					{"navigationType": "SR","qualityFilter": {"role": "284","semantics": "1"},"direction": "to"},
+					{"navigationType": "SR","qualityFilter": {"role": "31","semantics": "6"},"direction": "to"}]
+				}
+			]
+    },
+    {
+      "name": "TableDocument_from",
+			"queries": [
+				{"definition": [
+          {"navigationType": "SR","qualityFilter": {"role": "31","semantics": "6"},"direction": "from"},
+					{"navigationType": "SR","qualityFilter": {"role": "284","semantics": "1"},"direction": "from"},
+					{"navigationType": "relation","qualityFilter": {"rel_type": "VPLMrel/PLMConnection/V_Owner"},"direction": "from"}]
+				}
+			]
+    }
+  ]
+}

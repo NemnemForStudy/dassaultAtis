@@ -1,0 +1,1 @@
+define("DS/MPFExternalQuotation/MPFExternalQuotation_en",{});define("DS/MPFExternalQuotation/assets/nls/externalQuotation",{externalQuotationUrl:"External quotation URL",activateExternalQuotation:"Enable external quotation"});

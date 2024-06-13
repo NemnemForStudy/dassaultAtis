@@ -1,0 +1,20 @@
+{
+  "version": "1.0.0",
+  "summary": "建立新陣列，並填入呼叫陣列中每個元素呼叫指定圖形的結果。",
+  "description": "此圖塊可以將任何 <doc-idp-name translate=no>Input</doc-idp-name> 陣列類型對應至任何輸出陣列類型。<br>需要編輯內部圖形，才能提供對應程序。",
+  "dataPorts": {
+    "Input": "要對應的輸入陣列。<br>此資料連接埠可處理所有陣列類型。",
+    "SharedData": "每一個內部圖形副本要分享的資料。<br>此資料連接埠可處理所有類型。<br>如果需要分享數種不同類型的資料，則建議建立使用者類型。",
+    "Success": "成功輸出陣列。<br>此資料連接埠可處理所有陣列類型。<br>此陣列大小一律等於 <doc-idp-name translate=no>Input</doc-idp-name> 陣列大小。",
+    "State": "陣列 <doc-valuetype translate=no>ArrayMapState</doc-valuetype> 在 <doc-odp-name translate=no>Success</doc-odp-name> 輸出陣列的每一個索引指定 <doc-valuetype translate=no>EExecutionState</doc-valuetype>。<br>此陣列的大小一律等於 <doc-idp-name translate=no>Input</doc-idp-name> 陣列大小。",
+    "Progress": "陣列 <doc-valuetype translate=no>ArrayMapProgress</doc-valuetype> 在 <doc-odp-name translate=no>Input</doc-odp-name> 輸入陣列的每一個索引指定 <doc-valuetype translate=no>EExecutionState</doc-valuetype>。<br>因為圖塊背後的分佈程序關係，一次進展就可以在這個陣列填入數項資料。<br>但此陣列的大小不得超過 <doc-idp-name translate=no>Input</doc-idp-name> 陣列大小。",
+    "Error": "陣列 <doc-valuetype translate=no>ArrayMapError</doc-valuetype> 在 <doc-odp-name translate=no>Input</doc-odp-name> 輸入陣列的索引指定錯誤物件。<br>此陣列的大小不得超過 <doc-idp-name translate=no>Input</doc-idp-name> 陣列大小。"
+  },
+  "controlPorts": {
+    "In": "觸發圖塊執行。",
+    "Success": "在程序成功完成時啟用。",
+    "Progress": "每次發生進度時啟用。",
+    "Error": "發生錯誤時啟用。"
+  },
+  "example": null
+}

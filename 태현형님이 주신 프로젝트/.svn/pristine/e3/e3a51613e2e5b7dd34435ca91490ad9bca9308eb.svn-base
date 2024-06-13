@@ -1,0 +1,1 @@
+define("DS/UWPClientControls/UWPClientControls_es",{});define("DS/UWPClientControls/assets/nls/tooltips",{menu:"Menú",addTab:"Agregar pestaña"});

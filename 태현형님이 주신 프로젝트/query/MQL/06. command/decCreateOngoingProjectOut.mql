@@ -1,0 +1,21 @@
+################################################################################################
+# Created By thok : 2023. 05. 18
+# Admin Type : command
+# Name : decCreateOngoingProjectOut
+################################################################################################
+#delete command decCreateOngoingProjectOut;
+add command 'decCreateOngoingProjectOut' 
+	description 'Create Ongoing Project'
+	alt 'emxProgramCentral.Common.CreateOngoingProject' 
+	label 'emxProgramCentral.Common.CreateOngoingProject' 
+	href '${COMMON_DIR}/emxCreate.jsp?typeChooser=false&SelectType=single&ReloadOpener=true&nameField=keyin&autoNameChecked=false&type=type_ProjectSpace&policy=policy_ProjectSpace&form=decCreateOngoingProjectSpaceForm&mode=create&createJPO=emxProjectSpace:createNewProject&postProcessURL=../programcentral/emxProgramCentralUtil.jsp?mode=launchProject&submitAction=nothing&HelpMarker=emxhelpprojectdetailsspecify&findMxLink=false&showPageURLIcon=false&suiteKey=ProgramCentral&StringResourceFileId=emxProgramCentralStringResource&SuiteDirectory=programcentral&preProcessJavaScript=setFocusOnNameField&header=emxProgramCentral.Common.CreateOngoingProject&createProject=Blank&decProjectType=ongoing'
+	setting 'Image' '${COMMON_DIR}/images/iconActionCreate.png'
+	setting 'Registered Suite' 'ProgramCentral'
+	setting 'Licensed Product' ENO_PRF_TP
+	setting 'Popup Modal' true
+	setting 'Registered Suite' ProgramCentral
+	setting 'Slidein Width' 500
+	setting 'Target Location' slidein
+;
+add property command_decCreateOngoingProjectOut on program eServiceSchemaVariableMapping.tcl to command 'decCreateOngoingProjectOut'
+;

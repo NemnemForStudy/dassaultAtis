@@ -1,0 +1,1 @@
+define("DS/CommonReportingPanel/CommonReportingPanel_zh",{});define("DS/CommonReportingPanel/assets/nls/CommonCommandDialog",{okButton:"确定",cancelButton:"取消"});define("DS/CommonReportingPanel/assets/nls/CommonReportingPanelNls",{TotalRecords:"记录总数： ",ReportTitle:"报告"});

@@ -1,0 +1,21 @@
+################################################################################################
+# Modified By thok : 2023. 05. 15
+# Admin Type : command
+# Name : PMCProjectSummaryGateHold
+################################################################################################
+copy command PMCProjectSummaryGateHold PMCProjectSummaryGateHold_ootb;
+mod command PMCProjectSummaryGateHold href '${SUITE_DIR}/decemxProgramCentralProjectHoldCancel.jsp?program=emxProjectHoldAndCancel:projectHoldCancelResume&switch=Hold&invokedFrom=StructureBrowser'
+;
+mod command PMCProjectSummaryGateHold add setting 'Confirm Message' emxProgramCentral.ProjectHoldCancel.hold.notice
+;
+
+# Modified By thok : 2023. 07. 27
+mod command PMCProjectSummaryGateHold 
+	label 'emxProgramCentral.Label.ProjectStatus.Hold'
+	alt 'emxProgramCentral.Label.ProjectStatus.Hold'
+;
+
+# Modified By thok : 2023. 09. 18
+mod command PMCProjectSummaryGateHold 
+	add setting 'Access Expression' 'false'
+;

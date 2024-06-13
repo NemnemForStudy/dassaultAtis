@@ -1,0 +1,38 @@
+{{#if title}}<div class="tuto-title{{#if isIntro}} tuto-title-intro{{/if}}">{{title}}</div>{{/if}}
+<div class="tuto-pagination{{#if isIntro}} tuto-pagination-intro{{/if}}">
+    <ul role="tablist">
+        {{#times stepSize}}
+            {{#ifcond this ../stepNumber}}
+                <li role="presentation"><a role="button" class="active" data-stepnumber="{{this}}">&nbsp;</a></li>
+            {{else}}
+                <li role="presentation"><a role="button" data-stepNumber="{{this}}">&nbsp;</a></li>
+            {{/ifcond}}
+        {{/times}}
+    </ul>
+    <span class="fonticon fonticon-plus add-step"></span>
+    {{#unless isIntro}}
+        <span class="fonticon fonticon-trash delete-step"></span>
+    {{/unless}}
+</div>
+<div class="tuto-bubble">
+    {{#if isIntro}}
+    <textarea class="tuto-bubble-title" rows="1" cols="50" maxlength="50" placeholder="{{Nls.editableContentTitlePlaceHolder}}">{{title}}</textarea>
+    <textarea class="tuto-bubble-content" rows="3" cols="50" maxlength="500" placeholder="{{Nls.editableContentIntroPlaceHolder}}">{{content}}</textarea>
+    {{else}}
+    <textarea class="tuto-bubble-content" rows="3" cols="50" maxlength="500" placeholder="{{Nls.editableContentStepPlaceHolder}}">{{content}}</textarea>
+    {{/if}}
+    <div class="tuto-bubble-previous-next">
+        {{#unless isIntro}}
+            <a class="btn btn-info tuto-nav-button tuto-prevbutton" role="button">
+                <span class="fonticon fonticon-chevron-left"></span><span class="back">{{Nls.back}}</span>
+            </a>
+        {{/unless}}
+
+        {{#unless isLast}}
+            <a class="btn btn-info tuto-nav-button tuto-nextbutton" role="button">
+                <span class="fonticon fonticon-chevron-right"></span><span>{{Nls.next}}</span>
+            </a>        
+        {{/unless}}
+    </div>
+</div>
+

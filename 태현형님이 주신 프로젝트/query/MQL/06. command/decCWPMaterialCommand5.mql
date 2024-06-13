@@ -1,0 +1,23 @@
+# Added by hslee on 2023.08.07
+# del command decCWPMaterialCommand5;
+add command decCWPMaterialCommand5
+	label 'Others'
+	href '${COMMON_DIR}/emxIndentedTable.jsp?table=decCWPMaterialSummary&program=emxProjectSpace:getCWPMaterialList&editLink=false&parallelLoading=true&maxCellsToDraw=2000&scrollPageSize=50&pageSize=300&decExport=true&exportMode=MaterialStatus&slideinFilter=true&Discipline=Others&freezePane=UNIT_NM,CWA_NO,CWP_NO,DCPLN_CD&codeMaster=Discipline|SUBCON'
+	setting 'Target Location' 'content'
+	setting 'Registered Suite' 'ProgramCentral'
+	setting 'Access Expression' '(type == "Project Space" && attribute[decProjectType] == ongoing) || (type == "decCWPTask" && to[Project Access Key].from.from[Project Access List].to.attribute[decProjectType] == ongoing)'
+;
+
+mod command decCWPMaterialCommand5
+	href '${COMMON_DIR}/emxIndentedTable.jsp?table=decCWPMaterialSummary&program=emxProjectSpace:getCWPMaterialList&editLink=false&parallelLoading=true&maxCellsToDraw=2000&scrollPageSize=50&pageSize=300&decExport=true&exportMode=MaterialStatus&slideinFilter=true&Discipline=Others&freezePane=UNIT_NM,CWA_NO,CWP_NO&filterParam=codeMaster:Discipline,codeMaster:Sub-Con,Material Delay:true,codeMaster:Construction Item Type,Fab Category:true,CWP_Plan:true'
+;
+
+# Modified by thok on 2023.11.01
+mod command decCWPMaterialCommand5
+	add setting 'Access Expression' '(type == "Project Space") || (type == "decCWPTask" && to[Project Access Key].from.from[Project Access List].to.attribute[decProjectType] == ongoing)'
+;
+
+# Modified by choimingi on 2023.11.06
+mod command decCWPMaterialCommand5
+  href '${COMMON_DIR}/emxIndentedTable.jsp?table=decCWPMaterialSummary&program=emxProjectSpace:getCWPMaterialList&editLink=false&parallelLoading=true&maxCellsToDraw=2000&scrollPageSize=50&pageSize=300&decExport=true&exportMode=MaterialStatus&slideinFilter=true&Discipline=Others&freezePane=UNIT_NM,CWA_NO,CWP_NO&filterParam=codeMaster:Discipline,codeMaster:Sub-Con,Material Delay:true,codeMaster:Construction Item Type,Fab Category:true,CWP_Plan:true&header=emxProgramCentral.Command.header.decCWPMaterialCommand5&exportTitle=emxProgramCentral.Command.header.decCWPMaterialCommand5'
+;

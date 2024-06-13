@@ -1,0 +1,1 @@
+define("DS/SMAMpwControls/SMAMpwControls_ko",{});define("DS/SMAMpwControls/assets/nls/SMAMpwLegend",{frameSelectorPlaceHolder:"프레임 선택...",scaleFactor:"변형 배율",playOnlyTooltip:"현재 선택 항목에 애니메이션 고정",min:"최소:",max:"최대:"});

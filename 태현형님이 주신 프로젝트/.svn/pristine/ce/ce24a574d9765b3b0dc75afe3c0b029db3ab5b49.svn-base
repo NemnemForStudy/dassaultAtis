@@ -1,0 +1,49 @@
+@import "variables.uikit";
+
+.form-root {
+    textarea {
+        min-height: 38px;
+        resize: none;
+    }
+
+    .form-group.has-warning {
+        .form-control {
+            border-color: $orange-1;
+        }
+
+        .form-control-error-text {
+            display: block;
+            height: 16px;
+            font-size: 12px;
+            color: $orange-1;
+        }
+    }
+
+    .form__input-extension {
+        display: flex;
+
+        &:hover:not([disabled]):not([readonly]) {
+            border-color: $blue-3;
+        }
+
+        &:focus-within {
+            border-color: $blue-3;
+        }
+
+        input {
+            width: 100%;
+            border: 0;
+
+            &:focus {
+                outline: none;
+            }
+        }
+
+        span {
+            display: flex;
+            align-items: center;
+            white-space: nowrap;
+            user-select: none;
+        }
+    }
+}

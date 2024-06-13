@@ -1,0 +1,378 @@
+{
+  "version": "2.0.4",
+  "model": {
+    "definition": {
+      "uid": "c839f268-7348-4a4c-9d3f-7a08dbb90f59"
+    },
+    "name": "Graph",
+    "dataPorts": [
+      {
+        "name": "myArray",
+        "portType": 0,
+        "valueType": "Array<String>",
+        "override": true,
+        "value": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "dataPorts": []
+      }
+    ],
+    "controlPorts": [
+      {
+        "name": "Start",
+        "portType": 0
+      }
+    ],
+    "settings": [
+      {
+        "name": "CastLevel",
+        "valueType": "ECastLevel",
+        "override": false,
+        "value": 1
+      }
+    ],
+    "nodeIdSelectors": [],
+    "blocks": [
+      {
+        "definition": {
+          "uid": "f8ab03aa-a92e-4bfe-a01e-3630147a8eeb"
+        },
+        "name": "Array Iterator",
+        "dataPorts": [
+          {
+            "name": "Array",
+            "portType": 0,
+            "valueType": "Array<String>",
+            "override": false,
+            "dataPorts": []
+          },
+          {
+            "name": "Start Index",
+            "portType": 0,
+            "valueType": "Integer",
+            "override": false,
+            "value": 0,
+            "dataPorts": []
+          },
+          {
+            "name": "End Index",
+            "portType": 0,
+            "valueType": "Integer",
+            "override": false,
+            "dataPorts": []
+          },
+          {
+            "name": "Index",
+            "portType": 1,
+            "valueType": "Integer",
+            "dataPorts": []
+          },
+          {
+            "name": "Value",
+            "portType": 1,
+            "valueType": "String",
+            "dataPorts": []
+          }
+        ],
+        "controlPorts": [
+          {
+            "name": "In",
+            "portType": 0
+          },
+          {
+            "name": "Loop In",
+            "portType": 0
+          },
+          {
+            "name": "Out",
+            "portType": 1
+          },
+          {
+            "name": "Loop Out",
+            "portType": 1
+          }
+        ],
+        "settings": []
+      },
+      {
+        "definition": {
+          "uid": "25ecb466-9d4e-4116-9d5d-b215f3e75419"
+        },
+        "name": "Concat String",
+        "dataPorts": [
+          {
+            "name": "Value1",
+            "portType": 0,
+            "valueType": "String",
+            "override": true,
+            "value": "Value at index ",
+            "dataPorts": []
+          },
+          {
+            "name": "Value2",
+            "portType": 0,
+            "valueType": "String",
+            "override": false,
+            "value": "",
+            "dataPorts": []
+          },
+          {
+            "name": "Output String",
+            "portType": 1,
+            "valueType": "String",
+            "dataPorts": []
+          },
+          {
+            "name": "Value3",
+            "portType": 0,
+            "valueType": "String",
+            "override": true,
+            "value": " is: ",
+            "dataPorts": []
+          },
+          {
+            "name": "Value4",
+            "portType": 0,
+            "valueType": "String",
+            "override": false,
+            "value": "",
+            "dataPorts": []
+          }
+        ],
+        "controlPorts": [
+          {
+            "name": "In",
+            "portType": 0
+          },
+          {
+            "name": "Out",
+            "portType": 1
+          }
+        ],
+        "settings": [
+          {
+            "name": "Separator",
+            "valueType": "String",
+            "override": false,
+            "value": ""
+          }
+        ]
+      },
+      {
+        "definition": {
+          "uid": "381afc55-87e9-4663-9211-59abab491c7e"
+        },
+        "name": "Notify",
+        "dataPorts": [
+          {
+            "name": "Title",
+            "portType": 0,
+            "valueType": "String",
+            "override": false,
+            "value": "",
+            "dataPorts": []
+          },
+          {
+            "name": "Message",
+            "portType": 0,
+            "valueType": "String",
+            "override": true,
+            "value": "End of iteration!",
+            "dataPorts": []
+          }
+        ],
+        "controlPorts": [
+          {
+            "name": "In",
+            "portType": 0
+          },
+          {
+            "name": "Out",
+            "portType": 1
+          }
+        ],
+        "settings": [
+          {
+            "name": "Severity",
+            "valueType": "ESeverity",
+            "override": false,
+            "value": 0
+          }
+        ]
+      },
+      {
+        "definition": {
+          "uid": "381afc55-87e9-4663-9211-59abab491c7e"
+        },
+        "name": "Notify",
+        "dataPorts": [
+          {
+            "name": "Title",
+            "portType": 0,
+            "valueType": "String",
+            "override": false,
+            "value": "",
+            "dataPorts": []
+          },
+          {
+            "name": "Message",
+            "portType": 0,
+            "valueType": "String",
+            "override": false,
+            "value": "Hello World!",
+            "dataPorts": []
+          }
+        ],
+        "controlPorts": [
+          {
+            "name": "In",
+            "portType": 0
+          },
+          {
+            "name": "Out",
+            "portType": 1
+          }
+        ],
+        "settings": [
+          {
+            "name": "Severity",
+            "valueType": "ESeverity",
+            "override": false,
+            "value": 0
+          }
+        ]
+      }
+    ],
+    "dataLinks": [
+      {
+        "startPort": "$ref:$.dataPorts[0]",
+        "endPort": "$ref:$.blocks[0].dataPorts[0]"
+      },
+      {
+        "startPort": "$ref:$.blocks[0].dataPorts[3]",
+        "endPort": "$ref:$.blocks[1].dataPorts[1]"
+      },
+      {
+        "startPort": "$ref:$.blocks[0].dataPorts[4]",
+        "endPort": "$ref:$.blocks[1].dataPorts[4]"
+      },
+      {
+        "startPort": "$ref:$.blocks[1].dataPorts[2]",
+        "endPort": "$ref:$.blocks[3].dataPorts[1]"
+      }
+    ],
+    "controlLinks": [
+      {
+        "startPort": "$ref:$.controlPorts[0]",
+        "endPort": "$ref:$.blocks[0].controlPorts[0]",
+        "waitCount": 0
+      },
+      {
+        "startPort": "$ref:$.blocks[0].controlPorts[3]",
+        "endPort": "$ref:$.blocks[1].controlPorts[0]",
+        "waitCount": 0
+      },
+      {
+        "startPort": "$ref:$.blocks[0].controlPorts[2]",
+        "endPort": "$ref:$.blocks[2].controlPorts[0]",
+        "waitCount": 0
+      },
+      {
+        "startPort": "$ref:$.blocks[1].controlPorts[1]",
+        "endPort": "$ref:$.blocks[3].controlPorts[0]",
+        "waitCount": 0
+      },
+      {
+        "startPort": "$ref:$.blocks[3].controlPorts[1]",
+        "endPort": "$ref:$.blocks[0].controlPorts[1]",
+        "waitCount": 1
+      }
+    ]
+  },
+  "ui": {
+    "graphLeft": 0,
+    "graphTop": 0,
+    "width": 870,
+    "height": 470,
+    "blocks": [
+      {
+        "top": 180,
+        "left": 110,
+        "dataPorts": []
+      },
+      {
+        "top": 310,
+        "left": 360,
+        "dataPorts": []
+      },
+      {
+        "top": 180,
+        "left": 360,
+        "dataPorts": []
+      },
+      {
+        "top": 310,
+        "left": 550,
+        "dataPorts": []
+      }
+    ],
+    "dataPorts": [
+      {
+        "dataPorts": []
+      }
+    ],
+    "controlPorts": [
+      {
+        "offset": 190
+      }
+    ],
+    "dataLinks": [
+      {},
+      {},
+      {},
+      {}
+    ],
+    "controlLinks": [
+      {},
+      {},
+      {},
+      {},
+      {
+        "path": [
+          0,
+          682,
+          330,
+          1,
+          690,
+          330,
+          1,
+          690,
+          400,
+          1,
+          90,
+          400,
+          1,
+          90,
+          240,
+          1,
+          98,
+          240
+        ]
+      }
+    ],
+    "shortcuts": []
+  },
+  "templates": {
+    "model": {
+      "graphs": {},
+      "scripts": {}
+    },
+    "ui": {
+      "graphs": {},
+      "scripts": {}
+    }
+  }
+}

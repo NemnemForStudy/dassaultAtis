@@ -1,0 +1,1 @@
+define("DS/VCXWebKernel/VCXWebKernel_zh",{});define("DS/VCXWebKernel/assets/nls/VCXWebKernel",{"ProgressNotification.Loading":"正在加载","Notification.Cancel":"取消"});

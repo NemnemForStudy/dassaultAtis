@@ -1,0 +1,2 @@
+/*!  Copyright 2015 Dassault Systemes. All rights reserved. */
+define("DS/SPAContentOptimizer/COMiscNoteParameters",["DS/CSICommandBinder/CSICommandBinder","DS/SPAContentOptimizer/COProperty"],function(e,r){"use strict";var t=function(){this.Name="",this.Properties=[]};return e.declareType({type:"COMiscNoteParameters",serialize:function(e,r){return e.writeString("Name",r.Name),e.writeObjectArray("Properties","COProperty",r.Properties),!0},unserialize:function(e){var r=new t;return r.Name=e.readString("Name"),r.Properties=e.readObjectArray("Properties","COProperty"),r}}),t});

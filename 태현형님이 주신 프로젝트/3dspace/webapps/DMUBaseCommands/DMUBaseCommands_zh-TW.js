@@ -1,0 +1,1 @@
+define("DS/DMUBaseCommands/DMUBaseCommands_zh-TW",{});define("DS/DMUBaseCommands/assets/nls/DMUBaseCommands",{defaultSelectLabel:"選擇圖元",exportSlideError:"輸出投影片時發生錯誤",issueImplLinks:"瀏覽所選物件的實作限制條件時發生錯誤",noWidgetLinked:"若要強調顯示因實作連結而相關的物件，您需要將此 Widget 連結至其他顯示這些物件的 Widget"});

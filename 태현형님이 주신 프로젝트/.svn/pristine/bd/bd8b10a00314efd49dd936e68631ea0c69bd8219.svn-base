@@ -1,0 +1,105 @@
+{
+    "dsprcs:MfgProcess": {
+        "summary": "Manufacturing System Reference",
+        "description": "Manufacturing System Reference",
+        "PUBLICMasks": ["dsprcs:MfgProcessMask.Default", "dsprcs:MfgProcessMask.Details"],
+        "PROTECTEDMasks": ["dsprcs:MfgProcessMask.Config"],
+    	"PUBLICExtensions": ["dsprcs:AssetContext"],
+		"PROTECTEDExtensions": ["dslc:changeControl", "dscfg:Configured"],
+        "PRIVATEExtensions": [],
+        "PUBLICFields": ["dsmveno:CustomerAttributes", "dsmveno:SupportedTypes"],
+        "PROTECTEDFields": ["dsmvcfg:attribute.isConfigured"],
+        "PUBLICExcludedURIs": ["getItems", "GETAll"]
+    },
+    "dsprcs:MfgProcessInstance": {
+        "summary": "Manufacturing System Instance",
+        "description": "Manufacturing System Instance",
+        "PUBLICMasks": ["dsprcs:MfgProcessInstanceMask.Default", "dsprcs:MfgProcessInstanceMask.Details"],
+        "PROTECTEDMasks": ["dsprcs:MfgProcessInstanceMask.Filterable"],
+        "PUBLICExtensions": [],
+        "PROTECTEDExtensions": ["dscfg:Filterable"],
+        "PUBLICExcludedURIs": ["getItems", "GETAll"]
+    },
+    "dsprcs:MfgOperation": {
+        "summary": "Manufacturing operation Reference",
+        "description": "Manufacturing operation Reference",
+        "PUBLICMasks": ["dsprcs:MfgOperationMask.Default", "dsprcs:MfgOperationMask.Details"],
+        "PROTECTEDMasks": ["dsprcs:MfgOperationMask.Config"],
+        "PUBLICExtensions": [],
+		"PROTECTEDExtensions": ["dslc:changeControl", "dscfg:Configured"],
+        "PRIVATEExtensions": [],
+        "PUBLICExcludedURIs": ["getItems", "GETAll", "BULKUPDATE", "PATCH"]
+    },
+    "dsprcs:MfgOperationInstance": {
+        "summary": "Manufacturing operation Instance",
+        "description": "Manufacturing operation Instance",
+        "PUBLICMasks": ["dsprcs:MfgOperationInstanceMask.Default", "dsprcs:MfgOperationInstanceMask.Details"],
+        "PROTECTEDMasks": ["dsprcs:MfgOperationInstanceMask.Filterable"],
+        "PUBLICExtensions": [],
+        "PROTECTEDExtensions": ["dscfg:Filterable"],
+        "PUBLICExcludedURIs": ["getItems", "GETAll", "BULKUPDATE", "PATCH"]
+    },
+    "dsprcs:TimeConstraint": {
+    	"summary": "Manufacturing Process Element Time Constraint",
+    	"description": "Manufacturing Process Element Time Constraint",
+    	"PUBLICMasks": ["dsprcs:TimeConstraintMask.Default"],
+    	"PROTECTEDMasks": [],
+    	"PUBLICExcludedURIs": ["getItems", "GETAll", "BULKUPDATE"]
+    },
+    "dsprcs:PrimaryCapableResource": {
+    	"summary": "Manufacturing Process Element Primary Capable Resource",
+    	"description": "Manufacturing Process Element Primary Capable Resource",
+    	"PUBLICMasks": ["dsprcs:PrimaryCapableResourceMask.Default"],
+    	"PROTECTEDMasks": [],
+    	"PUBLICExcludedURIs": ["getItems", "GETAll", "BULKUPDATE"]
+    },
+    "dsprcs:ItemSpecification": {
+    	"summary": "Item specification of the Manufacturing Process",
+    	"description": "Item specification of the Manufacturing Process",
+    	"PUBLICMasks": ["dsprcs:ItemSpecificationMask.Default"],
+    	"PROTECTEDMasks": [],
+    	"PUBLICExcludedURIs": ["getItems", "BULKUPDATE"]
+    },
+    "dsprcs:PreAssignedWorkCenter": {
+    	"summary": "Pre-assigned work center link of the Manufacturing Process",
+    	"description": "Pre-assigned work center link of the Manufacturing Process",
+    	"PUBLICMasks": ["dsprcs:PreAssignedWorkCenterMask.Default"],
+    	"PROTECTEDMasks": [],
+    	"PUBLICExcludedURIs": ["getItems", "GETAll", "BULKUPDATE"]
+    },
+    "dsprcs:SecondaryCapableResource": {
+    	"summary": "Manufacturing Process Element Secondary Capable Resource",
+    	"description": "Manufacturing Process Element Secondary Capable Resource",
+    	"PUBLICMasks": ["dsprcs:SecondaryCapableResourceMask.Default"],
+    	"PROTECTEDMasks": [],
+    	"PUBLICExcludedURIs": ["getItems", "GETAll", "BULKUPDATE"]
+    },
+    "dsprcs:AssetContext": {
+    	"summary": "Asset context of the manufacturing process.",
+    	"description": "Asset context of the manufacturing process.",
+    	"PUBLICMasks": ["dsprcs:AssetContextMask.Default"],
+    	"PROTECTEDMasks": [],
+    	"PUBLICExcludedURIs": ["getItems", "GETAll", "BULKUPDATE", "PATCH"]
+    },
+    "dsprcs:AssignedOrganization": {
+        "summary": "Assigned Organization",
+        "description": "Assigns Organization",
+        "PUBLICMasks": [],
+        "PROTECTEDMasks": ["dsprcs:AssignedOrganizationMask.Default"],
+        "PUBLICExtensions": []
+    },
+    "dsprcs:AssignedRequirement": {
+        "summary": "Assigned Requirement",
+        "description": "Assigns Requirement",
+        "PUBLICMasks": ["dsprcs:AssignedRequirementMask.Default"],
+        "PROTECTEDMasks": [],
+    	"PUBLICExcludedURIs": ["getItems", "BULKUPDATE"]
+    },
+    "dsprcs:ScopeRequirementSpec": {
+        "summary": "Scope requirement specifications",
+        "description": "Scope requirement specifications",
+        "PUBLICMasks": ["dsprcs:ScopeRequirementSpecMask.Default"],
+        "PROTECTEDMasks": [],
+    	"PUBLICExcludedURIs": ["getItems", "BULKUPDATE"]
+    }
+}

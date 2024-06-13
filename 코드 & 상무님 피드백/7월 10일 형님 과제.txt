@@ -1,0 +1,125 @@
+<%@page import="java.util.*"%>
+<%@page import="java.util.Iterator"%>
+<%@page import="com.matrixone.apps.domain.DomainObject"%>
+<%@page import="com.matrixone.apps.domain.util.*"%>
+<%@page import="matrix.util.StringList"%>
+<%@page import="com.matrixone.apps.domain.util.FrameworkUtil"%>
+<%@page import="com.matrixone.servlet.Framework"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page import="matrix.db.Context" %>
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+   td, th {
+   border : 1px solid black;
+   }
+       
+</style>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<%!
+private String validBlankOrNull(String s){
+   if(s==null||s.isEmpty()){
+      s = "";
+   }
+   return s;
+}
+%>
+<%
+
+String title = validBlankOrNull(request.getParameter("title"));
+String condition = "";
+String category = validBlankOrNull(request.getParameter("category"));
+
+
+if(!title.isEmpty()){
+   title = "attribute[Title]=='" + title + "'";
+}
+if(!category.isEmpty()){
+   category = "attribute[atisDocumentCategory]=='" + category + "'";
+}
+if(!title.isEmpty()&&!category.isEmpty()){
+   condition = "&&";
+}
+String where = title + condition + category;
+
+Context context = Framework.getContext(session);
+StringList slSelect = new StringList();
+slSelect.add("name");
+slSelect.add("description");
+slSelect.add("shortdescription");
+slSelect.add("revision");
+slSelect.add("originated");
+slSelect.add("attribute[Title]");
+slSelect.add("owner");
+slSelect.add("lattice");
+slSelect.add("attribute[atisDocumentCategory]");
+StringList attrRanges = FrameworkUtil.getRanges(context, "atisDocumentCategory");
+MapList resultMapList = DomainObject.findObjects(context,
+      "atisDocument",           
+        "*",                              
+        where,
+        slSelect                          
+);
+ 
+%>
+<form action="">
+<h3>Title</h3>
+   <input type="text" name="title"/>
+   
+   <h3>Category</h3>
+   <select name="category" id="">
+      <option value="">선택하지 않음</option>
+      <%
+         for(int i = 0; i < attrRanges.size(); i++){
+            out.println("<option value=\""+attrRanges.get(i)+"\">"+ attrRanges.get(i)+"</option>");
+            
+         }
+      %>
+   </select>
+   <input type="submit" />
+</form>
+<br />
+<br />
+<br />
+<table>
+   <thead>
+      <tr>
+         <th>Name</th>
+         <th>Description</th>
+         <th>shortDescription</th>
+         <th>revision</th>
+         <th>originated</th>
+         <th>title</th>
+         <th>owner</th>
+         <th>lattice</th>
+         <th>Category</th>
+      </tr>
+   </thead>
+   <tbody><%
+   Iterator<Map> iter = resultMapList.iterator();
+   while(iter.hasNext()) {
+      Map map = iter.next();
+      %>
+      <tr>
+          <td><%=map.get("name")%></td>
+          <td><%=map.get("description")%></td>
+          <td><%=map.get("shortdescription")%></td>
+          <td><%=map.get("revision")%></td>
+          <td><%=map.get("originated")%></td>
+          <td><%=map.get("attribute[Title]")%></td>
+          <td><%=map.get("owner")%></td>
+          <td><%=map.get("lattice")%></td>
+          <td><%=map.get("attribute[atisDocumentCategory]")%></td>
+       </tr>
+       <%
+   }
+       %>
+   </tbody>
+</table>
+</body>
+</html>

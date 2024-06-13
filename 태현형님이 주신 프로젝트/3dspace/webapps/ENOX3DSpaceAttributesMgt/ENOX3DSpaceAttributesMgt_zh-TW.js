@@ -1,0 +1,1 @@
+define("DS/ENOX3DSpaceAttributesMgt/ENOX3DSpaceAttributesMgt_zh-TW",{});define("DS/ENOX3DSpaceAttributesMgt/assets/nls/ENOXAttributesMgtNls",{isCellEditableColumns:{title:"可從視圖編輯"},attributeForEditingColumns:{title:"儲存格版本屬性"},Classification:{title:"分類"},instance:"副本"});

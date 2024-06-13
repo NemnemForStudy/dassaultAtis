@@ -1,0 +1,280 @@
+<?xml version="1.0"?>
+
+<!-- ENOVIA DICTIONARY FOR DELMIA Data Collect Plan Application -->
+<!-- COPYRIGHT DASSAULT SYSTEMES 2018, All rights reserved -->
+<Package xmlns="PLMDictionaryUnified"
+	ModelerType="Top"
+	Name="DELWkiDataCollectPlan"
+	Uuid="6A31DBC0-6EE2-11E8-ADC0-FA7AE01BBEBC"
+	BelongsToModeler="DELWkiWorkInstructionPPR"
+	CustomerExposition="Programmer"
+	UseNames="DELWkiWorkInstructionPPR PLMRequirementSpecifyHowToCnxAbstract DELWkiInstruction DELWkiSignOff DELWkiAlert DELResourceParameterPlan">
+
+	<CAAComment>
+		<ShortRole>PLM DELMIA Data Collect Plan </ShortRole>
+		<Role>This package describes the PLM DELMIA Work Instruction Data Collect Plan model</Role>
+	</CAAComment>
+
+	<Comment>last update 2018-06-13</Comment>
+
+	<Class Name="DELWkiDataCollectPlanReference"
+		Uuid="71BF21E4-6EE3-11E8-ADC0-FA7AE01BBEBC"
+		Abstract="No"
+		SuperName="DELWkiPPRReference"
+		CustomerExposition="Programmer"
+		Specializable="No"
+		CustomerExtensible="Yes"
+		CreateInstName="DELWkiDataCollectPlanInstance"
+		Abbreviation="widp"
+		PublicResourceURI="/resources/v1/modeler/dsprcs/dsprcs:DataCollectPlan/{pid}">
+
+		<Property Name="ChangeManagementSupport" Value="Yes"/>
+		<Property Name="ChangeManagementReferential" Value="Yes"/>
+		<Property Name="ChangeManagementContext" Value="Yes"/>
+		<Property Name="IconName" Value="I_WI_DataCollectPlan"/>
+		<Property Name="3DIconName" Value="I_WI_DataCollectPlan.cgr"/>
+		<Property Name="Searchable" Value="Yes"/>
+		<Property Name="KweNew_InstanciationMethod" Value="DELDataCollectPlanDelegateInstanciation"/>
+		<Property Name="Newable" Value="Insert"/>
+
+		<CAAComment>
+			<ShortRole>PLM DELMIA Work Instruction Data Collect Plan Reference</ShortRole>
+			<Role>PLM DELMIA Work Instruction Data Collect Plan Reference</Role>
+		</CAAComment>
+	
+		<Method ImplementationType="None">
+			<RealizeMethodType href="ExportScope.meth#ExportScope"/>
+		</Method>		
+		<Method ImplementationType="None">
+			<RealizeMethodType href="ExchangeScope.meth#ExchangeScope"/>
+		</Method>
+	</Class>
+	
+	<Class Name="DELWkiDataCollectChecklistReference"
+		Uuid="DF102035-B5E0-485D-9F06-81E6486D92E6"
+		Abstract="No"
+		SuperName="DELWkiDataCollectPlanReference"
+		Discipline="Yes"
+		CustomerExposition="Programmer"
+		Specializable="No"
+		CustomerExtensible="Yes"
+		CreateInstName="DELWkiDataCollectPlanInstance"
+		Abbreviation="widc"
+		PublicResourceURI="/resources/v1/modeler/dsprcs/dsprcs:CheckList/{pid}">
+
+		<Property Name="ChangeManagementSupport" Value="Yes"/>
+		<Property Name="ChangeManagementReferential" Value="Yes"/>
+		<Property Name="ChangeManagementContext" Value="Yes"/>
+		<Property Name="IconName" Value="I_WI_DataCollectChecklist"/>
+		<Property Name="3DIconName" Value="I_WI_DataCollectChecklist.cgr"/>
+		<Property Name="Searchable" Value="Yes"/>
+		<Property Name="KweNew_InstanciationMethod" Value="DELDataCollectChecklistDelegateInstanciation"/>
+		<Property Name="Newable" Value="Insert"/>
+
+		<CAAComment>
+			<ShortRole>PLM DELMIA Work Instruction Data Collect Checklist Reference</ShortRole>
+			<Role>PLM DELMIA Work Instruction Data Collect Checklist Reference</Role>
+		</CAAComment>
+	
+		<Method ImplementationType="None">
+			<RealizeMethodType href="ExportScope.meth#ExportScope"/>
+		</Method>		
+		<Method ImplementationType="None">
+			<RealizeMethodType href="ExchangeScope.meth#ExchangeScope"/>
+		</Method>
+	</Class>
+	
+	<RelationClass Name="DELWkiDataCollectPlanInstance"
+		Uuid="5E7B62D6-6EE9-11E8-ADC0-FA7AE01BBEBC"
+		Abstract="No"
+    	SuperName="DELWkiPPRInstance"
+        Specializable="No"
+        CustomerExtensible="No"
+		CustomerExposition="Programmer">
+
+		<Property Name="KweNew_InstanciationMethod" Value="DELDataCollectPlanDelegateInstanciation"/>
+		<Property Name="IconName" Value="I_WI_DataCollectPlan"/>
+		<Property Name="3DIconName" Value="I_WI_DataCollectPlan.cgr"/>
+		<Property Name="Filtrable" Value="Yes"/>
+
+		<CAAComment>
+			<ShortRole>PLM DELMIA Work Instruction Data Collect Plan Instance</ShortRole>
+			<Role>PLM DELMIA Work Instruction Data Collect Plan Instance</Role>
+		</CAAComment>
+
+		<Volatile Name="Reference"
+			Uuid="11AF5BBA-6EE9-11E8-ADC0-FA7AE01BBEBC"
+			Accessor="PLMModelerReferenceKweAttribute"
+			TypeName="DELWkiDataCollectPlanReference"
+			AccessMode="ReadOnly" />
+		
+		<SubClause Name="to" TargetName="DELWkiDataCollectPlanReference"/>
+
+		<Method ImplementationType="None">
+			<RealizeMethodType href="ExportScope.meth#ExportScope"/>
+		</Method>
+		<Method ImplementationType="AsFather">
+			<RealizeMethodType href="ExchangeScope.meth#ExchangeScope"/>
+		</Method>
+	</RelationClass>	
+
+	<Class Name="PLMSpecifyHowToCollectDataCnx"
+		Uuid="6A401A34-6EEA-11E8-ADC0-FA7AE01BBEBC"
+		SuperName="PLMReqSpecifyHowToCnxAbstract"
+		CustomerExposition="Programmer"
+		CustomerExtensible="Yes"
+		Specializable="No"
+		Abstract="No">
+
+		<Property Name="Searchable" Value="No"/>
+		<Property Name="Newable" Value="No"/>
+		<Property Name="OwnerTypes" Value="DELWkiDataCollectPlanReference"/>
+
+		<CAAComment>
+			<ShortRole>Defines Data Collect Plan Connection "PLMSpecifyHowToCollectDataCnx"</ShortRole>
+			<Role>Defines a line in the Data Collect Plan Reference</Role>
+		</CAAComment>
+		
+		<Simple Name="V_DCMode"
+			Uuid="6A401D22-6EEA-11E8-ADC0-FA7AE01BBEBC"
+			Type="String"
+			Protection="Free"
+			CAAExposition="L0"
+			MultiValuated="No"
+			DefaultValue="Collected">
+			<Range>
+				<Equal>Collected</Equal>
+				<Equal>Computed</Equal>
+			</Range>
+		</Simple>
+		
+		<Simple Name="V_DCLabel"
+			Uuid="6A401F02-6EEA-11E8-ADC0-FA7AE01BBEBC"
+			Type="String"
+			MultiValuated="No"
+			Protection="Free"
+			CAAExposition="L0">
+		</Simple>
+		
+		<Simple Name="V_DCRichText"
+			Uuid="6A402146-6EEA-11E8-ADC0-FA7AE01BBEBC"
+			Type="Clob"
+			MultiValuated="No"
+			Protection="Internal">
+		</Simple>
+		
+		<Simple Name="V_DCNbSameMeasurement"
+			Uuid="6A402394-6EEA-11E8-ADC0-FA7AE01BBEBC"
+			Type="Integer"
+			MultiValuated="No"
+			Protection="Free"
+			CAAExposition="L0"
+			DefaultValue="1">
+		</Simple>
+		
+		<Simple Name="V_DCTypeMagnitudeUnitOrFormat"
+			Uuid="6A4027A4-6EEA-11E8-ADC0-FA7AE01BBEBC"
+			Type="Clob"
+			MultiValuated="No"
+			Protection="Internal">
+		</Simple>
+
+      
+    <!-- ********************************************************* -->
+		<!-- * Paths declaration -->
+		<!-- ********************************************************* -->
+
+		<Path Name="V_RFLPLMImplementTargets"
+			  Uuid="05DCA35B-B417-4362-8905-85D96A145BED"
+			  MultiValuated="No"
+			  Type="SemanticRelation"
+			  RoleName="PLM_ImplementLink_Target"
+			  SynchroSensitivity="PathAndLast"
+			  AdaptativeToMinor="No"
+			  RerouteOnEffectivityChange="No"
+			  Orientation="In"
+			  Semantics="Reference3"/>
+			  
+		<Path Name="DataCollectRow_To_Resources"
+			  Uuid="6437E47C-424B-45C0-B2D9-2E8B148622FF"
+			  MultiValuated="No"
+			  Type="SemanticRelation"
+			  RoleName="DEL_LinkToResources"
+			  SynchroSensitivity="None"
+			  AdaptativeToMinor="No"
+			  RerouteOnEffectivityChange="No"
+			  Semantics="Reference"/>
+
+		<Method ImplementationType="None">
+			<RealizeMethodType href="ExportScope.meth#ExportScope"/>
+		</Method>
+	</Class>
+
+  <Extension Name="DELLmiLinkOnRsc"
+            Uuid="2CF86DF2-2DF9-4E7A-A1CA-CD8F189C4A13"
+            ScopeNames="PLMSpecifyHowToCollectDataCnx DELResourcePrmPlanSET DELResourcePrmPlanGET"
+            CAAExposition="L0"
+            CustomerExposition="Programmer"
+            Specializable="No">
+      <Simple Name="V_LinkOnRsc"
+              Uuid="808DFDF9-C531-4371-9A0F-6F08687B05C3"
+              Type="String"
+              MultiValuated="Yes"
+              Protection="Internal"
+              ResetOnCloning="No"
+              ResetOnNewVersion="No"
+            >
+      </Simple>
+    </Extension>
+
+    <Extension Name="DELWkiLinkOnRsc"
+            Uuid="D6010E9B-5CF7-47D4-8BF2-528E432BBF5A"
+            ScopeNames="DELWkiInstructionReference DELWkiSignOffReference DELWkiAlertReference"
+            CAAExposition="L0"
+            CustomerExposition="Programmer"
+            Specializable="No">
+      <Simple Name="V_LinkOnRsc"
+              Uuid="8211B9A8-CE8D-4A59-984C-23A6A7B9CC8E"
+              Type="String"
+              MultiValuated="Yes"
+              Protection="Internal"
+              ResetOnCloning="No"
+              ResetOnNewVersion="No"
+              >
+      </Simple>
+    </Extension>
+  
+    <Extension Name="DELLmiLinkOnMBOM"
+            Uuid="8C5C2CD8-80F6-4504-BA5A-09A2E64B643A"
+            ScopeNames="PLMSpecifyHowToCollectDataCnx DELWkiInstructionReference DELWkiSignOffReference DELWkiAlertReference"
+            CAAExposition="L0"
+            CustomerExposition="Programmer"
+            Specializable="No">
+      <Simple Name="V_LinkOnMBOM"
+              Uuid="01A854E6-8C92-4470-8DF4-978E6A87EA5D"
+              Type="String"
+              MultiValuated="Yes"
+              Protection="Internal"
+              ResetOnCloning="No"
+              ResetOnNewVersion="No"
+            >
+      </Simple>
+    </Extension>
+    
+    <Extension Name="DELLmiLinkOnReq"
+            Uuid="16AD9180-5B63-496C-AC7D-8A86CB7DB0D5"
+            ScopeNames="PLMSpecifyHowToCollectDataCnx"
+            CAAExposition="L0"
+            CustomerExposition="Programmer"
+            Specializable="No">
+      <Simple Name="V_LinkOnReq"
+              Uuid="F43F5DB2-E37E-44AA-95F8-7CC7A6E51B38"
+              Type="String"
+              MultiValuated="Yes"
+              Protection="Internal"
+              ResetOnCloning="No"
+              ResetOnNewVersion="No"
+            >
+      </Simple>
+  </Extension>
+</Package>

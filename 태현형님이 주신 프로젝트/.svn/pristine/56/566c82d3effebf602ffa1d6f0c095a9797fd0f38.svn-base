@@ -1,0 +1,51 @@
+################################################################################################
+# Create By thok : 2023. 05. 08
+# Admin Type : form
+# Name : decCreateProjectSpaceForm
+################################################################################################
+#delete form decCreateProjectSpaceForm;
+add form decCreateProjectSpaceForm web 
+	field
+		name 'Type'
+		label 'emxProgramCentral.Common.Type' 
+		businessobject 'type'
+		setting 'Field Size' '20' 
+		setting 'Field Type' 'basic' 
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Access Expression' false
+	field
+		name 'Policy'
+		label 'emxProgramCentral.Common.Policy' 
+		businessobject 'policy'
+		setting 'Field Size' '20' 
+		setting 'Field Type' 'basic' 
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Access Expression' false
+	field
+		name 'Name'
+		label 'emxProgramCentral.Label.decName' 
+		businessobject 'name'
+		setting 'Field Size' '20' 
+		setting 'Field Type' 'basic' 
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Required' 'true'
+	field
+		name 'SiteName'
+		label 'emxProgramCentral.Label.decSiteName' 
+		businessobject 'attribute[decSiteName].value' 
+		setting 'Field Size' '20' 
+		setting 'Field Type' 'basic' 
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Required' 'true'
+	field
+		name 'ProjectAdministrator'
+		label 'emxProgramCentral.Label.ProjectAdministrator'
+		businessobject '' 
+		range '${COMMON_DIR}/emxFullSearch.jsp?type=PERSON_CHOOSER&field=TYPES=type_Person:USERROLE=Project Lead,VPLMProjectLeader&table=PMCCommonPersonSearchTable&form=PMCCommonPersonSearchForm'
+		setting 'Field Type' 'basic' 
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Show Clear Button' 'true'
+		setting 'Required' 'true'
+;	
+add property 'form_decCreateProjectSpaceForm' on program 'eServiceSchemaVariableMapping.tcl' to form 'decCreateProjectSpaceForm'
+;

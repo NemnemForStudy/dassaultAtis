@@ -1,0 +1,17 @@
+m|DELWeb3DViewer\DELWeb3DViewer.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.1.23003|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\DELWeb3DViewer\DELWeb3DViewer.js|1672780561|8705
+s|DELWeb3DViewer\DELWeb3DViewer.mweb\src\App3D.js|1598449300|7114
+t|win_b64\webapps\DELWeb3DViewer\assets\icons\32\I_DEL3DViewer_Favicon.png|1647691812|1528
+s|DELWeb3DViewer\DELWeb3DViewer.mweb\src\assets\icons\32\I_DEL3DViewer_Favicon.png|1595317692|1528
+t|win_b64\webapps\DELWeb3DViewer\assets\json\3DViewerConfigurations.json|1647691812|524
+s|DELWeb3DViewer\DELWeb3DViewer.mweb\src\assets\json\3DViewerConfigurations.json|1597306681|524
+t|win_b64\webapps\DELWeb3DViewer\index.html|1669670323|1922
+s|DELWeb3DViewer\DELWeb3DViewer.mweb\src\index.html|1668854081|1922
+u|DELWeb3DViewer\DELWeb3DViewer.mweb\src\MoreAttributesManager.js|1644593471|3134
+u|DELWeb3DViewer\DELWeb3DViewer.mweb\src\ViewManager.js|1671785792|27027
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

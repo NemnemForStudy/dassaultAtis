@@ -1,0 +1,526 @@
+{
+	"commands": {
+		"add_alternate": {
+			"isChangeControlled": true,
+			"method": "POST",
+			"targetService": "3DSpace",
+			"type": "json",
+			"url": "/resources/v1/alternateManagement/addAlternateItems"
+		},
+		"add_to_change": {
+			"isChangeControlled": true,
+			"method": "PUT",
+			"sc_tenant_in_url": true,
+			"targetService": "3DSpace",
+			"type": "json",
+			"url": "/resources/modeler/change/changeaction"
+		},
+		"alternateBasicAttributes": {
+			"Alternate": [{
+					"attrName": "Title",
+					"attrNls": "eng.alternate.column.title",
+					"dataIndex": "Title",
+					"type": "string"
+				}, {
+					"attrName": "Status",
+					"attrNls": "eng.alternate.column.status",
+					"dataIndex": "Status",
+					"type": "string"
+				}, {
+					"attrName": "revision",
+					"attrNls": "eng.alternate.column.revision",
+					"dataIndex": "revision",
+					"type": "string",
+					"width": "41px"
+				}, {
+					"attrName": "AlternateItemCurrentState",
+					"attrNls": "eng.alternate.column.maturityState",
+					"dataIndex": "AlternateItemCurrentState",
+					"type": "string",
+					"width": "61px"
+				}, {
+					"attrName": "PartNumber",
+					"attrNls": "eng.alternate.column.partNumber",
+					"dataIndex": "PartNumber",
+					"type": "string"
+				}, {
+					"attrName": "UsageScope",
+					"attrNls": "eng.alternate.column.usageScope",
+					"dataIndex": "UsageScope",
+					"type": "string"
+				}, {
+					"attrName": "ActiveChange",
+					"attrNls": "eng.alternate.column.Change",
+					"dataIndex": "ActiveChange",
+					"type": "string"
+				}, {
+					"attrName": "HasConfigContext",
+					"attrNls": "eng.alternate.column.hasConfigContext",
+					"dataIndex": "HasConfigContext",
+					"type": "string"
+				}
+			],
+			"AlternateSuggestionSettingsData": [{
+					"Title": "PreviousRevision",
+					"tree": "PreviousRevisionIDs"
+				}, {
+					"Title": "Revision",
+					"tree": "RevisionIDs"
+				}, {
+					"Title": "Branch",
+					"tree": "BranchIds"
+				}, {
+					"Title": "BranchFrom",
+					"tree": "BranchFromIDs"
+				}, {
+					"Title": "Duplicate",
+					"tree": "DuplicateIDs"
+				}, {
+					"Title": "OtherUsage",
+					"tree": "OtherUsageIDs"
+				}, {
+					"Title": "AlternatesOfAlternate",
+					"tree": "AlternatesOfAlternate"
+				}
+			],
+			"ColumnsOfUsageInfoPopup": [{
+					"attrName": "PrimaryItemTitle",
+					"attrNls": "eng.alternate.suggestion.primaryItem.title",
+					"dataIndex": "PrimaryItemTitle",
+					"type": "string"
+				}, {
+					"attrName": "PrimaryItemRevision",
+					"attrNls": "eng.alternate.suggestion.primaryItem.revison",
+					"dataIndex": "PrimaryItemRevision",
+					"type": "string",
+					"width": "41px"
+				}, {
+					"attrName": "SuggestionStatus",
+					"attrNls": "eng.alternate.column.status",
+					"dataIndex": "Status",
+					"type": "string",
+					"width": "41px"
+				}, {
+					"attrName": "PrimaryUsageScope",
+					"attrNls": "eng.alternate.properties.usageDetails",
+					"dataIndex": "UsageScope",
+					"type": "string"
+				}
+			],
+			"ColumnsOptionsForSuggestionPopup": {
+				"cellSelection": "multiple",
+				"identifier": "Alternate-DatagridView_Suggestion",
+				"rowSelection": "multiple"
+			},
+			"ColumnsOptionsForSuggestionSettings": {
+				"cellSelection": "multiple",
+				"identifier": "Alternate-DatagridView_SuggestionSettings",
+				"rowSelection": "multiple",
+				"showRowIndexFlag": false,
+				"showSelectionCheckBoxesFlag": "true"
+			},
+			"ColumnsOptionsForUsageInfoPopup": {
+				"cellSelection": "none",
+				"identifier": "Alternate-DatagridView_usage_popup",
+				"rowSelection": "none"
+			},
+			"SuggestionColumnInfo": [{
+					"attrName": "Title",
+					"attrNls": "eng.alternate.suggestion.title",
+					"dataIndex": "Title",
+					"pinned": "left",
+					"type": "string",
+					"width": "220px"
+				}, {
+					"attrName": "PartNumber",
+					"attrNls": "eng.alternate.column.partNumber",
+					"dataIndex": "PartNumber",
+					"type": "string",
+					"width": "81px"
+				}, {
+					"attrName": "SuggestionRevision",
+					"attrNls": "eng.alternate.suggestion.current.revision",
+					"dataIndex": "revision",
+					"type": "string",
+					"width": "41px"
+				}, {
+					"attrName": "SuggestionMaturity",
+					"attrNls": "eng.alternate.column.maturityState",
+					"dataIndex": "AlternateItemCurrentState",
+					"type": "string",
+					"width": "61px"
+				}, {
+					"attrName": "Source",
+					"attrNls": "eng.alternate.suggestion.source.details",
+					"dataIndex": "Source",
+					"type": "string",
+					"width": "41px"
+				}, {
+					"attrName": "SuggestionStatus",
+					"attrNls": "eng.alternate.column.status",
+					"dataIndex": "Status",
+					"type": "string",
+					"width": "41px"
+				}, {
+					"attrName": "UsageCount",
+					"attrNls": "eng.alternate.suggestion.count",
+					"dataIndex": "UsageCount",
+					"type": "string"
+				}, {
+					"attrName": "SelectUsage",
+					"attrNls": "eng.alternate.suggestion.usage.details",
+					"dataIndex": "SelectUsage",
+					"type": "string"
+				}
+			],
+			"alternateFilterParams": [{
+					"fonticon": "status-ok statusQualified",
+					"id": "Qualified",
+					"name": "AlternateQualificationStatus",
+					"selected": true,
+					"title": "eng.alternate.filter.status.qualified",
+					"type": "CheckItem"
+				}, {
+					"fonticon": "clock statusProposed",
+					"id": "Proposed",
+					"name": "AlternateQualificationStatus",
+					"selected": true,
+					"title": "eng.alternate.filter.status.proposed",
+					"type": "CheckItem"
+				}, {
+					"fonticon": "block statusObsolete",
+					"id": "Obsolete",
+					"name": "AlternateQualificationStatus",
+					"selected": true,
+					"title": "eng.alternate.filter.status.obsolete",
+					"type": "CheckItem"
+				}
+			],
+			"alternateGroupByOptions": [{
+					"context": "CONSTANT_NONE",
+					"title": "eng.alternate.groupby.options.none",
+					"type": "RadioItem"
+				}, {
+					"context": "CONSTANT_ALT_ID",
+					"title": "eng.alternate.groupby.options.reference",
+					"type": "RadioItem"
+				}, {
+					"context": "CONSTANT_PARTNUMBER",
+					"title": "eng.alternate.groupby.options.enterprise.number",
+					"type": "RadioItem"
+				}, {
+					"context": "CONSTANT_DATAGRID_MATURITY_STATE",
+					"title": "eng.alternate.groupby.options.maturity.state",
+					"type": "RadioItem"
+				}, {
+					"context": "CONSTANT_STATUS",
+					"title": "eng.alternate.groupby.options.qualification.status",
+					"type": "RadioItem"
+				}, {
+					"context": "CONSTANT_OPERATION_KEY",
+					"title": "eng.alternate.groupby.options.usage.scope",
+					"type": "RadioItem"
+				}
+			],
+			"alternateSuggestionFilterParams": [{
+					"fonticon": "status-ok statusQualified",
+					"id": "Qualified",
+					"name": "AlternateQualificationStatus",
+					"selected": true,
+					"title": "eng.alternate.filter.status.qualified",
+					"type": "CheckItem"
+				}, {
+					"fonticon": "clock statusProposed",
+					"id": "Proposed",
+					"name": "AlternateQualificationStatus",
+					"selected": true,
+					"title": "eng.alternate.filter.status.proposed",
+					"type": "CheckItem"
+				}, {
+					"fonticon": "block statusObsolete",
+					"id": "Obsolete",
+					"name": "AlternateQualificationStatus",
+					"selected": true,
+					"title": "eng.alternate.filter.status.obsolete",
+					"type": "CheckItem"
+				}
+			],
+			"alternateSuggestionsGroupByOptions": [{
+					"context": "CONSTANT_NONE",
+					"title": "eng.alternate.suggestion.groupby.none",
+					"type": "RadioItem"
+				}, {
+					"context": "CONSTANT_DATAGRID_COLUMN_SOURCE",
+					"title": "eng.alternate.suggestion.groupby.source",
+					"type": "RadioItem"
+				}, {
+					"context": "CONSTANT_STATUS",
+					"title": "eng.alternate.suggestion.groupby.alternate.status",
+					"type": "RadioItem"
+				}, {
+					"context": "CONSTANT_SUGGESTION_SELECT_USAGE",
+					"title": "eng.alternate.suggestion.groupby.select.usage",
+					"type": "RadioItem"
+				}
+			],
+			
+			"ColumnsOptionsForCarryOverAlternatesPopup": {
+				"cellSelection": "multiple",
+				"identifier": "Alternate-DatagridView-CarryOver-options",
+				"rowSelection": "node"
+			},
+			"ColumnsOptionsForCarryOverAlternateRevisionsPopup": {
+				"cellSelection": "multiple",
+				"identifier": "Alternate-DatagridView-CarryOver-revisions-options",
+				"rowSelection": "single"
+			},
+			"CarryOverAlternatesColumnsInfo": [{
+					"attrName": "AlternatesTitle",
+					"attrNls": "eng.alternate.suggestion.title",
+					"dataIndex": "Title",
+					"pinned": "left",
+					"type": "string",
+					"width": "220px"
+				}, {
+					"attrName": "revision",
+					"attrNls": "eng.alternate.suggestion.current.revision",
+					"dataIndex": "revision",
+					"type": "string",
+					"width": "64px"
+				}, {
+					"attrName": "EnterpriseExtension.V_PartNumber",
+					"attrNls": "eng.alternate.column.partNumber",
+					"dataIndex": "EnterpriseExtension.V_PartNumber",
+					"type": "string",
+					"width": "110px"
+				}, {
+					"attrName": "Maturity",
+					"attrNls": "eng.alternate.column.maturityState",
+					"dataIndex": "Maturity",
+					"type": "string",
+					"width": "88px"
+				}, {
+					"attrName": "PrimaryItemTitle",
+					"attrNls": "eng.alternate.carryOver.primaryItem.title",
+					"dataIndex": "PrimaryItemTitle",
+					"type": "string",
+					"width": "86px"
+				}, {
+					"attrName": "InstanceTitle",
+					"attrNls": "eng.alternate.carryOver.primaryItem.instanceTitle",
+					"dataIndex": "InstanceTitle",
+					"type": "string",
+					"width": "67px"
+				}, {
+					"attrName": "AlternateStatus",
+					"attrNls": "eng.alternate.column.status",
+					"dataIndex": "Status",
+					"type": "string",
+					"width": "130px"
+				}
+			],
+			"CarryOverRevisionsColumnInfo": [
+				{
+					"type": "string",
+					"attrName": "RevisionsTitle",
+					"dataIndex": "RevisionsTitle",
+					"pinned": "left",
+					"width": "150px",
+					"attrNls": "eng.alternate.suggestion.title"
+				},
+				{
+					"type": "string",
+					"attrName": "revision",
+					"dataIndex": "revision",
+					"width": "41px",
+					"attrNls": "eng.alternate.suggestion.current.revision"
+				},
+				{
+					"type": "string",
+					"attrName": "maturity_nls",
+					"dataIndex": "maturity_nls",
+					"width": "85px",
+					"attrNls": "eng.alternate.column.maturityState"
+				},
+				{
+					"type": "string",
+					"attrName": "modification",
+					"dataIndex": "modification",
+					"width": "110px",
+					"attrNls": "eng.alternate.carryOver.revisions.maturityDate"
+				},
+				{
+					"type": "string",
+					"attrName": "creation",
+					"dataIndex": "creation",
+					"width": "110px",
+					"attrNls": "eng.alternate.carryOver.revisions.creationDate"
+				},
+				{
+					"type": "string",
+					"attrName": "description",
+					"dataIndex": "description",
+					"width": "100px",
+					"attrNls": "eng.alternate.carryOver.revisions.description"
+				}
+			],
+			"versionGraphAttributes": ["revision", "EnterpriseExtension.V_PartNumber", "owner", "policy", "type", "project", "ispublished", "reserved", "reservedby", "organization", "PLMReference.V_versionComment", "vault"]
+		},
+		"alternate_properties": {
+			"isChangeControlled": true,
+			"method": "POST",
+			"sc_tenant_in_url": true,
+			"targetService": "3DSpace",
+			"type": "json",
+			"url": "/resources/v1/alternateManagement/getAlternateItemsInfo"
+		},
+		"approve_alternate": {
+			"isChangeControlled": true,
+			"method": "POST",
+			"targetService": "3DSpace",
+			"type": "json",
+			"url": "/resources/v1/alternateManagement/approveAlternateItems"
+		},
+		"fed_myEng": {
+			"isChangeControlled": false,
+			"method": "POST",
+			"nresults": 20,
+			"source": ["3dspace"],
+			"targetService": "3DSearch",
+			"type": "json",
+			"url": "/search"
+		},
+		"fetchRelatedItemIdsFromVersionGraph": {
+			"isChangeControlled": false,
+			"method": "POST",
+			"targetService": "3DSpace",
+			"type": "json",
+			"url": "/resources/v1/dslc/versiongraph"
+		},
+		"fetch_attributes": {
+			"isChangeControlled": false,
+			"method": "POST",
+			"targetService": "3DSpace",
+			"type": "json",
+			"url": "/resources/enopad/lwc/fetch"
+		},
+		"fetch_enopad_expand": {
+			"isChangeControlled": false,
+			"method": "POST",
+			"sc_tenant_in_url": true,
+			"targetService": "3DSpace",
+			"type": "json",
+			"url": "/resources/enopad/lwc/expand"
+		},
+		"getUserSelectedPrimaryItemConfigurations": {
+			"isChangeControlled": true,
+			"method": "POST",
+			"targetService": "3DSpace",
+			"type": "json",
+			"url": "/resources/v1/alternateManagement/getUserSelectedPrimaryItemConfigurations"
+		},
+		"get_AlternateReference": {
+			"isChangeControlled": true,
+			"method": "POST",
+			"sc_tenant_in_url": true,
+			"targetService": "3DSpace",
+			"type": "json",
+			"url": "/cvservlet/navigate"
+		},
+		"get_PrimaryItemInfo": {
+			"isChangeControlled": true,
+			"method": "POST",
+			"targetService": "3DSpace",
+			"type": "json",
+			"url": "/resources/v1/alternateManagement/getUserSelectedPrimaryItemInfo"
+		},
+		"get_alternate": {
+			"isChangeControlled": true,
+			"method": "POST",
+			"targetService": "3DSpace",
+			"type": "json",
+			"url": "/resources/v1/alternateManagement/getAlternateItems"
+		},
+		"getParentPointedAlternateReferencePhyIds": {
+			"isChangeControlled": false,
+			"method": "POST",
+			"targetService": "3DSpace",
+			"type": "json",
+			"url": "/resources/v1/alternateManagement/getParentPointedAlternateReferencePhyIds"
+		},
+		"carryOverAlternates": {
+			"isChangeControlled": true,
+			"method": "POST",
+			"targetService": "3DSpace",
+			"type": "json",
+			"url": "/resources/v1/alternateManagement/carryOverAlternates"
+		},
+		"get_alternate_cvservlet": {
+			"isChangeControlled": true,
+			"method": "POST",
+			"sc_tenant_in_url": true,
+			"targetService": "3DSpace",
+			"type": "json",
+			"url": "/cvservlet/expand"
+		},
+		"modifyProposedFor": {
+			"isChangeControlled": true,
+			"method": "POST",
+			"targetService": "3DSpace",
+			"type": "json",
+			"url": "/resources/v1/alternateManagement/modifyProposedFor"
+		},
+		"my_app_getPreference": {
+			"isChangeControlled": false,
+			"method": "GET",
+			"noContentType": true,
+			"targetService": "3DCompass",
+			"type": "text",
+			"url": "/resources/AppsMngt/user/preference"
+		},
+		"my_app_setPreference": {
+			"isChangeControlled": false,
+			"method": "PUT",
+			"targetService": "3DCompass",
+			"type": "text",
+			"url": "/resources/AppsMngt/user/preference",
+			"useFormData": true
+		},
+		"obsolete_alternate": {
+			"isChangeControlled": true,
+			"method": "POST",
+			"targetService": "3DSpace",
+			"type": "json",
+			"url": "/resources/v1/alternateManagement/obsoleteAlternateItems"
+		},
+		"reject_alternate": {
+			"isChangeControlled": true,
+			"method": "POST",
+			"targetService": "3DSpace",
+			"type": "json",
+			"url": "/resources/v1/alternateManagement/rejectAlternateItems"
+		},
+		"remove_alternate": {
+			"isChangeControlled": true,
+			"method": "POST",
+			"targetService": "3DSpace",
+			"type": "json",
+			"url": "/resources/v1/alternateManagement/removeAlternateItems"
+		}
+	},
+	"compute_select_bo": ["icon", "thumbnail_2d"],
+	"getIndexModePayloadAttributes": ["current", "type", "revision", "alternate_primary_item_physical_id"],
+	"groupByNLSMap": {
+		"AlternateItemCurrentState": "eng.alternate.column.maturityState",
+		"AlternateItemPhysicalId": "eng.alternate.groupby.options.reference",
+		"PartNumber": "eng.alternate.column.partNumber",
+		"Status": "eng.alternate.column.status",
+		"UsageScope": "eng.alternate.column.usageScope",
+		"revision": "eng.alternate.column.revision"
+	},
+	"nlsPropValue": {
+		"ds6w:status": ["IN_WORK", "FROZEN", "RELEASED", "OBSOLETE", "PRIVATE"]
+	},
+	"select_bo": ["physicalid", "current", "ds6w:label", "ds6w:description", "ds6w:identifier", "ds6w:type", "ds6wg:revision", "ds6wg:EnterpriseExtension.V_PartNumber", "change_id"],
+	"select_rel": ["physicalid", "type", "ds6w:label", "ds6w:type", "ds6w:globalType", "ALTERNATE_STATUS", "ContextScope", "Element_1_PhysicalId", "Element_1_LogicalId", "Element_2_PhysicalId", "Element_2_LogicalId", "Element_2_type", "Element_3_PhysicalId", "Element_3_LogicalId", "Element_3_type"]
+}

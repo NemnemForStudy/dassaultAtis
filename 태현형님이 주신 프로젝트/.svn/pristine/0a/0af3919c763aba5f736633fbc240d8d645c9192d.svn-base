@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<!-- COPYRIGHT DASSAULT SYSTEMES 2017, All rights reserved -->
+<Package  Name="VPMPointCloud"
+        ModelerType="Top"
+        xmlns="PLMDictionaryUnified"
+        Uuid="58470f82-5ec1-4441-bfce-5fefc849efd7"
+        UseNames="PRODUCTCFG"
+        CustomerExposition="Programmer">
+  <Class Name="VPMPointCloudRepReference"
+        Uuid="17da8f76-e72a-4f70-8c44-e4a97814c57e"
+        Abstract="No"
+        Discipline="Yes"
+        Abbreviation="delpc"
+        SuperName="VPMRepReference"
+        Specializable="No"
+        CustomerExtensible="No"
+        CustomerExposition="Programmer"
+        CreateInstName="VPMRepInstance"
+        InstantiationOwnerTypes="VPMReference">
+    <Property Name="Searchable" Value="No"/>
+    <Property Name="IconName" Value="I_PointRepIcon"/>
+    <Property Name="Newable" Value="No"/>
+    <Method ImplementationType="None">
+        <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+    </Method>
+  </Class>
+
+  <Extension Name="VPMPointCloudIdentifierExt"
+        Uuid="3B680657-787D-4f63-BA36-8732AE8FFA40"
+        ScopeNames="VPMPointCloudRepReference"
+        Discipline="No"
+        Abstract="No"
+        Specializable="No"
+        CAAExposition="L0"
+        CustomerExposition="Programmer">
+    <CAAComment>
+        <ShortRole>Extension used to store the identification of the Point Cloud linked to the representation</ShortRole>
+        <Role>Extension used to store the identification of the Point Cloud linked to the representation</Role>
+    </CAAComment>
+    <Simple Name="V_PointCloudIdentifier"
+        Uuid="59F67482-4A03-4e4c-A66E-4242E45484AF"
+        Type="String"
+        MultiValuated="No"
+        Protection="Internal"
+        ResetOnCloning="No"
+        ResetOnNewVersion="No">
+    </Simple>
+  </Extension>
+</Package>

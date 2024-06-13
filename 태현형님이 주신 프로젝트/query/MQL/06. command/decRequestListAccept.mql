@@ -1,0 +1,19 @@
+################################################################################################
+# Create By thok 2023. 08. 11
+# Admin Type : command
+# Name : decRequestListAccept
+################################################################################################
+#del command 'decRequestListAccept';
+add command decRequestListAccept
+	description 'RequestList Accept'
+	label 'emxProgramCentral.Label.RequestAccept'
+	href '${COMMON_DIR}/decRequestStatus.jsp?mode=accept'
+	alt 'emxProgramCentral.Label.RequestAccept'
+	setting 'Image' '${COMMON_DIR}/images/iconActionAcceptTask.png'
+	setting 'Confirm Message' 'emxProgramCentral.Alarm.RequestAccept' 
+	setting 'Registered Suite' 'ProgramCentral'
+	setting 'Target Location' 'content'
+	setting 'Submit' 'true'
+;
+add property 'command_decRequestListAccept' on prog eServiceSchemaVariableMapping.tcl to command 'decRequestListAccept'
+;

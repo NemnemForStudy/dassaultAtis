@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Styles xmlns:syp="http://www.3ds.com/xsd/SYP">
+
+      <Template syp:name="ENOXSceneHeaders" Target="CATCmdHeadersList">
+            <CATCmdHeadersList>
+                  <!-- GRAPH SECTION-->
+                  <CATCommandHeader ID="ReframeAll" HelpResourceFile="IPClassifyNav/IPClassifyNavHelpForCommands" ClassName="DS/IPClassifyNav/commands/xNavActionBarCmds" ResourceFile="IPClassifyNav/IPClassifyNav" Available="0" />
+                  <CATCommandHeader ID="ReframeOn" HelpResourceFile="IPClassifyNav/IPClassifyNavHelpForCommands" ClassName="DS/IPClassifyNav/commands/xNavActionBarCmds" ResourceFile="IPClassifyNav/IPClassifyNav" Available="0" />
+                  <CATCommandHeader ID="ToggleOverview" HelpResourceFile="IPClassifyNav/IPClassifyNavHelpForCommands" ClassName="DS/IPClassifyNav/commands/xNavActionBarCmds" ResourceFile="IPClassifyNav/IPClassifyNav" Available="0" />
+                  <CATCommandHeader ID="LayoutDown" HelpResourceFile="IPClassifyNav/IPClassifyNavHelpForCommands" ClassName="DS/IPClassifyNav/commands/xNavActionBarCmds" ResourceFile="IPClassifyNav/IPClassifyNav" Available="0" />
+                  <CATCommandHeader ID="LayoutRight" HelpResourceFile="IPClassifyNav/IPClassifyNavHelpForCommands" ClassName="DS/IPClassifyNav/commands/xNavActionBarCmds" ResourceFile="IPClassifyNav/IPClassifyNav" Available="0" />
+                  <CATCommandHeader ID="LayoutUp" HelpResourceFile="IPClassifyNav/IPClassifyNavHelpForCommands" ClassName="DS/IPClassifyNav/commands/xNavActionBarCmds" ResourceFile="IPClassifyNav/IPClassifyNav" Available="0" />
+                  <CATCommandHeader ID="LayoutLeft" HelpResourceFile="IPClassifyNav/IPClassifyNavHelpForCommands" ClassName="DS/IPClassifyNav/commands/xNavActionBarCmds" ResourceFile="IPClassifyNav/IPClassifyNav" Available="0" />
+                  <CATCommandHeader ID="SwapThumbState" HelpResourceFile="IPClassifyNav/IPClassifyNavHelpForCommands" ClassName="DS/IPClassifyNav/commands/xNavActionBarCmds" ResourceFile="IPClassifyNav/IPClassifyNav" Available="0" />                 
+            </CATCmdHeadersList>
+      </Template>
+
+      <Template syp:name="ENOXSceneWkbAccess" Target="CATCmdWorkbench">
+            <CATCmdWorkbench Name="ENOXSceneWkb">
+                  <CATCmdContainer Name="XSCGraphViews" RepresentationType="AfrActionBarSection">
+                        <CATCmdStarter Name="Fit All In" Command="ReframeAll" />
+                        <CATCmdStarter Name="Reframe On" Command="ReframeOn" />
+                        <CATCmdStarter Name="Overview" Command="ToggleOverview" />
+                        <CATCmdStarter Name="SwapThumbState" Command="SwapThumbState" />
+                        <CATCmdContainer Name="LayoutOrientation" RepresentationType="AfrActionBarDropDown">
+                              <CATCmdStarter Name="LayoutDown" Command="LayoutDown" />
+                              <CATCmdStarter Name="LayoutRight" Command="LayoutRight" />
+                              <CATCmdStarter Name="LayoutUp" Command="LayoutUp" />
+                              <CATCmdStarter Name="LayoutLeft" Command="LayoutLeft" />
+                        </CATCmdContainer>                    
+                  </CATCmdContainer>
+            </CATCmdWorkbench>
+      </Template>
+</Styles>

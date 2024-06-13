@@ -1,0 +1,9 @@
+m|ENOCollaborativeServicesWebUI\WebToWinInfra.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.0.22078|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\WebToWinInfra\WebToWinInfra.js|1647692319|2292
+s|ENOCollaborativeServicesWebUI\WebToWinInfra.mweb\src\WebToWinCom.js|1505136291|7052
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

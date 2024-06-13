@@ -1,0 +1,1 @@
+define("WebUX/WebUX",[],function(){"use strict";return new Object});

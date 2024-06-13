@@ -1,0 +1,56 @@
+<!-- numeric.js & num_util test example. Author: qif  -->
+<html>
+<head>
+<script src="../../../../../../numeric.js-1.2.6/numeric-1.2.6.js"></script>
+<script src="../../num_util.js"></script>
+</head>
+<body> 
+<div id="out"></div>  
+
+<script>
+  var s = document.getElementById("out");
+  s.innerHTML +=   
+"<samp>"+
+"<br/> Ax = b,"+
+"<br/></samp>" + 
+"<br/>To solve A from x^t * A^t = b^t, x^t element should be perpendicular for each element. <br/>" 
+ 
+  var u = [1,2,3], v = [4,5,7];
+  var w = cross_product_3Dvector(u, v);
+  var A=[u,v,w];  // numeric handles a matrix row first.  
+  s.innerHTML  += "<br/>A="+M2DtoTable(A);
+  var xt1 = [10,11,12], xt2=[13,14,15];
+  var xt3 = cross_product_3Dvector(xt1, xt2);
+  var xtrans = [xt1, xt2, xt3];
+  var x = numeric.transpose(xtrans);
+  s.innerHTML  += "x="+M2DtoTable(x);
+  
+  //s.innerHTML  += "<br/>det(A)="+numeric.det(A);
+  
+  //var Ainv = numeric.inv(A);
+  //s.innerHTML  += "<br/>Ainv="+M2DtoTable(Ainv); 
+  //s.innerHTML  += "<br/>A*Ainv="+M2DtoTable(numeric.dot(A, Ainv));
+  
+  var b = numeric.dot(A, x);
+  s.innerHTML  += "b="+M2DtoTable(b); 
+  
+  s.innerHTML +=   
+"<br/><samp>"+
+"    x^t * A^t   =   b^t,<br/>"+ 
+"</samp>"  
+
+  s.innerHTML += "x^t="+M2DtoTable(xtrans);
+  var btrans = numeric.transpose(b);  
+  s.innerHTML += "b^t="+M2DtoTable(btrans); 
+  
+  var solA=[];
+  for(var ii=0; ii<btrans[0].length; ii++) {
+    var btrans_colum_ii = getColumn(btrans,ii);// which is b[ii], ii<b.length; 
+	solA.push(numeric.solve(xtrans, btrans_colum_ii));   
+  }
+  s.innerHTML  += "<br/>solA="+M2DtoTable(solA);  
+  s.innerHTML += "<br/><a href='SolveAfromx_b3.html'>Example of Robotics.</a>";
+    
+</script>
+</body>
+</html>

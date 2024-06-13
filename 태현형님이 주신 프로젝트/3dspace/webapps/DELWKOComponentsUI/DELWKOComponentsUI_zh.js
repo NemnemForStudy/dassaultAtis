@@ -1,0 +1,1 @@
+define("DS/DELWKOComponentsUI/DELWKOComponentsUI_zh",{});define("DS/DELWKOComponentsUI/assets/nls/DELWKOAutoCompleteUI",{searchPlaceHolder:"按名称或标题搜索",searchTitle:"搜索"});

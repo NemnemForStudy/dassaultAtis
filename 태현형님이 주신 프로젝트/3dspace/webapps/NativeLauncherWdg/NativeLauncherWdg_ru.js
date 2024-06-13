@@ -1,0 +1,1 @@
+define("DS/NativeLauncherWdg/NativeLauncherWdg_ru",{});define("DS/NativeLauncherWdg/assets/nls/NativeLauncher",{Play:"Воспроизведение"});

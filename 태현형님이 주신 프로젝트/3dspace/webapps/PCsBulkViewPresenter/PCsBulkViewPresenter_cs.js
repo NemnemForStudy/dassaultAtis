@@ -1,0 +1,1 @@
+define("DS/PCsBulkViewPresenter/PCsBulkViewPresenter_cs",{});define("DS/PCsBulkViewPresenter/assets/nls/PCsBulkViewPresenter",{TotalVariability:"Celková variabilita",TotalProductConfigurations:"Celkový počet konfigurací produktu"});

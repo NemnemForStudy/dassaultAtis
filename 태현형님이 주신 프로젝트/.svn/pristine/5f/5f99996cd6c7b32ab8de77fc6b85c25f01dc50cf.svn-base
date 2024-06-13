@@ -1,0 +1,383 @@
+<html>
+	<head>
+		<meta charset="ISO-8859-1">
+
+		<title>DS Social Globe demo</title>
+
+
+
+<!-- WebGLV6 -->
+
+
+        <!-- DS Frameworks -->
+ <!-- UWA bypass to use the RequireJS AMD loader  -->
+
+         <!--[if IE]>
+        <script type="text/javascript">window.location.href = "SocialGlobe-no-webgl.html";</script>
+        <![endif]-->
+
+        <script type="text/javascript" src="../RequireJS/require.js"></script>
+        <script type="text/javascript">
+        //<![CDATA[
+            // Any script tag contains a "var UWA" declaration will be executed
+            // only in standalone mode
+            var UWA = {},
+                // Give another name to define/require for the curl AMD loader.
+                curl = {
+                    defineName: 'curl_define',
+                    requireName: 'curl_require'
+                },
+                isRunningStandalone = true;
+        //]]>
+        </script>
+
+        <!-- Application Standalone emulation files -->
+        <link rel="stylesheet" type="text/css" href="https://uwa.netvibes.com/lib/c/UWA/assets/css/standalone.css" />
+        <script type="text/javascript" src="https://uwa.netvibes.com/lib/c/UWA/js/UWA_Standalone_Alone.js"></script>
+
+
+                <!-- Application Styles -->
+        <style type="text/css">
+        .section {
+            border-bottom: 1px solid #c4c4c4;
+            padding: 10px;
+            font-size: 16px; /* the default font size of UWA is way too small,
+                                thus breaking the correct look and feel of inputs */
+        }
+        .section.buttons .inner {
+            overflow-x: auto;
+            margin-top: auto; /* fix an IE9 bug http://stackoverflow.com/a/6425130 */
+        }
+
+        .uwa-text,
+        .uwa-file,
+        .uwa-select {
+            width: 220px;
+        }
+
+        </style>
+
+        <script type="text/javascript" src="../WebUX/WebUX.js"></script>
+        <script type="text/javascript" src="../WebVisualization/WebVisualization.js"></script>
+        <script type="text/javascript" src="../SocialGlobe/SocialGlobe.js"></script>
+
+        <script type="text/javascript" src="../WebappsUtils/WebappsUtils.js"></script>
+<!-- End of WebGLV6 -->
+
+
+<link rel="stylesheet" type="text/css" href="style.css" />
+
+		<script type="text/javascript">
+/* blkop  */
+			'use strict';
+			var editor;
+            var globe;
+            var geoJSONObject;
+            var startColors;
+            var autoTurn = false;
+            var shaders = ["assets/shaders/tileplanet_fragment_norefraction.ps", "assets/shaders/tileplanet_fragment_transparent.ps", "assets/shaders/tileplanet_fragment.ps"];
+            var currentShader = 0;
+			function winHeight() {
+			  return window.innerHeight || (document.documentElement || document.body).clientHeight;
+			}
+
+            var projectionState = false;
+            function onProj(state) {
+                projectionState = state;
+               // alert("projection " + projectionState);
+            }
+
+            function addSection(name, content) {
+                widget.body.addContent({
+                    tag: 'div',
+                    'class': 'section ' + name.toLowerCase(),
+                    html: [
+                        { tag: 'div', 'class': 'inner', html: content }
+                    ]
+                });
+            }
+
+
+			require({
+				},['UWA/Drivers/Alone', 'widget', 'UWA/Core', 'DS/Core/Core', 'DS/SocialGlobe/GlobeItf','DS/SocialGlobe/Globals','UWA/Controls/Input'],
+                function(Alone, widget, UWACore, WUXCore, GlobeItf, Globals, Input) {
+
+                var onLoad = function()
+                {
+
+				var div = document.getElementById('canvas-div');
+
+                UWA.extendElement(widget.body);
+
+                if (!Globals.isBrowserSupported()) {
+                    console.log("BROWSER NOT SUPPORTED");
+                }
+
+                //globe = new GlobeUWA(widget,{container: widget.body, use2D: false, height: 400});
+
+				globe = GlobeItf.create(div, false, true);
+
+                var autoTurnBox = new Input.Checkbox();
+                autoTurnBox.addEvents({
+                    onChange: function (item, selected) {
+                        autoTurn = !autoTurn;
+                        if (autoTurn) {
+                            globe.autoTurn(1.0);
+                        } else {
+                            globe.autoTurn(0.0);
+                        }
+                    }
+                });
+
+                var projBox = new Input.Checkbox();
+                projBox.addEvents({
+                        onChange: function (item, selected) {
+                            globe.switchToProjection(!projectionState);
+                        }
+                    });
+
+
+                var geojsonLoadBox = new Input.Checkbox();
+                geojsonLoadBox.addEvents({
+                        onChange: function (item, selected) {
+                            globe.showGeoJSONObject(geoJSONObject);
+                            this.elements.container.addClassName('disabled');
+                        }
+                    });
+
+                var parisButton = new Input.Button({className: 'small light-grey', value: 'Paris' })
+                parisButton.addEvents({
+                        onClick: function (item) {
+                            globe.turnGlobeToLatLon(48.856578,2.351828);
+                        }
+                    });
+
+                var adelaideButton = new Input.Button({className: 'small light-grey', value: 'Adelaide' })
+                adelaideButton.addEvents({
+                        onClick: function (item) {
+                            globe.turnGlobeToLatLon(-34.93,138.59972);
+                        }
+                    });
+
+                var portlandButton = new Input.Button({className: 'small light-grey', value: 'Portland' })
+                portlandButton.addEvents({
+                        onClick: function (item) {
+                            globe.turnGlobeToLatLon(45.523056,-122.640278);
+                        }
+                    });
+
+                addSection('AutoTurn',[autoTurnBox,'AutoTurn']);
+                addSection('Projection mode', [projBox,'Projection mode']);
+                addSection('Load GeoJSON', [geojsonLoadBox,'Load GeoJSON']);
+                addSection('Go to', [parisButton, portlandButton, adelaideButton]);
+
+                /*var i = 0, n = 1000;
+                for(i = 0; i < 1000; i++){
+                    globe.addMarker(0, -180 + i*360/n, "#ff0000");
+                }*/
+
+                var markersManager = { onMouseMove: function(markersToShowArray, absoluteMouseX, absoluteMouseY) {
+                             //   UWA.log("onMouseMove " + markersToShowArray.length + " " + markersToShowArray.length + " " + absoluteMouseX + " " + absoluteMouseY);
+                            },
+                            onMouseClick: function(markersToShowArray, absoluteMouseX, absoluteMouseY) {
+                            //    UWA.log("onMouseClick " + markersToShowArray.length + " " + markersToShowArray.length + " " + absoluteMouseX + " " + absoluteMouseY);
+                            },
+                            onMouseOut: function() {
+                            //    UWA.log("onMouseOut");
+                            },
+                            onClearMarkers: function() {
+                    //      //      UWA.log("onClearMarkers");
+                            } };
+                globe.setMouseOverMarkersManager(markersManager);
+
+                globe.setHalo("#dddddd",0.6);
+
+/*                var haloSlider = new Slider({
+                    onChange: function (newValue){
+                        globe.setHalo("#dddddd",newValue);
+                    }
+                });
+                haloSlider.setLoadedValue(0.3);
+                haloSlider.show();*/
+
+                globe.setBackgroundColor("#5b7f95",1.0);
+                globe.setSwitchProjectionModeCB(onProj);
+                var geoJSON = { "type": "FeatureCollection",
+                    "features": [
+                        {
+                            "type": "Feature",
+                            "geometry": {"type": "Point", "coordinates": [102.0, 0.5,3000000]},
+                            "properties": {"prop0": "value0"}
+                        },
+                        {
+                            "type": "Feature",
+                            "geometry": {
+                                "type": "LineString",
+                                "coordinates": [[102.0, 10.0], [103.0, 11.0], [104.0, 10.0], [105.0, 11.0]]
+                            },
+                            "properties": {
+                                "prop0": "value0",
+                                "prop1": 0.0
+                            }
+                        },
+                        {
+                            "type": "Feature",
+                            "geometry": {
+                                "type": "Polygon",
+                                "coordinates": [
+                                    [[100.0, 20.0], [101.0, 20.0], [101.0, 21.0], [100.0, 21.0], [100.0, 20.0]]
+                                ]
+                            },
+                            "properties": {
+                                "prop0": "value0",
+                                "prop1": {"this": "that"}
+                            }
+                        },
+                        {
+                            "type": "Feature",
+                            "geometry": {
+                                "type": "MultiPoint",
+                                "coordinates": [ [100.0, 30.0, 1500000], [101.0, 31.0, 2000000] ]
+                            },
+                            "properties": {
+                                "prop0": "value0",
+                                "prop1": {"this": "that"}
+                            }
+                        },
+                        {
+                            "type": "Feature",
+                            "geometry": {
+                                "type": "MultiLineString",
+                                "coordinates": [
+                                    [ [100.0, 40.0], [101.0, 41.0] ],
+                                    [ [102.0, 42.0], [103.0, 43.0] ]
+                                ]
+                            },
+                            "properties": {
+                                "prop0": "value0",
+                                "prop1": {"this": "that"}
+                            }
+                        },
+                        {
+                            "type": "Feature",
+                            "geometry": { "type": "MultiPolygon",
+                                "coordinates": [
+                                    [[[102.0, 52.0], [103.0, 52.0], [103.0, 53.0], [102.0, 53.0], [102.0, 52.0]]],
+                                    [[[100.0, 50.0], [101.0, 50.0], [101.0, 51.0], [100.0, 51.0], [100.0, 50.0]],
+                                        [[100.2 + 0.001, 50.2], [100.8 + 0.001, 50.2], [100.8 + 0.001, 50.8], [100.2 + 0.001, 50.8], [100.2 + 0.001, 50.2]]]
+                                ]
+                                },
+                            "properties": {
+                                "prop0": "value0",
+                                "prop1": {"this": "that"}
+                            }
+                        }
+                    ]
+                    };
+                geoJSONObject = globe.loadGeoJSON(geoJSON);
+
+                var countryManager = {
+                    onMouseMove: function(countryToShow, absoluteMouseX, absoluteMouseY) {
+                        //UWA.log("onMouseMove " + (countryToShow ? countryToShow.getID() : "null"));
+                    },
+                    onMouseOut: function() {
+                        //UWA.log("onMouseOut");
+                    },
+                    onMouseClick: function(country) {
+                        //UWA.log("onMouseClick " + (country ? country.getID() : "null"));
+                    },
+                    onClearCountries: function() {
+                        //UWA.log("onClearCountries");
+                    }
+                };
+
+                //globe.setMouseOverCountryPanelManager(countryManager);
+                startColors = function() {
+                    var clock = 0;
+                    setInterval( function () {
+                        switch(clock) {
+                            case 5:
+                                globe.addMarker(48.85888889, 2.295833333, 0, "#ff0000");
+                                globe.addMarker(40.25, -3.45, 3500000, "#007fcc");
+                                globe.addMarker(40.25, -3.65, 150000, "#007fcc");
+                                globe.addMarker(40.25, -3.66, 3000000, "#007fcc");
+                                break;
+                            case 0:
+                                globe.setDefaultColor("#8f8f8f", false, 0.1);
+                                globe.setCountryColor(globe.getCountryIndexFromISO3("FRA"), "#ff0000");
+                                break;
+                            case 10:
+                                globe.setCountryColor(globe.getCountryIndexFromISO3("ITA"), "#ffff00");
+                                break;
+                            case 16:
+                                globe.setDefaultColor("#008fff", true, 0.1);
+                                globe.setCountryColor(globe.getCountryIndexFromISO3("FRA"), null);
+                                break;
+                            }
+                            clock++;
+                        //var intervalBis = setInterval( function () { globe.clearMarkers(); clearInterval(intervalBis)}, 6000);
+                        }, 1000);
+                    };
+                var markersManager = { onMouseMove: function(markersToShowArray, absoluteMouseX, absoluteMouseY) {
+                            },
+                            onMouseClick: function(markersToShowArray, absoluteMouseX, absoluteMouseY) {
+                            },
+                            onMouseOut: function() {
+                            },
+                            onClearMarkers: function() {
+                            } };
+                //globe.setMouseOverMarkersManager(markersManager);
+
+                //globe.setFragShader(shaders[currentShader]);
+
+
+                /* test for markers popup */
+                var markerPopup = "<a href='javascript:globe.turnGlobeToLatLon(-34.93,138.59972);'>turn to</a>";
+                globe.addMarker(48.85888889, 2.295833333, 0, "#ff0000", markerPopup);
+                var markersManager = { onMouseMove: function(markersToShowArray, absoluteMouseX, absoluteMouseY) {
+                },
+                onMouseClick: function(markersToShowArray, absoluteMouseX, absoluteMouseY) {
+                    if (markersToShowArray.length > 0) {
+                        console.log("marker clicked",markersToShowArray[0]);
+                        var popupDiv = document.getElementById("marker-popup");
+                        popupDiv.innerHTML = markersToShowArray[0].popup;
+                    }
+                },
+                onMouseOut: function() {
+                },
+                onClearMarkers: function() {
+                } };
+                //globe.setMouseOverMarkersManager(markersManager);
+
+				globe.go();
+            };
+
+            if (widget.launched)
+                onLoad();
+            else
+                widget.onLoad = onLoad;
+
+        });
+		</script>
+	</head>
+<body>
+    <a href="javascript: if(startColors) { startColors();}; startColors = null;">Color show</a> /
+    <a href="javascript:globe.switchToProjection(!projectionState);">Switch projection mode</a> /
+    <a href="javascript:globe.turnGlobeToLatLon(48.856578,2.351828);">Paris</a> /
+    <a href="javascript:globe.turnGlobeToLatLon(45.523056,-122.640278);">Portland</a> /
+    <a href="javascript:globe.turnGlobeToLatLon(-34.93,138.59972);">Adelaide</a> /
+    <a href="javascript:globe.autoTurn(1);">AutoTurn ON</a> /
+    <a href="javascript:globe.autoTurn(0);">AutoTurn OFF</a> /
+    <a href="javascript:globe.showGeoJSONObject(geoJSONObject);">GeoJSON ON</a>
+    <br>Select shader
+    <a href="javascript:currentShader = (currentShader+1)%shaders.length; globe.updateShader(shaders[currentShader]);">Switch shader</a>
+    <div id="canvas-div" width=1000 height=800>
+    </div>
+    <div id="marker-popup" width=300 height=100>marker popup</div>
+<!--	<div id="form-div">
+		<form class="code-form">
+			<textarea id="code" class="code" onkeyup="onCodeChange()">youpla boum</textarea>
+		</form>
+	</div>-->
+</body>
+</html>

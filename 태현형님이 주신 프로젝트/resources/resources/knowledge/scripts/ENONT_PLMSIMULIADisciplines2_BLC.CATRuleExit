@@ -1,0 +1,53 @@
+
+<Scripts>
+
+  <!-- provide implementation of common infrastructure Business Logic Openess for the modeler PLMSIMULIADisciplines2 -->
+  <!-- types provided with dedicated implementation: FEM, XRep -->
+
+
+  <!-- FEMRep -->
+
+  <Script OpeningID="PLMIdentificationInitialization" Type="FEM"    ScriptName="ENONT_PLMReference_BLInitialization" >
+    <Condition Attribute="Policy" Value="VPLM_SMB_Evaluation" />
+  </Script>
+  <Script OpeningID="PLMIdentificationInitialization" Type="FEM"    ScriptName="ENONT_PLMReference_BLInitialization" >
+    <Condition Attribute="Policy" Value="VPLM_SMB_Evaluation_MajorRev" />
+  </Script>
+  
+  <!-- WARNING: THIS CHECK MAY OPERATE BOTH IN FORMER TYPING AND NEW TYPING -->
+  <!--Adding Instance inside the structure: control that Standard data is only made of Standard data-->
+  <Script OpeningID="PLMInstanceAggregationCheck"     Type="VPMReference"    ScriptName="ENONT_StandardAggregation" >
+    <Condition Attribute="Policy" Value="VPLM_SMB_Evaluation" />
+  </Script>
+  <Script OpeningID="PLMInstanceAggregationCheck"     Type="VPMReference"    ScriptName="ENONT_StandardAggregation" >
+    <Condition Attribute="Policy" Value="VPLM_SMB_Evaluation_MajorRev" />
+  </Script>
+
+  <!-- WARNING: THIS CHECK MAY OPERATE BOTH IN FORMER TYPING AND NEW TYPING -->
+  <!--Adding Instance inside the structure: control that a data is made of Applicable Data-->
+  <Script OpeningID="PLMInstanceAggregationCheck"     Type="VPMReference"    ScriptName="ENONT_CrossProjectApplicability" >
+    <Condition Attribute="Policy" Value="VPLM_SMB_Evaluation" />
+  </Script>
+  <Script OpeningID="PLMInstanceAggregationCheck"     Type="VPMReference"    ScriptName="ENONT_CrossProjectApplicability" >
+    <Condition Attribute="Policy" Value="VPLM_SMB_Evaluation_MajorRev" />
+  </Script>
+
+  <!-- XRep -->
+  
+  <Script OpeningID="PLMIdentificationInitialization" Type="XRep"    ScriptName="ENONT_PLMReference_BLInitialization" >
+    <Condition Attribute="Policy" Value="VPLM_SMB_Evaluation" />
+  </Script>
+  <Script OpeningID="PLMIdentificationInitialization" Type="XRep"    ScriptName="ENONT_PLMReference_BLInitialization" >
+    <Condition Attribute="Policy" Value="VPLM_SMB_Evaluation_MajorRev" />
+  </Script>
+  
+  <!-- SIMShape -->
+
+  <Script OpeningID="PLMIdentificationInitialization" Type="SIMShape"    ScriptName="ENONT_PLMReference_BLInitialization" >
+    <Condition Attribute="Policy" Value="VPLM_SMB_Evaluation" />
+  </Script>
+  <Script OpeningID="PLMIdentificationInitialization" Type="SIMShape"    ScriptName="ENONT_PLMReference_BLInitialization" >
+    <Condition Attribute="Policy" Value="VPLM_SMB_Evaluation_MajorRev" />
+  </Script>
+  
+</Scripts>

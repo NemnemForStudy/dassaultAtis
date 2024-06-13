@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<src:AppResourceSet Id="ECMBusinessLogicResources" Scope="ServerOnly"
+                     xsi:schemaLocation="urn:com:dassault_systemes:AppResourceSet AppResourceSetDescription.xsd"
+                     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                     xmlns:src="urn:com:dassault_systemes:AppResourceSet">
+
+
+<src:BusinessRule Id="AreCAStandaloneAllowed" ExecutionMode="Computation">
+	<src:Parameter Name="Validation" Type="Boolean" Mode="OUT"/>
+</src:BusinessRule>
+
+<src:BusinessRule Id="ApprovalSchemaInitialization" ExecutionMode="Computation">
+	<src:Parameter Name="ChangeAction" Type="ObjectType" Mode="IN"/>
+	<src:Parameter Name="ImpactedObjects" Type="List" Mode="IN"/>
+	<src:Parameter Name="Approvers" Type="List" Mode="IN"/>
+	<src:Parameter Name="ComputedApprovalSchema" Type="Feature" Mode="OUT"/>
+</src:BusinessRule>
+
+<src:BusinessRule Id="ApprovalSchemaInitializationForChangeRequest" ExecutionMode="Computation">
+	<src:Parameter Name="ChangeRequest" Type="ObjectType" Mode="IN"/>
+	<src:Parameter Name="ComputedApprovalSchema" Type="Feature" Mode="OUT"/>
+</src:BusinessRule>
+
+<src:BusinessRule Id="ApprovalSchemaInitializationForChangeOrder" ExecutionMode="Computation">
+	<src:Parameter Name="ChangeOrder" Type="ObjectType" Mode="IN"/>
+	<src:Parameter Name="ComputedApprovalSchema" Type="Feature" Mode="OUT"/>
+</src:BusinessRule>
+
+</src:AppResourceSet>
+

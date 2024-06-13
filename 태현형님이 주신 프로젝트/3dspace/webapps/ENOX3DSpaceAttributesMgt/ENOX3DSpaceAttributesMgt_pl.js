@@ -1,0 +1,1 @@
+define("DS/ENOX3DSpaceAttributesMgt/ENOX3DSpaceAttributesMgt_pl",{});define("DS/ENOX3DSpaceAttributesMgt/assets/nls/ENOXAttributesMgtNls",{isCellEditableColumns:{title:"Można edytować z poziomu karty Widok"},attributeForEditingColumns:{title:"Atrybut edycji komórki"},Classification:{title:"Klasyfikacja"},instance:"Wystąpienie"});

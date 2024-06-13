@@ -1,0 +1,12 @@
+m|RenderingMaterialWeb\RenderingMaterial.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.3.23060|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\RenderingMaterial\RenderingMaterial.js|1677708086|23265
+s|RenderingMaterialWeb\RenderingMaterial.mweb\src\ApplyJOP.js|1676895266|13126
+u|RenderingMaterialWeb\RenderingMaterial.mweb\src\MaterialMappingServices.js|1676895897|24407
+u|RenderingMaterialWeb\RenderingMaterial.mweb\src\MaterialRequestBuilder.js|1605776146|2482
+u|RenderingMaterialWeb\RenderingMaterial.mweb\src\PLMMaterialFactory.js|1676034199|43230
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

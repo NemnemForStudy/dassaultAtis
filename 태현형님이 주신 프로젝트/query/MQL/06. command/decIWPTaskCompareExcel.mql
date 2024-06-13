@@ -1,0 +1,26 @@
+################################################################################################
+# Create By jhlee 2023. 06. 01
+# Admin Type : command
+# Name : decIWPTaskCompareExcel
+################################################################################################
+
+#del command 'decIWPTaskCompareExcel';
+add command 'decIWPTaskCompareExcel'
+	description 'decIWPTaskCompareExcel'
+	label 'emxProgramCentral.Common.Import'
+	alt 'emxProgramCentral.Common.Import'
+	setting 'Registered Suite' 'ProgramCentral'
+	setting 'Target Location' 'popup'
+	setting 'Image' "${COMMON_DIR}/images/I_ImportFromFile_32.png"
+	setting 'Submit' 'true'
+;
+add property 'command_decIWPTaskCompareExcel' on prog eServiceSchemaVariableMapping.tcl to command 'decIWPTaskCompareExcel';
+
+mod command 'decIWPTaskCompareExcel'
+	href '${COMMON_DIR}/decTaskCompareExcelDialogFS.jsp?type=IWP'
+	add setting 'hasAccess' 'PIM,AWP,WFP'
+	add setting 'Access Program' 'emxProjectSpace'
+	add setting 'Access Function' 'isAccessPMCUpdate'
+	label ProgramCentral.Label.ImportIWP
+	alt ProgramCentral.Label.ImportIWP
+;

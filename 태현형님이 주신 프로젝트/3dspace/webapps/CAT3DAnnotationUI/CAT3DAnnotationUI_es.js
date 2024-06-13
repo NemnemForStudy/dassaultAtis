@@ -1,0 +1,1 @@
+define("DS/CAT3DAnnotationUI/CAT3DAnnotationUI_es",{});define("DS/CAT3DAnnotationUI/assets/nls/CAT3DAnnotationUI",{MoreLbl:"Leer más...",FailureModes:{"0":"Menos importante","1":"Baja","2":"Media","3":"Alta","4":"Muy alto"}});

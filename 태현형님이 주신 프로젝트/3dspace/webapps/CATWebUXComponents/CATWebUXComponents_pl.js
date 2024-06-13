@@ -1,0 +1,1 @@
+define("DS/CATWebUXComponents/CATWebUXComponents_pl",{});define("DS/CATWebUXComponents/assets/nls/CATWebUXComponents",{validationPanelOk:"OK",validationPanelCancel:"Anuluj",replyButtonLabel:"Odpowiedz",addButtonLabel:"Nowy komentarz",pointedPageRemoved:"Wskazana strona została usunięta"});

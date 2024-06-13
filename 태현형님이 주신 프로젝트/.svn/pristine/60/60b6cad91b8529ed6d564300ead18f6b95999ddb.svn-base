@@ -1,0 +1,1 @@
+define("DS/CAT3DAnnotationBaseCmds/CAT3DAnnotationBaseCmds_zh",{});define("DS/CAT3DAnnotationBaseCmds/assets/nls/CAT3DAnnotationBaseCmds",{DisplayHistorySuccessfulLbl:"视图和捕获显示历史记录已删除",InfosPanelTitle:"语义标准",CloseButton:"关闭",relatedAttrPanelTitle:"特征相关信息"});

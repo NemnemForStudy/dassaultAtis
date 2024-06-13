@@ -1,0 +1,39 @@
+<?xml version="1.0" ?>
+<OOTBParameterization>
+	<Domain id="DigitalManufacturing" regSuite="DigitalMfg">
+	<Family id="OOTBRolesLayoutView">
+		<Parameter id="OOTBRolesLayoutTreeListView">
+			<Argument id="OOTBRolesLayoutTreeListViewArg" default="DELConfigurationTreeListView"/>
+		</Parameter>
+	 </Family>
+         <Family id="MfgItemsBehavior" icon="iconParameterizationDataAccess.gif">
+		<Parameter id="TakeIntoAccountRawCheckbox" implementation="com.dassault_systemes.delmia.param.implementation.DELConfigCommonIOtbParameter">
+			<Argument id="TakeIntoAccountRawArg" type="string" input="checkbox" default="Disabled"/>
+		</Parameter>
+		<Parameter id="AllowSingleItemCheckbox" implementation="com.dassault_systemes.delmia.param.implementation.DELConfigCommonIOtbParameter">
+			<Argument id="AllowSingleItemArg" type="string" input="checkbox" default="Disabled"/>
+		</Parameter>	
+		<Parameter id="TypeOfIntermediateItemCombobox" implementation="com.dassault_systemes.delmia.param.implementation.DELConfigCommonIOtbParameter">
+		<Argument id="TypeOfIntermediateItemArg" type="string" input="combobox" default="ManufacturedPart">
+					<Value id="ManufacturedPart"/>
+					<Value id="ManufacturedMaterial"/>
+		</Argument>	
+		</Parameter>
+	</Family>
+	<Family id="ProcessBehaviors">
+		<Parameter id="AutoCreateScopeOnHOPCheckbox" implementation="com.dassault_systemes.delmia.param.implementation.DELConfigCommonIOtbParameter">
+			<Argument id="AutoCreateScopeOnHOPArg" type="string" input="checkbox" default="Disabled"/>
+		</Parameter>
+	</Family>	
+	<Family id="CustomAttrLayoutView">
+		<Parameter id="CustomAttrLayoutTreeListView">
+			<Argument id="CustomAttrLayoutTreeListViewArg" default="DELConfigurationTreeListView"/>
+		</Parameter>
+	</Family>
+	<!-- <Family id="RoleOnLinkLayoutView">
+		<Parameter id="RoleOnLinkLayoutTreeListView">
+		    <Argument id="RoleOnLinkLayoutTreeListViewArg" default="DELConfigurationTreeListView"/>
+		</Parameter>
+	</Family> -->
+	</Domain>
+</OOTBParameterization>

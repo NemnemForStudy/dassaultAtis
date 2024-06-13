@@ -1,0 +1,1 @@
+define("DS/3DPlayAnnotationUtils/3DPlayAnnotationUtils_ja",{});define("DS/3DPlayAnnotationUtils/assets/nls/3DPlayAnnotation",{PlaceHolder:"新しいテキスト",ClickToLaunchText:"ビュー内をクリックして、新しいテキストボックスを作成します",cancelText:"キャンセル",validateText:"確定",nextText:"次へ"});

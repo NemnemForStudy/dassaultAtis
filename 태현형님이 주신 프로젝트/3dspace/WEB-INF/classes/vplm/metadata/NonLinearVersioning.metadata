@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- COPYRIGHT DASSAULT SYSTEMES 2018, All rights reserved -->
+<Package Name="NonLinearVersioning"
+         Uuid="93d1facf-c1b6-49d5-9b7e-baced185bf65"
+         UseNames="ERCoreModeler"
+         ModelerType="Top"
+         xmlns="PLMDictionaryUnified"
+         CustomerExposition="Programmer"
+         Architecture ="All" >
+
+   <!--======================================================================-->
+   <!--  Version Graph model                                                 -->
+   <!--======================================================================-->
+
+   <!-- Item for Version Graph -->
+   <Class Name="GenericPLMItem"
+          Uuid="bc554377-af92-4b90-9eb3-737f39b151db"
+          SuperName="BusinessType"
+          Abstract="No"
+          CustomerExposition="ProgrammerOnly"
+          ObjectNature="Independent"
+          Specializable="No"
+          CustomerExtensible="No"
+          Searchable="No"
+          Newable="No" >
+
+      <Comment>Item representing the handler on one Version family.</Comment>
+
+      <Simple Name="familyId"
+              Uuid="6574f021-8a7f-41d2-a39b-1443f56f5471"
+              Type="Clob"
+              Protection="Internal"
+              PLMImpacting="No" />
+
+      <Method ImplementationType="None">
+         <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+      </Method>
+   </Class>
+
+   <!-- Relationship to relies Business Object to their Item -->
+   <RelationClass Name="isVersionOf"
+                  Uuid="74d3a10d-31f0-452f-8a58-d34c08099461"
+                  SuperName="RelationType"
+                  Abstract="No"
+                  CustomerExposition="ProgrammerOnly"
+                  Specializable="No"
+                  CustomerExtensible="No" >
+
+      <Comment></Comment>
+
+      <Simple Name="fromId"
+              Uuid="0902D60F-D617-4238-9ABB-F8B0B3476FEF"
+              Type="Clob"
+              Protection="Internal"
+              PLMImpacting="No" />
+
+      <SubClause Name="from" TargetName="BusinessType"   cardinality="Many" minorrevision="replicate" clone="none" />
+      <SubClause Name="to"   TargetName="GenericPLMItem" cardinality="One"  minorrevision="none"      clone="none" />
+
+      <Method ImplementationType="None">
+         <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+      </Method>
+   </RelationClass>
+
+   <!-- Version Semantic edge using petal pattern model to support edge between 2 major version family with intent information -->
+   <RelationClass Name="hasSemanticVersion"
+                  Uuid="c58580b6-278c-4963-b32c-db38fd0126ca"
+                  SuperName="RelationType"
+                  Abstract="No"
+                  CustomerExposition="ProgrammerOnly"
+                  Specializable="No"
+                  CustomerExtensible="No" >
+
+      <Comment>Version Semantic edge.</Comment>
+
+      <SubClause Name="from" TargetName="GenericPLMItem" cardinality="Many" minorrevision="none" clone="none"/>
+      <SubClause Name="to"   TargetName="GenericPLMItem" cardinality="Many" minorrevision="none" clone="none"/>
+
+      <Simple Name = "fromFamilyId"
+              Uuid="76364c08-afd3-4063-9735-9650c6055905"
+              Type="Clob"
+              Protection="Internal"
+              PLMImpacting="No" />
+
+      <Simple Name = "toFamilyId"
+              Uuid="6824323d-708e-4748-af80-1af5b501b581"
+              Type="Clob"
+              Protection="Internal"
+              PLMImpacting="No" />
+
+      <Simple Name = "intentVersionType"
+              Uuid="c6c77dce-7a52-4ea4-b66f-fe014d1f2983"
+              Type="Integer"
+              Protection="Internal"
+              PLMImpacting="No"
+              DefaultValue ="1" >
+         <Range>
+            <Equal>1</Equal>
+            <Equal>2</Equal>
+            <Equal>3</Equal>
+            <Equal>4</Equal>
+            <Equal>5</Equal>
+            <Equal>6</Equal>
+            <Equal>7</Equal>
+         </Range>
+      </Simple>
+
+      <Method ImplementationType="None">
+         <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+      </Method>
+    </RelationClass>
+
+    <Extension Name="BranchInfo"
+       Uuid="5f8708ab-0ab7-4cc7-ae87-6cb1b7899e6f"
+       Abstract="No"
+       ScopeNames="hasSemanticVersion"
+       CustomerExposition="Programmer" >
+       <Simple Name="Title"
+          Uuid="313b4482-525e-41ff-9911-af7dd7aa8d7e"
+          Type="String"
+          Protection="Free"
+          PLMImpacting="No" />
+       <Simple Name="Filter"
+          Uuid="cd82e34f-4812-4877-9374-e04a69053249"
+          Type="Clob"
+          Protection="Internal"
+          PLMImpacting="No" />
+       <Simple Name="Comment"
+          Uuid="c7835c55-78ce-4dce-adbd-b20ae40f55ba"
+          Type="String"
+          Protection="Free"
+          multiline="Yes"
+          PLMImpacting="No" />
+    </Extension>
+
+
+    <!--======================================================================-->
+    <!-- Configured Revision Data model                                       -->
+    <!--======================================================================-->
+
+    <!-- Configured Revision in context of CPID project (added for R2021x FD05) -->
+    <Class  Name="ConfiguredBaseline"
+            Uuid="7b94abe2-bd3a-4ce3-abf4-ca4a5ce547cb"
+            SuperName="BusinessType"
+            Abstract="No"
+            CustomerExposition="ProgrammerOnly"
+            ObjectNature="Independent"
+            Specializable="No"
+            CustomerExtensible="Yes"
+            IconName="I_ENOVIA_Baseline"
+            ChangeMaturityAvailability="Yes"
+            DeleteAvailability="Yes"
+            DuplicateAvailability="No"
+            EditPropertiesAvailability="No"
+            EvolutionAvailability="Yes"
+            LockUnlockAvailability="Yes"
+            NewMajorRevisionAvailability="Yes"
+            NewMinorRevisionAvailability="No"
+            TransferOwnershipAvailability="Yes"
+            Configurable="No"
+            Searchable="No"
+            Newable="No" >
+
+      <Comment>Configured Revision representing a Baseline of an configured structure in evolution.</Comment>
+
+      <Property Name="NonLinearVersioningAvailability" Value="All"/>
+
+      <Simple  Name="Title"
+               Uuid="75c21d00-dc3f-4baa-bc13-f44fa648ad33"
+               Type="String"
+               Protection="Free"
+               PLMImpacting="No" >
+         <Property Name="SIXW"     Value="ds6w:label"/>
+         <Property Name="RamBased" Value="Yes"/>
+      </Simple>
+
+      <Simple  Name="VersionComment"
+               Uuid="3228b2fe-e94d-4c14-b19f-3255bd707ac6"
+               Type="String"
+               Protection="Free"
+               ResetOnNewVersion="Yes"
+               ResetOnCloning="Yes"
+               PLMImpacting="No" >
+         <Comment>To support Revision comment will probably associated to a ds6w tab in the future.</Comment>
+      </Simple>
+
+      <Simple  Name="forceChangeControlPropagation"
+               Uuid="0ede6cb7-87bb-4fd5-a364-c93efa28ee50"
+               Type="Boolean"
+               MultiValuated="No"
+               DefaultValue="false"
+               ResetOnNewVersion="No"
+               ResetOnCloning="No"
+               PLMImpacting="No"
+               Faceted="No"
+               Protection="Free" >
+         <Comment>Indicates if instances need to be declared as change Controlled when maturity state reach a certain level.</Comment>
+      </Simple>
+
+      <Method  ImplementationType="None">
+         <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+      </Method>
+   </Class>
+
+   <!-- Pseudo-composition of one GenericPLMItem below its owning Configured Object in context of CPID project (added for R2021x FD05) -->
+   <RelationClass Name="hasViews"
+                  SuperName="RelationType"
+                  Abstract="No"
+                  Uuid="711bdd8f-e233-494c-8365-7884917cfe63"
+                  CustomerExposition="ProgrammerOnly"
+                  Specializable="No"
+                  CustomerExtensible="No" >
+
+      <Comment>Capture that a set of Configured Revision family is associated to a Configured structure.</Comment>
+
+      <Property   Name="RelationNature" Value="Instanciation" />
+
+      <SubClause Name="from" TargetName="BusinessType"   cardinality="Many" minorrevision="replicate" clone="none" propagatemodify="No" propagateconnection="Yes" />
+      <SubClause Name="to"   TargetName="GenericPLMItem" cardinality="One"  minorrevision="none"      clone="none" propagatemodify="No" propagateconnection="Yes" />
+
+      <Method ImplementationType="None">
+         <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+      </Method>
+   </RelationClass>
+
+   <!-- Manage assembly of ConfiguredBaseline in context of CPID project (added for R2021x FD05) -->
+   <RelationClass    Name="isSubConfiguredBaselineOf"
+                     SuperName="RelationType"
+                     Uuid="4572dd2c-1713-410e-b299-cfe7262c5ddb"
+                     Abstract="No"
+                     CustomerExposition="ProgrammerOnly"
+                     Specializable="No"
+                     CustomerExtensible="No" >
+
+      <Comment>Instance relying different Configured Revision in an assembly structure.</Comment>
+
+      <SubClause Name="from" TargetName="ConfiguredBaseline" cardinality="Many" minorrevision="none" clone="none" propagatemodify="Yes" propagateconnection="Yes" />
+      <SubClause Name="to"   TargetName="ConfiguredBaseline" cardinality="Many" minorrevision="none" clone="none" propagatemodify="No"  propagateconnection="No"  />
+
+      <Method ImplementationType="None">
+         <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+      </Method>
+   </RelationClass>
+
+
+   <!--======================================================================-->
+   <!-- Capture Baseline definition model                                    -->
+   <!--======================================================================-->
+
+   <!-- Specification of ConfiguredBaseline based on Change Action -->
+   <Extension Name="ConfigurationBaselineByChange"
+              Abstract="No"
+              Uuid="d3fca427-b047-4b0d-bef5-28fb0aa17a41"
+              ScopeNames="ConfiguredBaseline"
+              CustomerExposition="ProgrammerOnly"
+              Specializable="No" >
+              
+      <Comment>Specification of ConfiguredBaseline based on Change Action</Comment>
+
+      <Simple Name="FullChangeSpecification"
+              Uuid="04945c3b-db7f-47dd-b4c2-a01370901b47"
+              Type="Clob"
+              MultiValuated="No"
+              ResetOnNewVersion="No"
+              ResetOnCloning="No"
+              PLMImpacting="No"
+              Faceted="No"
+              Protection="Internal" >
+         <Comment>Full specification from Changes</Comment>
+      </Simple>
+
+      <Simple Name="LocalChangeSpecification"
+              Uuid="5a142eeb-904a-488d-8426-e22aa49ee795"
+              Type="Clob"
+              MultiValuated="No"
+              ResetOnNewVersion="Yes"
+              ResetOnCloning="Yes"
+              PLMImpacting="No"
+              Faceted="No"
+              Protection="Internal" >
+         <Comment>local specification from Changes</Comment>
+      </Simple>
+
+      <Method ImplementationType="None">
+         <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+      </Method>
+   </Extension>
+
+   <!-- Configuration Revision Effectivity storage in context of CPID project (added for R2021x FD05) -->
+   <RelationClass    Name="ConfigurationBaselineEffectivity"
+                     SuperName="RelationType"
+                     Abstract="No"
+                     Uuid="244e9e11-b038-468a-9b67-2dbb042a5868"
+                     CustomerExposition="ProgrammerOnly"
+                     Specializable="No"
+                     CustomerExtensible="No" >
+
+      <Comment>Configuration Revision Effectivity storage</Comment>
+
+      <SubClause Name="fromrel" TargetName="RelationType"       cardinality="Many" minorrevision="none"      clone="none"      propagatemodify="No" propagateconnection="No" />
+      <SubClause Name="to"      TargetName="ConfiguredBaseline" cardinality="Many" minorrevision="replicate" clone="replicate" propagatemodify="No" propagateconnection="No" />
+
+      <Simple Name="UserSelection"
+              Uuid="60f58d63-2aa1-40dc-baca-d0524d378fca"
+              Type="Boolean"
+              MultiValuated="No"
+              DefaultValue="true"
+              ResetOnNewVersion="No"
+              ResetOnCloning="No"
+              PLMImpacting="No"
+              Faceted="No"
+              Protection="Internal" >
+         <Comment>Indicate if instance has been included the first time manually</Comment>
+      </Simple>
+
+      <Simple Name="SelectedFromChanges"
+              Uuid="b7794a82-81ff-482e-8327-da187e394504"
+              Type="Clob"
+              MultiValuated="No"
+              ResetOnNewVersion="No"
+              ResetOnCloning="No"
+              PLMImpacting="No"
+              Faceted="No"
+              Protection="Internal" >
+         <Comment>List of ChangeActions allowing to recompute effectivity Compiled form</Comment>
+      </Simple>
+
+      <Simple Name="EvolutionExprAttr"
+              Uuid="13e01139-6118-4322-ac0f-351db3c34f9a"
+              Type="Clob"
+              MultiValuated="No"
+              ResetOnNewVersion="No"
+              ResetOnCloning="No"
+              PLMImpacting="No"
+              Faceted="No"
+              Protection="Internal" >
+         <Comment>Readable Evolution Expression</Comment>
+      </Simple>
+
+      <Simple Name="VariantExpression"
+              Uuid="e853be05-b994-46b0-ae98-014f97910fff"
+              Type="Clob"
+              MultiValuated="No"
+              ResetOnNewVersion="No"
+              ResetOnCloning="No"
+              PLMImpacting="No"
+              Faceted="No"
+              Protection="Internal" >
+         <Comment>Readable Variant Expression</Comment>
+      </Simple>
+
+      <Simple Name="LocalModification"
+              Uuid="c86489b0-841d-4c5b-aef8-533dd98d364e"
+              Type="Boolean"
+              MultiValuated="No"
+              DefaultValue="false"
+              ResetOnNewVersion="Yes"
+              ResetOnCloning="Yes"
+              PLMImpacting="No"
+              Faceted="No"
+              Protection="Internal" >
+         <Comment>Specified if current relationship is part of local definition (not only inherited).</Comment>
+      </Simple>
+
+      <Simple Name="ConfigurationRevCompositionBinary"
+              Uuid="3b2df504-e462-477e-830a-00784da6b834"
+              Type="Clob"
+              MultiValuated="No"
+              ResetOnNewVersion="No"
+              ResetOnCloning="No"
+              PLMImpacting="No"
+              Faceted="No"
+              Protection="Internal" >
+         <Comment>Physical id of the next ConfigurationRevision.</Comment>
+      </Simple>
+
+      <Simple  Name="EffectivityCompiledForm"
+               Uuid="6707ebf8-f7e0-4811-ae38-f735f8b208fb"
+               Type="Clob"
+               Protection="Internal"
+               PLMImpacting="No" >
+      </Simple>
+
+      <Method ImplementationType="None">
+         <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+      </Method>
+   </RelationClass>
+
+   <!-- FUNCTIONS Declarations : here are declared PLMQL Functions -->
+   <Function Name="NLV_GetItemAndGraph">
+      <Implementation Name="NLV_GetItemAndGraph" FileLocation="NLV_GetItemAndGraph.plmql" Language="PLMQL" />
+      <Signature href="NLV_ExportSignature"/>
+   </Function>
+
+   <Signature id="NLV_ExportSignature">
+      <Parameter Name="InputIds"  Direction="in"  MultiValuated="Yes" DataType="PLMId"       />
+      <Parameter Name="OutputIds" Direction="out" MultiValuated="No"  DataType="PLMRouteSet" />
+   </Signature>
+</Package>

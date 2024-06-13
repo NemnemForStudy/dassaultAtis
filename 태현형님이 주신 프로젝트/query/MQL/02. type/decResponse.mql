@@ -1,0 +1,28 @@
+################################################################################################
+# Create By thok : 2023. 06. 28
+# Admin Type : type
+# Name : decResponse
+################################################################################################
+#delete type decResponse
+add type decResponse
+	attribute decResponseDate
+	attribute Originator
+;
+
+add property type_decResponse on program eServiceSchemaVariableMapping.tcl to type 'decResponse'
+;
+
+# Modified by thok on 2023.06.30
+mod type decResponse
+	add attribute decContentData
+;
+
+# Modified by thok on 2023.08.03
+mod type decResponse
+	remove attribute decResponseDate
+;
+
+# Modified by thok on 2023.08.10
+mod type decResponse
+	add attribute Title
+;

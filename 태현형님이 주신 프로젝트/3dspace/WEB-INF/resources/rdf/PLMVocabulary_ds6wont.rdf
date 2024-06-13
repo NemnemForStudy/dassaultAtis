@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!DOCTYPE rdf:RDF [
+    <!ENTITY xml "http://www.w3.org/XML/1998/namespace" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY ds6w "http://www.3ds.com/vocabularies/ds6w#" >
+]>
+
+<rdf:RDF
+    xmlns:ds6wont="http://www.3ds.com/vocabularies/ds6wont/"
+    xml:base="http://www.3ds.com/vocabularies/ds6wont/"
+    xmlns:xml="http://www.w3.org/XML/1998/namespace"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:ds6w="http://www.3ds.com/vocabularies/ds6w#">
+
+    <owl:Ontology rdf:about="http://www.3ds.com/vocabularies/ds6wont/">
+        <rdfs:label xml:lang="en">Ontology concepts Vocabulary</rdfs:label>
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">This ontology defines federated properties for Ontology concepts.</rdfs:comment>
+        <owl:versionInfo>R2021x</owl:versionInfo>
+    </owl:Ontology>
+
+    <owl:DatatypeProperty rdf:about="parentType">
+        <rdfs:label xml:lang="en">Parent type</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&ds6w;what"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment xml:lang="en">Taxonomic parent type</rdfs:comment>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="equivalentTo">
+        <rdfs:label xml:lang="en">Same as</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&ds6w;what"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment xml:lang="en">Exactly the same thing</rdfs:comment>
+    </owl:DatatypeProperty>
+	
+	<owl:DatatypeProperty rdf:about="similarTo">
+        <rdfs:label xml:lang="en">Similar to</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&ds6w;what"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment xml:lang="en">Similar thing</rdfs:comment>
+    </owl:DatatypeProperty>
+	
+	<owl:DatatypeProperty rdf:about="differentFrom">
+        <rdfs:label xml:lang="en">Different from</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&ds6w;what"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment xml:lang="en">Completely different thing</rdfs:comment>
+    </owl:DatatypeProperty>
+</rdf:RDF>

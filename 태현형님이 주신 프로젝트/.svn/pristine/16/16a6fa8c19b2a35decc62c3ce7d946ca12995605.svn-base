@@ -1,0 +1,15 @@
+# Added by choimingi on 2023.09.09
+# del command decCodeMasterEditCmd;
+add command decCodeMasterEditCmd
+	href 'javascript:editMode()'
+	setting 'Registered Suite' 'Framework'
+	setting 'Image' '${COMMON_DIR}/images/iconActionEdit.png'
+;
+
+mod command decCodeMasterEditCmd
+	add setting 'hasAccess' 'PIM'  
+	add setting 'Access Program' 'decAccess'
+	add setting 'Access Function' 'hasAccess'
+;
+
+mod menu decCodeMasterToolbar add command decCodeMasterEditCmd;

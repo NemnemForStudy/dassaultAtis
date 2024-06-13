@@ -1,0 +1,1 @@
+define("DS/DMUReviewFacets/DMUReviewFacets_fr",{});define("DS/DMUReviewFacets/assets/nls/DMUReviewFacets",{noHighlight:"La révision sélectionnée ne contient aucune mise en surbrillance",noCheck:"La révision sélectionnée ne contient aucune vérification"});

@@ -1,0 +1,198 @@
+* {
+    box-sizing: border-box;
+    --main-blue-color: #3c94d3;
+}
+
+a {
+    font-weight:bolder;
+}
+
+html {
+    height:100%;
+}
+
+p {
+    white-space:pre;
+}
+
+.wux-windows-window-content.wux-element-contentbox p {
+    white-space: pre-wrap;
+}
+
+.wux-windows-window-content.wux-element-contentbox h1 {
+    color: black;
+}
+
+@font-face {
+    font-family: "3dsRegular";
+    src: url('./assets/3dsRegular.otf');
+}
+
+body {
+    margin: 0;
+    height:100% ;
+    padding: 0/*1em*/;
+    font-family: "3dsRegular", georgia, serif;
+}
+
+pre {
+    display: block;
+    padding: 9.5px;
+    margin: 0 0 10px;
+    font-size: 13px;
+    line-height: 1.42857;
+    color: #3D3D3D;
+    overflow: auto;
+    word-break: break-all;
+    word-wrap: break-word;
+    background-color: #F4F5F6;
+    border: 1px solid #D1D4D4;
+    border-radius: 4px;
+}
+
+pre code {
+    padding: 0;
+    font-size: inherit;
+    color: inherit;
+    white-space: pre-wrap;
+    background-color: transparent;
+    border-radius: 0;
+}
+
+code, kbd, pre, samp {
+    font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+    font-size: 1em;
+}
+
+.topToolBar {
+    background-color: var(--main-blue-color);
+    background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.1));
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: #368ec4;
+    color: white;
+    display:flex;
+    flex-direction:row;
+    align-content:space-between;
+    transform: translate(0, 0);
+    height: 60px;
+    font-size: 75%;
+}
+
+.topToolBar .headerButton{
+	font-size:2.5em;
+    cursor: pointer;
+    text-shadow: 2px 4px 3px rgba(0, 0, 0, 0.3);
+}
+
+.settingsButton {
+    float: right;
+    font-family: DSFontIcon;
+    text-shadow: 2px 4px 3px rgba(0, 0, 0, 0.3);
+    line-height: 46px;
+    color: white;
+    border: 2px solid #efefef;
+    border-radius: 50%;
+    height: 26px;
+    min-width: 26px;
+    box-shadow: 2px 4px 3px rgba(0, 0, 0, 0.3);
+    background-color: rgb(158, 158, 158);
+    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(207, 207, 207, 0.1));
+}
+
+.topToolBar h1{
+	display:inline-block;
+    flex:1.5;
+    text-overflow: ellipsis;
+    margin-top: 20px;
+    color: white;
+    white-space: nowrap;
+}
+
+.topToolBar h2 {
+    display:inline-block;
+    margin: 20px 10px 5px 5px;
+}
+
+.topToolBar .wux-controls-combobox{
+    margin: 17px 10px 5px 5px;
+}
+
+.topToolBar span {
+	margin:15px;
+}
+
+.topToolBar span.wux-controls-combobox-icon {
+	margin:0;
+}
+.topToolBar .separator {
+    width: 2px;
+    background-color: white;
+    margin: 0px;
+}
+
+.flexGrowItem {
+	flex-grow: 1;
+    position:relative;
+    height: calc(100% - 60px);
+}
+
+.flexVerticalContainer{
+	display:flex;
+	height:100%;
+	flex-direction:column;
+}
+
+.headerLogo {
+    width: 49.5px;
+    height: 55px;
+    margin: 3px 15px 0px 15px;
+    -webkit-transition: opacity 0.2s ease-in-out;
+    -moz-transition: opacity 0.2s ease-in-out;
+    -o-transition: opacity 0.2s ease-in-out;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.headerLogo.top {
+    position: absolute;
+    cursor: pointer;
+}
+
+.headerLogo.top:hover {
+    opacity:0;
+}
+
+.topCenterDiv {
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    pointer-events: none;
+}
+
+.topCenterInnerDiv {
+    display: inline-block;
+    pointer-events: auto;
+}
+
+.extraLogo {
+    width: 30px;
+    height: 30px;
+    margin: 15px;
+    cursor: pointer;
+    filter: drop-shadow(2px 3px 3px rgb(0 0 0 / 30%));
+    image-rendering: -o-crisp-edges;
+    image-rendering: -webkit-optimize-contrast;
+    -ms-interpolation-mode: nearest-neighbor;
+}
+
+.wux-controls-toggle.epToggle {
+    position: relative;
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-top: 24px;
+    -webkit-transform: rotate(270deg);
+    -moz-transform: rotate(270deg);
+    -o-transform: rotate(270deg);
+    -ms-transform: rotate(270deg);
+    transform: rotate(270deg);
+}

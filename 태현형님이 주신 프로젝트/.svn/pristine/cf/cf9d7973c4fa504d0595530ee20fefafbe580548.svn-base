@@ -1,0 +1,108 @@
+###230418 Created By CMG
+# Modified by hslee on 2023.07.26
+
+# delete table decTableDetailTable system;
+
+add table decTableDetailTable system
+column 
+    name 'decCode'
+    bus '$<attribute[decCode]>'
+    label 'emxFramework.Label.decColumnName1'
+    setting 'Registered Suite' 'Framework'
+    setting 'Update Function' 'codeDetailNameVal'
+    setting 'Update Program' 'decCodeMaster'
+column 
+    name 'Description'
+    bus 'description'
+    label 'emxFramework.Label.decColumnName2'
+    setting 'Registered Suite' 'Framework'
+    setting 'Editable' 'true'
+    setting 'Field Type' 'basic'
+column
+    name 'Sequence Order'
+    label 'emxFramework.Attribute.Sequence_Order'
+    setting "Column Type" "program"
+    setting 'Registered Suite' 'Framework'
+    setting 'Sort Type' 'integer'
+    setting 'format' 'numeric'
+    setting 'program' 'decCodeMaster'
+    setting 'function' 'getSequenceOrder'
+    setting 'Update Function' 'updatedecCodeDetailSequenceOrder'
+    setting 'Update Program' 'decCodeMaster'
+column
+    name State
+    label 'emxFramework.History.State'
+    bus '$<current>'
+    setting 'Admin Type' 'State'
+    setting "Input Type" "combobox"
+    setting "Field Type" "policy"
+    setting 'Registered Suite' 'Framework'
+    setting 'Type Icon Function' 'getIcon'
+    setting 'Editable' true
+    setting 'Range Program' 'decCodeMaster'
+    setting 'Range Function' 'getStateRange'
+    setting 'Update Function' 'updateDetailState'
+    setting 'Update Program' 'decCodeMaster'
+column
+    name decGroupHeader
+    label 'emxFramework.Label.decGroupHeader'
+    bus '$<attribute[decGroupHeader]>'
+    setting 'Field Type' 'attribute'
+    setting 'Admin Type' 'attribute_decGroupHeader'
+    setting 'Editable' true
+    setting 'Registered Suite' 'Framework'
+column
+    name decApplyFilter
+    label 'emxFramework.Label.decApplyFilter'
+    bus '$<attribute[decApplyFilter]>'
+    setting 'Field Type' 'attribute'
+    setting 'Admin Type' 'attribute_decApplyFilter'
+    setting 'Input Type' 'combobox'
+    setting 'Editable' true
+    setting 'Registered Suite' 'Framework'
+column
+    name decCodeDetailAtt1
+    label 'emxFramework.Label.decCodeDetailAtt1'
+    bus '$<attribute[decCodeDetailAtt1]>'
+    setting 'Field Type' 'attribute'
+    setting 'Admin Type' 'attribute_decCodeDetailAtt1'
+    setting 'Registered Suite' 'Framework'
+    setting 'Type Icon Function' 'getIcon'
+    setting 'Editable' true
+column
+    name decCodeDetailAtt2
+    label 'emxFramework.Label.decCodeDetailAtt2'
+    bus '$<attribute[decCodeDetailAtt2]>'
+    setting 'Field Type' 'attribute'
+    setting 'Admin Type' 'attribute_decCodeDetailAtt2'
+    setting 'Registered Suite' 'Framework'
+    setting 'Type Icon Function' 'getIcon'
+    setting 'Editable' true
+column
+    name decCodeDetailAtt3
+    label 'emxFramework.Label.decCodeDetailAtt3'
+    bus '$<attribute[decCodeDetailAtt3]>'
+    setting 'Field Type' 'attribute'
+    setting 'Admin Type' 'attribute_decCodeDetailAtt3'
+    setting 'Registered Suite' 'Framework'
+    setting 'Type Icon Function' 'getIcon'
+    setting 'Editable' true
+column
+    name decCodeDetailAtt4
+    label 'emxFramework.Label.decCodeDetailAtt4'
+    bus '$<attribute[decCodeDetailAtt4]>'
+    setting 'Field Type' 'attribute'
+    setting 'Admin Type' 'attribute_decCodeDetailAtt4'
+    setting 'Registered Suite' 'Framework'
+    setting 'Type Icon Function' 'getIcon'
+    setting 'Editable' true
+column
+    name decCodeDetailAtt5
+    label 'emxFramework.Label.decCodeDetailAtt5'
+    bus '$<attribute[decCodeDetailAtt5]>'
+    setting 'Field Type' 'attribute'
+    setting 'Admin Type' 'attribute_decCodeDetailAtt5'
+    setting 'Registered Suite' 'Framework'
+    setting 'Type Icon Function' 'getIcon'
+    setting 'Editable' true
+;

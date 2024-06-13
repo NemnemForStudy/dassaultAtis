@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- proposal of eCAD, conceptually for 22x...FD04  Note in FD04, the inputStreamId="STEP"  , neither FottPrint are not yet supported-->
+<!-- may be need to replace all CGR/authoringVisu with 'ExactGeometry/linkable', relying on fact CGR is always recomputed from linkable -->
+<derivedformatmanagement xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="DerivedFormatDeclarative.xsd">
+	<converter name="3DEXPERIENCE" synchronous="false" nlsFile="emxDerivedFormatManagementStringResource" comment="all the eCAD conversions managed asynchronously by DS, By DerivedFormatConverter (OnTheEdge DO Converter) or Conversion Service" >
+		<datasources>		
+		
+		<!-- subtype is for UI/display in parametrization console, while partExtension is to provide criterion to distinguish sub type (algo ) -->
+		
+		<!-- =============================== CADENCE ALLEGRO - from 23xFD01 =============================== -->
+			<datasource name="CADENCEALLEGRO">
+				<!-- To come in 23xFD02 -->
+				<source name="brd" type="Part" subtype="CBDBoard" partExtension="CBDBoard">
+					<target name="cgr" inputStreamId="STEP"   outputStreamId="authoringvisu"      downloadable="false"  conversionService="true"/>
+					<!-- <target name="ExactGeometry" inputStreamId="STEP"   outputStreamId="linkable"      downloadable="false"/> -->
+				</source> 
+				<!-- FootPrint in step1,  must be commented for FD04 
+				<source name="psm,dra" type="Part" subtype="PLMPCBPackageFootprint" partExtension="PLMPCBPackageFootprint"> 
+					<target name="ExactGeometry" inputStreamId="STEP"   outputStreamId="linkable"      downloadable="false"/>
+				</source>
+				-->
+				<source name="STEP,STP" type="Part" subtype="PLMPCBPackageWrap" partExtension="PLMPCBPackageWrap"> 
+					<!-- Here authoring is STEP format -->
+					<target name="cgr"           inputStreamId="authoring" outputStreamId="authoringvisu" downloadable="false" conversionService="true"/>
+					<!-- <target name="ExactGeometry" inputStreamId="authoring" outputStreamId="linkable"      downloadable="false" conversionService="true"/> -->
+				</source>
+				
+				<events>
+					<event name="onXCADSave" />
+					<event name="ondemand" />
+				</events>
+			</datasource>
+
+		<!-- ===============================    ALTIUM  - Not yet available in 23xFD01       =============================== -->
+			<datasource name="ALTIUM">
+				<!-- To come in 23xFD02 -->
+				<source name="pcbdoc" type="Part" subtype="CBDBoard" partExtension="CBDBoard"> 
+					<target name="cgr" inputStreamId="STEP"   outputStreamId="authoringvisu"      downloadable="false"  conversionService="true"/>
+					<!-- <target name="ExactGeometry" inputStreamId="STEP"   outputStreamId="linkable"      downloadable="false"/> -->
+				</source> 
+				<!-- FootPrint in step1,  must be commented for FD04 
+				<source name="pcblib" type="Part" subtype="PLMPCBPackageFootprint" partExtension="PLMPCBPackageFootprint">					
+					<target name="ExactGeometry" inputStreamId="STEP"   outputStreamId="linkable"      downloadable="false"/>
+				</source>
+				-->
+				<source name="STEP,STP" type="Part" subtype="PLMPCBPackageWrap" partExtension="PLMPCBPackageWrap"> 
+					<!-- Here authoring is STEP format -->
+					<target name="cgr"           inputStreamId="authoring" outputStreamId="authoringvisu" downloadable="false" conversionService="true"/>
+					<!-- <target name="ExactGeometry" inputStreamId="authoring" outputStreamId="linkable"      downloadable="false" conversionService="true"/> -->
+				</source>
+				<!-- not clear about 'no partExtension/empty CGR case proposed by Patrick, to clarify -->
+				
+				<events>
+					<event name="onXCADSave" />
+					<event name="ondemand" />
+				</events>
+			</datasource>
+			
+		<!--===============================  CADENCE PULSE   =============================== -->
+			<datasource name="CADENCEPULSE">
+				<source name="STEP,STP" type="Part" subtype="CBDBoard" partExtension="CBDBoard"> 
+					<!-- Here authoring is STEP format -->
+					<target name="cgr"           inputStreamId="authoring" outputStreamId="authoringvisu" downloadable="false" conversionService="true"/>
+					<!-- <target name="ExactGeometry" inputStreamId="authoring" outputStreamId="linkable"      downloadable="false" conversionService="true"/> -->
+				</source>
+				<!-- FootPrint in step1,  must be commented for FD04 
+				<source name="STEP,STP" type="Part" subtype="PLMPCBPackageFootprint" partExtension="PLMPCBPackageFootprint"> 
+					<target name="ExactGeometry" inputStreamId="authoring" outputStreamId="linkable"      downloadable="false"/>
+				</source>
+				-->
+				<source name="STEP,STP" type="Part" subtype="PLMPCBPackageWrap" partExtension="PLMPCBPackageWrap">
+					<!-- Here authoring is STEP format -->
+					<target name="cgr"           inputStreamId="authoring" outputStreamId="authoringvisu" downloadable="false" conversionService="true"/>
+					<!-- <target name="ExactGeometry" inputStreamId="authoring" outputStreamId="linkable"      downloadable="false" conversionService="true"/> -->
+				</source>
+				
+				<events>
+					<event name="onXCADSave" />
+					<event name="ondemand" />
+				</events>
+			</datasource>
+
+		<!-- ===============================   ZUKEN DS-CR   =============================== -->
+			<datasource name="ZUKENDSCR">
+				<source name="STEP,STP" type="Part" subtype="CBDBoard" partExtension="CBDBoard">
+					<!-- Here authoring is STEP format -->
+					<target name="cgr"           inputStreamId="authoring" outputStreamId="authoringvisu" downloadable="false" conversionService="true"/>
+					<!-- <target name="ExactGeometry" inputStreamId="authoring" outputStreamId="linkable"      downloadable="false" conversionService="true"/> -->
+				</source>
+				<!-- FootPrint in step1,  must be commented for FD04 
+				<source name="STEP,STP" type="Part" subtype="PLMPCBPackageFootprint" partExtension="PLMPCBPackageFootprint">
+					<target name="ExactGeometry" inputStreamId="authoring" outputStreamId="linkable"      downloadable="false"/>
+				</source>
+				-->
+				<source name="STEP,STP" type="Part" subtype="PLMPCBPackageWrap" partExtension="PLMPCBPackageWrap">
+					<!-- Here authoring is STEP format -->
+					<target name="cgr"           inputStreamId="authoring" outputStreamId="authoringvisu" downloadable="false" conversionService="true"/>
+					<!-- <target name="ExactGeometry" inputStreamId="authoring" outputStreamId="linkable"      downloadable="false" conversionService="true"/> -->
+				</source>
+				
+				<events>
+					<event name="onXCADSave" />
+					<event name="ondemand" />
+				</events>
+			</datasource>
+
+		<!-- ===============================   XPEDITIONEDM EDM    =============================== -->
+			<datasource name="XPEDITIONEDM">
+				<source name="STEP,STP" type="Part" subtype="CBDBoard" partExtension="CBDBoard">
+					<!-- Here authoring is STEP format -->
+					<target name="cgr"           inputStreamId="authoring" outputStreamId="authoringvisu" downloadable="false" conversionService="true"/>
+					<!-- <target name="ExactGeometry" inputStreamId="authoring" outputStreamId="linkable"      downloadable="false" conversionService="true"/> -->
+				</source>
+				<!-- FootPrint in step1,  must be commented for FD04 
+				<source name="STEP,STP" type="Part" subtype="PLMPCBPackageFootprint" partExtension="PLMPCBPackageFootprint">
+					<target name="ExactGeometry" inputStreamId="authoring" outputStreamId="linkable"      downloadable="false"/>
+				</source>
+				-->
+				<source name="STEP,STP" type="Part" subtype="PLMPCBPackageWrap" partExtension="PLMPCBPackageWrap">
+					<!-- Here authoring is STEP format -->
+					<target name="cgr"           inputStreamId="authoring" outputStreamId="authoringvisu" downloadable="false" conversionService="true"/>
+					<!-- <target name="ExactGeometry" inputStreamId="authoring" outputStreamId="linkable"      downloadable="false" conversionService="true"/> -->
+				</source>
+				
+				<events>
+					<event name="onXCADSave" />
+					<event name="ondemand" />
+				</events>
+			</datasource>
+			
+		</datasources>
+	</converter>
+</derivedformatmanagement>

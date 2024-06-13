@@ -1,0 +1,226 @@
+<?xml version="1.0"?>
+
+<!-- ENOVIA DICTIONARY FOR DELMIA Production System Application -->
+<!-- COPYRIGHT DASSAULT SYSTEMES 2018, All rights reserved -->
+<Package xmlns="PLMDictionaryUnified"
+         ModelerType="Top"
+         Name="DELLmiProductionHeaderOperation"
+	       Uuid="2572FE40-ADBA-4eeb-90A1-F10CDB88BF86"
+         BelongsToModeler="DELLmiProductionSystem"
+	       UseNames="DELLmiProductionOperationPPR;PLMCORE"
+         CustomerExposition="Programmer">
+  <Property Name="FormerTypingLegacy" Value="Yes"/>
+
+  <CAAComment>
+    <ShortRole>PLM DELMIA Header Operation </ShortRole>
+    <Role>This package describes the PLM DELMIA Header Operation model on top of DELLmiProductionOperationPPR</Role>
+  </CAAComment>
+
+  <Comment>last update 2018-01-22</Comment>
+
+  <Class Name="DELLmiHeaderOperationReference"
+		     Uuid="F77D24DB-769D-473e-8AFA-5A6EF2034315"
+		     Abstract="No"
+    		 SuperName="DELLmiOperationPPRReference"
+         CustomerExposition="Programmer"
+         Specializable="Yes"
+         CustomerExtensible="Yes"
+         CreateInstName="DELLmiHeaderOperationInstance"
+         Abbreviation="hop"
+         InstantiationOwnerTypes="DELLmiGeneralSystemReference;DELLmiWorkPlanSystemReference;DELLmiServiceWorkPlanSystemReference;DELLmiHeaderOperationReference;DELLmiTransformationSystemReference;DELLmiQtyControlProcessReference;DELLmiChangeOverOperationReference"
+		 PublicResourceURI="/resources/v1/modeler/dsprcs/dsprcs:MfgOperation/{pid}"
+         >
+
+    <Property Name="DMCDerivable" Value="Yes"/>
+    <Property Name="KweNew_InstanciationMethod" Value="DELMPProdSystemAdvDelegateInstanciation"/>
+    <Property Name="KweNew_ReturnedType" Value="DELLmiHeaderOperationInstance"/>
+    <Property Name="IconName" Value="I_PPRSeqHeader"/>
+    <Property Name="3DIconName" Value="I_PPRSeqHeader.cgr"/>
+    <Property Name="Newable" Value="Insert_CAA"/>
+    <Property Name="Searchable" Value="Yes"/>
+    
+    <Simple Name="V_UseGanttTimeSolver"
+            Uuid="8A542800-FF46-4339-AA96-238B6962C1CD"
+            Type="Boolean"
+            DefaultValue="true"
+            MultiValuated="No"
+            ResetOnCloning="No"
+            ResetOnNewVersion="No"
+            Protection="Free"
+            CAAExposition="L0">
+      <CAAComment>
+        <ShortRole>If true the Time solver wil be used for Gantt display of operation with children. If no it will be the TimeMode that will be used.</ShortRole>
+      </CAAComment>
+    </Simple>
+
+    <Simple Name="V_ManageVariant"
+            Uuid="BDA4F19E-62AA-49e3-866F-89D5D8442BA5"
+            Type="Boolean"
+            DefaultValue="false"
+            MultiValuated="No"
+            ResetOnCloning="No"
+            ResetOnNewVersion="No"
+            Protection="Free"
+            CAAExposition="L0">
+      <CAAComment>
+        <ShortRole>If true the operation is dedicated to management of variants, else it is just a structural operation.</ShortRole>
+      </CAAComment>
+    </Simple>
+
+    <Simple Name="V_Interruptible"
+            Uuid="F6FB076D-B6E8-4949-B96D-C87346C7B8C7"
+            Type="Boolean"
+            DefaultValue="true"
+            MultiValuated="No"
+            Protection="Free"
+  	        ResetOnCloning="No"
+	          ResetOnNewVersion="No"
+            CAAExposition="L0">
+      <CAAComment>
+        <ShortRole>Interruptible.</ShortRole>
+      </CAAComment>
+    </Simple>
+
+    <Simple Name="V_SequencingMode"
+      Uuid="D7931EE2-732D-42AE-982E-A9C9800BA80F"
+      Type="String"
+      MaxLength="50"
+      MultiValuated="No"
+      Protection="External"
+      CAAExposition="L0"
+      DefaultValue="Advanced">
+      <Range>
+        <Equal>Linear</Equal>
+        <Equal>Advanced</Equal>
+      </Range>
+      <CAAComment>
+        <ShortRole>Defines a sequencing mode on a production system reference, a work plan reference or an operation.</ShortRole>
+      </CAAComment>
+    </Simple>
+
+    <CAAComment>
+      <ShortRole>PLM DELMIA Header Operation Reference</ShortRole>
+      <Role>PLM DELMIA Header Operation Reference</Role>
+    </CAAComment>
+
+    <Method ImplementationType="AsFather">
+      <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+    </Method>
+    <Method ImplementationType="AsFather">
+      <RealizeMethodType href="ExchangeScope.meth#ExchangeScope"/>
+    </Method>
+
+	<Path Name="HeaderOperationPartialScopeLink"
+          Uuid="E2A5C31B-D0F6-46DD-AA41-4946A0A7C891"
+          MultiValuated="Yes"
+          RoleName="PLM_ImplementLink_Target"
+          SynchroSensitivity="None"
+          Type="SemanticRelation"
+          AdaptativeToMinor="No"
+          RerouteOnEffectivityChange="No"
+          Orientation="Neutral"
+          Semantics="Reference"/>
+
+  </Class>
+  
+  <Extension Name="SymbolicIDForScope"
+           Uuid="5FA8A3EE-8058-41E8-ADE2-E9A2CB4AC102"
+           ScopeNames="SemanticRelation"
+           CAAExposition="L0"
+           CustomerExposition="Programmer"
+           Specializable="No">
+    <Simple Name="V_SymbolicIDForScope"
+            Uuid="3EBE5952-8B9A-44FC-AD54-2C248A462418"
+            Type="String"
+            MultiValuated="No"
+            Protection="Internal"
+            ResetOnCloning="No"
+            ResetOnNewVersion="No"/>
+  </Extension>
+
+
+  <RelationClass Name="DELLmiHeaderOperationInstance"
+		     Uuid="1172D332-0AA7-498a-851F-026BDF4A620B"
+		     Abstract="No"
+    		 SuperName="DELLmiOperationPPRInstance"
+         CustomerExposition="Programmer"
+         Specializable="Yes"
+         CustomerExtensible="Yes"
+         >
+
+    <Property Name="DMCDerivable" Value="Yes"/>
+    <Property Name="KweNew_InstanciationMethod" Value="DELMPProdSystemAdvDelegateInstanciation"/>
+    <Property Name="KweNew_ReturnedType" Value="DELLmiHeaderOperationInstance"/>
+
+    <CAAComment>
+      <ShortRole>PLM DELMIA General Operation Instance. Specialization is not supported yet.</ShortRole>
+      <Role>PLM DELMIA General Operation Instance</Role>
+    </CAAComment>
+
+    <Volatile Name="Reference"
+              Uuid="44F0EBE3-C455-4a0e-A8AC-3ED96E64B7B3"
+              Accessor="PLMModelerReferenceKweAttribute"
+              TypeName="DELLmiHeaderOperationReference"
+              AccessMode="ReadOnly" />
+
+    <SubClause Name="to"   TargetName="DELLmiHeaderOperationReference"/>
+
+    <Method ImplementationType="AsFather">
+      <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+    </Method>
+    <Method ImplementationType="AsFather">
+      <RealizeMethodType href="ExchangeScope.meth#ExchangeScope"/>
+    </Method>
+
+
+  </RelationClass>
+  
+  <Extension Name="DELLmiWIPQuantity_Ratio"
+             CustomerExposition="Programmer"
+             Uuid="93FDC254-83C6-4297-8D0D-22D9EF5514CB"
+             ScopeNames="DELLmiHeaderOperationInstance"
+             CAAExposition="L1">
+
+    <Simple Name="V_WIPQuantityRatio"
+         Uuid="BCB75CF1-731F-461D-82BB-BBB6225FDFD5"
+         Type="Double"
+		 Magnitude="Ratio"
+         MultiValuated="No"
+         Protection="Free"
+         CAAExposition="L1"
+         DefaultValue="1.0">
+      <CAAComment>
+        <ShortRole>Defines WIP quantiy ratio</ShortRole>
+
+      </CAAComment>
+    </Simple>
+    <CAAComment>
+      <ShortRole>WIP quantiy ratio Extension</ShortRole>
+    </CAAComment>
+  </Extension>
+
+<Extension Name="DELLmiScrapQuantity_Ratio"
+             CustomerExposition="Programmer"
+             Uuid="F1094A81-3A70-46EE-A436-14999FCBEB13"
+             ScopeNames="DELLmiHeaderOperationInstance"
+             CAAExposition="L1">
+
+    <Simple Name="V_ScrapQuantityRatio"
+         Uuid="53C899AE-7E77-4616-B02D-459F1E57F8CC"
+         Type="Double"
+		 Magnitude="Ratio"
+         MultiValuated="No"
+         Protection="Free"
+         CAAExposition="L1"
+         DefaultValue="1.0">
+      <CAAComment>
+        <ShortRole>Defines Scrap quantiy ratio</ShortRole>
+
+      </CAAComment>
+    </Simple>
+    <CAAComment>
+      <ShortRole>Scrap quantiy ratio Extension</ShortRole>
+    </CAAComment>
+  </Extension>  
+
+</Package>

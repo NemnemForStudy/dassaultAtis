@@ -1,0 +1,180 @@
+.search-column-custo-dialog {
+  // need to add this due to REG introduced by delivery of _wux.controls.abstract.scss
+  * {
+    box-sizing: border-box;
+  }
+  //z-index: 1050 !important;
+  .wux-windows-window-content {
+    height: 100%;
+
+    .global-column-custo-div {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      align-content: flex-start;
+      align-items: stretch;
+      height: 100%;
+      min-height: 400px;
+      min-width: 400px;
+
+      .column-custo-combo-div {
+        /*position: relative;*/
+        top: 0px;
+        left: 0px;
+        right: 0px;
+        /*display: flex;
+        height: 40px;*/
+        min-height: 40px;
+        order: 1;
+
+        &.custo-flex {
+          display: flex;
+        }
+
+        div.select {
+          flex-grow: 1;
+        }
+
+        div.autocomplete {
+          width: 100%;
+          clear: both;
+          float: left;
+          margin-bottom: 10px;
+        }
+      }
+
+      .column-custo-grid-div {
+        flex: 1 1 300px;
+        position: relative;
+        top: 0px;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
+        order: 2;
+        display: flex;
+        height: inherit; /* !important */
+        /* min-height: 60px; */
+        .column-custo-grid-div-content {
+          display: block;
+          position: relative;
+          float: left;
+
+          &.available {
+            width: 400px;
+          }
+
+          &.arrow {
+            width: 100px;
+          }
+
+          &.grid {
+            width: 500px;
+
+            &.extend {
+              width: 600px
+            }
+          }
+
+          &.arrow > button {
+            margin-top: 150px;
+            margin-left: 30px;
+          }
+        }
+
+        .wux-datagrid {
+          margin-top: 10px;
+          margin-bottom: 10px;
+          /*top: 80px!important;*/
+          /*bottom: 60px!important;*/
+          .wux-datagrid-cell {
+            text-align: left;
+          }
+        }
+
+        .wux-ui-hamburger {
+          cursor: move;
+          /* fallback if grab cursor is unsupported */
+          cursor: grab;
+          cursor: -moz-grab;
+          cursor: -webkit-grab;
+
+          &:active {
+            cursor: grabbing;
+            cursor: -moz-grabbing;
+            cursor: -webkit-grabbing;
+          }
+        }
+
+        .toggle-switch {
+          transform: scale(0.5);
+          margin-top: auto;
+        }
+        // IR-824914-3DEXPERIENCER2021x
+        .wux-datagrid-cell .fonticon {
+          color: #77797c;
+          &:hover {
+            color: #3d3d3d;
+          }
+        }
+        .item-icon-group {
+          .fonticon {
+            opacity: 1;
+          }
+        }
+      }
+
+      .column-custo-footer-div {
+        /*position: absolute;*/
+        display: flex;
+        justify-content: flex-end;
+        bottom: 5px;
+        right: 10px;
+        left: 10px;
+        order: 3;
+        height: 40px;
+        min-height: 40px;
+
+        .btn-primary, .secondary {
+          margin-left: 10px;
+        }
+
+        .apply-button {
+          order: 1;
+        }
+
+        .reset-button {
+          order: 2;
+        }
+
+        .save-button, .delete-button {
+          order: 3;
+        }
+
+        div.saveDiv {
+          display: flex;
+          width: 100%;
+
+          input.SearchDataGridPreferences_txt {
+            flex-grow: 1;
+            order: 0;
+          }
+
+          div.btnDiv {
+            order: 1;
+            display: flex;
+            flex: 0 0 auto;
+
+            button.ok-button {
+              order: 0;
+            }
+
+            button.cancel-button {
+              order: 1;
+            }
+          }
+        }
+      }
+    }
+  }
+}

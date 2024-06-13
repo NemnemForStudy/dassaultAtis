@@ -1,0 +1,47 @@
+
+<%@page import="java.util.List"%>
+<%@page import="com.dec.util.DecStringUtil"%>
+<%@page import="com.matrixone.apps.domain.DomainRelationship"%>
+<%@page import="com.dec.util.DecConstants"%>
+<%@page import="com.matrixone.apps.domain.DomainObject"%>
+<%@include file="emxNavigatorTopErrorInclude.inc"%>
+<%@ include file="../emxUICommonAppInclude.inc"%>
+
+<%
+	String sPSOID 	 = emxGetParameter(request, "objectId");      
+	DomainObject doPS = DomainObject.newInstance(context, sPSOID);
+	StringList slMemberRELID = doPS.getInfoList(context, "from[" + DecConstants.RELATIONSHIP_MEMBER + "].id");
+	StringList slRelParam = new StringList();
+	slRelParam.add(DecConstants.SELECT_ATTRIBUTE_DECPROJECTMEMBERROLE);
+	slRelParam.add("to.id");
+	StringBuilder sbParam = new StringBuilder();
+	
+	RelationshipWithSelectList rwsl = Relationship.getSelectRelationshipData(context, slMemberRELID, slRelParam);
+	ContextUtil.startTransaction(context, true);
+	try {
+		for(int i=0; i<rwsl.size(); i++) {
+			RelationshipWithSelect rws = rwsl.get(i);
+			StringList slMemberRole = rws.getSelectDataList(DecConstants.SELECT_ATTRIBUTE_DECPROJECTMEMBERROLE);
+			String sPersonOID = rws.getSelectData("to.id");
+			String[] sArrCheckRole = emxGetParameterValues(request, sPersonOID);
+			if(sArrCheckRole != null){
+				sbParam.setLength(0);
+				sbParam.append("mod connection $1 $2 ");
+				List<String> lParam = new ArrayList();
+				lParam.add(slMemberRELID.get(i));
+				lParam.add("decProjectMemberRole");
+				for(int j=0; j<sArrCheckRole.length; j++){
+					sbParam.append("$").append(String.valueOf(j+3)).append(",");
+					lParam.add(sArrCheckRole[j]);
+				}
+				sbParam.deleteCharAt(sbParam.length() - 1);
+				MqlUtil.mqlCommand(context, sbParam.toString(), lParam);
+			}
+		}
+	}catch(Exception e) {
+		ContextUtil.abortTransaction(context);
+		e.printStackTrace();
+		throw e;
+	}
+	ContextUtil.commitTransaction(context);
+%>

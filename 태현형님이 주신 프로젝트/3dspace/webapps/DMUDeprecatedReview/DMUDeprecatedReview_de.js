@@ -1,0 +1,1 @@
+define("DS/DMUDeprecatedReview/DMUDeprecatedReview_de",{});define("DS/DMUDeprecatedReview/assets/nls/DMUDeprecatedReview",{NominalSlide:"Nennwert"});

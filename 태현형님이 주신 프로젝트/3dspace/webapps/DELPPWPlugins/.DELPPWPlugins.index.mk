@@ -1,0 +1,9 @@
+m|DELPPWPlugins\DELPPWPlugins.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.1.22309|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\DELPPWPlugins\DELPPWPlugins.js|1667619903|1721
+s|DELPPWPlugins\DELPPWPlugins.mweb\src\Plugins.js|1663138646|2610
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

@@ -1,0 +1,1 @@
+define("DS/VCXWebVolatileGhosting/VCXWebVolatileGhosting_ja",{});define("DS/VCXWebVolatileGhosting/assets/nls/VCXWebVolatileGhosting",{VCXVolatileGhostingCmd:"ゴースト化"});

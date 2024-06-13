@@ -1,0 +1,1 @@
+define("DS/ErrorWidget/ErrorWidget_zh-TW",{});define("DS/ErrorWidget/assets/nls/langEW",{"Server issue":"無法與伺服器進行通訊","Forbidden access":"您沒有存取伺服器的權限"});

@@ -1,0 +1,1 @@
+define("UWA/Plugins/I18n",["UWA/Core","UWA/Plugins/Abstract"],function(n,i){"use strict";var t=i.extend({init:function(i,t){this._parent(i,t),n.is(t[i.lang],"object")&&n.i18n(t[i.lang])}});return n.namespace("Plugins/I18n",t,n)});

@@ -1,0 +1,1 @@
+define("DS/WebConnector2D/WebConnector2D_ko",{});define("DS/WebConnector2D/assets/nls/WebConnector2D",{LoadingErrorSheet:"사용 가능한 미리보기 없음"});

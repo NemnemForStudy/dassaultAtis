@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0",
+  "summary": "Compares the value of multiple input data following the given setting expression.",
+  "description": "This block is dynamic thus the input data count can be changed using the block configuration dialog.<br>The data port value type handles all types.<br>The variable name written in the setting <doc-setting-name translate=no>Expression</doc-setting-name> must correspond to the input data name otherwise the expression will be considered as invalid.<br><br>The setting expression value handles advanced expression comparison:<ul><li><doc-value translate=no>&quot;Value1 === Value2&quot;</doc-value>: checks that <doc-idp-name translate=no>Value1</doc-idp-name> is equal to <doc-idp-name translate=no>Value2</doc-idp-name>.</li><li><doc-value translate=no>&quot;Value3 > Value3 && Value3 < Value2&quot;</doc-value>: checks that <doc-idp-name translate=no>Value3</doc-idp-name> is between <doc-idp-name translate=no>Value1</doc-idp-name> and <doc-idp-name translate=no>Value2</doc-idp-name> (<doc-idp-name translate=no>Value1</doc-idp-name>, <doc-idp-name translate=no>Value2</doc-idp-name> and <doc-idp-name translate=no>Value3</doc-idp-name> being numbers).</li><li><doc-value translate=no>&quot;Value1 !== Value2 || Value1 !== Value3&quot;</doc-value>: checks that <doc-idp-name translate=no>Value1</doc-idp-name> is different from <doc-idp-name translate=no>Value2</doc-idp-name> or <doc-idp-name translate=no>Value3</doc-idp-name>.</li></ul>",
+  "dataPorts": {
+    "Value1": "is the first value to compare.",
+    "Value2": "is the second value to compare."
+  },
+  "controlPorts": {
+    "In": "triggers the block execution.",
+    "True": "is activated when the result of the expression filled by each input data values is positive.",
+    "False": "is activated when the result of the expression filled by each input data values if negative."
+  },
+  "settings": {
+    "Expression": "the value of the expression describing the input data values comparison."
+  },
+  "example": null
+}

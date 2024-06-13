@@ -1,0 +1,1 @@
+define("DS/CATWebUXCVS/CATWebUXCVS_fr",{});define("DS/CATWebUXCVS/assets/nls/CATWebUXCVS",{valStateChange:{dlgTitle:"Validation",closeBtn:"Fermer",inProgress:"En cours",passed:"Succès",failed:"Echec"}});

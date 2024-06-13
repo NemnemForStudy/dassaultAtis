@@ -1,0 +1,1 @@
+define("DS/CATFLWidgetProperties/CATFLWidgetProperties_zh-TW",{});define("DS/CATFLWidgetProperties/assets/nls/CATFLProperties",{msg_not_supported_selection:"不支援所選範圍",msg_facet_no_available:"此面無法使用"});

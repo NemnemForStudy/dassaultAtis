@@ -1,0 +1,1 @@
+define("DS/PIMwebPropertiesTabs/PIMwebPropertiesTabs_ko",{});define("DS/PIMwebPropertiesTabs/assets/nls/PIMwebPropertiesTabs",{privLevelSimulationError:"시뮬레이션 정의에 액세스할 수 없습니다.",isrInfoRetrievalFailed:"간섭 시뮬레이션 정보를 검색할 수 없습니다."});

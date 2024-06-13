@@ -1,0 +1,14 @@
+{
+  "version": "1.0.0",
+  "summary": "Interpole la valeur de données d'entrée à chaque étape d'exécution sur une seconde, en prenant en compte la durée écoulée depuis l'étape d'exécution précédente.",
+  "description": "Ce bloc peut être très utile pour obtenir des <b>animations basées sur les images</b>. Il garantira une vitesse d'animation constante peu importe la puissance de calcul utilisée.<br><br>Un objet animé <b>en fonction de la durée</b> se déplacera du <b>point A</b> au <b>point B</b> dans le <b>même temps</b>, peu importe la fréquence d'images du film. Plus la fréquence d'images est lente, plus les <b>objets avancent loin à chaque image</b> pour maintenir la même vitesse.<br><br>D'un autre côté, si l'animation est <b>basée sur la fréquence d'images</b>, l'objet nécessitera toujours le <b>même nombre d'images</b> pour aller du <b>point A</b> au <b>point B</b>. Plus la fréquence d'images est lente, plus cela prendra de temps car la distance parcourue à chaque image ne change pas.<br><br>Par exemple, lorsque la fréquence d'images ralentit, l'animation basée sur les images <b>ralentit également</b> et l'animation basée sur la durée devient <b>variable</b>.<br>L'animation basée sur la durée est également appelée animation 'indépendante de la fréquence d'images'.",
+  "dataPorts": {
+    "Input": "correspond à la valeur d'entrée à interpoler en 1 seconde.",
+    "Output": "correspond à la valeur de sortie où <doc-odp-name translate=no>Output</doc-odp-name> = <doc-idp-name translate=no>Input</doc-idp-name> * Durée écoulée (en secondes).<br>La durée écoulée représente la durée d'une étape d'exécution."
+  },
+  "controlPorts": {
+    "In": "déclenche l'exécution du bloc.",
+    "Out": "est activé lorsque le processus est terminé."
+  },
+  "example": null
+}

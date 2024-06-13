@@ -1,0 +1,195 @@
+<%--  emxProjectManagementDragAndDrop.jsp
+
+   Copyright (c) Dassault Systemes, 1992-2020 .All rights reserved
+
+--%>
+<%@page import="javax.json.JsonObjectBuilder"%>
+<%@page import="javax.json.Json"%>
+<%@page import="javax.json.JsonObject"%>
+<%@page import="java.lang.reflect.Method"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.Enumeration"%>
+<%@page import="com.matrixone.apps.domain.DomainObject"%>
+<%@page import="com.matrixone.apps.domain.DomainConstants"%>
+
+<%@page import="com.matrixone.apps.program.ProgramCentralConstants"%>
+<%@page import="com.matrixone.apps.domain.util.XSSUtil"%>
+<%@page import="matrix.util.StringList" %>
+
+<%@include file = "../common/emxNavigatorTopErrorInclude.inc"%>
+
+<%@include file = "../emxUICommonHeaderBeginInclude.inc" %>
+<%@include file = "../emxUICommonAppInclude.inc"%>
+<%@include file = "../common/emxUIConstantsInclude.inc"%>
+
+
+<%@include file = "../emxUICommonHeaderEndInclude.inc" %>
+
+<link rel="stylesheet" href="../programcentral/styles/emxProjectManagementDragAndDrop.css">
+<script src="../programcentral/script/emxProjectManagementDragAndDrop.js"></script>
+<script type="text/javascript" language="javascript" src="./scripts/emxUITableCustom.js"></script>
+<script language="javascript" src="scripts/emxUIConstants.js"></script>
+<script language="javascript" src="scripts/emxUICore.js"></script>
+
+
+<%
+    String AMP                  = "&";
+    String sLang                = request.getHeader("Accept-Language");
+    String sLabelClose          = i18nNow.getI18nString("emxCommon.Common.Close",              "emxComponentsStringResource", sLang);
+    String sFormTitle           = i18nNow.getI18nString("emxProgramCentral.Common.FormDragDrop",    "emxProgramCentralStringResource", sLang);
+    String sDropHere            = i18nNow.getI18nString("emxProgramCentral.Common.FormDropHere",    "emxProgramCentralStringResource", sLang);
+
+    String sLabelTitle           = i18nNow.getI18nString("emxFramework.Attribute.Title",            "emxFrameworkStringResource", sLang);
+    String sLabelDesc            = i18nNow.getI18nString("emxFramework.Basic.Description",          "emxFrameworkStringResource", sLang);
+
+    String sLabelDeliverable     = i18nNow.getI18nString("emxFramework.Relationship.Task_Deliverable",   "emxFrameworkStringResource", sLang);
+    String sLabelReference       = i18nNow.getI18nString("emxFramework.Attribute.Attachments", "emxFrameworkStringResource", sLang);
+    
+   
+    String sComfirmMsg           = i18nNow.getI18nString("ProgramCentralStringResource.Common.ImportExcel.ComfirmMsg",          "emxProgramCentralStringResource", sLang);
+    String sCompletionMsg        = i18nNow.getI18nString("ProgramCentralStringResource.Common.ImportExcel.CompletionMsg",          "emxProgramCentralStringResource", sLang);
+    String sErrorMsg             = i18nNow.getI18nString("ProgramCentralStringResource.Common.ImportExcel.ErrorMsg",          "emxProgramCentralStringResource", sLang);
+    
+    String sType        = emxGetParameter(request, "type");
+    String sParentOID	= emxGetParameter(request, "parentOID");
+	String sFolderWIN 	= "c:\\temp\\";
+	String sFolderUNIX 	= "/tmp/";
+	String sLanguage 	= request.getHeader("Accept-Language");
+	String sOSName 		= System.getProperty ( "os.name" );
+	String sFolder		= sOSName.contains("Windows") ? sFolderWIN : sFolderUNIX ;
+	String separator 	= sOSName.contains("Windows") ? "\\" : "/";
+	String sTmpDir		= Environment.getValue(context, "TMPDIR");
+	
+	if(null != sTmpDir && !sTmpDir.trim().isEmpty())
+	{
+		sFolder = sTmpDir;
+		if(!sFolder.substring(sFolder.length() - 1).equals(separator))
+			sFolder = sFolder + separator;
+	}
+	sFolder = XSSUtil.encodeForURL(sFolder);
+	
+    StringBuilder url = new StringBuilder();
+    url.append("./decTaskCompareExcelProcess.jsp?folder=");
+    url.append(sFolder);
+    String sURL =  url.toString(); 
+    
+    // Added by hslee on 2023.06.22
+    String queryStr = emxGetQueryString(request);
+%>
+
+<script>
+var files = null;
+// 엑셀파일인지 확인후 비교하여 테이블에 뿌려줌
+function getExcelData(e, form, div) {
+    FileDragHover(e, div);
+    <%--     var url = "<%=sURL%>"; --%>
+    var url = "<%=sURL + "&" + queryStr %>"; // Modified by hslee on 2023.06.22
+    files = e.target.files || e.dataTransfer.files;
+    var divTable = document.getElementById('divTable');
+    // 엑셀파일인지 확인
+	for(var i = 0; i<files.length; i++){
+		var fileName = files[i].name;
+		var ext = fileName.substring(files[i].name.lastIndexOf(".")+1, fileName.length);
+		if($.inArray(ext, ['xls', 'xlsx']) == -1){
+			alert('This File Not ext Excel');
+			return;
+		}
+	}
+    var formData = new FormData();
+    jQuery.each(files, function(k, file) {
+    	formData.append('file_'+k, file);
+    });
+    // 엑셀파일을 복사한뒤 복사성공시 divTable에 비교한 정보가 담긴 emxIndentedTable.jsp 화면 출력
+    jQuery.ajax({
+        url : url,
+        type: "POST",
+        data : formData,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function(data){
+        	divTable.src = data + "&folder=<%=sFolder%>";
+        },error: function(request,status,error){
+        	parent.turnOffProgress();
+        	alert("<%=sErrorMsg%>");
+        }
+    });
+}
+function validate(){
+	if(!divTable.emxUICore){
+		alert("Please Input Excel File.");
+		return false;
+	}
+	let allRows = divTable.emxUICore.selectNodes(divTable.oXML, "/mxRoot/rows//r");
+	let rowId = null;
+	let actionValue = null;
+	for (let idx = 0; idx < allRows.length; idx++)
+	{
+		rowId = allRows[idx].getAttribute("id");
+		actionValue = divTable.emxEditableTable.getCellValueByRowId(rowId, "Action");
+		
+		if ( actionValue.value.current.display.toUpperCase() === "ERROR" )
+		{
+			alert("You should fix Error Data first.");
+			divTable.emxEditableTable.scrollRowToView(rowId);
+			return false;
+		}
+	}
+	return true;
+}
+function importExcelData(){
+	// Added by hslee on 2023.06.24 --- [s]
+	if ( validate() )
+	{
+	    var formData = new FormData();
+	    jQuery.each(files, function(k, file) {
+	    	formData.append('file_'+k, file);
+	    });
+	    <%--     var url = "./decTaskImportExcelProcess.jsp?parentOID=<%=sParentOID%>&folder=<%=sFolder%>&type=<%=sType%>"; --%>
+	    var url = "./decTaskImportExcelProcess.jsp?folder=<%=sFolder + "&" + queryStr %>"; // Modified by hslee on 2023.06.22
+	    parent.turnOnProgress();
+	    if(confirm("<%=sComfirmMsg%>")){
+	        jQuery.ajax({
+	            url : url,
+	            type: "POST",
+	            data : formData,
+	            cache: false,
+	            contentType: false,
+	            processData: false,
+	            success: function(data){
+	            	alert(data);
+	                getTopWindow().opener.getTopWindow().refreshTablePage();
+	            	parent.turnOffProgress();
+	            	window.close();
+	            },error: function(request,status,error){
+	            	parent.turnOffProgress();
+	            	alert("<%=sErrorMsg%>" + "\n"+"message:"+request.responseText);
+	            }
+	        });
+	    }
+	}
+	// Added by hslee on 2023.06.24 --- [e]
+}
+
+function fnFocus2ErrorCell(colName) {
+	// test
+}
+</script>
+<style>
+	div.dropProgress {
+		color : #aaa;
+	}
+</style>
+<body style="width:99%;height:100%">
+<div id="divDrag" class="dropArea"
+     ondrop="getExcelData(event, 'formDrag', 'divDrag')"
+     ondragover="FileDragHover(event, 'divDrag')"
+     ondragleave="FileDragHover(event, 'divDrag')"
+     style="width:100%; margin-bottom:15px; margin-left: 2px; font-size: 16px;">
+<br/>
+    <%=sDropHere%>
+</div>
+<iframe id="divTable" name="divTable">
+</iframe>
+</body>
+</html>

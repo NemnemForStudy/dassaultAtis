@@ -1,0 +1,9 @@
+m|CAT3DAnnotPlayScenarioWeb\CAT3DAnnotPlayServices.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.3.23063|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\CAT3DAnnotPlayServices\CAT3DAnnotPlayServices.js|1677901467|5298
+s|CAT3DAnnotPlayScenarioWeb\CAT3DAnnotPlayServices.mweb\src\CAT3DAnnotPlayServices.js|1677571566|10424
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

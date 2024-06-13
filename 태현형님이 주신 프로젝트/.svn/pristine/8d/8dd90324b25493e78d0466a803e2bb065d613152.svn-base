@@ -1,0 +1,84 @@
+{{~#if isChecked}}
+  <div class = "wux-controls-responsivetileview-checkbox wux-ui-state-highlighted"></div>
+  {{else if multiselect}}
+    <div class = "wux-controls-responsivetileview-checkbox wux-ui-state-prehighlighted"></div>
+  {{else}}
+    <div class = "wux-controls-responsivetileview-checkbox"></div>
+{{~/if~}}
+<div class="card-details">
+      <div class="card-title"><span class="fonticon fonticon-bpa fonticon-plan-task"></span>{{title}}</div>
+      {{#with parent}}
+            <div class="card-context"><em>{{key}}: </em>{{value}}</div>
+      {{/with}}
+
+      <div class="card-description"><pre></pre></div>
+      {{~#if explicitTagsData~}}
+      <ul class="card-tags">
+            {{~#each explicitTagsData.where~}}
+              <li class="card-tag"><span class="fonticon fonticon-3ds-where"></span>{{this}}</li>
+            {{~/each~}}
+            {{~#each explicitTagsData.what~}}
+              <li class="card-tag"><span class="fonticon fonticon-3ds-what"></span>{{this}}</li>
+            {{~/each~}}
+            {{~#each explicitTagsData.when~}}
+              <li class="card-tag"><span class="fonticon fonticon-3ds-where"></span>{{this}}</li>
+            {{~/each~}}
+            {{~#each explicitTagsData.who~}}
+              <li class="card-tag"><span class="fonticon fonticon-3ds-who"></span>{{this}}</li>
+            {{~/each~}}
+            {{~#each explicitTagsData.how~}}
+              <li class="card-tag"><span class="fonticon fonticon-3ds-how"></span>{{this}}</li>
+            {{~/each~}}
+            {{~#each explicitTagsData.why~}}
+              <li class="card-tag"><span class="fonticon fonticon-3ds-why"></span>{{this}}</li>
+            {{~/each~}}
+      </ul>
+      {{~/if~}}
+</div>
+<div class="card-properties{{#if isFixed}} is-fixed{{/if}}{{#if isComplete}} is-complete{{/if}}{{#if hasFiles}} has-files{{/if}}{{#if moreAssignees}} more-assignees{{/if}} {{status}} {{compression}}">
+      <div class="thumbnail priority">
+            <span class="fonticon {{priority}}"></span>
+      </div>
+      <div class="thumbnail readiness">
+            <span class="fonticon fonticon-clock"></span>
+      </div>
+      <div class="card-progress">
+            <span title="{{percentCompleteTooltip}}">{{percentComplete}}%</span>
+      </div>
+      <div class="card-date">
+            <span>{{date.displayValue}}</span>
+      </div>
+      <div class="thumbnail card-badge fixed">
+            <span class="fonticon fonticon-pin"></span>
+      </div>
+      <div class="thumbnail card-badge attachments">
+            <span class="fonticon fonticon-attach"></span>
+      </div>
+      <div class="thumbnail card-badge subscriptions">
+            <span class="fonticon fonticon-rss"></span>
+      </div>
+      {{#eachLimit assignees 2}}
+            <div class="thumbnail profile-image card-assignee">
+                  <img src="{{image}}" title="{{fullName}}" />
+                  <span class="fonticon fonticon-user"></span>
+            </div>
+            {{else}}
+                  {{#if ../assignees.[3]}}
+
+                  {{else}}
+                        <div class="thumbnail profile-image card-assignee">
+                              <img src="{{assignees.[2].image}}" title="{{assignees.[2].fullName}}" />
+                              <span class="fonticon fonticon-user"></span>
+                        </div>
+                  {{/if}}
+      {{/eachLimit}}
+      <div class="thumbnail card-badge assignees">
+            <span class="fonticon fonticon-users"></span>
+      </div>
+      <div class="card-status">
+            <span class="{{state}}">{{i18n state}}</span>
+      </div>
+      <div class="card-stateForDisplay">
+            <span class="{{stateForDisplay}}">{{#if stateForDisplay}}{{i18n (concat 'emxCollaborativeTasks.Label.' stateForDisplay)}}{{/if}}</span>
+      </div>
+</div>

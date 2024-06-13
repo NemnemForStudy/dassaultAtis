@@ -1,0 +1,23 @@
+NAVIGATE 
+
+	T0.PLM_ExternalID, T0.PLMID,
+	T1.PLM_ExternalID, T1.PLMID	
+	
+FROM 
+
+	DIFModelerAnnotationSet/DIFAnnotatedProduct T0,	
+	PLMCORE/PLMCoreReference T1
+	
+FROM_ROOTS
+
+	[?1?]
+	
+ON ( RELATION(
+
+     FROM=DIFModelerAnnotationSet/DIFAnnotatedProduct
+
+     TO=PLMCORE/PLMCoreReference
+
+     THROUGH=POINTSTO ))
+
+;

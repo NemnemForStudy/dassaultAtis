@@ -1,0 +1,240 @@
+<%--  emxCollectionsEditDialog.jsp   - Dialog page to take input for editing a Collection.
+
+
+   Copyright (c) 2003-2020 Dassault Systemes.All Rights Reserved.
+   This program contains proprietary and trade secret information of MatrixOne,Inc.
+   Copyright notice is precautionary only and does not evidence any actual or intended publication of such program
+
+   decCreateSafetyStaticsDialog.jsp
+   Created By Choimingi 2023-05-26
+--%>
+   
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.time.format.DateTimeFormatter"%>
+<%@page import="java.time.LocalDateTime"%>
+<%@page import="java.sql.SQLException"%>
+<%@page import="java.time.temporal.ChronoUnit"%>
+<%@page import="java.time.LocalDate"%>
+<%@page import="com.dec.util.DecDateUtil"%>
+<%@page import="com.daewooenc.mybatis.main.decSQLSessionFactory"%>
+<%@page import="org.apache.ibatis.session.SqlSession"%>
+<%@page import="java.util.List"%>
+<%@page import="com.dec.util.DecMatrixUtil"%>
+<%@page import="com.dec.util.DecStringUtil"%>
+<%@page import="com.dec.util.DecConstants"%>
+<%@page import="com.matrixone.apps.domain.DomainObject"%>
+<%@include file = "../emxUICommonAppInclude.inc"%>
+<%@include file = "emxCompCommonUtilAppInclude.inc"%>
+<%@include file = "emxUIConstantsInclude.inc"%>
+<%@page import="com.matrixone.apps.domain.util.SetUtil,
+                com.matrixone.apps.domain.util.XSSUtil"
+%>
+<%@include file = "../emxTagLibInclude.inc" %>
+
+<script language="JavaScript" src="scripts/emxUICollections.js" type="text/javascript"></script>
+<script language="javascript" type="text/javascript" src="../common/scripts/emxUICalendar.js"></script>
+<%@include file = "../emxUICommonHeaderBeginInclude.inc"%>
+<%@include file = "../emxJSValidation.inc" %>
+<emxUtil:localize id="i18nId" bundle="emxProgramCentralStringResource" locale='<xss:encodeForHTMLAttribute><%= request.getHeader("Accept-Language") %></xss:encodeForHTMLAttribute>' />
+<%
+try{
+	String languageStr = request.getHeader("Accept-Language");
+	String jsTreeID    = emxGetParameter(request,"jsTreeID");
+	String suiteKey    = emxGetParameter(request,"suiteKey");
+	String sObjectId = emxGetParameter(request, "objectId");
+	String sCharSet    = Framework.getCharacterEncoding(request);
+	String strSetId = sObjectId;
+	String loginUser = context.getUser();
+	System.out.println("*********loginUser:"+loginUser);
+	//  String decOwner = "";
+	//  String decOwnerId = PersonUtil.getPersonObjectID(context, decOwner);
+	DomainObject doPS = DomainObject.newInstance(context, sObjectId);
+	doPS.open(context);
+	String sProjectName = doPS.getName();
+	Map mParam = new HashMap();
+	mParam.put("SITE_CD", sProjectName);
+	
+	SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+	//LocalDateTime now = LocalDateTime.now();
+// 	String inputStringDate = now.format(outputFormatter); //형식을 db에 맞게 바꿔준다
+// 	Date inputDbDate = dateFormatter.parse(inputStringDate);
+// 	LocalDate ldToday = LocalDate.now();
+	List<Map> resultList = new ArrayList();
+	
+	LocalDate now = LocalDate.now();
+	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+	String formatedNow = now.format(formatter);
+
+	StringList slBusSelect = new StringList();
+	slBusSelect.add(DecConstants.SELECT_ID);
+	slBusSelect.add(DecConstants.SELECT_NAME);
+	slBusSelect.add(DecConstants.SELECT_ATTRIBUTE_DECWBSTYPE);
+
+	MapList mlUnitPhase = new MapList();
+
+	
+	
+	String personSearchUrl = "../common/emxFullSearch.jsp?relId=&field=TYPES=type_Person:CURRENT=policy_Person.state_Active:TYPES=type_Person:USERROLE=Project Lead,VPLMProjectLeader"+
+		  		"&form=PMCCommonPersonSearchForm&selection=single&fieldNameActual=decOwner"+
+		  		"&parentOID="+strSetId+"&suiteKey=ProgramCentral&fieldNameOID=decOwnerOID&type=PERSON_CHOOSER"+
+		  		"&table=PMCCommonPersonSearchTable&objectId="+strSetId+"&fieldNameDisplay=decOwnerDisplay"+
+		  		"&submitURL=../common/decChangeHistoryAEFSearchUtil.jsp&form=AEFSearchPersonForm&selection=single&table=AEFPersonChooserDetails&";
+		  
+ %>
+<script type="text/javascript" src="../common/scripts/jquery-latest.js"></script>
+<script language="Javascript" >
+
+function cancelMethod()
+{
+	getTopWindow().closeSlideInDialog();
+}
+function doneMethod()
+{  
+	
+	  var decOwnerDisplay = document.editForm.decOwnerDisplay.value;
+	  var ConstructionItem = document.editForm.ConstructionItem.value;
+	  var cutOffDate = document.editForm.cutOffDate.value;
+	  var msg = "";
+	  if(ConstructionItem=="" || decOwnerDisplay=="" || cutOffDate==""){		 
+		  alert("<emxUtil:i18nScript localize="i18nId">emxProjectService.Error.MissingFormField.decChangeHistory</emxUtil:i18nScript>");
+	  }else{
+		  document.editForm.submit();
+	  }
+
+}
+
+
+function dateClear(){
+	document.editForm.cutOffDate.value = '';
+}
+</script>
+<%@include file = "../emxUICommonHeaderEndInclude.inc" %>
+<%
+
+    // ----------- set up the url to do the edit and refresh itself.
+    StringBuffer editURL = new StringBuffer("decCreateProjectChangeLogProcess.jsp?projectName=");
+    editURL.append(XSSUtil.encodeForURL(context,sProjectName));
+    editURL.append("&originator="+XSSUtil.encodeForURL(context,loginUser));
+    editURL.append("&inputDate="+XSSUtil.encodeForURL(context,formatedNow));
+%>
+<!-- \\XSSOK -->
+<form name="editForm"  target="pagehidden" method="post" action="<%=editURL.toString()%>">
+<table border="0" width="100%" cellpadding="5" cellspacing="2">
+  <tr>
+    <td class="labelRequired"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decProject_Code</emxUtil:i18n></td>
+  </tr>
+  <tr>
+    <td class="inputField">
+    	<%=sProjectName%>
+	</td>
+  </tr>
+  <tr>
+    <td class="labelRequired"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decRequest_Date</emxUtil:i18n></td>
+  </tr>
+    <tr>
+  	<td class="inputField" >
+	  	<input type="text" id="cutOffDate" name="cutOffDate" value="" size="8" readonly="readonly" />&nbsp;
+		<a href="javascript:showCalendar('editForm', 'cutOffDate', '');">
+	  		<img src="../common/images/iconSmallCalendar.gif" alt="Date Picker" border="0" />
+	  	</a>
+		<input type="hidden" name="fromDate_msvalue" value="" />
+		<a class = "dialogClear" href = "javascript:;" onclick = "javascript:dateClear('');">
+			<emxUtil:i18n localize="i18nId">emxProgramCentral.Common.Clear</emxUtil:i18n>
+		</a>
+  	</td>
+  </tr>
+  <tr>
+    <td class="labelRequired"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.AddEditDelete</emxUtil:i18n></td>
+  </tr>
+  <tr>
+    <td class="inputField">
+    	<select name="ConstructionItem">
+    		<option value="Add">Add</option>
+    		<option value="Edit">Edit</option>
+    		<option value="Delete">Delete</option>
+    	</select>
+	</td>
+  </tr> 
+  <tr>
+    <td class="labelRequired"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.Input_Date</emxUtil:i18n></td>
+  </tr>8
+  <tr>
+<%--   	<td class="inputField" name="inputDate"><%=inputDbDate.toString()%> --%>
+  	<td class="inputField" name="inputDate"><%=formatedNow%>
+  	</td>
+  </tr>
+  <tr>
+    <td class="labelRequired"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.Originator</emxUtil:i18n></td>
+  </tr>
+  <tr>
+  	<td class="inputField"><%=loginUser%>
+  	</td>
+  </tr>
+  <tr>
+    <td class="labelRequired"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decChange_Originator</emxUtil:i18n></td>
+  </tr>
+  <tr>
+    <td class="inputField">
+  	<input type="text" name="decOwnerDisplay" value="" onFocus="this.select()"/><!-- XSSOK -->
+  	</td>
+  </tr>
+  <tr>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decChange_Desc</emxUtil:i18n></td>
+  </tr>
+  <tr>
+  	<td class="inputField">
+  	<textarea cols="25" rows="5" name="decChange_Desc" value="" onFocus="this.select()"></textarea><!-- XSSOK -->
+  	</td>
+  </tr>
+  <tr>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.Old_No</emxUtil:i18n></td>
+  </tr>
+  <tr>
+  	<td class="inputField">
+  	<input type="text" name="Old_No" value="" onFocus="this.select()"/><!-- XSSOK -->
+  	</td>
+  </tr>  
+  <tr>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.New_No</emxUtil:i18n></td>
+  </tr>
+  <tr>
+  	<td class="inputField">
+  	<input type="text" name="New_No" value="" onFocus="this.select()"/><!-- XSSOK -->
+  	</td>
+  </tr>
+  <tr>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.OperationCenter</emxUtil:i18n></td>
+  </tr>
+  <tr>
+  	<td class="inputField">
+  	<input type="text" name="OperationCenter" value="" onFocus="this.select()"/><!-- XSSOK -->
+  	</td>
+  </tr>    
+  <tr>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.Status</emxUtil:i18n></td>
+  </tr>
+  <tr>
+  	<td class="inputField">
+  	<input type="text" name="Status" value="" onFocus="this.select()"/><!-- XSSOK -->
+  	</td>
+  </tr>
+  <tr>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.Summary_Of_Outcome</emxUtil:i18n></td>
+  </tr>
+  <tr>
+  	<td class="inputField">
+  	<textarea cols="25" rows="5" name="Summary_Of_Outcome" value="" onFocus="this.select()"></textarea><!-- XSSOK -->
+  	</td>
+  </tr>    
+</table>
+</form>
+<%	
+	} 
+	catch(MatrixException e) // 보안 취약 조치
+	{
+		e.printStackTrace();
+		throw e;
+	}
+%>
+<%@include file = "../emxUICommonEndOfPageInclude.inc" %>

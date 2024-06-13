@@ -1,0 +1,16 @@
+m|MPFComponents\MPFTooltip.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.1.22330|3.2
+r|G:\R425\BSF\.
+t|MPFComponents\MPFTooltip.mweb\LocalGenerated\win_b64\MPFTooltip.css|1669432282|1938
+s|MPFComponents\MPFTooltip.mweb\src\MPFTooltip.scss|1669417579|103
+t|win_b64\webapps\MPFTooltip\MPFTooltip.css|1669432503|59
+g|MPFComponents\MPFTooltip.mweb\LocalGenerated\win_b64\MPFTooltip.css|1669432282|1938
+t|win_b64\webapps\MPFTooltip\MPFTooltip.js|1669432501|342
+s|MPFComponents\MPFTooltip.mweb\src\MPFTooltip.js|1669417579|0
+u|MPFComponents\MPFTooltip.mweb\src\Tooltip.js|1669417579|692
+u|WebUiAssets\ProtectedInterfaces\_variables.uikit.scss|1662555505|6689
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240
+u|win_b64\code\toolcmds\yuicompressor-2.4.9.bat|1647654585|205

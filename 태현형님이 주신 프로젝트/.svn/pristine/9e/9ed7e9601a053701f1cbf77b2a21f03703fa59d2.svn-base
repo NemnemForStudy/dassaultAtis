@@ -1,0 +1,1 @@
+define("DS/ENOX3DSpaceAttributesMgt/ENOX3DSpaceAttributesMgt_zh",{});define("DS/ENOX3DSpaceAttributesMgt/assets/nls/ENOXAttributesMgtNls",{isCellEditableColumns:{title:"可从视图编辑"},attributeForEditingColumns:{title:"单元格编辑属性"},Classification:{title:"分类"},instance:"实例"});

@@ -1,0 +1,10 @@
+m|CATWebMove3DUX\CATW3DUtils.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.0.22078|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\CATW3DUtils\CATW3DUtils.js|1647691732|2676
+s|CATWebMove3DUX\CATW3DUtils.mweb\src\_copyright.js|1607435502|63
+u|CATWebMove3DUX\CATW3DUtils.mweb\src\CATW3DUtils.js|1611156016|7573
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

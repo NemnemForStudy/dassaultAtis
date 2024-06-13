@@ -1,0 +1,18 @@
+'<div class="' + this.getClassNames('-container') + '">
+    {{#each changes}}
+    <div class="' + this.getClassNames('-sub-container') + '">
+        <div class="Realized-tile-collapsed" id="Realized-collapsed-{{@index}}" 
+        {{#ifDraggableRealized Details.access}}{{/ifDraggableRealized}}>
+            <div class="Realized-accordion-div Realized-icon-class" id="Realized-accordion-div-{{@index}}"><div>
+            <div class="Realized-action-icon-wrapper Realized-accordion-div-inner" id="Realized-accordion-div-inner-{{@index}}"><span class="fonticon fonticon-2x fonticon-expand-right" id={{@index}}></span></div>
+            <div class="Realized-checked-action"><input type="checkbox" class="Realized-checkbox-accord hidden" id="Realized-checkbox-accord-{{Details.id}}"></div>
+        </div>
+    </div>
+    <div class="Realized-tile-inner" id="inner-{{@index}}">{{#getWhereDetails Details @index}}{{/getWhereDetails}}</div>
+        <div class="Realized-actions-container Realized-icon-class-1" id="Realized-operation-action-container-{{Details.displayId}}">{{#isContextualMenuAvailable Details}}{{/isContextualMenuAvailable}}</div>
+    </div>
+    <div class="Realized-tile-expanded hidden" id="Realized-expanded-{{@index}}"></div>
+    </div>
+    {{/each}}
+</div>';
+

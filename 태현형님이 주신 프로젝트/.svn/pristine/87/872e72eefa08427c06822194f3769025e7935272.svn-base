@@ -1,0 +1,314 @@
+<%--  decRequestDialog.jsp   - Dialog page to take input for editing a Collection.
+
+   Copyright (c) 2003-2020 Dassault Systemes.All Rights Reserved.
+   This program contains proprietary and trade secret information of MatrixOne,Inc.
+   Copyright notice is precautionary only and does not evidence any actual or intended publication of such program
+
+   decRequestDialog.jsp
+   Created By thok 2023-06-29
+--%>
+<%@page import="java.io.File"%>
+<%@page import="com.dec.util.DecConstants"%> 
+<%@page import="com.matrixone.apps.program.ProgramCentralUtil"%>   
+<%@page import="com.matrixone.apps.domain.DomainObject"%>
+<%@page import="com.matrixone.apps.domain.util.ContextUtil"%>
+<%@page import="com.matrixone.apps.domain.util.SetUtil,
+                com.matrixone.apps.domain.util.XSSUtil"
+%>
+<%@include file = "../emxTagLibInclude.inc" %>
+<%@include file = "../emxUICommonHeaderBeginInclude.inc"%>
+<%@include file = "emxNavigatorInclude.inc"%>
+
+<script language="JavaScript" src="scripts/emxUICollections.js" type="text/javascript"></script>
+<script type="text/javascript" src="../common/scripts/jquery-latest.js"></script>
+<emxUtil:localize id="i18nId" bundle="emxProgramCentralStringResource" locale='<xss:encodeForHTMLAttribute><%= request.getHeader("Accept-Language") %></xss:encodeForHTMLAttribute>' />
+<%
+	try{
+		String languageStr 			  = request.getHeader("Accept-Language");
+		String strSetId 	 		  = emxGetParameter(request, "relId");
+		String mode 	 	 		  = emxGetParameter(request, "mode");
+		String openerFrame 	 	 	  = emxGetParameter(request, "openerFrame");
+		
+		String Title 				  = DecConstants.EMPTY_STRING;
+		String responseTitle 		  = DecConstants.EMPTY_STRING;
+		String decType 				  = DecConstants.EMPTY_STRING;
+		String decContentData 		  = DecConstants.EMPTY_STRING;
+		String responseDecContentData = DecConstants.EMPTY_STRING;
+		String decResponseData 		  = DecConstants.EMPTY_STRING;
+		String ProjectName			  = DecConstants.EMPTY_STRING;
+		String ProjectId			  = DecConstants.EMPTY_STRING;
+		String responseId			  = DecConstants.EMPTY_STRING;
+		StringList fileList			  = null;
+		int fileListCount			  = 0;
+		StringList responseFileList   = null;
+		int responseFileListCount	  = 0;
+		
+		if(ProgramCentralUtil.isNotNullString(strSetId)){
+			DomainObject object = DomainObject.newInstance(context, strSetId);
+			responseId = object.getInfo(context,"from[" + DecConstants.RELATIONSHIP_DECRESPONSEREL + "].to." + DecConstants.SELECT_ID);
+			
+			Title = object.getAttributeValue(context, DecConstants.ATTRIBUTE_TITLE);
+			decType = object.getAttributeValue(context, DecConstants.ATTRIBUTE_DECTYPE);
+			decContentData = object.getAttributeValue(context, DecConstants.ATTRIBUTE_DECCONTENTDATA);
+			
+			decResponseData = object.getInfo(context,"from["+DecConstants.RELATIONSHIP_DECRESPONSEREL+"].to."+DecConstants.SELECT_ATTRIBUTE_DECCONTENTDATA);
+			decResponseData = ProgramCentralUtil.isNullString(decResponseData) ? "" : decResponseData;
+			
+			ProjectName = object.getInfo(context,"to["+DecConstants.RELATIONSHIP_DECPROJECTREQUESTREL+"].from."+DecConstants.SELECT_NAME);
+			ProjectName = ProgramCentralUtil.isNullString(ProjectName) ? "" : ProjectName;
+			
+			ProjectId = object.getInfo(context,"to["+DecConstants.RELATIONSHIP_DECPROJECTREQUESTREL+"].from."+DecConstants.SELECT_ID);
+			ProjectId = ProgramCentralUtil.isNullString(ProjectId) ? "" : ProjectId;
+			
+			fileList = object.getInfoList(context, DecConstants.FILE_NAME);
+			fileListCount = ProgramCentralUtil.isNullString(fileList.get(0)) ? 0 : fileList.size();
+			
+			if(ProgramCentralUtil.isNotNullString(responseId)){
+				DomainObject responseObject = DomainObject.newInstance(context, responseId);
+				
+				responseFileList = responseObject.getInfoList(context, DecConstants.FILE_NAME);
+				responseFileListCount = ProgramCentralUtil.isNullString(responseFileList.get(0)) ? 0 : responseFileList.size();
+				responseTitle = responseObject.getAttributeValue(context, DecConstants.ATTRIBUTE_TITLE);
+				responseDecContentData = responseObject.getAttributeValue(context, DecConstants.ATTRIBUTE_DECCONTENTDATA);
+			} else{
+				responseId = DecConstants.EMPTY_STRING;
+			}
+		}
+		
+		StringBuffer projectSearchUrl = new StringBuffer("../common/emxFullSearch.jsp?includeOIDprogram=emxProjectSpace:includeProgressProject");
+		projectSearchUrl.append("&field=TYPES=type_ProjectSpace");
+		projectSearchUrl.append("&selection=single");
+		projectSearchUrl.append("&fieldNameActual=decProject");
+		projectSearchUrl.append("&suiteKey=ProgramCentral");
+		projectSearchUrl.append("&fieldNameOID=decProjectOID");
+		projectSearchUrl.append("&table=PMCProjectSummaryForProjects");
+		projectSearchUrl.append("&showInitialResults=true");
+		projectSearchUrl.append("&fieldNameDisplay=decProjectDisplay");
+		projectSearchUrl.append("&submitURL=AEFSearchUtil.jsp");
+
+		StringBuffer editURL = new StringBuffer("decRequestProcess.jsp?mode=");
+	
+	    editURL.append(mode);
+	    editURL.append("&objectId=");
+	    editURL.append(strSetId);
+	    editURL.append("&openerFrame=");
+	    editURL.append(openerFrame);
+	    editURL.append("&responseId=");
+	    editURL.append(responseId);
+	    
+%>
+
+<script language="Javascript">
+  function closeMethod()
+  {
+	  getTopWindow().closeSlideInDialog();
+  }
+  function doneMethod()
+  {
+	  var response;
+	  var Title;
+	  var content;
+	  Title = document.editForm.Title.value;
+	  if(Title==null || Title=="") {
+		  	<%if(mode.equalsIgnoreCase("response") || mode.equalsIgnoreCase("responseEdit")){%>
+		  	alert("<emxUtil:i18nScript localize="i18nId">emxProgramCentral.Common.PleaseEnteraResponse</emxUtil:i18nScript>");
+		  	<%} else {%>
+		  	alert("<emxUtil:i18nScript localize="i18nId">emxProgramCentral.Common.EnterSubject</emxUtil:i18nScript>");
+		  	<% }%>
+	        
+	        document.editForm.Title.focus();
+	        return;
+	  }
+	  content = document.editForm.decContentData.value;
+
+	  if(content==null || content=="") {
+	        alert("<emxUtil:i18nScript localize="i18nId">emxProgramCentral.Common.PleaseEnteraContent</emxUtil:i18nScript>");
+	        document.editForm.decContentData.focus();
+	        return;
+	  }	
+ 	  document.editForm.submit();
+  }
+  function getFile(objectId,fileName){
+	  var objectId = objectId;
+	  var fileName = fileName;
+	  
+	  $.ajax({
+			url : "./decRequestGetFiles.jsp",
+			type : "post",
+			data : {"objectId" : objectId, "fileName" : fileName},
+			dataType : "text",
+			success : function(result){
+				alert(fileName + " <emxUtil:i18nScript localize="i18nId">emxProgramCentral.Alarm.DownloadComplete</emxUtil:i18nScript>");
+			}
+		});
+  }
+  function deleteFile(fileName,i){
+	  var fileCount = $('#fileCount').val();//첨부 파일 개수
+	  $('#fileCount').attr('value',fileCount-1);//첨부 파일 개수 - 1 
+	  fileCount = $('#fileCount').val();//-1 이후 첨부 파일 개수
+	  
+	  var delFile = $('#deleteFile'+i.toString()).parent().css('display','none');//삭제 처리한 첨부파일 항목 td 안보이게 설정
+	  
+	  if(fileCount==0){//첨부 파일 개수 0일 경우 첨부파일 라벨 td 안보이게 설정
+		  $('#tdFile').css('display','none');
+	  }
+	  var deleteFileList = $('#deleteFileList').val();
+	  if(deleteFileList=="NoData"){
+		  $('#deleteFileList').attr('value',fileName);
+	  }else{
+		  $('#deleteFileList').attr('value',deleteFileList + '|' + fileName);
+	  }
+	  
+  }
+  function pageBack(){
+	  window.history.back();
+  }
+</script>
+<!-- \\XSSOK -->
+<form name="editForm" method="POST" target="pagehidden" enctype="multipart/form-data" onsubmit="doneMethod(); return false" action="<%=editURL.toString()%>">
+<table border="0" width="100%" cellpadding="5" cellspacing="2">
+	<input type="hidden" value="<%=mode.equalsIgnoreCase("responseEdit") ? responseFileListCount : fileListCount%>" id="fileCount"/>
+	<input type="hidden" id="deleteFileList" name="deleteFileList" value="NoData"/>
+	<%if(mode.equalsIgnoreCase("create") || mode.equalsIgnoreCase("edit")){ %> <!-- 신규/수정일 경우 제목,유형,내용 수정 필드 -->
+	<tr>
+		<td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Common.Projects</emxUtil:i18n></td>
+	    <td class="inputField"><input type="text" name="decProjectDisplay"  value="<%=ProjectName %>" onFocus="this.select()" readonly/>
+	    <input type="button" value = "..." name = "btndecProject" id = "btndecProject" onclick = "showChooser('<%=projectSearchUrl.toString()%>')" />
+		<a class = "dialogClear" href = "javascript:;" onclick = "document.editForm.decProjectOID.value = '',document.editForm.decProjectDisplay.value = '',document.editForm.decProject.value = ''">
+			<emxUtil:i18n localize="i18nId">emxProgramCentral.Common.Clear</emxUtil:i18n>
+		</a>
+		<input type="hidden" name="decProject"  value="<%=ProjectName %>" onFocus="this.select()">
+		<input type="hidden" name="decProjectOID"  value="<%=ProjectId %>" onFocus="this.select()">
+	</tr>
+	<tr>
+		<td class="labelRequired"><emxUtil:i18n localize="i18nId">emxProgramCentral.Common.Title</emxUtil:i18n></td>
+		<td class="inputField"><input type="text" name="Title"  value="<%=Title%>" onFocus="this.select()" /></td>
+	</tr>
+	<tr>
+		<td class="labelRequired"><emxUtil:i18n localize="i18nId">emxProgramCentral.Common.Type</emxUtil:i18n></td>
+		<td class="inputField">
+			<select name="decType">
+				<option value="<%=DecConstants.ATTRIBUTE_DECTYPE_RANGE_INQUIRY %>" selected><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.Inquiry</emxUtil:i18n></option>
+				<option value="<%=DecConstants.ATTRIBUTE_DECTYPE_RANGE_REQUEST %>"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.Request</emxUtil:i18n></option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="labelRequired"><emxUtil:i18n localize="i18nId">emxProgramCentral.Common.Content</emxUtil:i18n></td>
+		<td class="inputField">
+			<textarea cols="25" rows="5" name="decContentData" onFocus="this.select()"><%=decContentData%></textarea>
+		</td>
+	</tr>
+		<%if(fileListCount > 0){ %><!-- checkIn 파일이 있을 경우 표현 -->
+			<tr>
+				<td class="label" rowspan=<%=fileListCount+1%> id="tdFile"><emxUtil:i18n localize="i18nId">emxProgramCentral.Common.File</emxUtil:i18n></td>
+			</tr>
+			<%for(int i=0;i<fileListCount;i++){%>
+			<tr>
+				<td class="field">
+					<a id="deleteFile<%=i%>" href='javascript:void(0);' onclick="deleteFile('<%=fileList.get(i)%>','<%=i%>')">
+						<img src="../common/images/iconStatusRemoved.gif"/></a> <%=fileList.get(i)%></td>
+			</tr>
+			<%}%>
+		<%} %>
+	<tr>
+		<td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Common.UploadFiles</emxUtil:i18n></td>
+		<td><input type="file" name="captureFile"/></td>
+	</tr>
+	<%}%>
+	<%if(mode.equalsIgnoreCase("view") || mode.equalsIgnoreCase("response") || mode.equalsIgnoreCase("responseEdit")){%> <!-- 뷰/답변/답변 수정 일 경우 제목,유형,내용 일반 필드 -->
+		<%if(ProjectName.length() > 0){ %>
+	<tr>
+		<td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Common.Projects</emxUtil:i18n></td>
+		<td class="field"><%=ProjectName%></td>
+	</tr>
+		<%} %>
+	<tr>
+		<td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Common.Title</emxUtil:i18n></td>
+		<td class="field"><%=Title%></td>
+	</tr>
+	<tr>
+		<td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Common.Type</emxUtil:i18n></td>
+		<td class="field"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.<%=decType%></emxUtil:i18n></td>
+	</tr>
+	<tr>
+		<td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Common.Content</emxUtil:i18n></td>
+		<td class="field">
+			<textarea cols="25" rows="5" readonly><%=decContentData%></textarea>
+		</td>
+	</tr>
+		<%if(fileListCount > 0){ %><!-- checkIn 파일이 있을 경우 표현 -->
+	<tr>
+		<td class="label" rowspan=<%=fileListCount+1%>><emxUtil:i18n localize="i18nId">emxProgramCentral.Common.File</emxUtil:i18n></td>
+	</tr>
+			<%for(int i=0;i<fileListCount;i++){%>
+	<tr>
+		<td class="field"><a href='javascript:void(0);' onclick="getFile('<%=strSetId%>','<%=fileList.get(i)%>')"><%=fileList.get(i)%></a>
+		</td>
+	</tr>
+			<%}%>
+		<%} %>
+		<%if(mode.equalsIgnoreCase("view") && responseId.length() > 0){ %> <!--뷰 상태일때 답변이 있는 경우 -->
+	<tr>
+		<td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.RequestResponse</emxUtil:i18n></td>
+		<td class="field"><%=responseTitle%></td>
+	</tr>
+	<tr>
+		<td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.RequestContents</emxUtil:i18n></td>
+		<td class="field">
+			<textarea cols="25" rows="5" readonly><%=responseDecContentData%></textarea>
+		</td>
+	</tr>
+			<%if(responseFileListCount > 0){ %><!-- 답변 checkIn 파일이 있을 경우 표현 -->
+	<tr>
+		<td class="label" rowspan=<%=responseFileListCount+1%>><emxUtil:i18n localize="i18nId">emxProgramCentral.Common.File</emxUtil:i18n></td>
+	</tr>
+				<%for(int i=0;i<responseFileListCount;i++){%>
+	<tr>
+		<td class="field"><a href='javascript:void(0);' onclick="getFile('<%=responseId%>','<%=responseFileList.get(i)%>')"><%=responseFileList.get(i)%></a>
+		</td>
+	</tr>
+				<%}%>
+			<%} %>		
+		<%} %>
+		<%if(mode.equalsIgnoreCase("response") || mode.equalsIgnoreCase("responseEdit")){ %>
+	<tr>
+		<td class="labelRequired"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.RequestResponse</emxUtil:i18n></td>
+		<td class="inputField"><input type="text" name="Title"  value="<%=responseTitle%>" onFocus="this.select()" /></td>
+	</tr>
+	<tr>
+		<td class="labelRequired"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.RequestContents</emxUtil:i18n></td>
+		<td class="inputField">
+			<textarea cols="25" rows="5" name="decContentData" onFocus="this.select()"><%=responseDecContentData%></textarea>
+		</td>
+	</tr>	
+			<%if(responseFileListCount > 0){ %><!-- checkIn 파일이 있을 경우 표현 -->
+	<tr>
+		<td class="label" rowspan=<%=responseFileListCount+1%> id="tdFile"><emxUtil:i18n localize="i18nId">emxProgramCentral.Common.File</emxUtil:i18n></td>
+	</tr>
+				<%for(int i=0;i<responseFileListCount;i++){%>
+	<tr>
+		<td class="field">
+			<a id="deleteFile<%=i%>" href='javascript:void(0);' onclick="deleteFile('<%=responseFileList.get(i)%>','<%=i%>')">
+				<img src="../common/images/iconStatusRemoved.gif"/></a> <%=responseFileList.get(i)%>
+		</td>
+	</tr>
+				<%}%>
+			<%} %>
+	<tr>
+		<td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Common.UploadFiles</emxUtil:i18n></td>
+		<td><input type="file" name="captureFile"/></td>
+	</tr>	
+		<%} %>
+	<%} %>
+</table>
+</form>
+<%
+	}
+	catch(Exception e)
+	{
+		e.printStackTrace();
+		throw e;
+	}
+%>
+<%@include file = "../emxUICommonEndOfPageInclude.inc" %>

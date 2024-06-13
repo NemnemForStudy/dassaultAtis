@@ -1,0 +1,1 @@
+define("DS/ENOXEmptyContent/ENOXEmptyContent_cs",{});define("DS/ENOXEmptyContent/assets/nls/ENOXEmptyContent",{defaultBottomSentence:"Postupujte podle výše uvedených pokynů",defaultSearchText:"Hledat v obsahu",defaultDropText:"Sem přetáhněte obsah",or:"nebo",emptyPage:"Stránka je prázdná."});

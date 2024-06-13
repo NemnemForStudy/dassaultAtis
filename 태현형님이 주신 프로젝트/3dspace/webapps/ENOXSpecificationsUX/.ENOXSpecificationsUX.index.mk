@@ -1,0 +1,10 @@
+m|ENOXAttachmentsUX\ENOXSpecificationsUX.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.3.23063|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\ENOXSpecificationsUX\ENOXSpecificationsUX.js|1677901279|18119
+s|ENOXAttachmentsUX\ENOXSpecificationsUX.mweb\src\data\Connector3DSpace.js|1677586368|47026
+u|ENOXAttachmentsUX\ENOXSpecificationsUX.mweb\src\SpecificationsPane.js|1628266891|10030
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

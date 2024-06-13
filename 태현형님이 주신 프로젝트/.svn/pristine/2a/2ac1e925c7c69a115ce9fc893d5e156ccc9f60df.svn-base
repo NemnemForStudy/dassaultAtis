@@ -1,0 +1,1 @@
+define("UWA/Services/Mail",["UWA/Core","UWA/Data"],function(e,r){"use strict";var i={getFromProvider:function(i,t){if(!r.proxies[i])throw new Error("Not supported UWA.Services.Mail proviver");switch(i){case"pop":case"gmail":return r.request(r.proxies[i],e.merge({method:"POST",type:"json"},t));default:e.log("invalid request type")}}};return e.namespace("Services/Mail",i,e)});

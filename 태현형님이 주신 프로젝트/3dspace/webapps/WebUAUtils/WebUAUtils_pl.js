@@ -1,0 +1,1 @@
+define("DS/WebUAUtils/WebUAUtils_pl",{});define("DS/WebUAUtils/assets/nls/translation",{UAPanel_Title:"Pomoc"});

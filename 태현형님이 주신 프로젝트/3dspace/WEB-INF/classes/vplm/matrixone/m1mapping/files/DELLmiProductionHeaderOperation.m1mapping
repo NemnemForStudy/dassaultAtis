@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapping xmlns="http://www.3ds.com/enovia-matrixone/vplm-m1/mapping" version="9">
+
+  <!-- Package -->
+  <pattern.VPLM_PACKAGE>
+    <vplm.Package name="DELLmiProductionHeaderOperation" />
+    <m1.package name="DELLmiProductionHeaderOperation" />
+
+    <!-- Extension -->
+    <pattern.VPLM_EXTENSION>
+      <vplm.Extension name="DELLmiScrapQuantity_Ratio" />
+      <m1.interface name="DELLmiScrapQuantity_Ratio" />
+
+      <!-- Simple -->
+      <pattern.VPLM_SIMPLE>
+        <vplm.Simple name="V_ScrapQuantityRatio" />
+        <m1.attribute name="DELLmiScrapQuantity_Ratio.V_ScrapQuantityRatio" local="yes" />
+      </pattern.VPLM_SIMPLE>
+
+    </pattern.VPLM_EXTENSION>
+
+    <!-- Extension -->
+    <pattern.VPLM_EXTENSION>
+      <vplm.Extension name="DELLmiWIPQuantity_Ratio" />
+      <m1.interface name="DELLmiWIPQuantity_Ratio" />
+
+      <!-- Simple -->
+      <pattern.VPLM_SIMPLE>
+        <vplm.Simple name="V_WIPQuantityRatio" />
+        <m1.attribute name="DELLmiWIPQuantity_Ratio.V_WIPQuantityRatio" local="yes" />
+      </pattern.VPLM_SIMPLE>
+
+    </pattern.VPLM_EXTENSION>
+
+    <!-- Extension -->
+    <pattern.VPLM_EXTENSION>
+      <vplm.Extension name="SymbolicIDForScope" />
+      <m1.interface name="SymbolicIDForScope" />
+
+      <!-- Simple -->
+      <pattern.VPLM_SIMPLE>
+        <vplm.Simple name="V_SymbolicIDForScope" />
+        <m1.attribute name="SymbolicIDForScope.V_SymbolicIDForScope" local="yes" />
+      </pattern.VPLM_SIMPLE>
+
+    </pattern.VPLM_EXTENSION>
+
+    <!-- RelationClass -->
+    <pattern.VPLM_RELATIONCLASS>
+      <vplm.PLMCoreInstance name="DELLmiHeaderOperationInstance" />
+      <m1.relationship name="DELLmiHeaderOperationInstance" />
+
+    </pattern.VPLM_RELATIONCLASS>
+
+    <!-- Class -->
+    <pattern.VPLM_CLASS>
+      <vplm.PLMCoreReference name="DELLmiHeaderOperationReference" />
+      <m1.type name="DELLmiHeaderOperationReference" />
+
+      <!-- Basic Concat -->
+      <pattern.VPLM_BASIC_CONCAT>
+        <vplm.Simple name="PLM_ExternalID" />
+        <m1.basic name="name" />
+      </pattern.VPLM_BASIC_CONCAT>
+
+      <!-- Simple -->
+      <pattern.VPLM_SIMPLE>
+        <vplm.Simple name="V_Interruptible" />
+        <m1.attribute name="DELLmiHeaderOperationReference.V_Interruptible" local="yes" />
+      </pattern.VPLM_SIMPLE>
+
+      <!-- Simple -->
+      <pattern.VPLM_SIMPLE>
+        <vplm.Simple name="V_ManageVariant" />
+        <m1.attribute name="DELLmiHeaderOperationReference.V_ManageVariant" local="yes" />
+      </pattern.VPLM_SIMPLE>
+
+      <!-- Simple -->
+      <pattern.VPLM_SIMPLE>
+        <vplm.Simple name="V_SequencingMode" />
+        <m1.attribute name="DELLmiHeaderOperationReference.V_SequencingMode" local="yes" />
+      </pattern.VPLM_SIMPLE>
+
+      <!-- Simple -->
+      <pattern.VPLM_SIMPLE>
+        <vplm.Simple name="V_UseGanttTimeSolver" />
+        <m1.attribute name="DELLmiHeaderOperationReference.V_UseGanttTimeSolver" local="yes" />
+      </pattern.VPLM_SIMPLE>
+
+    </pattern.VPLM_CLASS>
+
+  </pattern.VPLM_PACKAGE>
+
+</mapping>

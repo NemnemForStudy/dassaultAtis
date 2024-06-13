@@ -1,0 +1,451 @@
+{
+	"dsmfg:ScopeEngItem.referencedObject": {
+        "property": "computed",
+        "key": "ScopeEngItem",
+        "example": "com.dassault_systemes.enovia.xapps.dsmfg.implementations.dsmfgOpenAPIImpl.scopeEngItemReferenceObject"
+	},
+	"dsmfg:ScopeEngItem.referencedObject.v1": {
+        "property": "computed",
+        "key": "scopeEngItem",
+        "example": "com.dassault_systemes.enovia.xapps.dsmfg.implementations.dsmfgOpenAPIImpl.scopeEngItemReferenceObject",
+        "_isReferencedObject": true
+	},
+	"dsmfg:PartialScopeEngItem.referencedObject": {
+        "property": "computed",
+        "key": "PartialScopeEngItem",
+        "example": "com.dassault_systemes.enovia.xapps.dsmfg.implementations.dsmfgOpenAPIImpl.partialScopeEngItemReferenceObject"
+	},
+	"dsmfg:PartialScopeEngItem.referencedObject.v1": {
+        "property": "computed",
+        "key": "partialScopeEngItem",
+        "example": "com.dassault_systemes.enovia.xapps.dsmfg.implementations.dsmfgOpenAPIImpl.partialScopeEngItemReferenceObject",
+        "_isReferencedObject": true
+	},
+	"dsmfg:instanceDetails.referencedObject" : {
+		"property": "computed",
+		"key": "referencedObject",
+		"example": "com.dassault_systemes.enovia.xapps.dsmfg.implementations.dsmfgOpenAPIImpl.instanceDetailsReferenceObject",
+        "_isReferencedObject": true
+	},
+	"dsmfg:EnterpriseReference": {
+        "property": "attribute[EnterpriseExtension.V_PartNumber]",
+        "key": "partNumber",
+        "example": "1.3",
+        "description": "Manually entered partNumber value.",
+        "index": "ds6wg:EnterpriseExtension.V_PartNumber"
+    },
+    "dsmfg:EnterpriseReference.Details": {
+        "property": "computed",
+        "key": "dsmfg:EnterpriseReference",
+		"fetchOnce": true,        
+        "example": "com.dassault_systemes.enovia.xapps.dsmfg.implementations.dsmfgOpenAPIImpl.getEnterpriseReferencePartNumber",
+        "index": [{"index": "ds6wg:EnterpriseExtension.V_PartNumber", "key":"partNumber"}]
+    },
+	"dsmfg:planningRequired" : {
+        "property": "attribute[CreateAssembly.V_NeedDedicatedSystem, CreateKit.V_NeedDedicatedSystem, CreateMaterial.V_NeedDedicatedSystem, Provide.V_NeedDedicatedSystem, ElementaryEndItem.V_NeedDedicatedSystem, Installation.V_NeedDedicatedSystem, ProcessContinuousCreateMaterial.V_NeedDedicatedSystem, ProcessContinuousProvide.V_NeedDedicatedSystem]",
+        "key": "planningRequired",
+        "example": "2",
+        "description": "Indicates Yes(2) or No(1) value",
+        "index": "bo.CreateAssembly.V_NeedDedicatedSystem,bo.CreateKit.V_NeedDedicatedSystem,bo.CreateMaterial.V_NeedDedicatedSystem,bo.Provide.V_NeedDedicatedSystem,bo.ElementaryEndItem.V_NeedDedicatedSystem,bo.Installation.V_NeedDedicatedSystem,bo.ProcessContinuousCreateMaterial.V_NeedDedicatedSystem,bo.ProcessContinuousProvide.V_NeedDedicatedSystem",
+        "_conceptualName": "CreateAssembly.planningRequired, CreateKit.planningRequired, CreateMaterial.planningRequired, Provide.planningRequired, ElementaryEndItem.planningRequired, Installation.planningRequired, ProcessContinuousCreateMaterial.planningRequired, ProcessContinuousProvide.planningRequired" 
+    },
+    "dsmfg:outsourced" : {
+        "property": "attribute[CreateAssembly.V_Outsourced, CreateKit.V_Outsourced, CreateMaterial.V_Outsourced, Provide.V_Outsourced, ElementaryEndItem.V_Outsourced, Installation.V_Outsourced, ProcessContinuousCreateMaterial.V_Outsourced, ProcessContinuousProvide.V_Outsourced]",
+        "key": "outsourced",
+        "example": "1",
+        "description": "Indicates Yes(2) or No(1) value",
+        "index": "bo.CreateAssembly.V_Outsourced,bo.CreateKit.V_Outsourced,bo.CreateMaterial.V_Outsourced,bo.Provide.V_Outsourced,bo.ElementaryEndItem.V_Outsourced,bo.Installation.V_Outsourced,bo.ProcessContinuousCreateMaterial.V_Outsourced,bo.ProcessContinuousProvide.V_Outsourced",
+        "_conceptualName": "CreateAssembly.outsourced, CreateKit.outsourced, CreateMaterial.outsourced, Provide.outsourced, ElementaryEndItem.outsourced, Installation.outsourced, ProcessContinuousCreateMaterial.outsourced, ProcessContinuousProvide.outsourced" 
+	},
+	"dsmfg:estimatedTime" : {
+        "property": "attribute[DELFmiFunctionReference.V_EstimatedTime]",
+        "key": "estimatedTime",
+		"example": "double value",        
+        "index": "bo.DELFmiFunctionReference.V_EstimatedTime",
+        "format": "s_double"
+	},
+	"dsmfg:isLotNumberRequired" : {
+        "property": "attribute[DELAsmLotRefRequired.V_LotNumberRequired]",
+        "key": "isLotNumberRequired",
+        "example": "true or false",
+        "description": "checks whether lot number is required",
+        "index": "bo.DELAsmLotRefRequired.V_LotNumberRequired",
+        "format": "boolean"
+	},
+    "dsmfg:depthOfFeature" : {
+        "property": "attribute[Drill.V_DepthOfFeature, PreDrill.V_DepthOfFeature]",
+        "key": "depthOfFeature",
+        "example": "double value",
+        "index": "bo.Drill.V_DepthOfFeature,bo.CreateKit.V_Outsourced,bo.PreDrill.V_DepthOfFeature",
+        "format": "s_double",
+        "_conceptualName": "Drill.depthOfFeature, PreDrill.depthOfFeature"
+	},
+	"dsmfg:diameterOfFeature" : {
+        "property": "attribute[Drill.V_DiameterOfFeature, PreDrill.V_DiameterOfFeature]",
+        "key": "diameterOfFeature",
+        "example": "double value",
+        "index": "bo.Drill.V_DiameterOfFeature,bo.CreateKit.V_Outsourced,bo.PreDrill.V_DiameterOfFeature",
+        "format": "s_double",
+        "_conceptualName": "Drill.diameterOfFeature, PreDrill.diameterOfFeature"
+	},
+	"dsmfg:isSerialNumberRequired" : {
+        "property": "attribute[DELAsmUnitRefRequired.V_SerialNumberRequired]",
+        "key": "isSerialNumberRequired",
+        "example": "true or false",
+        "description": "checks whether serial number is required",
+        "index": "bo.DELAsmUnitRefRequired.V_SerialNumberRequired",
+        "format": "boolean"
+	},
+	"dsmfg:estimatedCost" : {
+        "property": "attribute[DELFmiFunctionPPRCreateReference.V_EstimatedCost, DELFmiFunctionPPRContinuousReference.V_EstimatedCost, DELFmiFunctionPPRAddReference.V_EstimatedCost]",
+        "key": "estimatedCost",
+        "example": "double value",
+        "index": "bo.DELFmiFunctionPPRCreateReference.V_EstimatedCost, bo.DELFmiFunctionPPRContinuousReference.V_EstimatedCost, bo.DELFmiFunctionPPRAddReference.V_EstimatedCost",
+        "format": "s_double",
+        "_conceptualName": "DELFmiFunctionPPRCreateReference.estimatedCost, DELFmiFunctionPPRContinuousReference.estimatedCost, DELFmiFunctionPPRAddReference.estimatedCost"
+	},
+	"dsmfg:estimatedCostCurrency" : {
+        "property": "attribute[DELFmiFunctionPPRCreateReference.V_EstimatedCostCurrency, DELFmiFunctionPPRContinuousReference.V_EstimatedCostCurrency, DELFmiFunctionPPRAddReference.V_EstimatedCostCurrency]",
+        "key": "estimatedCostCurrency",
+        "index": "bo.DELFmiFunctionPPRCreateReference.V_EstimatedCostCurrency, bo.DELFmiFunctionPPRContinuousReference.V_EstimatedCostCurrency, bo.DELFmiFunctionPPRAddReference.V_EstimatedCostCurrency",
+        "_conceptualName": "DELFmiFunctionPPRCreateReference.estimatedCostCurrency, DELFmiFunctionPPRContinuousReference.estimatedCostCurrency, DELFmiFunctionPPRAddReference.estimatedCostCurrency"
+	},
+	"dsmfg:estimatedLeadTimeDescription" : {
+        "property": "attribute[DELFmiFunctionPPRCreateReference.V_EstimatedLeadTimeDescription, DELFmiFunctionPPRContinuousReference.V_EstimatedLeadTimeDescription, DELFmiFunctionPPRAddReference.V_EstimatedLeadTimeDescription]",
+        "key": "estimatedLeadTimeDescription",
+        "index": "bo.DELFmiFunctionPPRCreateReference.V_EstimatedLeadTimeDescription, bo.DELFmiFunctionPPRContinuousReference.V_EstimatedLeadTimeDescription, bo.DELFmiFunctionPPRAddReference.V_EstimatedLeadTimeDescription",
+        "_conceptualName": "DELFmiFunctionPPRCreateReference.estimatedLeadTimeDescription, DELFmiFunctionPPRContinuousReference.estimatedLeadTimeDescription, DELFmiFunctionPPRAddReference.estimatedLeadTimeDescription"
+	},
+	"dsmfg:estimatedWeight" : {
+        "property": "attribute[DELFmiFunctionPPRCreateReference.V_EstimatedWeight, DELFmiFunctionPPRContinuousReference.V_EstimatedWeight, DELFmiFunctionPPRAddReference.V_EstimatedWeight]",
+        "key": "estimatedWeight",
+        "example": "double value",
+        "index": "bo.DELFmiFunctionPPRCreateReference.V_EstimatedWeight, bo.DELFmiFunctionPPRContinuousReference.V_EstimatedWeight, bo.DELFmiFunctionPPRAddReference.V_EstimatedWeight",
+        "format": "s_double",
+        "_conceptualName": "DELFmiFunctionPPRCreateReference.estimatedWeight, DELFmiFunctionPPRContinuousReference.estimatedWeight, DELFmiFunctionPPRAddReference.estimatedWeight"
+	},
+	"dsmfg:manufacturedItemClassification" : {
+        "property": "attribute[DELFmiFunctionPPRCreateReference.V_ManufacturedItemClassification, DELFmiFunctionPPRContinuousReference.V_ManufacturedItemClassification, DELFmiFunctionPPRAddReference.V_ManufacturedItemClassification]",
+        "key": "manufacturedItemClassification",
+        "index": "bo.DELFmiFunctionPPRCreateReference.V_ManufacturedItemClassification, bo.DELFmiFunctionPPRContinuousReference.V_ManufacturedItemClassification, bo.DELFmiFunctionPPRAddReference.V_ManufacturedItemClassification",
+        "_conceptualName": "DELFmiFunctionPPRCreateReference.manufacturedItemClassification, DELFmiFunctionPPRContinuousReference.manufacturedItemClassification, DELFmiFunctionPPRAddReference.manufacturedItemClassification"
+	},
+	"dsmfg:materialCategory" : {
+        "property": "attribute[DELFmiFunctionPPRCreateReference.V_MaterialCategory, DELFmiFunctionPPRContinuousReference.V_MaterialCategory, DELFmiFunctionPPRAddReference.V_MaterialCategory]",
+        "key": "materialCategory",
+        "index": "bo.DELFmiFunctionPPRCreateReference.V_MaterialCategory, bo.DELFmiFunctionPPRContinuousReference.V_MaterialCategory, bo.DELFmiFunctionPPRAddReference.V_MaterialCategory",
+        "_conceptualName": "DELFmiFunctionPPRCreateReference.materialCategory, DELFmiFunctionPPRContinuousReference.materialCategory, DELFmiFunctionPPRAddReference.materialCategory"
+	},
+	"dsmfg:spareManufacturedItem" : {
+        "property": "attribute[DELFmiFunctionPPRCreateReference.V_SpareManufacturedItem, DELFmiFunctionPPRContinuousReference.V_SpareManufacturedItem, DELFmiFunctionPPRAddReference.V_SpareManufacturedItem]",
+        "key": "spareManufacturedItem",
+        "example": "true or false",
+        "index": "bo.DELFmiFunctionPPRCreateReference.V_SpareManufacturedItem, bo.DELFmiFunctionPPRContinuousReference.V_SpareManufacturedItem, bo.DELFmiFunctionPPRAddReference.V_SpareManufacturedItem",
+        "format": "boolean",
+        "_conceptualName": "DELFmiFunctionPPRCreateReference.spareManufacturedItem, DELFmiFunctionPPRContinuousReference.spareManufacturedItem, DELFmiFunctionPPRAddReference.spareManufacturedItem"
+	},
+	"dsmfg:targetReleaseDate" : {
+        "property": "attribute[DELFmiFunctionPPRCreateReference.V_TargetReleaseDate, DELFmiFunctionPPRContinuousReference.V_TargetReleaseDate, DELFmiFunctionPPRAddReference.V_TargetReleaseDate]",
+        "key": "targetReleaseDate",
+        "index": "bo.DELFmiFunctionPPRCreateReference.V_TargetReleaseDate, bo.DELFmiFunctionPPRContinuousReference.V_TargetReleaseDate, bo.DELFmiFunctionPPRAddReference.V_TargetReleaseDate",
+        "_conceptualName": "DELFmiFunctionPPRCreateReference.targetReleaseDate, DELFmiFunctionPPRContinuousReference.targetReleaseDate, DELFmiFunctionPPRAddReference.targetReleaseDate"
+	},
+	"dsmfg:magnitude" : {
+        "property": "computed",
+        "key": "magnitude",
+        "fetchOnce":true,
+        "description": "Magnitude value",
+        "example": "Area"
+	},	
+	"dsmfg:MfgItemInstance.moveLocked" : {
+		"property": "attribute[DELAsmMoveStructureRestrictionExt.V_AutoDownMoveLocked]",
+		"key": "moveLocked",
+		"format": "boolean",
+		"example": "true",
+        "description": "moveLocked value"
+	},
+	"dsmfg:MfgItemInstance.fastenerClassification" : {
+		"property": "attribute[DELFastenerClassification.V_FstClassification]",
+		"key": "fastenerClassification",
+		"example": "GeoSpot",
+        "description": "fastenerClassification value"
+	},
+	"dsmfg:mfgFastenerStrategy" : {
+		"property": "attribute[Fasten.V_MfgFastenerStrategy]",
+        "key": "mfgFastenerStrategy",
+        "index": "bo.Fasten.V_MfgFastenerStrategy"
+	},	
+	"dsmfg:MfgItemInstance.quantity" : {
+        "property": "computed",
+        "key": "quantity",
+        "example": "{magnitude:\"MASS\",inputValue:\"1000\",inputUnit:\"gm\"}",
+        "fetchOnce": true,
+        "description": "Quantity value on Mfg Item Instance"
+	},
+	"dsmfg:ResultingEngItem.usage" : {
+		"property": "attribute[PLMEntity.V_usage]",
+		"key": "usage",
+		"example": "EIN",
+        "description": "Usage value"
+	},
+	"dsmfg:ResultingEngItem.computed": {
+		"property": "attribute[DELAsmProcessOutputStatusExt.V_GeneratedFlag]",
+		"key": "computed",
+		"format": "boolean",
+		"example": "true or false",
+        "description": "Indicates whether the resulting engineering item is a computed type or not"
+	},
+	"dsmfg:ResultingEngItem.referencedObject": {
+		"property": "computed",
+        "key": "ResultingEngItem",
+        "description":"Get the list of resulting product referenced object.",
+        "fetchOnce": true,
+        "example": "com.dassault_systemes.enovia.xapps.dsmfg.implementations.dsmfgOpenAPIImpl.resultingEngItemReferenceObject"
+	},
+	"dsmfg:ResultingEngItem.referencedObject.v1": {
+		"property": "computed",
+        "key": "resultingEngItem",
+        "description":"Get the list of resulting product referenced object.",
+        "fetchOnce": true,
+        "example": "com.dassault_systemes.enovia.xapps.dsmfg.implementations.dsmfgOpenAPIImpl.resultingEngItemReferenceObject",
+        "_isReferencedObject": true
+	},	
+	"dsmfg:ResultingEngItems": {
+		"property": "computed",
+        "key" : "ResultingEngItems",
+        "description":"Get the list of resulting products to the Manufacturing item.",
+        "fetchOnce":true,
+        "mask":"dsmfg:ResultingEngItemMask.Default",
+        "maskAppliesTo":"bus",
+        "_isReferencedObject": true
+	},
+	"dsmfg:ResultingEngItems.v1": {
+		"property": "computed",
+        "key" : "resultingEngItems",
+        "description":"Get the list of resulting products to the Manufacturing item.",
+        "fetchOnce":true,
+        "mask":"dsmfg:ResultingEngItemMask.Default",
+        "maskAppliesTo":"bus"
+	},	
+	"dsmfg:ResultingEngItem.ProductConfiguration.referencedObject": {
+        "property": "computed",
+        "key": "productConfiguration",
+        "fetchOnce": true,
+        "example": "com.dassault_systemes.enovia.xapps.dsmfg.implementations.dsmfgOpenAPIImpl.resultingEngItemReferenceObject"
+	},
+	"dsmfg:AssignmentFilter.referencedObjects": {
+		"property": "computed",
+        "key": "assignmentFilters",
+        "description":"Get paths of product instances pointed by Assignment Filter connection on each MBOM reference.",
+        "example": "com.dassault_systemes.enovia.xapps.dsmfg.implementations.dsmfgOpenAPIImpl.assignmentFilterReferencedObjects"
+	},	
+	"dsmfg:ImplementedEngOccurrence.referencedObjects": {
+		"property": "computed",
+        "key": "specifiedOccurrence",
+        "description":"Gets an Implemented Engineering Item Instances occurence.",
+        "example": "com.dassault_systemes.enovia.xapps.dsmfg.implementations.dsmfgOpenAPIImpl.scopeEngItemReferenceObject"
+	},
+	"dsmfg:program.getScopeRequirementSpec": {
+		"property": "computed",
+        "key": "requirement",
+        "example": "com.dassault_systemes.enovia.xapps.dsmfg.implementations.dsmfgOpenAPIImpl.getScopeRequirementSpecObject",
+        "fetchOnce": true,
+        "description": "Reference to the Requirement Specification."
+	},
+	"dsmfg:program.getAssignedRequirement": {
+		"property": "computed",
+        "key": "requirement",
+        "example": "com.dassault_systemes.enovia.xapps.dsmfg.implementations.dsmfgOpenAPIImpl.getAssignedRequirementObject",
+        "fetchOnce": true,
+        "description": "Reference to the requirement."
+	},
+	"dsmfg:AssignedRequirement.contextualReqInfo": {
+        "property": "attribute[PLMReqSpecifyHowToCnx.V_Contextual_Req_Info]",
+        "key": "contextualReqInfo",
+        "example": "String value",
+        "description": "contextualReqInfo value"
+	},
+	"dsmfg:AssignedRequirement.isIgnored": {
+        "property": "attribute[PLMReqSpecifyHowToCnx.V_Ignore]",
+        "key": "isIgnored",
+        "example": "true or false value",
+        "description": "isIgnored value",
+        "format": "boolean"
+	},
+	"dsmfg:AssignedRequirement.usage": {
+        "property": "computed",
+        "key": "usage",
+        "fetchOnce": true,
+        "example": "String value",
+        "description": "usage value"
+	},	
+	"dsmfg:uiAttributes": {
+		"property": "computed",
+        "key": "uiAttributes",
+        "fetchOnce": true,
+		"example": "com.dassault_systemes.enovia.xapps.dsmfg.implementations.dsmfgOpenAPIImpl.getUIAttributesDetails"
+	},
+	"dsmfg:MfgItemEnterpriseAttributes" : {
+        "property": "computed",
+        "key": "dsmfg:MfgItemEnterpriseAttributes",
+		"example": "com.dassault_systemes.enovia.xapps.dsmfg.implementations.dsmfgOpenAPIImpl.getEnterpriseAttributesDetails"
+	},
+	"dsmfg:CreateAssemblyEnterpriseAttributes": {
+		"property": "computed",
+        "key": "dsmfg:CreateAssemblyEnterpriseAttributes",
+		"example": "com.dassault_systemes.enovia.xapps.dsmfg.implementations.dsmfgOpenAPIImpl.getEnterpriseAttributesDetails",
+		"_conceptualName": "CreateAssembly.dsmfg:CreateAssemblyEnterpriseAttributes"
+	},
+	"dsmfg:CreateKitEnterpriseAttributes": {
+		"property": "computed",
+        "key": "dsmfg:CreateKitEnterpriseAttributes",
+		"example": "com.dassault_systemes.enovia.xapps.dsmfg.implementations.dsmfgOpenAPIImpl.getEnterpriseAttributesDetails",
+		"_conceptualName": "CreateKit.dsmfg:CreateKitEnterpriseAttributes"
+	},
+	"dsmfg:CreateMaterialEnterpriseAttributes": {
+		"property": "computed",
+        "key": "dsmfg:CreateMaterialEnterpriseAttributes",
+		"example": "com.dassault_systemes.enovia.xapps.dsmfg.implementations.dsmfgOpenAPIImpl.getEnterpriseAttributesDetails",
+		"_conceptualName": "CreateMaterial.dsmfg:CreateMaterialEnterpriseAttributes"
+	},
+	"dsmfg:ProvideEnterpriseAttributes": {
+		"property": "computed",
+        "key": "dsmfg:ProvideEnterpriseAttributes",
+		"example": "com.dassault_systemes.enovia.xapps.dsmfg.implementations.dsmfgOpenAPIImpl.getEnterpriseAttributesDetails",
+		"_conceptualName": "Provide.dsmfg:ProvideEnterpriseAttributes"
+	},
+	"dsmfg:ElementaryEndItemEnterpriseAttributes": {
+		"property": "computed",
+        "key": "dsmfg:ElementaryEndItemEnterpriseAttributes",
+		"example": "com.dassault_systemes.enovia.xapps.dsmfg.implementations.dsmfgOpenAPIImpl.getEnterpriseAttributesDetails",
+		"_conceptualName": "ElementaryEndItem.dsmfg:ElementaryEndItemEnterpriseAttributes"
+	},
+	"dsmfg:InstallationEnterpriseAttributes": {
+		"property": "computed",
+        "key": "dsmfg:InstallationEnterpriseAttributes",
+		"example": "com.dassault_systemes.enovia.xapps.dsmfg.implementations.dsmfgOpenAPIImpl.getEnterpriseAttributesDetails",
+		"_conceptualName": "Installation.dsmfg:InstallationEnterpriseAttributes"
+	},
+	"dsmfg:MarkingEnterpriseAttributes": {
+		"property": "computed",
+        "key": "dsmfg:MarkingEnterpriseAttributes",
+		"example": "com.dassault_systemes.enovia.xapps.dsmfg.implementations.dsmfgOpenAPIImpl.getEnterpriseAttributesDetails",
+		"_conceptualName": "Marking.dsmfg:MarkingEnterpriseAttributes"
+	},
+	"dsmfg:AnnotationEnterpriseAttributes": {
+		"property": "computed",
+        "key": "dsmfg:AnnotationEnterpriseAttributes",
+		"example": "com.dassault_systemes.enovia.xapps.dsmfg.implementations.dsmfgOpenAPIImpl.getEnterpriseAttributesDetails",
+		"_conceptualName": "Annotation.dsmfg:AnnotationEnterpriseAttributes"
+	},
+	"dsmfg:TransformEnterpriseAttributes": {
+		"property": "computed",
+        "key": "dsmfg:TransformEnterpriseAttributes",
+		"example": "com.dassault_systemes.enovia.xapps.dsmfg.implementations.dsmfgOpenAPIImpl.getEnterpriseAttributesDetails",
+		"_conceptualName": "Transform.dsmfg:TransformEnterpriseAttributes"
+	},
+	"dsmfg:MachineEnterpriseAttributes": {
+		"property": "computed",
+        "key": "dsmfg:MachineEnterpriseAttributes",
+		"example": "com.dassault_systemes.enovia.xapps.dsmfg.implementations.dsmfgOpenAPIImpl.getEnterpriseAttributesDetails",
+		"_conceptualName": "Machine.dsmfg:MachineEnterpriseAttributes"
+	},
+	"dsmfg:BevelingEnterpriseAttributes": {
+		"property": "computed",
+        "key": "dsmfg:BevelingEnterpriseAttributes",
+		"example": "com.dassault_systemes.enovia.xapps.dsmfg.implementations.dsmfgOpenAPIImpl.getEnterpriseAttributesDetails",
+		"_conceptualName": "Beveling.dsmfg:BevelingEnterpriseAttributes"
+	},
+	"dsmfg:CuttingEnterpriseAttributes": {
+		"property": "computed",
+        "key": "dsmfg:CuttingEnterpriseAttributes",
+		"example": "com.dassault_systemes.enovia.xapps.dsmfg.implementations.dsmfgOpenAPIImpl.getEnterpriseAttributesDetails",
+		"_conceptualName": "Cutting.dsmfg:CuttingEnterpriseAttributes"
+	},
+	"dsmfg:GrindingEnterpriseAttributes": {
+		"property": "computed",
+        "key": "dsmfg:GrindingEnterpriseAttributes",
+		"example": "com.dassault_systemes.enovia.xapps.dsmfg.implementations.dsmfgOpenAPIImpl.getEnterpriseAttributesDetails",
+		"_conceptualName": "Grinding.dsmfg:GrindingEnterpriseAttributes"
+	},
+	"dsmfg:NoDrillEnterpriseAttributes": {
+		"property": "computed",
+        "key": "dsmfg:NoDrillEnterpriseAttributes",
+		"example": "com.dassault_systemes.enovia.xapps.dsmfg.implementations.dsmfgOpenAPIImpl.getEnterpriseAttributesDetails",
+		"_conceptualName": "NoDrill.dsmfg:NoDrillEnterpriseAttributes"
+	},
+	"dsmfg:DrillEnterpriseAttributes": {
+		"property": "computed",
+        "key": "dsmfg:DrillEnterpriseAttributes",
+		"example": "com.dassault_systemes.enovia.xapps.dsmfg.implementations.dsmfgOpenAPIImpl.getEnterpriseAttributesDetails",
+		"_conceptualName": "Drill.dsmfg:DrillEnterpriseAttributes"
+	},
+	"dsmfg:PreDrillEnterpriseAttributes": {
+		"property": "computed",
+        "key": "dsmfg:PreDrillEnterpriseAttributes",
+		"example": "com.dassault_systemes.enovia.xapps.dsmfg.implementations.dsmfgOpenAPIImpl.getEnterpriseAttributesDetails",
+		"_conceptualName": "PreDrill.dsmfg:PreDrillEnterpriseAttributes"
+	},
+	"dsmfg:UnfastenEnterpriseAttributes": {
+		"property": "computed",
+        "key": "dsmfg:UnfastenEnterpriseAttributes",
+		"example": "com.dassault_systemes.enovia.xapps.dsmfg.implementations.dsmfgOpenAPIImpl.getEnterpriseAttributesDetails",
+		"_conceptualName": "Unfasten.dsmfg:UnfastenEnterpriseAttributes"
+	},
+	"dsmfg:FastenEnterpriseAttributes": {
+		"property": "computed",
+        "key": "dsmfg:FastenEnterpriseAttributes",
+		"example": "com.dassault_systemes.enovia.xapps.dsmfg.implementations.dsmfgOpenAPIImpl.getEnterpriseAttributesDetails",
+		"_conceptualName": "Fasten.dsmfg:FastenEnterpriseAttributes"
+	},
+	"dsmfg:SplitProcessEnterpriseAttributes": {
+		"property": "computed",
+        "key": "dsmfg:SplitProcessEnterpriseAttributes",
+		"example": "com.dassault_systemes.enovia.xapps.dsmfg.implementations.dsmfgOpenAPIImpl.getEnterpriseAttributesDetails",
+		"_conceptualName": "SplitProcess.dsmfg:SplitProcessEnterpriseAttributes"
+	},
+	"dsmfg:ProcessContinuousCreateMaterialEnterpriseAttributes": {
+		"property": "computed",
+        "key": "dsmfg:ProcessContinuousCreateMaterialEnterpriseAttributes",
+		"example": "com.dassault_systemes.enovia.xapps.dsmfg.implementations.dsmfgOpenAPIImpl.getEnterpriseAttributesDetails",
+		"_conceptualName": "ProcessContinuousCreateMaterial.dsmfg:ProcessContinuousCreateMaterialEnterpriseAttributes"
+	},
+	"dsmfg:ProcessContinuousProvideEnterpriseAttributes": {
+		"property": "computed",
+        "key": "dsmfg:ProcessContinuousProvideEnterpriseAttributes",
+		"example": "com.dassault_systemes.enovia.xapps.dsmfg.implementations.dsmfgOpenAPIImpl.getEnterpriseAttributesDetails",
+		"_conceptualName": "ProcessContinuousProvide.dsmfg:ProcessContinuousProvideEnterpriseAttributes"
+	},
+	"dsmfg:AssignedOrganization.usage" : {
+		"property": "attribute[PLMEntity.V_usage]",
+		"key": "usage",
+		"example": "EIN",
+        "description": "Usage value"
+	},	
+   	"dsmfg:AssignedOrganization.organizationRef": {
+		"property": "computed",
+        "key": "organizationRef",
+        "description": "Get the referenced object of organization.",
+        "fetchOnce": true,
+        "example": "com.dassault_systemes.enovia.xapps.dsmfg.implementations.dsmfgOpenAPIImpl.getEnterpriseAttributesDetails"
+	},
+	"dsmfg:dependencies": {
+		"property": "computed",
+        "key": "dependencies",
+        "description": "Get the Manufacturing Instance Dependency",
+        "fetchOnce": true,
+        "example": "com.dassault_systemes.enovia.xapps.dsmfg.implementations.dsmfgOpenAPIImpl.dependenciesReferencedObject"
+	},
+	"dsmfg:instance.parent": {
+        "property": "from.physicalid",
+        "key": "parent",
+        "example": "9FF50FB000008BF0614199720000DE53",
+        "description": "Physical ID of the object to which the instance is aggregated"
+    },
+    "dsmfg:instance.reference": {
+        "property": "to.physicalid",
+        "key": "reference",
+        "example": "EE562168015FFCF14F940A513C63AA77",
+        "description": "Instance to side object physical id"
+    }
+}

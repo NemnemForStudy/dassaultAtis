@@ -1,0 +1,22 @@
+################################################################################################
+# Modified By thok : 2023. 07. 25
+# Admin Type : command
+# Name : PMCLifecycle
+################################################################################################
+copy command PMCLifecycle PMCLifecycle_ootb;
+mod command PMCLifecycle
+	add setting 'Access Expression' 'admin_platform==context.user'
+;
+
+# Modified By thok : 2023. 07. 28
+mod command PMCLifecycle
+	add setting 'Access Expression' 'context.user.isassigned[decSystemAdmin]'
+;
+
+# Modified By thok : 2023. 09. 09
+mod command PMCLifecycle
+	remove setting 'Access Expression'
+	add setting 'hasAccess' 'PIM'
+	add setting 'Access Program' 'decAccess' 
+	add setting 'Access Function' 'hasAccess'
+;

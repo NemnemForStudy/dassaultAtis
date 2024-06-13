@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright DASSAULT SYSTEMES 2015 -->
+<AttributesDescriptionList Title="Attributes Description List by Types" Description="Sample configuration file delivered by DS." xmlns="DS_DELPPWConfiguration" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="DS_DELPPWConfiguration ../xsd/EditLinkAttributes.xsd">
+
+	<Type name="DELWkiInstructionReference" formStyle="Vertical">
+		<Attribute name="V_Name" dicoType="PLMEntity" mandatory="true" />
+		<Attribute name="V_WIInstruction_Text" dicoType="DELWkiInstructionReference" displayType="richText"/>
+	</Type>
+
+	<Type name="DELWkiSignOffReference" formStyle="Vertical">
+		<Attribute name="V_Name" dicoType="PLMEntity" mandatory="true" />
+		<Attribute name="V_WISignOff_Text" dicoType="DELWkiSignOffReference" displayType="richText"/>
+		<!--<Attribute name="V_WISignOff_Actors" dicoType="DELWkiSignOffReference"/>--><!-- Commented as fix awiated for IR-926466-3DEXPERIENCER2022x -->
+		<Attribute name="V_WISignOff_AllowPartial" dicoType="DELWkiSignOffReference" />
+		<Attribute name="V_WISignOff_NotMandatory" dicoType="DELWkiSignOffReference" />
+	</Type>
+
+	<Type name="DELWkiAlertReference" formStyle="Vertical">
+		<Attribute name="V_Name" dicoType="PLMEntity" mandatory="true" />
+		<Attribute name="V_WIAlert_Message" dicoType="DELWkiAlertReference" displayType="richText" />
+		<Attribute name="V_WIAlert_ShowMode" dicoType="DELWkiAlertReference" />
+		<Attribute name="V_WIAlert_TrackConfirmation" dicoType="DELWkiAlertReference" />
+	</Type>
+
+	<Type name="DELWkiDataCollectPlanReferenceInteger"  >
+		<Attribute name="V_DCType" dicoType="PLMSpecifyHowToCollectDataCnx" mandatory="true"/>
+		<Attribute name="V_DCRichText" dicoType="PLMSpecifyHowToCollectDataCnx_Custo" displayType="richText" />
+		<Attribute name="V_DCLabel" dicoType="PLMSpecifyHowToCollectDataCnx"/>
+		<Attribute name="V_DCNbSameMeasurement" dicoType="PLMSpecifyHowToCollectDataCnx" />
+		<Attribute name="V_MinValue" dicoType="PLMSpecifyHowToCollectDataCnx_Custo" displayType="inclusiveEditor" />
+		<Attribute name="V_MinControlValue" dicoType="PLMSpecifyHowToCollectDataCnx_Custo" displayType="inclusiveEditor" />
+		<Attribute name="V_PossibleValues" dicoType="PLMSpecifyHowToCollectDataCnx_Custo" displayType="chips"/>
+		<Attribute name="V_MaxControlValue" dicoType="PLMSpecifyHowToCollectDataCnx_Custo" displayType="inclusiveEditor" />
+		<Attribute name="V_MaxValue" dicoType="PLMSpecifyHowToCollectDataCnx_Custo" displayType="inclusiveEditor" />
+	</Type>
+
+	<Type name="DELWkiDataCollectPlanReferenceText">
+		<Attribute name="V_DCType" dicoType="PLMSpecifyHowToCollectDataCnx" mandatory="true"/>
+		<Attribute name="V_DCRichText" dicoType="PLMSpecifyHowToCollectDataCnx_Custo" displayType="richText" />
+		<Attribute name="V_DCLabel" dicoType="PLMSpecifyHowToCollectDataCnx"/>
+		<Attribute name="V_DCNbSameMeasurement" dicoType="PLMSpecifyHowToCollectDataCnx" />
+		<Attribute name="V_PossibleValues" dicoType="PLMSpecifyHowToCollectDataCnx_Custo" displayType="chips"/>
+	</Type>
+
+	<Type name="DELWkiDataCollectPlanReferenceBoolean">
+		<Attribute name="V_DCType" dicoType="PLMSpecifyHowToCollectDataCnx" mandatory="true" />
+		<Attribute name="V_DCRichText" dicoType="PLMSpecifyHowToCollectDataCnx_Custo" displayType="richText" />
+		<Attribute name="V_DCLabel" dicoType="PLMSpecifyHowToCollectDataCnx"/>
+		<Attribute name="V_DCNbSameMeasurement" dicoType="PLMSpecifyHowToCollectDataCnx" />
+		<Attribute name="V_PossibleValues" dicoType="PLMSpecifyHowToCollectDataCnx_Custo"/>
+	</Type>
+
+	<Type name="DELWkiDataCollectPlanReferenceTimeStamp">
+		<Attribute name="V_DCType" dicoType="PLMSpecifyHowToCollectDataCnx" mandatory="true"/>
+		<Attribute name="V_DCRichText" dicoType="PLMSpecifyHowToCollectDataCnx_Custo" displayType="richText" />
+		<Attribute name="V_DCLabel" dicoType="PLMSpecifyHowToCollectDataCnx"/>
+		<Attribute name="V_DCTimeStampFormat" dicoType="PLMSpecifyHowToCollectDataCnx_Custo"  />
+	</Type>
+
+	<Type name="DELWkiDataCollectPlanReferenceReal">
+		<Attribute name="V_DCType" dicoType="PLMSpecifyHowToCollectDataCnx" mandatory="true" />
+		<Attribute name="V_DCMode" dicoType="PLMSpecifyHowToCollectDataCnx" mandatory="true" readOnly="true"/>
+		<Attribute name="V_DCRichText" dicoType="PLMSpecifyHowToCollectDataCnx_Custo" displayType="richText" />
+		<Attribute name="V_DCLabel" dicoType="PLMSpecifyHowToCollectDataCnx"/>
+		<Attribute name="V_DCNbSameMeasurement" dicoType="PLMSpecifyHowToCollectDataCnx" />
+		<Attribute name="V_DCMagnitude" dicoType="PLMSpecifyHowToCollectDataCnx_Custo"/>
+		<Attribute name="V_DCUnit" dicoType="PLMSpecifyHowToCollectDataCnx_Custo"/>
+		<Attribute name="V_MinValue" dicoType="PLMSpecifyHowToCollectDataCnx_Custo" displayType="inclusiveEditor" />
+		<Attribute name="V_MinControlValue" dicoType="PLMSpecifyHowToCollectDataCnx_Custo" displayType="inclusiveEditor" />
+		<Attribute name="V_Value" dicoType="PLMSpecifyHowToCollectDataCnx_Custo"/>
+		<Attribute name="V_MaxControlValue" dicoType="PLMSpecifyHowToCollectDataCnx_Custo" displayType="inclusiveEditor" />
+		<Attribute name="V_MaxValue" dicoType="PLMSpecifyHowToCollectDataCnx_Custo" displayType="inclusiveEditor" />
+		<Attribute name="V_DCFormula" dicoType="PLMSpecifyHowToCollectDataCnx" readOnly="true"/>
+	</Type>
+	<Type name="DELWkiDataCollectChecklistReferenceBoolean">
+		<Attribute name="V_DCRichText" dicoType="PLMSpecifyHowToCollectDataCnx_Custo" displayType="richText" />
+		<Attribute name="V_DCLabel" dicoType="PLMSpecifyHowToCollectDataCnx"/>
+		<Attribute name="V_PossibleValues" dicoType="PLMSpecifyHowToCollectDataCnx_Custo"/>
+	</Type>
+
+</AttributesDescriptionList>

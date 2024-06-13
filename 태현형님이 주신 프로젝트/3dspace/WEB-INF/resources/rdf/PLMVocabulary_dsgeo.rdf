@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<!DOCTYPE rdf:RDF [
+  <!ENTITY xml "http://www.w3.org/XML/1998/namespace" >
+  <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+  <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+  <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+  <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+  <!ENTITY ds6w "http://www.w3.org/2002/07/ds6w/" >
+]>
+
+<rdf:RDF
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+  xmlns:xml="http://www.w3.org/XML/1998/namespace"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:owl="http://www.w3.org/2002/07/owl#"
+  xmlns:ds6w="http://www.w3.org/2002/07/ds6w/"
+  xmlns:dsgeo="http://www.3ds.com/vocabularies/dsgeo/"
+  xml:base="http://www.3ds.com/vocabularies/dsgeo/">
+
+<owl:Ontology rdf:about="http://www.3ds.com/vocabularies/dsgeo/">
+	<rdfs:label xml:lang="en">DSGeo vocabulary</rdfs:label>
+	<rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">This ontology defines the vocabulary of geolocalized objects for 6W tags.</rdfs:comment>
+	<owl:versionInfo>R2024x</owl:versionInfo>
+</owl:Ontology>
+
+
+<owl:Class rdf:about="NavigationExperience">
+	<rdfs:label xml:lang="en">City Navigation Experience</rdfs:label>
+	<rdfs:comment rdf:datatype="&xsd;string">Navigation Experience from City Apps</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="ReferentialExperience">
+	<rdfs:label xml:lang="en">City Referential Experience</rdfs:label>
+	<rdfs:comment rdf:datatype="&xsd;string">Referential Experience from City Apps</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="CollaborationExperience">
+	<rdfs:label xml:lang="en">City Collaboration Experience</rdfs:label>
+	<rdfs:comment rdf:datatype="&xsd;string">Collaboration Experience from City Apps</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="Dataset">
+	<rdfs:label xml:lang="en">City Dataset</rdfs:label>
+	<rdfs:comment rdf:datatype="&xsd;string">Dataset from City Apps</rdfs:comment>
+</owl:Class>
+
+
+<owl:DatatypeProperty rdf:about="referential">
+	<rdfs:label xml:lang="en">Referential</rdfs:label>
+	<rdfs:subPropertyOf rdf:resource="&ds6w;where"/>
+	<rdfs:range rdf:resource="&xsd;string"/>
+	<rdfs:comment xml:lang="en">Name of a City referential</rdfs:comment>
+</owl:DatatypeProperty>
+
+
+<owl:DatatypeProperty rdf:about="defaultStatus">
+	<rdfs:label xml:lang="en">Default status</rdfs:label>
+	<rdfs:subPropertyOf rdf:resource="&ds6w;what"/>
+	<rdfs:range rdf:resource="&xsd;string"/>
+	<rdfs:comment xml:lang="en">Default status of a City Experience</rdfs:comment>
+</owl:DatatypeProperty>
+
+
+<owl:DatatypeProperty rdf:about="outputFormat">
+	<rdfs:label xml:lang="en">Output format</rdfs:label>
+	<rdfs:subPropertyOf rdf:resource="&ds6w;what"/>
+	<rdfs:range rdf:resource="&xsd;string"/>
+	<rdfs:comment xml:lang="en">Output format of a Dataset</rdfs:comment>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="publishedStatus">
+	<rdfs:label xml:lang="en">Published status</rdfs:label>
+	<rdfs:subPropertyOf rdf:resource="&ds6w;what"/>
+	<rdfs:range rdf:resource="&xsd;string"/>
+	<rdfs:comment xml:lang="en">Published status of a City Dataset</rdfs:comment>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="geoItemType">
+	<rdfs:label xml:lang="en">Geoitem type</rdfs:label>
+	<rdfs:subPropertyOf rdf:resource="&ds6w;what"/>
+	<rdfs:range rdf:resource="&xsd;string"/>
+	<rdfs:comment xml:lang="en">Type of GeoItem</rdfs:comment>
+</owl:DatatypeProperty>
+
+
+
+</rdf:RDF>

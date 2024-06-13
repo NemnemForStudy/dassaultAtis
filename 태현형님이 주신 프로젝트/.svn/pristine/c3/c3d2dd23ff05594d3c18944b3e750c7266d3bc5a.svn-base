@@ -1,0 +1,39 @@
+.crop-modal .modal-wrap {
+  padding-top: 90px;
+  width: 100vw;
+}
+
+@media screen and (min-width: 768px) {
+  .crop-modal .modal-wrap {
+    max-width: calc(100vw - 100px);
+    /* Approximates the expected aspect ratio of the content */
+    width: calc((100vh - 100px - 2 * 90px) * 16 / 9);
+  }
+}
+
+.crop-modal-body {
+  max-height: calc(80vh - 140px);
+}
+
+.crop-modal-body canvas {
+  max-height: 100%;
+}
+
+.crop-modal-body .spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.crop-modal-body .cropper-crop {
+  cursor: auto;
+}
+
+.crop-modal-body .cropper-container {
+  opacity: 0;
+}
+
+.crop-modal-body.cropper-modal-ready .cropper-container {
+  opacity: 1;
+}

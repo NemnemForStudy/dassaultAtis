@@ -1,0 +1,26 @@
+################################################################################################
+# Create By thok 2023. 08. 09
+# Admin Type : command
+# Name : decRequestRequest
+################################################################################################
+#del command 'decRequestRequest';
+add command decRequestRequest
+	description 'Request Request'
+	label 'emxProgramCentral.Label.RequestRequest'
+	href '${COMMON_DIR}/decRequestStatus.jsp?mode=request'
+	alt 'emxProgramCentral.Label.RequestRequest'
+	setting 'Image' '${COMMON_DIR}/images/iconActionAssignRouteTask.png'
+	setting 'Confirm Message' 'emxProgramCentral.Alarm.RequestRequestConfirmMsg' 
+	setting 'Registered Suite' 'ProgramCentral'
+	setting 'Target Location' 'pagehidden'
+	setting 'Submit' 'true'
+	setting 'Access Function' 'isRequestOriginator' 
+	setting 'Access Program' 'decRequest'
+;
+add property 'command_decRequestRequest' on prog eServiceSchemaVariableMapping.tcl to command 'decRequestRequest'
+;
+
+# Modified By thok : 2023. 09. 19
+mod command 'decRequestRequest' 
+	add setting 'Access Function' 'isRequestRequestAvailable' 
+;

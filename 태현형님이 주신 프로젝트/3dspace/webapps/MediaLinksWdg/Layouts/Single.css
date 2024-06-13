@@ -1,0 +1,39 @@
+.single-layout {
+  height: 100%;
+  width: 100%; }
+  .single-layout.overflow {
+    overflow: auto; }
+  .single-layout .wrapper-item {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%; }
+    .single-layout .wrapper-item.has-link {
+      cursor: pointer; }
+  .single-layout .nav-ui-btn, .single-layout .nav-btn {
+    position: absolute;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    font-size: 44px;
+    cursor: pointer;
+    z-index: 500;
+    margin: 0; }
+  .single-layout .nav-btn {
+    width: 25%; }
+    .moduleContent:not(.touch) .single-layout .nav-btn:hover .nav-ui-btn.nav-ui-btn.nav-ui-btn {
+      opacity: 1;
+      background-color: rgba(255, 255, 255, 0.4); }
+    .single-layout .nav-btn .nav-ui-btn {
+      opacity: 0;
+      width: 44px;
+      transition: 0.3s;
+      background-color: rgba(255, 255, 255, 0.4); }
+      body:hover .single-layout .nav-btn .nav-ui-btn, .touch .single-layout .nav-btn .nav-ui-btn {
+        opacity: 0.4; }
+  .single-layout .previous-btn, .single-layout .previous-ui-btn {
+    left: 0; }
+  .single-layout .next-btn, .single-layout .next-ui-btn {
+    right: 0; }

@@ -1,0 +1,202 @@
+/*
+ *  emxPerson.java
+ *
+ * Copyright (c) 1992-2020 Dassault Systemes.
+ *
+ * All Rights Reserved.
+ * This program contains proprietary and trade secret information of
+ * MatrixOne, Inc.  Copyright notice is precautionary only and does
+ * not evidence any actual or intended publication of such program.
+ *
+ */
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.Map;
+import java.util.Properties;
+
+import javax.ws.rs.HttpMethod;
+
+import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.dec.util.DecConstants;
+import com.dec.util.DecMatrixUtil;
+import com.dec.util.decPropertyUtil;
+import com.dec.webservice.call.decWebserviceUtil;
+import com.matrixone.apps.domain.DomainConstants;
+import com.matrixone.apps.domain.DomainObject;
+import com.matrixone.apps.domain.util.PropertyUtil;
+import com.matrixone.json.JSONArray;
+import com.matrixone.json.JSONObject;
+
+import matrix.db.Context;
+import matrix.util.MatrixException;
+import matrix.util.StringList;
+/**
+ * @version AEF Rossini - Copyright (c) 2002, MatrixOne, Inc.
+ */
+@SuppressWarnings({ "unchecked", "deprecation" })
+public class emxPerson_mxJPO extends emxPersonBase_mxJPO
+{
+	private static final Logger logger = LoggerFactory.getLogger(emxPerson_mxJPO.class);
+	
+    /**
+     *
+     * @param context the eMatrix <code>Context</code> object
+     * @param args holds no arguments
+     * @throws Exception if the operation fails
+     * @since AEF Rossini
+     * @grade 0
+     */
+    public emxPerson_mxJPO (Context context, String[] args)
+        throws Exception
+    {
+      super(context, args);
+    }
+
+	/**
+	 * ootb person 생성 시 trigger override
+	 */
+	@Override
+	public int setPersonDefaultInfo(Context context, String[] args) throws MatrixException {
+		// TODO Auto-generated method stub
+		int result = super.setPersonDefaultInfo(context, args);
+		if ( result == 0 )
+		{
+			result = setPersonHomepage(context, args);
+		}
+		return result;
+	}
+	
+	/**
+	 * person 생성 시 homepage 지정
+	 * @param context
+	 * @param args
+	 * @return
+	 * @throws MatrixException
+	 */
+	private int setPersonHomepage(Context context, String[] args) throws MatrixException{
+		try{
+			String personId = args[0];
+			DomainObject person = DomainObject.newInstance(context, personId);
+			String personName = person.getInfo(context, DomainConstants.SELECT_NAME);
+	    	PropertyUtil.setAdminProperty(context, "person", personName, "preference_Command", "decProjectUICommand");
+	        PropertyUtil.setAdminProperty(context, "person", personName, "preference_Menu", "decProjectMyDesk");
+			return 0;
+		}catch(Exception e){
+			throw new MatrixException(e);
+		}
+	}
+	
+	public JSONObject send2Passport(String urlStr, String dsClientId, String dsClientSecret, String bodyStr) throws Exception{
+		try {
+			URL url = new URL(urlStr);
+			
+			logger.info("Passport URL : " + urlStr);
+			
+			HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
+			
+			httpCon.setRequestMethod(HttpMethod.POST);
+			
+			httpCon.setRequestProperty("ds-client-id", dsClientId);	
+			httpCon.setRequestProperty("ds-client-secret", dsClientSecret);	
+			httpCon.setRequestProperty("Content-Type", "application/json");
+			httpCon.setRequestProperty("Accept", "application/json");
+			
+			httpCon.setDoOutput(true);
+			
+			try ( OutputStream os = httpCon.getOutputStream() ) {
+			    byte[] input = bodyStr.getBytes("utf-8");
+			    os.write(input, 0, input.length);		
+			    os.close();
+			}
+			
+			httpCon.connect();
+			
+			String responseStr = IOUtils.toString(httpCon.getInputStream());
+			
+			logger.info("Passport Response : " + responseStr);
+			
+			JSONObject result = new JSONObject( responseStr );
+			return result;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	public int register3DPassport(Context context, String[] args) throws MatrixException{
+		try {
+			String personId = args[0];
+			DomainObject person = DomainObject.newInstance(context, personId);
+			
+			StringList slSelect = new StringList();
+			slSelect.add(DecConstants.SELECT_NAME);
+			slSelect.add("attribute[Email Address]");
+			slSelect.add(DecConstants.SELECT_ATTRIBUTE_FIRSTNAME);
+			slSelect.add(DecConstants.SELECT_ATTRIBUTE_LASTNAME);
+			
+			Map<String,String> personInfo = person.getInfo(context, slSelect);
+			
+			String email = personInfo.get("attribute[Email Address]");
+			
+			//
+			String passportURL = DecMatrixUtil.getSystemINIVariable("PASSPORT_URL");
+			String getInfoAPI = "/api/private/user/v2/get";
+			String registerAPI = "/api/private/user/register";
+			
+			String dsClientId = decWebserviceUtil.getConnectionProperty("dsClientId");
+			String dsClientSecret = decWebserviceUtil.getConnectionProperty("dsClientSecret");
+			
+			// 존재하는지 먼저 체크
+			JSONObject getInfoBody = new JSONObject();
+			getInfoBody.put("email", email);
+			
+			JSONObject getInfoResult = send2Passport(passportURL + getInfoAPI, dsClientId, dsClientSecret, getInfoBody.toString());
+			int code = (int) getInfoResult.get("code");
+			if ( code == -1 )
+			{
+				Properties connectionProp = decPropertyUtil.getConnectionProperties();
+				String ssoPassword = connectionProp.getProperty("ssoPassword");
+				
+				// Passport에 사용자 없음. 등록 필요
+				JSONObject fields = new JSONObject();
+				fields.put("username", personInfo.get(DecConstants.SELECT_NAME));
+				fields.put("email", email);
+				fields.put("lastName", personInfo.get(DecConstants.SELECT_ATTRIBUTE_LASTNAME));
+				fields.put("firstName", personInfo.get(DecConstants.SELECT_ATTRIBUTE_FIRSTNAME));
+				fields.put("password", ssoPassword);
+				fields.put("country", "KR");
+				
+				JSONObject registerBody = new JSONObject();
+				registerBody.put("batchCreation", true);
+				registerBody.put("disableUpdateNotification", true);
+				registerBody.put("fields", fields);
+				
+				JSONObject registerResult = send2Passport(passportURL + registerAPI, dsClientId, dsClientSecret, registerBody.toString());
+				
+				code = (int) registerResult.get("code");
+				if ( code == 0 )
+				{
+					return code;
+				}
+				else
+				{
+					JSONArray messageArr = (JSONArray) registerResult.get("messages");
+					throw new MatrixException( messageArr.getString(0).toString() );
+				}
+			}
+			else
+			{
+				// Passport에 사용자 있음. 등록 X
+				return code;
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new MatrixException( e.getMessage() );
+		}
+	}
+}

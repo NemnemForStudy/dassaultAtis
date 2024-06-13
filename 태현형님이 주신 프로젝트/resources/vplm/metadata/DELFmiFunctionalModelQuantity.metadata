@@ -1,0 +1,199 @@
+﻿<?xml version="1.0"?>
+<!-- COPYRIGHT DASSAULT SYSTEMES 2006, All rights reserved -->
+
+<Package xmlns="PLMDictionaryUnified" 
+         ModelerType="Top" 
+         BelongsToModeler="DELFmiFunctionalModel" 
+         Name="DELFmiFunctionalModelQuantity" 
+         CustomerExposition="Programmer" 
+         Uuid="7111923E-7F9A-4e86-8D6E-89372F9B9946" 
+         UseNames="DELFmiFunctionalModel"
+>
+
+  <!-- ***************************************************** -->
+  <!-- **************  ProcessInstanceSet ****************** -->
+  <!-- ***************************************************** -->
+
+  <RelationClass Name="ProcessInstanceSet"
+              Abstract="No"
+              CustomerExposition="Programmer"
+              CustomerExtensible="Yes"
+              Uuid="6C443933-ADB3-4bb3-8FEB-AA2F90EC93E9"
+              Discipline="Yes"
+              SuperName="DELFmiFunctionInstance"
+              Specializable="No">
+
+    <Property Name="MergedExtensionType" Value="ProcessInstanceSet_Ext"/>
+
+    <Simple Name="V_DiscreteQuantity"
+        Uuid="A226E41C-9010-44ca-8C59-C0DAF612ED0B"
+        Type="Integer"
+        MultiValuated="No"
+        Protection="External"
+        CAAExposition="L1"
+        DefaultValue="1"
+            >
+      <CAAComment>
+        <ShortRole>Defines unidentified discrete quantity</ShortRole>
+      </CAAComment>
+    </Simple>
+
+    <Method ImplementationType="AsFather">
+      <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+    </Method>
+    <Method ImplementationType="None">
+      <RealizeMethodType href="ExchangeScope.meth#ExchangeScope"/>
+    </Method>
+  </RelationClass>
+
+  <RelationClass Name="DELFmiFunctionIdentifiedInstance"
+            Abstract="No"
+            CustomerExposition="Programmer"
+            CustomerExtensible="Yes"
+            Uuid="3FF17B15-6C96-4c94-89B1-FF164B0D6C6D"
+            Discipline="Yes"
+            SuperName="ProcessInstanceSet"
+            Specializable="No"
+			PublicResourceURI="/resources/v1/modeler/dsmfg/dsmfg:MfgItem/{pid}/dsmfg:MfgItemInstance/{pid}">
+	
+    <Method ImplementationType="AsFather">
+      <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+    </Method>
+    <Method ImplementationType="None">
+      <RealizeMethodType href="ExchangeScope.meth#ExchangeScope"/>
+    </Method>
+  </RelationClass>
+
+  <!-- ***************************************************** -->
+  <!-- ************  ProcessInstanceContinuous ************* -->
+  <!-- ***************************************************** -->
+
+  <RelationClass Name="ProcessInstanceContinuous"
+              Abstract="No"
+              CustomerExposition="Programmer"
+              CustomerExtensible="Yes"
+              Uuid="0D9D593C-0729-4f77-A86B-59B248807D6F"
+              Discipline="Yes"
+              SuperName="DELFmiFunctionInstance"
+              Specializable="No"
+			  PublicResourceURI="/resources/v1/modeler/dsmfg/dsmfg:MfgItem/{pid}/dsmfg:MfgItemInstance/{pid}">
+
+    <Property Name="MergedExtensionType" Value="ProcessInstanceContinuous_Ext"/>
+
+    <Simple Name="V_UsageContCoeff"
+        Uuid="8EC915EE-B13B-4780-B217-EFA356D3181F"
+        Type="Double"
+        MultiValuated="No"
+        Protection="External"
+        CAAExposition="L1"
+        DefaultValue="1.0"
+            >
+      <CAAComment>
+        <ShortRole>Defines usage continuous coefficient</ShortRole>
+      </CAAComment>
+    </Simple>
+	
+	    <Simple Name="V_IsConstQuantity"
+        Uuid="2D841F0D-01DC-43ED-8E86-B32F387B240C"
+        Type="Boolean"
+        MultiValuated="No"
+        Protection="Free"
+        CAAExposition="L1"
+        DefaultValue="false"
+            >
+      <CAAComment>
+        <ShortRole>Defines if the quantity is constant</ShortRole>
+      </CAAComment>
+    </Simple>
+
+    <Method ImplementationType="AsFather">
+      <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+    </Method>
+    <Method ImplementationType="None">
+      <RealizeMethodType href="ExchangeScope.meth#ExchangeScope"/>
+    </Method>
+  </RelationClass>
+
+  <Class Name="DELFmiDiscreteFunctionReference"
+         Uuid="CD55B48F-7D64-464c-8D65-04C45615E757"
+         CustomerExposition="Programmer"
+         CustomerExtensible="No"
+         Specializable="Yes"
+         Abstract="No"
+         SuperName="DELFmiFunctionReference"
+         Discipline="Yes"
+         CreateInstName="ProcessInstanceSet"
+		     >
+
+    <CAAComment>
+      <ShortRole>Defines Continuous quantity reference</ShortRole>
+    </CAAComment>
+
+    <Method ImplementationType="None">
+      <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+    </Method>
+
+  </Class>
+
+  <Class Name="DELFmiContinuousFunctionReference"
+         Uuid="BC563D3B-A7D0-4cfb-A36F-3F3EFC4CF5C3"
+         CustomerExposition="Programmer"
+         CustomerExtensible="No"
+         Specializable="Yes"
+         Abstract="No"
+         SuperName="DELFmiFunctionReference"
+         Discipline="Yes"
+         CreateInstName="ProcessInstanceContinuous"
+		     >
+
+    <CAAComment>
+      <ShortRole>Defines Continuous quantity reference</ShortRole>
+    </CAAComment>
+
+    <Method ImplementationType="None">
+      <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+    </Method>
+
+  </Class>
+  
+  <Extension Name="DELFmiLossQuantityAbstract"
+           Uuid="EA302F90-6D48-4BD2-8533-2DE614414D65"
+           ScopeNames="ProcessInstanceContinuous"
+           Discipline="No"
+           Abstract="Yes"
+           Specializable="No"
+           CAAExposition="L0"     
+           CustomerExposition="Programmer">
+
+    <CAAComment>
+      <ShortRole>Abstract Loss Quantity Extension</ShortRole>
+    </CAAComment>
+  </Extension>
+  
+  <Extension Name="DELFmiLossQuantity_Ratio"
+             Uuid="7D705614-EEB1-447B-8153-5B5E36D18779"
+			 SuperName="DELFmiLossQuantityAbstract"
+             CAAExposition="L1"
+             Specializable="No"
+             CustomerExposition="Programmer"
+             >
+
+    <Simple Name="V_LossQuantity"
+            Uuid="5A175E6A-A2A1-4663-9F3A-11BECC0A71B2"
+            Type="Double"
+            Magnitude="Ratio"
+            MultiValuated="No"
+            Protection="Free"
+            CAAExposition="L1"
+            DefaultValue="1.0"
+            >
+      <CAAComment>
+        <ShortRole>Defines Ratio Loss Quantity</ShortRole>
+      </CAAComment>
+    </Simple>
+    <CAAComment>
+      <ShortRole>Loss Ratio Quantity Extension</ShortRole>
+    </CAAComment>
+  </Extension>
+
+</Package>

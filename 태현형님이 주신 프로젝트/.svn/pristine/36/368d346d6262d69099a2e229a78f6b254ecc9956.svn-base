@@ -1,0 +1,1 @@
+define("DS/LifecycleControls/LifecycleControls_ja",{});define("DS/LifecycleControls/assets/nls/CommandDialog",{okButton:"OK",cancelButton:"キャンセル"});define("DS/LifecycleControls/assets/nls/CustomizeColumns",{CustomizeColumns:"列をカスタマイズ",newTarget:"新規ターゲット"});define("DS/LifecycleControls/assets/nls/RelatedObjectsDialog",{selectRelatedObjs:"オプションの関連オブジェクトを選択します"});

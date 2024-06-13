@@ -1,0 +1,1 @@
+define("DS/3DPlayAppHybrid/3DPlayAppHybrid_zh",{});define("DS/3DPlayAppHybrid/assets/nls/3DPlayHybrid",{StatusOnline:"已连接",StatusOffline:"已断开连接"});define("DS/3DPlayAppHybrid/assets/nls/MyXAppHomePage",{"App.Title":"3DPlay","App.Motto":"体验触手可及","Open.Title":"打开本地模型","Mru.Title":"最近使用","Sample.Title":"打开模型示例","Search.Title":"搜索","SocialLink.Title":"Enovia 社交链接"});

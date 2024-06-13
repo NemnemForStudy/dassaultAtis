@@ -1,0 +1,661 @@
+#ENOVIALoc ver. 11/14/16
+#Titles
+mcadIntegration.Applet.Title.ProgressBar= ENOVIA 進度狀態
+mcadIntegration.Applet.Title.SelectDirectory= 選擇目錄
+mcadIntegration.Applet.Title.OperationFailed= 操作失敗
+mcadIntegration.Applet.Title.FileConfirm= 確認檔案取代
+mcadIntegration.Applet.Title.DeleteConfirmDialog= 警告：這個動作將會刪除全部選擇的檔案！
+mcadIntegration.Applet.Title.CreateNewDir= 建立新目錄
+
+#Messages
+mcadIntegration.Applet.Message.ConflictNotResolved= 請解決衝突再存回下列物件
+mcadIntegration.Applet.Message.NoFileOverwriteConfirmationReceived= 取出操作已中止。尚未從使用者收到檔案覆寫確認回應。
+mcadIntegration.Applet.Message.WorkingdirectoryAttrNotSpecified= 未在根節點中指定「workingdirectory」屬性。
+mcadIntegration.Applet.Message.NullCheckoutArguments= 取出操作已中止。取出引數為 null。
+mcadIntegration.Applet.Message.ObjectIsNotSelected= 未選擇任何品項
+mcadIntegration.Applet.Message.PleaseSelectCheckoutFromMCADTool= 請選擇 ENOVIA -> 從 CAD 封裝取出
+mcadIntegration.Applet.Message.CheckinAbortedUponUsersRequest= 在使用者的請求下已中止存回操作
+mcadIntegration.Applet.Message.FileUploadFailedErrorMessageIs= 檔案上傳失敗。錯誤訊息為：
+mcadIntegration.Applet.Message.CheckinPageCreationFailed= CheckinPage 建立失敗
+mcadIntegration.Applet.Message.CheckoutFailed= 取出失敗
+mcadIntegration.Applet.Message.DownloadStructureFailed= 下載結構失敗
+mcadIntegration.Applet.Message.Checkout= 取出
+mcadIntegration.Applet.Message.CheckoutSuccessfullyCompleted= 取出已成功完成
+mcadIntegration.Applet.Message.CheckoutCancelled= 取出已取消
+mcadIntegration.Applet.Message.UserCancelledCheckout= 使用者已取消取出
+mcadIntegration.Applet.Message.NoCADModelSelectedForCheckout= 未選擇任何 CAD 模型以進行取出。請在瀏覽器中搜尋 cad 物件並選擇它們以進行取出。然後選擇此功能表品項！
+mcadIntegration.Applet.Message.CheckoutAbortedUponUsersRequest= 在使用者的請求下已中止操作
+mcadIntegration.Applet.Message.NoFileNeedsDownlaod= 使用者已中止開啟操作
+mcadIntegration.Applet.Message.FileDownloadFailedForReason= 檔案下載失敗，原因為：\n
+mcadIntegration.Applet.Message.FailedToOpenTheFile= 無法開啟┌
+mcadIntegration.Applet.Message.ReasonIsEitherTheFileIsAlreadyOpened= 」。原因為「檔案已在 CSE 工具中開啟或它位於無寫入權限的磁碟上。」
+mcadIntegration.Applet.Message.NoDirectoryChooserListenerDefined= 未定義任何 DirectoryChooserListener
+mcadIntegration.Applet.Message.FindForCheckout= 尋找取出
+mcadIntegration.Applet.Message.PoppedUpWindowIsOpened= 快顯視窗已開啟，請關閉視窗再繼續進行
+mcadIntegration.Applet.Message.Cancel= 取消
+mcadIntegration.Applet.Message.UserCancelledTheOperation= 使用者已取消操作。
+mcadIntegration.Applet.Message.ServerFailedToCreateOrCheckoutWorkingSet= 伺服器無法建立/取出工作組：
+mcadIntegration.Applet.Message.FailedToGetGlobalConfigObject= 無法取得全域模型組態物件。\n
+mcadIntegration.Applet.Message.FailedToGetLocalConfigObject= 無法取得本機模型組態物件。\n
+mcadIntegration.Applet.Message.FailedToGetProperties= 無法從伺服器取得屬性。\n
+mcadIntegration.Applet.Message.FailedToFCSInformation= 無法取得 FCS 資訊。\n
+mcadIntegration.Applet.Message.FailedToSaveWorkingSet= 無法在伺服器中儲存工作組。\n
+mcadIntegration.Applet.Message.EnvironmentHasBeenChanged= 環境已改變。
+mcadIntegration.Applet.Message.GlobalConfigObjectIsNull= 重大錯誤 : 在 Applet 中的全域模型組態物件為 NULL 。\n無法決定相關類型。
+mcadIntegration.Applet.Message.NeitherEngineeringCentralNorInfoCentralIsActive= Engineering Central 或 Info Central 都不是在使用中。\n目前 IEF 僅支援這兩個中心應用程式。\n請選擇一個並重試。
+mcadIntegration.Applet.Message.ServerAndCSEVersionMismatchOld= 伺服器和 CSE 版本不相符。無法進一步繼續。\n必須安裝 CSE 新版本。\n\n目前線束版本為 ${VERSION}\n目前 ${APPLICATION} CSE 版本與線束的 ${HARNESSVERSION} 版本相容。
+mcadIntegration.Applet.Message.ServerAndCSEVersionMismatchNew= 伺服器和 CSE 版本不相符。無法進一步繼續。\n必須安裝 CSE 新版本。\n\n目前 ${APPLICATION} CSE 版本為 ${CURRENTCSEVERSION}\n目前線束與 ${APPLICATION} CSE 的 ${COMPATIBLECSEVERSION} 版本相容。
+mcadIntegration.Applet.Message.ErrorWhilePingingToServer= Ping 至伺服器時發生錯誤。錯誤：
+mcadIntegration.Applet.Message.CorruptUserDefinedCommand= 損毀使用者定義的指令。必須有 ${URLATTRIBUTE} 和 ${HANGBROWSERATTRIBUTE} 的屬性值！
+mcadIntegration.Applet.Message.CorruptUserDefinedCommandProperAttributeValues= 損毀使用者定義的指令。「hangBrowser」的屬性值應為「是」或「非」
+mcadIntegration.Applet.Message.UserDefinedCommandCancelled= 使用者定義的指令已取消
+mcadIntegration.Applet.Message.UserDefinedCommandFailed= UserDefinedCommand 失敗：伺服器無法返回儲存在伺服器中的指令檔案路徑
+mcadIntegration.Applet.Message.WrongCommandSentByCSE= CSE 傳送的錯誤指令：必須有類型、名稱和 dirname 以辨識 cadobject。
+mcadIntegration.Applet.Message.VersionsDialogSuccessfullyShown= 成功顯示迭代對話方塊
+mcadIntegration.Applet.Message.LockUnlock= 鎖定/解鎖
+mcadIntegration.Applet.Message.UserCancelledLockUnlock= 使用者已取消鎖定/解鎖。
+mcadIntegration.Applet.Message.LockUnlockFailedReason= 鎖定/解鎖失敗。原因：
+mcadIntegration.Applet.Message.LockUnlockSuccessful= 鎖定/解鎖成功。
+mcadIntegration.Applet.Message.FailureInLockUnlock= 鎖定/解鎖失敗。
+mcadIntegration.Applet.Message.LockUnlockPageCreationFailed= 鎖定/解鎖頁面建立失敗
+mcadIntegration.Applet.Message.FailedWhileCreatingLockUnlockPage= 建立鎖定/解鎖頁面時失敗
+mcadIntegration.Applet.Message.Checkin= 存回
+mcadIntegration.Applet.Message.CheckinSuccessful= 存回成功
+mcadIntegration.Applet.Message.SaveSuccessful= 儲存至 ENOVIA 成功
+mcadIntegration.Applet.Message.FailedWhileCreatingCheckinPage= 建立存回頁面時失敗。
+mcadIntegration.Applet.Message.FailedWhileCreatingCheckoutPage= 建立取出頁面時失敗。
+mcadIntegration.Applet.Message.FailedWhileCreatingCheckoutRequestXML= 建立取出請求 XML 時失敗
+mcadIntegration.Applet.Message.CheckinCancelled= 存回已取消
+mcadIntegration.Applet.Message.UserCancelledTheCheckin= 使用者已取消存回
+mcadIntegration.Applet.Message.CheckinFailed= 操作失敗
+mcadIntegration.Applet.Message.SelectDrive= 選擇磁碟：
+mcadIntegration.Applet.Message.SelectDriveAlias= 選擇磁碟/別名：
+mcadIntegration.Applet.Message.SelectAlias= 選擇別名：
+mcadIntegration.Applet.Message.Purge= 清除
+mcadIntegration.Applet.Message.NotYetImpl= 尚未實施！
+mcadIntegration.Applet.Message.ServerListeningOnPort= 在連接埠上接聽伺服器
+mcadIntegration.Applet.Message.SuitableGlobalConfigObjectIsNotSet= 目前全域模型組態物件 (GCO)「${CURRENTGCO}」未對應 CAD 工具「${CADTOOL}」。若是「${CADTOOL}」，需要「${REQUIREDGCO}」全域模型組態物件。請從 CAD 工具中使用「ENOVIA」功能表下的「喜好設定」功能表：「${CADTOOL}」並將全域模型組態物件變更為「${REQUIREDGCO}」。 
+mcadIntegration.Applet.Message.ErrorWhileReadingTheObjectFromServerResponse= 讀取伺服器回應的物件時發生錯誤。
+mcadIntegration.Applet.Message.FailedToGetGlobalConfigObjectFromTheServer= 錯誤：無法從伺服器取得 GlobalConfigObject。
+mcadIntegration.Applet.Message.AppletFailedToGetIntegrationProperties= Applet 無法取得整合屬性
+mcadIntegration.Applet.Message.CSEIncompatible= 所選物件是透過使用以下之外的 CAD 工具建立：
+mcadIntegration.Applet.Message.UserCanceledUpdate= 使用者已取消更新操作。
+mcadIntegration.Applet.Message.FailedWhileCreatingUpdatePage= 建立設計更新頁面時失敗。
+mcadIntegration.Applet.Message.RefreshSuccessful= 重新整理成功
+mcadIntegration.Applet.Message.CannotRefreshLockedFiles= 無法重新整理，所選結構已鎖定。
+mcadIntegration.Applet.Message.CannotRefreshStructure= 無法重新整理下列檔案，因為使用者已將其鎖定：\n${LOCKEDOBJLIST}
+mcadIntegration.Applet.Message.CannotRefreshFiles= 無法重新整理下列檔案，因為檔案已在 CSE 工具中開啟或它存在沒有寫入權限的磁碟上。
+mcadIntegration.Applet.Message.UserOpenedTheBrowserAndUserSentTheLoginRequestAreDifferent= 開啟瀏覽器的使用者與傳送 LoginRequest 的使用者不同。
+mcadIntegration.Applet.Message.PortNumbersGivenAreNotValidValues= 在 ief.properies 檔案中指供的連接埠號碼不是有效的值。
+mcadIntegration.Applet.Message.MultiPortRangeMaxValueShouldBeGreaterThanMultiPortRangeMinValue= MultiPortRangeMax 值應大於 MultiPortRangeMin 值。
+mcadIntegration.Applet.Message.NotAbleToFindUnusedPortToStartAppletServerSocket= 找不到未使用的連接埠可開始 applet 的 ServerSocket。
+mcadIntegration.Applet.Message.CanNotCheckoutIntegrationFileUsingThisCommand= 無法使用此指令取出整合檔案
+mcadIntegration.Applet.Message.FilesHaveBeenDownloadedSuccessfully= 檔案已下載成功
+mcadIntegration.Applet.Message.NoNodeNeedsToBeRecognized= 沒有需要辨識的節點。請選擇「取消」以關閉視窗。
+mcadIntegration.Applet.Message.CSEIncompatibility= 無法從不同的 CAD 工作選擇物件以進行多重設計取出。
+mcadIntegration.Applet.Message.UserCancelledTheRecognizeVersion= 使用者已取消 RecognizeIteration
+mcadIntegration.Applet.Message.NoItemToRefresh= 沒有設計需要依目前設計變更準則更新。
+mcadIntegration.Applet.Message.RefreshDirectoryChangedManualMergeRequired= 下列設計已下載至不同的目錄而非原先的設計目錄。他們在全部組合件中的參考應手動變更。
+mcadIntegration.Applet.Message.RefreshDirectoryChangedManualMergeFileDetails= 名稱「${NAME}」原始目錄：「${ORIGINALPATH}」下載目錄：「${DOWNLOADPATH}」
+mcadIntegration.Applet.Message.ObjectDetails= 物件詳細資料 
+mcadIntegration.Applet.Message.ObjectLocation= 物件位置
+mcadIntegration.Applet.Message.CheckinAborted= 存回已中止
+mcadIntegration.Applet.Message.CheckoutAborted= 取出已中止
+mcadIntegration.Applet.Message.LockUnlockAborted= 鎖定解鎖已中止
+mcadIntegration.Applet.Message.LockUnlockWaitingForNextRequest= 鎖定解鎖正在等待下一個請求
+mcadIntegration.Applet.Message.DesignChangeReportAborted= 設計變更報告已中止
+mcadIntegration.Applet.Message.ERRORFailedtoUpdateCSVData= 錯誤：無法更新 CSV 資料
+mcadIntegration.Applet.Message.FinalizeSuccessfullyCompleted= 定案成功完成。
+mcadIntegration.Applet.Message.FinalizeFailed= 定案失敗。
+mcadIntegration.Applet.Message.FailedWhileCreatingFinalizationPage= 建立定案頁面時失敗。
+mcadIntegration.Applet.Message.SaveAsSuccessfullyCompleted= 另存新檔成功完成。
+mcadIntegration.Applet.Message.SaveAsFailed= 另存新檔失敗。
+mcadIntegration.Applet.Message.FailedWhileCreatingSaveAsPage= 建立另存新檔頁面時失敗。
+mcadIntegration.Applet.Message.EnterTargetRevision= 為全部所選節點輸入 TargetRev 值。
+mcadIntegration.Applet.Message.EnterSaveAsName= 為您要使用不同名稱儲存的物件輸入另存新檔名稱。
+mcadIntegration.Applet.Message.BGCheckinLogTable1Status= 狀態：
+mcadIntegration.Applet.Message.BGCheckinLogTable1StatusValueSuccess= 成功
+mcadIntegration.Applet.Message.BGCheckinLogTable1StatusValueFailure= 失敗
+mcadIntegration.Applet.Message.BGCheckinLogTable1Date= 日期：
+mcadIntegration.Applet.Message.BGCheckinLogTable1MxIntegration= ENOVIA 整合：
+mcadIntegration.Applet.Message.BGCheckinLogTable1Version= 迭代：
+mcadIntegration.Applet.Message.BGCheckinLogTable1CopyAttributes= 複製屬性：
+mcadIntegration.Applet.Message.BGCheckinLogTable1CreateVersion= 建立迭代：
+mcadIntegration.Applet.Message.BGCheckinLogTable1DeleteFiles= 刪除檔案：
+mcadIntegration.Applet.Message.BGCheckinLogTable1CheckinComment= 存回意見：
+mcadIntegration.Applet.Message.BGCheckinLogTable2Name= 名稱
+mcadIntegration.Applet.Message.BGCheckinLogTable2Filename= FileName
+mcadIntegration.Applet.Message.BGCheckinLogTable2Status= 狀態
+mcadIntegration.Applet.Message.BGCheckinLogTable2TargetRevision= TargetRevision
+mcadIntegration.Applet.Message.BGCheckinLogTable2DesignType= 類型
+mcadIntegration.Applet.Message.BGCheckinLogTable2DesignPolicy= 策略
+mcadIntegration.Applet.Message.BGCheckinLogTable2CurrentVersion= CurrentIteration
+mcadIntegration.Applet.Message.BGCheckinSuccess= 背景存回成功。選取的檔案已全部存回。按一下「確定」儲存成功記錄檔案或取消以將其刪除。
+mcadIntegration.Applet.Message.BGCheckinFailed= 背景存回失敗。所選檔案未存回。
+mcadIntegration.Applet.Message.BGCheckinFailure= 失敗：  
+mcadIntegration.Applet.Message.BGSaveSuccess= 背景儲存成功。選取的檔案已全部儲存。按一下「確定」儲存成功記錄檔案或取消以將其刪除。
+mcadIntegration.Applet.Message.BGSaveFailed= 背景儲存失敗。所選檔案未儲存。  
+mcadIntegration.Applet.Message.BGCheckinFailedConfirm= 按一下「確定」以審查記錄檔案
+mcadIntegration.Applet.Message.CheckinInProgress= 存回進行中，請等候存回完成
+mcadIntegration.Applet.Message.WSMFileNotDirectory= 檔案非目錄  
+mcadIntegration.Applet.Message.WSMFInvalidCommand= 工作區管理無效的指令結構  
+mcadIntegration.Applet.Message.NoObjectSelected= 未選擇任何物件或資料夾已指派
+mcadIntegration.Applet.Message.ClearSelectedFolder= 清除
+mcadIntegration.Applet.Message.ClickToChooseFolder= 按一下選擇書籤
+mcadIntegration.Server.Message.ChildrenNotInPreFinalizationState= 無法選擇升級的品項因為下列子節點非處於預先定案狀態：
+mcadIntegration.Server.Message.FirstLevelChildrenNotAheadOfParent= 父項不應在子項之前。請將子項升級至等於或高於父項的狀態。
+mcadIntegration.Applet.Message.CanNotSelectItemUserDoesNotHaveCheckinAccess= 無法選擇品項「${NAME}」，使用者沒有存回存取權限
+mcadIntegration.Applet.Message.CanNotSelectItemUserDoesNotHaveLockUnlockAccess= 無法選擇品項「${NAME}」，使用者沒有鎖定/解鎖存取
+mcadIntegration.Server.Message.CanNotSelectItemNotCheckedOutWithLock= 無法選擇品項「${NAME}」，未使用鎖定取出
+mcadIntegration.Applet.Message.FilePresent= 資料夾已包含名稱為「${FILE_NAME}」的檔案\n\n是否要取代現有的檔案？
+mcadIntegration.Applet.Message.BackGroundCheckInIsInProgress= 背景存回進行中
+mcadIntegration.Applet.Message.BackGroundSaveIsInProgress= 背景儲存至 ENOVIA 進行中
+mcadIntegration.Applet.Message.SelectLoadFilesRenamedDesignsFoundInCurrentCheckout= 從取出頁面選擇「載入檔案」選項以為重新命名/儲存為子更新父
+mcadIntegration.Applet.Message.BackGroundCheckInPreProcess= 等待回應以開始背景存回的過程
+mcadIntegration.Applet.Message.FailedToShowDirectoryChooser= 無法顯示目錄選擇器
+mcadIntegration.Applet.Message.FailureAttemptingToDeleteLogfiles= 嘗試刪除記錄檔案失敗
+mcadIntegration.Applet.Message.FailedToAccessFailureLogs= 無法存取失敗記錄
+mcadIntegration.Applet.Message.FailedToAccessSuccessLogs= 無法存取成功記錄
+mcadIntegration.Applet.Message.FailedToConvertFileToString= 無法將檔案轉換為字串
+mcadIntegration.Applet.Message.FailedToGetDirectoryContents= 無法取得目錄內容
+mcadIntegration.Applet.Message.FailedToGetFilessInSession= 無法在工作階段中取得檔案
+mcadIntegration.Applet.Message.FailedToCheckoutFiles= 無法取出檔案
+mcadIntegration.Applet.Message.FailureAttemptingToDeleteFiles= 嘗試刪除檔案失敗
+mcadIntegration.Applet.Message.FailureAttemptingToCopyFiles= 嘗試複製檔案失敗
+mcadIntegration.Applet.Message.FailureAttemptingToMoveFiles= 嘗試移動檔案失敗
+mcadIntegration.Applet.Message.FailedToGetWSMInitialDir= 無法取得 WSM 初始目錄
+mcadIntegration.Applet.Message.FilesHaveBeenUploadedSuccessfully= 檔案已上載成功
+mcadIntegration.Applet.Message.FileUploadFailedForReason= 檔案上載失敗，原因為：\n
+mcadIntegration.Applet.Title.WSMDeleteRevertOperationFailed= 無法刪除/回復下列檔案，原因：存取被禁止！
+mcadIntegration.Applet.Message.FileRenameOnClientRequired= 下列檔案需要在客戶端上進行檔案重新命名。重新整理不會將檔案重新命名。
+mcadIntegration.Applet.Message.RapidFileAccessPathIsNull= 鎖定/解鎖操作已中止。請檢查 RapidFileAccess 設定。
+mcadIntegration.Applet.Message.CanNotDeleteFileReasonAlreadyOpen= 無法刪除檔案，因為檔案已在 CSE 工具中開啟或位於無寫入權限的磁碟上。
+mcadIntegration.Applet.Message.NewDirName= 新的目錄名稱：
+mcadIntegration.Applet.Message.ErrorWithDirName= 以下列名稱建立目錄時發生錯誤：
+mcadIntegration.Applet.Message.DirExistWithSameName= 指定的目錄已存在
+mcadIntegration.Applet.Message.FamiliesHavingUnRecognizedNodes= 無法辨識下列系列的部分例項
+mcadIntegration.Server.Message.CanNotCheckinItemAsItsFamilyLockedByAnotherUser= 無法存回品項「${NAME}」，因為系列「${FAMILYNAME}」被其他使用者鎖定。
+mcadIntegration.Applet.Message.ClickToChoosePart= 按一下以選擇零件
+mcadIntegration.Applet.Message.ClickToCreatePart= 按一下以建立零件
+mcadIntegration.Applet.Message.EBOMSyncronizationFailed= 建立 EBOM 同步化時發生錯誤
+mcadIntegration.Applet.Message.CantEBOMOnObjectHavingStructureDiffWithStructureDetails= ${TYPE1} ${NAME1} ${REV1} 和 ${TYPE2} ${NAME2} ${REV2} 的子結構有差異，因此 EBOM 同步化限制在物件上。
+mcadIntegration.Applet.Message.PartWithSameNameAlreadyAssigned= 有相同名稱的零件已指派至：${CADTYPE} ${NAME}
+mcadIntegration.Applet.Message.PartNameDoesNotMatchInstanceName= 零件名稱不符合例項物件的名稱需求，請使用 ${NAME}(${FAMILYNAME})
+mcadIntegration.Applet.Message.CopyOperationSuccesful= 檔案複製至位置成功
+mcadIntegration.Applet.Message.MoveOperationSuccesful= 檔案移動至位置成功
+mcadIntegration.Applet.Message.DeleteOperation= 檔案從位置刪除成功
+mcadIntegration.Applet.Message.RevertOperation= 在檔案上執行回復操作成功
+mcadIntegration.Applet.Message.OperationCancelled= 操作取消
+mcadIntegration.Applet.Message.SameDirectory= 來源和目標目錄不能相同
+mcadIntegration.Applet.Message.FileOverRite= 資料夾已包含下列檔案：\n\n ${FILENAME} \n\n是否要取代現有的檔案？
+mcadIntegration.Applet.WorkspaceMgmt.RefreshConfirmDialog= 警告：全部所選檔案將會重新整理，自上次開啟以來進行的任何變更都將遺失。
+mcadIntegration.Applet.Message.WSMDownloadAndRemoveHardlinkSuccesful= 物件鎖定成功。此 hardlink 已移除，物件已下載至：${DEFAULTDIR}
+mcadIntegration.Applet.Message.ObjectLockedUnlockedSuccessfully= 物件鎖定/解鎖成功。
+mcadIntegration.Applet.Message.CannotSelectItemNoCheckoutAccess= 無法選擇「${NAME}」，使用者沒有所需存取
+mcadIntegration.Applet.Message.CannotSelectMultipleIntegrationObjects= 無法選擇不同整合的物件
+mcadIntegration.Applet.Message.WarningMessageForRenamedObjects= 請選擇「繼續」以僅下載設計檔案或選擇「取消」，然後從 CAD 工具開啟設計。
+mcadIntegration.Applet.Message.Signature= 簽名
+mcadIntegration.Applet.Message.UserNotLoggedIn= 使用者未登入。 
+mcadIntegration.Applet.Message.OperationNotAllowed= 操作不允許用於類型 - 
+mcadIntegration.Applet.Message.LoginDialogCancelled= 使用者已取消登入操作
+
+# XCAD Trace Tool Messages
+mcadIntegration.Tracetool.Message.CannotStoreServerLog= 除錯標記關閉，將不會儲存伺服器記錄檔案。請開啟標記並重新執行。
+
+#JavaScript Messages
+mcadIntegration.Server.Message.CannotSelectSomeItemsForLock= 部分品項不是所選鎖定品項，原因可能是使用者沒有該品項的鎖定存取。
+mcadIntegration.Server.Message.CanNotSelectItemPreCheckOutEvaluationFailed= 預先存回評估失敗。無法選擇「${NAME}」。\n「${REASON}」
+mcadIntegration.Server.Message.CanNotSelectItemItHasConflictInUUID= 無法選擇品項「${NAME}」，它在 ENOVIA 中有身分的 UUID 衝突
+mcadIntegration.Server.Message.ConflictUUIDResolved= UUID 衝突已解決
+mcadIntegration.Server.Message.ViewsCantBeApplied= 視圖無法套用在未參與組合件結構的元素上
+mcadIntegration.Server.Message.SelectLateralView= 取出前，請明確選擇特定的橫向視圖
+mcadIntegration.Server.Message.CanNotSelectItemItIsSuppressed= 無法選擇品項「${NAME}」，因為物件不存在此檔案。
+mcadIntegration.Server.Message.CanNotSelectItemChildIsSuppressed= 無法選擇品項「${NAME}」，因為一或更多檔案子系不存在此檔案。
+mcadIntegration.Server.Message.CanNotSelectItemItIsFinalized= 無法選擇品項「${NAME}」，因為其已定案。
+mcadIntegration.Server.Message.CanNotSelectItemAllMajorRevisionsAreFinalized= 無法選擇品項「${NAME}」，全部主要修訂版已定案
+mcadIntegration.Server.Message.TargetRevisionFieldOfObjectIsEmpty= 物件「${NAME}」的目標修訂版欄位為空白
+mcadIntegration.Server.Message.ForInstanceCheckinFamilyObjectIsNotSelected= 若是例項「${NAME}」存回，父系列 「${FAMILYNAME}」未選擇
+mcadIntegration.Server.Message.ForInstanceCheckoutFamilyObjectIsNotSelected= 若是例項「${NAME}」取出，父系列 「${FAMILYNAME}」未選擇
+mcadIntegration.Server.Message.TargetRevisionsForTheFamilyAreNotInSinkAtObject= 系列「${FAMILYNAME}」的目標修訂版不在物件「${NAME}」的縮痕中
+mcadIntegration.Server.Message.ForSameObjectOfTypeAndNameDifferentVersionsHaveBeenSelectedForCheckout= 下列設計已識別修正版衝突：
+mcadIntegration.Server.Message.ForConfigurationObjectOfTypeAndNameDifferentVersionsHaveBeenSelectedForCheckout= 若是類型「${TYPE}」和名稱「${NAME}」的模型組態物件，已在相同的取出塔中選擇不同的迭代
+mcadIntegration.Server.Message.BusinessObjectIsLockedBy= 業務物件「${NAME}」已由「${LOCKEDBY}」鎖定
+mcadIntegration.Server.Message.CanNotLockItemItIsUnrecognized= 無法鎖定品項「${NAME}」，它在 ENOVIA 中的身分無法辨識
+mcadIntegration.Server.Message.CanNotLockItemItIsNotExisting= 無法鎖定品項「${NAME}」，它在 ENOVIA 中的不存在
+mcadIntegration.Server.Message.CanNotLockRFACheckoutDesign= 無法鎖定品項「${NAME}」，檔案未從本機取出
+mcadIntegration.Server.Message.CanNotDoLockUnlockDifferentVersionOfSameObjectIsLocked= 無法鎖定/解鎖品項「${NAME}」，相同物件的不同迭代會由「${LOCKEDBY}」鎖定
+mcadIntegration.Server.Message.CanNotDoLockUnlockIsIsLockedBy= 無法鎖定/解鎖品項「${NAME}」，它會由「${LOCKEDBY}」鎖定
+mcadIntegration.Server.Message.CanNotCloneObjectWithSameNameAsOriginal= 無法使用與正本相同的名稱複製物件「${NAME}」
+mcadIntegration.Server.Message.CanNotSelectItemItIsUnrecognized= 無法選擇品項「${NAME}」，它在 ENOVIA 中的身分無法辨識
+mcadIntegration.Server.Message.NodeAlreadyRecognized= 無法選擇品項「${NAME}」，其已被辨識。請先將其取消辨識再選擇
+mcadIntegration.Server.Message.UnrecognizedNodesExist= 存在無法辨識的文件節點，存回前需要先辨識這些節點
+mcadIntegration.Server.Message.CannotSelectNodeForRevisionItAlreadyExists= 您已辨識現有物件為「${REVISION}」，此物件僅將用於建立結構不是用於檔案存回。所以無法選擇。
+mcadIntegration.Server.Message.VersionFieldNotValid= 物件「${NAME}」的迭代欄位包含無效值。迭代欄位僅接受空白、下一個整數或正整數。
+mcadIntegration.Server.Message.VersionFieldBlankNotValid= 整個結構的迭代值可以為空白或僅用於葉節點。
+mcadIntegration.Server.Message.NoUnrecognizedNodesSelected= 未選擇要辨識的任何無法辨識的節點
+mcadIntegration.Server.Message.NoRecognizedNodesSelected= 未選擇要取消辨識的任何已辨識的節點
+mcadIntegration.Server.Message.TargetRevisionCanNotBeEmptyForTheSelectedNode= 所選物件「${NAME}」的 TargetRevision 不可為空白
+mcadIntegration.Server.Message.PleaseSelectNodeBeforeApplyingTheViews= 請選擇節點再套用視圖
+mcadIntegration.Server.Message.UnrecognizedNodesExistForRecognizeVersion= 無法辨識的文件節點存在，這些需要先辨識再選擇「RecognizeIteration」。
+mcadIntegration.Server.Message.DirectorySelectedForCheckoutDoesNotExist= 使用者的機器上不存在為取出選擇的目錄
+mcadIntegration.Server.Message.NotificationIntervalInvalidNumber= 請輸入用於通知間隔的正整數
+mcadIntegration.Server.Message.NameContainsInvalidCharacters= 為「${NAME}」輸入的新名稱包含一或多個下列無效的字元\n
+mcadIntegration.Server.Message.InstanceNameContainsInvalidCharacters= 為「${NAME}」的例項「${INSTANCENAME}」輸入的新名稱包含一或多個下列無效的字元\n
+mcadIntegration.Server.Message.InvalidTargetRevisionSelection= 無法選擇物件「${NAME}」。已選擇無效的目標修訂版。
+mcadIntegration.Applet.Message.TargetRevWorkingsetRevMismatchErrorTitle= 若是覆寫迭代，您必須選擇正在處理的目標修訂版。 
+mcadIntegration.Applet.Message.TargetRevWorkingsetRevMismatchErrorCorrection= 請選擇下列修訂版：
+mcadIntegration.Applet.Message.FinalizedTargetRevWorkingsetRevMismatchError= 以下為您正在處理的修訂版，但未定案，因此無法覆寫。
+mcadIntegration.Applet.Message.AppletReloaded= Applet 已重新載入。IEF 將無法如預期運作。\n\n請關閉瀏覽器然後再次登入。
+mcadIntegration.Applet.Message.AppletUnavailable= 找不到 Applet。IEF 將無法如預期運作。\n\n請關閉瀏覽器然後再次登入。
+mcadIntegration.Applet.Message.CheckoutInProgressCantRunOtherCommands= 取出進行中。除非已完成取出，否則您無法執行任何其他指令。
+mcadIntegration.Server.Message.LockStatusIsEnforced= 您無法變更鎖定選項。已強制執行為目前值。
+mcadIntegration.Server.Message.LocalCheckoutEnforced= 您無法變更本機取出選項。已強制執行為目前值。
+mcadIntegration.Server.Message.CanNotSelectItemItIsDeleted= 無法選擇品項「${NAME}」，己在設計的最新迭代中將它刪除
+mcadIntegration.Server.Message.CanNotSelectItemItIsNotDifferent= 無法選擇品項「${NAME}」，它與已取出的迭代相同
+mcadIntegration.Server.Message.CanNotSelectItemItIsInstance= 無法選擇品項「${NAME}」，它是例項。請選擇系列
+mcadIntegration.Server.Message.CanNotSelectDesignLockedByUser= 無法選擇品項「${NAME}」，已由使用者鎖定
+mcadIntegration.Server.Message.ObjectCantBeSelectedForCheckinLatestVersionOfObjectAvailableInDatabase= 物件無法選擇用於存回，因為資料庫中提供此物件之後的迭代。
+mcadIntegration.Server.Message.ObjectIsBeingReferredThroughHardlink= 會透過 hardlink 參考物件
+mcadIntegration.Server.Message.LockedObjectsWillbeDownloadedtoDisk= 鎖定的物件會下載至磁碟
+mcadIntegration.Server.Message.InputValueContainsInvalidChars= 提供的輸入值包含無效的字元。\n請確認輸入值不含這類字元。\n
+mcadIntegration.Server.Message.ObsoleteNodesSelected= 請取消選擇存回廢止的節點。 
+mcadIntegration.Server.Message.CanNotSelectItemItCannotbePromoted= 無法選擇「${NAME}」，無法將它升級
+mcadIntegration.Server.Message.FamilyCannotbeAtAHigherState= 無法選擇下列系列，系列無法處於高於其例項的狀態：
+mcadIntegration.Server.Message.InstanceCannotBePromoted= 例項「${NAME}」無法升級為系列「${FAMILYNAME}」不是與例項處於相同狀態。
+mcadIntegration.Server.Message.CanNotSelectItemsReferToDifferentFamilyVersions= 無法一起選擇「${NAME1}」和「${NAME2}」，它們代表相同系列不同的迭代。
+mcadIntegration.Server.Message.CanNotSelectItemItIsInFinalState= 無法選擇品項進行升級，因為它已處於最終狀態。
+mcadIntegration.Server.Message.ConflictFoundInTheFollowingFamily= 已識別以下系列的衝突：
+mcadIntegration.Server.Message.Design= 設計：
+mcadIntegration.Server.Message.Family= 系列：
+mcadIntegration.Server.Message.CanNotSelectItemUserDoesNotHaveLockUnlockAccess= 無法選擇品項「${NAME}」，使用者沒有鎖定/解鎖存取 
+mcadIntegration.Server.Message.CanNotSelectItemUserDoesNotHaveLockAccess= 無法選擇品項「${NAME}」，使用者沒有鎖定存取 
+mcadIntegration.Server.Message.CanNotSelectItemUserDoesNotHaveUnLockAccess= 無法選擇品項「${NAME}」，使用者沒有解鎖存取 
+mcadIntegration.Server.Message.CanNotSelectItemPreCheckInEvaluationFailed= 預先存回評估失敗。無法選擇「${NAME}」。\n「${REASON}」
+mcadIntegration.Server.Title.DownloadDerivedOutputFiles= 下載衍生輸出檔案
+mcadIntegration.Server.Message.UnSupportedCommand= 從 CAD 工具選擇的指令不支援所選功能
+mcadIntegration.Server.Message.CanNotLockItemNew= 物件不存在 ENOVIA 中。無法執行鎖定操作。
+mcadIntegration.Server.Message.LockStatusRevisionNextCannotBeLocked= 無法鎖定修訂版「下一個」。無法執行鎖定操作。
+mcadIntegration.Server.Message.LockStatusObjectLockedByDifferentUser= 無法鎖定設計，因為它已被 ${LOCKEDBY} 鎖定。
+mcadIntegration.Server.Message.SelectChildObjectsWithUUIDConflictForParentObject= 父節點 ${PARENTOBJECTNAMES} 有包含 UUID 衡突的子節點。請也為存回選擇子節點 ${CHILDOBJECTNAMES}。
+mcadIntegration.Server.Message.SelectCreateVersionForConflictUUIDNodes= 已以為含覆寫的存回選擇有 UUID 衝突的節點 ${BUSNAMES}。請存回，不要覆寫。
+mcadIntegration.Server.Message.CantDeleteSingleRootForFamilyConflict= 在修訂版衝突解決期間，將移除取出的全部根節點。無法取出。
+mcadIntegration.Server.Message.CanNotSelectItemItObsolate= 無法選擇品項「${NAME}」，它對在矩陣中的身分已廢止
+mcadIntegration.Applet.Title.FileDownloadFailedForFiles= 以下檔案的檔案下載失敗：
+mcadIntegration.Applet.Message.ExceptionInCopyFileFromWSM= 檔案 ${FILENAME} 的複製造成例外：\n ${EXCEPTION}。
+mcadIntegration.Applet.Message.ExceptionInMoveFileFromWSM= 檔案 ${FILENAME} 的移動造成例外：\n ${EXCEPTION}。
+mcadIntegration.Applet.Message.FailedToMoveFileFromWSM= 檔案 ${FILENAME} 的移動失敗。
+mcadIntegration.Server.Message.CanNotSelectItemAsNoPromoteAccess= 無法選擇升級的品項因為使用者沒有升級存取。
+mcadIntegration.Server.Message.RevisionAlreadyExists= 修訂版已存在修訂版清單中，請輸入新的修訂版資料流。
+mcadIntegration.Server.Message.RevisionFieldBlankNotValid= 修訂版不能為空白，請輸入一個字元。
+mcadIntegration.Server.Message.HardLinkAndWorkingsetHasBeenCreated= HardLink 和工作組已更新。
+mcadIntegration.Server.Message.HardLinkAndWorkingsetFailedFor= 下列檔案的 Hardlink 更新失敗：\n ${FILES}
+mcadIntegration.Server.Message.HardLinkAndWorkingsetFailed= Hardlink 更新失敗，請參閱 AutoRFAFailure.log 了解更多詳細資訊：
+mcadIntegration.Server.Message.HardLinkCreationFailedDuringLogin= 更新自動-rfa 的 hardlink 時發生錯誤： 
+mcadIntegration.Applet.Message.EditedRevisionFieldNotValid= 可以編輯整個結構的修訂版值，或僅針對葉節點。
+mcadIntegration.Applet.Message.CannotToggleRecognizedRevisionField= 無法切換修訂版欄位，因為已辨識設計。請取消辨識設計，然後切換欄位。
+mcadIntegration.Server.Message.PartAssoicationNotDone= 未指派「${NAME}」的零件
+mcadIntegration.Server.Message.ConflictUUIDNodesFound= 無法繼續進行「快速存回」，因為找到衝突的 UUID 節點
+mcadIntegration.Server.Message.obsoleteNodesFound= 無法繼續進行「快速存回」，因為找到廢止的節點
+mcadIntegration.Server.Message.unrecognizedNodesFound= 無法繼續進行「快速存回」，因為找到無法辨識的節點
+mcadIntegration.Server.Message.PartAssociationNodeFound= 無法繼續進行「快速存回」，因為未指派「${NAME}」的任何零件
+mcadIntegration.Server.Message.ExpandableNodeFound= 無法繼續進行「快速存回」，因為「${NAME}」可展開
+mcadIntegration.Server.Message.CanNotSelectDesignRenamed= 無法選擇「${NAME}」，因為它已重新命名。請使用取出操作更新此設計。
+mcadIntegration.Server.Message.LockedByMessage= 「${LOCKEDBY}」已鎖定業務物件
+mcadIntegration.Applet.Message.WrongJPOCommandSentByCSE= CSE 傳送的錯誤指令：請檢查請求 XML 封包。
+mcadIntegration.Applet.Message.WrongAbortCommandSentByCSE= CSE 傳送的錯誤指令：請在請求 XML 封包中正確設定 cse 和 iid 屬性。
+mcadIntegration.Applet.Message.QueryWorkingsetFailed= 無法查詢工作組
+mcadIntegration.Applet.Message.UserCancelledLockUnlockEx= 使用者已取消靜音鎖定-解鎖指令。
+mcadIntegration.Applet.Message.CreateUsingTemplateCancelled= 在使用者請求下，使用範本建立操作已中止
+mcadIntegration.Applet.Message.CreateUsingTemplateFailed= 使用範本建立指令失敗。
+mcadIntegration.Applet.Message.CreateUsingTemplateCheckoutFailed= 在使用範本建立指令中的取出操作失敗。
+mcadIntegration.Applet.Message.AbortCommandExecutedSuccessfully= 在使用者請求下，指令已中止成功
+mcadIntegration.Applet.Message.AbortCommandFailed= 中止操作失敗
+mcadIntegration.Applet.Message.NavigateObjectTreeFailed= 從 CSE 收到無效的業務物件 ID
+mcadIntegration.Server.Message.NotSelectedItemNotCheckedOutWithLock= 部分物件無法選擇。請前往「新增和已修改」標籤檢視物件。
+mcadIntegration.Server.Message.InetgSessionsionDataIntialisingError= 初始化整合工作階段資料時發生錯誤
+mcadIntegration.Applet.Message.FCSClientJarUpgraded= 要求的零組件已升級。請重新登入。
+mcadIntegration.Applet.Message.CannotMoveTo= 無法移至「${LOCATION}」 
+mcadIntegration.Applet.Message.ParseError= 分析請求的字串時發生例外
+mcadIntegration.Applet.Message.AutoUpgradeFail= 自動升級失敗，因為無法下載可安裝檔案：${ERROR_MESSAGE}
+mcadIntegration.Server.Message.ToolTipDesignInSync= 設計物件為同步化。
+mcadIntegration.Server.Message.ToolTipDesignOutOfSync= 設計物件未同步化。
+mcadIntegration.Server.Message.ToolTipDesignObsolete= 設計物件已廢止。
+mcadIntegration.Server.Message.CanNotSelectItemItIsOutOfSync= 無法選擇「${TYPE}」、「${NAME}」，它未同步化。
+
+#Button names
+mcadIntegration.Applet.ButtonName.Ok= 確定
+mcadIntegration.Applet.ButtonName.Cancel= 取消
+mcadIntegration.Applet.ButtonName.Create= 建立
+mcadIntegration.Applet.ButtonName.No= 否
+mcadIntegration.Applet.ButtonName.Yes= 是
+mcadIntegration.Applet.ButtonName.YesToAll= 全部皆是
+mcadIntegration.Applet.ButtonName.CreatePart= 建立新的
+mcadIntegration.Applet.ButtonName.Clear= 清除
+
+#Feature Names
+mcadIntegration.Applet.CommandName.Checkout= 取出
+mcadIntegration.Applet.CommandName.DownloadStructure= 下載結構
+
+#MSPI
+Integration.Applet.MSP2000.CompatibleMpecVersion= 1.0.0.0
+Integration.Applet.MPECTransactionXmlFile= ResponsesXML.XML
+Integration.ProgramCentral.emxProgramSearchPage= emxProgramCentralProjectSummaryFS.jsp?fromIntegrn=true&mode=projectSearch
+Integration.ProgramCentral.emxSearchProjectsPage= emxProgramCentralSearchFS.jsp?fromIntegrn=true&mode=projectSearch
+
+
+#Table column names
+mcadIntegration.Server.ColumnName.Type= 類型 
+mcadIntegration.Server.ColumnName.Name= 名稱 
+mcadIntegration.Server.ColumnName.Revision= 修訂版
+mcadIntegration.Server.ColumnName.Version= 迭代
+mcadIntegration.Server.ColumnName.ErrorMessage= 錯誤訊息
+mcadIntegration.Server.ColumnName.OtherErrorMessages= 其他錯誤訊息
+mcadIntegration.Server.ColumnName.ErrorMessageDetails= 工程圖與設計未同步化。嘗試升級前，請先更新工程圖。
+mcadIntegration.Server.ColumnName.Title= 標題
+mcadIntegration.Server.ColumnName.DefaultDesignPolicy= 預設策略
+mcadIntegration.Server.ColumnName.DefaultVersionPolicy= 預設迭代策略
+mcadIntegration.Server.ColumnName.LockStatus= 目標修訂版鎖定狀態
+mcadIntegration.Server.ColumnName.Check= 存回前評估
+
+#Status
+mcadIntegration.Server.Message.Status.NEW= 新增
+mcadIntegration.Server.Message.Status.EXISTS= 存在
+mcadIntegration.Server.Message.Status.MODIFIED= 已修改
+mcadIntegration.Server.Message.Status.OBSOLETE= 廢止
+mcadIntegration.Server.Message.Status.EXIST_TYPECHANGE= EXIST_TYPECHANGE
+mcadIntegration.Server.Message.Status.MODIFIED_TYPECHANGE= MODIFIED_TYPECHANGE
+mcadIntegration.Server.Message.Status.UNKNOWN= UNKNOWN
+
+#Tooltips
+mcadIntegration.Applet.ToolTipText.ClickToExpandOrCollapse= 按一下 +/- 以展開/摺疊
+mcadIntegration.Applet.ToolTipText.EBOMSynchornizationAlredyDoneOnOtherInstance= EBOM 曝露模式設定為單一，您正在嘗試於相同系列的兩個例項上執行 EBOM 同步化，或已於相同系列的其他例項上完成 EBOM 同步化。
+
+#Alts
+mcadIntegration.Applet.AltText.ClickHere= 按一下此處
+mcadIntegration.Applet.AltText.ObjectDetails= 物件詳細資料
+mcadIntegration.Applet.AltText.LockIcon= 鎖定/解鎖
+mcadIntegration.Applet.AltText.LockIconLatestRevision= 鎖定/解鎖最新修訂版
+mcadIntegration.Applet.AltText.ClickForComboBox= 按一下取得下拉式清單方塊。
+mcadIntegration.Applet.AltText.ClickForEditBox= 按一下取得編輯方塊。
+
+#Headings
+mcadIntegration.Applet.Heading.UnrecognizedNodesAndObsoleteNodes= 無法辨識的節點和廢止的節點
+mcadIntegration.Applet.Heading.UnrecognizedNodes= 無法辨識的節點
+mcadIntegration.Applet.Heading.ObsoleteNodes= 廢止的節點
+
+#
+Integration.Applet.Message.Test= 正在測試我...。
+Integration.Applet.Message.PoppedUpWindowIsOpened= 快顯視窗已開啟
+Integration.Applet.Message.ProgramCentralIsNotActive= Program Central 未啟用
+Integration.Applet.Message.ErrorWhileOpeningTheConnectionToServer= 開啟連接至伺服器時發生錯誤
+Integration.Applet.Message.ErrorWhilePingingToServer= Ping 至伺服器時發生錯誤
+Integration.Applet.Message.WrongCommandSentByMPEC= MPEC 傳送的錯誤指令
+Integration.Applet.Message.VersionsDialogSuccessfullyShown= 成功顯示迭代對話方塊
+Integration.Applet.Message.TransactionIDMismatch= 交易 ID 不相符
+Integration.Applet.Message.UserPanickedDuringTransaction= 交易發生時，使用者恐慌
+Integration.Applet.Message.IntegrationRequestIsStale= 整合請求已過時
+mcadIntegration.Server.Message.CannotOpenDownloadedDocument= 文件已下載，但無法開啟。請從在偏好中提到的取出目錄將其開啟
+mcadIntegration.Server.Message.ErrorInWritingXMLFileToProfileDir= 將 XML 檔案寫入設定檔目錄時發生錯誤
+mcadIntegration.Server.Message.CannotCopyFolderTo= 您無法將資料夾複製至 
+mcadIntegration.Server.Message.CannotCopyFolderHere= 您無法將資料夾複製至此處 
+mcadIntegration.Server.Message.DirectoryWithFiles= 目錄包含檔案。無法繼續處理。請從您要放置至 ENOVIA 的最上層資料夾移除檔案並重試。
+mcadIntegration.Applet.Message.DragDropCancelled= 使用者已取消拖放操作
+mcadIntegration.Applet.Message.WrongXMLRequestPacket= 從 CSE 收到錯誤的封包
+mcadIntegration.Applet.Message.RequestNotWellformed= 整合客戶端傳送的無效請求
+mcadIntegration.Applet.Message.EditViewMSPWarning= 若要編輯/檢視此專案，您需要關閉在目前 Microsoft Project 中開啟的現有專案，然後編輯/檢視此專案
+mcadIntegration.Applet.Message.NoFilesToCheckin= 沒有要存回的檔案
+
+mcadIntegration.Applet.Message.DerivedOutputParamTypeNotset= 已設定預設參數物件，但未設定衍生輸出類型
+mcadIntegration.Applet.Message.NoNewOrModifiedSelectableNodeFound= 存回未找到新增或已修改的可選擇節點
+mcadIntegration.Server.Message.SaveAsOperationSuccessful= 另存新檔操作成功
+mcadIntegration.Applet.Message.RecentlyAccessedPartsDialogSuccessfullyShown= 最近存取的零件對話方塊顯示成功
+mcadIntegration.Applet.Message.ReadOnlyAccessDenied= 操作成功 <BR> 警告：下列檔案無法設為「唯讀」或「寫入」存取遭拒 -
+
+mcadIntegration.Applet.Message.CADAppNotAvailable= 找不到 CAD 工具啟動二進位。
+mcadIntegration.Applet.Message.EnterSaveAsNameAndTargetRevision= 輸入另存新檔名稱和目標修正檔
+mcadIntegration.Applet.Message.BinaryDetailsNotAvailable= 無法在「${INTEGNAME}」整合上執行此操作
+mcadIntegration.Server.Message.CanNotCheckinItemAsItsFamilyNotCheckedOutWithLock= 無法存回品項「${NAME}」，因為系列「${FAMILYNAME}」取出時未鎖定
+mcadIntegration.Server.Message.LoginFailMessage= 登入失敗。錯誤：${message}
+mcadIntegration.Server.Message.IntegrationCheckMessage= 登入失敗。檢查是否已指派 ${integrationName} 整合。
+mcadIntegration.Applet.progressbar.label.metadata= 中繼資料
+mcadIntegration.Applet.progressbar.label.uploadFile= 上載檔案
+mcadIntegration.Applet.Label.New= 新增
+mcadIntegration.Applet.Label.Remove= 移除
+mcadIntegration.Applet.Label.AttributeUpdate= AttributeUpdate
+mcadIntegration.Applet.Label.FullUpdate= FullUpdate
+mcadIntegration.Applet.Label.NoUpdate= NoUpdate
+mcadIntegration.Applet.Label.None= 無
+mcadIntegration.Applet.progressbar.button.cancel= 取消
+mcadIntegration.Applet.Message.BaselineNameAlreadyExist= 基線名稱已存在。
+mcadIntegration.engine.messagebox.title= 3DEXPERIENCE 訊息
+mcadIntegration.engine.messagebox.cancel= 取消
+mcadIntegration.engine.messagebox.ok= 確定
+mcadIntegration.engine.messagebox.no= 否
+mcadIntegration.engine.messagebox.yes= 是
+
+mcadIntegration.Applet.Message.UpgradeConfirmTitle= IEFClientWorkspaceService
+mcadIntegration.Applet.Message.UpgradeConfirmMessage= 需要升級 ENOVIA Integration Framework Client 安裝。\n按一下「是」 開始升級，按一下「否」結束。
+mcadIntegration.Applet.Message.UpgradeVersionMismatchMessage= 版本不相符！！！！\nENOVIA 伺服器版本為「${SERVER_VERSION}」。\nENOVIA Integration Exchange Framework Client (IEC) 版本為「${CLIENT_VERSION}」。\n請取消安裝現有 IEC 版本並手動安裝與 ENOVIA 伺服器版本相容的 IEC 版本。
+mcadIntegration.Applet.Message.FCSJarNotAvailable= FCSClient jar 無法使用：${message}
+mcadIntegration.Applet.Message.FCSClientJarNotDownloaded= 下載並儲存 FCSClient jat 至 
+
+#Error Codes and Messages
+
+#System Level Failure
+mcadIntegration.Client.Message.IEF0001000001= 端口建立失敗：在模型組態檔案中提供的多連接埠範圍最大和最小數字不是有效的值
+mcadIntegration.Client.Message.IEF0001000002= 端口建立失敗：在模型組態檔案中多連接埠範圍最大值應大於多連接埠範圍最小值
+mcadIntegration.Client.Message.IEF0001000003= 端口建立失敗：在模型組態檔案中提供的連接埠號碼不是有效的值
+mcadIntegration.Client.Message.IEF0001200157= 操作中斷
+mcadIntegration.Client.Message.IEF0001200156= 無法執行請求的指令
+mcadIntegration.Client.Message.IEF0001200204= 無法取得所請求指令的登錄
+mcadIntegration.Client.Message.IEF0001200205= 在伺服器中找不到檔案 ${fileName}
+
+#Operation Aborted Upon CSEs Request
+mcadIntegration.Client.Message.IEF0001100033= 操作中止
+mcadIntegration.Client.Message.IEF0001100097= 發生內部錯誤。請檢查錯誤記錄檔以查看詳細資料
+
+#Operation Aborted Upon users Request
+mcadIntegration.Client.Message.IEF0001030034= 使用者已取消操作
+
+#Failed while Hashcode Generation
+mcadIntegration.Client.Message.IEF0001200035= 無法存取本機磁碟中的檔案
+mcadIntegration.Client.Message.IEF0001200178= 寫入頁面內容時失敗
+
+#Login
+mcadIntegration.Client.Message.IEF0011000020= 使用者登入 3DEXPERIENCE Platform 失敗
+mcadIntegration.Client.Message.IEF0011200060= 伺服器無法建立/取出工作組
+mcadIntegration.Client.Message.IEF0011200112= 無法開始客戶端工作區服務
+mcadIntegration.Client.Message.IEF0021200210= 登入失敗，使用者可能無法存取整合 ${INTEGRATION}
+mcadIntegration.Client.Message.IEF0011200214= 登入已中止，因為 ENOVIA Integration Framework Client 需要升級
+mcadIntegration.Client.Message.IEF0011120217= 使用者「${NAME}」已登入
+mcadIntegration.Client.Message.IEF0011200313= 設定安全性關聯時發生錯誤
+
+#Logout
+mcadIntegration.Client.Message.IEF0021200061= 無法在伺服器中儲存工作組
+mcadIntegration.Client.Message.IEF0021200063= 無法停止客戶端工作區服務
+mcadIntegration.Client.Message.IEF0021300064= 無法停止執行中的程序
+
+#Checkin / Save
+mcadIntegration.Client.Message.IEF0031200028= 無法建立設計物件和上載檔案
+mcadIntegration.Client.Message.IEF0031200029= 檔案上載失敗
+mcadIntegration.Client.Message.IEF0031200030= 認可資訊時失敗
+mcadIntegration.Client.Message.IEF0031200031= 執行 EBOM 同步化及認可資訊時失敗
+mcadIntegration.Client.Message.IEF0031200036= 無法處理檔案上載與設計物件建立的請求
+mcadIntegration.Client.Message.IEF0031200037= 無法處理背景上載的檔案 
+mcadIntegration.Client.Message.IEF0031200041= 處理所選品項的鎖定/解鎖請求時失敗
+mcadIntegration.Client.Message.IEF0031200167= 更新所展開品項的頁面時失敗
+mcadIntegration.Client.Message.IEF0031200172= 提交頁面時失敗
+mcadIntegration.Client.Message.IEF0031200173= 切換所選範圍時失敗
+mcadIntegration.Client.Message.IEF0031200174= 指派零件時失敗
+mcadIntegration.Client.Message.IEF0031200176= 切換所選品項的展開時失敗
+mcadIntegration.Client.Message.IEF0031200175= 擷取衍生輸出詳細資料時失敗 
+mcadIntegration.Client.Message.IEF0031200177= 更新衍生輸出所選範圍時失敗
+mcadIntegration.Client.Message.IEF0031200179= 修改品項的資料時失敗
+mcadIntegration.Client.Message.IEF0031200180= 執行快速存回時失敗
+mcadIntegration.Client.Message.IEF0031200183= 擷取檔案辨識的資訊時失敗
+mcadIntegration.Client.Message.IEF0031300224= 無法大量載入設計 ${TYPE} ${NAME}，因為它已經存回，沒有使用大量載入
+mcadIntegration.Applet.Message.EmbeddedComponentSaveAs= CATIA 內嵌零組件無法個別儲存
+mcadIntegration.Applet.Message.EmbCompParentSaveAs= 父組合件應與其子內嵌零組件一起儲存。
+
+#Checkout / Open
+mcadIntegration.Client.Message.IEF0041200106= 無法取得所選和/或其相關設計的詳細資料
+mcadIntegration.Client.Message.IEF0041100107= 無法取得工作目錄資訊
+mcadIntegration.Client.Message.IEF0041200108= 取得設計鎖定時失敗
+mcadIntegration.Client.Message.IEF0041200109= 未收到使用者的檔案覆寫確認
+mcadIntegration.Client.Message.IEF0041230110= 在使用者的請求下中止取出
+mcadIntegration.Client.Message.IEF0041230111= 在使用者的請求下已中止下載
+mcadIntegration.Client.Message.IEF0041200111= 沒有所選的設計
+mcadIntegration.Client.Message.IEF0041200113= 取出失敗
+mcadIntegration.Client.Message.IEF0041200114= 評估使用者結束時失敗
+mcadIntegration.Client.Message.IEF0041200115= 擷取檔案相關資訊時失敗
+mcadIntegration.Client.Message.IEF0041200116= 從不同的 CAD 工作選擇物件以進行多重設計取出
+mcadIntegration.Client.Message.IEF0041200117= 無法開啟 URL：${LOCATION}
+mcadIntegration.Client.Message.IEF0041200118= FCS 取出失敗
+mcadIntegration.Client.Message.IEF0041300212= 從位置下載檔案失敗
+mcadIntegration.Client.Message.IEF0041200119= 輸入 expandlevel 有效的數值
+mcadIntegration.Client.Message.IEF0041200120= 無法下載結構
+mcadIntegration.Client.Message.IEF0041200150= 建立取出頁面時失敗
+mcadIntegration.Client.Message.IEF0041200151= 解決系列迭代衝突時失敗
+mcadIntegration.Client.Message.IEF0041200152= 建立所選過濾器的資料時失敗
+mcadIntegration.Client.Message.IEF0041200153= 解決系列衝突時失敗
+mcadIntegration.Client.Message.IEF0041200154= 建立已展開節點的取出頁面時失敗
+mcadIntegration.Client.Message.IEF0041200155= 檔案下載失敗
+mcadIntegration.Client.Message.IEF0041200156= 建立下載結構頁面時失敗
+mcadIntegration.Client.Message.IEF0041200157= 建立已展開節點的下載結構頁面時失敗
+mcadIntegration.Client.Message.IEF0041200158= 無法刪除檔案，因為檔案已在 CSE 工具中開啟或位於無寫入權限的磁碟上。
+mcadIntegration.Client.Message.IEF0041200211= 下列設計已在 ENOVIA 重新命名或另存新檔或由範本建立。若要完成此程序，設計必須由您鎖定 (若尚未鎖定)，然後從 CAD 工具開啟並再儲存回到 ENOVIA。
+mcadIntegration.Client.Message.IEF0041210340= 無法取出已鎖定的含鎖定設計「${NAME}」 
+mcadIntegration.Client.Message.IEF0041200638= 結構中部分設計已在 ENOVIA 中修改。在 ENOVIA 中完成的設計不會反應在 CAD 檔案上，除非是從 ENOVIA 整合開啟設計。若要完成此程序，設計必須由您鎖定 (若尚未鎖定)，然後從 CAD 工具開啟並再儲存回到 ENOVIA。
+
+#CAD
+mcadIntegration.Client.Message.IEF0031200032= 頁面建立時失敗
+
+#CADObject Details
+mcadIntegration.Client.Message.IEF0051200039= 擷取檔案相關資訊時失敗
+mcadIntegration.Client.Message.IEF0051200299= 驗證資料時失敗
+mcadIntegration.Client.Message.IEF0051200303= 擷取檔案相關資訊時失敗
+
+#Other Commands
+mcadIntegration.Client.Message.IEF0081200093= 執行 MQL 指令時失敗
+mcadIntegration.Client.Message.IEF0091200094= 執行 JPO 時失敗
+mcadIntegration.Client.Message.IEF0061200095= 擷取 UI 資訊時失敗
+mcadIntegration.Client.Message.IEF0111200096= 設定使用者目錄別名時失敗
+mcadIntegration.Client.Message.IEF0101200098= 無法查詢使用者工作區資訊
+mcadIntegration.Client.Message.IEF0121200099= 擷取請求狀態時失敗
+mcadIntegration.Client.Message.IEF0151200215= 啟動工作區管理員時失敗
+
+#3DDashboard
+mcadIntegration.Client.Message.IEF0021100644= 重新導向失敗。
+mcadIntegration.Client.Message.IEF0011210646= 3DDashboard 已啟動。
+mcadIntegration.Client.Message.IEF0011210647= 3DDashboard 啟動失敗。
+mcadIntegration.Client.Message.IEF0011210648= 3DDashboard URL 空白。
+
+#Explore
+mcadIntegration.Client.Message.IEF0011210645= 無法取得物件資訊。
+
+#Common - Checkout Page
+mcadIntegration.Common.Message.IEF0041200184= ${COMMANDNAME}前，請明確選擇特定的橫向視圖
+mcadIntegration.Common.Message.IEF0041200185= 解決系列衝突時失敗
+mcadIntegration.Common.Message.IEF0041200186= 未選擇任何品項
+mcadIntegration.Common.Message.IEF0041200186.download= 未選擇任何下載品項
+mcadIntegration.Common.Message.IEF0041200186.quickcheckout= 無法選擇任何品項
+mcadIntegration.Common.Message.IEF0041200187= 取出 UUID 衝突的父節點 ${PARENTOBJECTSDETAILS} 和子節點 ${CHILDOBJECTSDETAILS} 以分開解決衝突的目錄
+mcadIntegration.Common.Message.IEF0041200188= 從取出頁面選擇「載入檔案」選項以為重新命名/儲存為子更新父
+mcadIntegration.Common.Message.IEF0041200189= 例項「${NAME}」取出，父系列 「${FAMILYNAME}」未選擇
+mcadIntegration.Common.Message.IEF0041200190= 使用者的機器上不存在為取出選擇的目錄
+mcadIntegration.Common.Message.IEF0041200191= 在修訂版衝突解決期間，將移除取出的全部根節點。無法取出。
+mcadIntegration.Common.Message.IEF0041200192= 預先存回評估失敗。無法選擇「${NAME}」。\n「${REASON}」
+mcadIntegration.Common.Message.IEF0041200193= 下載結構 UUID 衝突的父節點 ${PARENTOBJECTSDETAILS} 和子節點 ${CHILDOBJECTSDETAILS} 以分開解決衝突的目錄
+mcadIntegration.Common.Message.IEF0041200207= 提交頁面時失敗
+mcadIntegration.Common.Message.IEF0041200208= 解決系列衝突時失敗
+mcadIntegration.Common.Message.IEF0041200209= 切換所選品項的展開時失敗
+mcadIntegration.Common.Message.IEF0041200258= 重新命名或另存新檔設計應透過 CAD 工具中的 ENOVIA 功能表開啟。
+
+#
+mcadIntegration.Engine.FieldName.About= 關於
+mcadIntegration.Engine.FieldName.Exit= 結束
+mcadIntegration.Engine.FieldName.Version= 產品版本： 
+mcadIntegration.Engine.FieldName.Date= 日期： 
+
+mcadIntegration.Engine.Message.Starting= 正在開始 ENOVIA Integration Exchange Framework Client 服務...
+mcadIntegration.Engine.Message.ContactingServer= 聯絡伺服器：
+mcadIntegration.Engine.Message.StartingCommunicationService= 啟動通訊服務...
+mcadIntegration.Engine.Message.InitializationComplete= ENOVIA Integration Exchange Framework Client 服務初始化完成！
+
+#
+mcadIntegration.Client.LocalWorkspace= 本機工作區
+mcadIntegration.Client.MatrixWorkspaces= ENOVIA 工作區
+
+#Workspace actions
+mcadIntegration.Client.Message.IEF0191200286= 執行工作區動作時失敗
+
+# SSO
+mcadIntegration.Client.Message.IEF0171000218= 操作失敗，SSO https 回撥 url 回設定。
+mcadIntegration.Client.Message.IEF0171000219= 操作失敗，無法擷取授權票證 IOU 的 SSO proxy。
+mcadIntegration.Client.Message.IEF0171000220= 操作失敗，SSO https 連線問題。請檢查 SSL 設定。 
+mcadIntegration.Client.Message.IEF0171000221= 操作失敗，無法擷取授權票證的 SSO proxy。 
+mcadIntegration.Client.Message.IEF0171000222= 操作失敗，無法擷取 SSO 服務票證。
+mcadIntegration.Client.Message.IEF0171000223= 操作失敗，SSO 票證無效。
+
+# User Actions 
+mcadIntegration.Client.Message.IEF0161200229= 無法取得使用者偏好。
+mcadIntegration.Client.Message.IEF0161200282= 無法執行使用者動作
+
+#Preview command
+mcadIntegration.Client.Message.IEF0182200287= 處理預覽時失敗
+mcadIntegration.Client.Message.IEF0181200234= 下載檔案時失敗
+
+#Comment
+mcadIntegration.Client.action.CommentAdd= 加入品項
+mcadIntegration.Client.action.CommentGet= 擷取
+mcadIntegration.Client.action.AttachmentGet= 附件下載
+mcadIntegration.Client.action.CommentDelete= 刪除
+mcadIntegration.Client.Message.IEF0221200280= 在 ENOVIA 執行操作時發生重大錯誤。原因  
+mcadIntegration.Client.Message.IEF0221200278= 意見 ${ACTION} 不成功。原因 
+mcadIntegration.Client.Message.IEF0221200279= 不支援意見附件下載。
+mcadIntegration.Client.Message.IEF0221200281= 不支援附件加入意見。請移除附件並再次加入意見。
+
+#CAD Notify
+
+mcadIntegration.Client.Message.IEF0251200297= 擷取檔案相關資訊時失敗
+
+mcadIntegration.Client.Message.IEF0251200302= 無法建立設計
+
+#Promote/Demote
+mcadIntegration.Client.Message.PromoteSuccess= 升級成功
+mcadIntegration.Client.Message.PromoteFailed= 升級失敗
+mcadIntegration.Client.Message.DemoteSuccess= 降級成功
+mcadIntegration.Client.Message.DemoteFailed= 降級失敗
+
+#Save As
+mcadIntegration.Client.Message.EnterFilenameWithoutExtension= 輸入不包含副檔名的檔案名稱
+mcadIntegration.Client.Message.EnterInstanceName= 輸入例項名稱
+
+
+mcadIntegration.Server.ColumnName.LatestVersion= 最新增迭代
+
+mcadIntegration.Client.Message.IEF0031210651= 無法處理儲存操作，因為目前正在處理上個儲存操作。請稍後於目前正在處理的操作完成後重試。
+
+#Security URL Validation
+mcadIntegration.Client.Message.IEF0622= URL 的長度大於 2048 字元。
+mcadIntegration.Client.Message.IEF0623= 通訊協定不是 HTTPS。
+mcadIntegration.Client.Message.IEF0624= 主機不在相同的網域中。
+#Working Set Management
+mcadIntegration.Client.Message.IEF0351200645= 未定義指令動作 ${ACTION}。
+mcadIntegration.Client.Message.IEF0351200646= 執行指令失敗
+
+### Added for IEF-UPS. Used from IEC only
+mcadIntegration.Client.ErrorMessage.FileSizeLimitExceededMessage= 已超出下載限制。總下載檔案大小的位元組為
+
+#Change Locale Warning
+mcadIntegration.Client.ErrorMessage.ChangeLocale= 執行變更地區設定操作時發生錯誤
+
+### Added for IEF-UPS. Used from IEC only
+mcadIntegration.Applet.Message.3DExperienceSaveSuccessful= 成功儲存至 3DEXPERIENCE
+
+mcadIntegration.Client.ErrorMessage.FindObjectsTypeNameMismatch= 類型/名稱為必填屬性，且不允許萬用字元
+mcadIntegration.Client.ErrorMessage.SyncLocalRecognition= 執行同步本機辨識指令時發生錯誤
+
+### Added for IEF-UPS. Used from IEC only
+mcadIntegration.Server.ErrorMessage.ObjectIsNONCADTypeData= 不允許開啟不支援的 CAD 資料。
+

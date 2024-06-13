@@ -1,0 +1,1 @@
+define("DS/WidgetServices/WidgetServices_pt-BR",{});define("DS/WidgetServices/assets/nls/SecurityContextNls",{ErrorSecurityContextEmpty:"O usuário não escolheu o contexto de segurança",ErrorSecurityContext:"Ocorre um erro ao recuperar o contexto de segurança",ErrorTimeOut:"O servidor leva muito tempo para recuperar o contexto de segurança"});

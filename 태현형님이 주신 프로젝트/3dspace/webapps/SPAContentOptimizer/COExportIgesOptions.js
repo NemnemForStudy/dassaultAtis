@@ -1,0 +1,2 @@
+/*!  Copyright 2015 Dassault Systemes. All rights reserved. */
+define("DS/SPAContentOptimizer/COExportIgesOptions",["DS/CSICommandBinder/CSICommandBinder"],function(n){"use strict";var t=function(){this.Unit=0};return n.declareType({type:"COExportIgesOptions",serialize:function(n,t){return null!=t&&n.writeUint8("Unit",t.Unit),!0},unserialize:function(n){var i=new t;return i.Unit=n.readUint8("Unit"),i}}),t});

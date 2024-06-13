@@ -1,0 +1,1 @@
+define("DS/W3DDriveComponent/W3DDriveComponent_ja",{});define("DS/W3DDriveComponent/assets/nls/W3DDriveComponent",{select_platform:"プラットフォームを選択",myFiles:"マイ ファイル",sharedWithMe:"自分と共有"});

@@ -1,0 +1,2 @@
+/*!  Copyright 2015 Dassault Systemes. All rights reserved. */
+define("DS/SPAContentOptimizer/COptErrors",["DS/CSICommandBinder/CSICommandBinder"],function(r){"use strict";var e=function(){this.errors=[]};return r.declareType({type:"COptErrors",serialize:function(r,e){return r.writeStringArray("errors",e.errors),!0},unserialize:function(r){var n=new e;return n.errors=r.readStringArray("errors"),n}}),e});

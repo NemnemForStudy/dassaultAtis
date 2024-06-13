@@ -1,0 +1,77 @@
+#Prog XCAD_CompleteItems (iPLMIDSet : #In PLMIDSet, oPLMIDSet : #Out PLMIDSet) : VoidType
+{
+/* Variables */
+  let PLMIDSet_inRef (PLMIDSet)
+  let PLMIDSet_input (PLMIDSet)
+  let PLMIDSet_family (PLMIDSet)
+  let PLMIDSet_familyObj (PLMIDSet)
+  let PLMIDSet_items (PLMIDSet)
+  let PLMIDSet_composer (PLMIDSet)
+  let PLMIDSet_composed (PLMIDSet)
+  let PLMIDSet_allComp (PLMIDSet)
+  let PLMIDSet_compoLinks (PLMIDSet)
+  let PLMIDSet_component (PLMIDSet)
+  let PLMIDSet_expand (PLMIDSet)
+  let PLMIDSet_output (PLMIDSet)
+  let PLMIDSet_depLinks (PLMIDSet)
+  let PLMIDSet_fullFamilyObj (PLMIDSet)
+  let PLMIDSet_fullItems (PLMIDSet)
+  let PLMIDSet_fullExpand (PLMIDSet)
+
+/* filter input */
+  PLMIDSet_inRef = Restrict (iPLMIDSet, "PRODUCTCFG/VPMReference")
+
+/* Filter XCAD */
+  PLMIDSet_input = PLMIDSet_inRef
+
+/* retrieve family from item */
+  PLMIDSet_family = Ids (ExecutePLMFunction ("XCADModeler", "XCAD_GetFamilyFromItem",PLMIDSet_input))
+
+/* only family */
+  PLMIDSet_familyObj = Restrict (PLMIDSet_family, "XCADModelAndItemsModeler/XCADModelRepReference")
+
+/* retrieve dependencies between families */
+  PLMIDSet_depLinks = Ids (ExecutePLMFunction ("XCADModeler", "XCAD_GetDependenciesRepToRep",PLMIDSet_familyObj))
+
+
+/* only all families */
+  PLMIDSet_fullFamilyObj = Restrict (PLMIDSet_depLinks, "XCADModelAndItemsModeler/XCADModelRepReference")
+
+/* retrieve items from families */
+  PLMIDSet_fullItems = Ids (ExecutePLMFunction ("XCADModeler", "XCAD_GetItemsFromFamily",PLMIDSet_fullFamilyObj))
+
+/* retrieve items from family */
+  PLMIDSet_items = Ids (ExecutePLMFunction ("XCADModeler", "XCAD_GetItemsFromFamily",PLMIDSet_familyObj))
+
+  PLMIDSet_input = PLMIDSet_input + PLMIDSet_items + PLMIDSet_fullItems
+
+/* retrieve composer from items */
+  PLMIDSet_composer = Ids (ExecutePLMFunction ("XCADModeler", "XCAD_GetComposedRefToRef",Restrict(PLMIDSet_input, "PRODUCTCFG/VPMReference")))
+
+/* retrieve composed from family */
+  PLMIDSet_composed = Ids (ExecutePLMFunction ("XCADModeler", "XCAD_GetCompositionRefToRef",Restrict(PLMIDSet_composer, "PRODUCTCFG/VPMReference")))
+
+/* I have all compostion links */
+  PLMIDSet_allComp =  PLMIDSet_composed + PLMIDSet_composer
+  PLMIDSet_compoLinks = Restrict(PLMIDSet_allComp, "RelationClass/XCADComposition")
+
+/* I get all component */
+  PLMIDSet_component = Ids (ExecutePLMFunction ("XCADModeler", "XCAD_GetComponentFromLink",PLMIDSet_compoLinks))
+
+/* expand one reverse */
+  PLMIDSet_expand = Ids (ExecutePLMFunction ("XCADModeler", "XCAD_ExpandReverseOne",Restrict(PLMIDSet_component, "PRODUCTCFG/VPMReference")))
+
+
+/* expand one items and component */
+  PLMIDSet_fullItems = PLMIDSet_fullItems + Restrict(PLMIDSet_component, "PRODUCTCFG/VPMReference")
+  PLMIDSet_fullExpand = Ids (ExecutePLMFunction ("XCADModeler", "XCAD_ExpandRefOne",Restrict(PLMIDSet_fullItems, "PRODUCTCFG/VPMReference")))
+
+
+
+/* result are family / items / compo links / compo / dep links */
+  PLMIDSet_output = PLMIDSet_compoLinks + PLMIDSet_component + PLMIDSet_expand + PLMIDSet_family + PLMIDSet_items + PLMIDSet_depLinks + PLMIDSet_fullItems + PLMIDSet_fullExpand
+
+/* build output */
+  oPLMIDSet = iPLMIDSet + PLMIDSet_output
+
+}

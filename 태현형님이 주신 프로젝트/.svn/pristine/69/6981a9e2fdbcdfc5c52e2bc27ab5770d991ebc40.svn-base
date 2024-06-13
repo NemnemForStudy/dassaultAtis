@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0",
+  "summary": "Compara el valor de varios datos de entrada después del ajuste expresión indicado.",
+  "description": "Este bloque es dinámico, por lo que el recuento de datos de entrada se puede cambiar mediante el cuadro de diálogo de configuración del bloque.<br>El tipo de valor de puerto de datos gestiona todos los tipos.<br>El nombre de variable escrito en el ajuste <doc-setting-name translate=no>Expression</doc-setting-name> debe corresponder al nombre de datos de entrada; de lo contrario, la expresión se considerará no válida.<br><br>El valor de expresión de configuración gestiona la comparación de expresiones avanzadas:<ul><li><doc-value translate=no>&quot;Value1 === Value2&quot;</doc-value>: comprueba que <doc-idp-name translate=no>Value1</doc-idp-name> es igual a <doc-idp-name translate=no>Value2</doc-idp-name>.</li><li><doc-value translate=no>&quot;Value3 > Value3 && Value3 < Value2&quot;</doc-value>: comprueba que <doc-idp-name translate=no>Value3</doc-idp-name> está entre <doc-idp-name translate=no>Value1</doc-idp-name> y <doc-idp-name translate=no>Value2</doc-idp-name> (<doc-idp-name translate=no>Value1</doc-idp-name>, <doc-idp-name translate=no>Value2</doc-idp-name> y <doc-idp-name translate=no>Value3</doc-idp-name> siendo números).</li><li><doc-value translate=no>&quot;Value1 !== Value2 || Value1 !== Value3&quot;</doc-value>: comprueba que <doc-idp-name translate=no>Value1</doc-idp-name> es diferente de <doc-idp-name translate=no>Value2</doc-idp-name> o <doc-idp-name translate=no>Value3</doc-idp-name>.</li></ul>",
+  "dataPorts": {
+    "Value1": "es el primer valor que se va a comparar.",
+    "Value2": "es el segundo valor que se va a comparar."
+  },
+  "controlPorts": {
+    "In": "activa la ejecución del bloque.",
+    "True": "se activa cuando el resultado de la expresión rellenada por cada valor de datos de entrada es positivo.",
+    "False": "se activa cuando el resultado de la expresión rellenada por cada valor de datos de entrada es negativo."
+  },
+  "settings": {
+    "Expression": "el valor de la expresión que describe la comparación de valores de datos de entrada."
+  },
+  "example": null
+}

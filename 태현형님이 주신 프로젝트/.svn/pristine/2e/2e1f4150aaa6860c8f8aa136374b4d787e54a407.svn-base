@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<derivedformatmanagement xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="DerivedFormatDeclarative.xsd">
+    <!-- Introduced in 22x_FD01, with FUN104446 [Derived Format Conversion] 22xFD01 Admin Console for derived formats - Drop 3 XCAD integration  -->
+	<converter name="SOLIDWORKS" synchronous="true"  nlsFile="emxDerivedFormatManagementSolidWorksStringResource" comment="conversion managed synchronously at save by XCAD">
+      <datasources>
+		<datasource name="SOLIDWORKS">    <!-- XCAD SolidWorks only manages the Solidworks DataSource -->
+			<source name="SLDPRT" type="Part">
+				<target name="CGR"        inputStreamId="authoring" outputStreamId="authoringvisu"/>
+				<target name="PDF"        inputStreamId="authoring" outputStreamId="PDF"/>
+				<target name="STEP_AP203" inputStreamId="authoring" outputStreamId="STEP_AP203"/>
+				<target name="STEP_AP214" inputStreamId="authoring" outputStreamId="STEP_AP214"/>
+			</source>
+			
+			<source name="SLDDRW" type = "Drawing">
+				<target name="UDL"        inputStreamId="authoring" outputStreamId="authoringvisu"/>
+				<target name="PDF"        inputStreamId="authoring" outputStreamId="PDF" />
+				<!-- below may be technically possible, but don't want to expose in SLW
+				<target name="DWG"        inputStreamId="authoring" outputStreamId="DWG" />
+				<target name="DXF"        inputStreamId="authoring" outputStreamId="DXF" />   -->
+			</source>
+			
+
+			<events>        <!-- SolidWorks only manages the case of save from Solidworks XCAD -->
+				<event name="onXCADSave" type="Trigger"  />
+			</events>
+		</datasource>
+	  </datasources>
+	</converter>
+
+</derivedformatmanagement>

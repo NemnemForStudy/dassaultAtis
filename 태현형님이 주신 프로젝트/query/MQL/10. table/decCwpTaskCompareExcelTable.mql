@@ -1,0 +1,19 @@
+################################################################################################
+# Create By jhlee 2023. 04. 18
+# Admin Type : table
+# Name : decCwpTaskCompareExcelTable
+################################################################################################
+
+#del table "decCwpTaskCompareExcelTable" system;
+add table "decCwpTaskCompareExcelTable" system
+    column
+        name        "DynamicColumn"
+        alt         ""
+        range       ""
+        update      ""
+        setting    "Column Type" "Dynamic"
+        setting    "Dynamic Column Function" "getCwpTaskCompareExcelTableColumn"
+        setting    "Dynamic Column Program" "emxDnD"
+;
+
+add property 'table_decCwpTaskCompareExcelTable' on prog eServiceSchemaVariableMapping.tcl to table 'decCwpTaskCompareExcelTable' system;

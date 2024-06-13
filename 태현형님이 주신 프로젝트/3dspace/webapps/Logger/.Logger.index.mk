@@ -1,0 +1,11 @@
+m|WebappsUtils\Logger.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.0.22078|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\Logger\Logger.js|1647692009|4026
+s|WebappsUtils\Logger.mweb\src\Appenders\GelfHttp.js|1422220526|2568
+u|WebappsUtils\Logger.mweb\src\Appenders\Quake.js|1422220410|2724
+u|WebappsUtils\Logger.mweb\src\Logger.js|1422221217|18223
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

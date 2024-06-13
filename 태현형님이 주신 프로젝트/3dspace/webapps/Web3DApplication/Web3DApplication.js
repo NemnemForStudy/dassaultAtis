@@ -1,0 +1,1 @@
+define("DS/Web3DApplication/Web3DApplication",["DS/WebApplication/WebApplication","DS/ApplicationFrame/FrameWindow3D"],function(i,n){"use strict";return i.extend({init:function(i){i.FrameWindow=n,this._parent(i)}})});

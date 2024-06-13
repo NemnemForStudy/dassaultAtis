@@ -1,0 +1,171 @@
+<?xml version = "1.0"?>
+<!-- COPYRIGHT DASSAULT SYSTEMES 2021, All rights reserved -->
+<Package xmlns = "PLMDictionaryUnified"
+         Name = "PLMHangerSupport"
+         ModelerType = "Top"
+         CustomerExposition = "Programmer"
+         Uuid = "3d2d43f9-95cd-497d-8be3-91ebc88f4807"
+         UseNames = "CATComponentBasedDesign PRODUCTCFG">
+
+  <!-- Object Type -->
+  <Class Name = "SptAbstractSupportType"
+         Abbreviation = "sptast"
+         Abstract = "Yes"
+         CustomerExposition = "Programmer"
+         Discipline = "Yes"
+         Specializable="No"
+         SuperName = "ObjectTypeReference"
+         Uuid = "0609f68d-b7ea-4e19-95e9-5a550fef9f6b"/>
+
+  <Class Name = "SptSupportAssemblyType"
+         Abbreviation = "sptsat"
+         Abstract = "No"
+         CustomerExposition = "Programmer"
+         Discipline = "Yes"
+         Specializable="No"
+         SuperName = "SptAbstractSupportType"
+         Uuid = "3f188c62-0d7e-46d8-b377-56e383bdde98">
+    <Property Name = "IconName" Value = "I_SptSupportAssemblyType"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATCbaObjectTypeDelegateInstanciation"/>
+    <Property Name = "Newable" Value = "New"/>
+    <Property Name = "3DPartAvailability" Value = "ReferenceOnly"/>
+  </Class>
+
+  <Class Name = "SptPrimarySupportType"
+         Abbreviation = "sptpst"
+         Abstract = "No"
+         CustomerExposition = "Programmer"
+         Discipline = "Yes"
+         Specializable="No"
+         SuperName = "SptAbstractSupportType"
+         Uuid = "83f06c86-6957-474e-b715-8fdb49f6e498">
+    <Property Name = "IconName" Value = "I_SptPrimarySupportType"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATCbaObjectTypeDelegateInstanciation"/>
+    <Property Name = "Newable" Value = "New"/>
+    <Property Name = "3DPartAvailability" Value = "ReferenceOnly"/>
+  </Class>
+
+  <!-- Object -->
+  <Class Name = "SptAbstractSupportReference"
+         Abbreviation = "sptasr"
+         CustomerExposition = "Programmer"
+         Abstract = "Yes"
+         Discipline = "Yes"
+         CustomerExtensible="Yes"
+         Specializable="No"
+         SuperName = "VPMReference"
+         Uuid = "2cc1b6e1-46ff-4816-aeae-cf0d5c068bea">
+  </Class>
+
+  <Class Name = "SptSupportAssembly"
+         Abbreviation = "sptsa"
+         CustomerExposition = "Programmer"
+         Abstract = "No"
+         Discipline = "Yes"
+         CustomerExtensible = "Yes"
+         Specializable = "No"
+         SuperName = "SptAbstractSupportReference"
+         Uuid = "7e8a370e-df52-49a5-8a99-6b8c529e133e"
+         CreateInstName ="SptSupportAssemblyInst">
+    <Property Name = "IconName" Value = "I_SptSupportAssembly"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATESptDelegateInstanciation"/>
+    <Property Name = "Newable" Value = "All"/>
+    <Property Name = "3DPartAvailability" Value = "ReferenceOnly"/>
+  </Class>
+
+  <Class Name = "SptPrimarySupport"
+         Abbreviation = "sptps"
+         CustomerExposition = "Programmer"
+         Abstract = "No"
+         Discipline = "Yes"
+         CustomerExtensible ="Yes"
+         Specializable ="No"
+         SuperName = "SptAbstractSupportReference"
+         Uuid = "41eeaecc-6a0a-4dd9-85c4-c0559a7b94fd"
+         CreateInstName ="SptPrimarySupportInst">
+    <Property Name = "IconName" Value = "I_SptPrimarySupport"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATESptDelegateInstanciation"/>
+    <Property Name = "Newable" Value = "All"/>
+    <Property Name = "3DPartAvailability" Value = "UserChoiceReferenceDefault"/>
+    <Simple Name = "V_SptPrimaryFunction"
+            Uuid = "8ba50949-259b-4da8-8a21-c90231e97475"
+            Type = "String"
+            Protection = "Free"
+            CAAExposition = "L0"/>
+    <Simple Name = "V_SptNominalSize"
+            Uuid = "df8af794-2f1a-43a0-a649-ae65a0d4609f"
+            Type = "String"
+            Protection = "Free"
+            CAAExposition = "L0"/>
+    <Simple Name = "V_SptODMin"
+            Uuid = "97b27a7c-c518-4ce7-9c60-90f6bbb02e84"
+            Magnitude = "LENGTH"
+            Type = "Double"
+            Protection = "Free"
+            CAAExposition = "L0"/>
+    <Simple Name = "V_SptODMax"
+            Uuid = "d566a03c-8c9c-44a2-9d99-65f1e90a0e03"
+            Magnitude = "LENGTH"
+            Type = "Double"
+            Protection = "Free"
+            CAAExposition = "L0"/>
+    <Simple Name = "V_SptHeight"
+            Uuid = "51d7d16d-2ac7-4495-94f1-2fbda1f30f10"
+            Magnitude = "LENGTH"
+            Type = "Double"
+            Protection = "Free"
+            CAAExposition = "L0"/>
+    <Simple Name = "V_SptWidth"
+            Uuid = "f191261f-0299-4e79-95ee-2d9320cd5242"
+            Magnitude = "LENGTH"
+            Type = "Double"
+            Protection = "Free"
+            CAAExposition = "L0"/>
+    <Simple Name = "V_SptMaterial"
+            Uuid = "1fc387c4-2de5-4b45-b636-0e057c6d6e04"
+            Type = "String"
+            Protection = "Free"
+            CAAExposition = "L0"/>
+  </Class>
+
+  <RelationClass Name = "SptAbstractSupportInstance"
+                 Uuid = "99fe685c-b6ea-446e-b232-013269084d44"
+                 CustomerExposition = "Programmer"
+                 Abstract = "Yes"
+                 Discipline = "Yes"
+                 SuperName = "VPMInstance">
+    <SubClause Name = "to" TargetName = "SptAbstractSupportReference"/>
+  </RelationClass>
+
+  <RelationClass Name = "SptSupportAssemblyInst"
+                 Uuid = "b8c6eca8-5315-4261-8ca7-5a7ba969e4b5"
+                 CustomerExposition = "Programmer"
+                 Discipline = "Yes"
+                 CustomerExtensible = "Yes"
+                 SuperName = "SptAbstractSupportInstance">
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATESptDelegateInstanciation"/>
+    <SubClause Name = "to" TargetName = "SptSupportAssembly" />
+  </RelationClass>
+
+  <RelationClass Name = "SptPrimarySupportInst"
+                 Uuid = "2f85ec64-2a9e-46dc-b935-55edf47842b9"
+                 CustomerExposition = "Programmer"
+                 Discipline = "Yes"
+                 CustomerExtensible = "Yes"
+                 SuperName = "SptAbstractSupportInstance">
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATESptDelegateInstanciation"/>
+    <SubClause Name = "to" TargetName = "SptPrimarySupport" />
+  </RelationClass>
+
+  <Extension Name = "SptStandardSupportingInterface"
+             Uuid = "74fee242-4554-496b-b316-bded4d200054"
+             ScopeNames = "VPMPort"
+             CustomerExposition = "Programmer">
+  </Extension>
+  <Extension Name = "SptRetainerSupportingInterface"
+             Uuid = "cbe0c02d-eb4d-4c9a-8fd5-668d2e5baf0a"
+             ScopeNames = "VPMPort"
+             CustomerExposition = "Programmer">
+  </Extension>
+
+</Package>

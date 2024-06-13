@@ -1,0 +1,1 @@
+define("DS/CAT3DAnnotationWidget/CAT3DAnnotationWidget_es",{});define("DS/CAT3DAnnotationWidget/assets/nls/CAT3DAnnotationWidget",{customApp:"Personalizar su aplicación",prefs:"Preferencias",difAnnotSet:"Abra Annotation Sets"});

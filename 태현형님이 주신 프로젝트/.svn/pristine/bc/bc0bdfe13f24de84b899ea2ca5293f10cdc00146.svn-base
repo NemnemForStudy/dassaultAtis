@@ -1,0 +1,1 @@
+define("DS/CATWebUXCVS/CATWebUXCVS_zh-TW",{});define("DS/CATWebUXCVS/assets/nls/CATWebUXCVS",{valStateChange:{dlgTitle:"驗證",closeBtn:"關閉",inProgress:"進行中",passed:"通過",failed:"失敗"}});

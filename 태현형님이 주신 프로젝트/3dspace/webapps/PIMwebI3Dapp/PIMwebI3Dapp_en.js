@@ -1,0 +1,1 @@
+define("DS/PIMwebI3Dapp/PIMwebI3Dapp_en",{});define("DS/PIMwebI3Dapp/assets/nls/PIMwebI3Dapp",{isr:"Open Interference Simulations",itf:"Open Interference Metrics",customApp:"Customize your app",prefs:"Preferences",backToIssue:"Go back to Issue"});

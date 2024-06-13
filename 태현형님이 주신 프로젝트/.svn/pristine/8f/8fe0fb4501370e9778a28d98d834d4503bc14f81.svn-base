@@ -1,0 +1,216 @@
+<meta charset="UTF-8"/>
+//---------------------------------------------------------------------------
+// Check_SMBECCusto
+//---------------------------------------------------------------------------
+Check_SMBECCusto.Title="Přizpůsobení dílů EC pro Team Engineering";
+Check_SMBECCusto.Label1="Zaškrtnutím nebo zrušením zaškrtnutí políčka můžete aktivovat, resp. deaktivovat přizpůsobení dílů EC";
+Check_SMBECCusto.Resume="Instalace přizpůsobení dílů EC pro Team Engineering: /P1";
+InstallSMBECCusto="Přizpůsobení dílů EC";
+
+//---------------------------------------------------------------------------
+//  SMB Server Products Selection => PRF Only w/o TES configuration selected
+//---------------------------------------------------------------------------
+TESnotSelected.Title="Varování";
+TESnotSelected.Text="Vybrané produkty nelze nainstalovat bez TES; vyberte také TES";
+TESnotSelected.ok="OK";
+
+//---------------------------------------------------------------------------
+//  SMB Server Products Selection => PRF Only w/o MIS product selected
+//---------------------------------------------------------------------------
+PRFnotSelected.Title="Varování";
+PRFnotSelected.Text="Vybranou MIS produktu nelze nainstalovat bez PRF; vyberte také PRF";
+PRFnotSelected.ok="OK";
+
+//---------------------------------------------------------------------------
+//  ALL IN ONE INSTALLER HIGH END
+//---------------------------------------------------------------------------
+CPFOnly.Title="Varování";
+CPFOnly.Text="Musí být zvolena konfigurace CPF. Vyberte položku CPF";
+CPFOnly.ok="OK";
+
+Check_InstallTomcat.Title="Instalace aplikačního serveru Apache Tomcat";
+Check_InstallTomcat.Label1="Zaškrtnutím tohoto políčka nainstalujete aplikační server Tomcat a zavedete webovou aplikaci ENOVIA";
+Check_InstallTomcat.Resume.true="Je vybrána instalace Tomcat: ano";
+Check_InstallTomcat.Resume.false="Je vybrána instalace Tomcat: ne";
+Check_InstallTomcat.CheckButton="Instalace aplikačního serveru Tomcat. Vyberte port připojení:";
+
+Check_BuildJ2EEArchive.Title="Instalace J2EE Archives Build a Tomcat";
+Check_BuildJ2EEArchive.Label1="Zaškrtnutím tohoto políčka můžete sestavit archivy J2EE (.war a .ear)";
+Check_BuildJ2EEArchive.Resume.true="Sestavit archivy J2EE: ano";
+Check_BuildJ2EEArchive.Resume.false="Sestavit archivy J2EE: ne";
+Check_BuildJ2EEArchive.CheckButton="Sestavit soubory .ear/.war. Zadejte název webové aplikace:";
+
+Text_WebAppNameAllinOne.Title="Definice názvu aplikace J2EE";
+//Text_WebAppNameAllinOne.Label1 = "Please enter the name of the web application"; 
+Text_WebAppNameAllinOne.Resume="Název webové aplikace: /p1";
+
+TomcatSelectedButNoWarFiles.Title="Výběr není konzistentní";
+TomcatSelectedButNoWarFiles.Text="Vyberte možnost „sestavit .war'“, pokud chcete aplikaci zavést v systému TomEE!";
+
+Port_tomcaAllinOne.Title="Číslo portu pro připojení Tomcat";
+//Port_tomcaAllinOne.Label1 = "Please define the Tomcat connection port number:";  
+Text_Port_tomcaAllinOne.Resume="Připojovací port Tomcat: /P1";
+
+Text_SuperUserNameAllInOne.Title="Definice superuživatele, sestavení archivů J2EE a instalace Tomcat";
+Text_SuperUserNameAllInOne.Label1="Zadejte jméno uživatele, který má oprávnění Business i System Administration";
+Text_SuperUserNameAllInOne.Resume="Jméno superuživatele: /P1";
+
+Text_SuperUserPasswordAllInOne.Label1="Zadejte heslo uživatele, který má oprávnění Business i System Administration";
+
+Check_SMBProgramCentralCusto.Title="Instalace aplikace One Click Program Central Customization";
+Check_SMBProgramCentralCusto.Label1="Instalovat aplikaci One Click Program Central Customization";
+Check_SMBProgramCentralCusto.Resume="Instalovat aplikaci One Click Program Central Customization: /P1";
+
+X3DCSMA_previousInstallDetected.Title="Byla nalezena stávající instalace";
+X3DCSMA_previousInstallDetected.Text="Byla nalezena stávající instalace.\nTento instalační program je určen pouze pro zcela nové instalace";
+
+X3DCSMA_cmdToUpdateDB.Title="Aktualizace databáze";
+X3DCSMA_cmdToUpdateDB.Text="Po zobrazení výzvy zadejte následující příkaz v MQL, abyste aktualizovali databázi:\n  MQL<1>set context user creator;\n  MQL<2>run <instalační_cesta_serveru>/Apps/install3DSpaceV6R2023x.tcl;\n";
+
+X3DCSMA_failure_registration_3DPassport.Title="Registrace 3DSpace v 3DPassport";
+X3DCSMA_failure_registration_3DPassport.Text="Proveďte následující skript pro dokončení registrace 3DSpace v 3DPassport:\n<server>/<os>/code/command/3DSpaceRegistraceIn3DPassport.[sh|bat]\nPřed spuštěním tohoto skriptu se ujistěte, že je spuštěna aplikace 3DPassport.";
+
+passportRegistration.ExecuteAppli="Probíhá registrace 3DSpace v 3DPassport...";
+
+X3DCSMA_cmdToUpdateDBscript.Title="Aktualizace databáze";
+X3DCSMA_cmdToUpdateDBscript.Text="Proveďte následující skript pro aktualizaci databáze:\n<instalační_cesta_serveru>/Apps/install3DSpaceR2023x[.sh|.bat];\n";
+
+certificates_repository.Title="Umístění certifikátů";
+certificates_repository.Label1="Vyberte umístění certifikátů";
+certificates_repository.Label2="(Mělo by obsahovat pouze soubory certifikátů.";
+certificates_repository.Label3=" Ponecháte-li toto pole prázdné, bude nutno importovat certifikáty ručně pomocí nástroje keytool)";
+certificates_repository.Resume="Umístění certifikátů: /P1";
+
+certificates_import_error.Title="Chyba při importu certifikátů";
+certificates_import_error.Text="Nebyl importován nejméně jeden certifikát.\nDalší informace naleznete v souboru INFO_import_certs.log:\n/P1";
+
+X3DCSMA_SXI_postinstall.Title="Postup konfigurace fulltextového vyhledávání";
+X3DCSMA_SXI_postinstall.Label1="Zaškrtnutím políčka je možné po instalaci aplikace 3DSpace nakonfigurovat a spustit indexování";
+X3DCSMA_SXI_postinstall.Label2="Nekontrolovat, zda je třeba nainstalovat jiné aplikace.";
+X3DCSMA_SXI_postinstall.CheckButton="Nakonfigurujte a spusťte indexování fulltextového vyhledávání ihned po instalaci aplikace 3DSpace.";
+X3DCSMA_SXI_postinstall.Resume.true="Postup konfigurace fulltextového vyhledávání: ano";
+X3DCSMA_SXI_postinstall.Resume.false="Postup konfigurace fulltextového vyhledávání: ne";
+
+SXI_baseline_indexation.ExecuteAppli="Konfigurace průběžného indexování vyhledávání...";
+
+
+//---------------------------------------------------------------------------
+// VPLMCentralAdminUser
+//---------------------------------------------------------------------------
+X3DCSMA_administor_name.Title="Definice správce";
+X3DCSMA_administor_name.Label1="Jméno správce:";
+X3DCSMA_administor_name.Resume="Jméno správce: /p1";
+
+//---------------------------------------------------------------------------
+// VPLMCentralAdminPwd
+//---------------------------------------------------------------------------
+X3DCSMA_administor_password.Title="Heslo správce:";
+X3DCSMA_administor_password.Label1="Bude vytvořen správce: admin_platform";
+X3DCSMA_administor_password.Label2="Heslo správce:";
+
+X3DCSMA_slashvar_notwritable="Instalace potřebuje vytvořit složky v adresáři /var/DassaultSystemes/. Před zahájením instalace zkontrolujte, zda tato složka existuje";
+
+//---------------------------------------------------------------------------
+// Text_SuperUserName
+//---------------------------------------------------------------------------
+X3DCSMA_creator_name.Title="Superuživatel//Heslo";
+X3DCSMA_creator_name.Label1="Zadejte jméno uživatele, který má oprávnění Business i System Administration.";
+X3DCSMA_creator_name.Resume="Jméno superuživatele: /p1";
+
+//---------------------------------------------------------------------------
+// Text_SuperUserPwd
+//---------------------------------------------------------------------------
+X3DCSMA_creator_password.Title="Superuživatel//Heslo";
+X3DCSMA_creator_password.Label1="Zadejte heslo uživatele, který má oprávnění Business i System Administration.";
+
+X3DCSMA_CheckCredentialsFailed.Title="Chyba ověření";
+X3DCSMA_CheckCredentialsFailed.Text="Při pokusu o připojení byla nahlášena následující chyba:\n\n/P1";
+
+X3DCSMA_upgradefailed.Title="Chyba MQL";
+X3DCSMA_upgradefailed.Label1="Při provádění příkazu MQL>upgrade došlo k chybě:/P1";
+X3DCSMA_upgradefailed.ExecuteAppli="Probíhá příkaz MQL>upgrade...";
+
+//---------------------------------------------------------------------------
+// Reconfiguration Change creator's password
+//---------------------------------------------------------------------------
+BOOL_ChangeCreatorPassword.Title="Změnit heslo superuživatele (autora)";
+BOOL_ChangeCreatorPassword.CheckButton="Změnit heslo superuživatele (autora)";
+BOOL_ChangeCreatorPassword.Resume.true="Změnit heslo superuživatele: ano";
+BOOL_ChangeCreatorPassword.Resume.false="Změnit heslo superuživatele: ne";
+
+
+X3DCSMA_creator_old_password.Title="Staré heslo superuživatele (autora):";
+X3DCSMA_creator_old_password.Label1="Staré heslo superuživatele (autora):";
+X3DCSMA_creator_new_password.Title="Nové heslo superuživatele (autora):";
+X3DCSMA_creator_new_password.Label1="Nové heslo superuživatele (autora):";
+
+//---------------------------------------------------------------------------
+// Reconfiguration Change passwords
+//--------------------------------------------------------------------------- 
+BOOL_ChangeAdministratorPassword.Title="Změnit heslo správce platformy (admin_platform)";
+BOOL_ChangeAdministratorPassword.CheckButton="Změnit heslo správce platformy (admin_platform)";
+BOOL_ChangeAdministratorPassword.Resume.true="Změnit heslo správce platformy: ano";
+BOOL_ChangeAdministratorPassword.Resume.false="Změnit heslo správce platformy: ne";
+
+
+X3DCSMA_admin_platform_old_password.Title="Staré heslo správce platformy:";
+X3DCSMA_admin_platform_old_password.Label1="Staré heslo správce platformy:";
+X3DCSMA_admin_platform_new_password.Title="Nové heslo správce platformy:";
+X3DCSMA_admin_platform_new_password.Label1="Nové heslo správce platformy:";
+
+//---------------------------------------------------------------------------
+// Reconfiguration Error changing password
+//--------------------------------------------------------------------------- 
+changePasswordFailed.Title="Při změně hesla došlo k chybě";
+changePasswordFailed.Text="Při změně hesla došlo k následující chybě:\n/p1";
+
+//---------------------------------------------------------------------------
+// Reconfig Store path
+//---------------------------------------------------------------------------
+BOOL_ChangeStorePath.Title="Změnit cestu k úložišti";
+BOOL_ChangeStorePath.CheckButton="Chcete změnit cestu k úložišti?";
+BOOL_ChangeStorePath.Resume.true="Změnit cestu k úložišti: ano";
+BOOL_ChangeStorePath.Resume.false="Změnit cestu k úložišti: ne";
+
+//---------------------------------------------------------------------------
+// Reconfiguration Update Store fcurl
+//---------------------------------------------------------------------------
+BOOL_reconfigure_FCSURL.Title="Změnit adresu URL FCS";
+BOOL_reconfigure_FCSURL.CheckButton="Změnit adresu URL FCS úložiště";
+BOOL_reconfigure_FCSURL.Resume.true="Změnit adresu FCS URL úložiště: Ano";
+BOOL_reconfigure_FCSURL.Resume.false="Změnit adresu FCS URL úložiště: Ne";
+
+RECONF_X3DCSMA_FCSURL.Title="Nová adresa URL služby FCS:";
+RECONF_X3DCSMA_FCSURL.Label1="Adresa URL služby FCS:";
+RECONF_X3DCSMA_FCSURL.Resume="Adresa URL služby FCS: /p1";
+
+changePasswordFailed.Title="Při změně adresy fcsurl úložiště došlo k chybě";
+changePasswordFailed.Text="Při změně adresy fcsurl úložiště došlo k následující chybě:\n/p1";
+
+//---------------------------------------------------------------------------
+// Reconfiguration check creator password
+//--------------------------------------------------------------------------- 
+ConnectionSuperUserFailed.Title="Chyba připojení";
+ConnectionSuperUserFailed.Text="Při pokusu o připojení došlo k následující chybě:\n/p1";
+
+//---------------------------------------------------------------------------
+// check execution of inspectdb
+//--------------------------------------------------------------------------- 
+inspectDBKO.Title="Chyba při provádění příkazu MQL";
+inspectDBKO.Text="Při provádění příkazu MQL>list došlo k chybě\nDalší podrobnosti naleznete v tomto souboru protokolu:\n/P1";
+inspectDBKO.ok="OK";
+inspectDBKO.quit="Ukončit";
+
+//---------------------------------------------------------------------------
+// /tmp in noexec mount
+//---------------------------------------------------------------------------
+test_execution_rights_script.Exceptions.actCreateProcess.Title="Skripty nelze spouštět z výchozí dočasné složky";
+test_execution_rights_script.Exceptions.actCreateProcess.Text="Pokud je dočasná složka (např. /tmp) připojena v režimu „noexec“, musíte proměnnou „TMPDIR“ exportovat do složky, kde můžete spouštět skripty.\nPoté restartujte instalační program s tímto nastavením proměnné.";
+
+
+// ----------------------------------------
+// Special char in admin_platform password
+// ----------------------------------------
+X3DCSMA_Check_special_chars.Title="Byly nalezeny speciální znaky";
+X3DCSMA_Check_special_chars.Text="V hesle uživatele admin_platform byly nalezeny speciální znaky\nDoporučujeme nepoužívat následující znaky: \ [ { } ! $";
+X3DCSMA_Check_special_chars.ok="OK";

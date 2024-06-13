@@ -1,0 +1,25 @@
+<%@page import="com.matrixone.servlet.Framework"%>
+<%@page import="matrix.db.Context"%>
+<%@page import="com.matrixone.apps.domain.util.EnoviaResourceBundle"%>
+<%@page import="com.matrixone.apps.domain.util.XSSUtil"%>
+<%@page import="java.util.Enumeration"%>
+<%
+	Context context = Framework.getFrameContext(session);
+	Enumeration<String> eParamName = request.getParameterNames();
+	String sParamName = null;
+	String sParamValue = null;
+	StringBuilder sbURL = new StringBuilder();
+	String sURL = EnoviaResourceBundle.getProperty(context, "emxFramework.ServerUrl.Used");
+	sbURL.append(sURL);
+	sbURL.append("/3dspace/common/decDashboardEWPWeeklyReleaseStatus.jsp?");
+	while(eParamName.hasMoreElements()){
+		sParamName = eParamName.nextElement();
+		sbURL.append(sParamName);
+		sbURL.append("=");
+		sbURL.append(XSSUtil.encodeForURL(request.getParameter(sParamName)));
+		sbURL.append("&");
+	}
+%>
+<script>
+	document.location.href = "<%=sbURL.toString()%>";
+</script>

@@ -1,0 +1,124 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../c/UWA/assets/css/standalone.css" />
+<script type="text/javascript" src="../AmdLoader/AmdLoader.js"></script>
+<link href="http://web3dinfra/WUXShowRoom/i_framed_sample.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="../UIKIT/UIKIT.css">
+<script type="text/javascript" src="../c/UWA/js/UWA_Standalone_Alone.js"></script>
+<script>
+	document.devenv3DIM=true;
+	// API instanciation
+	require(['DS/PlatformAPI/PlatformAPI', 'UWA/Drivers/Alone', 'DS/RTAudioVideoAPI/RTAudioVideoAPI', 'DS/MessageBus/MessageBus', 'DS/UIKIT/DropdownMenu', 'DS/UIKIT/Input/Button', 'DS/MessageBus/MessageBus'], function (PlatformAPI, UWA, RTAudioVideoAPI, justHereToLoadMessageBus, Dropdown, Button, MessageBus) {			
+			
+			function transferPAPIcalls(channel) {
+				PlatformAPI.subscribe(channel, function (data) {
+					window.top.document.PlatformAPI.publish(channel, data);
+				});
+			}
+			transferPAPIcalls('fromwidgetim.ds.com');
+			transferPAPIcalls('im.ds.com');
+			
+			document.createRTAVAPI = function(logins) {
+				var params = {
+					tenantId : 'hyper3dsy', 
+					logins:logins,
+					size:'80px',
+					dmId : "123456789"
+				};
+				//svg
+				if (document.avapiObj) document.avapiObj.destroy();
+				document.avapiObj = new RTAudioVideoAPI(params);
+				document.avapiObj.renderTo({container:document.getElementById('RTwebrtcAPIDemov3'), type:'both'});
+				//fonticon
+				params.svgIcon = false;
+				params.onClick = function(type, component){
+					component.startCall(type, {dmId : "abcdef"});
+				}
+				params.dmId=null;
+				if (document.avapiObjFonticon) { document.avapiObjFonticon.destroy(); document.avapiObjFonticon=null}
+				document.avapiObjFonticon = new RTAudioVideoAPI(params);
+				document.avapiObjFonticon.renderTo({container:document.getElementById('RTwebrtcAPIDemov2'), type:'both'});
+			};
+
+			
+			/*document.avapiObj2 = new RTAudioVideoAPI({tenantId : 'hyper3dsy', logins:['ii9','p8d'], size:'80px', svgIcon:false});
+			document.avapiObj2.renderTo({container:document.getElementById('RTwebrtcAPIDemov3'), type:'both'});*/
+			
+			/*var button = new Button({ value: '2 items' }).inject(document.querySelector('#RTwebrtcAPIDemov4'));
+			new Dropdown({
+				items : document.avapiObj.getItems(),
+				target: button.getContent()
+			});			
+			
+			var button2 = new Button({ value: '1 item' }).inject(document.querySelector('#RTwebrtcAPIDemov4'));
+			new Dropdown({
+				items : document.avapiObj.getItem('video'),
+				target: button2.getContent()
+			});*/
+	});
+
+	// shortcut to static method
+	function startCallBypassAPI(type){
+		var data = {};
+		data.logins = callees;
+		data.action = 'startCall';
+		data.type = type || 'audio';
+		window.top.document.PlatformAPI.publish('im.ds.com', data);
+	}
+	document.startCallBypassAPI = startCallBypassAPI;	
+	
+
+
+	// demo checkbox listener
+	var callees = [];
+	function checkboxListener(login){
+		var checkbox = document.getElementById(login);
+		if (checkbox.checked) callees.push(login);
+		else {
+			var index = callees.indexOf(login);
+			if (index == -1) return console.error("login "+login+" can not be removed from callees");
+			delete callees[index];
+		}
+		
+		document.createRTAVAPI(callees);
+	}
+	document.checkboxListener=checkboxListener;
+	
+	function startCoreview(){
+	var calleesInSwymformat = [];
+	for (var i in callees) calleesInSwymformat.push({login:callees[i]});
+	window.top.document.PlatformAPI.publish("towidget.im.ds.com", { // fake swym init sketch
+			"action": "initCoreview",
+			"data": {
+				"communityId": "com id",
+				"mediaId": "media id",
+				"login": calleesInSwymformat
+			}
+		}); 
+	}
+	document.startCoreview = startCoreview;
+
+</script>
+</head>
+<body>
+	<!--<article id="RTwebrtcAPIDemov4"><center><h3>RT AudioVideo API dropdown items</h3></center>	</article>!-->
+	<article id="RTwebrtcAPIDemov3"><center><h3>RT AudioVideo API svg</h3></center>	</article>
+	<article id="RTwebrtcAPIDemov2"><center><h3>RT AudioVideo API fonticon</h3></center>	</article>
+	<article id="RTwebrtcAPIDemo"><center><h3>RT AudioVideo API static method</h3></center>
+		<ul>
+			<li><input type='checkbox' id='uxodtmem' onclick='document.checkboxListener(this.id)'>Uxodt Member</li>
+			<li><input type='checkbox' id='uxodtidp' onclick='document.checkboxListener(this.id)'>Uxodt ITP</li>
+			<li><input type='checkbox' id='t5r' onclick='document.checkboxListener(this.id)'>Thierry Olivier</li>
+			<li><input type='checkbox' id='p8d' onclick='document.checkboxListener(this.id)'>Paul Simard</li>
+			<li><input type='checkbox' id='ii9' onclick='document.checkboxListener(this.id)'>Adrien Berton</li>
+			<li><input type='checkbox' id='pne1' onclick='document.checkboxListener(this.id)'>Pierre Negre</li>
+			<li><input type='checkbox' id='ali2' onclick='document.checkboxListener(this.id)'>Achraf Lansari</li>
+			<li><input type='checkbox' id='henry' onclick='document.checkboxListener(this.id)'>Henry</li>
+		</ul>
+		<button id='btnStartCall' onclick='document.startCallBypassAPI()'>start call</button>
+		<button id='btnStartCoreview' onclick='document.startCoreview()'>start coreview</button>
+	</article>
+</body>
+</html>
+
+

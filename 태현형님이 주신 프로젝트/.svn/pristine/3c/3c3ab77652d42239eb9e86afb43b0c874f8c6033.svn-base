@@ -1,0 +1,1 @@
+define("DS/DMUReviewFacets/DMUReviewFacets_pt-BR",{});define("DS/DMUReviewFacets/assets/nls/DMUReviewFacets",{noHighlight:"A Revisão selecionada não contém destaques",noCheck:"A Revisão selecionada não contém verificações"});

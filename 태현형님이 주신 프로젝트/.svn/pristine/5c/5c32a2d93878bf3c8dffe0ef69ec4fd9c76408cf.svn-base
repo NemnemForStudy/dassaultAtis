@@ -1,0 +1,1 @@
+define("DS/CAT3DAnnotationBaseCmds/CAT3DAnnotationBaseCmds_de",{});define("DS/CAT3DAnnotationBaseCmds/assets/nls/CAT3DAnnotationBaseCmds",{DisplayHistorySuccessfulLbl:"Verlauf für Ansichts- und Erfassungsanzeige gelöscht",InfosPanelTitle:"Semantische Standards",CloseButton:"Schließen",relatedAttrPanelTitle:"Informationen zu Funktionen"});

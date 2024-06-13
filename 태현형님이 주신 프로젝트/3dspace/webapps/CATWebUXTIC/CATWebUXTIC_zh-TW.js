@@ -1,0 +1,1 @@
+define("DS/CATWebUXTIC/CATWebUXTIC_zh-TW",{});define("DS/CATWebUXTIC/assets/nls/CATWebUXTICCmdAdapt",{caOK:"成功產生變更動作",caKO:"產生變更動作失敗",issueOK:"產生問題成功",issueKO:"產生問題失敗",caAttached:"變更動作已附加至父問題",caNotAttached:"變更動作尚未附加至父問題"});

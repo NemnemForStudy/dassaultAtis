@@ -1,0 +1,353 @@
+/* OVERFLOW ==================================== */
+
+@mixin text-overflow() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* OPACITY ==================================== */
+
+@mixin opacity($opacity) {
+  opacity: $opacity;
+  // IE8 filter
+  $opacity-ie: ($opacity * 100);
+  filter: alpha(opacity=$opacity-ie);
+}
+
+/* VENDOR PREFIXES ==================================== */
+
+/* Animations ------------------ */
+@mixin animation($animation) {
+  -webkit-animation: $animation;
+       -o-animation: $animation;
+          animation: $animation;
+}
+@mixin animation-name($name) {
+  -webkit-animation-name: $name;
+          animation-name: $name;
+}
+@mixin animation-duration($duration) {
+  -webkit-animation-duration: $duration;
+          animation-duration: $duration;
+}
+@mixin animation-timing-function($timing-function) {
+  -webkit-animation-timing-function: $timing-function;
+          animation-timing-function: $timing-function;
+}
+@mixin animation-delay($delay) {
+  -webkit-animation-delay: $delay;
+          animation-delay: $delay;
+}
+@mixin animation-iteration-count($iteration-count) {
+  -webkit-animation-iteration-count: $iteration-count;
+          animation-iteration-count: $iteration-count;
+}
+@mixin animation-direction($direction) {
+  -webkit-animation-direction: $direction;
+          animation-direction: $direction;
+}
+@mixin animation-fill-mode($fill-mode) {
+  -webkit-animation-fill-mode: $fill-mode;
+          animation-fill-mode: $fill-mode;
+}
+
+/* Backface visibility ------------------ */
+@mixin backface-visibility($visibility){
+  -webkit-backface-visibility: $visibility;
+     -moz-backface-visibility: $visibility;
+          backface-visibility: $visibility;
+}
+
+/* Drop shadows ------------------ */
+@mixin box-shadow($shadow...) {
+  -webkit-box-shadow: $shadow; // iOS <4.3 & Android <4.1
+          box-shadow: $shadow;
+}
+
+/* Box sizing ------------------ */
+@mixin box-sizing($boxmodel) {
+  -webkit-box-sizing: $boxmodel;
+     -moz-box-sizing: $boxmodel;
+          box-sizing: $boxmodel;
+}
+
+/* CSS3 Content Columns ------------------ */
+@mixin content-columns($column-count, $column-gap: $grid-gutter-width) {
+  -webkit-column-count: $column-count;
+     -moz-column-count: $column-count;
+          column-count: $column-count;
+  -webkit-column-gap: $column-gap;
+     -moz-column-gap: $column-gap;
+          column-gap: $column-gap;
+}
+
+/* Hyphenation ------------------ */
+@mixin hyphens($mode: auto) {
+  overflow-wrap: break-word; // Break non-CJK
+  word-wrap: break-word;
+  line-break: strict;
+  word-break: keep-all;  // Preserve CJK
+  -webkit-hyphens: $mode;
+     -moz-hyphens: $mode;
+      -ms-hyphens: $mode; // IE10+
+       -o-hyphens: $mode;
+          hyphens: $mode;
+}
+
+/* Transformations ------------------ */
+@mixin scale($ratio...) {
+  -webkit-transform: scale($ratio);
+      -ms-transform: scale($ratio); // IE9 only
+       -o-transform: scale($ratio);
+          transform: scale($ratio);
+}
+
+@mixin scaleX($ratio) {
+  -webkit-transform: scaleX($ratio);
+      -ms-transform: scaleX($ratio); // IE9 only
+       -o-transform: scaleX($ratio);
+          transform: scaleX($ratio);
+}
+@mixin scaleY($ratio) {
+  -webkit-transform: scaleY($ratio);
+      -ms-transform: scaleY($ratio); // IE9 only
+       -o-transform: scaleY($ratio);
+          transform: scaleY($ratio);
+}
+@mixin skew($x, $y) {
+  -webkit-transform: skewX($x) skewY($y);
+      -ms-transform: skewX($x) skewY($y); // See https://github.com/twbs/bootstrap/issues/4885; IE9+
+       -o-transform: skewX($x) skewY($y);
+          transform: skewX($x) skewY($y);
+}
+@mixin translate($x, $y) {
+  -webkit-transform: translate($x, $y);
+      -ms-transform: translate($x, $y); // IE9 only
+       -o-transform: translate($x, $y);
+          transform: translate($x, $y);
+}
+@mixin translate3d($x, $y, $z) {
+  -webkit-transform: translate3d($x, $y, $z);
+          transform: translate3d($x, $y, $z);
+}
+@mixin rotate($degrees) {
+  -webkit-transform: rotate($degrees);
+      -ms-transform: rotate($degrees); // IE9 only
+       -o-transform: rotate($degrees);
+          transform: rotate($degrees);
+}
+@mixin rotateX($degrees) {
+  -webkit-transform: rotateX($degrees);
+      -ms-transform: rotateX($degrees); // IE9 only
+       -o-transform: rotateX($degrees);
+          transform: rotateX($degrees);
+}
+@mixin rotateY($degrees) {
+  -webkit-transform: rotateY($degrees);
+      -ms-transform: rotateY($degrees); // IE9 only
+       -o-transform: rotateY($degrees);
+          transform: rotateY($degrees);
+}
+@mixin perspective($perspective) {
+  -webkit-perspective: $perspective;
+     -moz-perspective: $perspective;
+          perspective: $perspective;
+}
+@mixin perspective-origin($perspective) {
+  -webkit-perspective-origin: $perspective;
+     -moz-perspective-origin: $perspective;
+          perspective-origin: $perspective;
+}
+@mixin transform-origin($origin) {
+  -webkit-transform-origin: $origin;
+     -moz-transform-origin: $origin;
+      -ms-transform-origin: $origin; // IE9 only
+          transform-origin: $origin;
+}
+
+/* Transitions ------------------ */
+@mixin transition($transition...) {
+  -webkit-transition: $transition;
+       -o-transition: $transition;
+          transition: $transition;
+}
+@mixin transition-property($transition-property...) {
+  -webkit-transition-property: $transition-property;
+          transition-property: $transition-property;
+}
+@mixin transition-delay($transition-delay) {
+  -webkit-transition-delay: $transition-delay;
+          transition-delay: $transition-delay;
+}
+@mixin transition-duration($transition-duration...) {
+  -webkit-transition-duration: $transition-duration;
+          transition-duration: $transition-duration;
+}
+@mixin transition-timing-function($timing-function) {
+  -webkit-transition-timing-function: $timing-function;
+          transition-timing-function: $timing-function;
+}
+@mixin transition-transform($transition...) {
+  -webkit-transition: -webkit-transform $transition;
+     -moz-transition: -moz-transform $transition;
+       -o-transition: -o-transform $transition;
+          transition: transform $transition;
+}
+
+/* User select ------------------ */
+@mixin user-select($select) {
+  -webkit-user-select: $select;
+     -moz-user-select: $select;
+      -ms-user-select: $select; // IE10+
+          user-select: $select;
+}
+
+@mixin floating($z-index) {
+  position: absolute;
+  z-index: $z-index;
+}
+/* Clearfix ---------------------*/
+@mixin clearfix() {
+  &::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+/* Appearance -------------------- */
+@mixin appearance($appearance) {
+  -webkit-appearance: $appearance;
+  -moz-appearance: $appearance;
+  -ms-appearance: $appearance;
+  appearance: $appearance;
+}
+
+/* COMPONENTS ==================================== */
+
+/* Dropdown --------------------- */
+@mixin dropdown-style() {
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.175);
+}
+/* Card ------------------ */
+
+@mixin card-variant($color) {
+  background-color: $color;
+  border-color: $color;
+}
+
+/* Tooltip ---------------- */
+@mixin inverted-floating-arrow($name, $position, $border-color, $after-border-color) {
+  &.#{$position} .#{$name}-arrow {
+    border-#{$position}-color: $border-color;
+
+    &:after {
+      border-#{$position}-color: $after-border-color;
+    }
+  }
+}
+
+@mixin inverted-tooltip-arrow($position) {
+  @include inverted-floating-arrow("tooltip", $position, $grey-0, $grey-7);
+}
+
+/* Popover ---------------- */
+@mixin inverted-popover-arrow($position) {
+  @include inverted-floating-arrow("popover", $position, $grey-7, $grey-7);
+}
+
+/* Progress --------------- */
+@mixin native-progress-bar-color($color) {
+  &::-webkit-progress-value {
+    background-color: $color;
+  }
+  &::-moz-progress-bar {
+    background-color: $color;
+  }
+  &::-ms-fill {
+    background-color: $color;
+  }
+}
+
+@mixin native-progress-bar-transition($transition...) {
+  &::-webkit-progress-value {
+    transition: $transition;
+  }
+  &::-moz-progress-bar {
+    transition: $transition;
+  }
+  &::-ms-fill {
+    transition: $transition;
+  }
+}
+
+@mixin progress-bar-color($color) {
+  > .progress-bar {
+    background-color: $color;
+  }
+}
+
+@mixin progress-width() {
+  @for $i from 0 to 21 {
+    $increment: $i * 5;
+    $width: $increment * 1%;
+    &.w-#{$increment}-percent > .progress-bar,
+    &.stacked .progress-bar.w-#{$increment}-percent {
+      width: $width;
+    }
+  }
+}
+
+@mixin fonticon() {
+  display: inline-block;
+  font-family: entypo;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  text-decoration: inherit;
+  text-align: center;
+  margin: 0 0.2em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@mixin placeholder-none() {
+  &::-moz-placeholder {
+    color: transparent;
+  }
+
+  &:-ms-input-placeholder{
+    color: transparent;
+  }
+
+  &::-webkit-input-placeholder {
+    color: transparent;
+  }
+
+  &.placeholder {
+    color: transparent;
+  }
+}
+
+@mixin placeholder() {
+  &::-moz-placeholder {
+   opacity: 1;
+   color: $grey-5;
+  }
+  
+  &:-ms-input-placeholder {
+    color: $grey-5;
+  }
+  
+  &::-webkit-input-placeholder {
+    color: $grey-5;
+  }
+  
+  &.placeholder {
+    color: $grey-5;
+  }
+}

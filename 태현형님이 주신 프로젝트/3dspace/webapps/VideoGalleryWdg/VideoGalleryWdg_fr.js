@@ -1,0 +1,1 @@
+define("DS/VideoGalleryWdg/VideoGalleryWdg_fr",{});define("DS/VideoGalleryWdg/assets/nls/VideoGallery",{NoInternet:"Votre connexion Internet semble inactive"});

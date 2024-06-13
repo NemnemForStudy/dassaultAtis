@@ -1,0 +1,355 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:widget="http://www.netvibes.com/ns/">
+
+<head>
+    <title>Globe Viewer</title>
+
+    <meta name="author" content="xa4, mau1" />
+    <meta name="description" content="Globe Viewer widget" />
+    <meta name="version" content="1.0" />
+
+    <widget:preferences>
+        <widget:preference name="widgetTitle" type="text" label="Widget title" defaultValue="Globe Viewer" />
+		<widget:preference name="x3dTitleShowAppName" type="boolean" label="displayAppName_html" defaultValue="true" />
+        <widget:preference name="use2D" type="hidden" label="Use 2D Mode" defaultValue="" />
+        <widget:preference name="feedUrl" type="hidden" label="GEORSS feed url" defaultValue="" />
+        <widget:preference name="jsonFile" type="hidden" label="JSON file" defaultValue="" />
+        <widget:preference name="jsonFieldsPrefURL" type="hidden" label="URL JSON Chosen Fields" defaultValue="" />
+        <widget:preference name="jsonFieldsPref3DDrive" type="hidden" label="3DDrive JSON Chosen Fields" defaultValue="" />
+        <widget:preference name="uwaServer" type="hidden" label="Intercom server name" defaultValue="" />
+        <widget:preference name="theme" type="hidden" label="Textures / themes" defaultValue="satellite">
+            <widget:option label="Natural" value="natural"></widget:option>
+            <widget:option label="Minimal" value="minimal"></widget:option>
+            <widget:option label="High-tech" value="high-tech"></widget:option>
+        </widget:preference>
+        <widget:preference name="tilemapserver" type="hidden"
+            label="TMS (Tile Map Service) URL (http://the.path.before/Z/Y/X.ext)" defaultValue="" />
+        <widget:preference name="tileextension" type="hidden" label="Tile extension (default .png)" defaultValue="" />
+        <widget:preference name="tilemapserver-max" type="hidden" label="TMS max level" defaultValue="" />
+        <widget:preference name="cors-exception" type="hidden" label="CORS exception servers" defaultValue="" />
+        <widget:preference name="backcolor" type="hidden" label="Background color (#html color)" defaultValue="" />
+        <!--preference name="links" type="hidden" defaultValue=""/-->
+        <widget:preference name="autoTurn" type="hidden" label="Auto-rotation speed" defaultValue="0">
+            <widget:option label="DESACTIVATE" value="0"></widget:option>
+            <widget:option label="Low" value="0.5"></widget:option>
+            <widget:option label="Medium" value="1"></widget:option>
+            <widget:option label="Fast" value="2"></widget:option>
+        </widget:preference>
+        <widget:preference name="inertia" type="hidden" label="Interaction speed" defaultValue="50">
+            <widget:option label="Low" value="120"></widget:option>
+            <widget:option label="Medium" value="50"></widget:option>
+            <widget:option label="Fast" value="10"></widget:option>
+        </widget:preference>
+        <widget:preference name="allowZoom" type="hidden" label="Enable Zoom" defaultValue="true" />
+        <!--widget:preference name="showFrontiers" type="boolean" label="Show Frontiers" defaultValue="false"/-->
+        <widget:preference name="countrySelection" type="hidden" label="Activate country selection"
+            defaultValue="false" />
+        <widget:preference name="initGeoloc" type="hidden" label="Initial viewpoint (lat,lon)" defaultValue="" />
+        <widget:preference name="initDistance" type="hidden" label="Zoom distance" defaultValue="7" step="1" min="1"
+            max="10" />
+        <widget:preference name="initDistance2D" type="hidden" label="Zoom distance 2D" defaultValue="2" step="1" min="1"
+        max="20" />
+        <widget:preference name="editMode" type="hidden" label="EDIT MODE" defaultValue="true" />
+        <widget:preference name="widgetHeight" type="hidden" label="Widget height (px)" defaultValue="400" step="50"
+            min="200" max="1000" />
+    </widget:preferences>
+
+    <!-- WebGLV6 -->
+
+    <link rel="stylesheet" type="text/css" href="../c/UWA/assets/css/standalone.css" />
+    <link rel="stylesheet" type="text/css" href="../SocialGlobe/balloon.css" />
+    <link rel="stylesheet" type="text/css" href="../SocialGlobe/style.css" />
+
+
+    <!--[if IE]>
+      <script type="text/javascript">
+        window.location.href = "SocialGlobe-no-webgl.html";
+      </script>
+    <![endif]-->
+
+    <!-- AMDLoader -->
+    <script type="text/javascript" src="../AmdLoader/AmdLoader.js"></script>
+    <script type="text/javascript" src="../WebappsUtils/WebappsUtils.js"></script>
+
+    <!-- UWA -->
+    <script type="text/javascript" src="../c/UWA/js/UWA_Standalone_Alone.js"></script>
+
+    <script type="text/javascript" src="../WebUX/WebUX.js"></script>
+    <script type="text/javascript" src="../WebVisualization/WebVisualization.js"></script>
+    <script type="text/javascript" src="../SocialGlobe/SocialGlobe.js"></script>
+    <script type="text/javascript" src="../SocialGlobe/Globe.js"></script>
+
+    <script type="text/javascript">
+        "use strict";
+
+        require([
+            "DS/Core/Core",
+            "DS/SocialGlobe/GlobeUWA",
+            "DS/SocialGlobe/Globals",
+            "DS/ApplicationFrame/FrameWindow",
+            "DS/WebappsUtils/WebappsUtils",
+            "DS/Controls/Button",
+			"UWA/Controls/Input",
+            "DS/Utilities/Dom",
+            // "SocialGlobe/leaflet",
+            // "css!SocialGlobe/leaflet.css"
+        ], function (WUXCore, GlobeUWA, Globals, FrameWindow, WebappsUtils, WUXButton, Input, Dom) {
+            var globe = null;
+            var uiFrame = null;
+
+            var myWidget = {
+                onLoad: function () {
+				
+					// force MapMode to true to activate 2D vs 3D selection screen
+					widget.setValue("MapMode", true);
+
+                    widget.body.empty();
+
+                    //UWAUtilsInterCom.setDebugMode(false);
+                    myWidget.nodes = {};
+
+                    myWidget.jsonConfLoaded = false;
+
+                    //Globals.tilespath = "http://api.tiles.mapbox.com/v3/archi.ho2j1446/";
+
+                    Globals.path = WebappsUtils.getWebappsBaseUrl() + "SocialGlobe/";
+                    Globals.tilespath = WebappsUtils.getWebappsAssetUrl(
+                        "SocialGlobe",
+                        "skins/natural/tiles/"
+                    );
+                    //Globals.path = "../SocialGlobe/";
+                    //Globals.tilespath = "../SocialGlobe/assets/skins/natural/tiles/";
+
+                    var browserSupported = Globals.isBrowserSupported();
+                    if (!browserSupported) {
+                        canvas.innerHTML = Globals.getBrowserErrorMsg();
+                    } else {
+                        if (widget.getValue("MapMode") && widget.getValue("use2D") === "") {                  // if no preferences for the mode
+
+                            // Page for 2D / 3D Choice
+
+                            var widgetHeight =
+                                widget.getValue("widgetHeight").toString() + "px";
+
+                            var container = new UWA.Element("div", {'id': "container"});
+                            container.inject(widget.body);
+
+
+                            var globeHomepage = new UWA.Element("div", {'id': "globe-homepage"}).inject(container);
+                            
+                            var globeHeader = new UWA.Element("div", {'class': "globe-header"}).inject(globeHomepage);
+                            
+                            var globeTitle = new UWA.Element("h1", {'class': "globe-title",text: "Globe Viewer"}).inject(globeHeader);
+                            
+                            var globeMain = new UWA.Element("div", {'class': "globe-main"}).inject(globeHomepage);
+                            var mode2D = new UWA.Element("div", {'class': "globe-mode"}).inject(globeMain);
+                            var mode3D = new UWA.Element("div", {'class': "globe-mode"}).inject(globeMain);	
+                            var mode2Doptions = new UWA.Element("div", {'class': "globe-2doptions"}).inject(globeMain);	
+							var textTMSinputDisplayed = false;	 
+                            
+                            var mode2DButton = new WUXButton({
+                                label: "Map Mode",
+                                icon:{iconName:"map", fontIconFamily: WUXManagedFontIcons.Font3DS}
+                            }).inject(mode2D);
+                            mode2DButton.getContent().addClassName("globe-homepage-button");
+                            
+                            var mode3DButton = new WUXButton({
+                                label: "3D Mode",
+                                icon:{iconName:"globe", fontIconFamily: WUXManagedFontIcons.Font3DS}
+                            }).inject(mode3D);
+                            mode3DButton.getContent().addClassName("globe-homepage-button");
+
+                            var globeFooter = new UWA.Element("div", {'class': "globe-footer"}).inject(globeHomepage);
+                            
+                            var globeUALink = new UWA.Element("div", {'class': "globe-link"}).inject(globeFooter);
+                            var globeUAIcon = Dom.generateIcon("i-question").inject(globeUALink);;  
+                            var globeUAButton = new UWA.Element("a", {'class': "globe-footer-button", text:"User Assistance", href:"https://help.3ds.com/2022x/english/dsdoc/X3dglobUserMap/x3dglob-c-ov.htm?contextscope=cloud&id=f8f14bc27f2140ddb9a0afd647cb0971", target:"_blank"}).inject(globeUALink);
+                            
+                            globeHomepage.inject(container);
+
+
+
+                            // When click on 3D or 2D button, launch corresponding mode
+
+                            mode2DButton.addEventListener("click", function (event) {
+							
+								if (textTMSinputDisplayed) {return;};
+								
+								textTMSinputDisplayed = true;
+							
+								// add a field to force a TMS url before launching the 2D mode
+								var textTMSinput = new UWA.Element("p", {'content': "Please enter a TMS (Tile Map Service) url to use:"}).inject(mode2Doptions);	
+								widget.tmsInput = new Input.Text({
+									attributes: {
+										id: "globeviewer-tms-input",
+										placeholder: "https://the.path.before/Z/Y/X.ext"
+									}
+								}).inject(mode2Doptions);
+								
+								var mode2DOKButton = new WUXButton({
+									label: "OK",
+									icon:{fontIconFamily: WUXManagedFontIcons.Font3DS}
+								}).inject(mode2Doptions);
+								mode2DOKButton.getContent().addClassName("globe-homepage-button-options");
+								
+								var mode2DCancelButton = new WUXButton({
+									label: "Cancel",
+									icon:{fontIconFamily: WUXManagedFontIcons.Font3DS}
+								}).inject(mode2Doptions);
+								mode2DCancelButton.getContent().addClassName("globe-homepage-button-options");
+							
+								mode2DOKButton.addEventListener("click", function (event) {
+									var tmsUrl = widget.tmsInput.getValue();
+									widget.setValue("tilemapserver", tmsUrl);// + "{z}/{x}/{y}");
+									widget.body.empty();
+									if (globe === null) {
+										globe = new GlobeUWA(widget, {
+											container: widget.body,
+											use2D: true,
+											height: widgetHeight,
+										});
+										console.log('call new 2D GlobeUWA')
+									}
+									globe.createFrameWindow(widgetHeight);
+
+									// save choice into widget preferences
+									widget.setValue("use2D", true);
+
+									globe.loadPreferences();
+									globe.go();
+								});
+									
+								mode2DCancelButton.addEventListener("click", function (event) {
+									mode2Doptions.setContent("");
+									textTMSinputDisplayed = false;
+								});
+							
+								/*widget.body.empty()
+								if (globe === null) {
+									globe = new GlobeUWA(widget, {
+										container: widget.body,
+										use2D: true,
+										height: widgetHeight,
+									});
+									console.log('call new 2D GlobeUWA')
+								}
+								globe.createFrameWindow(widgetHeight);
+
+								// save choice into widget preferences
+								widget.setValue("use2D", true);
+
+								globe.loadPreferences();
+								globe.go();*/
+
+                            }.bind(this));
+
+
+                            mode3DButton.addEventListener("click", function (event) {
+                                widget.body.empty()
+                                if (globe === null) {
+                                    globe = new GlobeUWA(widget, {
+                                        container: widget.body,
+                                        use2D: false,
+                                        height: widgetHeight,
+                                    });
+                                    console.log('call new 3D GlobeUWA')
+                                }
+                                globe.createFrameWindow(widgetHeight);
+
+                                // save choice into widget preferences
+                                widget.setValue("use2D", false);
+
+                                globe.loadPreferences();
+                                globe.go();
+
+                            }.bind(this));
+
+
+                        
+                        } else if (widget.getValue("MapMode") && widget.getValue("use2D")) {          // if preference set to 2D
+                            globe = new GlobeUWA(widget, {
+                                        container: widget.body,
+                                        use2D: true,
+                                        height: widgetHeight,
+                                    });
+
+                            globe.createFrameWindow(widgetHeight);
+                            globe.loadPreferences();
+                            globe.go();
+
+                        //} else if (widget.getValue("use2D") === false) {            // if preference set to 3D
+						} else { // preference set to 3D or MapMode disabled
+                            globe = new GlobeUWA(widget, {
+                                        container: widget.body,
+                                        use2D: false,
+                                        height: widgetHeight,
+                                    });
+
+                            globe.createFrameWindow(widgetHeight);
+                            globe.loadPreferences();
+                            globe.go();
+                        }
+
+                    }
+                },
+
+                onViewChange: function (event) {
+                    // Maximize view mode
+                    if (event.type === "fullscreen" || event.type === "maximized") {
+                        if (globe !== null && event.height) {
+                            var height = event.height + "px";
+                            globe.updateHeight(widget, height);
+                            globe.fullscreenMode = true;
+                        }
+
+                        // Windowed view mode
+                    } else {
+                        var height = widget.getValue("widgetHeight").toString() + "px";
+                        globe.updateHeight(widget, height);
+                        globe.fullscreenMode = false;
+                    }
+                },
+
+                onResize: function () {
+                    /*console.log(widget);
+                                    var height = "823px";
+                                    if (globe !== null && widget._view && widget._view.type === "windowed") {
+                                        globe.updateHeight(widget,"823px");
+                                    } else if (globe !== null) {
+                                        height = widget.getValue("widgetHeight").toString() + 'px';
+                                        globe.updateHeight(widget,height);
+                                    }*/
+                },
+
+                onRefresh: function () {
+                    console.log("Globe widget refresh");
+                },
+
+            };
+
+            widget.addEvent("onLoad", myWidget.onLoad);
+            widget.addEvent("onResize", myWidget.onResize);
+            widget.addEvent("onRefresh", myWidget.onRefresh);
+            widget.addEvent("onViewChange", myWidget.onViewChange);
+
+            /*widget.onResize = myWidget.onResize;
+                        widget.onViewChange = myWidget.onViewChange;
+                        widget.onRefresh = myWidget.onRefresh;*/
+        });
+    </script>
+</head>
+
+<body>
+    <!--[if IE]>
+      <center>
+        <img
+          src="assets/textures/COMPASS_Blue.jpg"
+          width="200px"
+        /><br /><br />This browser is not supported.
+        <a href="http://get.webgl.org/troubleshooting/" target="_blank"
+          >More information here.</a
+        >
+      </center>
+    <![endif]-->
+</body>
+
+</html>

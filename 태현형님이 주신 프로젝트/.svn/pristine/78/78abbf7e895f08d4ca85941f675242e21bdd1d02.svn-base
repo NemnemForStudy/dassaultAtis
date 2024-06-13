@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0",
+  "summary": "指定した設定式の後の複数入力データの値を比較します。",
+  "description": "このブロックは動的であるため、ブロック構成ダイアログを使用して入力データ数を変更できます。<br>データ ポートの値タイプはすべてのタイプを扱います。<br>設定 <doc-setting-name translate=no>Expression</doc-setting-name> に書き込まれる変数名は、入力データ名と一致する必要があります。一致しない場合、式は無効とみなされます。<br><br>設定式の値は、次のように高度な式の比較を処理します: <ul><li><doc-value translate=no>&quot;Value1 === Value2&quot;</doc-value>: <doc-idp-name translate=no>Value1</doc-idp-name> が <doc-idp-name translate=no>Value2</doc-idp-name> と等しいことを確認します。</li><li><doc-value translate=no>&quot;Value3 > Value3 && Value3 < Value2&quot;</doc-value>: <doc-idp-name translate=no>Value3</doc-idp-name> が <doc-idp-name translate=no>Value1</doc-idp-name> と <doc-idp-name translate=no>Value2</doc-idp-name> の間の値であることを確認します (<doc-idp-name translate=no>Value1</doc-idp-name>、<doc-idp-name translate=no>Value2</doc-idp-name>、および <doc-idp-name translate=no>Value3</doc-idp-name> は数値)。</li><li><doc-value translate=no>&quot;Value1 !== Value2 || Value1 !== Value3&quot;</doc-value>: <doc-idp-name translate=no>Value1</doc-idp-name> が <doc-idp-name translate=no>Value2</doc-idp-name> または <doc-idp-name translate=no>Value3</doc-idp-name> と異なることを確認します。</li></ul>",
+  "dataPorts": {
+    "Value1": "比較する最初の値です。",
+    "Value2": "比較する 2 番目の値です。"
+  },
+  "controlPorts": {
+    "In": "ブロック実行をトリガーします。",
+    "True": "各入力データの値により入力された式の結果が正であるときに活動化されます。",
+    "False": "各入力データの値により入力された式の結果が負であるときに活動化されます。"
+  },
+  "settings": {
+    "Expression": "入力データ値の比較を説明する式の値。"
+  },
+  "example": null
+}

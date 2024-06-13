@@ -1,0 +1,91 @@
+<meta charset="UTF-8"/>
+//---------------------------------------------------------------------------
+// Path_CustomSchemaDir
+//---------------------------------------------------------------------------
+Path_CustomSchemaDir.Title="Caminho de esquema personalizado";
+Path_CustomSchemaDir.Label1="Especifique o diretório onde estão os arquivos de esquema personalizados.";
+Path_CustomSchemaDir.Resume="Caminho de esquema personalizado:  /p1";
+Path_CustomSchemaDir.Resume.Title="Caminho de esquema personalizado";
+StudioInstall.Path_CustomSchemaDir.Resume.Title="Caminho de esquema personalizado";
+
+//---------------------------------------------------------------------------
+// Path_CustomSchemaDir
+//---------------------------------------------------------------------------
+CustomSchemaDir.Title="Caminho de esquema personalizado";
+CustomSchemaDir.Label1="Especifique o diretório onde estão os arquivos de esquema personalizados.";
+CustomSchemaDir.Resume="Caminho de esquema personalizado:  /p1";
+//---------------------------------------------------------------------------
+// Check_SchemaToInstall
+//---------------------------------------------------------------------------
+Check_SchemaToInstall.Title="Seletor de esquema";
+Check_SchemaToInstall.Label1="Especifique o esquema a ser instalado.";
+Check_SchemaToInstall.Label2="Clique em Avançar para continuar.";
+//---------------------------------------------------------------------------
+// Specify Schema Types 
+//---------------------------------------------------------------------------
+Check_SchemaToInstall.KeyNone="Nenhum";
+Check_SchemaToInstall.KeyAll="Tudo";
+Check_SchemaToInstall.Resume="Tipo de esquema: /p1";
+
+
+//---------------------------------------------------------------------------
+// An UIGroup contains Text_DataTBS and Text_IndexTBS
+// Text_DataTBS
+//---------------------------------------------------------------------------
+Text_DataTBS.Title="Detalhes do vault de produção";
+Text_DataTBS.Label1="Especifique os espaços da tabela de dados e índice para o vault de produção do eService.";
+Text_DataTBS.Label2="Para usar a área de armazenamento padrão do banco de dados, deixe os campos em branco.";
+Text_DataTBS.Label3="\n";
+Text_DataTBS.Label4="Espaço da tabela de dados";
+Text_DataTBS.Resume="Espaço da tabela de dados: /p1";
+//---------------------------------------------------------------------------
+// Text_IndexTBS
+//---------------------------------------------------------------------------
+Text_IndexTBS.Label1="\n";
+Text_IndexTBS.Label2="Espaço da tabela de índice";
+Text_IndexTBS.Resume="Espaço da tabela de índice: /p1";
+
+
+//---------------------------------------------------------------------------
+// BOOL_UpdateDB
+//---------------------------------------------------------------------------
+
+BOOL_UpdateDB.Title="Opção de atualização do banco de dados";
+BOOL_UpdateDB.Label1="Deseja atualizar o banco de dados?";
+BOOL_UpdateDB.Label2="Se a opção estiver desmarcada, o banco de dados não será atualizado";
+BOOL_UpdateDB.Label3="Você precisa executar manualmente os programas tcl gerados";
+BOOL_UpdateDB.CheckButton="Atualizar banco de dados";
+BOOL_UpdateDB.Resume.true="O banco de dados será atualizado";
+BOOL_UpdateDB.Resume.false="O banco de dados não será atualizado";
+
+
+//---------------------------------------------------------------------------
+// Text_SuperUserName
+//---------------------------------------------------------------------------
+Text_SuperUserName.Title="Superusuário//senha";
+Text_SuperUserName.Label1="Especifique o nome do usuário que tem privilégios de administração de negócios e sistemas.";
+Text_SuperUserName.Resume="Nome do superusuário: /p1";
+
+//---------------------------------------------------------------------------
+// Text_SuperUserPwd
+//---------------------------------------------------------------------------
+Text_SuperUserPwd.Title="Superusuário//senha";
+Text_SuperUserPwd.Label1="Especifique a senha do usuário com privilégios de administração de negócios e sistemas.";
+
+//---------------------------------------------------------------------------
+// Hot Fix installer - Creator password check
+//---------------------------------------------------------------------------
+ConnectionCreatorFailed.Title="Erro de conexão com o banco de dados para superusuário";
+ConnectionCreatorFailed.Text="O seguinte erro foi relatado:/p1";
+//---------------------------------------------------------------------------
+// IR-240244V6R2014: Check that there is no trace to Stdout activated (otherwise error message and Quit/Retry buttons only, see InsCommonInstallerOnly.xml)
+//---------------------------------------------------------------------------
+tracesToStdoutDetected.Title="Detecção de rastreamentos mql stdout";
+tracesToStdoutDetected.Text="Alguns rastreamentos mql a stdout são ativados.\nIsso pode impedir que a instalação seja concluída com êxito.\nDesative os rastreamentos mql ou redirecione-os para um arquivo.";
+
+//---------------------------------------------------------------------------
+// IR-431459: Check that there are no SLF4J duplicate bindings in MX_CLASSPATH (otherwise error message and Quit/Retry buttons only)
+//---------------------------------------------------------------------------
+SLF4JCheckerJarTempCopy_failed.Text="Não é possível copiar o jar para a verificação SLF4J\nde /P1\npara /P2\n(rc = /P3)./P4/P5\nHabilite a cópia e clique em Repetir.";
+SLF4JCheck_failed.Title="Verificação SLF4J";
+SLF4JCheck_failed.Text="Falha na inicialização do SLF4J:/P1\nIsso pode impedir que a instalação seja concluída com êxito.\nCorrija o estado SLF4J (pelo menos para o tempo de instalação) e clique em Repetir.";

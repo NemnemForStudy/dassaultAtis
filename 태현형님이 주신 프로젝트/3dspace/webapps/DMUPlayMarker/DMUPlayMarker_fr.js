@@ -1,0 +1,1 @@
+define("DS/DMUPlayMarker/DMUPlayMarker_fr",{});define("DS/DMUPlayMarker/assets/nls/DMUPlayMarker",{defaultSymbolLabel:"Symbole"});

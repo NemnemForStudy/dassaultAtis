@@ -1,0 +1,100 @@
+.sch-immersive-frame.sch-activetab-edit, .sch-immersive-frame.sch-activetab-play, .sch-immersive-frame.sch-activetab-debug, .sch-tabview-frame.sch-activetab-edit, .sch-tabview-frame.sch-activetab-play, .sch-tabview-frame.sch-activetab-debug {
+  border: 0px solid transparent;
+  border-top-width: 5px; }
+.sch-immersive-frame.sch-activetab-edit, .sch-tabview-frame.sch-activetab-edit {
+  border-color: #42a2da; }
+.sch-immersive-frame.sch-activetab-play, .sch-tabview-frame.sch-activetab-play {
+  border-color: #009688; }
+.sch-immersive-frame.sch-activetab-debug, .sch-tabview-frame.sch-activetab-debug {
+  border-color: #e87b00; }
+
+.sch-tabview-frame {
+  box-sizing: border-box;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  transition: all 150ms ease; }
+  .sch-tabview-frame .sch-tabview-container {
+    box-sizing: border-box;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    margin: 0px;
+    padding: 0px;
+    overflow: hidden;
+    list-style-type: none;
+    pointer-events: none;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center; }
+    .sch-tabview-frame .sch-tabview-container .sch-tabview-element {
+      box-sizing: border-box;
+      display: block;
+      position: relative;
+      float: left;
+      padding: 2px 24px 0px;
+      margin-right: 46px;
+      pointer-events: initial;
+      user-select: none;
+      cursor: pointer;
+      text-transform: uppercase;
+      font-family: "eps3dsFont", Arial, sans-serif;
+      line-height: 20px;
+      font-size: 13px;
+      border-radius: 0px 0px 8px 8px;
+      color: white;
+      transition: all 250ms ease;
+      white-space: nowrap; }
+      .sch-tabview-frame .sch-tabview-container .sch-tabview-element :first-child {
+        margin-right: 10px; }
+      .sch-tabview-frame .sch-tabview-container .sch-tabview-element::before, .sch-tabview-frame .sch-tabview-container .sch-tabview-element::after {
+        display: block;
+        content: "";
+        position: absolute;
+        top: 0px;
+        height: 100%;
+        width: 44px;
+        transition: all 250ms ease; }
+      .sch-tabview-frame .sch-tabview-container .sch-tabview-element::before {
+        left: -24px;
+        box-shadow: rgba(0, 0, 0, 0.1) -3px 2px 5px, inset rgba(255, 255, 255, 0.09) 1px 0;
+        transform: skew(30deg, 0deg);
+        border-radius: 0px 0px 0px 8px; }
+      .sch-tabview-frame .sch-tabview-container .sch-tabview-element::after {
+        right: -24px;
+        box-shadow: rgba(0, 0, 0, 0.1) 3px 2px 5px, inset rgba(255, 255, 255, 0.09) -1px 0;
+        transform: skew(-30deg, 0deg);
+        border-radius: 0px 0px 8px 0px; }
+      .sch-tabview-frame .sch-tabview-container .sch-tabview-element.sch-tabview-edit.active, .sch-tabview-frame .sch-tabview-container .sch-tabview-element.sch-tabview-play.active, .sch-tabview-frame .sch-tabview-container .sch-tabview-element.sch-tabview-debug.active {
+        z-index: 4;
+        cursor: default; }
+      .sch-tabview-frame .sch-tabview-container .sch-tabview-element.sch-tabview-edit {
+        z-index: 3;
+        margin-right: 70px; }
+        .sch-tabview-frame .sch-tabview-container .sch-tabview-element.sch-tabview-edit, .sch-tabview-frame .sch-tabview-container .sch-tabview-element.sch-tabview-edit::before, .sch-tabview-frame .sch-tabview-container .sch-tabview-element.sch-tabview-edit::after {
+          background-color: #c6e3f3; }
+        .sch-tabview-frame .sch-tabview-container .sch-tabview-element.sch-tabview-edit:not(.active):hover, .sch-tabview-frame .sch-tabview-container .sch-tabview-element.sch-tabview-edit:not(.active):hover::before, .sch-tabview-frame .sch-tabview-container .sch-tabview-element.sch-tabview-edit:not(.active):hover::after {
+          background-color: #67b4e1; }
+        .sch-tabview-frame .sch-tabview-container .sch-tabview-element.sch-tabview-edit.active, .sch-tabview-frame .sch-tabview-container .sch-tabview-element.sch-tabview-edit.active::before, .sch-tabview-frame .sch-tabview-container .sch-tabview-element.sch-tabview-edit.active::after {
+          background-color: #42a2da; }
+      .sch-tabview-frame .sch-tabview-container .sch-tabview-element.sch-tabview-play {
+        z-index: 2; }
+        .sch-tabview-frame .sch-tabview-container .sch-tabview-element.sch-tabview-play, .sch-tabview-frame .sch-tabview-container .sch-tabview-element.sch-tabview-play::before, .sch-tabview-frame .sch-tabview-container .sch-tabview-element.sch-tabview-play::after {
+          background-color: #b2dfdb; }
+        .sch-tabview-frame .sch-tabview-container .sch-tabview-element.sch-tabview-play:not(.active):hover, .sch-tabview-frame .sch-tabview-container .sch-tabview-element.sch-tabview-play:not(.active):hover::before, .sch-tabview-frame .sch-tabview-container .sch-tabview-element.sch-tabview-play:not(.active):hover::after {
+          background-color: #32ab9f; }
+        .sch-tabview-frame .sch-tabview-container .sch-tabview-element.sch-tabview-play.active, .sch-tabview-frame .sch-tabview-container .sch-tabview-element.sch-tabview-play.active::before, .sch-tabview-frame .sch-tabview-container .sch-tabview-element.sch-tabview-play.active::after {
+          background-color: #009688; }
+      .sch-tabview-frame .sch-tabview-container .sch-tabview-element.sch-tabview-debug {
+        z-index: 1;
+        margin-left: -30px; }
+        .sch-tabview-frame .sch-tabview-container .sch-tabview-element.sch-tabview-debug, .sch-tabview-frame .sch-tabview-container .sch-tabview-element.sch-tabview-debug::before, .sch-tabview-frame .sch-tabview-container .sch-tabview-element.sch-tabview-debug::after {
+          background-color: #f8d7b2; }
+        .sch-tabview-frame .sch-tabview-container .sch-tabview-element.sch-tabview-debug:not(.active):hover, .sch-tabview-frame .sch-tabview-container .sch-tabview-element.sch-tabview-debug:not(.active):hover::before, .sch-tabview-frame .sch-tabview-container .sch-tabview-element.sch-tabview-debug:not(.active):hover::after {
+          background-color: #eea24c; }
+        .sch-tabview-frame .sch-tabview-container .sch-tabview-element.sch-tabview-debug.active, .sch-tabview-frame .sch-tabview-container .sch-tabview-element.sch-tabview-debug.active::before, .sch-tabview-frame .sch-tabview-container .sch-tabview-element.sch-tabview-debug.active::after {
+          background-color: #e87b00; }

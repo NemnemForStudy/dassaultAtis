@@ -1,0 +1,1 @@
+define("DS/ENOXModelListView/ENOXModelListView_zh-TW",{});define("DS/ENOXModelListView/assets/nls/ModelListView",{_collapse_content:"摺疊內容",_expand_content:"展開內容",_groupByAction:"群組",_color:"色彩",_model:"模型",_action:"動作",_dataGridView:"資料網格視圖",_tileView:"並排視圖",_thumbnailView:"縮圖視圖",_largeTileView:"大型並排視圖"});

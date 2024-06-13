@@ -1,0 +1,1 @@
+define("DS/ReviseFromWidget/ReviseFromWidget_it",{});define("DS/ReviseFromWidget/assets/nls/ReviseFromPrefsDlg",{SettingsTitle:"Impostazioni",CopyTitleFromSource:"Copia titolo dall'origine",WarningNoRevise:"Visualizza avviso se i diritti di accesso non consentono la revisione"});

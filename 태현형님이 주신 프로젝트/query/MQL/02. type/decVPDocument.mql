@@ -1,0 +1,38 @@
+### 230418 created by cmg
+
+#delete type decVPDocument;
+
+add type decVPDocument derived Document
+  attr decDiscipline
+  attr decDocType
+  attr decSubDocNo
+  attr decAddDocNo
+  attr decTagNumber
+  attr decCustomSBMT_YN
+  attr decIMPTDoc_YN
+  attr decDESDoc_YN
+  attr decEXCWKDoc_YN
+  attr decDocStage
+  attr decReviseDate
+  attr decWorkFlow
+  attr decPlanDate
+  attr decForecastDate
+  attr decActualDate
+  attr decNextAction
+  attr decNextActionPlanDate
+  attr decFileRef_ID
+  attr decFile_ID
+  attr decFile_Name
+  attr decTurnover_YN;
+  attr decPO_No
+  attr decIWPNumber 
+add property type_decVPDocument on program eServiceSchemaVariableMapping.tcl to type decVPDocument;
+
+mod type decVPDocument add attr decPO_No;
+#mod type decVPDocument add attr decIWPNumber;
+mod type decVPDocument add attr decUnitNm,decDwgAreaNm,decUnitNmDoc,decDwgAreaNmDoc;
+mod type decVPDocument add attr decLatestIFDate,decIWPOid;
+mod type decVPDocument remove attr decIWPNumber,decIWPOid;
+
+# Modified by choimingi on 2023.09.07
+mod type decVPDocument add attr decCWPNo,decEWPNo;

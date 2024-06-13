@@ -1,0 +1,1 @@
+define("DS/3DPlayWidgetModel/3DPlayWidgetModel_cs",{});define("DS/3DPlayWidgetModel/assets/nls/prefs",{Label:"Preferovaná kvalita pro geometrii 3DSpace",auto:"Automaticky",base:"Vysoká kvalita",index:"Nízká kvalita",displayCandidateQueue:"Zobrazení načítacích polí"});

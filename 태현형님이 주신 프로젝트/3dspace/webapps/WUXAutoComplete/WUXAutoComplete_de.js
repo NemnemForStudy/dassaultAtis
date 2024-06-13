@@ -1,0 +1,1 @@
+define("DS/WUXAutoComplete/WUXAutoComplete_de",{});define("DS/WUXAutoComplete/assets/nls/translation",{AutoComplete:{Placeholder:"Suchen",CustomFilterMessage:"Keine Objekte gefunden",Loading:"Wird geladen..."}});

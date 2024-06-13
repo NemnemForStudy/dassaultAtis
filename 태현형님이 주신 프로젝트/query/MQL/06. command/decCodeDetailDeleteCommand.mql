@@ -1,0 +1,21 @@
+### 230421 
+
+copy command AEFGenericDelete decCodeDetailDeleteCommand;
+
+mod command decCodeDetailDeleteCommand href '${COMMON_DIR}/decCodeDetailDelete.jsp?action=delete';
+
+# Modified by hslee on 2023.07.24
+mod command decCodeDetailDeleteCommand
+	add setting 'Access Expression' 'context.user.isassigned[decSystemAdmin]==true'
+;
+
+# Modified by hslee on 2023.09.11
+mod command decCodeDetailDeleteCommand
+	add setting 'Access Expression' 'context.user.isassigned[decSystemAdmin]==true && type != "Project Space"'
+;
+# Modified by hslee on 2023.09.12
+mod command decCodeDetailDeleteCommand
+	remove setting 'Access Program'
+	remove setting 'Access Function'
+	remove setting 'hasAccess'
+;

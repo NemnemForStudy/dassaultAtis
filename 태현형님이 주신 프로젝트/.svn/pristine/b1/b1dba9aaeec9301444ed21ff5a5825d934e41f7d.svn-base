@@ -1,0 +1,52 @@
+start trans;
+############################## DO NOT EDIT ABOVE
+
+mod command PMCSchedule								  remove setting   'Access Expression';
+
+# Modified by jhlee on 2023.10.25
+delete command decCWPPlanListPortal;
+# Modified by hslee on 2023.09.14
+copy command PMCTaskReferenceDocument PMCTaskReferenceDocument_ootb;
+mod command PMCTaskReferenceDocument
+	label 'Attachment'
+;
+copy command PMCFolder PMCFolder_ootb;
+mod command PMCFolder
+	label 'Bookmark'
+;
+copy command PMCAccess_ResourcePlan PMCAccess_ResourcePlan_ootb;
+mod command PMCAccess_ResourcePlan
+	label 'User'
+;
+
+# Modified by thok on 2023.10.27
+mod command decCWPMaterialStatusLink
+	href '${COMMON_DIR}/emxIndentedTable.jsp?table=decMaterialStatusSummary&program=emxProjectSpace:getMaterialStatusList&header=ProgramCentral.Label.Procurement_Schedule_-_Material_Status&parallelLoading=true&maxCellsToDraw=2000&scrollPageSize=50&pageSize=300&showPaginationToggle=false&decExport=true&exportMode=MaterialStatus&toolbar=decCWPMaterialStatusToolbar&freezePane=ISO_NO&slideinFilter=true&filterParam=codeMaster:Discipline,codeMaster:Sub-Con,codeMaster:Item Group,codeMaster:Group,Fab Category:true,Material Delay:true,Status_Updated:true,CWP_Plan:true&selection=multiple'
+;
+
+# Modified By thok : 2023.10.27
+mod command APPImageManager
+	label 'Images'
+;
+
+# Modified By thok : 2023.10.27
+add command 'decCodeDetailRemoveExistingCmd' 
+	description 'Remove decCodeDetail' 
+	alt 'emxProgramCentral.Command.RemoveExisting' 
+	label 'emxProgramCentral.Command.RemoveExisting' 
+	href '${COMMON_DIR}/decCodeMasterUtil.jsp?action=Remove&submitAction=refreshCaller'
+	setting 'Target Location' hiddenFrame
+	setting 'Registered Suite' 'ProgramCentral' 
+	setting 'Image' '${COMMON_DIR}/images/iconActionCut.png'
+	setting 'Row Select' 'Multiple'
+	setting 'Submit' 'true'
+	setting 'hasAccess' 'PIM'
+	setting 'Access Function' 'hasAccess'
+	setting 'Access Program' 'decAccess'
+	setting 'Confirm Message' 'emxProgramCentral.Alert.RemoveExistingConfirm'
+;
+add property command_decCodeDetailRemoveExistingCmd on program eServiceSchemaVariableMapping.tcl to command 'decCodeDetailRemoveExistingCmd'
+;
+
+############################## DO NOT EDIT BELOW
+commit trans;

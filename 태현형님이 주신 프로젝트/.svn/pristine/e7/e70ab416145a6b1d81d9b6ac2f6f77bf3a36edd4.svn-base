@@ -1,0 +1,391 @@
+<?xml version="1.0"?>
+<!-- ENOVIA DICTIONARY  -->
+<!-- COPYRIGHT DASSAULT SYSTEMES 2021, All rights reserved -->
+
+<Package xmlns="PLMDictionaryUnified" ModelerType="Top" CustomerExposition="Programmer" Name="PLMSteelConnectionDesign" Uuid="7B7D4FF3-7D57-42CE-9D81-AA577797BAFE" UseNames="PRODUCTCFG">
+  <CAAComment>
+    <ShortRole>Steel Connection Design Package</ShortRole>
+    <Role>This package describes Steel Connection Design App data.</Role>
+  </CAAComment>
+
+  <Comment>Created  2021-03-10 by JRU3</Comment>
+  <Comment>2021-06-21 JRU3 - New attributes V_StdAssemblyType, V_StdAssemblyCategory for StdConnectionAssembly </Comment>
+  <Comment>2021-06-21 JRU3 - New attributes V_StdComponentType, V_StdComponentCategory for StdConnectionPlate, StdConnectionHole and StdConnectionWeld</Comment>
+  <Comment>2021-08-12 JRU3 - New Extension for StdConnectionLPlate, StdConnectionCircularHole and necessary attributes</Comment>
+  <Comment>2022-03-30 JRU3 - New Extension for StdPlateConnectionAssembly and StdGussetConnectionAssembly</Comment>
+
+  <Extension Name="StdConnectionAssembly" Uuid="9FB1D81E-2AEE-46B8-B63E-61FDD194D80A" CustomerExposition="Programmer" CAAExposition="L0" Abstract="No" ScopeNames="VPMReference">
+    <CAAComment>
+      <ShortRole>PLM Connection Assembly</ShortRole>
+      <Role>PLM Connection Assembly</Role>
+    </CAAComment>
+    <Simple Name="V_StdAssemblyType" Type="String" Uuid="0D752ED0-7865-4250-8209-2D09217A5B6F" MaxLength="128" Protection="Free" CAAExposition="L0" MultiValuated="No" PLMImpacting="No">
+      <CAAComment>
+        <ShortRole>To illustrate Connection assembly type</ShortRole>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StdAssemblyCategory" Type="String" Uuid="F9A6080F-07C8-40CF-BEA9-452F0CDB674E" MaxLength="128" Protection="Free" CAAExposition="L0" MultiValuated="No" PLMImpacting="No">
+      <CAAComment>
+        <ShortRole>To illustrate Connection assembly category</ShortRole>
+      </CAAComment>
+    </Simple>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATEStdExtDelegateInstanciation"/>
+  </Extension>
+
+  <Extension Name="StdPlateConnectionAssembly" Uuid="D16347BD-10EB-4AF1-B769-50D93D979168" CustomerExposition="Programmer" CAAExposition="L0" Abstract="No" ScopeNames="VPMReference">
+    <CAAComment>
+      <ShortRole>PLM Plate Connection Assembly</ShortRole>
+      <Role>PLM Plate Connection Assembly</Role>
+    </CAAComment>
+    <Simple Name="V_StdAssemblyType" Type="String" Uuid="D193F97F-8414-426C-B899-219D47A881F9" MaxLength="128" Protection="Free" CAAExposition="L0" MultiValuated="No" PLMImpacting="No">
+      <CAAComment>
+        <ShortRole>To illustrate Plate Connection assembly type</ShortRole>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StdAssemblyCategory" Type="String" Uuid="80CBB829-75B9-4948-A128-A8674941B1FC" MaxLength="128" Protection="Free" CAAExposition="L0" MultiValuated="No" PLMImpacting="No">
+      <CAAComment>
+        <ShortRole>To illustrate Plate Connection assembly category</ShortRole>
+      </CAAComment>
+    </Simple>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATEStdExtDelegateInstanciation"/>
+  </Extension>  
+
+  <Extension Name="StdGussetConnectionAssembly" Uuid="15145D7A-1DB6-4803-A542-F2DFF8A94A82" CustomerExposition="Programmer" CAAExposition="L0" Abstract="No" ScopeNames="VPMReference">
+    <CAAComment>
+      <ShortRole>PLM Gusset Connection Assembly</ShortRole>
+      <Role>PLM Gusset Connection Assembly</Role>
+    </CAAComment>
+    <Simple Name="V_StdAssemblyType" Type="String" Uuid="0673390D-E881-4312-99B7-AF2A91BF6610" MaxLength="128" Protection="Free" CAAExposition="L0" MultiValuated="No" PLMImpacting="No">
+      <CAAComment>
+        <ShortRole>To illustrate Gusset Connection assembly type</ShortRole>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StdAssemblyCategory" Type="String" Uuid="0BBD1F3C-CF62-4752-B52F-595D67838D5C" MaxLength="128" Protection="Free" CAAExposition="L0" MultiValuated="No" PLMImpacting="No">
+      <CAAComment>
+        <ShortRole>To illustrate Gusset Connection assembly category</ShortRole>
+      </CAAComment>
+    </Simple>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATEStdExtDelegateInstanciation"/>
+  </Extension>  
+  
+  <Extension Name="StdConnectionPlate" Uuid="CF8EC163-DFC5-40D7-9C4B-3C37C27408D3" CustomerExposition="Programmer" CAAExposition="L0" Abstract="No" ScopeNames="VPMReference">
+    <CAAComment>
+      <ShortRole>PLM Connection Plate</ShortRole>
+      <Role>PLM Connection Plate</Role>
+    </CAAComment>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATEStdExtDelegateInstanciation"/>
+    <Simple Name="V_StdComponentId" Type="String" Uuid="03ADE6A2-1007-494E-B677-A380EB3B5038" MaxLength="100" Protection="Free" CAAExposition="L0" MultiValuated="No" PLMImpacting="No">
+      <CAAComment>
+        <ShortRole>To illustrate component id</ShortRole>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StdComponentType" Type="String" Uuid="840A14A7-2081-43F2-9D22-FE69734F5587" MaxLength="128" Protection="Free" CAAExposition="L0" MultiValuated="No" PLMImpacting="No">
+      <CAAComment>
+        <ShortRole>To illustrate Component type</ShortRole>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StdComponentCategory" Type="String" Uuid="19C93B2C-7592-498A-9E16-648893B7F24E" MaxLength="128" Protection="Free" CAAExposition="L0" MultiValuated="No" PLMImpacting="No">
+      <CAAComment>
+        <ShortRole>To illustrate Component category</ShortRole>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StdComponentThickness" Type="Double" Magnitude="LENGTH" Uuid="93ADFE9B-3459-4521-B5A8-C31BF4C656C6" Protection="Free" CAAExposition="L0" MultiValuated="No" PLMImpacting="No">
+      <CAAComment>
+        <ShortRole>To illustrate Plate thickness</ShortRole>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StdComponentWidth" Type="Double" Magnitude="LENGTH" Uuid="15E6150E-D048-4E47-84B6-A425C638902E" Protection="Free" CAAExposition="L0" MultiValuated="No" PLMImpacting="No">
+      <CAAComment>
+        <ShortRole>To illustrate Plate width</ShortRole>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StdComponentHeight" Type="Double" Magnitude="LENGTH" Uuid="3B03D421-C0A2-4D35-BF22-5D7A61A9CF14" Protection="Free" CAAExposition="L0" MultiValuated="No" PLMImpacting="No">
+      <CAAComment>
+        <ShortRole>To illustrate Plate height</ShortRole>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StdComponentPerimeter" Type="Double"  Magnitude = "LENGTH" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="837B2509-066F-4BC4-BAAF-074F4D19B829">
+      <CAAComment>
+        <ShortRole>To illustrate plateperimeter</ShortRole>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StdComponentGrossArea" Type="Double"  Magnitude = "AREA" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="2316E167-900C-4E2F-BC11-F474C4747347">
+      <CAAComment>
+        <ShortRole>To illustrate plate gross area</ShortRole>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StdComponentNetArea" Type="Double"  Magnitude = "AREA" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="9B9801FB-3966-401C-A675-C6F565945245">
+      <CAAComment>
+        <ShortRole>To illustrate plate net area</ShortRole>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StdComponentGrossVolume" Type="Double"  Magnitude = "VOLUME" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="C20CDAB1-EE63-48D6-93B1-838943E6974C">
+      <CAAComment>
+        <ShortRole>To illustrate plate gross volume</ShortRole>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StdComponentNetVolume" Type="Double"  Magnitude = "VOLUME" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="491FAFC4-1111-4BAA-86BA-708097A60A9F">
+      <CAAComment>
+        <ShortRole>To illustrate plate net volume</ShortRole>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StdComponentGrossWeight" Type="Double"  Magnitude = "MASS" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="E8739FA3-A096-4125-9C06-F92F4A4903F8">
+      <CAAComment>
+        <ShortRole>To illustrate plate gross weight</ShortRole>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StdComponentNetWeight" Type="Double"  Magnitude = "MASS" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="FA9D3FF5-057A-4B29-8794-BBF1455274BB">
+      <CAAComment>
+        <ShortRole>To illustrate plate net weight</ShortRole>
+      </CAAComment>
+    </Simple>
+  </Extension>
+
+  <Extension Name="StdConnectionLPlate" Uuid="782C5849-4ADA-4FE5-8350-2FAF0CC61524" CustomerExposition="Programmer" CAAExposition="L0" Abstract="No" ScopeNames="VPMReference">
+    <CAAComment>
+      <ShortRole>PLM Connection L Plate</ShortRole>
+      <Role>PLM Connection L Plate</Role>
+    </CAAComment>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATEStdExtDelegateInstanciation"/>
+    <Simple Name="V_StdComponentId" Type="String" Uuid="A8F6E64F-502E-4649-808C-BC6AA57DF053" MaxLength="100" Protection="Free" CAAExposition="L0" MultiValuated="No" PLMImpacting="No">
+      <CAAComment>
+        <ShortRole>To illustrate component id</ShortRole>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StdComponentType" Type="String" Uuid="2A7A86D9-BE8E-46D5-AC65-7C7462E727E1" MaxLength="128" Protection="Free" CAAExposition="L0" MultiValuated="No" PLMImpacting="No">
+      <CAAComment>
+        <ShortRole>To illustrate Component type</ShortRole>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StdComponentCategory" Type="String" Uuid="710B190C-E75A-44EB-AA69-C6DF65477044" MaxLength="128" Protection="Free" CAAExposition="L0" MultiValuated="No" PLMImpacting="No">
+      <CAAComment>
+        <ShortRole>To illustrate Component category</ShortRole>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StdComponentThickness" Type="Double" Magnitude="LENGTH" Uuid="0ED63DD2-6ED9-4A12-A310-C3192355BF37" Protection="Free" CAAExposition="L0" MultiValuated="No" PLMImpacting="No">
+      <CAAComment>
+        <ShortRole>To illustrate Plate thickness</ShortRole>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StdComponentWidth" Type="Double" Magnitude="LENGTH" Uuid="CDFD554B-C3DF-40D9-ADED-72ADB0FF5669" Protection="Free" CAAExposition="L0" MultiValuated="No" PLMImpacting="No">
+      <CAAComment>
+        <ShortRole>To illustrate Plate width</ShortRole>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StdComponentHeight" Type="Double" Magnitude="LENGTH" Uuid="88FF073F-3503-4839-8BDF-93D72BB249AD" Protection="Free" CAAExposition="L0" MultiValuated="No" PLMImpacting="No">
+      <CAAComment>
+        <ShortRole>To illustrate Plate height</ShortRole>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StdComponentLength" Type="Double" Magnitude="LENGTH" Uuid="6CB0C183-9437-49F5-99A7-DF6673C96D53" Protection="Free" CAAExposition="L0" MultiValuated="No" PLMImpacting="No">
+      <CAAComment>
+        <ShortRole>To illustrate Plate length</ShortRole>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StdComponentPerimeter" Type="Double"  Magnitude = "LENGTH" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="A8D6412D-B1EF-4F29-AD5C-13350CEA3155">
+      <CAAComment>
+        <ShortRole>To illustrate plate perimeter</ShortRole>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StdComponentGrossArea" Type="Double"  Magnitude = "AREA" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="F3B4AA1A-4C56-4FC6-A179-681167A82063">
+      <CAAComment>
+        <ShortRole>To illustrate plate gross area</ShortRole>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StdComponentNetArea" Type="Double"  Magnitude = "AREA" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="7617C9F4-1028-424A-B3A4-BE0009F482BF">
+      <CAAComment>
+        <ShortRole>To illustrate plate net area</ShortRole>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StdComponentGrossVolume" Type="Double"  Magnitude = "VOLUME" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="B88E5023-3012-4FDE-9E71-1B0015157110">
+      <CAAComment>
+        <ShortRole>To illustrate plate gross volume</ShortRole>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StdComponentNetVolume" Type="Double"  Magnitude = "VOLUME" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="B7015174-2F8A-4BBF-8224-E5F31E142A0C">
+      <CAAComment>
+        <ShortRole>To illustrate plate net volume</ShortRole>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StdComponentGrossWeight" Type="Double"  Magnitude = "MASS" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="45A717EA-65D5-4D51-A1A0-33E6E609AB0A">
+      <CAAComment>
+        <ShortRole>To illustrate plate gross weight</ShortRole>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StdComponentNetWeight" Type="Double"  Magnitude = "MASS" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="66F324A0-970F-43B0-B7CC-F6D1021EC452">
+      <CAAComment>
+        <ShortRole>To illustrate plate net weight</ShortRole>
+      </CAAComment>
+    </Simple>
+  </Extension>
+
+  <Extension Name="StdConnectionHole" Uuid="AD6E3EAF-8841-4905-8E8A-03F17444506D" CustomerExposition="Programmer" CAAExposition="L0" Abstract="No" ScopeNames="VPMReference">
+    <CAAComment>
+      <ShortRole>PLM Connection Rectangular Hole</ShortRole>
+      <Role>PLM Connection Rectangular Hole</Role>
+    </CAAComment>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATEStdExtDelegateInstanciation"/>
+    <Simple Name="V_StdComponentId" Type="String" Uuid="47CD99F2-19C9-41B7-8FC3-DC4FC2A2ED51" MaxLength="100" Protection="Free" CAAExposition="L0" MultiValuated="No" PLMImpacting="No">
+      <CAAComment>
+        <ShortRole>To illustrate component id</ShortRole>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StdComponentType" Type="String" Uuid="78FEA2C9-4A0B-424B-9CA2-76756F30E677" MaxLength="128" Protection="Free" CAAExposition="L0" MultiValuated="No" PLMImpacting="No">
+      <CAAComment>
+        <ShortRole>To illustrate Component type</ShortRole>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StdComponentCategory" Type="String" Uuid="F97CFBF9-BA77-428D-B99C-8FCA7B9B4878" MaxLength="128" Protection="Free" CAAExposition="L0" MultiValuated="No" PLMImpacting="No">
+      <CAAComment>
+        <ShortRole>To illustrate Component category</ShortRole>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StdComponentDepth" Type="Double" Magnitude="LENGTH" Uuid="D8622C57-3551-4AC9-BDA2-5ADF14FA0711" Protection="Free" CAAExposition="L0" MultiValuated="No" PLMImpacting="No">
+      <CAAComment>
+        <ShortRole>To illustrate Hole depth</ShortRole>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StdComponentDiameter" Type="Double" Magnitude="LENGTH" Uuid="05699223-DFC6-4C6E-BB17-23802D61C264" Protection="Free" CAAExposition="L0" MultiValuated="No" PLMImpacting="No">
+      <CAAComment>
+        <ShortRole>To illustrate Hole diameter</ShortRole>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StdComponentHCount" Type="Integer" Uuid="DF410E2D-AA44-4338-A818-90C2822EAE54" Protection="Free" CAAExposition="L0" MultiValuated="No" PLMImpacting="No">
+      <CAAComment>
+        <ShortRole>To illustrate Hole horizontal count</ShortRole>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StdComponentVCount" Type="Integer" Uuid="5FD7E540-054C-401F-A4D0-4D1B983EF612" Protection="Free" CAAExposition="L0" MultiValuated="No" PLMImpacting="No">
+      <CAAComment>
+        <ShortRole>To illustrate Hole vertical count</ShortRole>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StdComponentHPitch" Type="Double" Magnitude="LENGTH" Uuid="FFC8BA1E-962F-4C1B-88CF-3E9DF0ABAFAC" Protection="Free" CAAExposition="L0" MultiValuated="No" PLMImpacting="No">
+      <CAAComment>
+        <ShortRole>To illustrate Hole horizontal pitch</ShortRole>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StdComponentVPitch" Type="Double" Magnitude="LENGTH" Uuid="F9343E81-AF95-4066-B541-A04249F719CB" Protection="Free" CAAExposition="L0" MultiValuated="No" PLMImpacting="No">
+      <CAAComment>
+        <ShortRole>To illustrate Hole vertical pitch</ShortRole>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StdComponentWidth" Type="Double" Magnitude="LENGTH" Uuid="028A6A55-6CD3-4CC8-920B-A2BCCECA17CE" Protection="Free" CAAExposition="L0" MultiValuated="No" PLMImpacting="No">
+      <CAAComment>
+        <ShortRole>To illustrate Hole width</ShortRole>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StdComponentHeight" Type="Double" Magnitude="LENGTH" Uuid="4F56D86E-9354-4D15-AA38-F59A694C6D99" Protection="Free" CAAExposition="L0" MultiValuated="No" PLMImpacting="No">
+      <CAAComment>
+        <ShortRole>To illustrate Hole height</ShortRole>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StdComponentArea" Type="Double"  Magnitude = "AREA" Uuid="3E39419F-5BA0-46A5-938A-6B86E2B68193" Protection="Free" CAAExposition="L0" MultiValuated="No" PLMImpacting="No">
+      <CAAComment>
+        <ShortRole>To illustrate Hole area</ShortRole>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StdComponentVolume" Type="Double"  Magnitude = "VOLUME" Uuid="18BE3CB0-2813-4B33-AC90-741C171DC63B" Protection="Free" CAAExposition="L0" MultiValuated="No" PLMImpacting="No">
+      <CAAComment>
+        <ShortRole>To illustrate Hole volume</ShortRole>
+      </CAAComment>
+    </Simple>
+  </Extension>
+
+  <Extension Name="StdConnectionCircularHole" Uuid="167D1E38-0F8D-4D0B-9C69-D830BE9CDD1A" CustomerExposition="Programmer" CAAExposition="L0" Abstract="No" ScopeNames="VPMReference">
+    <CAAComment>
+      <ShortRole>PLM Connection Circular Hole</ShortRole>
+      <Role>PLM Connection Circular Hole</Role>
+    </CAAComment>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATEStdExtDelegateInstanciation"/>
+    <Simple Name="V_StdComponentId" Type="String" Uuid="D992A3CB-1689-4E61-9457-FFFD509F60A1" MaxLength="100" Protection="Free" CAAExposition="L0" MultiValuated="No" PLMImpacting="No">
+      <CAAComment>
+        <ShortRole>To illustrate component id</ShortRole>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StdComponentType" Type="String" Uuid="B3D4716F-0A5F-4116-A9ED-9FF0A8BB9F2C" MaxLength="128" Protection="Free" CAAExposition="L0" MultiValuated="No" PLMImpacting="No">
+      <CAAComment>
+        <ShortRole>To illustrate Component type</ShortRole>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StdComponentCategory" Type="String" Uuid="C7AA3E0B-EDC6-487A-8A42-ECBEC2336A61" MaxLength="128" Protection="Free" CAAExposition="L0" MultiValuated="No" PLMImpacting="No">
+      <CAAComment>
+        <ShortRole>To illustrate Component category</ShortRole>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StdComponentDepth" Type="Double" Magnitude="LENGTH" Uuid="FD7F9149-453E-486A-B7E9-0A3058BCF07E" Protection="Free" CAAExposition="L0" MultiValuated="No" PLMImpacting="No">
+      <CAAComment>
+        <ShortRole>To illustrate Hole depth</ShortRole>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StdComponentDiameter" Type="Double" Magnitude="LENGTH" Uuid="9B86844E-E657-4B4A-B128-3112FA3546DA" Protection="Free" CAAExposition="L0" MultiValuated="No" PLMImpacting="No">
+      <CAAComment>
+        <ShortRole>To illustrate Hole diameter</ShortRole>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StdComponentAixalInstance" Type="Integer" Uuid="2FEFCB35-9EC6-4FB4-B511-203429AC527B" Protection="Free" CAAExposition="L0" MultiValuated="No" PLMImpacting="No">
+      <CAAComment>
+        <ShortRole>To illustrate Hole aixal instance</ShortRole>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StdComponentAixalAngularSpacing" Type="Double" Magnitude="ANGLE" Uuid="0971C112-66C0-4293-BE2A-E98A06FA6D3B" Protection="Free" CAAExposition="L0" MultiValuated="No" PLMImpacting="No">
+      <CAAComment>
+        <ShortRole>To illustrate Hole aixal angular spacing</ShortRole>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StdComponentCircle" Type="Integer" Uuid="69212E84-78A2-4048-B7BF-45EA399FD6F0" Protection="Free" CAAExposition="L0" MultiValuated="No" PLMImpacting="No">
+      <CAAComment>
+        <ShortRole>To illustrate Hole circle</ShortRole>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StdComponentCircleSpacing" Type="Double" Magnitude="LENGTH" Uuid="E4FAA2B3-DB30-42C8-82DE-B0E1991734CD" Protection="Free" CAAExposition="L0" MultiValuated="No" PLMImpacting="No">
+      <CAAComment>
+        <ShortRole>To illustrate Hole circle spacing</ShortRole>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StdComponentWidth" Type="Double" Magnitude="LENGTH" Uuid="C006722C-9BF3-45D9-AA95-DF3FB038A0BB" Protection="Free" CAAExposition="L0" MultiValuated="No" PLMImpacting="No">
+      <CAAComment>
+        <ShortRole>To illustrate Hole width</ShortRole>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StdComponentHeight" Type="Double" Magnitude="LENGTH" Uuid="FCC529B1-7C26-4DE0-AFBF-BD93ECA0D028" Protection="Free" CAAExposition="L0" MultiValuated="No" PLMImpacting="No">
+      <CAAComment>
+        <ShortRole>To illustrate Hole height</ShortRole>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StdComponentArea" Type="Double"  Magnitude = "AREA" Uuid="7A587F7A-2FBC-480F-9882-B6BF1373D629" Protection="Free" CAAExposition="L0" MultiValuated="No" PLMImpacting="No">
+      <CAAComment>
+        <ShortRole>To illustrate Hole area</ShortRole>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StdComponentVolume" Type="Double"  Magnitude = "VOLUME" Uuid="7ABBE946-62CA-42C1-86FF-7AAEAF3100EF" Protection="Free" CAAExposition="L0" MultiValuated="No" PLMImpacting="No">
+      <CAAComment>
+        <ShortRole>To illustrate Hole volume</ShortRole>
+      </CAAComment>
+    </Simple>
+  </Extension>
+
+  <Extension Name="StdConnectionWeld" Uuid="998FA675-D91E-4FDB-A869-BD9FD2FAE004" CustomerExposition="Programmer" CAAExposition="L0" Abstract="No" ScopeNames="VPMReference">
+    <CAAComment>
+      <ShortRole>PLM Connection Weld</ShortRole>
+      <Role>PLM Connection Weld</Role>
+    </CAAComment>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATEStdExtDelegateInstanciation"/>
+    <Simple Name="V_StdComponentId" Type="String" Uuid="3D750076-F6BD-4AAA-9B48-02D7A66E24BC" MaxLength="100" Protection="Free" CAAExposition="L0" MultiValuated="No" PLMImpacting="No">
+      <CAAComment>
+        <ShortRole>To illustrate component id</ShortRole>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StdComponentType" Type="String" Uuid="0526B996-0B71-4C3A-BB72-86E6D2C72423" MaxLength="128" Protection="Free" CAAExposition="L0" MultiValuated="No" PLMImpacting="No">
+      <CAAComment>
+        <ShortRole>To illustrate Component type</ShortRole>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StdComponentCategory" Type="String" Uuid="67A1A39A-CC02-4E6F-9BA1-9EC8585F8F5A" MaxLength="128" Protection="Free" CAAExposition="L0" MultiValuated="No" PLMImpacting="No">
+      <CAAComment>
+        <ShortRole>To illustrate Component category</ShortRole>
+      </CAAComment>
+    </Simple>
+  </Extension>
+
+</Package>

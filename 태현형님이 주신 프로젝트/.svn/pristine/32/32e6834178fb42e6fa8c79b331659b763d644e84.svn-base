@@ -1,0 +1,726 @@
+<html>
+	<head>
+		<title>Geolocation API check</title>
+		<link rel="stylesheet" type="text/css" href="GeoLocationCheck.css" />
+		<!--script src = "jquery-ui-1.11.3/external/jquery/jquery.js"></script>
+		<script src= "jquery-ui-1.11.3/jquery-ui.min.js"> </script-->
+        <script src="../../../../JavascriptMVC-3.3/can/lib/jquery.1.9.1.js"></script>
+        <script src="../../../../jQueryUI/js/jquery-ui-1.11.2.js"></script>
+		<script src="Geolocation_JScript.js"></script> 
+        
+        <!-- Chart + Legend Tool -->
+        <link href="Chart.js.legend-master/css/demo.css" rel="stylesheet" type="text/css">
+        <script src="Chart.js.legend-master/vendor/Chart.js"></script>
+        <script src="Chart.js.legend-master/src/legend.js"></script> 
+        <script src="PedometerSegment.js"></script> 
+        <script src="PedometerSegManager.js"></script> 
+        <script src="Pedometer.js"></script> 
+        <meta charset=utf-8 />
+        <meta name="viewport" content="width=device-width, user-scalable=no" />
+        <title>Sensor Data Analysis</title> 
+	<head>
+	
+<body>
+	<div id="GeoLocCheck">
+        <div id="data_handling"> 
+            <!--button type="button" id="read_data">Read sensor data</button--> 
+            <input type="file" id="file_input" class="foo" /> 
+            </br> 
+            Raw Data Size: <span id="buffer_size">0</span>
+            , Show DeviceMotion:<input type="checkbox" id="showDeviceMotion" checked="checked">  
+            , Show Orientation: <input type="checkbox" id="showDeviceOrientation"> </br>
+            <button type="button" id="drawMotionData"> Draw Motion Data </button>
+            draw starting index: <input type="number" id="drawStartIndex" value="0">
+            draw ending index: <input type="number" id="drawEndIndex"> 
+            
+            X:<input type="checkbox" id="showX">, Y:<input type="checkbox" id="showY">, Z:<input type="checkbox" id="showZ" >,  XYZSquare:<input type="checkbox" id="showXYZSquare" >,show Raw Data <input type="checkbox" id="showRawData"></br>
+            Preprocess: remove Gravity <input type="checkbox" id="removeGravity">, Warming Up time(secs)<input type="number" id="warmingUpTime" value="2">, 
+                        use pre-data as Rotation * (0, 0, 9.81) <input type="checkbox" id="useRotationGravity">  </br>
+            <!-- Filter out when no changesinput type="checkbox" id="filterOutWhenNoChange" checked="checked">, size: <input type="number" id="noChangeInSize", value="5"--> 
+            Gravity Formular <input type="radio" name="removeGravityOption" value="gravityFormular" checked="checked">, 
+            Hight-Pass Filter <input type="radio" name="removeGravityOption" value="high-passFilter">,  alpha:<input type="number" id="Gravity_alpha" value="0.9" min="0.0" max="1.0"> 
+            
+            show gravity-free:<input type="checkbox" id="showGravityFree"> </br>
+            Filtering: </br>
+            show Moving Average:<input type="checkbox" id="showMovingAverage" checked="checked">, buffer_size:<input type="number" id="MV_beffer_size" value="5" min="1" max=100> 
+            Exponential Moving Average:<input type="checkbox" id="showExponentialMovingAverage">, alpha(weight to raw):<input type="number" id="EMV_alpha" value="0.5" min="0.0" max="1.0"> 
+            
+            show velocity:<input type="checkbox" id="showVelocity" checked="checked"> </br>
+            Double Integrals <input type="radio" name="DistanceComputationMethod" value="doubleIntegrals" >
+            Pedometer <input type="radio" name="DistanceComputationMethod" value="pedometer" checked="checked">
+            , Applying Axis: X<input type="radio" name="PedometerAxis" value="X">, Y<input type="radio"  name="PedometerAxis" checked="checked" value="Y">, 
+            Z<input type="radio"  name="PedometerAxis" value="Z"></br>
+            Static Control <input type="radio" name="FixedAccel" value="Fixed" checked="checked">, Static Parameters: uphill acceleration<input type="number" id="uphill_acc" value="0.5">,  
+                           maximum velocity <input type="number" id="max_velocity" value="0.8"> </br>
+            Proportional Control <input type="radio" name="FixedAccel" value="Proportional">  
+            Proportional Parameters: uphill coeffient <input type="number" id="uphill_coefficient" value="1">, 
+            Common Parameters: down over up ratio<input type="number" id="du_ratio" value="0.7" min="0.1" max="0.9">
+        </div>
+        
+        <div style="width:60%">
+            <span id="lineLegend"></span>
+            <canvas id="AccLineGraph" > Accerlerometer Data</canvas>  
+            <canvas id="VeloLineGraph" >Velocity</canvas> 
+            <canvas id="PosiLineGraph" >Distance</canvas>
+        </div>
+
+	    <table id="sensorTable">
+		    <tr>
+                <td>index</td>
+                <td>Event Type</td>
+			    <td>Time Stamp</td>  
+			    <td>Alpha</td>
+			    <td>Beta</td>
+			    <td>Gamma</td>
+			    <td>accX</td>
+			    <td>accY</td>
+                <td>accZ</td>
+		    </tr>
+	    </table>   
+	</div>  
+    <script src="../3DCameraCalibration/Examples/TestCalibration/js/Three58.js"></script>
+<script>     
+function getMotionXYZ(DeviceMotion) {
+    var X=[], Y=[], Z=[]; 
+    var Intervals=[], RealIntervals=[];
+    for(var ii=0; ii < DeviceMotion.length; ii++) { 
+        var p = DeviceMotion[ii]; 
+        try{
+            if(p.accelerationIncludingGravity) {  
+                var acce = p.accelerationIncludingGravity;
+                X.push(parseFloat(acce.x)); Y.push(parseFloat(acce.y)); Z.push(parseFloat(acce.z)); 
+                if(ii==0)
+                    RealIntervals.push(p.interval);
+                else 
+                    RealIntervals.push(DeviceMotion[ii].timeStamp - p.timeStamp);
+                
+                Intervals.push(p.interval);
+            } 
+        }
+        catch(error){
+            console.log(error);
+        } 
+    } 
+    return {X:X, Y:Y, Z:Z, Intervals:Intervals, RealIntervals:RealIntervals};
+}
+function getMotionGraphLabels(SensorData, start_index, end_index) {
+    var labels =[];
+    var count=0; 
+    for(var ii=start_index; ii < SensorData.length && ii <= end_index; ii++) { 
+        p = SensorData[ii];
+        if(p.accelerationIncludingGravity)    
+            (count++%10==0)?labels.push(ii):labels.push("");
+    } 
+    return labels;
+}
+
+var filter = {
+    average: function(data, size) {
+        var answer = 0;
+        if(!data || data.length==0)
+            throw "NULL data";
+        var length = size?Math.min(data.length,size):data.length;   
+        for(var ii=0; ii<length; ii++)
+            answer += data[ii];
+        return (answer/length);
+    }, 
+}; 
+ 
+var tester = {
+    /* input_data: array of numbers,
+       buffer_size: size of moving average.
+       return the same size of input_data 
+    */ 
+    getMovingAverage: function(input_data, buffer_size) {
+        var answer = [];
+        var buffer = [];
+        for(var ii=0; ii<input_data.length; ii++) {
+            var raw_value = parseFloat(input_data[ii]);
+            buffer.push(raw_value);
+            if(buffer.length > buffer_size)
+                buffer.shift();
+            var baverage = filter.average(buffer);
+            answer.push(baverage); 
+        }
+        return answer;
+    },
+    
+    getHighPass: function(input_data, alpha) {
+        var answer = []; 
+        for(var ii=0; ii<input_data.length; ii++) {
+            var input_x = parseFloat(input_data[ii]); 
+            var y;
+            if(ii==0)
+                y = input_x;
+            else {
+                var prev_y = answer[answer.length-1];
+                var prev_x = parseFloat(input_data[ii-1]);
+                 y = alpha * (prev_y + input_x - prev_x);
+            } 
+            answer.push(y);
+        }
+        return answer;
+    },
+    /* input_data: array of numbers,
+       alpha in [0,1]: weight to a raw data 
+       return the same size of input_data 
+    */ 
+    getExpotentialMovingAverage: function(input_data, alpha) {
+        return this.getLowPass(input_data, alpha);
+    },
+    getLowPass: function(input_data, alpha) {
+        var answer = []; 
+        for(var ii=0; ii<input_data.length; ii++) {
+            var input = parseFloat(input_data[ii]);
+            var s = null;
+            if(ii==0)
+                s = input; 
+            else {
+                var prev_y = answer[answer.length-1]; 
+                s = alpha * input + (1-alpha) * prev_y;  
+            }
+            answer.push(s);
+        }
+        return answer; 
+    },
+    removeGravityByFormular: function(input_data, gravity_weight) {
+        var answer = []; 
+        for(var ii=0; ii<input_data.length; ii++) {
+            var input = parseFloat(input_data[ii]); 
+            if(ii==0)
+                this.gravity = input; //0; // input; 
+            else 
+                this.gravity = gravity_weight * this.gravity + (1-gravity_weight) * input;
+            var linear_acc = input - this.gravity;
+            answer.push(linear_acc);
+        }
+        return answer;
+    },  
+    translateByInitial5: function(input_data, gravity_weight) {
+        var answer = []; 
+        var gravity = filter.average(input_data, 5);
+        for(var ii=0; ii<input_data.length; ii++) {
+            var input = parseFloat(input_data[ii]);  
+            var linear_acc = input - gravity;
+            answer.push(linear_acc);
+        }
+        return answer;
+    },
+    somethingChangedLately: function(derivs, last_index, check_size){ 
+        if(!derivs || last_index<check_size)
+            return false;
+        for(var ii=last_index-check_size+1; ii<last_index; ii++) {
+            if( Math.abs(derivs[ii]-derivs[ii-1])>0.0001 )
+                return true;
+        } 
+        return false;
+    },
+    
+    takeIntegrals: function(derivs, intervals, warmingUpTime) {
+        var answers = [];
+        //var check_size = parseInt($('#noChangeInSize').val()); 
+        var elapsed_time = 0;
+        for(var ii=0; ii<derivs.length; ii++){
+            var dt = intervals[ii]*0.001; // millisecond to second;  
+            elapsed_time += dt; 
+            var current = (elapsed_time < warmingUpTime || ii==0)? 0 : answers[ii-1] + derivs[ii-1] * dt;   
+            answers.push(current);
+        } 
+        return answers;
+    }, 
+    
+    takeSecondIntergrals: function(accels, velos, intervals, warmingUpTime) {
+        var answers = [];
+        var check_size = parseInt($('#noChangeInSize').val()); 
+        var elapsed_time = 0;
+        for(var ii=0; ii<accels.length; ii++){
+            var dt = intervals[ii]*0.001; // millisecond to second;  
+            elapsed_time += dt; 
+            var current = (elapsed_time < warmingUpTime || ii==0)? 0 : answers[ii-1] + velos[ii-1] * dt + accels[ii-1]*dt*dt/2;   
+            answers.push(current);
+        } 
+        return answers; 
+    }
+}// end of tester
+
+function getMotionXYZMovingAverage(XYZ, buffer_size) {
+    var X =  tester.getMovingAverage(XYZ.X, buffer_size);
+    var Y =  tester.getMovingAverage(XYZ.Y, buffer_size);
+    var Z =  tester.getMovingAverage(XYZ.Z, buffer_size);
+    return {X:X, Y:Y, Z:Z};
+}
+
+function getExponentialMotionXYZMovingAverage(XYZ, weight_to_raw) {
+    var X =  tester.getExpotentialMovingAverage(XYZ.X, weight_to_raw);
+    var Y =  tester.getExpotentialMovingAverage(XYZ.Y, weight_to_raw);
+    var Z =  tester.getExpotentialMovingAverage(XYZ.Z, weight_to_raw);
+    return {X:X, Y:Y, Z:Z};
+}
+
+var gravity={x:0, y:0, z:0};
+
+function removeGravityByFilter(XYZ, gravity_weight) {  
+    var method = $('input:radio[name=removeGravityOption]:checked').val();
+    var X = method=="gravityFormular"?tester.removeGravityByFormular(XYZ.X, gravity_weight):tester.getHighPass(XYZ.X, gravity_weight);
+    var Y = method=="gravityFormular"?tester.removeGravityByFormular(XYZ.Y, gravity_weight):tester.getHighPass(XYZ.Y, gravity_weight);
+    var Z = method=="gravityFormular"?tester.removeGravityByFormular(XYZ.Z, gravity_weight):tester.getHighPass(XYZ.Z, gravity_weight);
+ 
+    return {X:X, Y:Y, Z:Z};
+}
+
+function removeGravityByRotation(SensorData) { 
+    var orientationMatrix = new THREE.Matrix4(); 
+    var gz = null;
+    var X=[], Y=[], Z=[]; 
+    var Intervals=[], RealIntervals=[];
+    var BufferA=[], BufferB=[], BufferC=[];
+    var buffer_size = 1;
+    for(var ii=0; ii < SensorData.length; ii++) {  
+        var p = SensorData[ii];
+        if(p.type == "deviceorientation") { 
+            orientationMatrix.identity(); // make identity  
+            BufferA.push(parseFloat(p.alpha)); BufferB.push(parseFloat(p.beta)); BufferC.push(parseFloat(p.gamma));
+             if(BufferA.length>buffer_size) {
+                BufferA.shift(); BufferB.shift(); BufferC.shift();
+            }  
+            if(BufferA.length==buffer_size) {
+                var alpha = filter.average(BufferA); beta = filter.average(BufferB); gamma = filter.average(BufferC);   
+                orientationMatrix.setRotationFromEuler(new THREE.Vector3(alpha , beta,  gamma), "XYZ"); 
+                gz = new THREE.Vector3(0, 0, 9.81)
+                gz.applyMatrix4(orientationMatrix);
+                gz.x = -gz.x; gz.y = -gz.y; // Catch 
+                console.log("g=["+gz.x+","+gz.y+","+gz.z);
+            } 
+        }else {
+            var acce = p.accelerationIncludingGravity;
+            if(gz) { // the first gravity based on orientation was set.   
+                X.push(parseFloat(acce.x)-gz.x); Y.push(parseFloat(acce.y)-gz.y); Z.push(parseFloat(acce.z)-gz.z);  
+            }else {
+                X.push(parseFloat(acce.x)); Y.push(parseFloat(acce.y)); Z.push(parseFloat(acce.z)); 
+            }
+            try { 
+                if(ii==start_index)
+                    RealIntervals.push(p.interval);
+                else 
+                    RealIntervals.push(DeviceMotion[ii].timeStamp - p.timeStamp);
+                
+                Intervals.push(p.interval);
+            }  
+            catch(error){
+                console.log(error);
+            }  
+        } 
+    } 
+    return {X:X, Y:Y, Z:Z, Intervals:Intervals, RealIntervals:RealIntervals}; 
+} 
+
+function getMotionData(SensorData) {
+    var XYZ = getMotionXYZ(SensorData);
+    var alpha = parseFloat($('#Gravity_alpha').val());  
+    var NoG_XYZ, IN_XYZ;
+   
+    if($('#removeGravity').is(':checked')) {  
+        if($('#useRotationGravity').is(':checked') ) 
+            NoG_XYZ = removeGravityByRotation(SensorData);
+        else
+            NoG_XYZ = removeGravityByFilter(XYZ, alpha);
+        IN_XYZ = NoG_XYZ;
+    }
+    else {
+        IN_XYZ = XYZ;
+    } 
+    var buffsize = parseInt($('#MV_beffer_size').val());
+    var MV_XYZ = getMotionXYZMovingAverage(IN_XYZ, buffsize);
+    var alpha = parseFloat($('#EMV_alpha').val());
+    var EMV_XYZ = getExponentialMotionXYZMovingAverage(IN_XYZ, alpha);
+    return {raw:XYZ, GravityFree:NoG_XYZ, MovingAverage:MV_XYZ, ExponentialMovingAverage:EMV_XYZ};
+}
+
+function makeAverage(A, alpha, B) {
+    if(A.length != B.length)
+        throw "A.length != B.length"; 
+        
+    var answer=[];
+    for(var ii=0; ii<A.length; ii++) {
+        var v = alpha * A[ii] + (1-alpha) * B[ii];
+        answer.push(v);
+    }
+    return answer;
+}
+
+function makeSquareRootOfSquareSum(A, B, C) {
+    if(A.length != B.length)
+        throw "A.length != B.length"; 
+        
+    var answer=[];
+    for(var ii=0; ii<A.length; ii++) {
+        var v = A[ii]*A[ii]+ B[ii]* B[ii] + C[ii]*C[ii];
+        answer.push(Math.sqrt(v));
+    }
+    return answer;
+}
+
+function getMotionGraphData(labels, GraphData, dstart_index, dend_index ) { 
+    var answer = {labels:labels, datasets:[ ]};
+    var si = Math.max(0, dstart_index);
+    var ei = Math.min(GraphData.raw.X.length, dend_index+1);
+    var SqrtOfSqrSum = makeSquareRootOfSquareSum(GraphData.raw.X, GraphData.raw.Y, GraphData.raw.Z);
+    
+    if($('#showRawData').is(':checked') ) {
+        if($('#showX').is(':checked') )  
+            answer.datasets.push({fillColor : "rgba(0,0,0,0)", strokeColor:"rgba(255,0,0,1)", pointColor:"rgba(255,0,0,1)", data:GraphData.raw.X.slice(si,ei), label:'X'});
+        if($('#showY').is(':checked') )     
+            answer.datasets.push({fillColor : "rgba(0,0,0,0)", strokeColor:"rgba(0,255,0,1)", pointColor:"rgba(0,255,0,1)", data:GraphData.raw.Y.slice(si,ei), label:'Y'});
+        if($('#showZ').is(':checked') ) 
+            answer.datasets.push({fillColor : "rgba(0,0,0,0)", strokeColor:"rgba(0,0,255,1)", pointColor:"rgba(0,0,255,1)", data:GraphData.raw.Z.slice(si,ei), label:'Z'});  
+        if($('#showXYZSquare').is(':checked') ) {
+           
+            answer.datasets.push({fillColor : "rgba(0,0,0,0)", strokeColor:"rgba(127,127,255,1)", pointColor:"rgba(127,127,255,1)",  data:SqrtOfSqrSum.slice(si,ei), label:'Square Root Of Square Sum(X,Y,Z)'});
+        }
+    }       
+    
+    
+    if($('#removeGravity').is(':checked')) { 
+        if($('#showGravityFree').is(':checked')) {  
+            if($('#showX').is(':checked') )  
+                answer.datasets.push({fillColor : "rgba(0,0,0,0)", strokeColor:"rgba(68,200,0,1)", pointColor:"rgba(68,200,0,1)", data:GraphData.GravityFree.X.slice(si,ei), label:'gravity-free X'});
+            if($('#showY').is(':checked') ) 
+                answer.datasets.push({fillColor : "rgba(0,0,0,0)", strokeColor:"rgba(0,68,200,1)", pointColor:"rgba(0,68,200,1)", data:GraphData.GravityFree.Y.slice(si,ei), label:'gravity-free Y'});
+            if($('#showZ').is(':checked') ) 
+                answer.datasets.push({fillColor : "rgba(0,0,0,0)", strokeColor:"rgba(68,0,200,1)", pointColor:"rgba(68,0,200,1)", data:GraphData.GravityFree.Z.slice(si,ei), label:'gravity-free Z'});
+        } 
+    }
+    if($('#showMovingAverage').is(':checked') ) {  
+        if($('#showX').is(':checked') )  
+            answer.datasets.push({fillColor : "rgba(0,0,0,0)", strokeColor:"rgba(255,255,0,1)", pointColor:"rgba(255,255,0,1)", data:GraphData.MovingAverage.X.slice(si,ei), label:'MovingAverage X'});
+        if($('#showY').is(':checked') ) 
+            answer.datasets.push({fillColor : "rgba(0,0,0,0)", strokeColor:"rgba(0,255,255,1)", pointColor:"rgba(0,255,255,1)", data:GraphData.MovingAverage.Y.slice(si,ei), label:'MovingAverage Y'});
+        if($('#showZ').is(':checked') ) 
+            answer.datasets.push({fillColor : "rgba(0,0,0,0)", strokeColor:"rgba(255,0,255,1)", pointColor:"rgba(255,0,255,1)", data:GraphData.MovingAverage.Z.slice(si,ei), label:'MovingAverage Z'});
+       
+        if($('#showXYZSquare').is(':checked') ) {
+          var MovingAverageXYZ = tester.getMovingAverage(SqrtOfSqrSum, 5);
+            answer.datasets.push({fillColor : "rgba(0,0,0,0)", strokeColor:"rgba(0,155,155,1)", pointColor:"rgba(0,155,155,1)",  data:MovingAverageXYZ.slice(si,ei), label:'MovingAverage XYZ Square'}); 
+        }
+              
+    } 
+    if($('#showExponentialMovingAverage').is(':checked') ) { 
+        if($('#showX').is(':checked') )  
+            answer.datasets.push({fillColor : "rgba(0,0,0,0)", strokeColor:"rgba(127,127,0,1)", pointColor:"rgba(127,127,0,1)", data:GraphData.ExponentialMovingAverage.X.slice(si,ei), label:'ExponentialMovingAverage X'});
+        if($('#showY').is(':checked') ) 
+            answer.datasets.push({fillColor : "rgba(0,0,0,0)", strokeColor:"rgba(0,127,127,1)", pointColor:"rgba(0,127,127,1)", data:GraphData.ExponentialMovingAverage.Y.slice(si,ei), label:'ExponentialMovingAverage Y'});
+        if($('#showZ').is(':checked') ) 
+            answer.datasets.push({fillColor : "rgba(0,0,0,0)", strokeColor:"rgba(127,0,127,1)", pointColor:"rgba(127,0,127,1)", data:GraphData.ExponentialMovingAverage.Z.slice(si,ei), label:'ExponentialMovingAverage Z'});
+    }  
+    return answer;
+}
+  
+
+function getMotionGraphDataPedometer(labels, GraphData, dstart_index, dend_index ) { 
+    var answer = {labels:labels, datasets:[ ]};
+    var si = Math.max(0, dstart_index);
+    var ei = Math.min(GraphData.length, dend_index+1);
+     
+    //if($('#showMovingAverage').is(':checked') ) {   
+        answer.datasets.push({fillColor : "rgba(0,0,0,0)", strokeColor:"rgba(0,255,255,1)", pointColor:"rgba(0,255,255,1)", data:GraphData.slice(si,ei), label:'MovingAverage Y'});  
+    //}
+    return answer;
+}
+function getVeloPosis(accs, intervals) { 
+    var filterOutWhenNoChange = $('#filterOutWhenNoChange').is(':checked');
+    var warmingUpTime = parseFloat($('#warmingUpTime').val());
+    var velocities = tester.takeIntegrals(accs, intervals, warmingUpTime);
+    var positions = tester.takeSecondIntergrals(accs, velocities, intervals, warmingUpTime);
+    
+    return {velocity:velocities, position:positions}; 
+} 
+
+function getVeloPosiXYZ(XYZ, Intervals) {
+    var X_VP = getVeloPosis(XYZ.X, Intervals);
+    var Y_VP = getVeloPosis(XYZ.Y, Intervals);
+    var Z_VP = getVeloPosis(XYZ.Z, Intervals);
+    return {velocities:{X:X_VP.velocity, Y:Y_VP.velocity, Z:Z_VP.velocity},
+            positions:{X:X_VP.position, Y:Y_VP.position, Z:Z_VP.position}};
+}
+ 
+
+function getVeloPosiData(filteredData) {
+    var Intervals = filteredData.raw.Intervals;
+    var raw = getVeloPosiXYZ(filteredData.raw, Intervals); 
+    var GravityFree = getVeloPosiXYZ(filteredData.GravityFree, Intervals); 
+    var MovingAverage = getVeloPosiXYZ(filteredData.MovingAverage, Intervals); 
+    var ExponentialMovingAverage = getVeloPosiXYZ(filteredData.ExponentialMovingAverage, Intervals); 
+    return {velocities:{raw:raw.velocities, GravityFree:GravityFree.velocities, MovingAverage:MovingAverage.velocities, ExponentialMovingAverage:ExponentialMovingAverage.velocities},
+            positions:{raw:raw.positions, GravityFree:GravityFree.positions, MovingAverage:MovingAverage.positions, ExponentialMovingAverage:ExponentialMovingAverage.positions}};
+} 
+
+var chart = null;
+var chart2= null;
+var chart3= null;
+
+function drawGraphs(labels, filterGraphdata, VeloPosiData, dstart_index, dend_index) { 
+    if($('#showX').is(':checked') || $('#showY').is(':checked') || $('#showZ').is(':checked')) {
+        var canvas = document.getElementById("AccLineGraph");
+        var context = canvas.getContext("2d");  
+        if(chart) {
+            try{     
+                context.clearRect(0, 0, canvas.width, canvas.height);
+                chart.destory();
+            }
+            catch(error) {
+                console.log(error);
+            }
+        } 
+        legend(document.getElementById("lineLegend"), filterGraphdata);
+        var chartOptions = {animation : false, responsive: true,  bezierCurve : false, scaleShowGridLines : false, pointDot : false, showTooltips: true, hide: { fixed: true }};
+        chart = new Chart(context).Line(filterGraphdata, chartOptions); //false});   
+     
+        if(!VeloPosiData)
+            return;
+            
+        if($('#showVelocity').is(':checked')) { 
+            var veloGraphdata = getMotionGraphData(labels, VeloPosiData.velocities, dstart_index, dend_index); // start_index, end_index);   
+            $("#VeloLineGraph").show();
+            var canvas = document.getElementById("VeloLineGraph");
+            var context = canvas.getContext("2d");  
+            if(chart2) {
+                try{     
+                    context.clearRect(0, 0, canvas.width, canvas.height);
+                    chart2.destory();
+                }
+                catch(error) {
+                    console.log(error);
+                }
+            }  
+            chart2 = new Chart(context).Line(veloGraphdata,chartOptions); 
+        }else
+            $("#VeloLineGraph").hide(); 
+         
+        var posiGraphdata = getMotionGraphData(labels, VeloPosiData.positions, dstart_index, dend_index); // start_index, end_index);   
+        var canvas = document.getElementById("PosiLineGraph");
+        var context = canvas.getContext("2d");  
+        if(chart3) {
+            try{     
+                context.clearRect(0, 0, canvas.width, canvas.height);
+                chart3.destory();
+            }
+            catch(error) {
+                console.log(error);
+            }
+        }  
+        chart3 = new Chart(context).Line(posiGraphdata, chartOptions);
+    }
+}
+
+function drawGraphsPedometer(labels, filterGraphdata, VeloPosiData, dstart_index, dend_index) { 
+    //if($('#showX').is(':checked') || $('#showY').is(':checked') || $('#showZ').is(':checked')) 
+    {
+        var canvas = document.getElementById("AccLineGraph");
+        var context = canvas.getContext("2d");  
+        if(chart) {
+            try{     
+                context.clearRect(0, 0, canvas.width, canvas.height);
+                chart.destory();
+            }
+            catch(error) {
+                console.log(error);
+            }
+        } 
+        legend(document.getElementById("lineLegend"), filterGraphdata);
+        var chartOptions = {animation : false, responsive: true,  bezierCurve : false, scaleShowGridLines : false, pointDot : false, showTooltips: true, hide: { fixed: true }};
+        chart = new Chart(context).Line(filterGraphdata, chartOptions); //false});   
+      
+            
+        if($('#showVelocity').is(':checked')) { 
+            var veloGraphdata = getMotionGraphDataPedometer(labels, VeloPosiData.Velocity, dstart_index, dend_index); // start_index, end_index);   
+            $("#VeloLineGraph").show();
+            var canvas = document.getElementById("VeloLineGraph");
+            var context = canvas.getContext("2d");  
+            if(chart2) {
+                try{     
+                    context.clearRect(0, 0, canvas.width, canvas.height);
+                    chart2.destory();
+                }
+                catch(error) {
+                    console.log(error);
+                }
+            }  
+            chart2 = new Chart(context).Line(veloGraphdata,chartOptions); 
+        }else
+            $("#VeloLineGraph").hide(); 
+         
+        var posiGraphdata = getMotionGraphDataPedometer(labels, VeloPosiData.Position, dstart_index, dend_index); // start_index, end_index);   
+        var canvas = document.getElementById("PosiLineGraph");
+        var context = canvas.getContext("2d");  
+        if(chart3) {
+            try{     
+                context.clearRect(0, 0, canvas.width, canvas.height);
+                chart3.destory();
+            }
+            catch(error) {
+                console.log(error);
+            }
+        }  
+        chart3 = new Chart(context).Line(posiGraphdata, chartOptions);
+    }
+}
+function drawGraphsByDoubleIntegrators(SensorData, drawstart_index, drawend_index) {
+    var labels= getMotionGraphLabels(SensorData, drawstart_index, drawend_index);
+    var filteredData = getMotionData(SensorData); // compute entire range 
+    var filterGraphdata = getMotionGraphData(labels, filteredData, drawstart_index, drawend_index); // start_index, end_index);  
+    var VeloPosiData = getVeloPosiData(filteredData); 
+    drawGraphs(labels, filterGraphdata, VeloPosiData, drawstart_index, drawend_index);
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+function getVeloPosiByPedometerAlgorithm(pedometer, SensorData) {
+    //--- make segments for each X and Y --
+    for(var ii= 0; ii < SensorData.length; ii++) {
+        var sensorEvent = SensorData[ii];
+        if(sensorEvent.type == "devicemotion")
+            pedometer.onMotionSensorChanged(sensorEvent);
+    }
+    pedometer.onMotionSensorEnd();
+    //var labels = getMotionGraphLabels(SensorData, drawStartIndex, drawEndIndex);
+    return {Velocity:pedometer.AcceSegmentManager.velocities, 
+            Position:pedometer.AcceSegmentManager.positions};
+}
+ 
+    
+function getPedometerSolutions(pedometer, SensorData) { 
+    var VeloPosiData = getVeloPosiByPedometerAlgorithm(pedometer, SensorData);
+    return VeloPosiData;
+}
+function drawGraphsByPedometer(SensorData, drawStartIndex, drawEndIndex){  
+    var axis = $('input:radio[name=PedometerAxis]:checked').val();
+    var uphill_acc = parseFloat($('#uphill_acc').val());
+    var du_ratio = parseFloat($('#du_ratio').val());
+    var max_velocity = parseFloat($('#max_velocity').val());
+    var options={Axis:axis, flagClearCaches:false, uphill_acc:uphill_acc, du_ratio:du_ratio, max_velocity:max_velocity};
+    
+    var pedometer = new Pedometer(options);
+    var VeloPosiData = getPedometerSolutions(pedometer, SensorData);  
+    var labels = getPedometerSegmentLabels(pedometer.AcceSegmentManager, drawStartIndex, drawEndIndex);
+    var filteredData = getMotionData(SensorData); 
+    var filterGraphdata = getMotionGraphData(labels, filteredData, drawStartIndex, drawEndIndex);  
+    drawGraphsPedometer(labels, filterGraphdata, VeloPosiData, drawStartIndex, drawEndIndex);
+}
+
+function writeHeader() {
+    $('#sensorTable').empty();
+    $('#sensorTable').append("<tr><td>index</td><td>Event Type</td><td>Time Stamp</td><td>Inteval</td><td>Runing Time</td><td>Alpha</td><td>Beta</td><td>Gamma</td><td>accX</td><td>accY</td><td>accZ</td></tr>");
+}
+
+function appendOrientationInTable(ii, data){  
+    var runtime = G_start_timeStamp?data.timeStamp-G_start_timeStamp:0;
+    //var realruntime = G_start_timeStamp?data.time_real-G_start_timeStamp:0;
+    $('#sensorTable').append('<tr><td>' + ii + '</td><td>' + data.type+ '</td><td>' + data.timeStamp /*+ '</td><td>' + data.time_real*/  + '</td><td>' + 'NA'+'</td><td>' + runtime
+                          + '</td><td>' + data.alpha + '</td><td>' + data.beta + '</td><td>' + data.gamma 
+                          + '</td><td>NA</td><td>NA</td><td>NA</td><tr>');
+}
+
+function appendMotionInTable(ii, data){
+    var runtime = G_start_timeStamp?data.timeStamp-G_start_timeStamp:0;
+    var rate = data.rotationRate?data.rotationRate:{alpha:0, beta:0, gamma:0};
+    var acce = data.accelerationIncludingGravity?data.accelerationIncludingGravity:{x:0, y:0, z:0};
+    $('#sensorTable').append('<tr><td>' + ii + '</td><td>'  + data.type + '</td><td>' + data.timeStamp /*+ '</td><td>' + data.time_real*/ + '</td><td>' + data.interval +'</td><td>' + runtime
+                           + '</td><td>' + rate.alpha + '</td><td>' + rate.beta + '</td><td>' + rate.gamma 
+                           + '</td><td>' + acce.x     + '</td><td>' + acce.y   + '</td><td>' + acce.z +  '</td></tr>');
+}
+
+var G_SensorBuffer = []; 
+var G_start_timeStamp = null;
+$("#showDeviceMotion").change(function() {
+    redrawTable();
+});
+$("#showDeviceOrientation").change(function() {
+    redrawTable();
+});
+
+$("#drawMotionData").click(function(){
+    var drawStartIndex = parseInt($('#drawStartIndex').val());
+    var drawEndIndex = parseInt($('#drawEndIndex').val()); 
+    var filteredData = filterData();
+    var method = $('input:radio[name=DistanceComputationMethod]:checked').val();
+    if(method=="doubleIntegrals")
+        drawGraphsByDoubleIntegrators(filteredData, drawStartIndex, drawEndIndex);
+    else
+        drawGraphsByPedometer(filteredData, drawStartIndex, drawEndIndex);
+});
+
+function filterData() {
+    var answer = [];
+    var showDeviceMotion = $('#showDeviceMotion').is(':checked');
+    var showDeviceOrientation = $('#showDeviceOrientation').is(':checked'); 
+    
+    for(var ii=0; ii<G_SensorBuffer.length; ii++){
+        var data = G_SensorBuffer[ii];
+        if( data.type=="devicemotion") {
+            if(showDeviceMotion)  
+                answer.push(data);   
+        } 
+        else if(data.type=="deviceorientation"){
+            if(showDeviceOrientation)  
+                answer.push(data);    
+        } 
+        else
+            allert("Unexpected data type ="+data.type);
+    }  
+    return answer;
+}
+
+function appendRows() { 
+    G_start_timeStamp = null; 
+    var filteredData = filterData(); 
+    var showDeviceMotion = $('#showDeviceMotion').is(':checked');
+    var showDeviceOrientation = $('#showDeviceOrientation').is(':checked'); 
+    for(var ii=0; ii<filteredData.length; ii++){
+        var data = filteredData[ii];   
+        if( data.type=="devicemotion")  
+            appendMotionInTable(ii, data);   
+        else if(data.type=="deviceorientation") 
+             appendOrientationInTable(ii, data);  
+        else
+            allert("Unexpected data type ="+data.type); 
+        
+        if(!G_start_timeStamp)
+            G_start_timeStamp = data.timeStamp;   
+    } 
+    $('#drawEndIndex').val(filteredData.length-1);
+}
+
+function redrawTable() {
+  writeHeader();
+  appendRows();
+}
+
+function loaded(evt) {
+    // Obtain the read file data    
+    var fileString = evt.target.result;
+    // Handle UTF-16 file dump
+    G_SensorBuffer = JSON.parse(fileString);
+     $("#buffer_size").html(G_SensorBuffer.length);
+    //Catch any errors with parsing the data and alert them
+    try {
+        //console.log(G_SensorBuffer);
+        redrawTable(); 
+    }catch(e) {
+        alert(e);
+    }
+}
+
+$('#file_input').on('change', function(e) {
+//$("#read_data").click(function() {  
+    if(G_BufferingOn) {
+        alert("First stop buffering.");
+    }else {    
+        var reader = new FileReader(); 
+        reader.readAsText(this.files[0], "UTF-8"); 
+        $("#info").html(this.files[0].name);
+        reader.onload = loaded; 
+    }
+}); 
+</script>
+</body>
+</html>

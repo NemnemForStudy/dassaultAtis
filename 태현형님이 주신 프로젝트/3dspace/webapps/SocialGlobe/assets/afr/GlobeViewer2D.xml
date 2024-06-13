@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Styles xmlns:syp="http://www.3ds.com/xsd/SYP">
+
+  <Template syp:name="GlobeViewerAfrWorkshopInterface" Target="CATCmdInterface">
+    <CATCmdInterface  WkbInterface= "CATIGlobeViewerAfrWorkshopConfiguration"/>
+  </Template>
+
+  <Template syp:name="GlobeViewerAfrWorkshopHeaders" Target="CATCmdHeadersList">
+    <CATCmdHeadersList>
+      <!-- <CATCommandHeader ID = "Theme"                  ClassName = "DS/SocialGlobe/CmdTheme"           SharedLibraryName = "ShareUI" ResourceFile = "SocialGlobe/GlobeViewer" /> -->
+      <CATCommandHeader ID = "Interaction"                  ClassName = "DS/SocialGlobe/CmdInteraction"           SharedLibraryName = "ShareUI" ResourceFile = "SocialGlobe/GlobeViewer" />
+      <CATCommandHeader ID = "Advanced"                  ClassName = "DS/SocialGlobe/CmdAdvanced"           SharedLibraryName = "ShareUI" ResourceFile = "SocialGlobe/GlobeViewer" />
+      <CATCommandHeader ID = "AddMarker"             ClassName = "DS/SocialGlobe/CmdAddMarker"             SharedLibraryName = "ShareUI" ResourceFile = "SocialGlobe/GlobeViewer" />
+      <!-- <CATCommandHeader ID = "DeleteMarker"          ClassName = "DS/SocialGlobe/CmdDeleteMarker"          SharedLibraryName = "ShareUI" ResourceFile = "SocialGlobe/GlobeViewer" /> -->
+      <CATCommandHeader ID = "EditMarker"          ClassName = "DS/SocialGlobe/CmdEditMarker"          SharedLibraryName = "ShareUI" ResourceFile = "SocialGlobe/GlobeViewer" />
+     
+      <!--CATCommandHeader ID = "ColorArea"             ClassName = "DS/SocialGlobe/CmdColorArea"             SharedLibraryName = "ShareUI" ResourceFile = "SocialGlobe/GlobeViewer" />
+      <CATCommandHeader ID = "DeleteArea"            ClassName = "DS/SocialGlobe/CmdDeleteArea"            SharedLibraryName = "ShareUI" ResourceFile = "SocialGlobe/GlobeViewer" /-->
+      <CATCommandHeader ID = "ImportFile"            ClassName = "DS/SocialGlobe/CmdImportFile"            SharedLibraryName = "ShareUI" ResourceFile = "SocialGlobe/GlobeViewer" />
+      <CATCommandHeader ID = "Reset"                 ClassName = "DS/SocialGlobe/CmdReset"                 SharedLibraryName = "ShareUI" ResourceFile = "SocialGlobe/GlobeViewer" />
+      <CATCommandHeader ID = "Save"                 ClassName = "DS/SocialGlobe/CmdSave"                   SharedLibraryName = "ShareUI" ResourceFile = "SocialGlobe/GlobeViewer" />
+      <CATCommandHeader ID = "Help"                  ClassName = "DS/SocialGlobe/CmdDisplayHelp"           SharedLibraryName = "ShareUI" ResourceFile = "SocialGlobe/GlobeViewer" />
+      <CATCommandHeader ID = "Publish"                  ClassName = "DS/SocialGlobe/CmdPublish"           SharedLibraryName = "ShareUI" ResourceFile = "SocialGlobe/GlobeViewer" />
+    </CATCmdHeadersList>
+  </Template>
+
+  <Template syp:name="GlobeViewerAfrWorkshopAccess" Target="CATCmdWorkbench">
+    <CATCmdWorkbench Name="GlobeViewerWorkbench">
+
+      <CATCmdContainer Name = "Display Settings"          Visibility = "1" RepresentationType="AfrActionBarSection">
+        <!--CATCmdStarter Name = "ImportFile"    Command = "ImportFile" />
+        <CATCmdSeparator Name="BasicManip_Separator" /-->
+        <CATCmdStarter Name = "Theme"         Command = "Theme" />
+        <CATCmdStarter Name = "Interaction"         Command = "Interaction" />
+        <CATCmdStarter Name = "Advanced"          Command = "Advanced" />
+        <!--CATCmdSeparator Name="BasicManip_Separator" />
+        <CATCmdStarter Name = "Help"          Command = "Help" /-->
+      </CATCmdContainer>
+
+      <CATCmdContainer Name = "Markers"          Visibility = "1" RepresentationType="AfrActionBarSection">
+        <CATCmdStarter Name = "AddMarker"     Command = "AddMarker" />
+        <!-- <CATCmdStarter Name = "DeleteMarker"  Command = "DeleteMarker" /> -->
+        <CATCmdStarter Name = "EditMarker"  Command = "EditMarker" />
+        <!--CATCmdSeparator Name="BasicManip_Separator" />
+        <CATCmdStarter Name = "Help"          Command = "Help" /-->
+      </CATCmdContainer>
+
+
+      <!-- CATCmdContainer Name = "Areas"          Visibility = "1" RepresentationType="AfrActionBarSection">
+        <CATCmdStarter Name = "ColorArea"     Command = "ColorArea" />
+        <CATCmdStarter Name = "DeleteArea"    Command = "DeleteArea" />
+      <CATCmdContainer /-->
+
+      <CATCmdContainer Name = "Manage"          Visibility = "1" RepresentationType="AfrActionBarSection">
+        <CATCmdStarter Name = "ImportFile"    Command = "ImportFile" />
+        <!--CATCmdSeparator Name="BasicManip_Separator" /-->
+        <CATCmdStarter Name = "Reset"         Command = "Reset" />
+        <CATCmdStarter Name = "Save"         Command = "Save" />
+        <!--CATCmdSeparator Name="BasicManip_Separator" />
+        <CATCmdStarter Name = "Publish"          Command = "Publish" /-->
+        <!--CATCmdSeparator Name="BasicManip_Separator" />
+        <CATCmdStarter Name = "Help"          Command = "Help" /-->
+      </CATCmdContainer>
+
+    </CATCmdWorkbench>
+  </Template>
+</Styles>

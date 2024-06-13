@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0",
+  "summary": "Compare la valeur de plusieurs données d'entrée suivant l'expression de paramètre spécifiée.",
+  "description": "Ce bloc étant dynamique, le nombre de données d'entrée peut être modifié à l'aide de la boîte de dialogue de configuration du bloc.<br>Le type de valeur du port de données traite tous les types.<br>Le nom de variable écrit dans le paramètre <doc-setting-name translate=no>Expression</doc-setting-name> doit correspondre au nom des données d'entrée, sinon l'expression est considérée comme non valide.<br><br>La valeur du paramètre expression traite la comparaison d'expression avancée :<ul><li><doc-value translate=no>&quot;Value1 === Value2&quot;</doc-value> : vérifie que <doc-idp-name translate=no>Value1</doc-idp-name> est égale à <doc-idp-name translate=no>Value2</doc-idp-name>.</li><li><doc-value translate=no>&quot;Value3 > Value3 && Value3 < Value2&quot;</doc-value> : vérifie que <doc-idp-name translate=no>Value3</doc-idp-name> se situe entre <doc-idp-name translate=no>Value1</doc-idp-name> et <doc-idp-name translate=no>Value2</doc-idp-name> (<doc-idp-name translate=no>Value1</doc-idp-name>, <doc-idp-name translate=no>Value2</doc-idp-name> et <doc-idp-name translate=no>Value3</doc-idp-name> étant des nombres).</li><li><doc-value translate=no>&quot;Value1 !== Value2 || Value1 !== Value3&quot;</doc-value> : vérifie que <doc-idp-name translate=no>Value1</doc-idp-name> est différente de <doc-idp-name translate=no>Value2</doc-idp-name> ou <doc-idp-name translate=no>Value3</doc-idp-name>.</li></ul>",
+  "dataPorts": {
+    "Value1": "est la première valeur à comparer.",
+    "Value2": "est la deuxième valeur à comparer."
+  },
+  "controlPorts": {
+    "In": "déclenche l'exécution du bloc.",
+    "True": "est activé lorsque le résultat de l'expression renseignée par chaque valeur de données d'entrée est positif.",
+    "False": "est activé lorsque le résultat de l'expression renseignée par chaque valeur de données d'entrée est négatif."
+  },
+  "settings": {
+    "Expression": "la valeur de l'expression décrivant la comparaison des valeurs de données d'entrée."
+  },
+  "example": null
+}

@@ -1,0 +1,23 @@
+################################################################################################
+# Create By jhlee : 2023. 05. 02
+# Admin Type : relationship
+# Name : decImageHolder
+################################################################################################
+
+#del relationship 'decImageHolder';
+copy rel 'Image Holder' 'decImageHolder';
+mod rel decImageHolder
+	from
+		remove type 'Image Holder'
+		add type decImageHolder
+		cardinality many
+	to
+		remove type all
+		add type Phase
+		cardinality many
+;
+add property 'relationship_decImageHolder' on prog eServiceSchemaVariableMapping.tcl to type 'decImageHolder';
+mod rel decImageHolder
+	remove trigger delete action
+	add trigger delete action emxTriggerManager input 'RelationshipDecImageHolderDeleteAction'
+;

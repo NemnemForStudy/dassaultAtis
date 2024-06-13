@@ -1,0 +1,11 @@
+m|PADUtils\ViewerCommandsExt.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.1.22295|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\ViewerCommandsExt\ViewerCommandsExt.js|1666424771|2817
+s|PADUtils\ViewerCommandsExt.mweb\src\A.js|1602684643|43
+u|PADUtils\ViewerCommandsExt.mweb\src\ViewerCommandsExt.js|1602684645|1
+u|PADUtils\ViewerCommandsExt.mweb\src\ViewerScreenshotUtils.js|1657175787|6977
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

@@ -1,0 +1,24 @@
+################################################################################################
+# Create By jhlee 2023. 05. 22
+# Admin Type : command
+# Name : decIWPChangeHistoryList
+################################################################################################
+
+#del command 'decIWPChangeHistoryList';
+add command 'decIWPChangeHistoryList'
+	description 'StandardList'
+	label 'ProgramCentral.Command.decIWPChangeHistoryList'
+	alt 'ProgramCentral.Command.decIWPChangeHistoryList'
+	setting 'Registered Suite' 'ProgramCentral'
+	setting 'Target Location' 'content'
+;
+add property 'command_decIWPChangeHistoryList' on prog eServiceSchemaVariableMapping.tcl to command 'decIWPChangeHistoryList';
+
+mod command 'decIWPChangeHistoryList'
+	href '${COMMON_DIR}/emxIndentedTable.jsp?program=emxProjectSpace:getIWPTaskHistoryList&table=decIWPTaskHistoryTable&header=ProgramCentral.Command.decIWPChangeHistoryList&HelpMarker=emxhelpprogramlist&Export=true&sortColumnName=Name&sortDirection=ascending&StringResourceFileId=emxProgramCentralStringResource&selection=multiple&parallelLoading=true&massPromoteDemote=true&slideinFilter=true&pageSize=300'
+;
+
+#mod command 'decIWPExcutionList'
+#	add setting 'Access Function' 'isAccessIWPExcutionList' 
+#	add setting 'Access Program' 'emxProjectSpace'	
+#;

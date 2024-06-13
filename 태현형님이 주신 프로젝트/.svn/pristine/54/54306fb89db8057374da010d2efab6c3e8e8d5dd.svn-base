@@ -1,0 +1,1 @@
+define("DS/UWPClientControls/UWPClientControls_cs",{});define("DS/UWPClientControls/assets/nls/tooltips",{menu:"Nabídka",addTab:"Přidat záložku"});

@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+
+<!-- ENOVIA DICTIONARY for Engineering Specifications Basic Objects -->
+<!-- COPYRIGHT DASSAULT SYSTEMES 2019, all rights reserved -->
+
+<!-- 
+   =========
+    Package
+   =========
+ -->
+
+<Package xmlns="PLMDictionaryUnified"
+         CustomerExposition="Programmer"
+         ModelerType="Top"
+         BelongsToModeler="PLMEngSpecBasicObjects"
+         Name="PLMEngSpecBasicObjects"
+         Uuid="8bb6322b-b45d-49ce-9ec1-56b3d94157ee"
+         UseNames="PLMEnsSpecTechnoTable PLMEnsSpecPartsFilter PLMEnsSpecSpecification" >
+
+  <CAAComment>
+    <ShortRole>Engineering Specifications Basic Objects Package</ShortRole>
+    <Role>This package describes the Engineering Specification Basic Objects.</Role>
+  </CAAComment>
+  <Comment>Initial creation: ADZ MMR14 Nov 2019</Comment>
+
+  <Class Name="EngSpecBasicSpecification"
+         Uuid="1a0c7f4d-5230-4ce6-8b35-212111893528"
+         Abbreviation="esbs"
+         CustomerExposition="Programmer"
+         Abstract="No"
+         SuperName="EnsSpecification"
+         Specializable="No"
+         Discipline="Yes"
+         CustomerExtensible="Yes">
+    <Property Name="IconName"                    Value="I_EngSpecBasic_Spec"/>
+    <Property Name="Searchable"                  Value="Yes"/>
+    <Property Name="Newable"                     Value="New"/>
+    <Property Name="KweNew_InstanciationMethod"  Value="CATEnsCompanyStdsInstanciation"/>
+    <Property Name="ProposedInDataSetup"         Value="Yes"/>
+    <CAAComment>
+      <ShortRole>Basic specification</ShortRole>
+      <Role>Basic specification</Role>
+    </CAAComment>
+  </Class>
+
+  <Class Name="EngSpecBasicTechnologicalTable"
+         Uuid="b3844822-f25d-4e87-9b51-3944b931e343"
+         Abbreviation="esbtt"
+         CustomerExposition="Programmer"
+         Abstract="No"
+         SuperName="EnsTechnologicalTable"
+         Discipline="Yes"
+         CreateInstName="EnsTechnologicalTableInstance">
+    <Property Name="IconName"                    Value="I_EngSpecBasic_Table"/>
+    <Property Name="Searchable"                  Value="Yes"/>
+    <Property Name="Newable"                     Value="All"/>
+    <Property Name="KweNew_InstanciationMethod"  Value="CATEnsCompanyStdsInstanciation"/>
+    <Property Name="KweNew_ReturnedType"         Value="EnsTechnologicalTableInstance"/>
+    <Property Name="ProposedInDataSetup"         Value="Yes"/>
+    <CAAComment>
+      <ShortRole>Basic Techno Table</ShortRole>
+      <Role>Basic Techno Table</Role>
+    </CAAComment>
+    <Simple Name="V_TableCriteria" Uuid="6b1d6371-10c5-443b-8d1a-3ec9eb48220f" Type="String" MultiValuated="No" MaxLength="100" Protection="Free" CAAExposition="L0"/>
+  </Class>
+
+  <Class Name="EngSpecBasicFilter"
+         Uuid="d0714dfb-3a5a-48d8-9bf2-7faf3680b37d"
+         Abbreviation="esbf"
+         CustomerExposition="Programmer"
+         Abstract="No"
+         SuperName="EnsFilter"
+         Discipline="Yes"
+         CreateInstName="EnsFilterInstance">
+    <Property Name="IconName"                    Value="I_EngSpecBasic_Filter"/>
+    <Property Name="Searchable"                  Value="Yes"/>
+    <Property Name="Newable"                     Value="All"/>
+    <Property Name="KweNew_InstanciationMethod"  Value="CATEnsCompanyStdsInstanciation"/>
+    <Property Name="KweNew_ReturnedType"         Value="EnsFilterInstance"/>
+    <Property Name="ProposedInDataSetup"         Value="Yes"/>
+    <CAAComment>
+      <ShortRole>Basic Filter</ShortRole>
+      <Role>Basic Filter</Role>
+    </CAAComment>
+  </Class>
+
+</Package>

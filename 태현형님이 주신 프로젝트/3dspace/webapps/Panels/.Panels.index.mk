@@ -1,0 +1,11 @@
+m|WebUX\Panels.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.0.22078|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\Panels\Panels.js|1647692084|2697
+s|WebUX\Panels.mweb\src\PanelBase.js|1454666055|3010
+u|WebUX\Panels.mweb\src\Panels.js|1427881365|0
+u|WebUX\Panels.mweb\src\SidePanel.js|1538471145|5627
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

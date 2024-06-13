@@ -1,0 +1,1 @@
+define("DS/CAT3DWInfraWizard/CAT3DWInfraWizard_it",{});define("DS/CAT3DWInfraWizard/assets/nls/CAT3DWWizardStep",{validateBtnLabel:"Avanti",cancelBtnLabel:"Indietro"});

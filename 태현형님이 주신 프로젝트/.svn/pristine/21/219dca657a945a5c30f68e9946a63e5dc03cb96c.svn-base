@@ -1,0 +1,541 @@
+{
+  "migration": {
+    "upgrade": "Tato pomůcka byla upgradována, nejnovější verzi získáte aktualizováním stránky prohlížeče."
+  },
+  "maturity": {
+    "create": "Koncept",
+    "assign": "Neprovedené",
+    "active": "Probíhá práce",
+    "review": "Probíhá schvalování",
+    "closed": "Dokončeno"
+  },
+  "priorities": {
+    "title": "Priorita",
+    "low": "Nízká",
+    "medium": "Střední",
+    "high": "Vysoká",
+    "urgent": "Naléhavé",
+    "pre-assigned": "Předem přiřazeno"
+  },
+  "dates": {
+    "seconds": "{number} sekund",
+    "minutes": "{number} minut",
+    "hours": "{number} hodin",
+    "days": "{number} dnů",
+    "months": "{number} měsíců",
+    "years": "{number} roků"
+  },
+  "skeleton": {
+    "dueDate": "Termín dokončení: {date}",
+    "issueSelection": "Vybráno problémů: {number}.",
+    "changes": "Změny se použijí na vše.",
+    "lifecycleNotAvailable": "Zvýšit nebo snížit stav lze pouze u problémů se stejným stavem.",
+    "deletedIssueInTheSelection": "Byl odstraněn alespoň jeden z vybraných problémů.",
+    "actions": {
+      "delete": "Odstranit vybrané problémy",
+      "changeOwner": "Změnit vlastnictví",
+      "close": "Zavřít problémy"
+    },
+    "facets": {
+      "properties": "Vlastnosti",
+      "relatedObjects": "Související objekty",
+      "team": "Členové",
+      "attachments": "Přílohy",
+      "comments": "Komentáře",
+      "history": "Historie",
+      "documents": "Dokumenty"
+    }
+  },
+  "lifecycle": {
+    "create": "Nastavte u problémů stav „Koncept“, který označuje, že na nich začínáte pracovat.",
+    "assign": "Nastavte u problémů stav „Neprovedené“, který umožní nabyvatelům začít na nich pracovat.",
+    "active": "Nastavte u problémů stav „Probíhá práce“, který označuje, že na nich pracujete.",
+    "review": "Nastavte u problémů stav „Probíhá schvalování“, který označuje, že je možné provést kontrolu vaší opravy.",
+    "closed": "Pokud je vše opraveno, nastavte u problémů stav „Dokončeno“.",
+    "partial": "Operace se nezdařila u {number} problémů.",
+    "error": "Došlo k chybě, obnovte stránku a zkuste to znovu."
+  },
+  "create": {
+    "title": "problém",
+    "titleTemplate": "šablony",
+    "titleActionCreate": "Nový",
+    "titleActionEdit": "Upravit",
+    "templateApplySuccess": "Šablona „{name}“ byla úspěšně použita.",
+    "templateApplyError": "Při použití šablony „{name}“ došlo k chybě.",
+    "issueApplySuccess": "Problém „{title} - {name}“ byl úspěšně použit.",
+    "issueApplyError": "Při použití problému „{title} - {name}“ došlo k chybě.",
+    "required": "Povinné pole nesmí být prázdné.",
+    "creationSuccess": "Problém byl úspěšně vytvořen.",
+    "creationTemplateSuccess": "Šablona byla úspěšně vytvořena.",
+    "creationFailed": "Během vytváření došlo k chybě, zkuste to znovu.",
+    "validationFailed": "Některá pole nejsou správně vyplněna.",
+    "promotionSuccess": "Stav problému byl úspěšně zvýšen.",
+    "promotionFailed": "Během zvyšování stavu došlo k chybě.",
+    "uploadImagesFailed": "Při nahrávání obrázků došlo k chybě.",
+    "createButton": "Vytvořit a zavřít",
+    "createButtonEditMode": "Aktualizovat",
+    "createAnotherButton": "Vytvořit",
+    "resetButton": "Vymazat",
+    "modeToggler": {
+      "multiStep": "Vícekrokové",
+      "fullView": "Plné zobrazení",
+      "tooltipMultiStep": "Přepnout na vícekrokové zobrazení",
+      "tooltipFullView": "Přepnout na zobrazení celého formuláře"
+    },
+    "start": {
+      "title": "Vytvořit problémy a šablony",
+      "cancelButton": "Storno",
+      "actionPage": {
+        "issue": {
+          "title": "Problém",
+          "fromBlank": "Nový",
+          "fromIssue": "Duplikujte problém",
+          "fromTemplate": "Ze šablony"
+        },
+        "template": {
+          "title": "Šablona",
+          "fromBlank": "Nový",
+          "fromIssue": "Ze stávajícího problému",
+          "edit": "Správa",
+          "cloneSuffix": "[DUP]"
+        }
+      }
+    },
+    "templateChooser": {
+      "title": "Vyberte šablonu",
+      "titleEdit": "Spravovat šablony",
+      "cancelButton": "Storno",
+      "closeButton": "Zavřít",
+      "selectButton": "Vybrat",
+      "treeList": {
+        "tree": "Název",
+        "description": "Popis",
+        "placeholder": "Není k dispozici žádná šablona"
+      },
+      "iconBar": {
+        "title": "Šablony",
+        "create": "Nový",
+        "fromIssue": "Nový z problému",
+        "clone": "Duplikovat",
+        "edit": "Upravit",
+        "delete": "Odstranit"
+      },
+      "lastUsed": {
+        "title": "Naposledy použité"
+      },
+      "preview": {
+        "objectCount": "objekty",
+        "noObject": "Žádný objekt"
+      },
+      "confirmDelete": {
+        "title": "Odebrat šablony",
+        "text": "Opravdu chcete trvale odstranit vybrané šablony?",
+        "okButton": "Odstranit",
+        "cancelButton": "Storno"
+      },
+      "clonePrefix": "Duplikovat z",
+      "errors": {
+        "get": "Při načítání šablon došlo k chybě, obnovte stránku a zkuste to znovu.",
+        "remove": "Při odebírání šablon došlo k chybě, obnovte stránku a zkuste to znovu.",
+        "save": "Při ukládání šablon došlo k chybě, obnovte stránku a zkuste to znovu."
+      }
+    },
+    "views": {
+      "properties": "Vlastnosti",
+      "relatedObjects": "Související objekty",
+      "team": "Členové",
+      "documents": "Dokumenty",
+      "moreAttributes": "Další atributy",
+      "finalize": "Dokončit"
+    },
+    "properties": {
+      "labels": {
+        "title": "Název",
+        "titlePlaceholder": "Název nového problému...",
+        "titleHelper": "Stručné jednořádkové shrnutí problému.",
+        "description": "Popis",
+        "descriptionPlaceholder": "Zapište popis...",
+        "descriptionHelper": "Podrobný popis problému. K dispozici je sada funkcí pro formátování textu připravených k použití.",
+        "resolutionRecommendation": "Doporučené rozlišení",
+        "resolutionRecommendationPlaceholder": "Jak se to má udělat?",
+        "resolutionRecommendationHelper": "Doporučení s vysvětlením, jak by měl být tento problém vyřešen.",
+        "priorityHelper": "Význam problému ve vztahu k jiným problémům.",
+        "priorityHelperUrgent": "Naléhavé: Nejvyšší priorita. Označuje, že tento problém má přednost před všemi ostatními.",
+        "priorityHelperHigh": "Vysoká: Označuje, že tento problém způsobuje potíže a vyžaduje naléhavou pozornost.",
+        "priorityHelperMedium": "Střední: Označuje, že tento problém má významný dopad.",
+        "priorityHelperLow": "Nízká: Označuje, že tento problém má relativně malý dopad.",
+        "dueDate": "Termín dokončení",
+        "dueDatePlaceholder": "Vyberte termín dokončení...",
+        "dueDateHelper": "Datum, do kterého by tento problém měl být dokončen."
+      }
+    },
+    "related": {
+      "labels": {
+        "reportedAgainst": "Dotčené položky",
+        "reportedAgainstHelper": "Tento vztah se používá k propojení libovolných objektů s problémem, aby bylo možné je identifikovat jako „vadné“. Může to být například 3D objekt, dokument...",
+        "reportedAgainstPlaceholder": "Objekt, který chcete nastavit jako Dotčená položka, můžete vyhledat, vybrat ve 3D nebo přetáhnout.",
+        "contexts": "Kontexty",
+        "contextHelper": "Nazývá se také kontext DMU. Slouží k připojení jednoho objektu k problému pro lepší pochopení problému. Může se jednat o další 3D objekt s větší strukturou, aby bylo vidět úplný kontext problému.",
+        "contextPlaceholder": "Objekt, který chcete nastavit jako kontext, můžete vyhledat nebo přetáhnout."
+      },
+      "search": "Vyhledejte a přidejte objekt.",
+      "remove": "Odeberte vybrané objekty.",
+      "removeErrorNoSelection": "Vyberte nějaké objekty, které chcete odebrat.",
+      "addBalloonAvailable": "Vyberte přesný prvek ve 3D a přidejte jej k problému.",
+      "addBalloonNotAvailable": "Funkce výběru ve 3D je k dispozici pouze v nabídce „3D kontrola problému“.",
+      "alreadyReportedAgainst": "Tento objekt již byl přidán, vyberte jiný.",
+      "dropError": "Některé přetažené objekty nejsou podporovány.",
+      "contextMultiError": "Přidání více objektů do kontextu není podporováno.",
+      "treelist": {
+        "tree": "Název",
+        "ds6w:type": "Typ",
+        "ds6w:identifier": "Název",
+        "ds6wg:revision": "Oprava"
+      }
+    },
+    "team": {
+      "labels": {
+        "assignees": "Nabyvatelé",
+        "assigneesHelper": "Tento vztah vám umožňuje přiřadit osoby k problému (může jich být několik). Tato osoba tento problém nyní uvidí ve svém seznamu a může na něm začít pracovat.",
+        "reviewers": "Autoři revize",
+        "contributors": "Přispěvatelé",
+        "assignToMe": "Přiřadit mně"
+      },
+      "alreadyAssigned": "Název {name} již byl přiřazen.",
+      "removeAssignee": "Kliknutím odeberte tohoto uživatele."
+    },
+    "documents": {
+      "labels": {
+        "images": "Obrázky",
+        "imagesHelper": "Obrázky lze nahrát nebo zaznamenat pomocí aplikace „3D kontrola problému“.",
+        "imagesPlaceholder": "Nahrajte obrázek nebo pomocí tlačítka snímku obrazovky vytvořte a přidejte nový obrázek.",
+        "imagesPlaceholderNotAvailable": "Nahrajte obrázek pomocí tlačítka Nahrát.",
+        "documents": "Dokumenty"
+      },
+      "uploadImage": "Nahrajte obrázek",
+      "screenshotAvailable": "Pořiďte snímek obrazovky",
+      "screenshotNotAvailable": "Funkce snímku obrazovky je k dispozici pouze v nabídce „3D kontrola problému“.",
+      "remove": "Odeberte vybrané dokumenty.",
+      "removeErrorNoSelection": "Vyberte nějaké dokumenty, které chcete odebrat."
+    },
+    "finalize": {
+      "labels": {
+        "automation": "Automatizace",
+        "saveAsTemplate": "Uložit jako šablonu",
+        "templateName": "Název šablony",
+        "templateNamePlaceholder": "Jedinečný identifikátor šablony...",
+        "templateDescription": "Popis šablony",
+        "templateOverwrite": "Stávající šablona se stejným názvem bude přepsána."
+      },
+      "closeDialogToggle": "Po vytvoření zavřete dialogové okno.",
+      "saveAsTemplateToggle": "Uložte formulář jako opakovaně použitelnou šablonu."
+    }
+  },
+  "delete": {
+    "preparing": "Příprava k odstranění...",
+    "title": "Odstraňování {number} problémů.",
+    "nothing": "Žádné problémy k odstranění.",
+    "delete": "Odstranit",
+    "cancel": "Storno",
+    "warning": "Opravdu chcete odstranit tento obsah?",
+    "deletable": "Odstraněním následujících problémů je <b>trvale</b> odeberete a nebude možné je vrátit zpět:",
+    "indelible": "Následující problémy nelze odstranit, <b>je nutné problém vlastnit ve stavu „Koncept“<b>:",
+    "singleSuccess": "{title} byl odstraněn",
+    "multipleSuccess": "Počet odstraněných problémů: {number}.",
+    "error": "Během odstranění došlo k chybě, zkuste to znovu."
+  },
+  "duplicate": {
+    "title": "Počet problémů k duplikování: {number}.",
+    "preparing": "Příprava duplikování...",
+    "duplicate": "Duplikovat",
+    "cancel": "Storno",
+    "content": "Následující problémy budou duplikovány (<i>duplikované problémy budou ve vašem vlastnictví ve stavu „Koncept“</i>):",
+    "singleSuccess": "{title} byl duplikován.",
+    "multipleSuccess": "Počet duplikovaných problémů: {number}.",
+    "multipleCopiesSuccess": "Počet problémů, které byly {multiplication}krát duplikovány: {number}.",
+    "error": "Během duplikování došlo k chybě, zkuste to znovu."
+  },
+  "attachments": {
+    "title": "Správce příloh - {title}",
+    "holdIssue": "Podržet/uvolnit problém",
+    "popup": "Místní okno"
+  },
+  "images": {
+    "title": "Počet obrázků: {count}",
+    "actions": {
+      "download": "Stáhnout",
+      "upload": "Nahrát",
+      "delete": "Odstranit",
+      "popup": "Místní okno",
+      "annotate": "Popsat"
+    },
+    "noImages": "Žádné obrázky k zobrazení.",
+    "popup": {
+      "title": "Zobrazení obrázku",
+      "holdIssue": "Podržet aktuální problém",
+      "releaseIssue": "Uvolnit aktuální problém"
+    },
+    "delete": {
+      "cancel": "Storno",
+      "confirmDeleteTitle": "Odstranit obrázek",
+      "confirmDeleteMessage": "Opravdu chcete tento obrázek trvale odstranit?",
+      "imageDisplayDeleteError": "Chyba při odstraňování obrázků",
+      "okButton": "OK",
+      "pictureDeleted": "Soubory obrázků byly odstraněny."
+    },
+    "notSupported": "Tento formát souboru není podporován. <br>Soubor: {name}.",
+    "errorUpload": "Nelze nahrát obrázek {name}.",
+    "pictureUploaded": "Soubory obrázků byly nahrány."
+  },
+  "team": {
+    "title": "Počet členů: {count}",
+    "error": {
+      "loadContent": "Nelze načíst informace o problému.",
+      "alreadyAdded": "Uživatel {name} již byl přidán do role {role} vybraných problémů.",
+      "update": "Aktualizace problémů {role} se nezdařila",
+      "notSupportedDrop": "Přetažené objekty nejsou podporovány.",
+      "notFound": "Nebyl nalezen žádný výsledek."
+    },
+    "success": {
+      "update": "Problémy {role} byly aktualizovány."
+    },
+    "filter": {
+      "title": "Filtr",
+      "placeholder": "Filtrovat členy týmu"
+    },
+    "owner": {
+      "title": "Odpovědná osoba",
+      "changeOwnership": "Změnit vlastnictví",
+      "addSelf": "Přiřadit mně"
+    },
+    "confirmRemoveTitle": "Odstranit „{user}“ z „{role}“",
+    "confirmRemoveText": "Opravdu chcete odstranit uživatele „{user}“ z role „{role}“?",
+    "removeOkButton": "Odebrat",
+    "removeCancelButton": "Storno",
+    "assignees": {
+      "title": "Nabyvatelé",
+      "add": "Přidat nabyvatele",
+      "save": "Uložit nabyvatele",
+      "propagate": "Rozšířit na všechny vybrané problémy",
+      "discard": "Zrušit změny",
+      "remove": "Odebrat z vybraných problémů",
+      "search": {
+        "placeholder": "Vyhledejte člena, kterého chcete přidat jako nabyvatele..."
+      },
+      "addSelf": "Přiřadit mně"
+    },
+    "reviewers": {
+      "title": "Autoři revize",
+      "add": "Přidat recenzenty",
+      "save": "Uložit recenzenty",
+      "propagate": "Rozšířit na všechny vybrané problémy",
+      "discard": "Zrušit změny",
+      "remove": "Odebrat z vybraných problémů",
+      "search": {
+        "placeholder": "Vyhledejte člena, kterého chcete přidat jako recenzenta..."
+      },
+      "addSelf": "Přiřadit mně"
+    },
+    "contributors": {
+      "title": "Přispěvatelé",
+      "add": "Přidat přispěvatele",
+      "save": "Uložit přispěvatele",
+      "propagate": "Rozšířit na všechny vybrané problémy",
+      "discard": "Zrušit změny",
+      "remove": "Odebrat z vybraných problémů",
+      "search": {
+        "placeholder": "Vyhledejte člena, kterého chcete přidat jako přispěvatele..."
+      },
+      "addSelf": "Přiřadit mně"
+    },
+    "common": {
+      "tooltip": "Tento člen je přiřazen ke všem vybraným problémům.",
+      "label": "Je přiřazen",
+      "notLabel": "Liší se"
+    },
+    "notSaved": {
+      "tooltip": "Tento člen ještě nebyl uložen."
+    },
+    "changeLayout": "Změnit rozvržení zobrazení"
+  },
+  "helper": {
+    "states": {
+      "create": "Problém přijímá podrobnosti před přiřazením.",
+      "assign": "Problém byl přiřazen a čeká na zpracování.",
+      "active": "Problém zpracovávají nabyvatelé.",
+      "review": "Navrhované řešení problému se vyhodnocuje.",
+      "closed": "Tvůrce řešení přijal a problém je nastaven jako „Dokončeno“."
+    },
+    "dialog": {
+      "title": "Aplikace Issue Management – Nápověda",
+      "tabStates": "Stavy",
+      "tabShortcuts": "Zkratky",
+      "subtitleShortcuts": "Klávesové zkratky",
+      "subtitleMouseOperation": "Ovládání myší",
+      "states": {
+        "create": "Problém přijímá podrobnosti před přiřazením.",
+        "assign": "Problém byl přiřazen a čeká na zpracování.",
+        "active": "Problém zpracovávají nabyvatelé.",
+        "review": "Navrhované řešení problému se vyhodnocuje.",
+        "closed": "Tvůrce řešení přijal a problém je nastaven jako „Dokončeno“."
+      },
+      "shortcut": {
+        "key": {
+          "shortcut": {
+            "delete": "Odstranit",
+            "arrowUp": "Nahoru",
+            "arrowDown": "Dolů",
+            "arrowLeft": "Vlevo",
+            "arrowRight": "Vpravo",
+            "enter": "Zadat",
+            "shiftArrow": "Shift + šipky",
+            "ctrlA": "Ctrl + A",
+            "ctrlC": "Ctrl+ C"
+          },
+          "mouse": {
+            "ctrlClick": "Ctrl + kliknutí",
+            "shiftClick": "Shift + kliknutí",
+            "doubleClick": "Dvojité kliknutí"
+          }
+        },
+        "detail": {
+          "shortcut": {
+            "delete": "Odstranit/odpojit položku",
+            "arrowUp": "Přejít na předchozí položku",
+            "arrowDown": "Přejít na další položku",
+            "arrowLeft": "Sbalit položku/přejít na předchozí položku",
+            "arrowRight": "Rozbalit položku/přejít na další položku",
+            "enter": "Otevřít panel vlastností/Odeslat textový vstup",
+            "shiftArrow": "Vybrat více položek",
+            "ctrlA": "Vybrat všechny položky",
+            "ctrlC": "Kopírovat vybranou položku"
+          },
+          "mouse": {
+            "ctrlClick": "Vybrat/zrušit výběr více položek, na které kliknete",
+            "shiftClick": "Vybrat všechny položky mezi kliknutími",
+            "doubleClick": "Otevřít panel vlastností/rozbalit nebo sbalit položku"
+          }
+        }
+      }
+    }
+  },
+  "taskManager": {
+    "cancel": "Storno",
+    "iconToExit": "Zrušit výběr objektu v části „3D kontrola problému“"
+  },
+  "share": {
+    "successMultiple": "Odkaz na následující počet problémů byl úspěšně zkopírován: {number}.",
+    "successSingle": "Odkaz na problém „{name}“ byl úspěšně zkopírován",
+    "info": "Počet problémů, které lze sdílet, je omezen na {number}. Adresa URL byla zkopírována do schránky."
+  },
+  "move": {
+    "move": "Přesunout"
+  },
+  "error": {
+    "0": {
+      "title": "Tento obsah již není přístupný.",
+      "subtitle": "Obnovte pomůcku.",
+      "message": "Objekt byl možná odstraněn nebo již nemáte potřebný přístup."
+    },
+    "1": {
+      "title": "Tuto operaci nelze provést na: Problém",
+      "subtitle": "Nemáte odpovídající odpovědnost k provedení operace s těmito problémy.",
+      "message": "Možné řešení: Musíte být přidáni jako vlastník problému na panelu Členové"
+    },
+    "2": {
+      "title": "Tento typ objektu nelze duplikovat: Problém",
+      "subtitle": "Zkontrolujte, zda používáte správné přihlašovací údaje.",
+      "message": "Možná nemáte potřebnou odpovědnost k duplikaci tohoto typu objektu v cílovém prostoru pro spolupráci."
+    },
+    "4": {
+      "title": "Tento typ objektu nemůžete vytvořit: Problém",
+      "subtitle": "Zkontrolujte, zda používáte správné přihlašovací údaje.",
+      "message": "Možná nemáte potřebnou odpovědnost k vytvoření tohoto typu objektu v cílovém prostoru pro spolupráci."
+    },
+    "5": {
+      "title": "Tuto operaci nelze provést na: Problém",
+      "subtitle": "Nejsou vyplněna pole Provedená akce a Informace o řešení.",
+      "message": "Možné řešení: Na panelu Vlastnosti je třeba přidat informace o provedené akci a informace o řešení problému."
+    },
+    "6": {
+      "title": "Tuto operaci nelze provést na: Problém",
+      "subtitle": "Není vyplněno pole Provedená akce.",
+      "message": "Možné řešení: Na panelu Vlastnosti je třeba přidat informace o provedené akci s problémem."
+    },
+    "7": {
+      "title": "Tuto operaci nelze provést na: Problém",
+      "subtitle": "Není vyplněno pole Informace o řešení.",
+      "message": "Možné řešení: Na panelu Vlastnosti je třeba přidat informace o řešení problému."
+    },
+    "8": {
+      "title": "Tuto operaci nelze provést na: Problém",
+      "subtitle": "Pole Datum vyřešení není vyplněno.",
+      "message": "Možné řešení: Na panelu Vlastnosti je třeba přidat informace o datu vyřešení problému."
+    },
+    "2005": {
+      "title": "Tuto operaci nelze provést na: Problém",
+      "subtitle": "Problém je ve stavu Dokončeno.",
+      "message": "Tato operace je zakázaná."
+    },
+    "1500028": {
+      "title": "Tento typ objektu nelze odstranit: Problém",
+      "subtitle": "Zkontrolujte, zda používáte správné přihlašovací údaje.",
+      "message": "Možná nemáte potřebnou odpovědnost k odstranění tohoto typu objektu v cílovém prostoru pro spolupráci."
+    },
+    "1004": {
+      "title": "Požadavek nelze provést z následujících důvodů:",
+      "subtitle": "Tento problém vyžaduje schválení a potřebuje alespoň jednoho nabyvatele.",
+      "message": "Možné řešení: Na panelu Členové přiřaďte alespoň jednoho nabyvatele."
+    },
+    "1005": {
+      "title": "Tuto operaci nelze provést na: Problém",
+      "subtitle": "Nemáte odpovídající odpovědnost k provedení operace s těmito problémy.",
+      "message": "Možné řešení: Musíte být přidáni jako vlastník nebo koordinátor problému na panelu Členové."
+    },
+    "1005_1": {
+      "title": "Tuto operaci nelze provést na: Problém",
+      "subtitle": "Zkontrolujte, zda používáte správné přihlašovací údaje.",
+      "message": "Možná nemáte potřebnou přístupovou roli k provedení této operace v cílovém prostoru pro spolupráci."
+    },
+    "11": {
+      "title": "Tuto operaci nelze provést na: Šablona",
+      "subtitle": "Zkontrolujte, zda používáte správné přihlašovací údaje.",
+      "message": "Možná nemáte potřebnou odpovědnost v cílovém prostoru pro spolupráci."
+    },
+    "11_1": {
+      "title": "Tuto operaci nelze provést na: Šablona",
+      "subtitle": "Zkontrolujte, zda používáte správné přihlašovací údaje.",
+      "message": "Možná nemáte potřebná oprávnění nebo je šablona v nesprávném stavu dokončení"
+    },
+    "12": {
+      "title": "Neplatné datum",
+      "subtitle": "Odhadované datum zahájení nesmí být pozdější než termín dokončení.",
+      "message": "Zadejte platná data."
+    },
+    "1500028_1": {
+      "title": "Tuto operaci nelze provést na: Problém",
+      "subtitle": "Zkontrolujte, zda používáte správné přihlašovací údaje.",
+      "message": "Možná nemáte potřebnou odpovědnost k provedení této operace v cílovém prostoru pro spolupráci."
+    },
+    "10": {
+      "title": "Tuto operaci nelze provést na: Problém",
+      "subtitle": "Nemáte odpovídající odpovědnost k provedení operace s těmito problémy.",
+      "message": "Možné řešení: Musíte být přidáni jako vlastník, koordinátor nebo přiřazená osoba problému na panelu Členové."
+    },
+    "9": {
+      "title": "Tuto operaci nelze provést na: Problém",
+      "subtitle": "Stav dokončení objektu problému nelze snížit.",
+      "message": "Stav dokončení objektu problému nelze snížit, protože alespoň jedna položka řešení připojená k problému přešla do stavu Probíhá práce."
+    },
+    "13": {
+      "title": "Tuto operaci nelze provést na: Problém",
+      "subtitle": "Stav dokončení objektu problému nelze zvýšit.",
+      "message": "Stav dokončení objektu problému nelze zvýšit, protože alespoň jedna položka řešení připojená k problému není ve stavu Dokončeno."
+    },
+    "1500167_1": {
+      "title": "Požadavek nelze provést z následujících důvodů:",
+      "subtitle": "Stav dokončení objektu problému nelze zvýšit.",
+      "message": "Objekt problému nelze povýšit, protože nebyla zahájena žádná změna řešení."
+    }
+  }
+}

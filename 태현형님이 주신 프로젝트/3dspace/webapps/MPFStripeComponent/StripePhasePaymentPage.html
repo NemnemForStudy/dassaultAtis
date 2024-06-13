@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:widget="http://www.netvibes.com/ns/">
+  <!-- Copyright 2014 , Dassault Systemes. All rights reserved. -->
+  <head>
+      <title>Stripe - Payment</title>
+      <meta name="description" content="Stripe Phase Payment Page" />
+      <meta name="keywords" content="Marketplace Enterprise PSP Stripe" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+      <link rel="stylesheet" type="text/css" href="../UIKIT/UIKIT.css" />
+
+      <script type="text/javascript" src="../AmdLoader/AmdLoader.js"></script>
+      <script type="text/javascript" src="../c/UWA/js/UWA_W3C_Alone.js"></script>
+      <script src="https://checkout.stripe.com/checkout.js"></script>
+      <script src="https://js.stripe.com/v3/"></script>
+
+  </head>
+
+  <body>
+
+    <script type="text/javascript">
+      require([
+          'UWA/Utils',
+          'UWA/Promise',
+          'DS/UIKIT/Mask',
+          'DS/MPFStripeComponent/StripePhasePaymentPage',
+          'DS/MPFUrl/UrlUtils',
+          'DS/MPFDataProxy/MarketplaceConnector',
+          'DS/MPFModelFactory/MPFFactoriesV2',
+          'DS/MPFCartPaymentModel/CartPaymentFactory',
+          'DS/MPFPersonModel/PersonFactory',
+          'DS/MPFCartPaymentModel/WaitForPaymentFactory',
+          'DS/MPFCartPaymentModel/CartPaymentModel',
+          'css!DS/MPFStripeComponent/MPFStripeComponent'
+        ], function (
+          UwaUtils,
+          UwaPromise,
+          UikitMask,
+          StripePhasePaymentPage,
+          UrlUtils,
+          MarketplaceConnector,
+          MPFFactoriesV2,
+          CartPaymentFactory,
+          PersonFactory,
+          WaitForPaymentFactory,
+          CartPaymentModel
+        ) {
+          var stripePhasePaymentPage;
+          var stripeAPIKey;
+          var factories;
+          var cartPaymentFactory;
+          var personFactory;
+          var waitForPaymentFactory;
+          var cartPayment;
+          var me;
+          var creditCardTokenMultiUse;
+          var service;
+          var isScaEnabled;
+          var url;
+          var cartName;
+          var phaseNumber;
+          var phaseAmount;
+          var currency;
+
+          url= new UrlUtils(window.location.href);
+          service = url.getValueParameter('service');
+
+          UikitMask.mask(document.body);
+
+          MarketplaceConnector.fetchPromise({
+            service: service
+          })
+            .then(function (connector) {
+              factories = MPFFactoriesV2.getInstance(connector)
+              return UwaPromise.all([
+                factories.getFactory(MPFFactoriesV2.Types.PERSON),
+                factories.getFactory(MPFFactoriesV2.Types.CART_PAYMENT),
+                factories.getFactory(MPFFactoriesV2.Types.WAIT_FOR_PAYMENT)
+              ]);
+            })
+            .then(function (factories) {
+              personFactory = factories[0];
+              cartPaymentFactory = factories[1];
+              waitForPaymentFactory = factories[2];
+
+              cartPayment = cartPaymentFactory.createModel(CartPaymentFactory.Types.CART_PHASE_CART_PAYMENT);
+              cartPayment.setParentResourceId(url.getValueParameter('phaseCartId'));
+
+              me = personFactory.createModel(PersonFactory.Types.ME);
+
+              return UwaPromise.all([
+                me.fetchPromise(),
+                cartPayment.fetchPromise()
+              ]);
+              return cartPayment.fetchPromise();
+            })
+            .then(function () {
+              var attributes = {};
+
+              isScaEnabled = url.getValueParameter('isScaEnabled', false) === 'true';
+              creditCardTokenMultiUse = url.getValueParameter('CreditCardTokenMultiUse');
+
+              if (creditCardTokenMultiUse === '1') {
+                attributes.CreditCardTokenMultiUse = '1';
+              }
+
+              if (isScaEnabled && (cartPayment.getState() !== CartPaymentModel.States.PAYMENT_INITIATED)) {
+                attributes[CartPaymentModel.Fields.STATE] = CartPaymentModel.States.PENDING_PAYMENT;
+                return cartPayment.savePromise(attributes, {
+                  patch: true
+                });
+              } else {
+                return UwaPromise.resolve();
+              }
+            })
+            .then(function () {
+              stripeAPIKey = url.getValueParameter('stripeKey');
+              cartName = url.getValueParameter('cartName');
+              phaseNumber = url.getValueParameter('phaseNumber');
+              currency = url.getValueParameter('currency');
+              phaseAmount = url.getValueParameter('phaseAmount');
+
+              var waitForPaymentModel = waitForPaymentFactory.createModel(WaitForPaymentFactory.Types.PAYMENT);
+              waitForPaymentModel.setParentResourceId(cartPayment.get('id'));
+
+              UikitMask.unmask(document.body);
+
+              stripePhasePaymentPage = new StripePhasePaymentPage({
+                locale: UwaUtils.Client.Locale.lang || 'fr-FR',
+                apiKey: stripeAPIKey,
+                creditCardTokenMultiUse: creditCardTokenMultiUse,
+                me: me,
+                cartPayment: cartPayment,
+                isScaEnabled: isScaEnabled,
+                cartName: cartName,
+                phaseNumber: phaseNumber,
+                currency: currency,
+                phaseAmount: phaseAmount,
+                waitForPaymentModel: waitForPaymentModel
+              });
+
+              stripePhasePaymentPage.render().inject(document.body);
+              stripePhasePaymentPage.mountCreditCardInputs();
+            });
+      });
+    </script>
+
+  </body>
+
+</html>

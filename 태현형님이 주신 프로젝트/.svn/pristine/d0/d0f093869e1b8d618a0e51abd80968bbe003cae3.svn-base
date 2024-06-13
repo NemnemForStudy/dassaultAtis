@@ -1,0 +1,1 @@
+define("DS/ENORIPE/ENORIPE_Search_es",{});define("DS/ENORIPE_Search/assets/nls/Enoripe_Search",{whereused_title:"Relaciones",whereused_open_title:"Abierta"});

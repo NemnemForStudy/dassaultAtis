@@ -1,0 +1,15 @@
+{
+  "version": "1.0.0",
+  "summary": "Schaltet den sequentiellen Stream auf den entsprechenden Ausgabesteuerungsanschluss um, nachdem der Vergleich zwischen <doc-idp-name translate=no>TestValue</doc-idp-name> und den anderen Eingabedaten erfolgt ist.",
+  "description": "Dieser Block ist dynamisch, sodass die Anzahl der Eingabedatenanschlüsse mithilfe der Blockkonfiguration geändert werden kann.<br>Die Anzahl der Ausgabesteuerungsanschlüsse wird mit der Anzahl der Eingabedatenanschlüsse synchronisiert.<br>Die Datenanschlüsse können alle Datentypen verarbeiten.<br>Dieser Block schaltet den sequentiellen Stream auf die Ausgabesteuerungsanschluss <doc-ocp-name translate=no>ParameterK</doc-ocp-name> um, wenn <doc-idp-name translate=no>TestValue</doc-idp-name> = <doc-idp-name translate=no>ValueK</doc-idp-name>.",
+  "dataPorts": {
+    "TestValue": "der zu testende Parameter.",
+    "Value1": "Erster Referenzparameter."
+  },
+  "controlPorts": {
+    "In": "löst die Blockausführung aus.",
+    "None": "wird aktiviert, wenn <doc-idp-name translate=no>TestValue</doc-idp-name> mit keinem der anderen Eingabeparameter identisch ist.",
+    "Parameter1": "wird aktiviert, wenn <doc-idp-name translate=no>TestValue</doc-idp-name> mit dem Wert von <doc-idp-name translate=no>Value1</doc-idp-name> identisch ist."
+  },
+  "example": null
+}

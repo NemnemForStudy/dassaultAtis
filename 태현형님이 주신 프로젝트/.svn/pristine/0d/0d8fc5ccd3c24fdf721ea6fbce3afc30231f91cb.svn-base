@@ -1,0 +1,1 @@
+define("DS/CAT3DAnnotationWidget/CAT3DAnnotationWidget_ko",{});define("DS/CAT3DAnnotationWidget/assets/nls/CAT3DAnnotationWidget",{customApp:"앱 사용자 정의",prefs:"기본 설정",difAnnotSet:"주석 세트 열기"});

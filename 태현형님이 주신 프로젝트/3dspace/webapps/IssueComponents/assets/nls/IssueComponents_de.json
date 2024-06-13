@@ -1,0 +1,839 @@
+{
+  "maturity": {
+    "create": "Entwurf",
+    "assign": "Zu erledigen",
+    "active": "In Arbeit",
+    "review": "Zur Genehmigung",
+    "closed": "Abgeschlossen"
+  },
+  "priorities": {
+    "title": "Priorität",
+    "low": "Niedrig",
+    "medium": "Mittel",
+    "high": "Hoch",
+    "urgent": "Dringend"
+  },
+  "dates": {
+    "seconds": "{number} Sekunde(n)",
+    "minutes": "{number} Minute(n)",
+    "hours": "{number} Stunde(n)",
+    "days": "{number} Tag(e)",
+    "months": "{number} Monat(e)",
+    "years": "{number} Jahr(e)"
+  },
+  "placeholder": {
+    "reportedAgainstPlaceholder": "Nach einem Objekt suchen, es in 3D auswählen oder ablegen, um es als 'Betroffenes Element' einzustufen.",
+    "resolvedByPlaceholder": "Nach einem Objekt suchen, es in 3D auswählen oder ablegen, um es als 'Gelöst durch' einzustufen.",
+    "resolvedItemsPlaceholder": "Nach einem Objekt suchen, es in 3D auswählen oder ablegen, um es als aufgelöstes Element einzustufen.",
+    "contextPlaceholder": "Ein Objekt suchen oder ablegen, um es als Kontexte festzulegen.",
+    "emptyRelatedDatagridView": "Inhalte hier hinzufügen oder ablegen"
+  },
+  "lifecycle": {
+    "create": "Setzen Sie das/die Problem(e) auf den Status 'Entwurf', um anzugeben, dass Sie mit der Arbeit daran beginnen.",
+    "assign": "Setzen Sie das/die Problem(e) auf den Status 'Zu erledigen', damit Inhaber daran arbeiten können.",
+    "active": "Setzen Sie das/die Problem(e) auf den Status 'In Arbeit', um anzugeben, dass Sie gerade daran arbeiten.",
+    "review": "Setzen Sie das/die Problem(e) auf den Status 'Zur Genehmigung', um die Prüfung Ihrer Fehlerkorrektur zu ermöglichen.",
+    "closed": "Setzen Sie das/die Problem(e) auf den Status 'Abgeschlossen', wenn alle Fehler behoben wurden.",
+    "CREATE": "Setzen Sie das/die Problem(e) auf den Status '{stateDisplayName}', um anzugeben, dass Sie mit der Arbeit daran beginnen.",
+    "ASSIGN": "Setzen Sie das/die Problem(e) auf den Status '{stateDisplayName}', damit Inhaber daran arbeiten können.",
+    "ACTIVE": "Setzen Sie das/die Problem(e) auf den Status '{stateDisplayName}', um anzugeben, dass Sie gerade daran arbeiten.",
+    "REVIEW": "Setzen Sie das/die Problem(e) auf den Status '{stateDisplayName}', um die Prüfung Ihrer Fehlerkorrektur zu ermöglichen.",
+    "CLOSED": "Setzen Sie das/die Problem(e) auf den Status '{stateDisplayName}', wenn alle Fehler behoben wurden.",
+    "partial": "Der Vorgang ist bei {number} Problem(en) fehlgeschlagen.",
+    "error": "Es ist ein Fehler aufgetreten. Aktualisieren Sie die Seite und versuchen Sie es erneut.",
+    "notSupported": "Nur Probleme mit demselben Bearbeitungsstatus und Validierungsprozess können herauf- oder herabgestuft werden.",
+    "routeIndicatorTooltip": {
+      "rejectionTitle": "Abgelehnt von:",
+      "approvalTitle": "Genehmigt von:",
+      "rejectionText": "{name} am {date}.",
+      "approvalText": "{name} am {date}.",
+      "moreTooltip": {
+        "title": "{number} Entscheidung(en)",
+        "approvalText": "Genehmigt am {date}",
+        "rejectionText": "Abgelehnt am {date}"
+      },
+      "inProgressTooltip": {
+        "title": "Warte auf Genehmigung von:",
+        "multiSelectionTitle": "Die ausgewählten Probleme müssen noch von mehreren Prüfern genehmigt werden."
+      }
+    },
+    "approveModal": {
+      "reasonLabel": "Kommentieren",
+      "reasonPlaceholder": "Kommentar zu Ihrer Genehmigung...",
+      "header": "Beförderung zu '{approveTo}' genehmigen",
+      "reasonRequired": "Bitte geben Sie einen Kommentar zu Ihrer Genehmigung ein.",
+      "okButton": "Genehmigen",
+      "cancelButton": "Abbrechen"
+    },
+    "rejectModal": {
+      "reasonLabel": "Grund",
+      "reasonPlaceholder": "Der Grund für Ihre Ablehnung...",
+      "header": "Die Beförderung zu '{approveTo}' ablehnen",
+      "reasonRequired": "Bitte geben Sie einen Grund für die Ablehnung an.",
+      "okButton": "Ablehnen",
+      "cancelButton": "Abbrechen"
+    },
+    "paths": {
+      "anyStateToClose": "Erlauben Sie dem Eigentümer, das Problem aus einem beliebigen Status auf 'Abgeschlossen' zu setzen.",
+      "approve": "Genehmigen",
+      "reject": "Ablehnen"
+    },
+    "orgs": {
+      "Reporting": "Berichtende Organisation",
+      "Responsible": "Verantwortliche Organisation"
+    },
+    "varies": "Variiert",
+    "goToNextState": "Nächstes Stadium",
+    "goToPrevState": "Vorheriger Status"
+  },
+  "routes": {
+    "header": {
+      "states": "Hochstufung des Bearbeitungsstatus",
+      "routes": "Entscheidungen"
+    },
+    "columns": {
+      "reviewer": "Prüfer",
+      "date": "Entscheidungsdatum",
+      "reason": "Grund/Kommentar",
+      "action": "Aktion",
+      "attachments": "Anhänge"
+    },
+    "attachmentsManagerTitle": "Entscheidung über die Hochstufung des Bearbeitungsstatus [{fromState} -> {toState}] [{status}]",
+    "status": {
+      "approved": "Genehmigt",
+      "rejected": "Abgelehnt",
+      "inProgress": "Wird durchgeführt"
+    },
+    "confirm": "Bestätigen",
+    "approve": "Genehmigen"
+  },
+  "create": {
+    "title": "Problem",
+    "titleTemplate": "Vorlage(n)",
+    "templateName": "Vorlagenname",
+    "templateDesc": "Beschreibung",
+    "titleActionCreate": "Neu",
+    "titleActionEdit": "Bearbeiten",
+    "templateApplySuccess": "Vorlage '{name}' wurde erfolgreich angewendet.",
+    "templateApplyError": "Beim Anwenden der Vorlage '{name}' ist ein Fehler aufgetreten.",
+    "templateApplyWarningAttachments": "Einige Anhänge, auf die in der Vorlage verwiesen wird, können nicht abgerufen werden. Sie werden nicht hinzugefügt.",
+    "templateApplyWarningRelated": "Einige zugehörige Objekte, auf die in der Vorlage verwiesen wird, können nicht abgerufen werden. Sie werden nicht hinzugefügt.",
+    "issueApplySuccess": "Problem '{title} - {name}' wurde erfolgreich angewendet.",
+    "issueApplyError": "Beim Anwenden von Problem '{title} - {name}' ist ein Fehler aufgetreten.",
+    "required": "Pflichtfeld darf nicht leer sein.",
+    "creationSuccess": "Problem erfolgreich erstellt.",
+    "creationTemplateSuccess": "Vorlage erfolgreich erstellt.",
+    "updateTemplateSuccess": "Vorlage erfolgreich aktualisiert.",
+    "creationFailed": "Beim Erstellen ist ein Fehler aufgetreten. Versuchen Sie es erneut.",
+    "classificationFailed": "Beim Klassifizieren des Objekts ist ein Fehler aufgetreten",
+    "setAttributesFailed": "Beim Festlegen der Klassifizierungsattribute ist ein Fehler aufgetreten",
+    "validationFailed": "Einige Felder wurden nicht richtig ausgefüllt.",
+    "promotionSuccess": "Problem erfolgreich hochgestuft.",
+    "promotionFailed": "Beim Hochstufen ist ein Fehler aufgetreten.",
+    "uploadImagesFailed": "Beim Hochladen der Bilder ist ein Fehler aufgetreten.",
+    "sendButton": "Start",
+    "saveButton": "Speichern",
+    "saveAsDraftButton": "Als Entwurf speichern",
+    "cancelButton": "Abbrechen",
+    "settings": "Einstellungen",
+    "modeToggler": {
+      "multiStep": "Mehrere Schritte",
+      "fullView": "Vollbild",
+      "tooltipMultiStep": "In die Ansicht mit mehreren Schritten wechseln",
+      "tooltipFullView": "In die Ansicht mit vollständigem Formular wechseln"
+    },
+    "start": {
+      "title": "Probleme und Vorlagen erstellen",
+      "cancelButton": "Abbrechen",
+      "actionPage": {
+        "issue": {
+          "title": "Problem",
+          "fromBlank": "Neu",
+          "fromIssue": "Ein Problem duplizieren",
+          "fromTemplate": "Aus einer Vorlage"
+        },
+        "template": {
+          "title": "Vorlage",
+          "fromBlank": "Neu",
+          "fromIssue": "Aus einem vorhandenen Problem",
+          "edit": "Verwalten",
+          "cloneSuffix": "[DUP]"
+        }
+      }
+    },
+    "views": {
+      "properties": "Eigenschaften",
+      "relatedObjects": "Inhalt",
+      "team": "Mitglieder",
+      "attachments": "Anhänge",
+      "moreAttributes": "Weitere Attribute",
+      "finalize": "Abschließen"
+    },
+    "properties": {
+      "labels": {
+        "title": "Titel",
+        "titlePlaceholder": "Titel des neuen Problems...",
+        "titleHelper": "Eine kurze einzeilige Zusammenfassung des Problems.",
+        "required": " * ",
+        "type": "Typ",
+        "escalationRequired": "Eskalation erforderlich",
+        "escalationRequired_Yes": "Ja",
+        "escalationRequired_No": "Nein",
+        "typePlaceHolder": "",
+        "typeHelper": "Typ des Problemobjekts",
+        "credentials": "Anmeldeinformationen",
+        "similarIssues": "Ähnliche Probleme",
+        "Created": "Erstellt",
+        "Updated": "Aktualisiert",
+        "ago": "vor",
+        "similarIssuesHelper": "Diese bereits vorhandenen Probleme weisen einen ähnlichen Titel auf. Es wird empfohlen, dort einen Kommentar hinzuzufügen, anstatt ein weiteres ähnliches Problem zu erstellen.",
+        "description": "Beschreibung",
+        "descriptionPlaceholder": "Beschreibung verfassen...",
+        "descriptionHelper": "Eine detaillierte Beschreibung des Problems.",
+        "classification": "Klassifizierungen",
+        "classificationAddBtn": "Hinzufügen",
+        "classificationPlaceholder": "Klasse auswählen...",
+        "classificationHelper": "Mindestens eine Klassifizierung ist zur Identifizierung des Problems erforderlich.",
+        "resolutionRecommendation": "Lösungsempfehlung",
+        "resolutionRecommendationPlaceholder": "Wie sollte sie vorgenommen werden?",
+        "resolutionRecommendationHelper": "Eine Empfehlung dazu, wie dieses Problem behoben werden sollte.",
+        "priorityHelper": "Die Wichtigkeit des Problems im Verhältnis zu anderen Problemen.",
+        "priorityHelperUrgent": "Dringend: höchste Priorität. Weist darauf hin, dass dieses Problem Vorrang vor allen anderen hat.",
+        "priorityHelperHigh": "Hoch: weist darauf hin, dass dieses Problem einen Fehler verursacht und dringend behoben werden muss.",
+        "priorityHelperMedium": "Mittel: weist darauf hin, dass dieses Problem deutliche Auswirkungen hat.",
+        "priorityHelperLow": "Niedrig: weist darauf hin, dass dieses Problem verhältnismäßig geringe Auswirkungen hat.",
+        "dueDate": "Fälligkeitsdatum",
+        "dueDatePlaceholder": "Termin auswählen...",
+        "dueDateHelper": "Das Datum, bis zu dem das Problem abgeschlossen werden sollte.",
+        "resolutionStatement": "Lösungsbeschreibung",
+        "resolutionStatementPlaceholder": "Wie wurde(n) das/die Problem(e) gelöst?"
+      }
+    },
+    "related": {
+      "labels": {
+        "reportedAgainst": "Betroffene Elemente",
+        "reportedAgainstshortHelper": "Fügen Sie mindestens ein Objekt hinzu, bei dem das Problem auftritt.",
+        "reportedAgainstlongHelper": "Sie können beispielsweise Dokumente, Konstruktions- und Fertigungsobjekte, Aufgaben oder sogar Bilder (am Ziel) hinzufügen",
+        "reportedAgainstPlaceholder": "Nach einem Objekt suchen, es in 3D auswählen oder ablegen, um es als 'Betroffenes Element' einzustufen.",
+        "contexts": "Kontexte",
+        "contextshortHelper": "Fügen Sie mindestens ein Objekt hinzu, um weitere Angaben zum Kontext des Problems zu machen. ",
+        "contextlongHelper": "Ein Problem mit einem Dokument kann beispielsweise ein Projekt als Kontext aufweisen, ein Konstruktionsteil demgegenüber ein übergeordnetes Modell.",
+        "contextPlaceholder": "Ein Objekt suchen oder ablegen, um es als Kontext festzulegen."
+      },
+      "search": "Ein Objekt suchen und hinzufügen.",
+      "remove": "Ausgewählte(s) Objekt(e) entfernen.",
+      "removeErrorNoSelection": "Wählen Sie Objekte aus, die entfernt werden sollen.",
+      "addBalloonAvailable": "Wählen Sie ein genaues Element im 3D-Bereich aus, um es dem Problem hinzuzufügen.",
+      "addBalloonNotAvailable": "Die Auswahl in der 3D-Komponente ist nur über 'Issue 3D Review' möglich.",
+      "alreadyReportedAgainst": "Dieses Objekt wurde bereits hinzugefügt. Wählen Sie ein anderes aus.",
+      "dropError": "Manche abgelegten Objekte werden nicht unterstützt.",
+      "selectContextIn3D": "Wählen Sie ein genaues Element in 3D aus, um Kontext für das Problem auszuwählen.",
+      "contextMultiError": "Das Hinzufügen mehrerer Objekte im Kontext wird nicht unterstützt.",
+      "treelist": {
+        "tree": "Titel",
+        "ds6w:type": "Typ",
+        "ds6w:identifier": "Name",
+        "ds6wg:revision": "Revision",
+        "occurrence": "Pfad"
+      }
+    },
+    "team": {
+      "labels": {
+        "owner": "Eigentümer",
+        "coOwners": "Koordinatoren",
+        "ownerHelper": "Die Person ist Eigentümer des Problems und hat alle Zuständigkeiten.",
+        "coOwnersHelper": "Koordinatoren haben dieselben Zuständigkeiten wie der Eigentümer, jedoch keine Berechtigung zum Löschen.",
+        "assignees": "Inhaber",
+        "assigneesHelper": "Inhaber können das Problem anzeigen, bearbeiten und lösen.",
+        "reviewers": "Prüfer",
+        "contributors": "Mitwirkende",
+        "contributorHelper": "Mitwirkende können das Problem anzeigen und bewerten.",
+        "informedUsers": "Informierte Benutzer",
+        "informedUserHelper": "Informierte Benutzer können das Problem anzeigen und werden über Aktualisierungen benachrichtigt.",
+        "assignToMe": "Mir zuweisen",
+        "reportingOrganization": "Berichtende Organisation",
+        "reportingOrganizationHelper": "Legen Sie die berichtende Organisation für dieses Problem fest.",
+        "responsibleOrganization": "Verantwortliche Organisation",
+        "responsibleOrganizationHelper": "Legen Sie die verantwortliche Organisation für dieses Problem fest."
+      },
+      "alreadyAssigned": "{name} wurde bereits zugewiesen.",
+      "removeAssignee": "Zum Entfernen dieses Benutzers klicken",
+      "cannotAddOwnerAsCoOwner": "Sie können den Eigentümer nicht als Koordinator hinzufügen."
+    },
+    "attachments": {
+      "labels": {
+        "attachmentsshortHelper": "Fügen Sie mindestens eine zusätzliche Angabe hinzu, um die Analyse des Problems zu unterstützen.",
+        "attachmentslongHelper": "Dabei kann es sich beispielsweise um ein Bild oder um Dokumente mit Bezug zum Thema handeln, z. B. um eine Anfrage nach einem Angebotsdokument, oder um Nachrichtenartikel",
+        "attachmentsPlaceholder": "Laden Sie eine Datei hoch oder legen Sie diese ab, suchen Sie nach einem 3DEXPERIENCE Objekt oder legen Sie dieses ab oder aber nehmen Sie einen Screenshot mit Anmerkungen auf, um eine neue Anlage zu erstellen und hinzuzufügen.",
+        "attachmentsPlaceholderNotAvailable": "Laden Sie eine Datei hoch oder legen Sie diese ab oder suchen Sie nach einem 3DEXPERIENCE Objekt oder legen Sie dieses ab, um eine neue Anlage zu erstellen und hinzuzufügen.",
+        "attachments": "Anhänge"
+      },
+      "screenshotAvailable": "Nehmen Sie einen Screenshot auf.",
+      "screenshotNotAvailable": "Die Screenshot-Funktion ist nur in der App 'Issue 3D Review' verfügbar.",
+      "remove": "Ausgewählte(s) Dokument(e) entfernen.",
+      "removeErrorNoSelection": "Wählen Sie Dokumente aus, die entfernt werden sollen.",
+      "attach": {
+        "fromLocalDisk": "Von lokaler Festplatte",
+        "from3DX": "Bestehende Elemente hinzufügen"
+      },
+      "annotate": "Anmerkung erzeugen"
+    },
+    "finalize": {
+      "labels": {
+        "lifecycle": "Lebenszyklus",
+        "approval": "Genehmigung",
+        "template": "Vorlage",
+        "saveAsTemplate": "Als Vorlage speichern",
+        "templateNamePlaceholder": "Vorlagenname (Pflichtfeld)...",
+        "templateDescriptionPlaceholder": "Vorlagenbeschreibung...",
+        "templateOverwrite": "Eine vorhandene Vorlage mit demselben Namen wird überschrieben."
+      },
+      "closeDialogToggle": "Schließen Sie den Dialog nach der Erstellung.",
+      "enableApproval": "Aktivieren Sie die Genehmigung, um sicherzustellen, dass dieses Problem validiert und geprüft wird.",
+      "assignContentOwner": "Weisen Sie dem Problem automatisch den Eigentümer des Inhalts zu.",
+      "saveAsTemplateToggle": "Speichern Sie das Problem als wiederverwendbare Vorlage."
+    },
+    "moreAttributes": {
+      "selectPlaceholder": "Wert auswählen",
+      "textPlaceholder": "Wert eingeben",
+      "numberPlaceholder": "Wert eingeben"
+    }
+  },
+  "templates": {
+    "title": "Vorlage auswählen",
+    "titleEdit": "Vorlagen verwalten",
+    "cancelButton": "Abbrechen",
+    "closeButton": "Schließen",
+    "selectButton": "Auswählen",
+    "treeList": {
+      "shared": "Freigegeben",
+      "tree": "Name",
+      "description": "Beschreibung",
+      "owner": "Eigentümer",
+      "isNotShared": "Dies ist eine private Vorlage",
+      "isShared": "Dies ist eine freigegebene Vorlage",
+      "placeholder": "Keine Vorlage verfügbar"
+    },
+    "iconBar": {
+      "title": "Vorlagen",
+      "create": "Neu",
+      "fromIssue": "Neu aus Problem",
+      "clone": "Duplizieren",
+      "edit": "Bearbeiten",
+      "delete": "Löschen",
+      "share": "Freigeben"
+    },
+    "lastUsed": {
+      "title": "Zuletzt verwendet"
+    },
+    "preview": {
+      "objectCount": "Objekte",
+      "noObject": "Kein Objekt"
+    },
+    "shared": {
+      "title": "Freigegebene Problemvorlage - {owner}",
+      "description": "Dieses Dokument umfasst eine freigegebene Problemvorlage.",
+      "file": "Freigegebene Problemvorlage - {owner}",
+      "popover": {
+        "title": "Verknüpfung zu dieser freigegebenen Vorlage",
+        "copy": "Link kopieren"
+      }
+    },
+    "confirmDelete": {
+      "title": "{number} Vorlage(n) wird/werden gelöscht",
+      "text": "Möchten Sie die ausgewählte(n) Vorlage(n) wirklich löschen? Durch Löschen der ausgewählten Vorlagen werden diese <b>dauerhaft</b> entfernt. Dieser Vorgang kann nicht rückgängig gemacht werden.",
+      "sharedInfo": "Die freigegebenen Vorlagen, deren Eigentümer Sie nicht sind, werden <b>nur aus Ihrer Liste</b> entfernt.",
+      "sharedWarning": "Die freigegebenen Vorlagen, deren Eigentümer Sie sind, werden <b>bei allen Benutzern</b> entfernt.",
+      "okButton": "Löschen",
+      "cancelButton": "Abbrechen"
+    },
+    "clonePrefix": "Duplikat von {name}",
+    "errors": {
+      "get": "Beim Abrufen der Vorlagen ist ein Fehler aufgetreten. Aktualisieren Sie die Seite und versuchen Sie es erneut.",
+      "remove": "Beim Entfernen der Vorlagen ist ein Fehler aufgetreten. Aktualisieren Sie die Seite und versuchen Sie es erneut.",
+      "save": "Beim Speichern der Vorlagen ist ein Fehler aufgetreten. Aktualisieren Sie die Seite und versuchen Sie es erneut."
+    },
+    "notifications": {
+      "sharedSuccess": "Diese Vorlage wurde freigegeben und es wurde eine URL für die Freigabe erzeugt.",
+      "sharedTemplateAdded": "Eine freigegebene Vorlage wurde erfolgreich zu Ihrer Vorlagenliste hinzugefügt.",
+      "sharedTemplateNotValid": "Diese freigegebene Vorlage ist nicht länger gültig. Sie wurde nicht zu Ihrer Vorlagenliste hinzugefügt.",
+      "sharedTemplateAlreadyAdded": "Diese freigegebene Vorlage befindet sich bereits in Ihrer Vorlagenliste.",
+      "sharedTemplateNotAdded": "Beim Hinzufügen der freigegebenen Vorlage ist ein Fehler aufgetreten. Aktualisieren Sie die Seite und versuchen Sie es erneut.",
+      "sharedTemplateURL": "Die URL der freigegebenen Vorlage wurde in die Zwischenablage kopiert."
+    }
+  },
+  "open": {
+    "dialog": {
+      "title": "Objekt(e) öffnen in...",
+      "open": "Öffnen",
+      "cancel": "Abbrechen"
+    },
+    "labels": {
+      "placeholder": "Wählen Sie Ihre Anwendung aus",
+      "contexts": "Kontexte",
+      "reportedAgainst": "Betroffene Elemente",
+      "resolvedBy": "Gelöst durch",
+      "resolvedItems": "Gelöste Elemente",
+      "nothing": "Keine zu öffnenden Objekte. Wählen Sie ein anderes Objekt aus."
+    },
+    "error": "Beim Öffnen der ausgewählten Objekte ist ein Fehler aufgetreten. Aktualisieren Sie und versuchen Sie es erneut."
+  },
+  "close": {
+    "preparing": "Statusänderung zu 'Abgeschlossen' wird vorbereitet...",
+    "titleSingle": "{number} Problem auf 'Abgeschlossen' gesetzt",
+    "titleMultiple": "{number} Probleme auf 'Abgeschlossen' gesetzt",
+    "nothing": "Es gibt keine Probleme, die auf 'Abgeschlossen' gesetzt werden können.",
+    "close": "Auf 'Abgeschlossen' setzen",
+    "cancel": "Abbrechen",
+    "warning": "Möchten Sie diese Probleme wirklich auf 'Abgeschlossen' setzen?",
+    "closable": "Wenn Sie die folgenden Probleme auf 'Abgeschlossen' setzen, sind keine Änderungen möglich, es sei denn, sie werden erneut geöffnet:",
+    "indelible": "Die folgenden Probleme sind bereits abgeschlossen:",
+    "singleSuccess": "{title} wurde auf 'Abgeschlossen' gesetzt",
+    "multipleSuccess": "{number} Probleme wurden auf 'Abgeschlossen' gesetzt.",
+    "error": "Bei der Statusänderung zu 'Abgeschlossen' ist ein Fehler ist aufgetreten. Versuchen Sie es erneut."
+  },
+  "reopen": {
+    "preparing": "Erneutes Öffnen wird vorbereitet...",
+    "title": "{number} Problem(e) wird/werden erneut geöffnet",
+    "nothing": "Es sind keine erneut zu öffnenden Probleme vorhanden.",
+    "reopen": "Erneut öffnen",
+    "cancel": "Abbrechen",
+    "warning": "Möchten Sie diese Probleme wirklich erneut öffnen?",
+    "closable": "Folgende Probleme werden erneut geöffnet:",
+    "indelible": "Die folgenden Probleme wurden noch nicht als 'Abgeschlossen' eingestuft:",
+    "singleSuccess": "{title} wurde erneut geöffnet.",
+    "multipleSuccess": "{number} Probleme wurden erneut geöffnet.",
+    "error": "Beim erneuten Öffnen des/der Problem(e) ist ein Fehler aufgetreten. Versuchen Sie es erneut."
+  },
+  "delete": {
+    "preparing": "Löschvorgang wird vorbereitet...",
+    "title": "{number} Problem(e) wird/werden gelöscht.",
+    "nothing": "Es sind keine Probleme zum Löschen vorhanden.",
+    "delete": "Löschen",
+    "cancel": "Abbrechen",
+    "warning": "Möchten Sie diesen Inhalt wirklich löschen?",
+    "deletable": "Durch Löschen der folgenden Probleme werden diese <b>dauerhaft</b> entfernt. Dieser Vorgang kann nicht rückgängig gemacht werden:",
+    "indelible": "Die folgenden Probleme können nicht gelöscht werden. Sie weisen nicht den Status 'Entwurf' auf.",
+    "singleSuccess": "{title} wurde gelöscht.",
+    "multipleSuccess": "{number} Probleme wurden gelöscht.",
+    "error": "Beim Löschen ist ein Fehler aufgetreten. Versuchen Sie es erneut.",
+    "deletePrivilege": "Nur ein Admin-Benutzer kann die abgeschlossene Weiterleitung entfernen."
+  },
+  "duplicate": {
+    "titleSingle": "{number} Problem duplizieren",
+    "titleMultiple": "{number} Probleme duplizieren",
+    "preparing": "Duplikation wird vorbereitet...",
+    "duplicate": "Duplizieren",
+    "cancel": "Abbrechen",
+    "content": "Die folgenden Probleme werden dupliziert (<i>die duplizierten Probleme haben dann den Status 'Entwurf' und Sie sind ihr Eigentümer</i>):",
+    "singleSuccess": "{title} wurde dupliziert.",
+    "multipleSuccess": "{number} Probleme wurden dupliziert.",
+    "multipleCopiesSuccess": "{number} Problem(e) wurde(n) {multiplication} mal dupliziert.",
+    "error": "Beim Duplizieren ist ein Fehler aufgetreten. Versuchen Sie es erneut.",
+    "keepRelated": "Vorhandene betroffene Elemente und Kontext in duplizierten Problemen beibehalten",
+    "keepAttachments": "Vorhandene Anhänge in duplizierten Problemen beibehalten",
+    "advancedOptions": "Erweitertes Duplizieren",
+    "titleModifier": "Titelmodifikatoren",
+    "copyCount": "Anzahl Kopien",
+    "replace": "Ersetzen",
+    "replacePlaceholder": "Zeichenfolge aus Titel ersetzen",
+    "suffix": "Suffix",
+    "suffixPlaceholder": "Suffix für Titel",
+    "prefix": "Präfix",
+    "prefixPlaceholder": "Präfix für Titel",
+    "iterator": "Iterator",
+    "iteratorPlaceholder": "Iteratormuster",
+    "replaceHelp": "Teil des Titels angeben, der als Zeichenfolge oder regulärer Ausdruck ersetzt werden soll, gefolgt von der Zeichenfolge, mit der die Ersetzung erfolgt. Beide Teile werden durch ':' getrennt, z. B. ersetzt [a-z]*:'Test' alle klein geschriebenen Zeichenfolgen im Titel mit 'Test'.",
+    "suffixHelp": "Zeichenfolge angeben für Suffix für Titel duplizierter Probleme",
+    "prefixHelp": "Zeichenfolge angeben für Präfix für Titel duplizierter Probleme",
+    "iteratorHelp": "Teil des Titels angeben, der nach der Duplizierung als Zeichenfolge oder regulärer Ausdruck inkrementiert werden soll. Der numerische Teil wird inkrementiert.",
+    "confirmTitle": "Duplizierung von {number} Problem(en) bestätigen.",
+    "confirm": "Bestätigen",
+    "confirmMsg": "Problem {title} wird dupliziert als"
+  },
+  "images": {
+    "title": "{count} Bild(er)",
+    "actions": {
+      "download": "Herunterladen",
+      "upload": "Hochladen",
+      "delete": "Löschen",
+      "popup": "Popup",
+      "annotate": "Anmerkung erzeugen"
+    },
+    "noImages": "Keine Bilder zur Anzeige vorhanden.",
+    "popup": {
+      "title": "Bildanzeige",
+      "holdIssue": "Aktuelles Problem sperren",
+      "releaseIssue": "Aktuelles Problem freigeben"
+    },
+    "delete": {
+      "cancel": "Abbrechen",
+      "confirmDeleteTitle": "Bild löschen",
+      "confirmDeleteMessage": "Möchten Sie dieses Bild wirklich dauerhaft löschen?",
+      "imageDisplayDeleteError": "Fehler beim Löschen der Bilder",
+      "okButton": "OK",
+      "pictureDeleted": "Bilddatei(en) wurde(n) gelöscht."
+    },
+    "notSupported": "Dieses Dateiformat wird nicht unterstützt. <br>Datei: {name}.",
+    "errorUpload": "Bild {name} kann nicht hochgeladen werden.",
+    "pictureUploaded": "Bilddatei(en) wurde(n) hochgeladen."
+  },
+  "team": {
+    "titleSingle": "{count} Mitglied",
+    "titleMultiple": "{count} Mitglieder",
+    "error": {
+      "loadContent": "Probleminformationen können nicht abgerufen werden.",
+      "alreadyAdded": "Benutzer {name} wurde bereits zu {role} der ausgewählten Probleme hinzufügt.",
+      "isOwner": "Der Benutzer {name} ist der Eigentümer der ausgewählten Probleme und kann daher nicht als Koordinator ausgewählt werden.",
+      "notSupportedDrop": "Die abgelegten Objekte werden nicht unterstützt.",
+      "notFound": "Kein Ergebnis gefunden.",
+      "skipRemoveOwner": "Eigentümer ist von der Entfernung ausgenommen.",
+      "warnRemoveOwner": "Eigentümer kann nicht entfernt werden.",
+      "dropNotSupported": "Diese Ablegeoperation wird nicht unterstützt.",
+      "notSupportedObjects": "Manche abgelegten Objekte werden nicht unterstützt."
+    },
+    "success": {
+      "update": "{role} wurden aktualisiert."
+    },
+    "filter": {
+      "title": "Filter",
+      "placeholder": "Teammitglieder filtern",
+      "filterByName": "Nach Titel filtern",
+      "searchPlaceholder": "Zu filternden Titel eingeben...",
+      "filterByResponsibilities": "Nach Zuständigkeiten filtern",
+      "filterAll": "Alle",
+      "filterAssignees": "Inhaber",
+      "filterCoowners": "Koordinatoren",
+      "filterContributors": "Mitwirkende"
+    },
+    "owner": {
+      "title": "Eigentümer",
+      "label": "Eigentümer",
+      "changeOwnership": "Eigentümer ändern"
+    },
+    "confirmRemoveTitle": "'{user}' aus '{role}' entfernen",
+    "confirmRemoveText": "Möchten Sie '{user}' wirklich aus '{role}' entfernen?",
+    "removeOkButton": "Entfernen",
+    "removeCancelButton": "Abbrechen",
+    "coOwners": {
+      "title": "Koordinatoren",
+      "label": "Koordinator",
+      "add": "Koordinator hinzufügen",
+      "propagate": "Diesen Koordinator auf alle ausgewählten Probleme propagieren",
+      "propagateAll": "Alle Koordinatoren auf alle ausgewählten Probleme propagieren",
+      "remove": "Koordinator aus ausgewählten Problemen entfernen",
+      "search": {
+        "placeholder": "Benutzer suchen, der als Koordinator hinzugefügt werden soll..."
+      },
+      "addSelf": "Mir zuweisen"
+    },
+    "assignees": {
+      "title": "Inhaber",
+      "label": "Inhaber",
+      "add": "Inhaber hinzufügen",
+      "propagate": "Diesen Inhaber auf alle ausgewählten Probleme propagieren",
+      "propagateAll": "Alle Inhaber auf alle ausgewählten Probleme propagieren",
+      "remove": "Inhaber aus ausgewählten Problemen entfernen",
+      "search": {
+        "placeholder": "Benutzer suchen, der als Inhaber hinzugefügt werden soll..."
+      },
+      "addSelf": "Mir zuweisen"
+    },
+    "contributors": {
+      "title": "Mitwirkende",
+      "label": "Mitwirkender",
+      "add": "Mitwirkenden hinzufügen",
+      "propagate": "Diesen Mitwirkenden auf alle ausgewählten Probleme propagieren",
+      "propagateAll": "Alle Mitwirkenden auf alle ausgewählten Probleme propagieren",
+      "remove": "Mitwirkenden aus ausgewählten Problemen entfernen",
+      "search": {
+        "placeholder": "Benutzer suchen, der als Mitwirkender hinzugefügt werden soll..."
+      }
+    },
+    "informedUsers": {
+      "title": "Informierte Benutzer",
+      "label": "Informierter Benutzer",
+      "propagate": "Diesen informierten Benutzer auf alle ausgewählten Probleme propagieren",
+      "propagateAll": "Alle informierten Benutzer auf alle ausgewählten Probleme propagieren",
+      "remove": "Informierten Benutzer aus ausgewählten Problemen entfernen",
+      "search": {
+        "placeholder": "Benutzer suchen, der als informierter Benutzer hinzugefügt werden soll..."
+      }
+    },
+    "common": {
+      "tooltip": "Dieses Mitglied ist allen ausgewählten Problemen zugewiesen.",
+      "label": "Ist zugewiesen",
+      "notLabel": "Variiert",
+      "varies": "Variiert",
+      "allIssues": "Alle Probleme"
+    },
+    "notSaved": {
+      "tooltip": "Dieses Mitglied wurde noch nicht gespeichert."
+    },
+    "changeLayout": "Anzeigelayout ändern",
+    "columns": {
+      "name": "Name",
+      "title": "Titel",
+      "memberof": "Mitglied von",
+      "responsibility": "Verantwortlichkeit",
+      "actions": "Aktionen"
+    },
+    "toolbar": {
+      "gridView": "Datenrasteransicht",
+      "tileView": "Kachelansicht",
+      "addMember": "Mitglieder hinzufügen",
+      "assignToSelf": "Mir zuweisen",
+      "remove": "Entfernen",
+      "filter": "Filter",
+      "propagateCoowners": "Alle Koordinatoren propagieren",
+      "propagateAssignees": "Alle Inhaber propagieren",
+      "propagateContributors": "Alle Mitwirkenden propagieren",
+      "propagateInformedUsers": "Alle informierten Benutzer propagieren"
+    },
+    "menu": {
+      "coowner": "Koordinator",
+      "assignee": "Inhaber",
+      "contributor": "Mitwirkender",
+      "informedUser": "Informierter Benutzer",
+      "remove": "Entfernen",
+      "profile": "Profil anzeigen",
+      "propagate": "Propagieren",
+      "changeOwner": "Eigentümer ändern"
+    },
+    "addMember": {
+      "assignee": "Inhaber",
+      "coowner": "Koordinatoren",
+      "contributor": "Mitwirkende",
+      "informedUser": "Informierte Benutzer",
+      "typeToSearch": "Hier ablegen oder Eingabe tätigen, um Suche zu starten",
+      "noSearchFound": "Keine Suche gefunden",
+      "add": "Hinzufügen",
+      "cancel": "Abbrechen"
+    },
+    "datagridPlaceholder": "Keine Objekte gefunden",
+    "removeTitle": "Entfernen",
+    "removeMessage": "Möchten Sie dieses Mitglied wirklich aus diesem Problem entfernen?",
+    "memberAlreadyAdded": "Einige Mitglieder sind bereits hinzugefügt worden."
+  },
+  "search": {
+    "error": {
+      "usersNotFound": "Der angegebene Benutzer oder die angegebene Organisation wurde nicht gefunden: {users}.",
+      "orgNotFound": "Organisation konnte nicht gefunden werden."
+    },
+    "info": {
+      "expressSearch": "Drücken Sie die Eingabeteste, um diese Benutzer hinzuzufügen."
+    }
+  },
+  "resolveIssues": {
+    "title": "Problem(e) beheben",
+    "okButton": "OK",
+    "cancel": "Abbrechen",
+    "reportedAgainst": "Betroffene Elemente",
+    "resolvedBy": "Gelöst durch",
+    "resolvedItems": "Gelöste Elemente",
+    "issue": "Problem",
+    "item": "{count} Element",
+    "items": "{count} Elemente",
+    "revisionFamily": "Revisionsfamilie",
+    "addReportedAgainst": "‚Betroffenes Element‘ hinzufügen",
+    "addResolvedBy": "‚Gelöst durch‘ hinzufügen",
+    "addResolvedItems": "Aufgelöste Elemente hinzufügen",
+    "pickReportedAgainst": "‚Betroffenes Element‘ auswählen",
+    "pickResolvedBy": "‚Gelöst durch‘ auswählen",
+    "pickResolvedItems": "Aufgelöste Elemente auswählen",
+    "addObjectsForReportedAgainst": "Zu ‚Betroffene Elemente‘ hinzufügen",
+    "addObjectsForResolvedBy": "Zu 'Gelöst durch' hinzufügen",
+    "changeViewLayout": "Anzeigelayout ändern",
+    "errorSameIssue": "Dasselbe Problemobjekt kann nicht als Gelöst durch hinzugefügt werden.",
+    "tooltips": {
+      "propagateHeaderTooltip": "Fortführen",
+      "propagateTooltip": "Auf ausgewählte Probleme propagieren.",
+      "isLastRevision": "Dies ist die neueste Revision.",
+      "isNotLastRevision": "Dies ist nicht die neueste Revision.",
+      "noIsLastRevision": "Nicht anwendbar"
+    },
+    "contextualMenus": {
+      "remove": "Entfernen",
+      "propagate": "Propagieren",
+      "maturity": "Bearbeitungsstatus",
+      "compare": "Vergleichen",
+      "relationalExplorer": "Beziehungen",
+      "openWith": "Öffnen mit",
+      "replaceByRevision": "Durch Revision ersetzen",
+      "replaceByLatestRevision": "Durch neueste Revision ersetzen",
+      "replaceByReleasedLatestRevision": "Durch neueste veröffentlichte Revision ersetzen",
+      "replaceByStableLatestRevision": "Durch neueste stabile Revision ersetzen",
+      "preview": "Vorschau",
+      "edit": "Bearbeiten",
+      "undoEdit": "Rückgängig",
+      "update": "Aktualisieren",
+      "information": "Informationen",
+      "download": "Herunterladen"
+    },
+    "label": "Titel",
+    "name": "Name",
+    "type": "Typ",
+    "revision": "Revision",
+    "isLastRevision": "Ist letzte Revision",
+    "actions": "Aktionen",
+    "common": "",
+    "propagate": "Propagieren",
+    "state": "Bearbeitungsstatus",
+    "pickupError_needtoExitInspectionMode": "Objekt kann im Prüfmodus nicht ausgewählt werden.",
+    "successResolved": "Inhalt(e) wird/werden aktualisiert.",
+    "attachSuccess": {
+      "reportedAgainst": "Sie haben erfolgreich {count} Objekte als Betroffene Elemente zu {issue} hinzugefügt.",
+      "resolvedBy": "Sie haben erfolgreich {count} Objekte als Gelöst durch zu {issue} hinzugefügt.",
+      "resolvedItems": "Sie haben erfolgreich {count} Objekte als Gelöste Elemente zu {issue} hinzugefügt.",
+      "contexts": "Sie haben erfolgreich {count} Objekte als Kontext zu {issue} hinzugefügt.",
+      "attachments": "Sie haben erfolgreich {count} Objekte als Anhänge zu {issue} hinzugefügt."
+    },
+    "attachSuccessMultiple": {
+      "reportedAgainst": "Sie haben erfolgreich {count} Objekte als Betroffene Elemente zu mehreren Problemen hinzugefügt.",
+      "resolvedBy": "Sie haben erfolgreich {count} Objekte als Gelöst durch zu mehreren Problemen hinzugefügt.",
+      "resolvedItems": "Sie haben erfolgreich {count} Objekte als Gelöste Elemente zu mehreren Problemen hinzugefügt.",
+      "contexts": "Sie haben erfolgreich {count} Objekte als Kontext zu mehreren Problemen hinzugefügt."
+    },
+    "errorResolved": "Inhalt(e) kann/können nicht aktualisiert werden.",
+    "nothingToAdd": "Die ausgewählten Objekte wurden bereits hinzugefügt.",
+    "nothingToReplace": "Es gibt keine zu ersetzenden Objekte.",
+    "errorFetch": "Objektinformationen können nicht abgerufen werden.",
+    "errorGetIssues": "Probleminformationen können nicht abgerufen werden.",
+    "errorShowIssues": "Wählen Sie Probleme im Status 'In Arbeit' aus und versuchen Sie es erneut.",
+    "errorNotSupportedMultipleObject": "Mehrere Objekte werden nicht unterstützt.",
+    "errorNotSupportedObject": "Dieser Inhaltstyp wird nicht unterstützt. Verwenden Sie die entsprechende App über den Compass, um diesen Inhaltstyp zu öffnen.",
+    "issueNotDroppable": "Dieses Objekt wird nicht unterstützt.",
+    "propertiesTitle": "Eigenschaften",
+    "confirmDialog": {
+      "detachTitle": "{number} Objekt(e) von {issues} Problem(en) trennen",
+      "confirmDetach": "Möchten Sie die ausgewählten Objekte wirklich trennen?",
+      "propagateTitle": "{number} Objekt(e) auf {issues} Problem(e) propagieren",
+      "confirmPropagate": "Möchten Sie die ausgewählten Objekte wirklich propagieren?",
+      "replaceByLatestRevisionTitle": "{number} Objekt(e) durch die neueste Revision in {issues} Problem(en) ersetzen",
+      "confirmReplaceByLatestRevision": "Sollen die ausgewählten Objekte wirklich durch die neueste Revision ersetzt werden?",
+      "replaceByReleasedLatestRevisionTitle": "{number} Objekt(e) durch die neueste veröffentlichte Revision in {issues} Problem(en) ersetzen",
+      "confirmReplaceByReleasedLatestRevision": "Sollen die ausgewählten Objekte wirklich durch die neueste veröffentlichte Revision ersetzt werden?",
+      "replaceByStableLatestRevisionTitle": "{number} Objekt(e) durch die neueste stabile Revision in {issues} Problem(en) ersetzen",
+      "confirmReplaceByStableLatestRevision": "Sollen die ausgewählten Objekte wirklich durch die neueste stabile Revision ersetzt werden?",
+      "confirmReplaceByTitleMessage": "{target} ersetzt durch {latest}"
+    },
+    "contexts": {
+      "okButton": "OK",
+      "cancel": "Abbrechen",
+      "contexts": "Kontexte",
+      "columnTitle": "Titel",
+      "columnName": "Name",
+      "columnType": "Typ",
+      "columnRevision": "Revision",
+      "addContext": "Kontext hinzufügen",
+      "pickContext": "Kontext auswählen",
+      "detachContext": "Kontext trennen",
+      "contextualMenus": {
+        "detach": "Trennen",
+        "propagate": "Propagieren",
+        "collaborativeLifecycle": "Bearbeitungsstatus",
+        "compare": "Vergleichen",
+        "relationalExplorer": "Beziehungen",
+        "openWith": "Öffnen mit"
+      },
+      "errorNotSupportedMultipleObject": "Mehrere Objekte werden nicht unterstützt.",
+      "errorNotSupportedObject": "Dieses Objekt wird nicht unterstützt.",
+      "errorToGetContext": "Kontextobjektinformationen können nicht abgerufen werden.",
+      "successUpdateContext": "Kontext wurde aktualisiert.",
+      "successDetachContext": "Kontext wurde getrennt.",
+      "errorUpdateContext": "Kontext kann nicht aktualisiert werden.",
+      "errorDetachContext": "Kontext kann nicht getrennt werden",
+      "confirmDetachContextTitle": "Kontext trennen",
+      "confirmDetachContextMessage": "Möchten Sie diesen Kontext wirklich trennen?",
+      "confirmUpdateContextTitle": "Kontext aktualisieren",
+      "confirmUpdateContextMessage": "Möchten Sie diesen Kontext wirklich aktualisieren?"
+    }
+  },
+  "tasks": {
+    "selectIn3D": "Stellen Sie ein vorhandenes Objekt zum Hinzufügen bereit, ausgewählt aus einer kompatiblen 3D-Anwendung.",
+    "addObjects": "Stellen Sie ein oder mehrere vorhandene Objekte zum Hinzufügen bereit.",
+    "takeScreenshot": "Stellen Sie ein Bild zum Hinzufügen bereit."
+  },
+  "helper": {
+    "states": {
+      "create": "Das Problem empfängt Details, bevor es zugewiesen wird.",
+      "assign": "Das Problem wurde zugewiesen und wartet darauf, bearbeitet zu werden.",
+      "active": "Die Inhaber arbeiten gerade an dem Problem.",
+      "review": "Die vorgeschlagene Lösung wird geprüft.",
+      "closed": "Die Lösung wurde vom Ersteller angenommen und das Problem als 'Abgeschlossen' eingestuft."
+    },
+    "dialog": {
+      "title": "Anwendungen für Issue Management – Hilfe",
+      "tabStates": "Stadien",
+      "tabShortcuts": "Tastenkombinationen",
+      "subtitleShortcuts": "Tastenkombinationen",
+      "subtitleMouseOperation": "Mausvorgänge",
+      "workflow": "Workflow",
+      "states": {
+        "create": "Das Problem empfängt Details, bevor es zugewiesen wird.",
+        "assign": "Das Problem wurde zugewiesen und wartet darauf, bearbeitet zu werden.",
+        "active": "Die Inhaber arbeiten gerade an dem Problem.",
+        "review": "Die vorgeschlagene Lösung für das Problem wird geprüft.",
+        "closed": "Die Lösung wurde vom Ersteller angenommen und das Problem als 'Abgeschlossen' eingestuft."
+      },
+      "shortcut": {
+        "key": {
+          "shortcut": {
+            "delete": "Löschen",
+            "arrowUp": "Nach oben",
+            "arrowDown": "Nach unten",
+            "arrowLeft": "Links",
+            "arrowRight": "Rechts",
+            "enter": "Eingabetaste",
+            "shiftArrow": "Umschalttaste + Pfeile",
+            "ctrlA": "Strg + A",
+            "ctrlC": "Strg + C"
+          },
+          "mouse": {
+            "ctrlClick": "Strg + Klick",
+            "shiftClick": "Umschalttaste + Klick",
+            "doubleClick": "Doppelklick"
+          }
+        },
+        "detail": {
+          "shortcut": {
+            "delete": "Element löschen/trennen",
+            "arrowUp": "Zum vorherigen Element",
+            "arrowDown": "Zum nächsten Element gehen",
+            "arrowLeft": "Element ausblenden/Zum vorherigen Element",
+            "arrowRight": "Element einblenden/Zum nächsten Element gehen",
+            "enter": "Eigenschaftenfenster öffnen/Texteingabe übermitteln",
+            "shiftArrow": "Mehrere Elemente auswählen",
+            "ctrlA": "Alle Elemente auswählen",
+            "ctrlC": "Ausgewähltes Element kopieren"
+          },
+          "mouse": {
+            "ctrlClick": "Mehrere Elemente per Klick auswählen/Auswahl aufheben",
+            "shiftClick": "Alle Elemente zwischen den Klicks auswählen",
+            "doubleClick": "Eigenschaftenfenster öffnen/Element ein- oder ausblenden"
+          }
+        }
+      }
+    }
+  },
+  "users": {
+    "more": "Weitere Informationen"
+  },
+  "toolbar": {
+    "ISU_TOOLTIP_GRID_VIEW": "Datenrasteransicht",
+    "ISU_TOOLTIP_TILE_VIEW": "Kachelansicht",
+    "pickCommand": "Inhalte auswählen",
+    "pickAffectedItem": "Betroffene Elemente auswählen",
+    "pickResolvedBy": "‚Gelöst durch‘ auswählen",
+    "pickResolvedItems": "Aufgelöste Elemente auswählen",
+    "pickContext": "Kontexte auswählen",
+    "addCommand": "Aus Suche hinzufügen",
+    "addAffectedItem": "Betroffene Elemente hinzufügen",
+    "addResolvedBy": "‚Gelöst durch‘ hinzufügen",
+    "addResolvedItems": "Aufgelöste Elemente hinzufügen",
+    "addContexts": "Kontexte hinzufügen"
+  },
+  "columns": {
+    "actionsColumn": "Aktionen"
+  }
+}

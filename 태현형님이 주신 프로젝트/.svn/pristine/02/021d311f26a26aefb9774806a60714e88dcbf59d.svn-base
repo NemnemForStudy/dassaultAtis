@@ -1,0 +1,10 @@
+m|WebClientSession\VCXWebComponents.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.0.22204|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\VCXWebComponents\VCXWebComponents.js|1658540270|4316
+s|WebClientSession\VCXWebComponents.mweb\src\VCXWebComponentCamera.js|1495196447|2146
+u|WebClientSession\VCXWebComponents.mweb\src\VCXWebComponentOccurrence.js|1658229099|11293
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="DS_DELPPWConfiguration"  xmlns:tns="DS_DELPPWConfiguration" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  	<xs:element name="RolesConfig">
+ 		 <xs:complexType>
+			<xs:sequence>
+		      <xs:element name ="Role" type="tns:Role" maxOccurs="unbounded" minOccurs="1"/>
+			</xs:sequence>
+	   	 <xs:attribute type="xs:string" name="Title" 		use="optional"/>
+	   	 <xs:attribute type="xs:string" name="Description" 	use="optional"/>
+    	</xs:complexType>
+  	</xs:element>
+	<xs:complexType name="Role">
+	  	<xs:attribute type="xs:string" name="value" use="required"/>
+	</xs:complexType>
+</xs:schema>

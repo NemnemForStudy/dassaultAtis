@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:widget="http://www.netvibes.com/ns/">
+    <head>
+
+        <!-- Application Metas -->
+        <title>Dashboards by Role</title>
+
+        <meta name="author" content="Dassault Systèmes" />
+        <meta name="description" content="Manager for associations from dashboards to custom roles." />
+        <meta name="keywords" content="DashboardsByRole" />
+        <meta name="version" content="1.0" />
+        <meta name="inline" content="true" />
+        <meta name="debugMode" content="false" />
+        <meta name="autoRefresh" content="0" />
+        <meta name="noSearchInWidgetUI" content="true" />
+        <meta charset="UTF-8" />
+
+        <script type="text/javascript" src="../AmdLoader/AmdLoader.js"></script>
+        <script type="text/javascript" src="../c/UWA/js/UWA_Standalone_Alone.js"></script>
+        <link rel="stylesheet" type="text/css" href="../c/UWA/assets/css/standalone.css" />
+
+<style type="text/css">
+
+    /* Alerts are related to widget not to a specific view */
+    .alert-no-script .alert-message{
+        position: relative;
+    }
+
+</style>
+
+<!-- Application JavaScript Source -->
+<script type="text/javascript">
+//<![CDATA[
+require(['DS/DashboardsByRoleWdg/DashboardsByRole'], function (DashboardByRoles) {
+    'use strict';
+
+    new DashboardByRoles({
+        widget: widget
+    });
+});
+//]]>
+</script>
+</head>
+    <body></body>
+</html>

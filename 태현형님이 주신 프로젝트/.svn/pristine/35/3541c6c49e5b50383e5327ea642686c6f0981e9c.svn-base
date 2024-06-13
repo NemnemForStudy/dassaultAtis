@@ -1,0 +1,32 @@
+{
+  "name": "swymuicomponents",
+  "version": "0.1.1",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "mk:clean": "ymir clean $PWD && modclean -r -n default:safe --additional-patterns=\"FUNDING.yml\" && find -L node_modules/ -type l -delete",
+    "mk:unarchive": "ymir unarchive $PWD/node_modules $PWD/node_modules",
+    "mk:resolve": "ymir resolve $PWD",
+    "mk:setup": "rm -rf $INIT_CWD/workspace/ && cp -aRp $PWD $INIT_CWD/workspace",
+    "mk:buildold": "LOG_LEVEL=debug ./node_modules/@ds/ymir/dist/index.js resolve $PWD && ./node_modules/@vue/cli-service/bin/vue-cli-service.js build --target lib --name SwymUIVueComponents src/index.js --dest $PWD/../webapps/SwymUIVueComponents/",
+    "mk:build": "LOG_LEVEL=debug ./node_modules/@vue/cli-service/bin/vue-cli-service.js build --target lib --name SwymUIVueComponents src/index.js --dest $PWD/../webapps/SwymUIVueComponents/"
+  },
+  "dependencies": {
+    "@vue/cli-service": "~4.5.0",
+    "sass": "^1.43.2",
+    "sass-loader": "^8.0.2",
+    "vue": "2.6.10",
+    "vue-template-compiler": "2.6.10"
+  },
+  "devDependencies": {
+    "@vue/eslint-config-airbnb": "^6.0.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^8.5.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-vue": "^8.2.0",
+    "eslint-plugin-vue-scoped-css": "^2.0.0",
+    "eslint-plugin-vuejs-accessibility": "^1.1.0"
+  }
+}

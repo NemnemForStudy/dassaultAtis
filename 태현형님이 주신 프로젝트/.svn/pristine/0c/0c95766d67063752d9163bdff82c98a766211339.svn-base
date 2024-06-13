@@ -1,0 +1,91 @@
+<meta charset="UTF-8"/>
+//---------------------------------------------------------------------------
+// Path_CustomSchemaDir
+//---------------------------------------------------------------------------
+Path_CustomSchemaDir.Title="사용자 정의 스키마 경로";
+Path_CustomSchemaDir.Label1="사용자 정의 스키마 파일이 있는 디렉터리를 지정합니다.";
+Path_CustomSchemaDir.Resume="사용자 정의 스키마 경로:  /p1";
+Path_CustomSchemaDir.Resume.Title="사용자 정의 스키마 경로";
+StudioInstall.Path_CustomSchemaDir.Resume.Title="사용자 정의 스키마 경로";
+
+//---------------------------------------------------------------------------
+// Path_CustomSchemaDir
+//---------------------------------------------------------------------------
+CustomSchemaDir.Title="사용자 정의 스키마 경로";
+CustomSchemaDir.Label1="사용자 정의 스키마 파일이 있는 디렉터리를 지정합니다.";
+CustomSchemaDir.Resume="사용자 정의 스키마 경로:  /p1";
+//---------------------------------------------------------------------------
+// Check_SchemaToInstall
+//---------------------------------------------------------------------------
+Check_SchemaToInstall.Title="스키마 선택";
+Check_SchemaToInstall.Label1="설치할 스키마를 지정합니다.";
+Check_SchemaToInstall.Label2="계속하려면 다음을 클릭하십시오.";
+//---------------------------------------------------------------------------
+// Specify Schema Types 
+//---------------------------------------------------------------------------
+Check_SchemaToInstall.KeyNone="없음";
+Check_SchemaToInstall.KeyAll="전체";
+Check_SchemaToInstall.Resume="스키마 유형: /p1";
+
+
+//---------------------------------------------------------------------------
+// An UIGroup contains Text_DataTBS and Text_IndexTBS
+// Text_DataTBS
+//---------------------------------------------------------------------------
+Text_DataTBS.Title="Production 볼트 세부 정보";
+Text_DataTBS.Label1="eService Production 볼트에 대한 데이터와 인덱스 테이블 공간을 지정합니다.";
+Text_DataTBS.Label2="데이터베이스의 기본 저장 공간 영역을 사용하려면 필드를 비워 둡니다.";
+Text_DataTBS.Label3="\n";
+Text_DataTBS.Label4="데이터 테이블 공간";
+Text_DataTBS.Resume="데이터 테이블 공간: /p1";
+//---------------------------------------------------------------------------
+// Text_IndexTBS
+//---------------------------------------------------------------------------
+Text_IndexTBS.Label1="\n";
+Text_IndexTBS.Label2="인덱스 테이블 공간";
+Text_IndexTBS.Resume="인덱스 테이블 공간: /p1";
+
+
+//---------------------------------------------------------------------------
+// BOOL_UpdateDB
+//---------------------------------------------------------------------------
+
+BOOL_UpdateDB.Title="데이터베이스 업데이트 옵션";
+BOOL_UpdateDB.Label1="데이터베이스를 업데이트하시겠습니까?";
+BOOL_UpdateDB.Label2="선택하지 않으면 데이터베이스가 업데이트되지 않습니다.";
+BOOL_UpdateDB.Label3="생성된 tcl 프로그램을 수동으로 실행해야 합니다.";
+BOOL_UpdateDB.CheckButton="데이터베이스 업데이트";
+BOOL_UpdateDB.Resume.true="데이터베이스가 업데이트됩니다.";
+BOOL_UpdateDB.Resume.false="데이터베이스가 업데이트되지 않습니다.";
+
+
+//---------------------------------------------------------------------------
+// Text_SuperUserName
+//---------------------------------------------------------------------------
+Text_SuperUserName.Title="슈퍼 사용자//암호";
+Text_SuperUserName.Label1="비즈니스와 시스템 관리 권한을 모두 가진 사용자의 이름을 지정합니다.";
+Text_SuperUserName.Resume="슈퍼 사용자 이름: /p1";
+
+//---------------------------------------------------------------------------
+// Text_SuperUserPwd
+//---------------------------------------------------------------------------
+Text_SuperUserPwd.Title="슈퍼 사용자//암호";
+Text_SuperUserPwd.Label1="비즈니스와 시스템 관리 권한을 모두 가지고 있는 사용자의 암호를 지정합니다.";
+
+//---------------------------------------------------------------------------
+// Hot Fix installer - Creator password check
+//---------------------------------------------------------------------------
+ConnectionCreatorFailed.Title="슈퍼 사용자에 대한 데이터베이스 연결 오류";
+ConnectionCreatorFailed.Text="다음 오류가 보고되었습니다.\n/p1";
+//---------------------------------------------------------------------------
+// IR-240244V6R2014: Check that there is no trace to Stdout activated (otherwise error message and Quit/Retry buttons only, see InsCommonInstallerOnly.xml)
+//---------------------------------------------------------------------------
+tracesToStdoutDetected.Title="Stdout mql 추적 감지";
+tracesToStdoutDetected.Text="일부 mql의 stdout 추적이 활성화됩니다.\n이 때문에 설치가 성공적으로 완료되지 않을 수 있습니다.\nmql 추적을 비활성화하거나 파일로 리디렉션하십시오.";
+
+//---------------------------------------------------------------------------
+// IR-431459: Check that there are no SLF4J duplicate bindings in MX_CLASSPATH (otherwise error message and Quit/Retry buttons only)
+//---------------------------------------------------------------------------
+SLF4JCheckerJarTempCopy_failed.Text="SLF4J 확인을 위한 jar를\n/P1에서\n/P2(으)로 복사할 수 없습니다.\n(rc = /P3).\n/P4\n/P5\n복사를 활성화한 다음 재시도를 클릭하십시오.";
+SLF4JCheck_failed.Title="SLF4J 확인";
+SLF4JCheck_failed.Text="SLF4J 초기화 실패:\n/P1\n이 때문에 설치가 성공적으로 완료되지 않을 수 있습니다.\nSLF4J 상태(최소 설치 시간 동안)를 수정한 다음 재시도를 클릭하십시오.";

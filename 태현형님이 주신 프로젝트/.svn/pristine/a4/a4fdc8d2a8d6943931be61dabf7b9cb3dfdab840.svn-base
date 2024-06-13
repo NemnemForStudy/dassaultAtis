@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:widget="http://www.netvibes.com/ns/">
+      <!-- Copyright 2015 , Dassault Systemes. All rights reserved. -->
+
+      <head>
+            <title>Browsing Structure Definition</title>
+            <!-- Application Metas Start -->
+            <meta name="author" content="Dassault Systèmes" />
+            <meta name="brand" content="ENOVIA" />
+            <meta name="autoRefresh" content="0" />
+            <meta name="description" content="Browsing Structure Definition widget" />
+            <meta name="keywords" content="Browsing Structure Definition" />
+
+            <script type="text/javascript" src="../AmdLoader/AmdLoader.js"></script>
+
+            <link rel="stylesheet" type="text/css" href="../c/UWA/assets/css/standalone.css" />
+            <link rel="stylesheet" type="text/css" href="TerminologyEditor.css" />
+
+            <script type="text/javascript" src="../etree/etree.js"></script>
+            <script type="text/javascript" src="../egraph/egraph.js"></script>
+            <script type="text/javascript" src="../WebUX/WebUX.js"></script>
+            <script type="text/javascript" src="TerminologyEditor.js"></script>
+
+            <link rel="stylesheet" type="text/css" href="../UIKIT/UIKIT.css" />
+
+            <widget:preferences>                  
+              <preference name="dsUser" type="hidden" label="dsUser"></preference>
+              <preference name="vMigration" type="hidden" label="vMigration"></preference> <!-- mandatory for CATIA v5 -->
+              <preference name="sortMode" type="hidden" label="sortMode"></preference>
+              <preference name="order" type="hidden" label="order"></preference>
+              <preference name="customLeftWidth" type="hidden" label="customLeftWidth"></preference>
+              <preference name="TerminologyCusto_treelistview" type="hidden" label="TerminologyCusto_treelistview"></preference>
+              <preference name="terminologyTreeSelectedNode" type="hidden" label="terminologyTreeSelectedNode"></preference>
+              <preference name="terminologyTreeStructure" type="hidden" label="terminologyTreeStructure"></preference>
+              <preference name="view_status" type="hidden" label="view_status"></preference> <!-- UX status of the widget -->
+            </widget:preferences>
+
+            <!-- Application JavaScript Source -->
+            <script type="text/javascript">
+                window.top.performance.mark('createWidget_begin');
+                'use strict';
+                require(["DS/TerminologyEditor/TerminologyEditor"], function(TerminologyEditor){
+                    TerminologyEditor.init({
+                        'widget': widget
+                    });
+                });
+
+            </script>
+      </head>
+
+      <body>
+        <div class="centerMe spinner spinning fade in " style="transform: translate3d(0px, 0px, 0px); display: inline-block; margin: auto; top: 0%; bottom: 0%; left: 0%; right: 0%; width: 50px; position: absolute;">
+            <span class="spinner-bar"></span>
+            <span class="spinner-bar spinner-bar1"></span>
+            <span class="spinner-bar spinner-bar2"></span>
+            <span class="spinner-bar spinner-bar3"></span>
+        </div>
+      </body>
+
+</html>

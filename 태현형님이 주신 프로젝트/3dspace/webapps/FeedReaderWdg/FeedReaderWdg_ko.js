@@ -1,0 +1,1 @@
+define("DS/FeedReaderWdg/FeedReaderWdg_ko",{});define("DS/FeedReaderWdg/assets/nls/feed",{loading:"로드 중",placeHolderEnterFeed:"피드 URL 입력",submitFeedBtn:"추가",Title_html:"피드 제목",Url_html:"피드 URL",View_html:"보기",errorURL:"오류가 발생했습니다. 다른 피드 URL을 시도하십시오.",emptyFeedWarning:"이 피드에 뉴스가 없습니다.",goToWebsite:"웹 사이트로 이동",details:"세부 정보",shareArticle:"문서 공유"});

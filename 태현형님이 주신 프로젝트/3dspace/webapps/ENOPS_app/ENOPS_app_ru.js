@@ -1,0 +1,1 @@
+define("DS/ENOPS/ENOPS_app_ru",{});define("DS/ENOPS_app/assets/nls/ENOPS_app",{appDescription:"Изучайте и редактируйте свою конструкцию простым и эффективным способом",newProduct:"Новый продукт",newPart:"Новая деталь",newDrawing:"Новый чертеж"});

@@ -1,0 +1,1 @@
+define("DS/CfgFilterCommands/CfgFilterCommands_ko",{});define("DS/CfgFilterCommands/assets/nls/CfgUnitFilterCmd",{Dialog_Title:"단위 기준 필터링",No_Model_Title:"루트 참조에 연결된 모델이 없습니다.",No_Model_Msg:"모델을 연결하십시오.",No_Evolution_Crit_Error:"루트 참조에서 단위 기준이 활성화되지 않아 단위를 필터링할 수 없습니다.",Unit_Firing_Generic_Error:"단위 필터링에 실패했습니다."});

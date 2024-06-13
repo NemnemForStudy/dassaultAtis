@@ -1,0 +1,23 @@
+<div 
+  class="im-call-video-item"
+>
+  <video
+    :muted="isSelfView || $store.getters.isVolumeOFF"
+    :src="src"
+    :src-object.prop.camel="srcObject"
+    autoplay="true"
+    playsinline="playsinline"
+    @click.stop="toggleSpeaker"
+    onloadeddata="function onloadeddata() { this.play(); } "
+  />
+  <!-- <div 
+    class="fonticon stream-info"
+    :class="{ 
+      'fonticon-videocamera-off': isVideoMuted, 
+      'fonticon-microphone-off': isAudioMuted 
+    }"
+    v-show="isVideoMuted || isAudioMuted"
+    v-if="isSelfView"
+  /> -->
+
+</div>

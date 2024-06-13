@@ -1,0 +1,1 @@
+define("DS/DMUBaseCommands/DMUBaseCommands_zh",{});define("DS/DMUBaseCommands/assets/nls/DMUBaseCommands",{defaultSelectLabel:"选择实体",exportSlideError:"导出幻灯片时出错",issueImplLinks:"导航所选对象的实施关系时出错",noWidgetLinked:"要突出显示通过实施链接相关的对象，您需要将此小组件链接到显示对象的其他小组件"});

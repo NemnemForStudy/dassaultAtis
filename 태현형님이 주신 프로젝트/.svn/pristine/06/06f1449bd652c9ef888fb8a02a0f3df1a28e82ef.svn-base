@@ -1,0 +1,44 @@
+@keyframes labelFadeInFast {
+  from {
+    opacity: 0; }
+
+  to {
+    opacity: 1; } }
+
+@keyframes labelFadeInSlow {
+  from {
+    opacity: 0; }
+
+  50% {
+    opacity: 0; }
+
+  to {
+    opacity: 1; } }
+
+/* Block Port Label style configuration */
+.sch-label-container {
+  box-sizing: border-box;
+  position: absolute;
+  visibility: hidden;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1; }
+  .sch-label-container > .sch-label-line-container {
+    box-sizing: border-box;
+    position: absolute;
+    visibility: hidden;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%; }
+    .sch-label-container > .sch-label-line-container > .sch-label-line {
+      box-sizing: border-box;
+      visibility: visible;
+      stroke: #3d3d3d;
+      stroke-width: 1px;
+      stroke-dasharray: 5, 4; }
+      .sch-label-container > .sch-label-line-container > .sch-label-line.sch-label-line-hidden {
+        display: none; }

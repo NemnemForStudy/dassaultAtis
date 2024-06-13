@@ -1,0 +1,58 @@
+<?xml version="1.0" ?>
+<!-- ENOVIA DICTIONARY  -->
+<!-- COPYRIGHT DASSAULT SYSTEMES 2021, All rights reserved -->
+
+<Package xmlns="PLMDictionaryUnified"
+    ModelerType="Top"
+    Name="RawMaterialSpecification"
+    UseNames="PRODUCTCFG"
+	Architecture="All" 
+    Uuid="e97b7cad-a44f-41e9-89b0-5f8ac8c3e5f0" 
+    CustomerExposition="Programmer"
+	>
+	<!-- RawMaterial type start-->
+	<Class Name="Raw_Material"
+		Uuid="1947cde6-3923-44f6-9202-438ef3a30a9e"
+		Abstract="No"
+		CustomerExposition="Programmer"
+		SuperName="VPMReference"
+		Discipline="Yes"
+		Specializable="Yes"
+		Searchable="Yes"
+		Newable="All"
+		PublicResourceURI="/resources/v1/modeler/dsrm/dsrm:RawMaterial/{pid}"
+		>
+		
+		<Property Name="KweNew_InstanciationMethod" Value="CATRMInstantiation"/>
+		<Property Name="KweNew_ReturnedType" Value="VPMInstance"/>
+		<Property Name = "IconName" Value = "I_RawMaterial"/>
+		
+		<Simple Name="V_DimensionType"
+		  Uuid="0b3619a4-5560-4b8f-97fe-a44be3aab341"
+		  Type="String"
+		  Protection="External"
+		  MaxLength="256"
+		  ResetOnCloning="No"
+		  DefaultValue="Mass"
+		  ResetOnNewVersion="No">
+		  <Range><Equal>Area</Equal>
+				<Equal>Length</Equal>
+				<Equal>Mass</Equal>
+				<Equal>Volume</Equal>
+			</Range>
+			<Property Name="CustoUserAccess" Value="ReadWrite"/>
+		 </Simple>
+	</Class>
+	<!-- RawMaterial type end-->
+
+	<Function Name="RawMat_retrieveAllAppliedRawMaterial">
+		<Implementation Name="RawMat_retrieveAllAppliedRawMaterial" FileLocation="RawMat_retrieveAllAppliedRawMaterial.plmql" Language="PLMQL"/>
+		<Signature href="RawMatSignature"/>
+	</Function>
+
+	<Signature id="RawMatSignature">
+		<Parameter Name="InputIds" Lower="0" Upper="-1" Direction="in" MultiValuated="No" DataType="PLMId"/>
+		<Parameter Name="OutputIds" Lower="0" Upper="-1" Direction="out" MultiValuated="No" DataType="PLMRouteSet"/>
+	</Signature>
+	
+</Package>

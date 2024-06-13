@@ -1,0 +1,2 @@
+/*! Copyright 2020 Dassault Systèmes */
+"object"==typeof nipplejs?define("DS/VENNippleJSLib",nipplejs):-1===require.toUrl("DS/VENNippleJSLib").indexOf("0.6.8/nipplejs.min")&&(NIPPLEJS_BASEPATH=require.toUrl("DS/VENNippleJSLib/0.6.8/"),NIPPLEJS_BASEPATH.indexOf("?")>-1&&(NIPPLEJS_BASEPATH=NIPPLEJS_BASEPATH.substring(0,NIPPLEJS_BASEPATH.indexOf("?"))),require.config({paths:{"DS/VENNippleJSLib":NIPPLEJS_BASEPATH+"nipplejs.min"},shim:{"DS/VENNippleJSLib":{exports:"nipplejs"}}})),define("DS/VirtualDevice/Joystick",["DS/VENNippleJSLib"],function(i){"use strict";return i});

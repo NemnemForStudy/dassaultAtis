@@ -1,0 +1,353 @@
+/* ------------------------------------------------------------------------------------------------------------------------- */
+/* --------------------------------------------- Control of Min and Max ranges --------------------------------------------- */
+/* ------------------------------------------------------- IR-275544 ------------------------------------------------------- */
+/* ------------------------------------------------------------------------------------------------------------------------- */
+/* ------------------------------------------ Control of Authorized/Multiple Values ---------------------------------------- */
+/* ------------------------------------------------------- IR-351943 ------------------------------------------------------- */
+/* ------------------------------------------------------------------------------------------------------------------------- */
+/* -------------------------------------------------- Control of Authorized ------------------------------------------------ */
+/* ------------------------------------------------------- IR-420082 ------------------------------------------------------- */
+/* ------------------------------------------------------------------------------------------------------------------------- */
+
+Let Errorlist(List)
+Let Warninglist(List)
+Let ErrorMessagelist(List)
+Let WarningMessagelist(List)
+Let messageNLS(String)
+Let attrKeyNLS(String)
+Let valueKeyNLS(String)
+Let keyNLS(String)
+
+Let attrNames(List)
+Let error = 0
+Let i = 1
+Let size = 0
+Let index = 0
+Let zz = 1
+Let multiListSize = 0
+Let attr_i(String)
+Let dimension(String)
+Let paramValue(String)
+Let minValue(String)
+Let maxValue(String)
+Let multiValue(String)
+Let kindValue(Integer)
+Let minRangeProp = 0
+Let maxRangeProp = 0
+Let parmValuePointer(ValuePointer)
+Let multiValuePointer(ValuePointer)
+Let multiValList(List)
+Let multiValIndex(Integer)
+Let multiVal_zz(Real)
+Let minPointer(ValuePointer)
+Let maxPointer(ValuePointer)
+Let kindValuePointer(ValuePointer)
+Let displayUnitValuePointer(ValuePointer)
+Let stringValue(String)
+/*Let booleanValue(Boolean)*/
+Let integerValue(Integer)
+Let integerMin(Integer)
+Let integerMax(Integer)
+Let realValue(Real)
+Let realMin(Real)
+Let realMax(Real)
+Let role(String)
+Let rolePointer(ValuePointer)
+
+Validation = true
+
+set Errorlist = Parameters->GetAttributeObject("ErrorAttributes")
+set Warninglist = Parameters->GetAttributeObject("WarningAttributes")
+set ErrorMessagelist = Parameters->GetAttributeObject("ErrorMessages")
+set WarningMessagelist = Parameters->GetAttributeObject("WarningMessages")
+
+attrNames = ThisObject->ListAttributeNames("", FALSE)
+size = attrNames->Size()
+dimension = ""
+for i while i<=size
+{
+	attr_i = attrNames->GetItem(i)
+	index = attr_i->Search("ParameterValue", 0, FALSE)
+	if (index > 0)
+	{
+		dimension = attr_i->Extract(0, index)
+		Trace(1, "# dimension: #", ThisObject.PrimaryType.UserName, dimension)
+	}
+	i = i+1
+}
+
+
+/* Checking the Parameter is not being created */
+if (dimension->Length() > 0)
+{
+
+	/* the Role attribute is editable if it has not already been valuated */
+	if (ThisObject->HasAttribute("PlmParamRole"))
+	{
+		/*roleValue = ThisObject->GetAttributeString("PlmParamRole")*/
+		rolePointer = ThisObject->GetAttributeValuePointer("PlmParamRole")
+		if (rolePointer <> NULL)
+		{
+			rolePointer.Constant = true
+		}
+	}
+
+	/* Kind of valuation */
+	if (ThisObject->HasAttribute("PlmParamValuationType"))
+	{
+		kindValue = ThisObject->GetAttributeInteger("PlmParamValuationType")
+		kindValuePointer = ThisObject->GetAttributeValuePointer("PlmParamValuationType")
+		if (kindValuePointer <> NULL)
+		{
+			kindValuePointer.Constant = true
+
+			paramValue = dimension + "ParameterValue"
+			multiValue = dimension + "MultiValue"
+			if (ThisObject->HasAttribute(multiValue) and ThisObject->HasAttribute(paramValue))
+			{
+				multiValuePointer = ThisObject->GetAttributeValuePointer(multiValue)
+				parmValuePointer = ThisObject->GetAttributeValuePointer(paramValue)
+				if (multiValuePointer <> NULL and parmValuePointer <> NULL)
+				{
+					/* IR-420082 Authorized values (if any) are first checked */
+					multiValList = ThisObject->GetAttributeObject(multiValue)
+					if (1 == kindValue and "Boolean" <> dimension and multiValList.Size() > 0)
+					{
+						if ("String" == dimension)
+						{
+							stringValue = ThisObject->GetAttributeString(paramValue)
+							multiValIndex = multiValList.IndexOf(stringValue, 0)
+							if (0 == multiValIndex)
+							{
+								error = 3
+							}
+						}
+						else if ("Integer" == dimension)
+						{
+							integerValue = ThisObject->GetAttributeInteger(paramValue)
+							multiValIndex = multiValList.IndexOf(integerValue, 0)
+							if (0 == multiValIndex)
+							{
+								error = 3
+							}
+						}
+						else if ("Real" == dimension)
+						{
+							realValue = ThisObject->GetAttributeReal(paramValue)
+							multiValIndex = multiValList.IndexOf(realValue, 0)
+							if (0 == multiValIndex)
+							{
+								error = 3
+							}
+						}
+						else /* precision issue with dimensions in the IndexOf method */
+						{
+							realValue = ThisObject->GetAttributeReal(paramValue)
+							multiListSize = multiValList.Size()
+							multiValIndex = 0
+							for zz while zz <= multiListSize and 0 == multiValIndex
+							{
+								multiVal_zz = multiValList.GetItem(zz)
+								if (multiVal_zz == realValue)
+								{
+									multiValIndex = zz
+								}
+								zz = zz+1
+							}
+							if (0 == multiValIndex)
+							{
+								error = 3
+							}
+						}
+
+						if (3 == error)
+						{
+							Validation = false
+							Errorlist->Append(paramValue)
+							keyNLS = "ErrorUnauthorized"
+
+							valueKeyNLS = BuildMessageNLS("PLMParameter", "PLMParameter." + dimension + "Parameter." + paramValue)
+							if (valueKeyNLS.Length() > 0 and keyNLS.Length() > 0)
+							{
+								messageNLS = BuildMessageNLS("PlmParameter_BLValuationCheck", keyNLS, valueKeyNLS)
+								ErrorMessagelist->Append(messageNLS)
+							}
+						}
+					}
+
+					if (error <> 3)
+					{
+						minValue = dimension + "MinValue"
+						maxValue = dimension + "MaxValue"
+						if (dimension <> "String" and dimension <> "Boolean" and ThisObject->HasAttribute(minValue) and ThisObject->HasAttribute(maxValue) and ThisObject->HasAttribute("MinRangeProperty") and ThisObject->HasAttribute("MaxRangeProperty"))
+						{
+							minRangeProp = ThisObject->GetAttributeInteger("MinRangeProperty")
+							maxRangeProp = ThisObject->GetAttributeInteger("MaxRangeProperty")
+							minPointer = ThisObject->GetAttributeValuePointer(minValue)
+							maxPointer = ThisObject->GetAttributeValuePointer(maxValue)
+
+							if (minPointer <> NULL)
+							{
+								if ((minRangeProp == 1) or (minRangeProp == 2))
+								{
+									minPointer.Constant = false
+								
+									/* Simple valuation */
+									if (kindValue == 1)
+									{
+										if (dimension == "Integer")
+										{
+											integerValue = ThisObject->GetAttributeInteger(paramValue)
+											integerMin = ThisObject->GetAttributeInteger(minValue)
+											if (integerValue < integerMin)
+											{
+												Validation = false
+												Errorlist->Append(minValue)
+												error = 1
+												keyNLS = "ErrorLowerLimit"
+											}
+											else if (integerValue == integerMin and minRangeProp == 2)
+											{
+												Validation = false
+												Errorlist->Append(minValue)
+												error = 2
+												keyNLS = "ErrorLowerLimit2"
+											}
+										}
+										else /* Dimension */
+										{
+											realValue = ThisObject->GetAttributeReal(paramValue)
+											realMin = ThisObject->GetAttributeReal(minValue)
+											if (realValue < realMin)
+											{
+												Validation = false
+												Errorlist->Append(minValue)
+												error = 1
+												keyNLS = "ErrorLowerLimit"
+											}
+											else if (realValue == realMin and minRangeProp == 2)
+											{
+												Validation = false
+												Errorlist->Append(minValue)
+												error = 2
+												keyNLS = "ErrorLowerLimit2"
+											}
+										}
+
+										if (error == 1 or error == 2)
+										{
+											attrKeyNLS = BuildMessageNLS("PLMParameter", "PLMParameter." + dimension + "Parameter." + minValue)
+											valueKeyNLS = BuildMessageNLS("PLMParameter", "PLMParameter." + dimension + "Parameter." + paramValue)
+											if (attrKeyNLS.Length() > 0 and valueKeyNLS.Length() > 0 and keyNLS.Length() > 0)
+											{
+												messageNLS = BuildMessageNLS("PlmParameter_BLValuationCheck", keyNLS, valueKeyNLS, attrKeyNLS)
+												ErrorMessagelist->Append(messageNLS)
+											}
+											error = 0
+											keyNLS = ""
+											attrKeyNLS = ""
+											valueKeyNLS = ""
+										}
+									}
+								}
+								else
+								{
+									minPointer.Constant = true
+								}
+							}
+							if (maxPointer <> NULL)
+							{
+								if ((maxRangeProp == 1) or (maxRangeProp == 2))
+								{
+									maxPointer.Constant = false
+								
+									/* Simple valuation */
+									if (kindValue == 1)
+									{	
+										if (dimension == "Integer")
+										{
+											integerValue = ThisObject->GetAttributeInteger(paramValue)
+											integerMax = ThisObject->GetAttributeInteger(maxValue)
+											if (integerValue > integerMax)
+											{
+												Validation = false
+												Errorlist->Append(maxValue)
+												error = 1
+												keyNLS = "ErrorUpperLimit"
+											}
+											else if (integerValue == integerMax and maxRangeProp == 2)
+											{
+												Validation = false
+												Errorlist->Append(maxValue)
+												error = 2
+												keyNLS = "ErrorUpperLimit2"
+											}
+										}
+										else /* Dimension */
+										{
+											realValue = ThisObject->GetAttributeReal(paramValue)
+											realMax = ThisObject->GetAttributeReal(maxValue)
+											if (realValue > realMax)
+											{
+												Validation = false
+												Errorlist->Append(maxValue)
+												error = 1
+												keyNLS = "ErrorUpperLimit"
+											}
+											else if (realValue == realMax and maxRangeProp == 2)
+											{
+												Validation = false
+												Errorlist->Append(maxValue)
+												error = 2
+												keyNLS = "ErrorUpperLimit2"
+											}
+										}
+
+										if (error == 1 or error == 2)
+										{
+											attrKeyNLS = BuildMessageNLS("PLMParameter", "PLMParameter." + dimension + "Parameter." + maxValue)
+											valueKeyNLS = BuildMessageNLS("PLMParameter", "PLMParameter." + dimension + "Parameter." + paramValue)
+											if (attrKeyNLS.Length() > 0 and valueKeyNLS.Length() > 0 and keyNLS.Length() > 0)
+											{
+												messageNLS = BuildMessageNLS("PlmParameter_BLValuationCheck", keyNLS, valueKeyNLS, attrKeyNLS)
+												ErrorMessagelist->Append(messageNLS)
+											}
+										}
+									}
+								}
+								else
+								{
+									maxPointer.Constant = true
+								}
+							}
+						}
+					}
+			
+					/* Multiple valuation */
+					if (kindValue == 2)
+					{
+						parmValuePointer.Constant = true
+					}
+				}
+			}
+		}
+
+		/* Display Unit */
+		if (ThisObject->HasAttribute("PlmParamDisplayUnit"))
+		{
+			displayUnitValuePointer = ThisObject->GetAttributeValuePointer("PlmParamDisplayUnit")
+			if (displayUnitValuePointer <> NULL)
+			{
+				displayUnitValuePointer.Constant = true
+			}
+		}
+	}
+}
+
+if (Validation == false) 
+{
+    Parameters->SetAttributeObject("ErrorMessages",ErrorMessagelist)
+    Parameters->SetAttributeObject("ErrorAttributes",Errorlist)
+    Parameters->SetAttributeObject("WarningAttributes",Warninglist)
+    Parameters->SetAttributeObject("WarningMessages",WarningMessagelist) 
+}

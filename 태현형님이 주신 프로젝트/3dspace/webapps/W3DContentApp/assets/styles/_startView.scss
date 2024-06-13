@@ -1,0 +1,91 @@
+@import 'variables.uikit';
+
+.empty-view.empty-view-root.start-view {
+    // MEDIUM
+    &.start-view--medium {
+        > #dnd-view.start-view__drop-zone {
+            width: 80%;
+
+            > .start-view__drop-zone-icon {
+                font-size: 50px;
+            }
+
+            > .start-view__drop-zone-title {
+                font-size: 20px;
+            }
+        }
+    }
+
+    // SMALL
+    &.start-view--small {
+        > #dnd-view.start-view__drop-zone {
+            width: 90%;
+
+            > .start-view__drop-zone-content {
+                flex-direction: column;
+
+                > .start-view__drop-zone-icon {
+                    font-size: 50px;
+                }
+
+                > .start-view__drop-zone-title {
+                    font-size: 20px;
+                }
+            }
+        }
+    }
+
+    > #dnd-view.start-view__drop-zone {
+        width: 50%;
+        min-height: 180px;
+        transition: width 0.3s ease;
+        border: dashed $grey-4;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        > .start-view__drop-zone-content {
+            display: flex;
+            align-items: center;
+
+            > .start-view__drop-zone-icon {
+                font-size: 80px;
+                color: $grey-6;
+                margin-right: 2rem;
+            }
+
+            > .start-view__drop-zone-title {
+                font-size: 24px;
+                color: $grey-6;
+            }
+        }
+    }
+
+    &:not(:only-child) {
+        > * {
+            display: none !important;
+        }
+    }
+
+    /* Drag-over the start view */
+    &.drag-over {
+        border: dashed $blue-3;
+
+        > #dnd-view.start-view__drop-zone {
+            border: none;
+        }
+    }
+}
+
+// Can be used outside the start-view (eg. Guest app)
+.empty-view-infos {
+    > .empty-view-icon {
+        color: $grey-5;
+    }
+
+    > .empty-view-title {
+        color: $grey-5;
+    }
+}

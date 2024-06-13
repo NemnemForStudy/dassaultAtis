@@ -1,0 +1,14 @@
+################################################################################################
+# Modified By thok : 2023. 05. 15
+# Admin Type : command
+# Name : PMCProjectSummaryGateCancel
+################################################################################################
+copy command PMCProjectSummaryGateCancel PMCProjectSummaryGateCancel_ootb;
+mod command PMCProjectSummaryGateCancel 
+	href '${SUITE_DIR}/decemxProgramCentralProjectHoldCancel.jsp?program=emxProjectHoldAndCancel:projectHoldCancelResume&switch=Cancel&invokedFrom=StructureBrowser'
+;
+
+# Modified By thok : 2023. 07. 27
+mod command PMCProjectSummaryGateCancel 
+	add setting 'Access Expression' false
+;

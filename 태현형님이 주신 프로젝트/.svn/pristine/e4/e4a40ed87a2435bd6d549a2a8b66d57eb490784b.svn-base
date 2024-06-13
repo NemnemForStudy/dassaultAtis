@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright DASSAULT SYSTEMES 2015 -->
+<AttributesDescriptionList Title="Attributes Description List by Types" Description="Sample configuration file delivered by DS." xmlns="DS_DELPPWConfiguration" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="DS_DELPPWConfiguration ../xsd/CreateWorkOrderFromProcessCmdFormAttribute.xsd">
+	<Type name="DELLmiWorkOrderReference">
+		<Section name="Section.MandatoryAttributes">
+			<Attribute name="V_Name" dicoType="PLMEntity" mandatory="true" />
+      <Attribute name="ProductionPlan" dicoType="DELLmiProductionPlanReference" displayType="search" mandatory="true" defaultValue="resources/v1/modeler/dswo/dswo:ProductionPlan/search?$top=1000" /> <!-- /*ProductionPlanId*/ -->
+			<Attribute name="MfgProcess" dicoType="DELLmiWorkPlanSystemReference" displayType="search" mandatory="true" defaultValue="resources/v1/modeler/dsprcs/dsprcs:MfgProcess/search?$top=1000" precondition="AND current:released"/>
+			<Attribute name="MfgItem" dicoType="DELFmiFunctionReference" displayType="search" defaultValue="resources/v1/modeler/dsmfg/dsmfg:MfgItem/search?$top=1000" />
+			<Attribute name="OrderQuantity" displayType="richText" mandatory="true" />
+			<Attribute name="Magnitude" defaultValue="EACH,VOLUME,LENGTH,MASS,AREA" displayType="select" mandatory="true" />
+		</Section>
+		<!-- <Section name="Section.Attributes"> -->
+			<!-- <Attribute name="MfgResource" dicoType="VPMReference" displayType="search" defaultValue="resources/v1/modeler/dsrsc/dsrsc:Resource/search" /> -->
+		<!-- <Attribute name="V_description" dicoType="PLMEntity" />
+			<Attribute name="V_EarliestStartDate" dicoType="DELLmiWorkOrderReference" />
+			<Attribute name="V_TargetStartDate" dicoType="DELLmiWorkOrderReference" />
+			<Attribute name="V_TargetEndDate" dicoType="DELLmiWorkOrderReference" />
+			<Attribute name="V_ScheduledStartDate" dicoType="DELLmiWorkOrderReference" />
+			<Attribute name="V_ScheduledEndDate" dicoType="DELLmiWorkOrderReference" />
+			<Attribute name="V_PlannedStartDate" dicoType="DELLmiWorkOrderReference" />
+			<Attribute name="V_PlannedEndDate" dicoType="DELLmiWorkOrderReference" />
+			<Attribute name="V_CalculatedDueDate" dicoType="DELLmiUPRSystemReference" />
+			<Attribute name="V_DueDate" dicoType="DELLmiWorkOrderReference" />
+		</Section>-->
+	</Type>
+</AttributesDescriptionList>

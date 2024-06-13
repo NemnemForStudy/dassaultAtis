@@ -1,0 +1,1 @@
+define("DS/PIMwebPropertiesTabs/PIMwebPropertiesTabs_ru",{});define("DS/PIMwebPropertiesTabs/assets/nls/PIMwebPropertiesTabs",{privLevelSimulationError:"Невозможно получить доступ к определению моделирования",isrInfoRetrievalFailed:"Не удается извлечь информацию о моделировании интерференций"});

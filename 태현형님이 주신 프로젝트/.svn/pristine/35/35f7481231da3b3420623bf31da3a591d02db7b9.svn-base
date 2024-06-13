@@ -1,0 +1,20 @@
+################################################################################################
+# Created By thok : 2023. 08. 10
+# Admin Type : command
+# Name : decRequestResponseEdit
+################################################################################################
+#delete command decRequestResponseEdit;
+add command 'decRequestResponseEdit' 
+	description 'Request Response Eidt' 
+	alt 'emxProgramCentral.Button.Edit' 
+	label 'emxProgramCentral.Button.Edit' 
+	href '${COMMON_DIR}/decRequestDialogFS.jsp?mode=responseEdit'
+	setting 'Submit' 'true' 
+	setting 'Target Location' 'slideInFrame'
+	setting 'Registered Suite' 'ProgramCentral' 
+	setting 'Image' '${COMMON_DIR}/images/iconActionEdit.png'
+	setting 'Access Function' 'isRequestResponseEditAvailable' 
+	setting 'Access Program' 'decRequest'
+;
+add property command_decRequestResponseEdit on program eServiceSchemaVariableMapping.tcl to command 'decRequestResponseEdit'
+;

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<!-- Copyright 2014 , Dassault Systemes. All rights reserved. -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:widget="http://www.netvibes.com/ns/"> 
+	<head>
+	     <!-- Application Metas -->
+		<!-- These information will be displayed in the widget preferences -->
+		<title>MIB LOT</title>
+		<meta name="author" content="VDU" />
+		<meta name="description" content="MIB LOT" />
+		<!-- UWA Environment -->
+		<script type="text/javascript" src="../AmdLoader/AmdLoader.js"></script>
+		<!-- Load UWA environment --> 
+		<link rel="stylesheet" type="text/css" href="../c/UWA/assets/css/standalone.css" />
+		<script type="text/javascript" src="../c/UWA/js/UWA_Standalone_Alone.js"></script>
+		<!-- UWA/Class/View, Model and Collection will be loaded dynamically -->
+
+		<link rel="stylesheet" type="text/css" href="../UIKIT/UIKIT.css" /> 
+		<script type="text/javascript" src="../UIKIT/UIKIT.js"></script> 
+   
+
+	    <script type="text/javascript">
+	    
+	    var dependencies = dependencies || [];
+	    
+		require(
+			[
+				'DS/MIBListOfThingsWidget/MIBListOfThingsWidget',
+				'DS/WidgetServices/WidgetServices',
+				'DS/WAFData/WAFData'
+			].concat(dependencies),
+			
+			function(MIBListOfThingsWidget, widgetServices, WAFData) {
+				
+				var myWidget = {
+					onLoad: function(){
+						console.log('onLoad');
+						
+						var options = {runmyapp: true, id: this.id};
+						this.myLifecycleWidget = new MIBListOfThingsWidget(widget, widget.body, options);
+						widget.body.setContent(this.myLifecycleWidget);
+						
+						var that = this;
+						
+						this.myLifecycleWidget.container.addEventListener("drop", function (e) { 
+								e.preventDefault();
+							  								  
+								var serializedData = e.dataTransfer.getData("text/plain");
+								var droppedObject = JSON.parse(serializedData);
+                                var protocol = droppedObject.protocol;
+
+                                if (protocol!=="3DXContent")
+                                    return;
+								
+								if (droppedObject.hasOwnProperty("data") && droppedObject.data.hasOwnProperty("items") && droppedObject.data.items.length==1) {
+									var curObject = droppedObject.data.items[0];
+									
+									var envId    = curObject.envId;
+									var serviceId    = curObject.serviceId;
+									var objectId = curObject.objectId;
+									var objectType = curObject.objectType;
+									var displayName = curObject.displayName;
+									
+									that.myLifecycleWidget.executeCmd([{'objectId': objectId}]);
+								}
+								else
+									that.myLifecycleWidget.executeCmd([]);
+						});			
+						
+						this.myLifecycleWidget.container.addEventListener('dragover', function(e) {
+							e.preventDefault();
+						});
+						
+					},
+					
+					onRefresh: function() {
+						console.log('onRefresh');
+						this.myLifecycleWidget.refresh();
+					},
+					
+					onResize: function(){
+					}
+				};
+				
+				widget.addEvent('onLoad', myWidget.onLoad);
+				widget.addEvent('onRefresh', myWidget.onRefresh);
+				widget.addEvent('onResize', myWidget.onResize);
+		});
+		
+    </script>
+	</head>
+	<body>
+		<p>Loading...</p>
+	</body>
+</html>

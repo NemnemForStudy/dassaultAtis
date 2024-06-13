@@ -1,0 +1,66 @@
+################################################################################################
+# Create By thok : 2023. 05. 08
+# Admin Type : form
+# Name : decCreateOngoingProjectSpaceForm
+################################################################################################
+#delete form decCreateOngoingProjectSpaceForm;
+add form decCreateOngoingProjectSpaceForm web 
+	field
+		name 'Type'
+		label 'emxProgramCentral.Common.Type' 
+		businessobject 'type'
+		setting 'Field Size' '20' 
+		setting 'Field Type' 'basic' 
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Access Expression' false
+	field
+		name 'Policy'
+		label 'emxProgramCentral.Common.Policy' 
+		businessobject 'policy'
+		setting 'Field Size' '20' 
+		setting 'Field Type' 'basic' 
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Access Expression' false
+	field
+		name 'Name'
+		label 'emxProgramCentral.Label.decName' 
+		businessobject 'name'
+		setting 'Field Size' '20' 
+		setting 'Field Type' 'basic' 
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Required' 'true'
+	field
+		name 'BiddingProject'
+		label 'emxProgramCentral.Label.BiddingProject'
+		setting 'Field Size' '20' 
+		setting 'Field Type' 'program' 
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'function' 'setProjectName' 
+		setting 'program' 'emxProjectSpace'
+		setting 'Update Function' 'updateFunctionProject' 
+		setting 'Update Program' 'emxProjectSpace'
+		setting 'Editable' 'false'
+		setting 'Access Function' 'isCompleteBidding'
+		setting 'Access Program' 'emxProjectSpace'
+	field
+		name 'BiddingProject'
+		label 'emxProgramCentral.Label.BiddingProject'
+		range '${COMMON_DIR}/emxFullSearch.jsp?field=TYPES=type_ProjectSpace&selection=single&table=PMCProjectSummaryForProjects&showInitialResults=true&includeOIDprogram=emxProjectSpace:includeProjectStatusWinProject'
+		setting 'Field Size' '20' 
+		setting 'Field Type' 'basic' 
+		setting 'Show Clear Button' 'true'
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Editable' 'true'
+		setting 'Access Function' 'isNotCompleteBidding'
+		setting 'Access Program' 'emxProjectSpace'
+	field
+		name 'ProjectAdministrator'
+		label 'emxProgramCentral.Label.ProjectAdministrator'
+		range '${COMMON_DIR}/emxFullSearch.jsp?type=PERSON_CHOOSER&field=TYPES=type_Person:USERROLE=Project Lead,VPLMProjectLeader&table=PMCCommonPersonSearchTable&form=PMCCommonPersonSearchForm'
+		setting 'Field Type' 'basic' 
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Show Clear Button' 'true'
+		setting 'Required' 'true'
+;	
+add property 'form_decCreateOngoingProjectSpaceForm' on program 'eServiceSchemaVariableMapping.tcl' to form 'decCreateOngoingProjectSpaceForm'
+;

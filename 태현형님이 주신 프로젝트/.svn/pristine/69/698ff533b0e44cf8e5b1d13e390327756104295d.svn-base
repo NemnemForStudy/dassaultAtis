@@ -1,0 +1,11 @@
+m|InstantMessaging\InstantMessagingRichClient.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.0.22078|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\InstantMessagingRichClient\InstantMessagingRichClient.js|1647691984|6714
+s|InstantMessaging\InstantMessagingRichClient.mweb\src\InstantMessagingRichClient.js|1629375924|14085
+t|win_b64\webapps\InstantMessagingRichClient\RichClientAV.html|1647691984|1166
+s|InstantMessaging\InstantMessagingRichClient.mweb\src\RichClientAV.html|1629375924|1166
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

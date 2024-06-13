@@ -1,0 +1,14 @@
+m|i3DXCompassUI\i3DXCompassStandalone.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.1.22351|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\i3DXCompassStandalone\i3DXCompassStandalone.css|1669240410|1487
+s|i3DXCompassUI\i3DXCompassStandalone.mweb\src\i3DXCompassStandalone.css|1599283795|2218
+t|win_b64\webapps\i3DXCompassStandalone\i3DXCompassStandalone.html|1671246104|1958
+s|i3DXCompassUI\i3DXCompassStandalone.mweb\src\i3DXCompassStandalone.html|1669989888|1958
+t|win_b64\webapps\i3DXCompassStandalone\i3DXCompassStandalone.js|1671246105|3308
+s|i3DXCompassUI\i3DXCompassStandalone.mweb\src\i3DXCompassStandalone.js|1670436455|8454
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240
+u|win_b64\code\toolcmds\yuicompressor-2.4.9.bat|1647654585|205

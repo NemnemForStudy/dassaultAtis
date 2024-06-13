@@ -1,0 +1,1 @@
+define("UWA/Services/Auth/Adapter/Netvibes",["UWA/Core","UWA/Services/Auth/Adapter/Abstract"],function(t,e){"use strict";var n=e.extend({defaultOptions:{},hasIdentity:function(){},getIdentity:function(){},clearIdentity:function(){},authenticate:function(){}});return t.namespace("Services/Auth/Adapter/Netvibes",n,t)});

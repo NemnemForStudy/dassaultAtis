@@ -1,0 +1,1 @@
+define("DS/PIMwebPropertiesTabs/PIMwebPropertiesTabs_fr",{});define("DS/PIMwebPropertiesTabs/assets/nls/PIMwebPropertiesTabs",{privLevelSimulationError:"Impossible d'accéder à la définition de la simulation",isrInfoRetrievalFailed:"Impossible de récupérer les informations de simulation d'interférence"});

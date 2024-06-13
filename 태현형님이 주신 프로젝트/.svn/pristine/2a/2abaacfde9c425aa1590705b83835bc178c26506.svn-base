@@ -1,0 +1,16 @@
+m|ENOLifecycleWebUI\ReviseWidget.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.3.23059|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\ReviseWidget\ReviseWidget.css|1669240443|441
+s|ENOLifecycleWebUI\ReviseWidget.mweb\src\ReviseWidget.css|1626773062|539
+t|win_b64\webapps\ReviseWidget\ReviseWidget.html|1647692109|2487
+s|ENOLifecycleWebUI\ReviseWidget.mweb\src\ReviseWidget.html|1457017652|2487
+t|win_b64\webapps\ReviseWidget\ReviseWidget.js|1677621405|29041
+s|ENOLifecycleWebUI\ReviseWidget.mweb\src\ReviseWidget.js|1677065884|67596
+t|win_b64\webapps\ReviseWidget\assets\HelloWorld.png|1647692108|1463
+s|ENOLifecycleWebUI\ReviseWidget.mweb\src\assets\HelloWorld.png|1401131486|1463
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240
+u|win_b64\code\toolcmds\yuicompressor-2.4.9.bat|1647654585|205

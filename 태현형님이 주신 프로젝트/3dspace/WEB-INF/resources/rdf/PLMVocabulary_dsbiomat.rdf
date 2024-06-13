@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+<!DOCTYPE rdf:RDF [
+    <!ENTITY xml "http://www.w3.org/XML/1998/namespace" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY ds6w "http://www.3ds.com/vocabularies/ds6w#" >
+]>
+
+<rdf:RDF
+    xmlns:dsbiomat="http://www.3ds.com/vocabularies/dsbiomat/"
+    xml:base="http://www.3ds.com/vocabularies/dsbiomat/"
+    xmlns:xml="http://www.w3.org/XML/1998/namespace"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:ds6w="http://www.3ds.com/vocabularies/ds6w#">
+
+    <owl:Ontology rdf:about="http://www.3ds.com/vocabularies/dsbiomat/">
+        <rdfs:label xml:lang="en">BIOVIA Materials Registration Vocabulary</rdfs:label>
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">This ontology defines the BIOVIA Materials Registration vocabulary .</rdfs:comment>
+        <owl:versionInfo>R2020x</owl:versionInfo>
+    </owl:Ontology>
+
+    <owl:DatatypeProperty rdf:about="materialType">
+        <rdfs:label xml:lang="en">Material Type</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&ds6w;what"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment xml:lang="en">The material type (ie. Chemical, Biological, etc) of a material.</rdfs:comment>
+    </owl:DatatypeProperty>
+	
+	<owl:DatatypeProperty rdf:about="materialFunction">
+        <rdfs:label xml:lang="en">Material Function</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&ds6w;what"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment xml:lang="en">A purpose for which a material is commonly used or identified as.</rdfs:comment>
+    </owl:DatatypeProperty>
+	
+	<owl:DatatypeProperty rdf:about="materialGrade">
+        <rdfs:label xml:lang="en">Grade</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&ds6w;what"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment xml:lang="en">A quality classification.</rdfs:comment>
+    </owl:DatatypeProperty>
+	
+	<owl:DatatypeProperty rdf:about="supplierName">
+        <rdfs:label xml:lang="en">Supplier Name</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&ds6w;what"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment xml:lang="en">The place from which a sourced material can be ordered from.</rdfs:comment>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="identifierType">
+        <rdfs:label xml:lang="en">Identifier Type</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&ds6w;what"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment xml:lang="en">The identifier.</rdfs:comment>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="antibodyIsotype">
+        <rdfs:label xml:lang="en">Antibody Isotype</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&ds6w;what"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment xml:lang="en">The antibody isotope, as defined by the heavy chain(s). For example: IgA.</rdfs:comment>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="cellCulturePropertyType">
+        <rdfs:label xml:lang="en">Cell Culture Type</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&ds6w;what"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment xml:lang="en">The culture property of the cellular substance. For example, Adherent, Suspension.</rdfs:comment>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="cellType">
+        <rdfs:label xml:lang="en">Cell Type</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&ds6w;what"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment xml:lang="en">The type of biological cells. For example, Epithelial.</rdfs:comment>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="sequenceAnnotationFeatureType">
+        <rdfs:label xml:lang="en">Sequence Feature</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&ds6w;what"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment xml:lang="en">The feature type of the sequence annotation. For example: ORF.</rdfs:comment>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="speciesType">
+        <rdfs:label xml:lang="en">Species</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&ds6w;what"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment xml:lang="en">The species of an organism. For example: Homo sapiens.</rdfs:comment>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="substanceType">
+        <rdfs:label xml:lang="en">Substance Type</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&ds6w;what"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment xml:lang="en">The specific sub-type of the substance. For example: Protein.</rdfs:comment>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="tissueType">
+        <rdfs:label xml:lang="en">Tissue Type</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&ds6w;what"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment xml:lang="en">The tissue type from which a substance originates. For example, Heart.</rdfs:comment>
+    </owl:DatatypeProperty>
+
+</rdf:RDF>

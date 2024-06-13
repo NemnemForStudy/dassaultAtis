@@ -1,0 +1,35 @@
+
+### 230418 Created by CMG
+
+#delete command decTableDetailCommand;
+
+
+add command decTableDetailCommand
+	label "emxFramework.Command.decTableDetailCommand"
+	href '${COMMON_DIR}/emxIndentedTable.jsp?program=decTableMaster:findTableDetail&table=decCodeDetailTable&header=emxFramework.Command.decTableDetailCommand&submitAction=refreshCaller&toolbar=decTableDetailToolbar&editLink=true&selection=multiple&sortColumnName=none&relationName=relationship_decCodeDetailRel&isTo=false&sortColumnName=Sequence Order&sortDirection=ascending'
+	setting "Registered Suite" "Framework"
+	setting "Target Location" "content"
+	property "installer" value "ENOVIAEngineering"
+	property "application" value "Framework"
+	property "original name" value "decTableDetailCommand"
+;
+
+### href 수정 MQL ### 
+mod command decTableDetailCommand href '${COMMON_DIR}/emxIndentedTable.jsp?program=decTableMaster:findTableDetail&table=decTableDetailTable&header=emxFramework.Command.decTableDetailCommand&submitAction=refreshCaller&toolbar=decTableDetailToolbar&editLink=true&selection=multiple&sortColumnName=none&relationName=relationship_decCodeDetailRel&isTo=false&sortColumnName=Sequence Order&sortDirection=ascending';
+
+
+
+
+add property command_decTableDetailCommand on program eServiceSchemaVariableMapping.tcl to command decTableDetailCommand;
+
+# Modified by choimingi on 2023.09.09
+mod command decTableDetailCommand
+	add setting 'hasAccess' 'PIM' 
+	add setting 'Access Program' 'decAccess'
+	add setting 'Access Function' 'hasAccess'
+;
+mod command decTableDetailCommand
+href '${COMMON_DIR}/emxIndentedTable.jsp?program=decTableMaster:findTableDetail&table=decTableDetailTable&header=emxFramework.Command.decTableDetailCommand&submitAction=refreshCaller&toolbar=decTableDetailToolbar&selection=multiple&sortColumnName=none&relationName=relationship_decCodeDetailRel&isTo=false&sortColumnName=Sequence Order&sortDirection=ascending'
+;
+
+

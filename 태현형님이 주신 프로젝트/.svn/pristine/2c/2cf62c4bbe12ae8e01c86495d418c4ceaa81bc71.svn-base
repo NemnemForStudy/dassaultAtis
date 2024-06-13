@@ -1,0 +1,236 @@
+<?xml version="1.0"?>
+<!DOCTYPE rdf:RDF [
+    <!ENTITY xml "http://www.w3.org/XML/1998/namespace" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY ds6w "http://www.3ds.com/vocabularies/ds6w#" >
+]>
+
+<rdf:RDF
+    xmlns:dsbioform="http://www.3ds.com/vocabularies/dsbioform/"
+    xml:base="http://www.3ds.com/vocabularies/dsbioform/"
+    xmlns:xml="http://www.w3.org/XML/1998/namespace"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:ds6w="http://www.3ds.com/vocabularies/ds6w#">
+
+    <owl:Ontology rdf:about="http://www.3ds.com/vocabularies/dsbioform/">
+        <rdfs:label xml:lang="en">BIOVIA Formulation Vocabulary</rdfs:label>
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">This ontology defines the BIOVIA Formulation vocabulary .</rdfs:comment>
+        <owl:versionInfo>R2020x</owl:versionInfo>
+    </owl:Ontology>
+
+    <owl:DatatypeProperty rdf:about="alternateNumbers">
+        <rdfs:label xml:lang="en">Alternate Numbers</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&ds6w;what"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment xml:lang="en">Additional list of identifiers that can be used to recognize the formula.</rdfs:comment>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="approvedBy">
+        <rdfs:label xml:lang="en">Approved By</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&ds6w;who"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment xml:lang="en">Indicates the user name who approved the formula.</rdfs:comment>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="approvedDate">
+        <rdfs:label xml:lang="en">Approved Date</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&ds6w;when"/>
+        <rdfs:range rdf:resource="&xsd;dateTime"/>
+        <rdfs:comment xml:lang="en">Indicates the date when the formula is approved.</rdfs:comment>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="batchSize">
+        <rdfs:label xml:lang="en">Batch Size</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&ds6w;what"/>
+        <rdfs:range rdf:resource="&xsd;double"/>
+        <rdfs:comment xml:lang="en">Indicates Primary batch size for the formula.</rdfs:comment>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="category">
+        <rdfs:label xml:lang="en">Category</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&ds6w;what"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment xml:lang="en">Category of the formula.</rdfs:comment>
+    </owl:DatatypeProperty>	
+	
+    <owl:DatatypeProperty rdf:about="competitive">
+        <rdfs:label xml:lang="en">Competitive</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&ds6w;what"/>
+        <rdfs:range rdf:resource="&xsd;boolean"/>
+        <rdfs:comment xml:lang="en">Competitive</rdfs:comment>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="costPerKg">
+        <rdfs:label xml:lang="en">Cost Per Kg</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&ds6w;what"/>
+        <rdfs:range rdf:resource="&xsd;double"/>
+        <rdfs:comment xml:lang="en">Represents the Cost per Kg of the Material or Formula.</rdfs:comment>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="crossReference">
+        <rdfs:label xml:lang="en">Cross Reference</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&ds6w;what"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment xml:lang="en">Refers to any other formulas that may be necessary to understanding work performed by this formula.</rdfs:comment>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="currentFormulator">
+        <rdfs:label xml:lang="en">Current Formulator</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&ds6w;who"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment xml:lang="en">Indicates the person who is responsible for the development of the recipe.</rdfs:comment>
+    </owl:DatatypeProperty>
+	
+    <owl:DatatypeProperty rdf:about="doxFormula">
+        <rdfs:label xml:lang="en">DOX Formula</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&ds6w;what"/>
+        <rdfs:range rdf:resource="&xsd;boolean"/>
+        <rdfs:comment xml:lang="en">A DOX formula is a staging formula with relaxed validation rules waiting to be processed.</rdfs:comment>
+    </owl:DatatypeProperty>
+	
+    <owl:DatatypeProperty rdf:about="experimentNumber">
+        <rdfs:label xml:lang="en">Experiment Number</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&ds6w;what"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment xml:lang="en">Identifies the experiment number for this formula.</rdfs:comment>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="formulaName">
+        <rdfs:label xml:lang="en">Formula Name</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&ds6w;what"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment xml:lang="en">Indicates Formula Name</rdfs:comment>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="formulaNumber">
+        <rdfs:label xml:lang="en">Formula Number</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&ds6w;what"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment xml:lang="en">Indicates Formula Number</rdfs:comment>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="formulaType">
+        <rdfs:label xml:lang="en">Formula Type</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&ds6w;what"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment xml:lang="en">Indicates Formula Type</rdfs:comment>
+    </owl:DatatypeProperty>	
+	
+    <owl:DatatypeProperty rdf:about="formulator">
+        <rdfs:label xml:lang="en">Formulator</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&ds6w;who"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment xml:lang="en">Indicates the person who is responsible for the development of the formula.</rdfs:comment>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="notebookNumber">
+        <rdfs:label xml:lang="en">Notebook Number</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&ds6w;what"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment xml:lang="en">Identifies the physical lab notebook where data about this formula is maintained.</rdfs:comment>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="productForm">
+        <rdfs:label xml:lang="en">Product Form</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&ds6w;what"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment xml:lang="en">Identifies the form of the product (Gel, Aerosol, etc).</rdfs:comment>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="productType">
+        <rdfs:label xml:lang="en">Product Type</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&ds6w;what"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment xml:lang="en">Identifies if this formula is a Leave On or Rinse Off product (or neither).</rdfs:comment>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="purpose">
+        <rdfs:label xml:lang="en">Purpose</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&ds6w;what"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment xml:lang="en">Identifies the reason for change.</rdfs:comment>
+    </owl:DatatypeProperty>
+	
+    <owl:DatatypeProperty rdf:about="rdSite">
+        <rdfs:label xml:lang="en">RD Site</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&ds6w;where"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment xml:lang="en">Indicates the availability of this formula within the given R and D site.</rdfs:comment>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="recipeName">
+        <rdfs:label xml:lang="en">Recipe Name</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&ds6w;what"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment xml:lang="en">Identifies the Recipe Name.</rdfs:comment>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="recipeNumber">
+        <rdfs:label xml:lang="en">Recipe Number</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&ds6w;what"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment xml:lang="en">Identifies the Recipe Number.</rdfs:comment>
+    </owl:DatatypeProperty>
+	
+    <owl:DatatypeProperty rdf:about="shadeCode">
+        <rdfs:label xml:lang="en">Shade Code</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&ds6w;what"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment xml:lang="en">Numerical identifier for the shade of the formula.</rdfs:comment>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="shadeName">
+        <rdfs:label xml:lang="en">Shade Name</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&ds6w;what"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment xml:lang="en">Identifies name for the shade of the formula.</rdfs:comment>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="singlePieceSize">
+        <rdfs:label xml:lang="en">Single Piece Size</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&ds6w;what"/>
+        <rdfs:range rdf:resource="&xsd;double"/>
+        <rdfs:comment xml:lang="en">Indicates Single Piece Size.</rdfs:comment>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="subBrand">
+        <rdfs:label xml:lang="en">Sub Brand</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&ds6w;what"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment xml:lang="en">Product's Sub-brand.</rdfs:comment>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="subCategory">
+        <rdfs:label xml:lang="en">Sub Category</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&ds6w;what"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment xml:lang="en">Product's Sub-Category.</rdfs:comment>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="thirdPartyManufacturer">
+        <rdfs:label xml:lang="en">Third Party Manufacturer</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&ds6w;who"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment xml:lang="en">Indicates Third Party Manufacturer.</rdfs:comment>
+    </owl:DatatypeProperty>
+
+    <owl:DatatypeProperty rdf:about="thirdPartyRefNumber">
+        <rdfs:label xml:lang="en">Third Party Reference Number</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&ds6w;what"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment xml:lang="en">Represents Formula number used by the Third Party Manufacturer to identify this formula in their system.</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="intermediateFormula">
+        <rdfs:label xml:lang="en">Intermediate Formula</rdfs:label>
+        <rdfs:subPropertyOf rdf:resource="&ds6w;what"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:comment xml:lang="en">Represents Intermediate Formula.</rdfs:comment>
+    </owl:DatatypeProperty>
+</rdf:RDF>

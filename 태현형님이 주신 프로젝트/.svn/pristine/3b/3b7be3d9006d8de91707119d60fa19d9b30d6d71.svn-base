@@ -1,0 +1,1 @@
+define("DS/CAT3DWPanoply/CAT3DWPanoply_pt-BR",{});define("DS/CAT3DWPanoply/assets/nls/CAT3DWActionHelp",{tipLabel:"Dica",defaultTitle:"Ajuda","modal.labelButton":"Feito!",moreLabel:"Mais ajuda"});

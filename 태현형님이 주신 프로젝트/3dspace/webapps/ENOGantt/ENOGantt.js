@@ -1,0 +1,1 @@
+define("DS/ENOGantt/ENOGantt",["DS/ENOGantt/Infra","DS/ENOGantt/View/GanttView","DS/ENOGantt/Ven/Ext"],function(t,n,i){i.onReady(function(){i.QuickTips.init()})});

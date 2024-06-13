@@ -1,0 +1,1 @@
+define("DS/CATFLWidgetProperties/CATFLWidgetProperties_ko",{});define("DS/CATFLWidgetProperties/assets/nls/CATFLProperties",{msg_not_supported_selection:"지원되지 않는 선택 항목",msg_facet_no_available:"이 파셋은 사용할 수 없습니다."});

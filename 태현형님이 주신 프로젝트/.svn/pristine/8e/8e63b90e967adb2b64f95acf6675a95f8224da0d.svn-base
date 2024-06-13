@@ -1,0 +1,44 @@
+<div class="information-table">
+    <div class="" id="drive-rename" style="display: none;">
+        <div class="information-cell">{{NLS.title}}</div>
+        <div class="value-edit">
+            <input type="text" value="{{drive.title}}" placeholder="Title" autocomplete="off" autocorrect="off" autocapitalize="off" class="form-control form-control-root">
+        </div>
+        <div class="btn-rename-drive btn-edit">
+            <button type="button" class="btn-primary btn btn-root" disabled>{{NLS.rename}}</button>
+            <button type="button" class="btn-default btn btn-root">{{NLS.cancel}}</button>
+        </div>
+    </div>
+    <div class="information-row" id="drive-title">
+        <div class="information-cell">{{NLS.title}}</div>
+        <div class="information-cell--value">{{drive.title}}</div>
+        <span class="fonticon fonticon-pencil rename-drive"></span>
+    </div>
+    <div class="information-row">
+        <div class="information-cell">{{NLS.owner}}</div>
+        <div class="information-cell--value">{{drive.fullnameowner}}</div>
+    </div>
+    <div class="information-row">
+        <div class="information-cell">{{NLS.ownerStatus}}</div>
+        <div class="information-cell--value">{{drive.ownerstatus}}</div>
+    </div>
+    <div class="information-row" id="drive-quota">
+        <div class="information-cell">{{NLS.quota}}</div>
+        <div class="information-cell--value">{{drive.quota}} {{NLS.gb}}</div>
+        <span class="fonticon fonticon-pencil edit-quota"></span>
+    </div> 
+    <div id="quota-edit" style="display: none;">
+        <div class="information-cell">{{NLS.quota}}</div>
+        <div class="value-edit">
+            <input type="number" class="quota-input form-control" value="{{drive.quota}}" 
+            pattern="^\d*[1-9]\d*$" required min="0" max="10000" placeholder="Quota"
+             autocomplete="off" autocorrect="off" autocapitalize="off" >
+             <span >{{NLS.gb}}</span>
+        </div>
+        <div class="btn-edit-quota btn-edit">
+            <button type="button" class="btn-primary btn btn-root" disabled>{{NLS.save}}</button>
+            <button type="button" class="btn-default btn btn-root">{{NLS.cancel}}</button>
+        </div>
+    </div>
+    <span class="quota-error-message">{{NLS.quotaEditWrongValue}}</span>
+</div>

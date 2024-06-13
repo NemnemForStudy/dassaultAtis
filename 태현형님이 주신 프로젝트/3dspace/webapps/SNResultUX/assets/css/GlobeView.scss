@@ -1,0 +1,267 @@
+﻿.search-globe-view {
+  align-self: stretch;
+  flex: 1 1 auto;
+  display: flex;
+  height: 100%;
+  z-index: 10;
+  background-color: #00163c;
+  border-radius: 25px;
+  margin-top: 10px; // UX point #2
+
+  .search-globe-view-object {
+    width: 100%;
+    cursor: default;
+
+    canvas {
+      border-radius: 25px;
+    }
+
+    &.mini {
+      width: 90px !important;
+      height: 90px !important;
+      margin-top: 56px;
+      float: right;
+      margin-right: 14px;
+
+      canvas {
+        cursor: pointer !important;
+      }
+
+      .Search-MarkerInfo {
+        cursor: default;
+      }
+    }
+
+    .Search-MarkerInfo {
+      display: block;
+      font-size: 12px;
+      font-family: arial;
+      color: #3d3d3d;
+      height: 40px;
+      width: 40px;
+      text-align: center;
+      cursor: pointer;
+      overflow: hidden;
+      position: absolute;
+      resize: none;
+
+      .SearchMarkerInfo-count {
+        width: 38px;
+        max-width: 40px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        margin-top: 10px;
+      }
+    }
+
+    .Search-Marker-3DExp {
+      display: block;
+      font-size: 12px;
+      font-family: arial;
+      color: #3d3d3d;
+      height: auto;
+      width: 80px;
+      text-align: center;
+      cursor: pointer;
+      top: 50px;
+      background-repeat: no-repeat;
+      min-height: 80px;
+      overflow: hidden;
+      position: absolute;
+      resize: none;
+
+      .fonticon {
+        font-size: 30px;
+        color: #368ec4;
+        margin-top: 20px;
+      }
+
+      .Search-Source-Title {
+        padding-top: 15px;
+        font-family: '3ds';
+        color: white;
+        font-size: 12px;
+      }
+    }
+
+    .Search-Marker-Logo {
+      position: absolute;
+      overflow: hidden;
+      display: block;
+      resize: none;
+      cursor: default;
+      background-repeat: no-repeat;
+      min-width: 574px;
+      min-height: 574px;
+      background-color: #34759b;
+      border-radius: 50%;
+      background-size: cover;
+    }
+  }
+
+  .Search-docking {
+    display: flex;
+    position: absolute;
+    overflow: hidden;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    //border: 1px solid #77797C;
+    background: #77797C;
+    color: white;
+    cursor: pointer;
+    font-size: 30px;
+    background-color: #368EC4;
+    border-color: #368EC4;
+    margin-top: -4px;
+    margin-left: 0px;
+    z-index: 191;
+
+    .left {
+      margin-top: -3px;
+      margin-left: 3px; // center verticaly the arrow
+    }
+
+    &.collapsed {
+      background-color: white;
+      border-color: #77797C;
+      display: flex !important;
+
+      .globe {
+        color: #77797C;
+        font-size: 24px;
+        padding-bottom: -30px;
+        margin-top: 2px;
+        margin-left: 7px;
+      }
+
+      .chevron {
+        color: #77797C;
+        font-size: 14px;
+        margin-left: -9px;
+        margin-top: 10px;
+      }
+    }
+  }
+  /*.search-globe-view {
+    display: inline-block;
+    width: 75%;
+
+    .map-container {
+      height: 100%;
+
+      .leaflet-zoom-animated {
+        height: 100%;
+        width: 100%;
+      }
+
+      .leaflet-tile-loaded {
+        height: 100%;
+        width: 100%;
+      }
+    }
+
+    .Search-MarkerInfo {
+      display: block;
+      font-size: 12px;
+      font-family: arial;
+      color: #3d3d3d;
+      height: 40px;
+      width: 40px;
+      text-align: center;
+      cursor: pointer;
+
+      .SearchMarkerInfo-count {
+        width: 38px;
+        max-width: 40px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        margin-top: 10px;
+      }
+    }
+  }*/
+  .SearchMapView-LargeTile {
+    display: inline-block;
+
+    .wux-layout-largetilecollectionView {
+      position: relative !important;
+      height: 100%;
+    }
+
+    .empty-view {
+      width: 100%;
+      position: relative !important;
+    }
+  }
+
+  .SearchMapView-Globe-mobile {
+    width: 100%;
+    height: 100%;
+    z-index: 5000;
+    display: grid;
+    top: 0;
+    bottom: 0;
+    overflow-y: auto;
+    background-color: white;
+    overflow-x: hidden;
+
+    .map-container {
+      height: 100%;
+
+      .leaflet-zoom-animated {
+        height: 100%;
+        width: 100%;
+      }
+
+      .leaflet-tile-loaded {
+        height: 100%;
+        width: 100%;
+      }
+    }
+  }
+
+  .wux-windows-docking-element-collapser {
+    height: 40px !important;
+    width: 100%;
+    bottom: 25px;
+    display: flex;
+    text-align: center;
+    position: absolute;
+    background-color: unset !important;
+    border-top-style: unset !important;
+
+    .globe-collapser-icon {
+      background-color: #368ec4;
+      height: 38px !important;
+      width: 38px !important;
+      text-align: center;
+      margin-left: auto;
+      margin-right: auto;
+      border-top-right-radius: 50%;
+      border-top-left-radius: 50%;
+
+      .fonticon {
+        color: white;
+        font-size: 24px;
+      }
+    }
+  }
+
+  .SearchMapView-LargeTile-mobile {
+    display: block;
+    width: 100%;
+    height: 100%;
+
+    .wux-layout-largetilecollectionView {
+      position: relative !important;
+      height: calc(100% - 40px);
+    }
+
+    .empty-view {
+      width: 100%;
+      position: relative !important;
+    }
+  }
+}

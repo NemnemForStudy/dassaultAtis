@@ -1,0 +1,1 @@
+define("DS/ApplicationFrame/ApplicationFrame_ja",{});define("DS/ApplicationFrame/assets/nls/ApplicationFrameActionBar",{hideActionBar:"アクション バーを非表示",showActionBar:"アクション バーを表示"});

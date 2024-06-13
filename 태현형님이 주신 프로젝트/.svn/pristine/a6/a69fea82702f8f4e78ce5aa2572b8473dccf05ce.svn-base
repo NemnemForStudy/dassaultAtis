@@ -1,0 +1,125 @@
+@keyframes labelFadeInFast {
+  from {
+    opacity: 0; }
+
+  to {
+    opacity: 1; } }
+
+@keyframes labelFadeInSlow {
+  from {
+    opacity: 0; }
+
+  50% {
+    opacity: 0; }
+
+  to {
+    opacity: 1; } }
+
+.sch-label-show-direct {
+  opacity: 1; }
+
+.sch-label-show-fast {
+  animation: labelFadeInFast 0.6s;
+  opacity: 1; }
+
+.sch-label-show-slow {
+  animation: labelFadeInSlow 1.5s;
+  opacity: 1; }
+
+.sch-label {
+  box-sizing: border-box;
+  background-color: #fff3e9;
+  border: 1px solid #b4b6ba;
+  border-radius: 4px;
+  padding: 2px;
+  max-width: 400px;
+  visibility: visible;
+  pointer-events: all;
+  line-height: normal; }
+  .sch-label.sch-label-hidden {
+    display: none; }
+  .sch-label.sch-label-solo .sch-label-pin-icon {
+    position: absolute;
+    color: #b4b6ba;
+    cursor: pointer;
+    font-size: 14px; }
+    .sch-label.sch-label-solo .sch-label-pin-icon:hover {
+      transform: scale(1.1);
+      color: #d1d4d4; }
+  .sch-label.sch-label-solo .sch-label-title {
+    padding-left: 20px;
+    padding-right: 20px; }
+  .sch-label.sch-label-trace:not(.sch-trace-hidden) {
+    background-color: #b2dfdb; }
+  .sch-label.sch-label-trace-debug:not(.sch-trace-hidden) {
+    background-color: #ffd199; }
+  .sch-label.sch-label-trace:not(.sch-trace-hidden) .sch-label-content, .sch-label.sch-node-label-trace-debug:not(.sch-trace-hidden) .sch-label-content {
+    border-top: 1px solid darkgray;
+    scrollbar-width: thin;
+    scrollbar-color: darkgrey transparent; }
+    .sch-label.sch-label-trace:not(.sch-trace-hidden) .sch-label-content::-webkit-scrollbar, .sch-label.sch-node-label-trace-debug:not(.sch-trace-hidden) .sch-label-content::-webkit-scrollbar {
+      width: 5px;
+      height: 5px; }
+    .sch-label.sch-label-trace:not(.sch-trace-hidden) .sch-label-content::-webkit-scrollbar-thumb, .sch-label.sch-node-label-trace-debug:not(.sch-trace-hidden) .sch-label-content::-webkit-scrollbar-thumb {
+      background: darkgrey;
+      border-radius: 10px; }
+      .sch-label.sch-label-trace:not(.sch-trace-hidden) .sch-label-content::-webkit-scrollbar-thumb:hover, .sch-label.sch-node-label-trace-debug:not(.sch-trace-hidden) .sch-label-content::-webkit-scrollbar-thumb:hover {
+        background: #8f8f8f; }
+    .sch-label.sch-label-trace:not(.sch-trace-hidden) .sch-label-content::-webkit-scrollbar-track, .sch-label.sch-node-label-trace-debug:not(.sch-trace-hidden) .sch-label-content::-webkit-scrollbar-track {
+      background: white;
+      border-radius: 10px;
+      margin-top: 2px; }
+  .sch-label .sch-label-title {
+    box-sizing: border-box;
+    font-family: Arial;
+    font-size: 14px;
+    vertical-align: middle;
+    text-align: center;
+    padding-left: 3px;
+    padding-right: 3px;
+    overflow-y: hidden;
+    overflow-x: auto;
+    white-space: pre;
+    scrollbar-width: thin;
+    scrollbar-color: lightgrey transparent; }
+    .sch-label .sch-label-title::-webkit-scrollbar {
+      width: 5px;
+      height: 5px; }
+    .sch-label .sch-label-title::-webkit-scrollbar-thumb {
+      background: lightgrey;
+      border-radius: 10px; }
+      .sch-label .sch-label-title::-webkit-scrollbar-thumb:hover {
+        background: #b9b9b9; }
+    .sch-label .sch-label-title::-webkit-scrollbar-track {
+      background: white;
+      border-radius: 10px;
+      margin-top: 2px; }
+    .sch-label .sch-label-title .sch-label-port-name {
+      font-weight: bold; }
+    .sch-label .sch-label-title .sch-label-dataport-valuetype, .sch-label .sch-label-title .sch-label-controlport-eventtype {
+      font-style: italic; }
+  .sch-label .sch-label-content {
+    box-sizing: border-box;
+    overflow: auto;
+    max-height: 150px;
+    margin-top: 2px;
+    border-top: 1px solid lightgrey;
+    padding-top: 2px;
+    white-space: pre;
+    user-select: text;
+    scrollbar-width: thin;
+    scrollbar-color: lightgrey transparent; }
+    .sch-label .sch-label-content::-webkit-scrollbar {
+      width: 5px;
+      height: 5px; }
+    .sch-label .sch-label-content::-webkit-scrollbar-thumb {
+      background: lightgrey;
+      border-radius: 10px; }
+      .sch-label .sch-label-content::-webkit-scrollbar-thumb:hover {
+        background: #b9b9b9; }
+    .sch-label .sch-label-content::-webkit-scrollbar-track {
+      background: white;
+      border-radius: 10px;
+      margin-top: 2px; }
+    .sch-label .sch-label-content.sch-valuetype-boolean, .sch-label .sch-label-content.sch-valuetype-number, .sch-label .sch-label-content.sch-valuetype-string.sch-valuetype-string-monoline, .sch-label .sch-label-content.sch-valuetype-undefined {
+      text-align: center; }

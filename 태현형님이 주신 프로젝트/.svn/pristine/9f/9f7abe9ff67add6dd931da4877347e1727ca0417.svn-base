@@ -1,0 +1,121 @@
+{
+	"dsmvxcad:attribute.XCADExtension.CADOrigin": {
+        "property": "computed",
+        "key": "dsxcad:xCADAttributes",
+        "fetchOnce":true,
+    	 "label": "XCAD.Label.Attribute.CADOrigin",
+         "example": "com.dassault_systemes.enovia.xapps.dsxcad.implementations.dsxcadOpenAPIImpl.getCADOrigin",
+         "description": "Entity CAD specific attributes"
+    },
+    
+    "dsmvxcad:attribute.XCADRepresentation.CADType": {
+        "property": "attribute[XCADNonPSBaseRepReference.V_CADObjectType]",
+        "key": "cadtype",
+         "label": "XCAD.Label.Attribute.CADType",
+         "example": "process",
+         "description": "Entity CAD Type"
+    },
+    "dsmvxcad:attribute.XCADFamilyRepresentation.CADType": {
+        "property": "attribute[XCADModelRepReference.V_CADFileType]",
+        "key": "cadtype",
+         "label": "XCAD.Label.Attribute.CADType",
+         "example": "assemblyFamily,componentFamily",
+         "description": "Entity CAD Type"
+    },
+    "dsmvxcad:attribute.AuthoringFile.FileName": {
+        "property": "computed",
+            "key": "dsxcad:AuthoringFile",
+    		"fetchOnce":true,
+    		"label": "XCAD.Label.Attribute.CADFileName",
+            "example": "com.dassault_systemes.enovia.xapps.dsxcad.implementations.dsxcadOpenAPIImpl.getAuthoringFileName",
+            "description": "Information of the file associated to the XCAD Entity"
+    },
+    "dsmvxcad:attribute.VisualizationFile.FileName": {
+        "property": "computed",
+            "key": "dsxcad:VisualizationFile",
+    		"fetchOnce":true,
+    		"label": "XCAD.Label.Attribute.VisuCADFileName",
+            "example": "com.dassault_systemes.enovia.xapps.dsxcad.implementations.dsxcadOpenAPIImpl.getVisualizationFileName",
+            "description": "Information of the visualization file associated to the XCAD Entity"
+    },
+    "dsmvxcad:attribute.CADLink": {
+    	"property": "from[XCADBaseDependency].physicalid",
+        "key": "relatedData",
+        "mask": "dsmvxcad:DefaultCADLinkMask",
+        "maskAppliesTo": "rel"
+    },
+    "dsmvxcad:attribute.CADLink.CADType": {
+         "property": "attribute[XCADBaseDependency.V_CADLinkType]",
+         "key": "cadlinktype"
+    },
+    "dsmvxcad:attribute.CADLink.Pointed":{
+        "property": "computed",
+        "key": "referencedObject",
+       "fetchOnce":true,
+    	"example": "com.dassault_systemes.enovia.xapps.dsxcad.implementations.dsxcadOpenAPIImpl.getPointedInfo",
+         "description": "Referenced object informations"
+    },
+    "dsmvxcad:attribute.CADLink.PointedItem":{
+        "property": "computed",
+        "key": "referencedObject",
+       "fetchOnce":true,
+    	"example": "com.dassault_systemes.enovia.xapps.dsxcad.implementations.dsxcadOpenAPIImpl.getRelatedObjects",
+         "description": "informations of if the item is active"
+    },
+    "dsmvxcad:attribute.CADItemLink": {
+    	"property": "from[XCADItem].physicalid",
+        "key": "DerivedItems",
+        "mask": "dsmvxcad:DefaultCADItemLinkMask",
+        "maskAppliesTo": "rel"
+    },
+     "dsmvxcad:attribute.CADLink.CADItemType": {
+         "property": "attribute[XCADItem.Is_ActiveItem]",
+         "key": "active"
+    },
+    "dsmvxcad:attribute.ECADExtension" :{
+    	"property": "computed",
+        "key": "ECADExtension",
+       "fetchOnce":true,
+    	"example": "PLMPCBPhysicalComponent",
+        "description": "ECAD type"
+    },
+    "dsmvxcad:FamilyEnterpriseAttributes" :{
+    	"property": "computed",
+        "key": "dsxcad:FamilyEnterpriseAttributes",
+		"example": "com.dassault_systemes.enovia.xapps.dsxcad.implementations.dsxcadOpenAPIImpl.getEnterpriseAttributesDetails"
+    },
+    "dsmvxcad:attribute.Template": {
+        "property": "computed",
+        "key": "dsxcad:TemplateAttributes",
+        "fetchOnce":true,
+        "example": "com.dassault_systemes.enovia.xapps.dsxcad.implementations.dsxcadOpenAPIImpl.getTemplateInfo"
+    },
+    "dsmvxcad:attribute.Symbol": {
+       "property": "computed",
+        "key": "dsxcad:SymbolAttributes",
+        "fetchOnce":true
+    },
+    "dsmvxcad:attribute.ElecProject": {
+       "property": "computed",
+        "key": "dsxcad:ElecProjectAttributes",
+        "fetchOnce":true
+    },
+     "dsmvxcad:attribute.ElecProject.ContractNumber": {
+        "property": "attribute[XCADElectricalProject.V_ContractNumber]",
+        "key": "measurement"
+    },
+     "dsmvxcad:attribute.ElecProject.CustomerName": {
+        "property": "attribute[XCADElectricalProject.V_CustomerName]",
+        "key": "measurement"
+    },
+     "dsmvxcad:attribute.ElecProject.DesignOfficeName": {
+        "property": "attribute[XCADElectricalProject.V_DesignOfficeName]",
+        "key": "measurement"
+    },
+    "dsmvxcad:program.CP.DrawingEnterpriseAttributes" : {
+        "property": "computed",
+        "key": "dsdrw:EnterpriseAttributes",
+		"example": "com.dassault_systemes.enovia.xapps.dsxcad.implementations.dsxcadOpenAPIImpl.getEnterpriseAttributesDetails"
+   
+    }
+}

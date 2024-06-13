@@ -1,0 +1,1 @@
+define("DS/VideoGalleryWdg/VideoGalleryWdg_ru",{});define("DS/VideoGalleryWdg/assets/nls/VideoGallery",{NoInternet:"Возможно, интернет-соединение неактивно"});

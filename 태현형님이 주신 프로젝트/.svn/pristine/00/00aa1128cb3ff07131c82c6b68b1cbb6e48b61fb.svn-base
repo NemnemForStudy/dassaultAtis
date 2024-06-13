@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:widget="http://www.netvibes.com/ns/">
+<head>
+
+<title>Feed Reader</title>
+<!-- Application Metas -->
+<meta name="author" content="Dassault Systèmes" />
+<meta name="description" content="FeedReader" />
+<meta name="apiVersion" content="1.4" />
+<meta name="debugMode" content="false" />
+<meta name="strictMode" content="false" />
+<meta name="autoRefresh" content="10" />
+
+<widget:preferences>
+    <preference name="title" type="text" label="Title_html" defaultValue="" />
+    <preference name="url" type="text" label="Url_html" defaultValue="" />
+    <preference name="view" type="list" label="View_html" defaultValue="Normal">
+        <option value="Normal" label="Normal" />
+        <option value="Channel" label="Channel" />
+    </preference>
+</widget:preferences>
+
+<script type="text/javascript" src="../UIKIT/UIKIT.js"></script>
+<link rel="stylesheet" href="../UIKIT/UIKIT.css" type="text/css" />
+
+<script type="text/javascript" src="../AmdLoader/AmdLoader.js"></script>
+<link rel="stylesheet" type="text/css" href="../c/UWA/assets/css/standalone.css" />
+
+<script type="text/javascript" src="../c/UWA/js/UWA_Standalone_Alone.js"></script>
+
+<style type="text/css">
+.custo-item {
+    min-height: 2em;
+    width: 100%;
+}
+
+.custo-item-icon {
+    background-size: contain;
+    width: 4em;
+    height: 4em;
+    float: left;
+}
+
+.custo-item-title {
+    font-size: 2em;
+    padding-top: .3em;
+    margin-bottom: .3em;
+}
+
+.generic-content {
+    overflow-y: auto;
+    width: 100%;
+    height: 100%;
+    padding: 1em;
+}
+
+.skeleton .skeleton-id-cnt .facets-section {
+    display: none;
+}
+
+/* TileView overrides to avoid display images when necessary. Only for ListView (list-container). */
+.no-thumbnail .list-container .tile-header {
+    display: none;
+}
+.no-thumbnail .list-container .tile-body {
+    margin-left: 15px;
+}
+
+
+.my-alert {
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    height: auto;
+    -webkit-justify-content: center;
+    justify-content: center;
+    margin-top: 5px;
+}
+
+.my-alert .alert-message {
+    width: auto;
+    position: relative;
+    text-align: center;
+}
+</style>
+
+<!-- Application JavaScript Source -->
+<script type="text/javascript">
+
+
+
+/*global require, widget*/
+
+require([ 'DS/FeedReaderWdg/FeedReader' ], function(FeedReader) {
+    'use strict';
+    widget.addEvents({
+        onLoad: function() {
+            FeedReader.onStart(widget);
+        },
+        onRefresh: FeedReader.onLoad,
+        onSearch: FeedReader.onSearch,
+        onResetSearch: FeedReader.onResetSearch,
+        onViewChange: FeedReader.onViewChange
+    });
+});
+</script>
+    </head>
+    <body></body>
+</html>

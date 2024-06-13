@@ -1,0 +1,1 @@
+define("DS/ENOPS/ENOPS_app_ko",{});define("DS/ENOPS_app/assets/nls/ENOPS_app",{appDescription:"쉽고 효율적인 방법으로 구조 탐색 및 편집",newProduct:"새 제품",newPart:"새 파트",newDrawing:"새 도면"});

@@ -1,0 +1,52 @@
+<?xml version="1.0" ?>
+<OOTBParameterization regSuite="ENOXFLPCommonERServices">
+    <Domain id="SystemsArchitectureDefinition">
+        <Family id="ArchitectureNumber">
+            <Parameter id="SystemsArchitectureDefinition" implementation= "com.dassault_systemes.enovia.xapps.flp.sad.param.impl.ArchitectureNumberPatternXPHandler">
+            </Parameter>
+        </Family>
+    </Domain>
+    <Domain id="SystemsArchitectureDefinitionCSGroup">
+        <Family id="CSGroup">
+            <Parameter id="SystemsArchitectureDefinitionCSGroup" implementation= "com.dassault_systemes.enovia.xapps.flp.sad.param.impl.CollaborativeSpacesGroupXPHandler">
+            </Parameter>
+        </Family>
+    </Domain>
+    <Domain id="SystemsArchitectureDefinitionOtbParameter">
+        <Family id="ArchitectureNumberOtbParameter">
+            <Parameter id="ArchitectureNumberFormatByType" implementation="com.dassault_systemes.enovia.xapps.flp.sad.param.impl.OtbParameterArchitectureNumberFormatByType">
+                <Argument id="Argument" type="string" input="checkbox" default="Disabled"/>
+            </Parameter>
+            <Parameter id="ArchitectureNumberCopyToTitleL" implementation="com.dassault_systemes.enovia.xapps.flp.sad.param.impl.OtbParameterArchitectureNumberCopyToTitleL">
+                <Argument id="Argument" type="string" input="checkbox" default="Disabled"/>
+            </Parameter>
+            <Parameter id="ArchitectureNumberCopyToTitleP" implementation="com.dassault_systemes.enovia.xapps.flp.sad.param.impl.OtbParameterArchitectureNumberCopyToTitleP">
+                <Argument id="Argument" type="string" input="checkbox" default="Disabled"/>
+            </Parameter>
+            <Parameter id="ArchitectureNumberForbidFrozenReferenceEdit" implementation="com.dassault_systemes.enovia.xapps.flp.sad.param.impl.OtbParameterArchitectureNumberForbidFrozenReferenceEdit">
+                <Argument id="Argument" type="string" input="checkbox" default="Enabled"/>
+            </Parameter>
+        </Family>
+        <Family id="ArchitectureNumberUnicityOtbParameter">
+            <Parameter id="ArchitectureNumberCheckUnicity" implementation="com.dassault_systemes.enovia.xapps.flp.sad.param.impl.OtbParameterArchitectureNumberCheckUnicity">
+                <Argument id="Argument" type="string" input="checkbox" default="Disabled"/>
+            </Parameter>
+            <Parameter id="ArchitectureNumberCheckUnicityByCSGroup" implementation="com.dassault_systemes.enovia.xapps.flp.sad.param.impl.OtbParameterArchitectureNumberCheckUnicityByCSGroup">
+                <Argument id="Argument" type="string" input="checkbox" default="Disabled"/>
+            </Parameter>
+            <Parameter id="ArchitectureNumberAllowDuplicateP2L" implementation="com.dassault_systemes.enovia.xapps.flp.sad.param.impl.OtbParameterArchitectureNumberAllowDuplicateP2L">
+                <Argument id="Argument" type="string" input="checkbox" default="Disabled"/>
+            </Parameter>
+        </Family>
+        <Family id="ProposedSolutionOtbParameter">
+            <Parameter id="AllowMultipleProposedSolutions" implementation="com.dassault_systemes.enovia.xapps.flp.sad.param.impl.OtbParameterAllowMultipleProposedSolutions">
+                <Argument id="Argument" type="string" input="checkbox" default="Enabled"/>
+            </Parameter>
+        </Family>
+        <Family id="LogicalReferenceOtbParameter">
+            <Parameter id="LogicalReferenceCreateShowSubTypes" implementation="com.dassault_systemes.enovia.xapps.flp.sad.param.impl.OtbParameterLogicalReferenceCreateShowSubTypes">
+                <Argument id="Argument" type="string" input="checkbox" default="Enabled"/>
+            </Parameter>
+        </Family>
+    </Domain>
+</OOTBParameterization>

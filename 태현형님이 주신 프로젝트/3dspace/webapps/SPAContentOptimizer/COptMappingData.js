@@ -1,0 +1,2 @@
+/*!  Copyright 2015 Dassault Systemes. All rights reserved. */
+define("DS/SPAContentOptimizer/COptMappingData",["DS/CSICommandBinder/CSICommandBinder"],function(t){"use strict";var n=function(){this.targetEntityPID="",this.sourceEntityPID=""};return t.declareType({type:"COptMappingData",serialize:function(t,n){return t.writeString("targetEntityPID",n.targetEntityPID),t.writeString("sourceEntityPID",n.sourceEntityPID),!0},unserialize:function(t){var i=new n;return i.targetEntityPID=t.readString("targetEntityPID"),i.sourceEntityPID=t.readString("sourceEntityPID"),i}}),n});

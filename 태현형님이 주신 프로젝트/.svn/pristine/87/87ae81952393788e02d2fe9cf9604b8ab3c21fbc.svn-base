@@ -1,0 +1,1 @@
+define("DS/CATW3DMoveManager/CATW3DMoveManager_ko",{});define("DS/CATW3DMoveManager/assets/nls/CATW3DMoveReferent",{title:"이동",allowDirectManipulation:"직접 조작 허용",moveSection:"3D 지오메트리를 끌 때 이동",first:"첫 번째 어셈블리 수준",leaf:"리프 파트"});

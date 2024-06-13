@@ -1,0 +1,1 @@
+define("DS/OSLCConsumer/OSLCConsumer_pt-BR",{});define("DS/OSLCConsumer/assets/nls/OSLCConsumerNls",{selectRepository:"Repositório:",selectProvider:"Fornecedor:",selectSingleObject:"Selecione um único artefato antes de enviar a caixa de diálogo.",processing:"Processando..."});

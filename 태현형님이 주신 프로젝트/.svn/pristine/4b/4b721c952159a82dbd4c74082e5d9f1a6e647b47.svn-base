@@ -1,0 +1,1 @@
+define("DS/CADExportConfig/utils/Constants",[],function(){"use strict";return{CAD_MASTER_3DEXP:"3DEXPERIENCE",CAD_MASTER_V5:"CATIAV5",CAD_3DSHAPE:"3DShape",VALIDATE_URL:"/resources/xcadexport/services/validate",BOOKMARK_TYPES:["Workspace","Workspace Vault"]}});

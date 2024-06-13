@@ -1,0 +1,88 @@
+<?xml version="1.0" ?>
+
+<!-- ENOVIA DICTIONARY  -->
+<!-- COPYRIGHT DASSAULT SYSTEMES 2020, All rights reserved -->
+
+<Package xmlns="PLMDictionaryUnified"
+    ModelerType="Top"
+    BelongsToModeler="RFLVPMLogical"
+    Name="ArchitectureSolution"
+    Uuid="d31acbd4-56eb-11ea-99d9-f875a4373278"
+    UseNames="ERCoreModeler"  
+    CustomerExposition="Programmer"
+	Architecture="All" >
+  
+  
+  
+     <!--Relation From FLP ref to P ref-->
+
+   <RelationClass Name="ProposedSolution"
+		Uuid="196882d2-9ec3-4cc2-984f-48fdf5b10c07"
+		Abstract="No"
+		SuperName="RelationType"
+		CustomerExposition="Programmer"  
+		RelationNature="Pointer"
+		Specializable="No"
+		CustomerExtensible="No">
+
+		<Property Name="LockUnlockAvailability"    Value="No"/>
+		<Property Name="TransferOwnerShipAvailability"    Value="No"/>
+		<Property Name="EditPropertiesAvailability"    Value="No"/> 
+		<Property Name="ManageAccessAvailability"    Value="No"/>
+		<Property Name="ShareBetweenProjectsAvailability"    Value="No"/>
+
+		<SubClause Name="from" 
+				TargetName="RFLPLMFunctionalReference" 
+				minorrevision="replicate" 
+				clone="replicate" 
+				propagatemodify="Yes" 
+				propagateconnection="Yes" 
+				cardinality="Many"/> 
+
+		<SubClause Name="from" 
+				TargetName="VPMReference" 
+				minorrevision="replicate" 
+				clone="replicate" 
+				propagatemodify="Yes" 
+				propagateconnection="Yes" 
+				cardinality="Many"/> 
+
+		<SubClause Name="from" 
+				TargetName="RFLVPMLogicalReference" 
+				minorrevision="replicate" 
+				clone="replicate" 
+				propagatemodify="Yes" 
+				propagateconnection="Yes" 
+				cardinality="Many"/> 
+
+		<SubClause Name="to"   
+				TargetName="VPMReference" 
+				cardinality="Many"/>
+
+
+<!-- Export-Exchange-->
+			<Method ImplementationType="None">
+			<RealizeMethodType href="ExportScope.meth#ExportScope"/>
+			</Method>
+			
+			<Method ImplementationType="None">
+			<RealizeMethodType href="ExchangeScope.meth#ExchangeScope"/>
+			</Method>
+
+
+
+   </RelationClass>
+
+  <Function Name="ArchitectureSolution_GetProposedSolution">
+    <Implementation Name="ArchitectureSolution_GetProposedSolution" FileLocation="ArchitectureSolution_GetProposedSolution.plmql" Language="PLMQL"/>
+    <Signature href="ENOArcSolSignature"/>
+  </Function>
+  
+  <Signature id="ENOArcSolSignature">
+    <Parameter Name="InputIds" Lower="0" Upper="-1" Direction="in" MultiValuated="Yes" DataType="PLMId"/>
+    <Parameter Name="OutputIds" Lower="0" Upper="-1" Direction="out" MultiValuated="No" DataType="PLMRouteSet"/>
+  </Signature>
+  
+</Package>
+
+

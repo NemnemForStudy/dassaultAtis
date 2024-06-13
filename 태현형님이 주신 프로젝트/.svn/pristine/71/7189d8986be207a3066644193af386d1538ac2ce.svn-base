@@ -1,0 +1,28 @@
+### 230418 Created by CMG
+
+
+#delete relationship decCodeMasterRel;
+
+
+add relationship decCodeMasterRel
+	description 'F.Project Space T.dewCodeMaster'
+	preventduplicates
+	from
+	 type "Project Space"
+	 cardinality 1
+	 revision none
+	 clone none
+	to
+	 type "decCodeMaster"
+	 cardinality many
+	 revision none
+	 clone replicate
+;
+
+add property relationship_decCodeMasterRel on program eServiceSchemaVariableMapping.tcl to relationship decCodeMasterRel;
+
+# Modified by hslee on 2023.07.31
+mod relationship decCodeMasterRel
+	to 
+		clone none
+;

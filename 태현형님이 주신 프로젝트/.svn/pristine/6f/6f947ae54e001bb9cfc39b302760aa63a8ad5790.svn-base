@@ -1,0 +1,115 @@
+{
+    "dsmvbsd:basic.id": {
+        "property": "physicalid",
+        "key": "id",
+        "label": "CRS.common.Label.Attribute.Id",
+        "example": "EE562168015FFCF14F940A513C63AA77",
+        "description": "Entity physical id",
+        "index": "resourceid"
+    },
+    "dsmvbsd:basic.type": {
+        "property": "type",
+        "key": "type",
+        "label": "CRS.common.Label.Attribute.Type",
+        "format": "type",
+        "example": "My Type",
+        "description": "Basic type value",
+        "index": "ds6w:what/ds6w:type"
+    },
+    "dsmvbsd:basic.modified": {
+        "property": "modified",
+        "key": "modified",
+        "label": "CRS.common.Label.Attribute.Modified",
+        "format": "datetime",
+        "example": "Dec 15, 2021 11:17 PM",
+        "description": "Basic modified date",
+        "index": "MODIFIED"
+    },
+    "dsmvbsd:basic.created": {
+        "property": "originated",
+        "key": "created",
+        "label": "CRS.common.Label.Attribute.Created",
+        "format": "datetime",
+        "example": "Dec 11, 2022 12:53 PM",
+        "description": "Object created date",
+        "index": "ORIGINATED"
+    },
+    "dsmvbsd:basic.name": {
+        "property": "name",
+        "key": "name",
+        "label": "CRS.common.Label.Attribute.Name",
+        "example": "My name",
+        "description": "object name",
+        "index": "ds6w:identifier"
+    },
+    "dsmvbsd:attribute.title": {
+        "property": "attribute[Title]",
+        "key": "title",
+        "label": "CRS.common.Label.Attribute.Title",
+        "example": "My title",
+        "description": "Object Title value",
+        "index": "ds6w:label"
+    },
+    "dsmvbsd:basic.description": {
+        "property": "description",
+        "key": "description",
+        "label": "CRS.common.Label.Attribute.Description",
+        "example": "My description",
+        "description": "Object description value",
+        "index": "ds6w:description"
+    },
+    "dsmvbsd:basic.revision": {
+        "property": "revision",
+        "key": "revision",
+        "label": "CRS.common.Label.Attribute.Revision",
+        "example": "A.1",
+        "description": "Object revision value",
+        "index": "revision"
+    },
+    "dsmvbsd:basic.state": {
+        "property": "current",
+        "key": "state",
+        "label": "CRS.common.Label.Attribute.State",
+        "format": "state",
+        "example": "In Work",
+        "description": "Object current state value",
+        "index": "current"
+    },
+    "dsmvbsd:basic.owner": {
+        "property": "owner",
+        "key": "owner",
+        "label": "CRS.common.Label.Attribute.Owner",
+        "format": "fullname",
+        "example": "John Doe",
+        "description": "Object owner value",
+        "index": "ds6w:who/ds6w:responsible"
+    },
+    "dsmvbsd:basic.organization": {
+        "property": "organization",
+        "key": "organization",
+        "example": "MyCompany",
+        "description": "Object organization value",
+        "index": "organization"
+    },
+    "dsmvbsd:basic.collabspace": {
+        "property": "project",
+        "key": "collabspace",
+        "example": "Default",
+        "description": "Object collabspace value",
+        "index": "ds6w:where/ds6w:context/ds6w:project"
+    },
+    "dsmvbsd:Children": {
+        "property": "from[Sub Term].to.id",
+        "example": "objectid",
+        "key": "Sub Term",
+        "mask": "dsbsd:BsdMask.Common",
+        "maskAppliesTo": "bus"
+    },
+    "dsmvbsd:Parent": {
+        "property": "to[Sub Term].from.id",
+        "example": "objectid",
+        "key": "Parent Term",
+        "mask": "dsbsd:BsdMask.Common",
+        "maskAppliesTo": "bus"
+    }
+}

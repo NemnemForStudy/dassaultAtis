@@ -1,0 +1,74 @@
+{
+	"select" : {
+		"ROUTINGS": ["MANUFACTURING","RESOURCE","CMDS","LINKS", "AUTHORLINKMOD", "EGRAPHMOD", "PRODUCTFLOWMOD", "PROPERTIES", "MANAGECAPABLERESOURCESMOD"],
+		"MANUFACTURING": ["ROUTINGS", "CMDS","LINKS", "AUTHORLINKMOD", "EGRAPHMOD", "PROPERTIES"],
+		"RESOURCE": ["ROUTINGS","CMDS","LINKS", "AUTHORLINKMOD", "EGRAPHMOD", "PROPERTIES"],
+		"AUXILIARY": ["CMDS", "LINKS", "AUTHORLINKMOD", "PROPERTIES"],
+		"MIL": [ "MIL" ],
+		"MANAGECAPABLERESOURCESMOD" : ["MANAGECAPABLERESOURCESMOD"]
+	},
+	"EGraphNodeSelect" : {
+		"EGRAPHMOD" : ["ROUTINGS",	"MANUFACTURING","RESOURCE"],
+		"PRODUCTFLOWMOD" : ["ROUTINGS"]
+	},
+	"SearchAndAddCommand" : {
+		"ROUTINGS": ["ROUTINGS"]
+	},
+	"ActionRemove" : {
+		"ALTERNATE": ["ALTERNATE"],
+		"CAPRESOURCE": ["CAPRESOURCE"],
+		"ORIGIN": ["ORIGIN"]
+	},
+	"AlternateBL" : {
+		"ALTERNATE": ["ALTERNATE"]
+	},
+	"CapableResourceBL" : {
+		"CAPRESOURCE": ["CAPRESOURCE"]
+	},
+	"Hide" : {
+		"CommandsService": ["EGRAPHMOD", "ROUTINGS", "MANUFACTURING","RESOURCE", "AUXILIARY", "PRODUCTFLOWMOD"]
+	},
+	"ExportCSVCmd" : {
+		"CommandsService" : ["ROUTINGS"]
+	},
+	"LoadRelations" : {
+		"CommandsService" : ["ROUTINGS"]
+	},
+	"updateCrossHighlight": {
+		"ROUTINGS": ["MANUFACTURING","RESOURCE"],
+		"MANUFACTURING": ["ROUTINGS", "RESOURCE"],
+		"RESOURCE": ["MANUFACTURING", "ROUTINGS"]
+	},
+	"selectNodes": {
+		"ROUTINGS": ["MANUFACTURING", "RESOURCE"],
+		"MANUFACTURING": ["ROUTINGS"],
+		"RESOURCE": ["ROUTINGS"],
+		"UDECMDMOD":["MANUFACTURING", "RESOURCE", "ROUTINGS"]
+	},
+	"addRootNode" : {
+		"ROUTINGS": ["ROUTINGS", "EGRAPHMOD", "PRODUCTFLOWMOD"],
+		"MANUFACTURING" : ["EGRAPHMOD"]
+	},
+	"EditAttribute" : {
+		"ROUTINGS": ["ROUTINGS"],
+		"MANUFACTURING": ["MANUFACTURING"],
+		"RESOURCE": ["RESOURCE"]
+	},
+	"DuplicateAdvCmd" : {
+		"CommandsService": ["ROUTINGS", "AUXILIARY"]
+	},
+	"InsertAsCopy" : {
+		"CommandsService": ["ROUTINGS", "AUXILIARY"]
+	},
+	"visibleNodesChanged": {
+		"ROUTINGS": ["ROUTINGS"],
+		"MANUFACTURING": ["MANUFACTURING"],
+		"RESOURCE": ["RESOURCE"]
+	},
+	"resetBIModel": {
+		"BIPlugin": [ "ROUTINGS", "MANUFACTURING", "MIL" ]
+	},
+	"LoadDropContent" : {
+		"DELWKOLandingPageService": ["ROUTINGS"]
+	}
+}

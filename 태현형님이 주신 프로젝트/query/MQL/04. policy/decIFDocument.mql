@@ -1,0 +1,16 @@
+# Added by hslee on 2023.07.21
+# delete policy decIFDocument;
+add policy decIFDocument 
+	type decDeliverableDoc, decVPDocument
+	format generic
+	store STORE 
+	state Exist
+		public all 
+		owner all
+;
+add property policy_decIFDocument on program eServiceSchemaVariableMapping.tcl to policy 'decIFDocument';
+
+mod policy decIFDocument
+	state Exist
+		add revoke public create,checkin,delete filter '(context.user != owner)'
+;

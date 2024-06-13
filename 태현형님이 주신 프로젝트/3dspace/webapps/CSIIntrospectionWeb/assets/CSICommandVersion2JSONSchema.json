@@ -1,0 +1,199 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "CSICommandVersion2JSONSchema.json",
+  "title": "CSI Command version 2",
+  "description": "JSON Schema of a CSI Command version 2",
+  "type": "object",
+  "definitions": {
+    "inputParameters": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "parameters": {
+          "$ref": "CSIParametersJSONSchema.json#"
+        },
+        "type": {
+          "type": "string",
+          "description": "Type's name"
+        },
+        "file": {
+          "type": "string",
+          "description": "Parameters File -Deprecated-",
+          "minLength": 1
+        },
+        "desc": {
+          "type": "string",
+          "description": "Description for the Type"
+        }
+      },
+      "oneOf": [
+        {
+          "required": [
+            "parameters"
+          ]
+        },
+        {
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "required": [
+            "file"
+          ]
+        },
+        {
+          "not": {
+            "anyOf": [
+              {
+                "required": [
+                  "parameters"
+                ]
+              },
+              {
+                "required": [
+                  "type"
+                ]
+              },
+              {
+                "required": [
+                  "file"
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "outputParameters": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "parameters": {
+          "$ref": "CSIParametersJSONSchema.json#/definitions/nonDefaultValueParameters"
+        },
+        "type": {
+          "type": "string",
+          "description": "Type's name"
+        },
+        "file": {
+          "type": "string",
+          "description": "Parameters File -Deprecated-",
+          "minLength": 1
+        },
+        "desc": {
+          "type": "string",
+          "description": "Description for the Property"
+        }
+      },
+      "oneOf": [
+        {
+          "required": [
+            "parameters"
+          ]
+        },
+        {
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "required": [
+            "file"
+          ]
+        },
+        {
+          "not": {
+            "anyOf": [
+              {
+                "required": [
+                  "parameters"
+                ]
+              },
+              {
+                "required": [
+                  "type"
+                ]
+              },
+              {
+                "required": [
+                  "file"
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "beginCommandEndSignature": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "in",
+        "answers"
+      ],
+      "properties": {
+        "in": {
+          "$ref": "#/definitions/inputParameters"
+        },
+        "answers": {
+          "$ref": "#/definitions/outputParameters"
+        }
+      }
+    },
+    "implementation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "library": {
+          "type": "string"
+        },
+        "version": {
+          "type": "integer",
+          "enum": [
+            2
+          ]
+        }
+      },
+      "oneOf": [
+        {
+          "required": [
+            "library",
+            "version"
+          ]
+        }
+      ]
+    }
+  },
+  "required": [
+    "grammarVersion",
+    "implementation",
+    "onBeginParameters",
+    "onCommandParameters",
+    "onEndParameters"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "grammarVersion": {
+      "type": "integer",
+      "enum": [
+        2
+      ]
+    },
+    "desc": {
+      "type": "string"
+    },
+    "implementation": {
+      "$ref": "#/definitions/implementation"
+    },
+    "onBeginParameters": {
+      "$ref": "#/definitions/beginCommandEndSignature"
+    },
+    "onCommandParameters": {
+      "$ref": "#/definitions/beginCommandEndSignature"
+    },
+    "onEndParameters": {
+      "$ref": "#/definitions/beginCommandEndSignature"
+    }
+  }
+}

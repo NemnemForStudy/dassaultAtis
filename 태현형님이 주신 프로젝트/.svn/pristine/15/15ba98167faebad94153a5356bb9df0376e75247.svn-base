@@ -1,0 +1,42 @@
+<div class="im-call-invitation-item">
+
+  <div class="im-call-invitation-item-title">
+    <span
+      class="im-call-invitation-top-icon fonticon fonticon-phone"
+    ></span>
+    <div class="im-call-invitation-top-title">
+      {{ label }}
+    </div>
+    <span
+      class="im-call-invitation-top-icon fonticon fonticon-resize-full"
+      v-if="isMinimizedCall"
+      @click="maximize"
+      v-tooltip.body.top="$store.getters.nls('maximize')"
+    ></span>
+  </div>
+
+  <div class="im-call-invitation-content">
+    <div class="im-call-invitation-avatar">
+      <vu-rtuserpresence
+        class="big bgInherit noPresence"
+        :login="callerLogin"
+        :tenantId="$store.getters.tenant"
+      />
+    </div>
+
+    <div class="im-call-invitation-content-information">
+      <span class="im-call-invitation-content-title">
+        {{ label }}
+      </span>
+      <div class="im-call-invitation-content-subtitle">
+        {{ subtitle }}
+      </div>
+    </div>
+  </div>
+
+  <im-call-bar
+    :class="{ noPickup: isCaller || isMinimizedCall }"
+    :room="room"
+  />
+
+</div>

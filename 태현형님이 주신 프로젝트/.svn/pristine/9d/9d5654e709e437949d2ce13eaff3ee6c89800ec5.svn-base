@@ -1,0 +1,24 @@
+### 230418 Created by CMG
+
+#delete command decTableMasterCloneCommand;
+
+
+add command decTableMasterCloneCommand
+	label "emxFramework.Command.decTableMasterCloneCommand"
+	href '${COMMON_DIR}/emxFullSearch.jsp?field=TYPES=type_decCodeMaster&selection=multiple&includeOIDprogram=decTableMaster:project_findTableMaster&HelpMarker=emxhelpfullsearch&submitURL=${SUITE_DIR}/decTableMasterCloneProcess.jsp&submitAction=refreshCaller'
+	setting "Registered Suite" "Framework"
+	setting "Target Location" "popup"
+	setting "Submit" "true"
+	setting "Popup Modal" "true"
+	setting "Access Expression" "type.kindOf[Project Space]==true && context.user.isassigned[decSystemAdmin]==true"
+	setting "Image"  "${COMMON_DIR}/images/iconActionAdd.png"
+	property "installer" value "ENOVIAEngineering"
+	property "application" value "Framework"
+	property "original name" value "decCodeMasterCommand"
+;
+
+
+
+add property command_decTableMasterCloneCommand on program eServiceSchemaVariableMapping.tcl to command decTableMasterCloneCommand;
+
+

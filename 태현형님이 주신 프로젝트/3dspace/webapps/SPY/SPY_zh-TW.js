@@ -1,0 +1,1 @@
+define("DS/SPY/SPY_zh-TW",{});define("DS/SPY/assets/nls/CATSimNavDataHelper",{mode:"模式"});define("DS/SPY/assets/nls/CATSimNavTypes",{CATSimNavDataFrameViewImage:"影像",CATSimNavDataFrameViewXYChart:"圖表"});

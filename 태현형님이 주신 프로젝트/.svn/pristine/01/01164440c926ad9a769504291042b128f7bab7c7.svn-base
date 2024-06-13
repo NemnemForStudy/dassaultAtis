@@ -1,0 +1,12 @@
+m|MPFModels\MPFTaxModel.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.1.22330|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\MPFTaxModel\MPFTaxModel.js|1669432505|683
+s|MPFModels\MPFTaxModel.mweb\src\MPFTaxAreaCollection.js|1669417588|1434
+u|MPFModels\MPFTaxModel.mweb\src\MPFTaxAreaDataProxy.js|1669417588|794
+u|MPFModels\MPFTaxModel.mweb\src\MPFTaxAreaModel.js|1669417588|864
+u|MPFModels\MPFTaxModel.mweb\src\MPFTaxModel.js|1669417588|0
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

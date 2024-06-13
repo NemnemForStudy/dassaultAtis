@@ -1,0 +1,1 @@
+define("DS/ENXScene/ENXScene_zh-TW",{});define("DS/ENXScene/assets/nls/ENXScene",{appDescription:"以簡單有效的方式探索您的結構",default_view_label:"預設視圖",treelistview_label:"樹狀結構清單視圖",graphview_label:"圖形視圖",tileview_label:"並排視圖",thumbnailview_label:"縮圖視圖",datagridview_label:"資料網格視圖",storedObjectMgt_label:"選擇重新整理期間要載入的物件"});

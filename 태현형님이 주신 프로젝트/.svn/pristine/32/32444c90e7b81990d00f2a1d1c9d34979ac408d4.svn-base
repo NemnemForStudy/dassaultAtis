@@ -1,0 +1,1 @@
+define("DS/MPFSheerIdVerificationModel/MPFSheerIdVerificationModel_zh",{});define("DS/MPFSheerIdVerificationModel/assets/nls/MPFSheerIdVerificationModel",{firstName:"名字",lastName:"姓氏",emailAddress:"电子邮件地址",birthData:"出生日期",organization:"组织",phoneNumber:"电话号码",xIsInvalid:"{x} 无效",xIsRequired:"{x} 必填"});

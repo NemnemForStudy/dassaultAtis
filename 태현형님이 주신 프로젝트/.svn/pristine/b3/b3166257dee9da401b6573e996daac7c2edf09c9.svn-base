@@ -1,0 +1,23 @@
+################################################################################################
+# Create By thok 2023. 06. 15
+# Admin Type : command
+# Name : decProjectProgressView
+################################################################################################
+#del command 'decProjectProgressView';
+add command 'decProjectProgressView'
+	description 'ProjectProgressView'
+	label 'emxProgramCentral.Label.ProgressInfo'
+	href '${COMMON_DIR}/emxIndentedTable.jsp?pageSize=300&program=emxProjectSpace:getProjectSelect&table=decProjectProgressList&header=emxProgramCentral.Label.safetyStaticsView&toolbar=decProjectProgressToolbar&HelpMarker=emxhelpprogramlist&Export=true&sortColumnName=CutOffWeek&sortDirection=descending&StringResourceFileId=emxProgramCentralStringResource&select=Project.selectProgress&editLink=true&freezePane=Empty,CutOffWeek,Date'
+	alt 'emxProgramCentral.Label.ProgressInfo'
+	setting 'Registered Suite' 'ProgramCentral'
+	setting 'Target Location' 'content'
+;
+add property 'command_decProjectProgressView' on prog eServiceSchemaVariableMapping.tcl to command 'decProjectProgressView'
+;
+
+# Modified By thok : 2023. 09. 09
+mod command decProjectProgressView
+	add setting 'hasAccess' 'PIM'
+	add setting 'Access Program' 'decAccess' 
+	add setting 'Access Function' 'hasAccess'
+;

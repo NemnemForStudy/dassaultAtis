@@ -1,0 +1,11 @@
+m|XCTInfrastructureUIWeb\XCTInfUIManagers.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.0.22078|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\XCTInfUIManagers\XCTInfUIManagers.js|1647692370|3033
+s|XCTInfrastructureUIWeb\XCTInfUIManagers.mweb\src\XCTInfPanelManager.js|1507622109|4640
+u|XCTInfrastructureUIWeb\XCTInfUIManagers.mweb\src\XCTInfUIManagers.js|1498651929|106
+u|XCTInfrastructureUIWeb\XCTInfUIManagers.mweb\src\XCTInfViewManager.js|1519055757|2576
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

@@ -1,0 +1,1 @@
+define("DS/WebNoteWdg/WebNoteWdg_cs",{});define("DS/WebNoteWdg/assets/nls/webNote",{Title_html:"Název",typeText:"Sem napište text",Font_html:"Písmo",FontSize_html:"Velikost písma",Small_html:"Malé",Medium_html:"Střední",Big_html:"Velké"});

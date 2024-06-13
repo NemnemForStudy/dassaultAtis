@@ -1,0 +1,1 @@
+define("DS/ENOX3DSpaceAttributesMgt/ENOX3DSpaceAttributesMgt_ru",{});define("DS/ENOX3DSpaceAttributesMgt/assets/nls/ENOXAttributesMgtNls",{isCellEditableColumns:{title:"Можно редактировать в окне Вид"},attributeForEditingColumns:{title:"Атрибут для редактирования ячейки"},Classification:{title:"Классификация"},instance:"Экземпляр"});

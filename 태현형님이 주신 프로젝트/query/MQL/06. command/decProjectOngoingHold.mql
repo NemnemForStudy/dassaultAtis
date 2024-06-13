@@ -1,0 +1,49 @@
+################################################################################################
+# Created By thok : 2023. 07. 26
+# Admin Type : command
+# Name : decProjectOngoingHold
+################################################################################################
+#delete command decProjectOngoingHold;
+add command 'decProjectOngoingHold' 
+	description 'Command to Hold Ongoing Project'
+	alt 'emxProgramCentral.Common.Gate.Hold' 
+	label 'emxProgramCentral.Common.Gate.Hold' 
+	href '${COMMON_DIR}/decProjectStatusControl.jsp?projectStatus=Hold' 
+	setting 'Confirm Message' 'emxProgramCentral.ProjectSpace.alert.Hold' 
+	setting 'Image' '${COMMON_DIR}/images/iconActionPause.gif'
+	setting 'Registered Suite' 'ProgramCentral'
+	setting 'Target Location' 'hiddenFrame'
+	setting 'Submit' true
+	setting 'Access Expression' '(attribute[decProjectStatus]==Ongoing) && (context.user.isassigned[decSystemAdmin] || owner==context.user)'
+;
+add property command_decProjectOngoingHold on program eServiceSchemaVariableMapping.tcl to command 'decProjectOngoingHold'
+;
+
+# Modified By thok : 2023. 07. 27
+mod command 'decProjectOngoingHold'
+	add setting 'Access Expression' '(attribute[decProjectType]==ongoing) && (attribute[decProjectStatus]=="In-Progress") && (context.user.isassigned[decSystemAdmin] || owner==context.user)'
+;
+
+# Modified By thok : 2023. 07. 28
+mod command 'decProjectOngoingHold'
+	alt 'emxProgramCentral.Label.ProjectStatus.Hold' 
+	label 'emxProgramCentral.Label.ProjectStatus.Hold'
+;
+
+# Modified By thok : 2023. 09. 09
+mod command 'decProjectOngoingHold'
+	add setting 'Access Expression' '(attribute[decProjectType]==ongoing) && (attribute[decProjectStatus]=="In-Progress") && (owner==context.user)'
+	add setting 'hasAccess' 'PIM'
+	add setting 'Access Program' 'decAccess' 
+	add setting 'Access Function' 'hasAccess'
+;
+
+# Modified By thok : 2023. 09. 11
+mod command 'decProjectOngoingHold'
+	add setting 'Access Expression' '(attribute[decProjectType]==ongoing) && (attribute[decProjectStatus]=="In-Progress")'
+;
+
+# Modified By thok : 2023. 09. 12
+mod command 'decProjectOngoingHold'
+	add setting 'Image' '${COMMON_DIR}/images/iconActionPause.png'
+;

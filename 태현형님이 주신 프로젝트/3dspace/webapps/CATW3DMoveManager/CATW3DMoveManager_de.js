@@ -1,0 +1,1 @@
+define("DS/CATW3DMoveManager/CATW3DMoveManager_de",{});define("DS/CATW3DMoveManager/assets/nls/CATW3DMoveReferent",{title:"Verschieben",allowDirectManipulation:"Direkte Manipulation zulassen",moveSection:"Beim Ziehen der 3D-Geometrie verschieben",first:"Erste Baugruppenebene",leaf:"Blattteil"});

@@ -1,0 +1,81 @@
+﻿.onesearch_results {
+
+  .wux-layouts-collectionview.wux-layouts-datagridview {
+
+    .wux-layouts-datagridview-kpi-color {
+      color: #fff; // IR-887289-3DEXPERIENCER2022x - make KPI color white by default.
+    }
+
+    .wux-layouts-datagridview-cell[row-header],
+    .wux-layouts-datagridview-cell[row-header][is-selected],
+    .wux-layouts-datagridview-cell[column-header] {
+      background-color: #fff !important;
+    }
+
+    .wux-layouts-datagridview-cell[row-header][column-header],
+    .wux-layouts-datagridview-cell[column-header] {
+      /*border-right: 1px solid transparent !important;*/
+      border-bottom: 1px solid transparent !important;
+      border-left: 1px solid transparent !important;
+    }
+
+    .wux-layouts-datagridview-row-header-cell .wux-datagridview-selection-label,
+    .wux-layouts-datagridview-column-header-cell .wux-tweakers.wux-tweakers-string-label {
+      font-weight: bold;
+    }
+
+    .wux-layouts-datagridview-row[odd-row]:not([is-selected]):not([is-preselected]) {
+      background-color: #fff !important;
+    }
+
+    .wux-layouts-datagridview-row:not([is-selected]):not([is-preselected]) {
+      background-color: #f4f5f6 !important;
+    }
+
+    .wux-datagridview-layouts-row-header-extension:not([hideBorder]) {
+      border-right: 1px solid #fff !important;
+      margin-bottom: 17px;
+    }
+
+    .wux-scroller::-webkit-scrollbar-track {
+      background-color: #fff !important;
+    }
+
+    .wux-scroller::-webkit-scrollbar-thumb {
+      background-color: #eee !important;
+    }
+
+    .label-datagrid:hover {
+      text-decoration: underline;
+      color: #42a2da;
+      cursor: pointer;
+    }
+
+    .wux-controls-abstract.wux-layouts-collectionview-cell.wux-layouts-datagridview-cell {
+      img.type-icon-datagrid {
+        max-width: 16px;
+        max-height: 16px;
+        vertical-align: unset;
+      }
+
+      :nth-child(3) {
+        vertical-align: top;
+        /*margin-left: 5px;*/
+      }
+    }
+
+    .wux-layouts-header-scroller-container { // IR-726055 - force label header padding-left/alignment problem.
+      .wux-tweakers.wux-tweakers-string-label {
+        padding-left: 8px;
+      }
+    }
+
+    .wux-datagridview-layouts-row-header-extension {
+      background-color: white;
+    }
+
+    .wux-layouts-datagridview-cell:not([row-header]):not([column-header])[is-active] {
+      //border: 0 !important; IR-889372-3DEXPERIENCER2022x - for datagrid, actie selection is not bordered.
+    }
+  }
+}

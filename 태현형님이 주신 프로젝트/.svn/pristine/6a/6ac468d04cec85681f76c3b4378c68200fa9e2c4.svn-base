@@ -1,0 +1,1 @@
+define("DS/ENOPS/ENOPS_app_de",{});define("DS/ENOPS_app/assets/nls/ENOPS_app",{appDescription:"Einfaches und effizientes Untersuchen und Bearbeiten von Strukturen",newProduct:"Neues Produkt",newPart:"Neues Teil",newDrawing:"Neue Zeichnung"});

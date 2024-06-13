@@ -1,0 +1,1 @@
+define("DS/WebConnector2D/WebConnector2D_pt-BR",{});define("DS/WebConnector2D/assets/nls/WebConnector2D",{LoadingErrorSheet:"Nenhuma visualização disponível"});

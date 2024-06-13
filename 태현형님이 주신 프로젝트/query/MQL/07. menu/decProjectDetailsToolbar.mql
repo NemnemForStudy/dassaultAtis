@@ -1,0 +1,38 @@
+################################################################################################
+# Created By thok : 2023. 05. 15
+# Admin Type : menu
+# Name : decProjectDetailsToolbar
+################################################################################################
+#delete menu decProjectDetailsToolbar;
+add menu 'decProjectDetailsToolbar' 
+	label 'ProgramCentral.Toolbar.Actions' 
+	menu 'decProjectDetailsToolbarActions' 
+	setting 'Registered Suite' 'ProgramCentral'
+	setting 'Image' '${COMMON_DIR}/images/iconActionActions.png'
+	property application value 'ProgramManagementBase' 
+	property version value 'R423.HF7' 
+	property installer value 'ENOVIAEngineering' 
+	property 'installed date' value '05-15-2023' 
+	property 'original name' value 'decProjectDetailsToolbar'
+;
+add property menu_decProjectDetailsToolbar on program eServiceSchemaVariableMapping.tcl to menu 'decProjectDetailsToolbar'
+;
+
+# Modified By thok : 2023. 09. 12
+mod menu 'decProjectDetailsToolbar'
+	add command decProjectDetailsPropertiesEdit
+    add command decProjectChangeProjectCode
+    add command decProjectBiddingEnterOrderResult
+    add command decCreateOngoingProjectIn
+    add command decProjectInterfaceCmd
+    add command decProjectOngoingComplete
+    add command decProjectOngoingHold
+    add command decProjectOngoingRestart
+	remove menu 'decProjectDetailsToolbarActions' 
+;
+
+# Modified By thok : 2023. 09. 18
+mod menu 'decProjectDetailsToolbar'
+    remove command decProjectOngoingHold
+    remove command decProjectOngoingRestart
+;

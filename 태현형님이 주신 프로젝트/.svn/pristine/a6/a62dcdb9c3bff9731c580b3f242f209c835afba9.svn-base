@@ -1,0 +1,1 @@
+define("DS/DMUComment/DMUComment_en",{});define("DS/DMUComment/assets/nls/DMUComment",{highlightCommentPrefix:"CommentHighlight",positionedCommentPrefix:"CommentPositioned",commentPrefix:"Comment",commentCreationLabel:"Select a point, a marker or some text to link a new comment"});

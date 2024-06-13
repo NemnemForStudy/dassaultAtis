@@ -1,0 +1,1 @@
+define("DS/DeleteActionHandler/DeleteActionHandler_ko",{});define("DS/DeleteActionHandler/assets/nls/DeleteActionHandlerNls",{delete_:"삭제"});

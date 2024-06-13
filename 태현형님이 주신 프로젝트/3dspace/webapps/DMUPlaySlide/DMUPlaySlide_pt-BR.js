@@ -1,0 +1,1 @@
+define("DS/DMUPlaySlide/DMUPlaySlide_pt-BR",{});define("DS/DMUPlaySlide/assets/nls/DMUPlaySlide",{page:"Página",of:"de"});

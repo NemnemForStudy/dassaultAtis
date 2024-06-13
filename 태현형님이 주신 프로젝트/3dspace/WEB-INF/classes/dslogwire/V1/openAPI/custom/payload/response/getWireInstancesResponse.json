@@ -1,0 +1,217 @@
+{
+	"200": {
+		"schema": {
+			"type": "object",
+			"properties": {
+				"totalItems": {
+					"description": "total Items",
+					"type": "integer",
+					"example": 1
+				},
+				"members": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"OccurencePosition": {
+								"description": "instance Position",
+								"type": "integer",
+								"example": 1
+							},
+							"inputObject": {
+								"type": "object",
+								"properties": {
+									"LogicalOcc": {
+										"type": "array",
+										"items": {
+											"anyOf": [{
+													"type": "object",
+													"properties": {
+														"instancePosition": {
+															"description": "instance Position",
+															"type": "integer",
+															"example": 0
+														},
+														"instanceObject": {
+															"type": "object",
+															"properties": {
+																"identifier": {
+																	"description": "Reference physical id value",
+																	"type": "string",
+																	"example": "B8760F13000013CC61F002060000D5CE"
+																},
+																"source": {
+																	"description": "Source",
+																	"type": "string",
+																	"example": "3DSpace"
+																},
+																"relativePath": {
+																	"description": "Relative path",
+																	"type": "string",
+																	"example": "/resource/v1/dslog/dslog:LogItem/B8760F13000013CC61F002060000D4FD/dslog:LogInstance/B8760F13000013CC61F002060000D5CE"
+																},
+																"type": {
+																	"description": "type",
+																	"type": "string",
+																	"example": "RFLVPMLogicalInstance"
+																}
+															}
+														}
+													}
+												},
+												{
+													"type": "object",
+													"properties": {
+														"instancePosition": {
+															"description": "instance Position",
+															"type": "integer",
+															"example": 1
+														},
+														"instanceObject": {
+															"type": "object",
+															"properties": {
+																"identifier": {
+																	"description": "Reference physical id value",
+																	"type": "string",
+																	"example": "B8760F13000013CC61F002060000D605"
+																},
+																"source": {
+																	"description": "Source",
+																	"type": "string",
+																	"example": "3DSpace"
+																},
+																"relativePath": {
+																	"description": "Relative path",
+																	"type": "string",
+																	"example": "/resources/v1/modeler/dslog/dslog:LogItem/B8760F13000013CC61F002060000D508/dslogwire:CableInst/B8760F13000013CC61F002060000D605"
+																},
+																"type": {
+																	"description": "type",
+																	"type": "string",
+																	"example": "EleLogicalCableInst"
+																}
+															}
+														}
+													}
+												}
+											]
+										}
+									}
+								}
+							},
+							"output": {
+								"type": "object",
+								"properties": {
+									"LogicalOcc": {
+										"type": "array",
+										"items": {
+											"anyOf": [{
+													"type": "object",
+													"properties": {
+														"instancePosition": {
+															"description": "instance Position",
+															"type": "integer",
+															"example": 0
+														},
+														"instanceObject": {
+															"type": "object",
+															"properties": {
+																"identifier": {
+																	"description": "Reference physical id value",
+																	"type": "string",
+																	"example": "B8760F13000013CC61F002060000D5CE"
+																},
+																"source": {
+																	"description": "Source",
+																	"type": "string",
+																	"example": "3DSpace"
+																},
+																"relativePath": {
+																	"description": "Relative path",
+																	"type": "string",
+																	"example": "resource/v1/dslog/dslog:LogItem/B8760F13000013CC61F002060000D4FD/dslog:LogInstance/B8760F13000013CC61F002060000D5CE"
+																},
+																"type": {
+																	"description": "type",
+																	"type": "string",
+																	"example": "RFLVPMLogicalInstance"
+																}
+															}
+														}
+													}
+												},
+												{
+													"type": "object",
+													"properties": {
+														"instancePosition": {
+															"description": "instance Position",
+															"type": "integer",
+															"example": 1
+														},
+														"instanceObject": {
+															"type": "object",
+															"properties": {
+																"identifier": {
+																	"description": "Reference physical id value",
+																	"type": "string",
+																	"example": "B8760F13000013CC61F002060000D63C"
+																},
+																"source": {
+																	"description": "Source",
+																	"type": "string",
+																	"example": "3DSpace"
+																},
+																"relativePath": {
+																	"description": "Relative path",
+																	"type": "string",
+																	"example": "resource/v1/dslog/dslog:LogItem/B8760F13000013CC61F002060000D508/dslogwire:WireInst/B8760F13000013CC61F002060000D63C"
+																},
+																"type": {
+																	"description": "type",
+																	"type": "string",
+																	"example": "EleLogicalWireInst"
+																}
+															}
+														}
+													}
+												}
+											]
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"400": {
+		"schema": {
+			"properties": {
+				"status": {
+					"type": "integer",
+					"example": 400
+				},
+				"message": {
+					"type": "string",
+					"example": "My message"
+				}
+			}
+		}
+	},
+	"500": {
+		"schema": {
+			"properties": {
+				"status": {
+					"type": "integer",
+					"example": 500
+				},
+				"message": {
+					"type": "string",
+					"example": "My message"
+				}
+			}
+		}
+	}
+}

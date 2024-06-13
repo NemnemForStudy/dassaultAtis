@@ -1,0 +1,22 @@
+<div class="virtual-keyboard">
+  <div class="dialer-buttons"
+    v-for="(rows, idx) in buttonsValues"
+    v-bind:key="idx">
+    <div class="dialer-row">
+      <vu-btn
+        class="dialer-btn-input"
+        v-for="(value, idx) in rows"
+        v-bind:key="idx"
+        v-html="value"
+        v-on:click="input(value)"/>
+    </div>
+  </div>
+  <div class="dialer-submit">
+    <div class="dialer-row">
+      <vu-btn
+        class="dialer-btn-submit"
+        v-html="submitValue"
+        v-on:click="submit"/>
+    </div>
+  </div>
+</div>

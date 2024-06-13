@@ -1,0 +1,19 @@
+################################################################################################
+# Create By choimingi 2023. 07. 25
+# Admin Type : command
+# Name : decDeliverableDocChangeHistoryList
+################################################################################################
+
+#del command 'decDeliverableDocChangeHistoryList';
+add command 'decDeliverableDocChangeHistoryList'
+	description 'Deliverable Interface HistoryList'
+	label 'emxProgramCentral.Command.decDeliverableDocProperties.InterfaceHistory'
+	alt 'emxProgramCentral.Command.decDeliverableDocProperties.InterfaceHistory'
+	setting 'Registered Suite' 'ProgramCentral'
+	setting 'Target Location' 'content'
+;
+add property 'command_decDeliverableDocChangeHistoryList' on prog eServiceSchemaVariableMapping.tcl to command 'decDeliverableDocChangeHistoryList';
+
+mod command 'decDeliverableDocChangeHistoryList'
+	href '${COMMON_DIR}/emxIndentedTable.jsp?program=decInterfaceDV:getInterfaceHistoryList&table=decDeliverableDocHistoryTable&header=ProgramCentral.Command.decDeliverableDocChangeHistoryList&HelpMarker=emxhelpprogramlist&Export=true&sortColumnName=Name&sortDirection=ascending&StringResourceFileId=emxProgramCentralStringResource&selection=multiple&parallelLoading=true&massPromoteDemote=true&slideinFilter=true&pageSize=300'
+;

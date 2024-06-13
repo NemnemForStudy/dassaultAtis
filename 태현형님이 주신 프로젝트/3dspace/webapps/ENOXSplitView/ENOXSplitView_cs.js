@@ -1,0 +1,1 @@
+define("DS/ENOXSplitView/ENOXSplitView_cs",{});define("DS/ENOXSplitView/assets/nls/ENOXSplitView",{minimize:"Minimalizovat",maximize:"Maximalizovat"});

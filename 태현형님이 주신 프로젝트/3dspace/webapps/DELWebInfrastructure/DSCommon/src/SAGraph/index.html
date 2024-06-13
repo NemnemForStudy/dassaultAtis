@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="SAGraph.js"></script>
+
+<script>
+function GraphTest() {
+   
+    var g = new SAGraph(id_key="__id_", src_key="_src_", dst_key="_dst_");
+    
+    g.addVtx("1",{name:"one"});
+    g.addVtx("2",{name:"two"});
+    g.addVtx("3",{name:"three"});
+    g.addVtx("4",{name:"three"});
+     
+    g.addEdge("1-2","1","2",{type:"he"});   
+    g.addEdge("2-3","2","3",{type:"he"});   
+    g.addEdge("2-4","2","4",{type:"he"});   
+    
+    console.log("VE="+JSON.stringify(g.VE));  
+    console.log("FE="+JSON.stringify(g.FE));  
+    console.log("BE="+JSON.stringify(g.BE));  
+    console.log("outV(1)="+JSON.stringify(g.outV("1")));
+    console.log("outE(1)="+JSON.stringify(g.outE("1")));
+    console.log("ToutE(1)="+JSON.stringify(g.ToutE("1")));
+    console.log("inV(3)="+JSON.stringify(g.inV("3")));
+    console.log("inE(3)="+JSON.stringify(g.inE("3")));
+    console.log("TinE(3)="+JSON.stringify(g.TinE("3")));
+    console.log("inV(4)="+JSON.stringify(g.inV("4")));
+    console.log("inE(4)="+JSON.stringify(g.inE("4")));
+    console.log("TinE(4)="+JSON.stringify(g.TinE("4")));
+} 
+
+</script>
+</head>
+
+<body>  
+<p id="demo">SAGraph Test</p>
+
+<button type="button" onclick="GraphTest()">Try it</button>
+
+</body>
+</html>

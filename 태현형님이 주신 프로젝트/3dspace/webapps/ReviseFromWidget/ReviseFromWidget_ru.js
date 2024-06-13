@@ -1,0 +1,1 @@
+define("DS/ReviseFromWidget/ReviseFromWidget_ru",{});define("DS/ReviseFromWidget/assets/nls/ReviseFromPrefsDlg",{SettingsTitle:"Настройки",CopyTitleFromSource:"Копировать название из источника",WarningNoRevise:"Отображать предупреждение, если в соответствии с правами доступа не разрешен пересмотр"});

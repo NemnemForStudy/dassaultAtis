@@ -1,0 +1,1 @@
+define("DS/ENOPS/ENOPS_app_en",{});define("DS/ENOPS_app/assets/nls/ENOPS_app",{appDescription:"Explore and Edit your structure in a easy and efficient way",newProduct:"New Product",newPart:"New Part",newDrawing:"New Drawing"});

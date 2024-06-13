@@ -1,0 +1,1 @@
+define("DS/RTwebrtcAPI/RTwebrtcAPI_es",{});define("DS/RTwebrtcAPI/assets/nls/feed",{Call:"Llamar",notCompatible:"Esta función no es compatible con su navegador o dispositivo actual"});

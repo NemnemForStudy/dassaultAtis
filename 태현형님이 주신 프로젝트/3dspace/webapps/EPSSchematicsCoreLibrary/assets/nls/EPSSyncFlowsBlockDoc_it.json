@@ -1,0 +1,11 @@
+{
+  "version": "1.0.0",
+  "summary": "Il blocco consente di sincronizzare il controllo e il flusso di dati. La porta di controllo di output si attiva non appena ciò avviene per tutte le porte di controllo di input. Per scenari più complessi (ad esempio, molteplici esecuzioni del blocco), leggere la descrizione dettagliata di seguito.",
+  "description": "Ogni porta di controllo di input è associata a un contatore interno, che aumenta di numero quando la porta è stata attivata e diminuisce di numero quando il blocco esce dalla porta di controllo di input <doc-ocp-name translate=no>Out</doc-ocp-name>. Ogni volta che viene attivata una porta di controllo di input, il blocco viene eseguito ed esce dalla porta di controllo di output <doc-ocp-name translate=no>Out</doc-ocp-name> solo se tutti i contatori interni della porta di controllo di input riportano valori superiori a 0.",
+  "controlPorts": {
+    "In1": "attiva l'esecuzione del blocco e incrementa il contatore interno associato alla porta.",
+    "In2": "attiva l'esecuzione del blocco e incrementa il contatore interno associato alla porta.",
+    "Out": "viene attivato solo quando tutti i contatori interni della porta di controllo di input riportano valori superiori a 0. Ciò diminuisce il numero di tutti i contatori interni della porta di controllo di input."
+  },
+  "example": null
+}

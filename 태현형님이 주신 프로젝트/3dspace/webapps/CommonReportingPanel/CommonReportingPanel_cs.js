@@ -1,0 +1,1 @@
+define("DS/CommonReportingPanel/CommonReportingPanel_cs",{});define("DS/CommonReportingPanel/assets/nls/CommonCommandDialog",{okButton:"OK",cancelButton:"Zrušit"});define("DS/CommonReportingPanel/assets/nls/CommonReportingPanelNls",{TotalRecords:"Celkem záznamů: ",ReportTitle:"Zpráva"});

@@ -1,0 +1,1 @@
+define("DS/CSIViewModelSelection/CSIViewModelSelectionObjectFactory",["DS/CSIViewModelWebSelection/CSIViewModelWebSelectionObjectFactory"],function(e){"use strict";var t;return null==t&&((t={}).createCSISelectionObject=function(t){return e.createCSISelectionObject(t)}),t});

@@ -1,0 +1,182 @@
+{
+	"dsmvwo:WorkOrderMask.Default": [
+		{
+	        "property": "reuseMask",
+	        "mask": "dsmveno:DefaultBusMask.public"
+	    }
+	],
+	"dsmvwo:WorkOrderMask.Details": [
+		{
+	        "property": "reuseMask",
+	        "mask": "dsmvwo:WorkOrderMask.Default"
+	    },
+	    "dsmvwo:attribute.reference.priority",
+	    "dsmvwo:attribute.reference.dueDate",
+	    "dsmvwo:attribute.reference.earliestStartDate",
+	    "dsmvwo:attribute.reference.targetStartDate",
+	    "dsmvwo:attribute.reference.targetEndDate",
+	    "dsmvwo:attribute.reference.plannedStartDate",
+	    "dsmvwo:attribute.reference.plannedEndDate",
+	    "dsmvwo:attribute.reference.actualStartDate",
+	    "dsmvwo:attribute.reference.actualEndDate",
+	    "dsmvwo:attribute.reference.scheduledStartDate",
+	    "dsmvwo:attribute.reference.scheduledEndDate",
+	    "dsmvwo:collection.extension.onHold",
+	    "dsmvwo:attribute.reference.calculatedDueDate",
+	    "dsmvwo:attribute.reference.ganttColor"
+	],
+	"dsmvwo:WorkOrderMask.Advanced": [
+		{
+	        "property": "reuseMask",
+	        "mask": "dsmvwo:WorkOrderMask.Details"
+	    },
+	    "dsmvwo:program.getWorkOrderQuantity",
+	    "dsmvwo:program.getSerializedFrom",
+	    "dsmvwo:program.getBuild",
+	    "dsmvwo:collection.relation.assetContext",
+	    "dsmvwo:program.getScopeLink"
+	],
+	"dsmvwo:WorkOrderMask.DetailedStructure.Index": [
+		"dsmvwo:program.getWorkOrderDetailedStructure"
+	],
+	"dsmvwo:WorkOrderMask.DetailedStructure": [
+		"dsmvwo:program.getObjectReferenceSelfRoot",
+		"dsmvwo:program.getWOWorkOrderOperationDetailedStructures",
+		"dsmvwo:program.getWOTimeConstraintDetailedStructures"
+	],
+	"dsmvwo:WorkOrderMask.DetailedStructure_V2": [
+		"dsmvwo:program.getDetailedStructure"
+	],
+	"dsmvwo:WorkOrderOperationMask.DetailedStructure": [
+		"dsmvwo:program.getWOOPTimeConstraintDetailedStructures",
+		"dsmvwo:program.getWOOPAssetAssignmentDetailedStructures",
+		"dsmvwo:program.getWOOPPrimaryCapableResourceDetailedStructures",
+		"dsmvwo:program.getWOOPSecondaryCapableResourceDetailedStructures"
+	],
+	"dsmvwo:WorkOrderOperationMask.Default": [
+		{
+	        "property": "reuseMask",
+	        "mask": "dsmveno:DefaultBusMask.public"
+	    }
+	],
+	"dsmvwo:WorkOrderOperationMask.Details": [
+		{
+	        "property": "reuseMask",
+	        "mask": "dsmvwo:WorkOrderOperationMask.Default"
+	    },
+	    "dsmvwo:attribute.reference.operationPriority",
+	    "dsmvwo:attribute.instance.operationNo",
+	    "dsmvwo:attribute.reference.scheduled",
+	    "dsmvwo:attribute.reference.interruptible",
+	    "dsmvwo:attribute.reference.preparationTime",
+	    "dsmvwo:attribute.reference.preProcessingTime",
+	    "dsmvwo:attribute.reference.postProcessingTime",
+	    "dsmvwo:attribute.reference.isTimeProportionalToQty",
+	    "dsmvwo:attribute.reference.remainingTime",
+	    "dsmvwo:attribute.reference.actualTime",
+	    "dsmvwo:attribute.reference.estimatedTime",
+	    "dsmvwo:attribute.reference.operationTargetStartDate",
+	    "dsmvwo:attribute.reference.operationTargetEndDate",
+	    "dsmvwo:attribute.reference.operationPlannedStartDate",
+	    "dsmvwo:attribute.reference.operationPlannedEndDate",
+	    "dsmvwo:attribute.reference.operationScheduledStartDate",
+	    "dsmvwo:attribute.reference.operationScheduledEndDate",
+	    "dsmvwo:attribute.reference.operationActualStartDate",
+	    "dsmvwo:attribute.reference.operationActualEndDate",
+	    "dsmvwo:collection.extension.onHold"
+	],
+	"dsmvwo:WorkOrderOperationMask.Advanced": [
+		{
+	        "property": "reuseMask",
+	        "mask": "dsmvwo:WorkOrderOperationMask.Details"
+	    },
+	    "dsmvwo:program.getSerializedFromOperationInstanceId",
+	    "dsmvwo:program.getWorkOrderOperationMinStartDateUser",
+	    "dsmvwo:program.getWorkOrderOperationMinStartDateAuto",
+	    "dsmvwo:program.getWorkOrderOperationMinStartDateRawMaterial",
+	    "dsmvwo:program.getWorkOrderOperationMinStartDateSemiFinished",
+	    "dsmvwo:program.getWorkOrderOperationQuantityToBeProducedPerTime",
+		"dsmvwo:program.getWorkOrderOperationInitialQuantity",
+		"dsmvwo:program.getWorkOrderOperationRemainingQuantity",
+		"dsmvwo:program.getWorkOrderOperationCompletedQuantity",
+		"dsmvwo:collection.relation.assignedWorkCenter"
+	],
+    "dsmvwo:ProductionPlanMask.Default": [
+        {
+        	"property": "reuseMask",
+        	"mask": "dsmveno:DefaultBusMask.public"
+        },
+        "dsmvwo:attribute.reference.horizonStart",
+        "dsmvwo:attribute.reference.horizonEnd",
+        "dsmvwo:attribute.reference.dateMRP",
+        "dsmvwo:attribute.reference.lastSchedulingSave",
+		"dsmvwo:attribute.extension.timeZone",
+        "dsmvwo:program.getProductionPlanOrganizationalResource"
+    ],
+    "dsmvwo:ProductionPlanMask.WorkOrders": [
+    	"dsmveno:basic.id",
+    	"dsmvwo:program.getProductionPlanWorkOrders"
+    ],
+    "dsmvwo:ProductionPlanMask.DetailedStructure": [
+    	"dsmwvo:basic.productionPlanPhysicalId"
+    ],
+    "dsmvwo:ProductionPlanMask.DetailedStructure.HappyPath": [
+        "dsmwvo:basic.productionPlanPhysicalId"
+    ],
+	"dsmvwo:TimeConstraintMask.Default": [
+        {
+            "property": "reuseMask",
+            "mask": "dsmveno:BaseMask.public"
+        },
+        "dsmvwo:attribute.relation.dependencyType",
+        "dsmvwo:attribute.relation.isProductFlow",
+		"dsmvwo:attribute.relation.delayMode",
+        "dsmvwo:attribute.relation.isOptional",
+        "dsmvwo:attribute.relation.resourceConstraint",
+        "dsmvwo:attribute.relation.delay",
+        "dsmvwo:program.getTimeConstraintFlowType",
+        "dsmvwo:attribute.extension.returnCode",
+        "dsmvwo:attribute.extension.maximumRetries",
+		"dsmvwo:program.getTimeConstraintConstrainedObject"
+	],
+	"dsmvwo:OnHoldMask.Default": [
+		"dsmvwo:attribute.extension.onHoldComment"
+	],
+	"dsmvwo:AssetAssignmentMask.Default": [
+		{
+	        "property": "reuseMask",
+	        "mask": "dsmveno:DefaultBusMask.public"
+	    },
+	    "dsmvwo:attribute.reference.groupIndex",
+	    "dsmvwo:program.getAssetAssignmentResource"
+	],
+	"dsmvwo:AssetContextMask.Default": [
+		"dsmvwo:program.getAssetContext"
+	],
+	"dsmvwo:AssignedWorkCenterMask.Default": [
+		"dsmvwo:program.getAssignedWorkCenter"
+	],
+	"dsmvwo:PrimaryCapableResourceMask.Default": [
+		"dsmveno:basic.id",
+		"dsmveno:basic.modified.public",
+		"dsmveno:basic.created.public",
+		"dsmvwo:program.getPrimaryCapableResource",
+		"dsprcs:PrimaryCapableResource.resourcesQuantity",
+		"dsprcs:PrimaryCapableResource.isPreferred",
+		"dsprcs:PrimaryCapableResource.manuallyScheduled",
+		"dsprcs:PrimaryCapableResource.priority",
+		"dsprcs:PrimaryCapableResource.toolChangeoverTime",
+		"dsprcs:PrimaryCapableResource.estimatedTime",
+		"dsprcs:PrimaryCapableResource.isReservedFromFirstStep",
+		"dsprcs:PrimaryCapableResource.capableRscGroupIndex"
+	],
+	"dsmvwo:SecondaryCapableResourceMask.Default": [
+		"dsmveno:basic.id",
+		"dsmveno:basic.modified.public",
+		"dsmveno:basic.created.public",
+		"dsmvwo:program.getSecondaryCapableResource",
+		"dsmvwo:program.getSecondaryCapableResourceDependsOn",
+		"dsprcs:SecondaryCapableResource.rscTimeConst",
+		"dsprcs:SecondaryCapableResource.rscTimePerQtyToProducedPerTime"
+	]
+}

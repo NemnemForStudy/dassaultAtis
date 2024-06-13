@@ -1,0 +1,1 @@
+define("DS/ApplicationFrame/ApplicationFrame_ko",{});define("DS/ApplicationFrame/assets/nls/ApplicationFrameActionBar",{hideActionBar:"작업 모음 숨기기",showActionBar:"작업 모음 표시"});

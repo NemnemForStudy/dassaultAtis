@@ -1,0 +1,1 @@
+define("DS/DMUPlaySection/DMUPlaySection_ko",{});define("DS/DMUPlaySection/assets/nls/DMUPlaySection",{sectionplane:"단면 평면",sectioncurves:"단면 곡선",notifyComputeContourfailure:"단면 윤곽선을 계산할 수 없습니다.",viewMenu:"보기 메뉴",exploreView:"보기 탐색",detailedView:"세부 보기",lblIncrement:" 증분:",lblOnlyNum:"다음의 숫자만",sectionPrefix:"단면"});

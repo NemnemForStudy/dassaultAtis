@@ -1,0 +1,29 @@
+################################################################################################
+# Created By thok : 2023. 06. 15
+# Admin Type : menu
+# Name : decProjectProgressToolbarActions
+################################################################################################
+#delete menu decProjectProgressToolbarActions;
+add menu 'decProjectProgressToolbarActions' 
+	label 'ProgramCentral.Toolbar.Actions' 
+	command 'decProjectProgressCreate' 
+	setting 'Registered Suite' 'ProgramCentral' 
+	setting 'Image' '${COMMON_DIR}/images/iconActionActions.png'
+	property application value 'ProgramManagementBase' 
+	property version value 'R423.HF7' 
+	property installer value 'ENOVIAEngineering' 
+	property 'installed date' value '06-15-2023' 
+	property 'original name' value 'decProjectProgressToolbarActions'
+;
+add property menu_decProjectProgressToolbarActions on program eServiceSchemaVariableMapping.tcl to menu 'decProjectProgressToolbarActions'
+;
+
+mod menu decProjectProgressToolbarActions add command 'decProjectProgressDelete'
+;
+
+# Modified By thok : 2023. 09. 09
+mod command decProjectProgressToolbarActions
+	add setting 'hasAccess' 'PIM'
+	add setting 'Access Program' 'decAccess' 
+	add setting 'Access Function' 'hasAccess'
+;

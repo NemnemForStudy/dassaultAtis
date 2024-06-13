@@ -1,0 +1,1 @@
+define("DS/DELWeb3DViewerComp/DELWeb3DViewerComp_de",{});define("DS/DELWeb3DViewerComp/assets/nls/messages",{"Error.InvalidInput.Message":"Ungültige Eingabe","Error.Viewer.NotInitialized":"Anzeigekomponente ist nicht initialisiert","Warn.WKIFailed.Message":"Keine Arbeitsanweisungen zur Anzeige vorhanden","Facet.work_instructions.Text":"Work Instructions"});

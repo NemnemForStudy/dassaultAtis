@@ -1,0 +1,16 @@
+m|XCTWebExperienceModelPlay\StudioCamerasModelWebPlay.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.1.22347|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\StudioCamerasModelWebPlay\StudioCamerasModelWebPlay.js|1670966969|3162
+s|XCTWebExperienceModelPlay\StudioCamerasModelWebPlay.mweb\src\extensions\StuECameraManagerSequencePrototypeBuild.js|1629212417|1043
+u|XCTWebExperienceModelPlay\StudioCamerasModelWebPlay.mweb\src\StuNavigation.js|1629212417|446
+u|XCTWebExperienceModelPlay\StudioCamerasModelWebPlay.mweb\src\StuOrbitalNavigation.js|1629212417|365
+u|XCTWebExperienceModelPlay\StudioCamerasModelWebPlay.mweb\src\StuReticule.js|1629212417|605
+u|XCTWebExperienceModelPlay\StudioCamerasModelWebPlay.mweb\src\StuShadingManager.js|1670495766|2194
+u|XCTWebExperienceModelPlay\StudioCamerasModelWebPlay.mweb\src\extensions\StuECameraManagerTransitionPrototypeBuild.js|1629212417|1057
+u|XCTWebExperienceModelPlay\StudioCamerasModelWebPlay.mweb\src\extensions\StuENavigationPrototypeBuild.js|1629212417|957
+u|XCTWebExperienceModelPlay\StudioCamerasModelWebPlay.mweb\src\extensions\StuEOrbitalNavigationPrototypeBuild.js|1629212417|994
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

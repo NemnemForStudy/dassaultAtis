@@ -1,0 +1,18 @@
+<div class="dashboard-menu-item-preview-information-container">
+    <div class="thumbnail">
+        {{#NewDashboardMenu_shouldShowThumbnail dashboard.thumbnail}}
+            <img src="{{NewDashboardMenu_getDashThumbnailUrl dashboard.modelId}}" class="thumbnail-img" draggable="false"/>
+        {{else}}
+            <div class="fonticon fonticon-chart-map-tree thumbnail-icon"></div>
+        {{/NewDashboardMenu_shouldShowThumbnail}}
+    </div>
+    <div class="dashboard-menu-item-preview-information">
+        <span class="dashboard-title">{{dashboard.name}}</span></br>
+        {{{expandedNLS.role}}} <span class="ctx-role-icon fonticon {{dashboard.roleIcon}}"></span> </br>
+        {{{expandedNLS.modifiedOn}}} </br>
+        {{{expandedNLS.members}}} </br>
+    </div>
+</div>
+{{#if dashboard.description}}
+    <div class="dashboard-menu-item-preview-description">{{dashboard.description}}</div>
+{{/if}}

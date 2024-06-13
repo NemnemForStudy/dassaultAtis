@@ -1,0 +1,25 @@
+#####################################################################################################
+# Created by jonghunlee
+# Create Date : 2023-05-11
+# Name : decEWPStatus
+#####################################################################################################
+#del attribute 'decEWPStatus';
+add attribute 'decEWPStatus'
+    description ''
+    type        'String'
+    notmultiline
+    nothidden
+    property 'original name'    value 'decEWPStatus'
+    property 'version'          value 'R2018X'
+    property 'installed date'   value '2023-05-11'
+;
+add property attribute_decEWPStatus on program 'eServiceSchemaVariableMapping.tcl' to attribute 'decEWPStatus';
+
+mod attribute 'decEWPStatus'
+	add range = 'To be started'
+	add range = 'Delay'
+	add range = 'In-Progress'
+	add range = 'In-Trouble'
+	add range = 'Completed'
+	default 'To be started'
+;

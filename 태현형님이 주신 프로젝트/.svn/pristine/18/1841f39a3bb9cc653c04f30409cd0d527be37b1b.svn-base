@@ -1,0 +1,50 @@
+### 230418 Created by CMG
+
+#delete command decCodeDetailCommand;
+
+
+add command decCodeDetailCommand
+	label "emxFramework.Command.decCodeDetailCommand"
+	href '${COMMON_DIR}/emxIndentedTable.jsp?program=decCodeMaster:findCodeDetail&table=decCodeDetailTable&header=emxFramework.Command.decCodeDetailCommand&submitAction=refreshCaller&toolbar=decCodeDetailToolbar&editLink=true&selection=multiple&sortColumnName=none&relationName=relationship_decCodeDetailRel&isTo=false&sortColumnName=Sequence Order&sortDirection=ascending'
+	setting "Registered Suite" "Framework"
+	setting "Target Location" "content"
+	property "installer" value "ENOVIAEngineering"
+	property "application" value "Framework"
+	property "original name" value "decCodeDetailCommand"
+;
+
+### href 수정 MQL ### 
+mod command decCodeDetailCommand href '${COMMON_DIR}/emxIndentedTable.jsp?program=decCodeMaster:findCodeDetail&table=decCodeDetailTable&header=emxFramework.Command.decCodeDetailCommand&submitAction=refreshCaller&toolbar=decCodeDetailToolbar&editLink=true&selection=multiple&relationName=relationship_decCodeDetailRel&isTo=false&sortColumnName=decGroupHeader&sortDirection=ascending&expandProgram=decCodeMaster:getCodeDetailExpand&expandMultiLevelsJPO=true';
+
+
+#mod menu decManagerDesk add command decCodeDetailCommand;
+
+#mod menu decManagerDesk remove command decCodeDetailCommand;
+
+add property command_decCodeDetailCommand on program eServiceSchemaVariableMapping.tcl to command decCodeDetailCommand;
+
+#&sortColumnName=Sequence Order&sortDirection=ascending
+### 툴바 & 편집기능 추가
+mod command decCodeDetailCommand href '${COMMON_DIR}/emxIndentedTable.jsp?program=decCodeMaster:findCodeDetail&table=decCodeDetailTable&header=emxFramework.Command.decCodeDetailCommand&submitAction=refreshCaller&toolbar=decCodeDetailToolbar&editLink=true&selection=multiple&sortColumnName=none&relationName=relationship_decCodeDetailRel&isTo=false&sortColumnName=Sequence Order&sortDirection=ascending'
+;
+
+# Modified by hslee on 2023.07.06 ---> 2023.07.13 원복
+mod command decCodeDetailCommand
+	href '${COMMON_DIR}/emxIndentedTable.jsp?program=decCodeMaster:findCodeDetail&table=decCodeDetailTable&header=emxFramework.Command.decCodeDetailCommand&submitAction=refreshCaller&toolbar=decCodeDetailToolbar&editLink=true&selection=multiple&relationName=relationship_decCodeDetailRel&isTo=false&sortColumnName=decGroupHeader&sortDirection=ascending&expandProgram=decCodeMaster:getCodeDetailExpand&expandMultiLevelsJPO=true'
+;
+
+# Modified by hslee on 2023.07.25
+mod command decCodeDetailCommand
+	href '${COMMON_DIR}/emxIndentedTable.jsp?program=decCodeMaster:findCodeDetail&table=decCodeDetailTable&header=emxFramework.Command.decCodeDetailCommand&submitAction=refreshCaller&toolbar=decCodeDetailToolbar&editLink=true&selection=multiple&relationName=relationship_decCodeDetailRel&isTo=false&sortColumnName=Sequence Order&sortDirection=ascending&expandProgram=decCodeMaster:getCodeDetailExpand&expandMultiLevelsJPO=true'
+;
+
+# Modified by choimingi on 2023.09.09
+mod command decCodeDetailCommand
+	add setting 'hasAccess' 'PIM' 
+	add setting 'Access Program' 'decAccess'
+	add setting 'Access Function' 'hasAccess'
+;
+mod command decCodeDetailCommand
+href '${COMMON_DIR}/emxIndentedTable.jsp?program=decCodeMaster:findCodeDetail&table=decCodeDetailTable&header=emxFramework.Command.decCodeDetailCommand&submitAction=refreshCaller&toolbar=decCodeDetailToolbar&selection=multiple&relationName=relationship_decCodeDetailRel&isTo=false&sortColumnName=Sequence Order&sortDirection=ascending&expandProgram=decCodeMaster:getCodeDetailExpand&expandMultiLevelsJPO=true'
+;
+

@@ -1,0 +1,2 @@
+/*!  Copyright 2015 Dassault Systemes. All rights reserved. */
+define("DS/SPAContentOptimizer/COEnums",[],function(){"use strict";function e(){}return e.COPartFormat=Object.freeze({NoBRep:0,CATPart:1,CGM3D:2}),e.COVisuFormat=Object.freeze({NoVisu:0,Cgr:1,_3Dxm:2}),e.StepVersion=Object.freeze({APDefault:0,AP203:1,AP214:2,AP242:3}),e});

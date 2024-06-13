@@ -1,0 +1,41 @@
+### 230418 Created by CMG
+
+#delete command decCodeMasterCommand;
+
+
+add command decCodeMasterCommand
+	label "emxFramework.Command.decCodeMasterCommand"
+	href '${COMMON_DIR}/emxIndentedTable.jsp?program=decCodeMaster:findCodeMaster&table=decCodeMasterTable&header=emxFramework.Command.decCodeMasterCommand&toolbar=decCodeMasterToolbar&editLink=true&selection=multiple&sortColumnName=none&submitAction=refreshCaller'
+	setting "Registered Suite" "Framework"
+	setting "Target Location" "content"
+	property "installer" value "ENOVIAEngineering"
+	property "application" value "Framework"
+	property "original name" value "decCodeMasterCommand"
+;
+
+#mod menu decManagerDesk add command decCodeMasterCommand;
+
+
+add property command_decCodeMasterCommand on program eServiceSchemaVariableMapping.tcl to command decCodeMasterCommand;
+
+
+### 툴바 & 편집기능 추가
+mod command decCodeMasterCommand
+	href '${COMMON_DIR}/emxIndentedTable.jsp?program=decCodeMaster:findCodeMaster&table=decCodeMasterTable&header=emxFramework.Command.decCodeMasterCommand&toolbar=decCodeMasterToolbar&editLink=true&selection=multiple&sortColumnName=none&submitAction=refreshCaller';
+
+# Modified by hslee on 2023.07.25
+mod command decCodeMasterCommand
+	href '${COMMON_DIR}/emxIndentedTable.jsp?program=decCodeMaster:findCodeMaster&table=decCodeMasterTable&header=emxFramework.Command.decCodeMasterCommand&toolbar=decCodeMasterToolbar&editLink=true&selection=multiple&sortColumnName=Name&sortDirection=ascending&submitAction=refreshCaller'
+;
+
+
+# Modified by choimingi on 2023.09.09
+mod command decCodeMasterCommand
+	add setting 'hasAccess' 'PIM' 
+	add setting 'Access Program' 'decAccess'
+	add setting 'Access Function' 'hasAccess'
+;
+mod command decCodeMasterCommand
+   href '${COMMON_DIR}/emxIndentedTable.jsp?program=decCodeMaster:findCodeMaster&table=decCodeMasterTable&header=emxFramework.Command.decCodeMasterCommand&toolbar=decCodeMasterToolbar&selection=multiple&sortColumnName=Name&sortDirection=ascending&submitAction=refreshCaller'
+;
+

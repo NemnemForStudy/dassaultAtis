@@ -1,0 +1,1 @@
+define("DS/CAT3DWRichLinksUI/CAT3DWRichLinksUI_es",{});define("DS/CAT3DWRichLinksUI/assets/nls/CAT3DWLinkFullHtmlView",{authorPrep:"Por",communityPrep:"en"});define("DS/CAT3DWRichLinksUI/assets/nls/CAT3DWLinkPlaceholderHtmlView",{processingMsg:"Cargando contenido..."});define("DS/CAT3DWRichLinksUI/assets/nls/CAT3DWRichLinkHtmlView",{authorPrep:"por",communityPrep:"en"});

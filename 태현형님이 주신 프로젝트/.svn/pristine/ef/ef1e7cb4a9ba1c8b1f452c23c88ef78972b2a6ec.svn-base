@@ -1,0 +1,1 @@
+define("DS/XCADSTPZDocument/STPZInputDocument",["DS/XCADSTEPDocument/STEPInputDocument"],function(e){"use strict";return e.zipped=!0,e.requestResponseType="arraybuffer",e});

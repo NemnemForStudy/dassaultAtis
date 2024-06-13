@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Interface">
+
+	<select id="selectDeliverableFile" parameterType="map" resultType="map">
+	 <![CDATA[ 
+		SELECT * FROM  X3DDEC_ADMIN.IF_DELIVERABLE_LIST_IN WHERE IF_FLAG ='N'
+		FETCH FIRST #{limit} ROWS ONLY 
+	  ]]>
+	</select>
+	
+	<select id="selectDeliverableHistory" parameterType="map" resultType="map">
+	 <![CDATA[ 
+		SELECT * FROM  X3DDEC_ADMIN.IF_DELIVERABLE_LIST_IN WHERE DOC_NO =#{docNo}
+	  ]]>
+	</select>
+	
+	<update id="updateDeliverableIfFlag" parameterType="java.lang.String">
+		  UPDATE X3DDEC_ADMIN.IF_DELIVERABLE_LIST_IN
+		  SET IF_FLAG = 'P'
+		  WHERE SITE_CD = #{siteCd} AND DOC_NO = #{docNo} AND REVISION = #{revision} AND IF_SEQ = #{ifSeq}
+	</update>
+	
+	<update id="updateDeliverableIfFlagE" parameterType="java.lang.String">
+		  UPDATE X3DDEC_ADMIN.IF_DELIVERABLE_LIST_IN
+		  SET IF_FLAG = 'E', IF_MSG = #{ifmsg}
+		  WHERE SITE_CD = #{siteCd} AND DOC_NO = #{docNo} AND REVISION = #{revision} AND IF_SEQ = #{ifSeq}
+	</update>
+	
+	<update id="updateDeliverableIfFlagY" parameterType="java.lang.String">
+		  UPDATE X3DDEC_ADMIN.IF_DELIVERABLE_LIST_IN
+		  SET IF_FLAG = 'Y'
+		  WHERE SITE_CD = #{siteCd} AND DOC_NO = #{docNo} AND REVISION = #{revision} AND IF_SEQ = #{ifSeq} AND IF_FLAG != 'E'
+	</update>
+	
+	<select id="selectVendorPrintList" parameterType="map" resultType="map">
+	 <![CDATA[ 
+		SELECT * FROM  X3DDEC_ADMIN.IF_VENDOR_PRINT_LIST_IN WHERE IF_FLAG ='N' 
+		FETCH FIRST #{limit} ROWS ONLY 
+	  ]]>
+	</select>
+	
+	<select id="selectVendorPrintHistory" parameterType="map" resultType="map">
+	 <![CDATA[ 
+		SELECT * FROM  X3DDEC_ADMIN.IF_VENDOR_PRINT_LIST_IN WHERE DOC_NO =#{docNo}
+	  ]]>
+	</select>
+	
+	<update id="updateVendorPrintIfFlag" parameterType="java.lang.String">
+		  UPDATE X3DDEC_ADMIN.IF_VENDOR_PRINT_LIST_IN
+		  SET IF_FLAG = 'P'
+		  WHERE SITE_CD = #{siteCd} AND DOC_NO = #{docNo} AND REVISION = #{revision} AND IF_SEQ = #{ifSeq}
+	</update>
+	
+	<update id="updateVendorPrintIfFlagE" parameterType="java.lang.String">
+		  UPDATE X3DDEC_ADMIN.IF_VENDOR_PRINT_LIST_IN
+		  SET IF_FLAG = 'E',
+		  IF_MSG = #{ifmsg}
+		  WHERE SITE_CD = #{siteCd} AND DOC_NO = #{docNo} AND REVISION = #{revision} AND IF_SEQ = #{ifSeq}
+	</update>
+	
+	<update id="updateVendorPrintIfFlagY" parameterType="java.lang.String">
+		  UPDATE X3DDEC_ADMIN.IF_VENDOR_PRINT_LIST_IN
+		  SET IF_FLAG = 'Y'
+		  WHERE SITE_CD = #{siteCd} AND DOC_NO = #{docNo} AND REVISION = #{revision} AND IF_SEQ = #{ifSeq} AND IF_FLAG != 'E'
+	</update>
+	
+	
+	<select id="selectAllDeliverableDoc" parameterType="map" resultType="map">
+	    
+		   SELECT IF_SEQ AS ID,IF_FLAG,DBMS_LOB.SUBSTR(IF_MSG, 1000, 1) AS IF_MSG,IF_INTERFACE_DATE,SITE_CD,DCPLN_NM,DOC_TYPE_NM,DOC_NO,REVISION, DOC_TITLE,STAGE,FILE_ATCH_ID,FILE_ID 
+		   FROM  X3DDEC_ADMIN.IF_DELIVERABLE_LIST_IN
+	       <where>
+	       <if test="@com.dec.util.DecStringUtil@isNotNull(SITE_CD)"> SITE_CD=#{SITE_CD}</if>
+	       </where>
+	     
+	</select>
+	
+	
+	<select id="selectAllVendorPrint" parameterType="map" resultType="map">
+	    
+		   SELECT IF_SEQ AS ID,IF_FLAG,DBMS_LOB.SUBSTR(IF_MSG, 1000, 1) AS IF_MSG,IF_INTERFACE_DATE,SITE_CD,DCPLN_NM,DOC_TYPE_NM,DOC_NO,REVISION, DOC_TITLE,STAGE,FILE_ATCH_ID,FILE_ID FROM  X3DDEC_ADMIN.IF_VENDOR_PRINT_LIST_IN
+	    	<where>
+	       <if test="@com.dec.util.DecStringUtil@isNotNull(SITE_CD)"> SITE_CD=#{SITE_CD}</if>
+	       </where>
+	    
+	</select>
+	
+	<select id="selectErrorOnlyDeliverableDoc" parameterType="map" resultType="map">
+	   
+		   SELECT IF_SEQ AS ID,IF_FLAG,DBMS_LOB.SUBSTR(IF_MSG, 1000, 1) AS IF_MSG,IF_INTERFACE_DATE,SITE_CD,DCPLN_NM,DOC_TYPE_NM,DOC_NO,REVISION, DOC_TITLE,STAGE,FILE_ATCH_ID,FILE_ID FROM  X3DDEC_ADMIN.IF_DELIVERABLE_LIST_IN 
+	       WHERE IF_FLAG = 'E'
+	       <if test="@com.dec.util.DecStringUtil@isNotNull(SITE_CD)"> AND SITE_CD=#{SITE_CD}</if>
+	  
+	</select>
+	
+	
+	<select id="selectErrorOnlyVendorPrint" parameterType="map" resultType="map">
+	   
+		   SELECT IF_SEQ AS ID,IF_FLAG,DBMS_LOB.SUBSTR(IF_MSG, 1000, 1) AS IF_MSG,IF_INTERFACE_DATE,SITE_CD,DCPLN_NM,DOC_TYPE_NM,DOC_NO,REVISION, DOC_TITLE,STAGE,FILE_ATCH_ID,FILE_ID FROM  X3DDEC_ADMIN.IF_VENDOR_PRINT_LIST_IN
+	        WHERE IF_FLAG = 'E' 
+	        <if test="@com.dec.util.DecStringUtil@isNotNull(SITE_CD)"> AND SITE_CD=#{SITE_CD}</if>
+	   
+	</select>
+	
+	<update id="updateFlagDeliverable" parameterType="java.lang.String">
+		  UPDATE X3DDEC_ADMIN.IF_DELIVERABLE_LIST_IN
+		  SET IF_FLAG = 'N'
+		  WHERE SITE_CD = #{SITE_CD} AND DOC_NO = #{DOC_NO} AND REVISION = #{REVISION} AND IF_FLAG = #{IF_FLAG} AND IF_SEQ= #{IF_SEQ} AND DOC_TITLE= #{DOC_TITLE}
+	</update>
+	
+	<update id="updateFlagVendorPrint" parameterType="java.lang.String">
+		  UPDATE X3DDEC_ADMIN.IF_VENDOR_PRINT_LIST_IN
+		  SET IF_FLAG = 'N'
+		  WHERE SITE_CD = #{SITE_CD} AND DOC_NO = #{DOC_NO} AND REVISION = #{REVISION} AND IF_FLAG = #{IF_FLAG} AND IF_SEQ= #{IF_SEQ} AND DOC_TITLE= #{DOC_TITLE}
+	</update>
+</mapper>

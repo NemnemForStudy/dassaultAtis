@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+	  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link type="image/x-icon" href="/ematrix/favicon.ico" rel="shortcut icon">
+		<title>DELWebInfrastructure sample page</title>
+	</head>
+	<body>
+	    <!-- h1>Welcome to JavaScriptMVC!</h1>
+        <ul>
+			<li>Include plugins and files in <i>nplan/helloworld.js</i>.</li>
+			<li>Change to production mode by changing <i>development</i> to <i>production</i> in this file.</li>
+        </ul -->
+    <script type="text/javascript">
+      window.Configuration = {
+                                mode : 'DELWebInfrastructure',
+                                applicationName : 'DELWebInfrastructure test page',
+                                webroot : "/ematrix",
+                                UWA:{
+                                  Data:{
+                                    proxies:{
+                                      passport : "/ematrix/common/emxCrossDomainProxy.jsp"
+                                    }
+                                  }
+                                },
+                                Compass: {
+                                  //myAppsBaseURL : 'http://vdevpril730dsy.dsy.ds:8090/ematrix',
+                                  //passportUrl : '',
+                                  proxyTicketUrl : '/ematrix/resources/bps/proxyticket'
+                                },
+                                login: {},
+                                sync: {},
+                                dateFormat: 'E M/dd/yyyy',
+                                timeFormat: "h:mm a",
+                                logTimes:false,
+                                useFixtures:false
+                              };
+
+    </script>
+		<script type='text/javascript'
+	    src='../../JavascriptMVC-3.3/steal/steal.js?//../DSCommon/src/ds_common.js'>
+        </script>
+		<script type='text/javascript'>
+		  setTimeout(function() {
+        //fake out an authentication so we can see the top bar in 5 seconds..
+        if ( window.OpenAjax ) {
+          OpenAjax.hub.publish("Ds.Auth.updated",{user : "dummy_ds_common_user"});
+        } else {
+          alert("OpenAjax has not been loaded!!");
+        }
+
+		  },5000);
+		</script>
+	</body>
+</html>

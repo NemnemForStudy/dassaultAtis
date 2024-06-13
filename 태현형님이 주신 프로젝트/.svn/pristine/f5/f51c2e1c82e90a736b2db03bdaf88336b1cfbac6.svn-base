@@ -1,0 +1,215 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:widget="http://www.netvibes.com/ns/">
+
+
+<head>
+
+    <meta name="author" content="Dassault Systemes" />
+    <meta name="brand" content="ENOVIA" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="autoRefresh" content="0" />
+    <meta name="description" content="ENOVIA ESign Demo" />
+
+    <title>ESign Demo</title>
+
+    <widget:preferences>
+        <preference name="collab-storage" type="list" label="storage_label" defaultValue="">
+            <option value="" label="loading_label" />
+        </preference>
+        <preference name="collabspace" type="list" label="collabspace" defaultValue="">
+            <option value="" label="loading_label" />
+        </preference>
+        <widget:preference type="hidden" name="eSignName" defaultValue=""></widget:preference>
+        <widget:preference type="hidden" name="eSignId" defaultValue=""></widget:preference>
+        <widget:preference type="hidden" name="x3dPlatformId" label="x3dPlatformId" defaultValue="OnPremise">
+        </widget:preference>
+    </widget:preferences>
+
+    <style>
+        .container {
+            display: block;
+            width: 100%;
+            position: relative;
+        }
+        .button-container {
+            height: 15%;
+        }
+        .test-container {
+            height: 85%;
+        }
+        .button {
+            display: inline-block;
+            color: #444;
+            border: 1px solid #CCC;
+            background: #DDD;
+            box-shadow: 0 0 5px -1px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            vertical-align: middle;
+            max-width: 100px;
+            padding: 5px;
+            text-align: center;
+        }
+
+        .button:active {
+            color: red;
+            box-shadow: 0 0 5px -1px rgba(0, 0, 0, 0.6);
+        }
+    </style>
+
+    <script>
+
+        const configButton = new UWA.Element('div', { "class": "config-button button" })
+        const recordsButton = new UWA.Element('div', { "class": "records-button button" })
+        const configContainerButton = new UWA.Element('div', { "class": "config-container-button button" })
+        const recordsContainerButton = new UWA.Element('div', { "class": "records-container-button button" })
+        const testDelegatedAuth = new UWA.Element('div', { "class": "records-container-button button" })
+        const buttonContainer = new UWA.Element('div', { "class": "button-container container" })
+        const testAppContainer = new UWA.Element('div', { "class": "test-container container" })
+
+        configButton.setText('Get ESign Configs in Dialog')
+        recordsButton.setText('Get ESign Records in Dialog')
+        configContainerButton.setText('Get ESign Configs with container')
+        recordsContainerButton.setText('Get ESign Records with container')
+        testDelegatedAuth.setText('Open delegated auth popup')
+
+        function showRecords() {
+            testAppContainer.empty()
+            require(['UWA/Core', 'DS/ENXESignature/ENXESignMgmtDetails'],
+                function (UWA, ENXESignMgmtDetails) {
+                    'use strict';
+                    ENXESignMgmtDetails.init({
+                    	ESignRecordId: "45AD8256B5B9000063776462001D7FF8",
+                    	onCloseCallback: () => console.log('on close callback called'),
+                        x3dPlatformId: 'OnPremise',
+                        // userSecurityContext: 'ctx::VPLMAdmin.Admin.Default',
+                    });
+                }
+            );
+        }
+        function showESign() {
+            testAppContainer.empty()
+            require(['UWA/Core', 'DS/ENXESignConfigApp/View/CustomContainer/ESignConfigInit'],
+                function (UWA, ESignConfigInit) {
+                    'use strict';
+                    ESignConfigInit.init({
+                        x3dPlatformId: 'OnPremise',
+                        // userSecurityContext: 'ctx::VPLMAdmin.Admin.Default',
+                        //userGroup: '45AD82562107080063733CF90011EDC6'
+                    })
+                });
+        }
+        function showRecordsInContainer() {
+            testAppContainer.empty()
+            require(['UWA/Core', 'DS/ENXESignature/ENXESignMgmtDetails'],
+                function (UWA, ENXESignMgmtDetails) {
+                    'use strict';
+                    ENXESignMgmtDetails.init({
+                    	refID: "041E8256C9DA3800631027040000B290",
+                        serviceID: '3DSpace',
+                        x3dPlatformId: 'OnPremise',
+                        // userSecurityContext: 'ctx::VPLMAdmin.Admin.Default',
+                    }, testAppContainer);
+                }
+            );
+        }
+        function showESignInContainer() {
+            testAppContainer.empty()
+            require(['UWA/Core', 'DS/ENXESignConfigApp/View/CustomContainer/ESignConfigInit'],
+                function (UWA, ESignConfigInit) {
+                    'use strict';
+                    ESignConfigInit.init({
+                        x3dPlatformId: 'OnPremise',
+                        // userSecurityContext: 'ctx::VPLMAdmin.Admin.Default',
+                        //userGroup: '45AD82562107080063733CF90011EDC6'
+                    }, testAppContainer);
+                });
+        }
+
+        function testDelegatedAuthFuncion() {
+            testAppContainer.empty()
+            require(['UWA/Core', 'DS/ENXESignConfigApp/Controller/ESignBootstrap', 'DS/ENXESignConfigApp/Utilities/ParseJSONUtil'],
+            function (UWA, ESignBootstrap, ParseJSONUtil) {
+                ESignBootstrap.start({}).then(() => {
+                        'use strict';
+                        const uniqueKey = (new Date()).getTime()
+                        console.log('reauthid sent', uniqueKey)
+                        const url3Dspace = ESignBootstrap.get3DSpaceURL();
+                        // window.open("https://vdevpril249blr.dsone.3ds.com/3DSpace/resources/v1/modeler/ESignRecord/delegateAuth" , '_blank', 'location=0');
+                        // window.open(`https://devopsdsn4ga1n24143756-euw1-devprol33.iam.3dx-staging.3ds.com/api/login/reauth?id=${uniqueKey}&callback=${url3Dspace}/resources/v1/modeler/ESignRecord/delegateAuthSuccess` , '_blank', 'location=0');
+                        const popup = window.open(`https://devopsmss1rsqo7104343-euw1-25dsw11103.iam.3dx-staging.3ds.com/api/login/reauth?id=${uniqueKey}&callback=https://vdevpril249blr.dsone.3ds.com/3DSpace/resources/v1/modeler/ESignRecord/delegateAuthSuccess` , '_blank', 'location=0');
+                        //window.addEventListener('message', childResponse);
+                        const checkPopup = setInterval(() => {
+                           if (popup.window.location.href
+                              .includes('success')) {popup.close()}
+                           if (!popup || !popup.closed) return;
+                           clearInterval(checkPopup);
+                        }, 1000);
+    
+                        function childResponse(e) {
+                            // e.data hold the message from child
+                            console.log('popup response', e);
+                            // alert("Login Success !!! Proceed with Post Process" + e.data);
+                            let url = 'https://vdevpril249blr.dsone.3ds.com/3DSpace/resources/v1/modeler/ESignRecord/delegateAuthTransient';
+                            let options = {};
+                            // options = UWACore.extend(options, ESignBootstrap.getSyncOptions(), true);
+                            options.method = 'GET';
+                            options.type = 'json';
+                            options.timeout = 0;
+                            options.headers = {
+                                'Accept': 'application/json',
+                            };
+                            options.wait = true;
+                            let payload = new ParseJSONUtil().createDataForRequest({ transientUrl: decodeURIComponent(e.data) })
+                            options.data = JSON.stringify(payload);
+
+                            options.onComplete = function (serverResponse) {
+                                console.log(serverResponse)
+                            };
+
+                            options.onFailure = function (serverResponse, respData) {
+                                console.log('failed', serverResponse)
+                            };
+
+                            ESignBootstrap.authenticatedRequest(url, options);
+                            window.removeEventListener('message', childResponse);
+                        }
+
+                    });
+                });
+        }
+
+        function addButton() {
+            configButton.inject(buttonContainer)
+            recordsButton.inject(buttonContainer)
+            configContainerButton.inject(buttonContainer)
+            recordsContainerButton.inject(buttonContainer)
+            testDelegatedAuth.inject(buttonContainer)
+            buttonContainer.inject(widget.body)
+            testAppContainer.inject(widget.body)
+        }
+
+        function addContainer() {
+            widget.setBody("")
+            addButton();
+            configButton.addEvent('click', showESign)
+            recordsButton.addEvent('click', showRecords)
+            configContainerButton.addEvent('click', showESignInContainer)
+            recordsContainerButton.addEvent('click', showRecordsInContainer)
+            testDelegatedAuth.addEvent('click', testDelegatedAuthFuncion)
+        }
+
+        function refreshDemoWidget() {
+            console.log('Widget Refeshed')
+            widget.setBody("")
+            addContainer()
+        }
+
+        widget.addEvent('onLoad', addContainer);
+        widget.addEvent('onRefresh', refreshDemoWidget);
+    </script>
+</head>
+
+<body>
+</body>
+
+</html>

@@ -1,0 +1,548 @@
+#####################################################################################################
+# Created by jonghunlee
+# Admin Type : Table
+# Create Date : 2023-05-22
+# Name : decIWPExcutionTable
+#####################################################################################################
+#del table 'decIWPExcutionTable' system;
+add table 'decIWPExcutionTable' system
+    column
+    	name	 'LV1 Code'
+    	label	 'ProgramCentral.Label.LV1_Code'
+    	setting  'Column Type'  'programHTMLOutput'
+    	setting  'Registered Suite'  'ProgramCentral'
+    	setting  'program'  'emxProjectSpace'
+    	setting  'function'  'getLVCode'
+    	setting  'Editable'  'false'
+    	setting  'level'  '1'
+    	setting  'Export'   'true'
+    	setting    'Width'  '120'
+    column
+    	name	 'LV1 Desc'
+    	label	 'ProgramCentral.Label.LV1_Desc'
+    	setting  'Column Type'  'programHTMLOutput'
+    	setting  'Registered Suite'  'ProgramCentral'
+    	setting  'program'  'emxProjectSpace'
+    	setting  'function'  'getLVDesc'
+    	setting  'Editable'  'false'
+    	setting  'level'  '1'
+    	setting  'Export'   'true'
+    	setting    'Width'  '120'
+    column
+    	name	 'LV2 Code'
+    	label	 'ProgramCentral.Label.LV2_Code'
+    	setting  'Column Type'  'programHTMLOutput'
+    	setting  'Registered Suite'  'ProgramCentral'
+    	setting  'program'  'emxProjectSpace'
+    	setting  'function'  'getLVCode'
+    	setting  'Editable'  'false'
+    	setting  'level'  '2'
+    	setting  'Export'   'true'
+    	setting    'Width'  '120'
+    column
+    	name	 'LV2 Desc'
+    	label	 'ProgramCentral.Label.LV2_Desc'
+    	setting  'Column Type'  'programHTMLOutput'
+    	setting  'Registered Suite'  'ProgramCentral'
+    	setting  'program'  'emxProjectSpace'
+    	setting  'function'  'getLVDesc'
+    	setting  'Editable'  'false'
+    	setting  'level'  '2'
+    	setting  'Export'   'true'
+    	setting    'Width'  '120'
+    column
+        name    'CWP No'
+        label    'ProgramCentral.Label.CWP_No'
+        businessobject '$<to[Subtask].from.name>'
+#        href        "${COMMON_DIR}/emxTree.jsp"
+        setting 'Registered Suite'   'ProgramCentral'
+        setting 'Field Type'   'basic'
+        setting 'Target Location'   "popup"
+        setting    'Alternate OID expression' '$<to[Subtask].from.id>'
+    	setting    'Width'  '120'
+    	setting  'Column Type'  'programHTMLOutput'
+    	setting  'program'  'emxTask'
+    	setting  'function'  'getNameColumnLinkTree'
+    	setting  'Export'   'true'
+        setting    'Alternate Object' 'to[Subtask].from'
+    column
+        name    'Discipline Desc'
+        label    'ProgramCentral.Label.Discipline'
+        setting    'Registered Suite'   'ProgramCentral'
+        setting    'Column Type'   'program'
+        setting    'program'   'decCodeMaster'
+        setting    'function'   'getCodeMasterDesc'
+        setting    'Editable'   'false'
+#        setting    'MasterName' 'DP Hierarchy'
+        setting    'MasterName' 'Discipline' # Modified by hslee on 2023.07.25
+        setting    'DetailType' 'Discipline'
+        setting    'attributeName' 'decDiscipline'
+        setting    'type'  'IWP'
+    	setting    'Width'  '120'
+    column
+        name    'IWP Type'
+        label    'ProgramCentral.Label.IWP_Type'
+        businessobject '$<attribute[attribute_decIWPType].value>'
+        setting 'Registered Suite'   'ProgramCentral'
+        setting 'Input Type'   'combobox'
+        setting    'Edit Access Function'    "isTaskCellEditable"
+        setting    'Edit Access Program'     "emxTask"
+        setting 'Admin Type'   'attribute_decIWPType'
+        setting 'Field Type'   'attribute'
+        setting    'Range Program'   'decCodeMaster'
+        setting    'Range Function'   'getCodeMasterRange'
+        setting 'Editable'   'true'
+        setting    'MasterName' 'IWP Type'
+    	setting    'Width'  '120'
+    column
+        name    'IWP Type Desc'
+        label    'ProgramCentral.Label.IWP_Type_Desc'
+        setting    'Registered Suite'   'ProgramCentral'
+        setting    'Column Type'   'program'
+        setting    'program'   'decCodeMaster'
+        setting    'function'   'getCodeMasterDesc'
+        setting    'Editable'   'false'
+        setting    'MasterName' 'IWP Type'
+        setting    'attributeName' 'decIWPType'
+    	setting    'Width'  '120'
+    column
+        name    'IWP Sequence'
+        label    'ProgramCentral.Label.IWP_Sequence'
+        businessobject '$<attribute[attribute_decIWPSequence].value>'
+        setting 'Registered Suite'   'ProgramCentral'
+        setting 'Admin Type'   'attribute_decIWPSequence'
+        setting 'Field Type'   'attribute'
+        setting 'Editable'   'true'
+        setting    'Edit Access Function'    "isTaskCellEditable"
+        setting    'Edit Access Program'     "emxTask"
+    	setting    'Width'  '120'
+    column
+        name    'IWP No'
+        label    'ProgramCentral.Label.IWP_No'
+        businessobject '$<name>'
+ #       href        "${COMMON_DIR}/emxTree.jsp"
+        setting 'Registered Suite'   'ProgramCentral'
+        setting 'Field Type'   'basic'
+        setting 'Target Location'   "popup"
+        setting 'Editable'   'true'
+        setting    'Edit Access Function'    "isTaskCellEditable"
+        setting    'Edit Access Program'     "emxTask"
+    	setting    'Width'  '120'
+    	setting  'Column Type'  'programHTMLOutput'
+    	setting  'program'  'emxTask'
+    	setting  'function'  'getNameColumnLinkTree'
+    	setting  'Export'   'true'
+        setting    'Update Function'         "updateWBSElementsName"
+        setting    'Update Program'          "emxTask"
+    column
+        name    'IWP Description'
+        label    'ProgramCentral.Label.IWP_Description'
+        businessobject '$<description>'
+        setting 'Registered Suite'   'ProgramCentral'
+        setting 'Field Type'   'basic'
+        setting 'Target Location'   "popup"
+        setting 'Editable'   'true'
+        setting    'Edit Access Function'    "isTaskCellEditable"
+        setting    'Edit Access Program'     "emxTask"
+    	setting    'Width'  '120'
+    column
+        name    'Stage'
+        label    'ProgramCentral.Label.Stage'
+        businessobject '$<attribute[attribute_decStage].value>'
+        setting 'Registered Suite'   'ProgramCentral'
+        setting 'Admin Type'   'attribute_decStage'
+        setting 'Field Type'   'attribute'
+    	setting    'Width'  '120'
+    column
+        name    'Status'
+        label    'ProgramCentral.Label.Status'
+        businessobject 'current'
+        setting 'Registered Suite'   'ProgramCentral'
+        setting 'Input Type'   'combobox'
+        setting 'Column Type'   'program'
+        setting 'Editable'   'true'
+        setting 'Range Program'   'emxTask'
+        setting 'Range Function'   'getCWPTaskManagementStateRange'
+        setting 'function'  'getCWPTaskStateName'
+        setting 'program'  'emxTask'
+        setting 'Update Function'  'updateDetailState'
+        setting 'Update Program'  'decCodeMaster'
+        setting 'Edit Access Function'	'accessUpdateStatus'
+        setting 'Edit Access Program'   'emxTask'
+        setting 'On Focus Handler' 'reloadRangeValues'
+    	setting    'Width'  '120'
+    column
+        name    'Sub-Con'
+        label    'ProgramCentral.Label.Sub-Con'
+        businessobject '$<to[Subtask].from.attribute[attribute_decSubConNo].value>'
+        setting 'Registered Suite'   'ProgramCentral'
+        setting 'Admin Type'   'attribute_decSubConNo'
+        setting 'Field Type'   'attribute'
+        setting 'Editable'   'false'
+        setting    'Column Type'   'program'
+        setting    'MasterName' 'Sub-Con'
+        setting    'DetailType' 'Sub-Con'
+        setting    'program'   'decCodeMaster'
+        setting    'function'   'getCodeMasterCode'
+        setting    'attributeName' 'decSubConNo'
+        setting    'type'    'IWP'
+    	setting    'Width'  '120'
+    column
+        name    'Assignments - Engineer'
+        label    'ProgramCentral.Label.Assignments_-_Engineer'
+        businessobject '$<attribute[attribute_decEngineer].value>'
+        setting 'Registered Suite'   'ProgramCentral'
+        setting 'Admin Type'   'attribute_decEngineer'
+        setting 'Field Type'   'attribute'
+        setting 'Editable'   'true'
+        setting    'Edit Access Function'    "isTaskCellEditable"
+        setting    'Edit Access Program'     "emxTask"
+        setting "Group Header" 'ProgramCentral.Label.Assignments'
+    	setting    'Width'  '120'
+    column
+        name    'Assignments - Planner'
+        label    'ProgramCentral.Label.Assignments_-_Planner'
+        businessobject '$<attribute[attribute_decPlanner].value>'
+        setting 'Registered Suite'   'ProgramCentral'
+        setting 'Admin Type'   'attribute_decPlanner'
+        setting 'Field Type'   'attribute'
+        setting 'Editable'   'true'
+        setting    'Edit Access Function'    "isTaskCellEditable"
+        setting    'Edit Access Program'     "emxTask"
+        setting "Group Header" 'ProgramCentral.Label.Assignments'
+    	setting    'Width'  '120'
+    column
+        name    'Assignments - Superintendent'
+        label    'ProgramCentral.Label.Assignments_-_Superintendent'
+        businessobject '$<attribute[attribute_decSuperintendent].value>'
+        setting 'Registered Suite'   'ProgramCentral'
+        setting 'Admin Type'   'attribute_decSuperintendent'
+        setting 'Field Type'   'attribute'
+        setting 'Editable'   'true'
+        setting    'Edit Access Function'    "isTaskCellEditable"
+        setting    'Edit Access Program'     "emxTask"
+        setting "Group Header" 'ProgramCentral.Label.Assignments'
+    	setting    'Width'  '120'
+    column
+        name    'Assignments - Foreman'
+        label    'ProgramCentral.Label.Assignments_-_Foreman'
+        businessobject '$<attribute[attribute_decForeman].value>'
+        setting 'Registered Suite'   'ProgramCentral'
+        setting 'Admin Type'   'attribute_decForeman'
+        setting 'Field Type'   'attribute'
+        setting 'Editable'   'true'
+        setting    'Edit Access Function'    "isTaskCellEditable"
+        setting    'Edit Access Program'     "emxTask"
+        setting "Group Header" 'ProgramCentral.Label.Assignments'
+    	setting    'Width'  '120'
+    column
+        name    'IWP Key Qty - Type'
+        label    'ProgramCentral.Label.IWP_Key_Qty_-_Type'
+        businessobject '$<attribute[attribute_decKeyQuantityType].value>'
+        setting 'Registered Suite'   'ProgramCentral'
+        setting 'Admin Type'   'attribute_decKeyQuantityType'
+        setting 'Field Type'   'attribute'
+        setting 'Input Type'   'combobox'
+#   	setting 'Column Type'  'program'
+#       setting 'program'   'decCodeMaster'
+#       setting 'function'   'getCodeMasterDesc'
+#       setting 'attributeName' 'decKeyQuantityType'
+#       setting 'Range Program'   'decCodeMaster'
+#       setting 'Range Function'   'getCodeMasterDescRange'
+        setting 'Column Type'  'programHTMLOutput'
+        setting 'program'   'decCodeMaster'
+        setting 'function'   'getCodeMasterRangeHTMLOutput'
+        setting 'MasterName' 'Discipline'
+        setting 'DetailType' 'BOQ Key Item'
+        setting 'GroupByValue' 'Discipline'
+        setting 'GroupKeyAttr' 'to[Subtask].from.attribute[decDiscipline]'
+        setting 'GroupKeyAttrType' 'IWP'
+#       setting 'GroupByRelToAttr' 'decDiscipline'
+#       setting 'GroupByRelToAttrKey' 'attribute[decCode]'
+        setting 'Update Program' 'emxTask'
+        setting 'Update Function' 'updateTableAttrValue'
+        setting 'Editable'   'true'
+    	setting  'Export'   'true'
+        setting    'Edit Access Function'    "isTaskCellEditable"
+        setting    'Edit Access Program'     "emxTask"
+        setting "Group Header" 'ProgramCentral.Label.IWP_Key_Qty'
+    	setting    'Width'  '120'
+    column
+        name    'IWP Key Qty - UOM'
+        label    'ProgramCentral.Label.IWP_Key_Qty_-_UOM'
+        businessobject '$<attribute[attribute_decKeyQuantityUOM].value>'
+        setting 'Registered Suite'   'ProgramCentral'
+        setting 'Input Type'   'combobox'
+        setting 'Admin Type'   'attribute_decKeyQuantityUOM'
+        setting 'Field Type'   'attribute'
+        setting 'Column Type'  'programHTMLOutput'
+        setting 'program'   'decCodeMaster'
+        setting 'function'   'getCodeMasterRangeHTMLOutput'
+        setting 'MasterName' 'BOQ Key Item'
+        setting 'DetailType' 'UOM'
+        setting 'GroupByValue' 'BOQ Key Item'
+        setting 'GroupKeyAttr' 'decKeyQuantityType'
+#       setting 'GroupByRelToAttr' 'decKeyQuantityType'
+#       setting 'GroupByRelToAttrKey' 'attribute[decCode]'
+        setting 'Update Program' 'emxTask'
+        setting 'Update Function' 'updateTableAttrValue'
+        setting 'Editable'   'true'
+    	setting  'Export'   'true'
+        setting    'Edit Access Function'    "isTaskCellEditable"
+        setting    'Edit Access Program'     "emxTask"
+        setting "Group Header" 'ProgramCentral.Label.IWP_Key_Qty'
+    	setting    'Width'  '120'
+    column
+        name    'IWP Key Qty - Total'
+        label    'ProgramCentral.Label.IWP_Key_Qty_-_Total'
+        businessobject '$<attribute[attribute_decKeyQuantityTotal].value>'
+        setting 'Registered Suite'   'ProgramCentral'
+        setting 'Admin Type'   'attribute_decKeyQuantityTotal'
+        setting 'Field Type'   'attribute'
+        setting 'Editable'   'true'
+        setting    'Edit Access Function'    "isTaskCellEditable"
+        setting    'Edit Access Program'     "emxTask"
+        setting "Group Header" 'ProgramCentral.Label.IWP_Key_Qty'
+    	setting    'Width'  '120'
+    	setting 'format' 'numeric'
+    	setting 'On Change Handler' 'isNumCheck'
+    column
+        name    'IWP Key Qty - Completed'
+        label    'ProgramCentral.Label.IWP_Key_Qty_-_Completed'
+        businessobject '$<attribute[attribute_decKeyQuantityCompleted].value>'
+        setting 'Registered Suite'   'ProgramCentral'
+        setting 'Admin Type'   'attribute_decKeyQuantityCompleted'
+        setting 'Field Type'   'attribute'
+        setting 'Editable'   'true'
+        setting    'Edit Access Function'    "isTaskCellEditable"
+        setting    'Edit Access Program'     "emxTask"
+        setting "Group Header" 'ProgramCentral.Label.IWP_Key_Qty'
+    	setting    'Width'  '120'
+    	setting 'format' 'numeric'
+    	setting 'On Change Handler' 'isNumCheck'
+    column
+        name    'PhaseEstimatedDuration'
+        label    'ProgramCentral.Label.IWP_Duration_-_Plan'
+        businessobject '$<attribute[attribute_TaskEstimatedDuration].value>'
+        setting 'Registered Suite'   'ProgramCentral'
+        setting 'Admin Type'   'attribute_TaskEstimatedDuration'
+        setting 'Field Type'   'attribute'
+        setting "Group Header" 'ProgramCentral.Label.IWP_Duration'
+    	setting    'Width'  '120'
+    column
+        name    'PhaseActualDuration'
+        label    'ProgramCentral.Label.IWP_Duration_-_Actual'
+        businessobject '$<attribute[attribute_TaskActualDuration].value>'
+        setting 'Registered Suite'   'ProgramCentral'
+        setting 'Admin Type'   'attribute_TaskActualDuration'
+        setting 'Field Type'   'attribute'
+        setting "Group Header" 'ProgramCentral.Label.IWP_Duration'
+    	setting    'Width'  '120'
+    column
+        name    'IWP Release - Plan'
+        label    'ProgramCentral.Label.IWP_Release_-_Plan'
+        businessobject '$<attribute[attribute_decReleasePlan].value>'
+        setting 'Registered Suite'   'ProgramCentral'
+        setting 'Admin Type'   'attribute_decReleasePlan'
+        setting 'Field Type'   'attribute'
+        setting 'format'   'date'
+        setting 'Editable'   'true'
+        setting    'Edit Access Function'    "isTaskCellEditable"
+        setting    'Edit Access Program'     "emxTask"
+        setting "Group Header" 'ProgramCentral.Label.IWP_Release'
+    	setting    'Width'  '120'
+    column
+        name    'IWP Release - Forecast'
+        label    'ProgramCentral.Label.IWP_Release_-_Forecast'
+        businessobject '$<attribute[attribute_decReleaseForecast].value>'
+        setting 'Registered Suite'   'ProgramCentral'
+        setting 'Admin Type'   'attribute_decReleaseForecast'
+        setting 'Field Type'   'attribute'
+        setting 'format'   'date'
+        setting 'Editable'   'true'
+        setting    'Edit Access Function'    "isTaskCellEditable"
+        setting    'Edit Access Program'     "emxTask"
+        setting "Group Header" 'ProgramCentral.Label.IWP_Release'
+    	setting    'Width'  '120'
+    column
+        name    'IWP Release - Actual'
+        label    'ProgramCentral.Label.IWP_Release_-_Actual'
+        businessobject '$<attribute[attribute_decReleaseActual].value>'
+        setting 'Registered Suite'   'ProgramCentral'
+        setting 'Admin Type'   'attribute_decReleaseActual'
+        setting 'Field Type'   'attribute'
+        setting 'format'   'date'
+        setting 'Editable'   'true'
+        setting    'Edit Access Function'    "isTaskCellEditable"
+        setting    'Edit Access Program'     "emxTask"
+        setting "Group Header" 'ProgramCentral.Label.IWP_Release'
+    	setting    'Width'  '120'
+    column
+        name    'PhaseEstimatedStartDate'
+        label    'ProgramCentral.Label.Installation_Schedule_-_Plan_Start'
+        businessobject '$<attribute[attribute_TaskEstimatedStartDate].value>'
+        setting 'Registered Suite'   'ProgramCentral'
+        setting 'Admin Type'   'attribute_TaskEstimatedStartDate'
+        setting 'Field Type'   'attribute'
+        setting 'format'   'date'
+        setting 'Editable'   'true'
+        setting    'Edit Access Function'    "isSummaryTaskCellEditable"
+        setting    'Edit Access Program'     "emxTask"
+        setting "Group Header" 'ProgramCentral.Label.Installation_Schedule'
+    	setting    'Width'  '120'
+    column
+        name    'PhaseEstimatedEndDate'
+        label    'ProgramCentral.Label.Installation_Schedule_-_Plan_Finish'
+        businessobject '$<attribute[attribute_TaskEstimatedFinishDate].value>'
+        setting 'Registered Suite'   'ProgramCentral'
+        setting 'Admin Type'   'attribute_TaskEstimatedFinishDate'
+        setting 'Field Type'   'attribute'
+        setting 'format'   'date'
+        setting 'Editable'   'true'
+        setting    'Edit Access Function'    "isSummaryTaskCellEditable"
+        setting    'Edit Access Program'     "emxTask"
+        setting "Group Header" 'ProgramCentral.Label.Installation_Schedule'
+    	setting    'Width'  '120'
+    column
+        name    'PhaseForecastStartDate'
+        label    'ProgramCentral.Label.Installation_Schedule_-_Forecast_Start'
+        businessobject '$<attribute[attribute_decTaskForecastStartDate].value>'
+        setting 'Registered Suite'   'ProgramCentral'
+        setting 'Admin Type'   'attribute_decTaskForecastStartDate'
+        setting 'Field Type'   'attribute'
+        setting 'format'   'date'
+        setting 'Editable'   'true'
+        setting    'Edit Access Function'    "isTaskCellEditable"
+        setting    'Edit Access Program'     "emxTask"
+        setting "Group Header" 'ProgramCentral.Label.Installation_Schedule'
+    	setting    'Width'  '120'
+    column
+        name    'PhaseForecastEndDate'
+        label    'ProgramCentral.Label.Installation_Schedule_-_Forecast_Finish'
+        businessobject '$<attribute[attribute_decTaskForecastFinishDate].value>'
+        setting 'Registered Suite'   'ProgramCentral'
+        setting 'Admin Type'   'attribute_decTaskForecastFinishDate'
+        setting 'Field Type'   'attribute'
+        setting 'format'   'date'
+        setting 'Editable'   'true'
+        setting    'Edit Access Function'    "isTaskCellEditable"
+        setting    'Edit Access Program'     "emxTask"
+        setting "Group Header" 'ProgramCentral.Label.Installation_Schedule'
+    	setting    'Width'  '120'
+    column
+        name    'PhaseActualStartDate'
+        label    'ProgramCentral.Label.Installation_Schedule_-_Actual_Start'
+        businessobject '$<attribute[attribute_TaskActualStartDate].value>'
+        setting 'Registered Suite'   'ProgramCentral'
+        setting 'Admin Type'   'attribute_TaskActualStartDate'
+        setting 'Field Type'   'attribute'
+        setting 'format'   'date'
+        setting 'Editable'   'true'
+        setting    'Edit Access Function'    "isSummaryTaskCellEditable"
+        setting    'Edit Access Program'     "emxTask"
+        setting "Group Header" 'ProgramCentral.Label.Installation_Schedule'
+    	setting    'Width'  '120'
+    column
+        name    'PhaseActualEndDate'
+        label    'ProgramCentral.Label.Installation_Schedule_-_Actual_Finish'
+        businessobject '$<attribute[attribute_TaskActualFinishDate].value>'
+        setting 'Registered Suite'   'ProgramCentral'
+        setting 'Admin Type'   'attribute_TaskActualFinishDate'
+        setting 'Field Type'   'attribute'
+        setting 'format'   'date'
+        setting 'Editable'   'true'
+        setting    'Edit Access Function'    "isSummaryTaskCellEditable"
+        setting    'Edit Access Program'     "emxTask"
+        setting "Group Header" 'ProgramCentral.Label.Installation_Schedule'
+    	setting    'Width'  '120'
+    column
+        name    'Man Hours - Planned'
+        label    'ProgramCentral.Label.Man_Hours_-_Planned'
+        businessobject '$<attribute[attribute_decManHoursPlan].value>'
+        setting 'Registered Suite'   'ProgramCentral'
+        setting 'Admin Type'   'attribute_decManHoursPlan'
+        setting 'Field Type'   'attribute'
+        setting 'Editable'   'true'
+        setting    'Edit Access Function'    "isTaskCellEditable"
+        setting    'Edit Access Program'     "emxTask"
+        setting "Group Header" 'ProgramCentral.Label.Man_Hours'
+    	setting    'Width'  '120'
+    column
+        name    'Man Hours - Actual'
+        label    'ProgramCentral.Label.Man_Hours_-_Actual'
+        businessobject '$<attribute[attribute_decManHoursActual].value>'
+        setting 'Registered Suite'   'ProgramCentral'
+        setting 'Admin Type'   'attribute_decManHoursActual'
+        setting 'Field Type'   'attribute'
+        setting 'Editable'   'true'
+        setting    'Edit Access Function'    "isTaskCellEditable"
+        setting    'Edit Access Program'     "emxTask"
+        setting "Group Header" 'ProgramCentral.Label.Man_Hours'
+    	setting    'Width'  '120'
+    column
+        name    'Hold Category'
+        label    'ProgramCentral.Label.Hold_Category'
+        businessobject '$<attribute[attribute_decHoldCategory].value>'
+        setting 'Registered Suite'   'ProgramCentral'
+        setting    'Input Type'   'combobox'
+        setting    'Column Type'   'program'
+        setting    'program'   'decCodeMaster'
+        setting    'function'   'getCodeMasterDesc'
+        setting    'Range Program'   'decCodeMaster'
+        setting    'Range Function'   'getCodeMasterDescRange'
+        setting    'Editable'   'true'
+        setting    'MasterName' 'Hold Category'
+        setting    'attributeName' 'decHoldCategory'
+        setting    'Admin Type'   'attribute_decHoldCategory'
+        setting    'Field Type'   'attribute'
+        setting    'Update Program'   'emxTask'
+        setting    'Update Function'   'updateTableAttrValue'
+    	setting    'Width'  '120'
+        setting    'Edit Access Function'    "isTaskCellEditable"
+        setting    'Edit Access Program'     "emxTask"
+    column
+        name    'Remark'
+        label    'ProgramCentral.Label.Remark'
+        businessobject '$<attribute[attribute_decRemark].value>'
+        setting 'Registered Suite'   'ProgramCentral'
+        setting 'Admin Type'   'attribute_decRemark'
+        setting 'Field Type'   'attribute'
+        setting 'Editable'   'true'
+    	setting    'Width'  '120'
+        setting    'Edit Access Function'    "isTaskCellEditable"
+        setting    'Edit Access Program'     "emxTask"
+    column
+        name    'UDF1'
+        label    'ProgramCentral.Label.UDF1'
+        businessobject '$<attribute[decUPF1]>'
+        setting    'Registered Suite'   'ProgramCentral'
+        setting    'Admin Type'   'attribute_decUPF1'
+        setting    'Field Type'   'attribute'
+        setting    'Editable'   'true'
+    	setting    'Width'  '120'
+        setting    'Edit Access Function'    "isTaskCellEditable"
+        setting    'Edit Access Program'     "emxTask"
+    column
+        name    'UDF2'
+        label    'ProgramCentral.Label.UDF2'
+        businessobject '$<attribute[decUPF2]>'
+        setting    'Registered Suite'   'ProgramCentral'
+        setting    'Admin Type'   'attribute_decUPF2'
+        setting    'Field Type'   'attribute'
+        setting    'Editable'   'true'
+    	setting    'Width'  '120'
+        setting    'Edit Access Function'    "isTaskCellEditable"
+        setting    'Edit Access Program'     "emxTask"
+    column
+        name    'UDF3'
+        label    'ProgramCentral.Label.UDF3'
+        businessobject '$<attribute[decUPF3]>'
+        setting    'Registered Suite'   'ProgramCentral'
+        setting    'Admin Type'   'attribute_decUPF3'
+        setting    'Field Type'   'attribute'
+        setting    'Editable'   'true'
+    	setting    'Width'  '120'
+        setting    'Edit Access Function'    "isTaskCellEditable"
+        setting    'Edit Access Program'     "emxTask"
+;
+add property 'table_decIWPExcutionTable' on prog eServiceSchemaVariableMapping.tcl to table 'decIWPExcutionTable' system;

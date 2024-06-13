@@ -1,0 +1,1 @@
+define("DS/DMUSlideEdition/DMUSlideEdition_ko",{});define("DS/DMUSlideEdition/assets/nls/DMUSlideEdition",{normalSlideTitle:"슬라이드",createSlideMessage:"생성됨",normalFormatTitle:"포맷",formatGenerated:"포맷이 정상적으로 생성되었습니다.",formatGenerationError:"포맷 생성 중 오류가 발생했습니다.",generateAndEditLabel:"닫고 편집",generateFormatTitle:"포맷 생성"});

@@ -1,0 +1,10 @@
+m|CATWebUXPreferences\CATWebUXSelectionManager.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.1.22295|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\CATWebUXSelectionManager\CATWebUXSelectionManager.js|1666424834|3256
+s|CATWebUXPreferences\CATWebUXSelectionManager.mweb\src\_copyright.js|1475050414|63
+u|CATWebUXPreferences\CATWebUXSelectionManager.mweb\src\CATWebUXSelectionManager.js|1661332801|8730
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

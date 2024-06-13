@@ -1,0 +1,82 @@
+function deleteObject() {
+	const ids = [];
+	
+	const objectIds = document.querySelectorAll("input[name='objectId']");
+	
+	for(let i = 0; i < objectIds.length; i++) {
+		if(objectIds[i].checked == true) {
+			ids.push(objectIds[i].value);
+		}
+	}
+	
+	if(ids.length == 0) {
+		alert("삭제하실 데이터를 선택해주세요");
+		return;
+	}
+	document.querySelector("#deleteForm").submit();
+	
+}
+
+function modifyObject() {
+	const ids = [];
+	let id;
+	
+	const objectIds = document.querySelectorAll("input[name='objectId']");
+	for(let i = 0; i < objectIds.length; i++){
+		if(objectIds[i].checked == true) {
+			ids.push(objectIds[i].value);
+		}
+	}
+	if(ids.length == 1) {
+		for(let i = 0; i < deleteForm.objectId.length; i++) {
+			if(deleteForm.objectId[i].checked == true) {
+				window.open("modifyPage.jsp?objectId=" + deleteForm.objectId[i].value);
+			}
+		}
+	} else if(ids.length == 0) {
+		alert("변경하실 데이터를 선택해주세요.");
+		return;
+	} else {
+		alert("1개의 데이터만 선택해주세요");
+		return;
+	}
+}
+
+	let docNo = document.querySelector("#docNo");
+	let title = document.querySelector("#title");
+	let changeDocNo = docNo.value;
+	
+	if(docNo.value === ''){
+		alert("Doc No를 입력해주세요");
+		docNo.focus();
+		return
+	} else if(docNo.value == changeDocNo){
+		alert("Doc No가 중복입니다.");
+		docNo.focus();
+		return
+	}
+	
+	if(title.value === '') {
+		alert("title을 입력해주세요.");
+		title.focus();
+		return
+	}
+
+let changeTitle = title.value;
+
+function saveCheck() {
+	let title = document.querySelector("#title");
+	
+	if(title.value === '') {
+		alert("title을 입력해주세요");
+		title.focus();
+		return
+	}
+	
+	if(title.value == changeTitle) {
+		alert("title을 변경해야 합니다.");
+		title.focus();
+		return
+	}
+	document.querySelector("#modifyForm").submit();
+}

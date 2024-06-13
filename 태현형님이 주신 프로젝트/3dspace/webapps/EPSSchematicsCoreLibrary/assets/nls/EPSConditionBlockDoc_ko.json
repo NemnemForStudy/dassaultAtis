@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0",
+  "summary": "주어진 설정 표현식에 따라 여러 입력 데이터의 값을 비교합니다.",
+  "description": "이 블록은 동적이므로 블록 사양 대화 상자를 사용하여 입력 데이터 수를 변경할 수 있습니다.<br>데이터 포트 값 유형은 모든 유형을 처리합니다.<br>설정 <doc-setting-name translate=no>Expression</doc-setting-name>에 작성된 변수 이름은 입력 데이터 이름과 일치해야 합니다. 그렇지 않으면 표현식이 올바르지 않은 것으로 간주됩니다.<br><br>설정 표현식 값은 고급 표현식 비교를 처리합니다.<ul><li><doc-value translate=no>&quot;Value1 === Value2&quot;</doc-value>: <doc-idp-name translate=no>Value1</doc-idp-name>이 <doc-idp-name translate=no>Value2</doc-idp-name>와 같은지 확인합니다.</li><li><doc-value translate=no>&quot;Value3 > Value3 && Value3 < Value2&quot;</doc-value>: <doc-idp-name translate=no>Value3</doc-idp-name>이 <doc-idp-name translate=no>Value1</doc-idp-name>과 <doc-idp-name translate=no>Value2</doc-idp-name> 사이에 있는지 확인합니다(<doc-idp-name translate=no>Value1</doc-idp-name>, <doc-idp-name translate=no>Value2</doc-idp-name> and <doc-idp-name translate=no>Value3</doc-idp-name>은 숫자)).</li><li><doc-value translate=no>&quot;Value1 !== Value2 || Value1 !== Value3&quot;</doc-value>: <doc-idp-name translate=no>Value1</doc-idp-name>이 <doc-idp-name translate=no>Value2</doc-idp-name> 또는 <doc-idp-name translate=no>Value3</doc-idp-name>과 다른지 확인합니다.</li></ul>",
+  "dataPorts": {
+    "Value1": "비교할 첫 번째 값입니다.",
+    "Value2": "비교할 두 번째 값입니다."
+  },
+  "controlPorts": {
+    "In": "블록 실행을 트리거합니다.",
+    "True": "각 입력 데이터 값으로 채워진 표현식의 결과가 양수이면 활성화됩니다.",
+    "False": "각 입력 데이터 값으로 채워진 표현식의 결과가 음수이면 활성화됩니다."
+  },
+  "settings": {
+    "Expression": "입력 데이터 값 비교를 설명하는 표현식의 값."
+  },
+  "example": null
+}

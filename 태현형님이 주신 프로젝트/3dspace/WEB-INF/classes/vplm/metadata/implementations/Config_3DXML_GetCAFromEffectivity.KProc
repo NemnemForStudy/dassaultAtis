@@ -1,0 +1,14 @@
+#Prog Config_3DXML_GetCAFromEffectivity( iPLMIDSet : #In PLMIDSet, oPLMIDSet : #Out PLMIDSet ) : VoidType
+{
+	let PLMRouteSetCAContent (PLMRouteSet)	
+	let PLMIDSetCA (PLMIDSet)
+	let PLMIDSetCAContent (PLMIDSet)
+
+	/* Completes with the Change Action */
+	PLMIDSetCA = Restrict(iPLMIDSet, "VPMCfgEffectivity/VPMCfgEffectivity")
+	PLMRouteSetCAContent = ExecutePLMFunction("VPMCfgEffectivity", "Config_GetChangeActionFromEffectivity", PLMIDSetCA)
+	PLMIDSetCAContent = Ids(PLMRouteSetCAContent)
+
+	/* Fill output ID set */
+	oPLMIDSet = iPLMIDSet + PLMIDSetCAContent
+}

@@ -1,0 +1,18 @@
+# Added by hslee on 2023.06.20
+# del command decProjectKeyQtyMgmtCmd;
+add command decProjectKeyQtyMgmtCmd
+	label 'Key Q`ty Management'
+	href '${COMMON_DIR}/emxIndentedTable.jsp?table=decProjectKeyQtyReportMgmtSummary&program=decKeyQty:getMasterList&header=emxProgramCentral.Label.KeyQtyReportMgmt&editLink=true&sortDirection=ascending&StringResourceFileId=emxProgramCentralStringResource&toolbar=decProjectKeyQtyReportMgmtSummaryToolbar&selection=multiple'
+	setting "Registered Suite" "ProgramCentral"
+	setting "Target Location" "content"
+;
+
+# Modified by hslee on 2023.09.09
+mod command decProjectKeyQtyMgmtCmd
+	add setting 'hasAccess' 'PIM,EM,LE'
+	add setting 'Access Program' 'decAccess'
+	add setting 'Access Function' 'hasAccess'
+;
+mod command decProjectKeyQtyMgmtCmd
+	href '${COMMON_DIR}/emxIndentedTable.jsp?table=decProjectKeyQtyReportMgmtSummary&program=decKeyQty:getMasterList&header=emxProgramCentral.Label.KeyQtyReportMgmt&sortDirection=ascending&StringResourceFileId=emxProgramCentralStringResource&toolbar=decProjectKeyQtyReportMgmtSummaryToolbar&selection=multiple'
+;

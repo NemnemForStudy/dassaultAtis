@@ -1,0 +1,111 @@
+#
+#   ExpressionStringResource.properties -- Properties file.
+#
+#   Copyright (c) 1992-2015 Dassault Systemes.
+#   All Rights Reserved.
+#   This program contains proprietary and trade secret information of MatrixOne,
+#   Inc.  Copyright notice is precautionary only
+#   and does  not evidence any actual or intended publication of such program
+
+#   static const char RCSID[]="$Id: ExpressionStringResource.properties.rca  $"
+#
+
+# --- General
+
+General.Model=Modello
+General.ModelVersion=Versione modello
+
+# Criteria
+Criteria.Date=Data
+Criteria.Products=Prodotti
+Criteria.ManufacturingPlans=Piani di produzione
+Criteria.Unit=Unità
+Criteria.Milestone=Milestone
+Criteria.FeatureOption=Varianti e opzioni
+
+
+# --- Success
+
+# Effectivity
+Effectivity.Success.SetEvolutionOperationSuccess=La validità dell'evoluzione è stata impostata correttamente.
+
+
+# --- Errors
+
+Error.InternalServerError=errore interno
+
+# General
+General.Error.InvalidCategoryTypeSetting=Tipo di categoria non valido. Selezionare impostazioni valide del tipo di categoria.
+General.Range.Error.SequenceValues=Inserisci come intervallo richiede uno o due valori di sequenza. Il numero di valori di sequenza trovati è: 
+General.Range.Error.DatesValues=Inserisci come intervallo richiede una o due date. Il numero di valori di date trovati è: 
+General.Error.UnsupportedDateWithRelational=Data non supportata con il tipo di validità Relazionale. Rimuovere uno dei tipi di validità dalla proprietà admin per questa relazione o tipo.
+General.Error.UnsupportedGlobalWithMultipleContexts=Impossibile combinare il contesto di configurazione globale con un altro contesto di configurazione nella stessa espressione. Rimuovere il contesto di configurazione globale o tutti gli altri contesti di configurazione.
+
+
+# Criteria
+Criteria.Error.UnsupportedCriteriaType=Tipo di criteri non supportato. Specificare un tipo di criteri supportato.
+Criteria.Error.TypeNotAModel=non è un tipo di modello
+Criteria.Error.TypeNotAModelVersion=non è un tipo di versione del modello
+
+# Effectivity
+Effectivity.Error.MismatchEffectivityTypesAndExpression_bus=L'espressione di validità contiene alcuni tipi di validità che non sono stati applicati a questo oggetto.
+Effectivity.Error.NoEffectivityTypeFound=Nessun tipo di validità trovato. Usare un tipo di validità valido, come definito nello schema.
+Effectivity.Error.EffectivityUsageCannotDelete=L'oggetto è usato in una espressione di validità e non può essere eliminato. Rimuovere l'oggetto da tutte le espressioni di validità per consentirne l'eliminazione.
+Effectivity.FalseExpression.Display=Non valida
+Effectivity.TrueExpression.Display=Valido
+Effectivity.Error.OnlyEvolutionEffectivity=Questa istanza ha solo il valore di validità del dominio Evoluzione.
+Effectivity.Error.EffectivityUsageCannotRemoveObject=L'oggetto <object_type> <object_name> è usato in un'espressione di configurazione (Filtro, Validità...) e non può essere rimosso. Rimuovere l'oggetto da tutte le espressioni di configurazione per consentirne la rimozione.
+Effectivity.Error.EffectivityUsageCannotModifyObject=L'oggetto <object_type> <object_name> è usato in un'espressione di configurazione (Filtro, Validità...) e non può essere modificato. Rimuovere l'oggetto da tutte le espressioni di configurazione per consentirne la modifica.
+Effectivity.Error.ChangeApplicabilityAndEffectivitieDoNotIntersect=Impossibile modificare la validità perché l'espressione non si interseca con l'applicabilità. Utilizzare un'istanza evoluta per modificare la validità della variante.
+Effectivity.Error.ChangeApplicabilityAndEffectivitieAreEqual=L'espressione di Validità è uguale all'Applicabilità: impossibile applicare questa operazione.
+Effectivity.Error.Unset.NoEffectivity=Questa istanza manca del valore di validità, annulla impostazione è inutile
+
+# Expression
+Expression.Error.MissingAttachedModels=Non tutti i modelli necessari sono associati nel riferimento padre.  
+Effectivity.Error.ParentNotAttachedAllModelsFromAC=Il riferimento padre non ha tutti i modelli collegati dal contesto di creazione.
+Effectivity.Error.ParentNotEnabledAllCriteriaFromAC=Il riferimento padre non ha tutti i criteri attivati dal contesto di creazione.
+Expression.Error.InvalidExpression=Espressione effettiva non valida
+Expression.Error.ParentPartIsNotConfigured=La parte padre di una data relazione non ha un Contesto di configurazione.
+
+# Reference
+Expression.Error.AttachContextDeniedSinceReferenceIsRevised=L'associazione del contesto di configurazione non è supportata su un oggetto rivisto. Associazione di <modelType> non riuscita
+Expression.Error.CriteriaNotEnabled=Il file XML di input contiene <critType> ma questo criterio non è abilitato nel riferimento <name>
+Expression.Error.CriteriaNotDisabled=Impossibile disattivare i criteri sugli oggetti poiché per una o più istanze è stata definita la validità dei criteri <critType>
+Expression.Error.LastCriteriaCannotBeDisabled=Impossibile disattivare i criteri sugli oggetti perché non sarebbe attivato alcun altro criterio quando vi è ancora almeno un modello associato
+Expression.Error.EvolCriteriaCannotBeDisabled.FrozenInstance=Il criterio di evoluzione non può essere disattivato perchè esiste un'istanza con validità bloccata
+Expression.Error.EvolCriteriaCannotBeDisabled.FrozenConfiguredInstance=Il criterio di evoluzione non può essere disattivato perchè esiste un'istanza senza evoluzione bloccata
+Expression.Error.EvolCriteriaCannotBeEnabled.FrozenInstance=Il criterio di evoluzione non può essere attivato perché esiste un'istanza senza validità bloccata
+Expression.Error.EvolCriteriaCannotBeEnabled.FrozenConfiguredInstance=Il criterio di evoluzione non può essere attivato perché esiste un'istanza senza evoluzione bloccata
+Expression.Error.DetachNotPossible.ConfigurationUsage=Impossibile disassociare il modello in quanto è utilizzato da una configurazione
+Expression.Error.DetachNotPossible.EffectivityUsage=Impossibile disassociare il modello in quanto è utilizzato da una espressione di validità
+Expression.Error.DetachNotPossible.ConfigurationRevision=Impossibile scollegare il modello perché il riferimento ha revisioni di configurazione
+Expression.Error.DetachNotPossible.FrozenInstancesDefinedWithModel=Impossibile disassociare il modello <name> perché contiene criteri di evoluzione bloccati che causano il blocco di almeno un'istanza nella struttura
+Expression.Error.AttachNotPossible.InstanceBecomesValidForFrozenCriteria=Impossibile associare il modello <name> perché contiene criteri di evoluzione bloccati. Se il modello viene associato, almeno un'istanza nella struttura diventerà valida per i criteri bloccati
+
+# Immutability
+Expression.Error.FrozenCriteriaInEffs=Impossibile alterare fisicamente le istanze perché la loro validità contiene almeno un criterio congelato. Utilizzare 'Lavora in'.
+Expression.Error.FrozenCfgRevImpacted=Impossibile effettuare l'operazione: ha effetto su almeno una Revisione configurazione congelata
+Expression.Error.FrozenRangeOfEffImpactedBySetExpression=Impossibile impostare le espressioni perché verrebbe aggiunto o rimosso almeno un criterio di evoluzione congelato per la validità
+Expression.Error.ExpressionContainsFrozen=Impossibile usare questa espressione perché contiene almeno un criterio di evoluzione congelato
+Expression.Error.FailedToRetrieveFrozenFilterOfModels=Impossibile effettuare questa operazione. Sembra che alcuni modelli utilizzati per verificare la validità dell'operazione non esistono
+Expression.Error.FailedToDetermineWhetherToDoImmutabilityChecks=Impossibile determinare se rispettare o meno le regole di immutabilità perché alcuni oggetti non sono nelle stesse aree di collaborazione 
+Expression.Error.DeniedModelFilters=Impossibile effettuare l'operazione. Almeno un modello allegato non è accessibile perchè appartiene a un'area di collaborazione con restrizioni
+
+# Granular reject
+Expression.Error.CANotRejectableForEffectivities=L'azione di modifica <name> non può essere rifiutata per almeno una di queste istanze
+
+# Configured Operations
+Expression.Error.SplitUnderCACannotBeDoneOnVarOnlyStructure=L'operazione di divisione in Azione di modifica non può essere eseguita in una struttura di sole varianti;
+CfgOperation.Error.EffectivityCannotBeExtended=L'operazione di estensione è applicabile solo alla validità con espressione di evoluzione.
+CfgOperation.Error.Extend.InstanceWithoutEffectivity=Impossibile eseguire l'operazione di estensione sulle istanze che non hanno validità
+CfgOperation.Error.Extend.ExpressionTrue=Impossibile eseguire l'operazione di estensione sulle istanze sempre valide
+CfgOperation.Error.Extend.VariantOnlyEffectivity=Impossibile eseguire l'operazione di estensione sulle istanze che hanno solo una variante nella loro validità perché sono sempre valide
+CfgOperation.Error.Extend.UselessExtension=Impossibile estendere le istanze da un intervallo di validità interamente contenuto nel relativo intervallo di validità esistente
+CfgOperation.Error.Reparent.CriterionNotEnabledOnParentRefOfDuplicate=Il criterio <critType> non è attivato sul nuovo riferimento padre <name>, ma viene utilizzato nelle validità
+
+# Work Under
+Change.Error.ParentPartIsNotCompliantWithChange=La modifica utilizzata come 'Lavoro sotto' utilizza modelli che non sono disponibili sul contesto di configurazione della parte padre.
+Change.Error.ChangeApplicabilityIsEmptyAtFinalize=L'espressione di applicabilità è vuota ma esistono elementi interessati da aggiornare.
+Change.Error.ApplicabilityRead=Errore durante la lettura dell'applicabilità
+Change.Error.Applicability.Finalization.Models=Impossibile finalizzare l'azione di modifica perché non tutti i modelli sono collegati nel riferimento
+AuthContext.Error.ModelVersionIsAttached="Non è possibile usare un contesto di creazione modifiche su una struttura con una versione del modello allegata"

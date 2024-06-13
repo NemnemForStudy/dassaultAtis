@@ -1,0 +1,71 @@
+<div class="RealizedOperation-container">
+    {{#each changes}}
+    <div class="RealizedOperation-sub-container">
+        <div class="Realized-tile-collapsed" id="Realized-collapsed-{{@index}}">
+            <div class="Realized-accordion-div Realized-icon-class" id="Realized-accordion-div-{{@index}}">
+                <div>
+                    <div class="Realized-action-icon-wrapper Realized-accordion-div-inner" id="Realized-accordion-div-inner-{{@index}}"><span class="fonticon fonticon-2x fonticon-expand-right" id={{@index}}></span></div>
+                    <div class="Realized-checked-action"><input type="checkbox" class="Realized-checkbox-accord hidden" id="Realized-checkbox-accord-{{Details.id}}"></div>
+                </div>
+            </div>
+            <div class="Realized-tile-inner" id="inner-{{@index}}">
+                <div class="Realized-change-info-text" id="info-text-{{@index}}">
+                    <div class="Realized-change-TNR-text" id="TNR-text-{{@index}}">
+                        <div class="Realized-change-TNR-Preference" id="TNR-Preference-{{@index}}">
+                            <img class="Realized-change-info-icon" id="info-icon-{{@index}}" src ={{Details.icon}}></img>
+                            <div class="Realized-name-title" id="Realized-name-title-{{@index}}" title="{{Details.name}} {{Details.revision}}">
+                                <span class="Realized-name-span" id="Realized-name-span-{{@index}}">{{Details.name}}</span>
+                                <span class="Realized-revision-span" id="Realized-revision-span-{{@index}}">{{Details.revision}}</span>
+                                {{#if Details.access}}
+                                <span class="context-actions-container">
+                                    <span class="action-icon-wrapper">
+                                        <span class="Realized-operation-action-open fonticon fonticon-2x fonticon-down-open" id="Realized-Op-Clicked-{{Details.displayId}}"></span>
+                                    </span>
+                                </span>
+                                {{/if}}
+                            </div>
+                        </div>
+                    </div>
+                    {{#if Details.access}}
+                    <!--div class="Realized-change-info-text-1 ">
+                        <div class="Realized-flowdown-status" id="targetCA-{{@index}}">
+                            <span class="selected-proposed-label" id="targetCA-span-{{@index}}">{{Details.flowdownStatusText}}</span>
+                            <span>{{Details.flowdownStatusStr}}</span>
+                            <span class="context-actions-container">
+                                <span class="action-icon-wrapper">
+                                    <span class="flowdown-status-dropdown fonticon fonticon-2x fonticon-down-open" id="flowdown-status-{{Details.displayId}}"></span>
+                                </span>
+                            </span>
+                        </div>
+                    </div-->
+                    {{/if}}
+                    {{#if Details.selectedProposedExists}}
+                    <!--div class="Realized-change-info-text-1">
+                        <div class="Realized-flowdown-status"  id="selected-proposed-{{@index}}">
+                            <span class="selected-proposed-label" id="selected-proposed-label-{{@index}}">{{Details.selectedProposedText}}</span>
+                            {{#if (equalsToOne Details.proposedObjects)}}
+                                {{#each Details.proposedObjects}}
+                                <span class="selected-proposed-label-obejct text" id="selected-proposed-label-obejct-{{@index}}">
+                                    <span class="formatted-label" title={{this.selectedProposedDisplayText}}> {{this.selectedProposedDisplayText}}</span>
+                                    <span class="supp-icon" id="supp-icon-{{this.proposedId}}-{{@../index}}">×</span>
+                                </span>
+                                {{/each}}
+                            {{else}}
+                                <div><a class="multiple-proposed" id="multiple-proposed-{{Details.id}}-{{@index}}">{{Details.proposedObjects.length}} Items</a></div>
+                            {{/if}}
+                        </div>
+                    </div-->
+                    {{/if}}
+                </div>
+            </div>
+            {{#if Details.access}}
+            <!--div class="Realized-actions-container Realized-icon-class-1" id="Realized-operation-action-container-{{Details.displayId}}">
+                <span class="Realized-operation-related-object fonticon fonticon-2x fonticon-object-related" id="Realized-Op-Clicked-{{Details.displayId}}"></span>
+            </div-->
+            {{/if}}
+        </div>
+        <div class="Realized-tile-expanded hidden" id="Realized-expanded-{{@index}}"></div>
+    </div>
+    {{/each}}
+</div>
+

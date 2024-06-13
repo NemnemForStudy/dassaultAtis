@@ -1,0 +1,562 @@
+[
+    {
+        "ParsingVersion": "2.0",
+        "DeclarativeTypes": [
+            {
+                "ConceptualName": "BusinessType",
+                "IsAbstract": true,
+                "Attributes": [
+                    {
+                        "ConceptualName": "id",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "physicalid"
+                            },
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "physicalid"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "interface",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "interface"
+                            },
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "interface"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "type",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "type"
+                            },
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "type"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "logicalid",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "logicalid"
+                            },
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "logicalid"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "cestamp",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "cestamp"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "cestamp"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "state",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "current"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "current"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "modified",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "modified"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "modified"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "modified_utc",
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.threed_space.tools.transform.DELCRUDCrpsToolsUTCTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.index.tools.transform.DELCRUDCrpsToolsUTCTransform"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "organization",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "organization"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "organization"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "created",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "originated"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "originated"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "created_utc",
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.threed_space.tools.transform.DELCRUDCrpsToolsUTCTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.index.tools.transform.DELCRUDCrpsToolsUTCTransform"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "owner",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "owner"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "owner"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "revision",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "revision"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "revision"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "collabspace",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "project"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "project"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "typeKind"
+                    },
+                    {
+                        "ConceptualName": "groupedKind"
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "RelationType",
+                "IsAbstract": true,
+                "Attributes": [
+                    {
+                        "ConceptualName": "id",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "physicalid"
+                            },
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "physicalid"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "cestamp",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "cestamp"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "cestamp"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "interface",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "interface"
+                            },
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "interface"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "type",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "type"
+                            },
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "type"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "logicalid",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "logicalid"
+                            },
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "logicalid"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "organization",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "organization"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "organization"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "created",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "originated"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "originated"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "created_utc",
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.threed_space.tools.transform.DELCRUDCrpsToolsUTCTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.index.tools.transform.DELCRUDCrpsToolsUTCTransform"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "modified",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "modified"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "modified"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "modified_utc",
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.threed_space.tools.transform.DELCRUDCrpsToolsUTCTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.index.tools.transform.DELCRUDCrpsToolsUTCTransform"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "owner",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "owner"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "owner"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "collabspace",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "project"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "project"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "typeKind"
+                    },
+                    {
+                        "ConceptualName": "grouped_kind"
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "PLMEntity",
+                "ParentType": "BusinessType",
+                "IsAbstract": true,
+                "Attributes": [
+                    {
+                        "ConceptualName": "name",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "PLMEntity.PLM_ExternalID"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.PLMEntity.PLM_ExternalID"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "title",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "PLMEntity.V_Name"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.PLMEntity.V_Name"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "description",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "PLMEntity.V_description"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.PLMEntity.V_description"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "usage",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "PLMEntity.V_usage"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.PLMEntity.V_usage"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "PLMReference",
+                "ParentType": "PLMEntity",
+                "IsAbstract": true,
+                "Attributes": [
+                    {
+                        "ConceptualName": "versionComment",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "PLMReference.V_versionComment"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "bo.PLMReference.V_versionComment"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "PLMConnection",
+                "ParentType": "PLMEntity",
+                "IsAbstract": true,
+                "Attributes": [
+                    {
+                        "ConceptualName": "composer"
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "PLMInstance",
+                "ParentType": "RelationType",
+                "IsAbstract": true,
+                "Attributes": [
+                    {
+                        "ConceptualName": "parent",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "from.physicalid"
+                            }
+                        ],
+                        "Checkers": [
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.tools.checkers.AttributeDefaultChecker"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "reference",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "to.physicalid"
+                            }
+                        ],
+                        "Checkers": [
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.tools.checkers.AttributeDefaultChecker"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "referencedObject",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "to.physicalid"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "to.physicalid"
+                            }
+                        ],
+                        "Checkers": [
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.tools.checkers.AttributeDefaultChecker"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "name",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "PLMInstance.PLM_ExternalID"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "ro.PLMInstance.PLM_ExternalID"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "title",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "PLMInstance.V_Name"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "ro.PLMInstance.V_Name"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "description",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "PLMInstance.V_description"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "ro.PLMInstance.V_description"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "treeOrder",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "ro.PLMInstance.V_TreeOrder"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]

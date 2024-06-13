@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:widget="http://www.netvibes.com/ns/">
+
+<head>
+
+      <!-- Application Metas -->
+      <title>3D Explore Viewer</title>
+      <meta name="author" content="Dassault Systèmes" />
+      <meta name="brand" content="ENOVIA" />
+      <meta name="autoRefresh" content="0" />
+      <meta name="description" content="ENOVIA 3D Explore Viewer" />
+
+      <script type="text/javascript" src="../AmdLoader/AmdLoader.js"></script>
+      <link rel="stylesheet" type="text/css" href="../c/UWA/assets/css/standalone.css" />
+
+      <script type="text/javascript" src="../c/UWA/js/UWA_Standalone_Alone.js"></script>
+      <link rel="stylesheet" type="text/css" href="../UIKIT/UIKIT.css" />
+
+      <widget:preferences>
+      </widget:preferences>
+
+      <!-- Application JavaScript Source -->
+      <script type="text/javascript">
+
+            require(['i18n!PADUtils/assets/nls/PADUtils.json'],function (nlsKeys) {
+                  var textDiv = document.getElementById('ENX3DScene-text');
+                  if(textDiv) {
+                        textDiv.innerHTML = nlsKeys.outdatedApp.replace('{AppName}', "Product Explorer");
+                  }
+            });
+      </script>
+</head>
+
+<body>
+      <div id="ENX3DScene-background" style="background-color:#005686;width:100%;height:100%;display:flex;justify-content:center;user-select: none;">
+            <div id="ENX3DScene-text" style="color:#FAFAFA;align-self:center;"></div>
+      </div>
+</body>
+
+</html>

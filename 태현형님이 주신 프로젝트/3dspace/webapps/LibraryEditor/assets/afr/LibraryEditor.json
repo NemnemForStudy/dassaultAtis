@@ -1,0 +1,347 @@
+{
+    "Rules": {
+        "openWith": {
+            "CATIAV6": false,
+            "multisel": false,
+            "CONTENT": {
+                "ctxMenu": true,
+                "classifiedItem": true
+            },
+            "TREE": false
+
+        },
+        "RenameCmd": {
+            "white_click": false,
+            "multisel": false,
+            "ctxFavorite": true,
+            "TREE": {
+                "ctxMenu": false,
+                "Sections": false
+            },
+            "CONTENT": {
+                "ctxMenu": false
+            }
+        },
+        "repeatCmd": {
+            "NOT_WEBInWin": false,
+            "white_click": false,
+            "TREE": {
+                "ctxMenu": false
+            },
+            "CONTENT": {
+                "ctxMenu": false
+            }
+        },
+        "AddExistingContent": {
+            "white_click": true,
+            "TREE": {
+                "ctxMenu": true,
+                "Sections": false,
+                "RootLibraries": false
+            },
+            "CONTENT": false
+        },
+        "Favorites_Add_Remove": {
+            "white_click": false,
+            "ctxFavorite": true,
+            "TREE": {
+                "ctxMenu": true,
+                "Sections": false
+            },
+            "CONTENT": false
+        },
+        "RemoveContent": {
+            "TREE":false,
+            "CONTENT": {
+                "classifiedItem": true
+            }
+        },
+        "ActionBar_Attributes": {
+            "white_click": false,
+            "TREE": {
+                "ctxMenu": true,
+                "Sections": false,
+                "Libraries": true
+            },
+            "CONTENT": {
+                "ctxFavOnMultiSel":true,
+                "ctxMenu": true
+            }
+        },
+        "ReplaceByRevision": {
+            "multisel": false,
+            "TREE":false,
+            "CONTENT": {
+                "classifiedItem": true
+            }
+        },
+        "ReplaceByLatestRevision": {
+            "multisel": false,
+            "TREE":false,
+            "CONTENT": {
+                "classifiedItem": true
+            }
+        },
+        "CreateLink": {
+            "multisel": false,
+            "isContentItem": true,
+            "white_click": false,
+            "TREE": {
+                "commandName": "CreateLink",
+                "ctxMenu": true,
+                "Sections": false,
+                "filter": {"ctxMenuRestictTo" : ["RootLibrary", "Library"], "ctxMenuOnly": [1]}
+            },
+            "CONTENT": {
+                "filter": {"ctxMenuRestictTo" : ["RootLibrary", "Library"], "ctxMenuOnly": [1]}
+            }
+        },
+        "SelectAll": true,
+        "SelectInversion": true,
+        "SelectSiblings": {
+            "NoSelection":false
+        },
+        "treeview": true,
+        "tileview": true,
+        "thumbnailview": true,
+        "ExpandAll": {
+            "TREE": true,
+            "CONTENT": false
+        },
+        "ExpandN": {
+            "TREE": true,
+            "CONTENT": false
+        },
+        "CollapseAll": {
+            "TREE": true,
+            "CONTENT": false
+        },
+        "ColumnVisibility": {
+            "views": ["datagridview"]
+        }
+    },
+    "headers": {
+        "RenameCmd": {
+            "ClassName": "DS/LibraryEditor/commands/CtxCommands",
+            "ResourceFile": "LibraryEditor/ENOLibrary",
+            "HelpResourceFile": "LibraryEditor/help_toolbar",
+            "icon": "rename"
+        },
+        "repeatCmd": {
+			"ClassName":"DS/LibraryEditor/commands/ActionBar_RepeatModeCmd", 
+            "ResourceFile": "LibraryEditor/ENOLibrary",
+            "icon": "play-loop"
+        },
+        "AddExistingContent": {
+			"ClassName":"DS/LibraryEditor/commands/ActionBar_AddExistingContentCmd", 
+            "ResourceFile": "LibraryEditor/ENOLibrary",
+            "HelpResourceFile": "LibraryEditor/help_toolbar",
+            "icon": "plus"
+        },
+		 "RemoveContent": {
+            "ClassName": "DS/LibraryEditor/commands/ActionBar_RemoveContentCmd",
+            "ResourceFile": "LibraryEditor/ENOLibrary",
+            "HelpResourceFile": "LibraryEditor/help_toolbar",
+            "icon": "remove"
+        },
+		 "Favorites_Add_Remove": {
+            "ClassName": "DS/LibraryEditor/commands/ActionBar_AddToFavoritesCmd",
+            "ResourceFile": "LibraryEditor/ENOLibrary",
+            "HelpResourceFile": "LibraryEditor/help_toolbar",
+            "Behavior": "CATAfrHeaderCheck",
+            "icon": "favorite-on"
+        },
+		"ActionBar_Attributes": {
+            "ClassName": "DS/ENOCollabSharingCmds/commands/EditPropCmd/ActionBar_EditPropCmd",
+            "ResourceFile": "ENOCollabSharingCmds/CollabSharing_Workbench",
+            "HelpResourceFile": "LibraryEditor/help_toolbar",
+            "icon": "properties"
+        },
+		"treeview": {
+			"ClassName": "DS/IPClassifyNav/commands/xNavActionBarCmds",
+            "ResourceFile":"IPClassifyNav/IPClassifyNav",
+            "icon": "view-list",
+            "_readOnly": true
+        },
+		"tileview": {
+			"ClassName":"DS/IPClassifyNav/commands/xNavActionBarCmds",
+            "ResourceFile":"IPClassifyNav/IPClassifyNav",
+            "icon": "view-small-tile",
+            "_readOnly": true
+        },
+        "thumbnailview": {
+			"ClassName":"DS/IPClassifyNav/commands/xNavActionBarCmds",
+            "ResourceFile":"IPClassifyNav/IPClassifyNav",
+            "icon": "view-small-thb",
+            "_readOnly": true
+        },
+		"ExpandAll": {
+			"ClassName":"DS/LibraryEditor/commands/ActionBar_ExpandAllCmd", 
+            "ResourceFile":"LibraryEditor/ENOLibrary",
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": "flow-tree-expand-down",
+            "_readOnly": true
+        },
+        "ExpandN": {
+			"ClassName":"DS/LibraryEditor/commands/ActionBar_ExpandNCmd", 
+            "ResourceFile":"LibraryEditor/ENOLibrary",
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": "flow-tree-expand-down-cog",
+            "_readOnly": true
+        },
+        "CollapseAll": {
+			"ClassName":"DS/LibraryEditor/commands/ActionBar_CollapseAllCmd",          
+            "ResourceFile":"LibraryEditor/ENOLibrary",
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": "flow-tree-expand-up",
+            "_readOnly": true
+        },
+        "SelectAll": {
+			"ClassName":"DS/IPClassifyNav/commands/xNavActionBarCmds", 
+            "ResourceFile":"IPClassifyNav/IPClassifyNav",
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": "select-all",
+            "_readOnly": true
+        },
+		"SelectInversion": {
+			"ClassName":"DS/IPClassifyNav/commands/xNavActionBarCmds", 
+            "ResourceFile":"IPClassifyNav/IPClassifyNav",
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": "select-inverted",
+            "_readOnly": true
+        },
+		"SelectSiblings": {
+			"ClassName":"DS/IPClassifyNav/commands/xNavActionBarCmds", 
+            "ResourceFile":"IPClassifyNav/IPClassifyNav",
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": "tree-view-flattened-progress-3",
+            "_readOnly": true
+        },
+		"ColumnVisibility": {
+			"ClassName":"DS/LibraryEditor/commands/ActionBar_ColumnVisibilityCmd", 
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": "attributes-cog",
+            "_readOnly": true
+        },
+		  "ReplaceByLatestRevision": {
+			"ClassName":"DS/LibraryEditor/commands/ActionBar_ReplaceByLatestRevision", 
+			"ResourceFile":"LibraryEditor/ENOLibrary",
+            "HelpResourceFile": "LibraryEditor/help_toolbar",
+            "icon": "replace-by-revision",
+            "Name": "Replace by Revision"
+        },
+        "ReplaceByRevision": {
+            "ClassName":"DS/LibraryEditor/commands/ActionBar_ReplaceByRevision", 
+			"ResourceFile":"LibraryEditor/ENOLibrary",
+            "HelpResourceFile": "LibraryEditor/help_toolbar",
+            "icon": "replace-by-latest-version",
+            "Name": "Replace by Latest Revision"
+        },
+	"SubscribeHdr": {
+            "ClassName": "DS/ENOSubscriptionMgmt/Commands/Subscribe",
+            "ResourceFile": "ENOSubscriptionMgmt/ENOSubscriptionMgmt",
+            "HelpResourceFile": "ENOSubscriptionMgmt/ENOSubscriptionHelp",
+            "icon": "bell-add",
+            "_readOnly": true
+        },
+        "UnSubscribeHdr": {
+            "ClassName": "DS/ENOSubscriptionMgmt/Commands/UnSubscribe",
+            "ResourceFile": "ENOSubscriptionMgmt/ENOSubscriptionMgmt",
+            "HelpResourceFile": "ENOSubscriptionMgmt/ENOSubscriptionHelp",
+            "icon": "bell-delete",
+            "_readOnly": true
+        },
+        "EditSubscribeHdr": {
+            "ClassName": "DS/ENOSubscriptionMgmt/Commands/EditSubscribe",
+            "ResourceFile": "ENOSubscriptionMgmt/ENOSubscriptionMgmt",
+            "HelpResourceFile": "ENOSubscriptionMgmt/ENOSubscriptionHelp",
+            "icon": "bell-pencil",
+            "_readOnly": true
+        },
+        "MySubscriptionsHdr": {
+            "ClassName": "DS/ENOSubscriptionMgmt/Commands/MySubscriptions",
+            "ResourceFile": "ENOSubscriptionMgmt/ENOSubscriptionMgmt",
+            "HelpResourceFile": "ENOSubscriptionMgmt/ENOSubscriptionHelp",
+            "icon": "bell",
+            "_readOnly": true
+        },
+       "PushSubscribeHdr": {
+            "ClassName": "DS/ENOSubscriptionMgmt/Commands/PushSubscribe",
+            "ResourceFile": "ENOSubscriptionMgmt/ENOSubscriptionMgmt",
+	     "HelpResourceFile": "ENOSubscriptionMgmt/ENOSubscriptionHelp",
+            "icon": "bell-add",
+            "_readOnly": true
+        },
+        "ViewSubscribeHdr": {
+            "ClassName": "DS/ENOSubscriptionMgmt/Commands/ViewSubscriptions",
+            "ResourceFile": "ENOSubscriptionMgmt/ENOSubscriptionMgmt",
+	     "HelpResourceFile": "ENOSubscriptionMgmt/ENOSubscriptionHelp",
+            "icon": "bell",
+            "_readOnly": true
+        },
+        "CreateLink":{
+            "ClassName":"DS/LibraryEditor/commands/ActionBar_CreateLinkCmd",
+            "ResourceFile":"LibraryEditor/ENOLibrary",
+            "HelpResourceFile": "LibraryEditor/help_toolbar",
+            "icon": "link"
+		}
+	},
+    "toolbar": {		 
+        "unstable": [
+			"AddExistingContent",
+            "sep",
+            "openWith",
+			"sep",
+            {
+                "Name": "expand",
+                "Commands": ["ExpandAll", "ExpandN", "CollapseAll"]
+            }, 
+            "ColumnVisibility",
+            "sep", 
+			{
+                "Name": "replace",
+                "Commands": ["ReplaceByLatestRevision", "ReplaceByRevision"]        
+            }, 
+            "sep", 
+            "Favorites_Add_Remove", 
+            "ActionBar_Attributes", 
+            "sep", 
+            "RemoveContent",
+            "repeatCmd"
+        ],
+        "stable": [
+            "Search",
+            "IndexMode",
+            {
+                "Name": "select",
+                "Commands": ["SelectAll","SelectInversion","SelectSiblings"]
+            },
+            {
+                "Name": "display",
+                "Commands": ["treeview", "tileview", "thumbnailview"]
+            },
+	    {
+                "Name": "subscribe",
+                "Commands": ["SubscribeHdr", "UnSubscribeHdr", "EditSubscribeHdr", "MySubscriptionsHdr","PushSubscribeHdr","ViewSubscribeHdr"]
+            }, 
+            "Information"
+        ]
+    },
+	"ctxMenu": [
+        "AddExistingContent",
+        "sep",
+        "openWith",
+        "sep",
+        "ExpandAll",
+        "CollapseAll",
+        "sep",
+        "RenameCmd",
+        "sep",
+        "CreateLink",
+        "sep",
+        "Favorites_Add_Remove",
+        "ActionBar_Attributes",
+        "sep",
+		"RemoveContent"
+	]	
+}

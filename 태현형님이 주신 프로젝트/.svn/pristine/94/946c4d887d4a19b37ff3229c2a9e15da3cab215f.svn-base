@@ -1,0 +1,1 @@
+define("DS/DMUDeprecatedReview/DMUDeprecatedReview_ja",{});define("DS/DMUDeprecatedReview/assets/nls/DMUDeprecatedReview",{NominalSlide:"標準"});

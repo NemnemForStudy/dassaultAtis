@@ -1,0 +1,297 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "CSIFunctionVersion2JSONSchema.json",
+  "title": "CSI Function version 2",
+  "type": "object",
+  "description": "JSON Schema of a CSI Function version 2",
+  "definitions": {
+    "outputParameters": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "parameters": {
+          "$ref": "CSIParametersJSONSchema.json#/definitions/nonDefaultValueParameters"
+        },
+        "type": {
+          "type": "string",
+          "description": "Type's name"
+        },
+        "file": {
+          "type": "string",
+          "description": "Parameters File -Deprecated-",
+          "minLength": 1
+        },
+        "desc": {
+          "type": "string",
+          "description": "Description for the Type"
+        }
+      },
+      "oneOf": [
+        {
+          "required": [
+            "parameters"
+          ]
+        },
+        {
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "required": [
+            "file"
+          ]
+        },
+        {
+          "not": {
+            "anyOf": [
+              {
+                "required": [
+                  "parameters"
+                ]
+              },
+              {
+                "required": [
+                  "type"
+                ]
+              },
+              {
+                "required": [
+                  "file"
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "required": [
+    "grammarVersion",
+    "implementation",
+    "onCall"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "grammarVersion": {
+      "type": "integer",
+      "description": "Grammar version used for the Function definition",
+      "enum": [
+        2
+      ]
+    },
+    "desc": {
+      "type": "string",
+      "description": "Description of the Function"
+    },
+    "implementation": {
+      "type": "object",
+      "description": "Specify the implementation library for this Function",
+      "additionalProperties": false,
+      "properties": {
+        "library": {
+          "type": "string",
+          "description": "C++ DLL",
+          "minLength": 1
+        },
+        "debugLibrary": {
+          "type": "string",
+          "description": "C++ DLL -Deprecated-",
+          "minLength": 1
+        },
+        "javaClassPath": {
+          "type": "string",
+          "description": "Java JAR",
+          "minLength": 1
+        },
+        "workflow": {
+          "type": "object",
+          "description": "Workflow implementation -Deprecated-"
+        },
+        "version": {
+          "type": "integer",
+          "description": "Version of the library",
+          "enum": [
+            1,
+            2
+          ]
+        }
+      },
+      "oneOf": [
+        {
+          "required": [
+            "library"
+          ],
+          "not": {
+            "anyOf": [
+              {
+                "required": [
+                  "version"
+                ]
+              },
+              {
+                "required": [
+                  "debugLibrary"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "required": [
+            "library",
+            "debugLibrary"
+          ],
+          "not": {
+            "anyOf": [
+              {
+                "required": [
+                  "version"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "required": [
+            "library",
+            "version"
+          ],
+          "not": {
+            "required": [
+              "debugLibrary"
+            ]
+          }
+        },
+        {
+          "oneOf": [
+            {
+              "required": [
+                "library",
+                "debugLibrary",
+                "version"
+              ]
+            },
+            {
+              "required": [
+                "debugLibrary",
+                "version"
+              ],
+              "not": {
+                "required": [
+                  "library"
+                ]
+              }
+            }
+          ],
+          "dependencies": {
+            "debugLibrary": {
+              "properties": {
+                "version": {
+                  "enum": [
+                    1
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "required": [
+            "javaClassPath"
+          ]
+        },
+        {
+          "required": [
+            "workflow"
+          ]
+        }
+      ]
+    },
+    "onCall": {
+      "type": "object",
+      "description": "Define the Function's input and output",
+      "required": [
+        "in",
+        "out"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "in": {
+          "type": "object",
+          "description": "Input Parameters of the Function",
+          "additionalProperties": false,
+          "properties": {
+            "parameters": {
+              "$ref": "CSIParametersJSONSchema.json"
+            },
+            "type": {
+              "type": "string",
+              "description": "Type's name",
+              "minLength": 1
+            },
+            "file": {
+              "type": "string",
+              "description": "Parameters File -Deprecated-",
+              "minLength": 1
+            },
+            "desc": {
+              "type": "string",
+              "description": "Description for the Type"
+            }
+          },
+          "oneOf": [
+            {
+              "required": [
+                "parameters"
+              ]
+            },
+            {
+              "required": [
+                "type"
+              ]
+            },
+            {
+              "required": [
+                "file"
+              ]
+            },
+            {
+              "not": {
+                "anyOf": [
+                  {
+                    "required": [
+                      "parameters"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "type"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "file"
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "out": {
+          "$ref": "#/definitions/outputParameters",
+          "description": "Output Parameters of the Function"
+        }
+      }
+    },
+    "throwError": {
+      "$ref": "#/definitions/outputParameters",
+      "description": "Error Parameters of the Function"
+    },
+    "progress": {
+      "$ref": "#/definitions/outputParameters",
+      "description": "Progress Parameters of the Function"
+    }
+  }
+}

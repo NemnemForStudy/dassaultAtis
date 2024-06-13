@@ -1,0 +1,1 @@
+define("DS/DELWeb3DUtils/DELWeb3DUtils_de",{});define("DS/DELWeb3DUtils/assets/nls/Messages",{"Warn.Timeout.Message":"Zeitüberschreitung bei Webserviceanforderung. Erhöhen Sie das Zeitlimit oder versuchen Sie es später erneut"});

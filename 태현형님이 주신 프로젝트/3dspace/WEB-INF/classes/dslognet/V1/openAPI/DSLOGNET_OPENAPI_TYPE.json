@@ -1,0 +1,201 @@
+{
+  "dslognet:Net": {
+    "summary": "Net",
+    "description": "the net is a kind of logical item",
+
+    "PUBLICMasks": ["dsmvlognet:NetMask", "dsmvlognet:NetDetailedMask"],
+    "PROTECTEDMasks": [],
+    "PRIVATEMasks": [],
+
+    "PUBLICFields": ["dsmvlognet:attribute.net.color",
+      "dsmvlognet:attribute.net.gauge",
+      "dsmvlognet:attribute.net.section",
+      "dsmvlognet:attribute.net.subtype",
+      "dsmvlognet:attribute.net.tagnumber",
+      "dsmveno:CustomerAttributes"
+    ],
+    "PROTECTEDFields": [],
+    "PRIVATEFields": [],
+
+    "PUBLICExtensions": ["dseno:EnterpriseAttributes",
+      "dslc:changeControl",
+      "dscfg:Configured"],
+    "PROTECTEDExtensions": [
+    ],
+    "PRIVATEExtensions": [],
+
+    "PUBLICExcludedURIs": ["getItems", "GETAll", "BULKUPDATE", "attach", "detach"]
+
+  },
+
+  "dslognet:NetGroup": {
+    "summary": "Net Group",
+    "description": "the net group is a kind of logical item",
+    "PUBLICMasks": ["dsmvlognet:NetGroupMask", "dsmvlognet:NetGroupDetailedMask"],
+    "PROTECTEDMasks": [],
+    "PRIVATEMasks": [],
+
+    "PUBLICFields": ["dsmvlognet:attribute.netgroup.gauge",
+      "dsmvlognet:attribute.netgroup.subtype",
+      "dsmvlognet:attribute.netgroup.segregation",
+      "dsmvlognet:attribute.netgroup.color",
+      "dsmvlognet:attribute.netgroup.externaldiameter",
+      "dsmvlognet:attribute.netgroup.routingpriority",
+      "dsmvlognet:attribute.netgroup.section",
+      "dsmvlognet:attribute.netgroup.type",
+      "dsmvlognet:attribute.netgroup.tagnumber",
+      "dsmveno:CustomerAttributes"
+    ],
+    "PROTECTEDFields": [],
+    "PRIVATEFields": [],
+
+    "PUBLICExtensions": ["dseno:EnterpriseAttributes",
+      "dslc:changeControl",
+      "dscfg:Configured"],
+    "PROTECTEDExtensions": [
+    ],
+    "PRIVATEExtensions": [],
+
+    "PUBLICExcludedURIs": ["getItems", "GETAll", "BULKUPDATE", "attach", "detach"]
+  },
+
+  "dslognet:NetInst": {
+    "summary": "Net Instance",
+    "description": "instance of a net within a net group",
+    "PUBLICMasks": ["dsmvlognet:NetInstMask", "dsmvlognet:NetInstDetailedMask"],
+    "PROTECTEDMasks": [],
+    "PRIVATEMasks": [],
+
+    "PUBLICFields": ["dsmvlognet:attribute.netinst.tagnumber",
+      "dsmvlognet:attribute.instance.reference",
+      "dsmveno:CustomerAttributes"
+    ],
+    "PROTECTEDFields": [],
+    "PRIVATEFields": [],
+
+    "PUBLICExtensions": ["dscfg:Filterable"],
+    "PROTECTEDExtensions": [],
+    "PRIVATEExtensions": [],
+
+    "PUBLICExcludedURIs": ["getItems", "GETAll", "BULKUPDATE"]
+  },
+
+  "dslognet:NetGroupInst": {
+    "summary": "Net Group Instance",
+    "description": "instance of a net group within a logical item",
+    "PUBLICMasks": ["dsmvlognet:NetGroupInstMask", "dsmvlognet:NetGroupInstDetailedMask"],
+    "PROTECTEDMasks": [],
+    "PRIVATEMasks": [],
+
+    "PUBLICFields": ["dsmvlognet:attribute.netgroupinst.segregation",
+      "dsmvlognet:attribute.netgroupinst.tagnumber",
+      "dsmvlognet:attribute.instance.reference",
+      "dsmveno:CustomerAttributes"
+    ],
+    "PROTECTEDFields": [],
+    "PRIVATEFields": [],
+
+    "PUBLICExtensions": ["dscfg:Filterable"],
+    "PROTECTEDExtensions": [],
+    "PRIVATEExtensions": [],
+
+    "PUBLICExcludedURIs": ["getItems", "GETAll", "BULKUPDATE"]
+  },
+
+  "dslognet:ShellConnector": {
+    "summary": "Shell Connector",
+    "description": "the shell connector is a logical part in an equipment",
+
+    "PUBLICMasks": ["dsmvlognet:ShellConnectorMask", "dsmvlognet:ShellConnectorDetailedMask"],
+    "PROTECTEDMasks": [],
+    "PRIVATEMasks": [],
+
+    "PUBLICFields": ["dsmvlognet:attribute.shellconnector.predefinedpartnumber",
+      "dsmvlognet:attribute.shellconnector.subtype"
+    ],
+    "PROTECTEDFields": [],
+    "PRIVATEFields": [],
+
+    "PUBLICExtensions": [],
+    "PROTECTEDExtensions": [],
+    "PRIVATEExtensions": [],
+
+    "PUBLICExcludedURIs": ["getItems", "GETAll", "BULKUPDATE"]
+
+  },
+
+  "dslognet:Connector": {
+    "summary": "Connector",
+    "description": "the connector is a logical part in an equipment or a shell connector",
+
+    "PUBLICMasks": ["dsmvlognet:ConnectorMask", "dsmvlognet:ConnectorDetailedMask"],
+    "PROTECTEDMasks": [],
+    "PRIVATEMasks": [],
+
+    "PUBLICFields": ["dsmvlognet:attribute.connector.predefinedpartnumber",
+      "dsmvlognet:attribute.connector.subtype",
+      "dsmvlognet:attribute.connector.style",
+      "dsmvlognet:attribute.connector.getowner"
+    ],
+    "PROTECTEDFields": [],
+    "PRIVATEFields": [],
+
+    "PUBLICExtensions": [],
+    "PROTECTEDExtensions": [],
+    "PRIVATEExtensions": [],
+
+    "PUBLICExcludedURIs": ["getItems", "GETAll", "BULKUPDATE"]
+
+  },
+
+  "dslognet:Pin": {
+    "summary": "Pin",
+    "description": "the Pin is a logical contact",
+
+    "PUBLICMasks": ["dsmvlognet:PinMask", "dsmvlognet:PinDetailedMask"],
+    "PROTECTEDMasks": [],
+    "PRIVATEMasks": [],
+
+    "PUBLICFields": ["dsmvlognet:attribute.pin.contactgauge",
+      "dsmvlognet:attribute.pin.nominalcurrent",
+      "dsmvlognet:attribute.pin.nominalsection",
+      "dsmvlognet:attribute.pin.sepcode",
+      "dsmvlognet:attribute.pin.signal",
+      "dsmvlognet:attribute.pin.subtype",
+      "dsmvlognet:attribute.pin.getowner"
+    ],
+    "PROTECTEDFields": [],
+    "PRIVATEFields": [],
+
+    "PUBLICExtensions": [],
+    "PROTECTEDExtensions": [],
+    "PRIVATEExtensions": [],
+
+    "PUBLICExcludedURIs": ["getItems", "GETAll", "BULKUPDATE"]
+
+  },
+
+  "dslognet:GroundPin": {
+    "summary": "Ground Pin",
+    "description": "the Ground Pin is a logical contact",
+
+    "PUBLICMasks": ["dsmvlognet:GroundPinMask", "dsmvlognet:GroundPinDetailedMask"],
+    "PROTECTEDMasks": [],
+    "PRIVATEMasks": [],
+
+    "PUBLICFields": ["dsmvlognet:attribute.groundpin.nominalsection",
+      "dsmvlognet:attribute.groundpin.subtype",
+      "dsmvlognet:attribute.groundpin.getowner"
+    ],
+    "PROTECTEDFields": [],
+    "PRIVATEFields": [],
+
+    "PUBLICExtensions": [],
+    "PROTECTEDExtensions": [],
+    "PRIVATEExtensions": [],
+
+    "PUBLICExcludedURIs": ["getItems", "GETAll", "BULKUPDATE"]
+
+  }
+
+}

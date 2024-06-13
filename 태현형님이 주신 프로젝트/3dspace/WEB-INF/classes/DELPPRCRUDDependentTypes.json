@@ -1,0 +1,202 @@
+[
+    {
+        "ParsingVersion": "2.0",
+        "DeclarativeTypes": [
+            {
+                "ConceptualName": "VPMReference",
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "VPMReference",
+                        "Behavior": "REFERENCE"
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "VPMInstance",
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "VPMInstance",
+                        "Behavior": "REFERENCE"
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "SpecificationDocument",
+                "ParentType": "RelationType",
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "SpecificationDocument",
+                        "Behavior": "INSTANCE"
+                    },
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "SpecificationDocument",
+                        "Behavior": "INSTANCE"
+                    }
+                ],
+                "Attributes": [
+                    {
+                        "ConceptualName": "parent",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "from.physicalid"
+                            }
+                        ],
+                        "Checkers": [
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.tools.checkers.AttributeDefaultChecker"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "reference",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "to.physicalid"
+                            }
+                        ],
+                        "Checkers": [
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.tools.checkers.AttributeDefaultChecker"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "Reference Document",
+                "ParentType": "RelationType",
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "Reference Document",
+                        "Behavior": "INSTANCE"
+                    },
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "Reference Document",
+                        "Behavior": "INSTANCE"
+                    }
+                ],
+                "Attributes": [
+                    {
+                        "ConceptualName": "parent",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "from.physicalid"
+                            }
+                        ],
+                        "Checkers": [
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.tools.checkers.AttributeDefaultChecker"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "reference",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_Index",
+                                "Mapping": "to.physicalid"
+                            }
+                        ],
+                        "Checkers": [
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.tools.checkers.AttributeDefaultChecker"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "dsdoc:Document",
+                "ParentType": "BusinessType",
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "Document",
+                        "Behavior": "REFERENCE"
+                    },
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "Document",
+                        "Behavior": "REFERENCE"
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "PLMDocConnection",
+                "ParentType": "PLMConnection",
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "PLMDocConnection",
+                        "Behavior": "REFERENCE"
+                    },
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "PLMDocConnection",
+                        "Behavior": "REFERENCE"
+                    }
+                ],
+                "Attributes": [
+                    {
+                        "ConceptualName": "document",
+                        "Transforms": [
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.transforms.DELMIACRUDIndexProcAttrTransformToPathSR"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "DELLmiDocRepInstance",
+                "ParentType": "PLMInstance",
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "DELLmiDocRepInstance",
+                        "Behavior": "INSTANCE"
+                    },
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "DELLmiDocRepInstance",
+                        "Behavior": "INSTANCE"
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "dsreq:Requirement",
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "Requirement",
+                        "Behavior": "REFERENCE"
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "dsreq:RequirementSpecification",
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "Requirement Specification",
+                        "Behavior": "REFERENCE"
+                    }
+                ]
+            }
+        ]
+    }
+]

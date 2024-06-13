@@ -1,0 +1,44 @@
+################################################################################################
+# Create By thok : 2023. 05. 03
+# Admin Type : policy
+# Name : decExist
+################################################################################################
+#delete policy decExist
+add policy decExist
+	type decEWP
+	format generic 
+	state Exist
+		public all 
+		owner all
+;
+
+add property policy_decExist on program eServiceSchemaVariableMapping.tcl to policy 'decExist';
+
+mod policy 'decExist' add type decRequest
+;
+
+mod policy 'decExist' add type decResponse
+;
+
+# Modified by hslee on 2023.06.29
+mod policy decExist
+	store STORE
+;
+
+# Modified by choimingi on 2023.07.4
+mod policy decExist
+	add type decDeliverableDoc, decVPDocument
+;
+
+# Modified by hslee on 2023.07.21
+mod policy decExist
+	remove type decDeliverableDoc, decVPDocument
+;
+
+# Modified by thok on 2023.08.03
+mod policy decExist
+	remove type decRequest, decResponse
+;
+
+# Modified by jhlee on 2023.10.24
+mod policy decExist minorsequence '';

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="IF_WorkPackage">
+	<select id="selectCWPLatestChangeUserList" parameterType="map" resultType="map">
+		SELECT HISTORY.CWP_NO 
+			 , HISTORY.CHANGE_USER 
+		  FROM DEC_CWP_CHANGE_REGISTER HISTORY
+		     , (
+		     SELECT SITE_CD 
+		     	  , CWP_NO
+				  , MAX(CHANGE_DATE) AS CHANGE_DATE 
+			   FROM DEC_CWP_CHANGE_REGISTER 
+			  GROUP BY SITE_CD
+			      , CWP_NO 
+		  ) LATEST
+		 WHERE HISTORY.SITE_CD = LATEST.SITE_CD
+		   AND HISTORY.CWP_NO = LATEST.CWP_NO 
+		   AND HISTORY.CHANGE_DATE = LATEST.CHANGE_DATE
+		   AND HISTORY.SITE_CD = #{SITE_CD}
+	</select>
+	
+	<insert id="insertCWP" parameterType="map">
+		INSERT INTO X3DDEC_ADMIN.IF_CWP_LIST_OUT
+		(
+			SITE_CD
+			, DCPLN_CD
+			, PACK_LVL_CD1, PACK_CONT1, LVL_TP_CD1
+			, PACK_LVL_CD2, PACK_CONT2, LVL_TP_CD2
+			, PACK_LVL_CD3, PACK_CONT3, LVL_TP_CD3
+			, PACK_LVL_CD4, PACK_CONT4, LVL_TP_CD4
+			, PACK_LVL_CD5, PACK_CONT5, LVL_TP_CD5
+			, PACK_LVL_CD6, PACK_CONT6, LVL_TP_CD6
+			, PACK_LVL_CD7, PACK_CONT7, LVL_TP_CD7
+			, CWA_NO, CWA_CONT
+			, ACTV_TP_CD, ACTV_TP_CONT
+			, CWP_NO, CWP_CONT
+			, PRFR_GRP_CD
+			, PRFR_RANK
+			, STAGE_CD, STAGE_CONT
+			, STS_CD, STS_CONT
+			, ORG_CD1, ORG_CD2, ORG_NM1, ORG_NM2
+			, PLAN_ST_YMD, FCAST_ST_YMD, ACCP_ST_YMD
+			, PLAN_ED_YMD, FCAST_ED_YMD, ACCP_ED_YMD
+			, SITE_INWH_DEMYMD
+			, FST_REG_DT, FST_REG_USER_ID
+			, FNL_EDIT_DT, FNL_EDIT_USER_ID
+			, OBJECTID
+		)
+		SELECT
+			#{SITE_CD}
+			, NVL(#{DCPLN_CD}, '---')
+			, #{PACK_LVL_CD1}, #{PACK_CONT1}, #{LVL_TP_CD1}
+			, #{PACK_LVL_CD2}, #{PACK_CONT2}, #{LVL_TP_CD2}
+			, #{PACK_LVL_CD3}, #{PACK_CONT3}, #{LVL_TP_CD3}
+			, #{PACK_LVL_CD4}, #{PACK_CONT4}, #{LVL_TP_CD4}
+			, #{PACK_LVL_CD5}, #{PACK_CONT5}, #{LVL_TP_CD5}
+			, #{PACK_LVL_CD6}, #{PACK_CONT6}, #{LVL_TP_CD6}
+			, #{PACK_LVL_CD7}, #{PACK_CONT7}, #{LVL_TP_CD7}
+			, #{CWA_NO}, #{CWA_CONT}
+			, NVL(#{ACTV_TP_CD}, '---'), NVL(#{ACTV_TP_CONT}, '---')
+			, NVL(#{CWP_NO}, '---'), NVL(#{CWP_CONT}, '---')
+			, NVL(#{PRFR_GRP_CD}, '---')
+			, NVL(#{PRFR_RANK}, 0)
+			, NVL(#{STAGE_CD}, '---'), NVL(#{STAGE_CONT}, '---')
+			, NVL(#{STS_CD}, '---'), NVL(#{STS_CONT}, '---')
+			, #{ORG_CD1}, #{ORG_CD2}, #{ORG_NM1}, #{ORG_NM2}
+			, NVL(#{PLAN_ST_YMD}, '---'), #{FCAST_ST_YMD}, #{ACCP_ST_YMD}
+			, NVL(#{PLAN_ED_YMD}, '---'), #{FCAST_ED_YMD}, #{ACCP_ED_YMD}
+			, NVL(#{SITE_INWH_DEMYMD}, '---')
+			, #{FST_REG_DT}, #{FST_REG_USER_ID}
+			, #{FNL_EDIT_DT}, #{FNL_EDIT_USER_ID}
+			, #{OBJECTID}
+		FROM DUAL
+	</insert>
+	
+	<delete id="deleteCWPList" parameterType="map">
+		DELETE FROM X3DDEC_ADMIN.IF_CWP_LIST_OUT
+		 WHERE SITE_CD = #{SITE_CD} 
+	</delete>
+	
+	<select id="selectIWPLatestChangeUserList" parameterType="map" resultType="map">
+		SELECT HISTORY.IWP_NO 
+			 , HISTORY.CHANGE_USER 
+		  FROM DEC_IWP_CHANGE_REGISTER HISTORY
+		     , (
+		     SELECT SITE_CD 
+		     	  , IWP_NO
+				  , MAX(CHANGE_DATE) AS CHANGE_DATE 
+			   FROM DEC_IWP_CHANGE_REGISTER 
+			  GROUP BY SITE_CD
+			      , IWP_NO 
+		  ) LATEST
+		 WHERE HISTORY.SITE_CD = LATEST.SITE_CD
+		   AND HISTORY.IWP_NO = LATEST.IWP_NO 
+		   AND HISTORY.CHANGE_DATE = LATEST.CHANGE_DATE
+		   AND HISTORY.SITE_CD = #{SITE_CD}
+	</select>
+	
+	<select id="selectCWPListSeq" resultType="map">
+		SELECT X3DDEC_ADMIN.IF_CWP_LIST_OUT_SEQ.NEXTVAL 
+		  FROM DUAL
+	</select>
+	
+	<insert id="insertIWP" parameterType="map">
+		INSERT INTO X3DDEC_ADMIN.IF_IWP_LIST_OUT
+		(
+			SITE_CD
+			, CWP_NO
+			, IWP_NO, IWP_CONT
+			, STAGE_CD, STAGE_CONT
+			, STS_CD, STS_CONT
+			, ACTV_TP_CD, ACTV_TP_CONT
+			, PLAN_ST_YMD, FCAST_ST_YMD, ACCP_ST_YMD
+			, PLAN_ED_YMD, FCAST_ED_YMD, ACCP_ED_YMD
+			, FST_REG_DT, FST_REG_USER_ID
+			, FNL_EDIT_DT, FNL_EDIT_USER_ID
+			, OGG_CD
+			, OBJECTID
+		)
+		SELECT
+			#{SITE_CD}
+			, NVL(#{CWP_NO}, '---')
+			, NVL(#{IWP_NO}, '---'), #{IWP_CONT}
+			, #{STAGE_CD}, #{STAGE_CONT}
+			, #{STS_CD}, #{STS_CONT}
+			, NVL(#{ACTV_TP_CD}, '---'), NVL(#{ACTV_TP_CONT}, '---')
+			, NVL(#{PLAN_ST_YMD}, '---'), #{FCAST_ST_YMD}, #{ACCP_ST_YMD}
+			, NVL(#{PLAN_ED_YMD}, '---'), #{FCAST_ED_YMD}, #{ACCP_ED_YMD}
+			, #{FST_REG_DT}, #{FST_REG_USER_ID}
+			, #{FNL_EDIT_DT}, #{FNL_EDIT_USER_ID}
+			, #{OGG_CD}
+			, #{OBJECTID}
+		FROM DUAL
+	</insert>
+	
+	<delete id="deleteIWPList" parameterType="map">
+		DELETE FROM X3DDEC_ADMIN.IF_IWP_LIST_OUT
+		 WHERE SITE_CD = #{SITE_CD} 
+	</delete>
+	
+
+</mapper>

@@ -1,0 +1,4258 @@
+/*
+**  emxAEFCollectionBase
+**
+**  Copyright (c) 1992-2020 Dassault Systemes.
+**  All Rights Reserved.
+**  This program contains proprietary and trade secret information of MatrixOne,
+**  Inc.  Copyright notice is precautionary only
+**  and does not evidence any actual or intended publication of such program
+**
+**   This JPO contains the implementation of emxAEFCollectionBase
+*/
+
+import java.io.File;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Hashtable;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.Vector;
+
+import org.apache.commons.lang3.StringUtils;
+import org.apache.ibatis.session.SqlSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.daewooenc.compare.CompareRule;
+import com.daewooenc.compare.util.CompareUtil;
+import com.daewooenc.mybatis.main.decSQLSessionFactory;
+import com.dassault_systemes.enovia.changeaction.servicesimpl.ChangeConstants;
+import com.dec.util.DecConstants;
+import com.dec.util.DecDateUtil;
+import com.dec.util.DecExcelUtil;
+import com.dec.util.DecMatrixUtil;
+import com.dec.util.DecStringUtil;
+import com.dec.util.decCollectionUtil;
+import com.dec.util.decListUtil;
+import com.matrixone.apps.domain.DomainConstants;
+import com.matrixone.apps.domain.DomainObject;
+import com.matrixone.apps.domain.DomainRelationship;
+import com.matrixone.apps.domain.util.ContextUtil;
+import com.matrixone.apps.domain.util.EnoviaResourceBundle;
+import com.matrixone.apps.domain.util.FrameworkException;
+import com.matrixone.apps.domain.util.FrameworkUtil;
+import com.matrixone.apps.domain.util.MapList;
+import com.matrixone.apps.domain.util.MqlUtil;
+import com.matrixone.apps.domain.util.PropertyUtil;
+import com.matrixone.apps.domain.util.i18nNow;
+import com.matrixone.apps.program.ProgramCentralUtil;
+
+import matrix.db.BusinessObjectWithSelect;
+import matrix.db.BusinessObjectWithSelectList;
+import matrix.db.Context;
+import matrix.db.JPO;
+import matrix.db.RelationshipList;
+import matrix.db.State;
+import matrix.util.Pattern;
+import matrix.util.StringList;
+
+/**
+ * The <code>emxAEFCollectionBase</code> class contains methods for the
+ * "Collection" Common Component.
+ *
+ * @version AEF 10.0.Patch1.0 - Copyright (c) 2003, MatrixOne, Inc.
+ */
+@SuppressWarnings({"rawtypes", "unchecked"})
+public class decCodeMaster_mxJPO {
+	
+	public static final String SYSTEM_CODE_MASTER_REVISION = "-";
+	private final String TASK_PROJECT_ID = "to[" + DecConstants.RELATIONSHIP_PROJECT_ACCESS_KEY + "].from.from[" + DecConstants.RELATIONSHIP_PROJECT_ACCESS_LIST +"].to.id";
+	private final String TASK_PROJECT_NAME = "to[" + DecConstants.RELATIONSHIP_PROJECT_ACCESS_KEY + "].from.from[" + DecConstants.RELATIONSHIP_PROJECT_ACCESS_LIST +"].to.name";
+	private static final Logger logger = LoggerFactory.getLogger(decCodeMaster_mxJPO.class);
+	
+	public MapList findCodeMaster(Context context, String[] args) throws Exception {
+		HashMap dataMap = (HashMap) JPO.unpackArgs(args);
+		String objectId = (String) dataMap.get("objectId");
+		return getCodeMasterList(context, objectId, "Code");
+	}
+	
+	public MapList getCodeMasterList(Context context, String objectId, String masterType) throws Exception{
+		try {
+			MapList codeMasterList = null;
+			StringList busSelects = new StringList();
+			busSelects.add(DomainConstants.SELECT_ID);
+			busSelects.add(DomainConstants.SELECT_TYPE);
+			busSelects.add(DomainConstants.SELECT_NAME);
+			busSelects.add(DomainConstants.SELECT_REVISION);
+
+			String whereExpr = null;
+			String projectId = null;
+			if ( StringUtils.isNotEmpty(masterType) )
+			{
+				whereExpr = "attribute[decMasterType] == '" + masterType + "'";
+			}
+			
+			if ( StringUtils.isEmpty(objectId) )
+			{
+				// do nothing...
+			}
+			else
+			{
+				String type = MqlUtil.mqlCommand(context, "print bus $1 select $2 dump", objectId, DecConstants.SELECT_TYPE);
+				
+				switch (type) {
+				case "Project Space":
+					projectId = objectId;
+					break;
+				case "decCodeMaster":
+					projectId = MqlUtil.mqlCommand(context, "print bus $1 select $2 dump", objectId, "to[decCodeMasterRel].from.id");
+					break;
+				case "decCodeDetail":
+					StringBuffer relPattern = new StringBuffer(DecConstants.RELATIONSHIP_DECCODEDETAILREL);
+					relPattern.append(",");
+					relPattern.append(DecConstants.RELATIONSHIP_DECCODEMASTERREL);
+					
+					StringBuffer typePattern = new StringBuffer(DecConstants.TYPE_DECCODEDETAIL);
+					typePattern.append(",");
+					typePattern.append(DecConstants.TYPE_DECCODEMASTER);
+					typePattern.append(",");
+					typePattern.append(DecConstants.TYPE_PROJECT_SPACE);
+					
+					MapList parentList = DomainObject.newInstance(context, objectId).getRelatedObjects(context
+							, relPattern.toString(), typePattern.toString()
+							, busSelects, null
+							, true, false
+							, (short) 0
+							, null, null
+							, 0);
+					Map parentMap = null;
+					String parentType = null;
+					for ( Object obj : parentList )
+					{
+						parentMap = (Map) obj;
+						parentType = (String) parentMap.get(DecConstants.SELECT_TYPE);
+						if ( DecConstants.TYPE_PROJECT_SPACE.equals(parentType) ) 
+						{
+							projectId = (String) parentMap.get(DecConstants.SELECT_ID);
+							break;
+						}
+					}
+					break;
+
+				default:
+					break;
+				}
+				
+			}
+			
+			if ( StringUtils.isNotEmpty(projectId) )
+			{
+				codeMasterList = DomainObject.newInstance(context, projectId).getRelatedObjects(context
+						, DecConstants.RELATIONSHIP_DECCODEMASTERREL, DecConstants.TYPE_DECCODEMASTER
+						, busSelects, null
+						, false, true
+						, (short) 1
+						, whereExpr, null
+						, 0);
+			}
+			else
+			{
+				codeMasterList = DomainObject.findObjects(context, DecConstants.TYPE_DECCODEMASTER, DecConstants.SYMB_WILD, DecConstants.SYMB_HYPHEN
+						, DecConstants.SYMB_WILD, DecConstants.VAULT_ESERVICE_PRODUCTION
+						, whereExpr, false, busSelects);
+			}
+			
+			return codeMasterList;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
+	@com.matrixone.apps.framework.ui.ProgramCallable
+	public MapList findCodeDetail(Context context, String[] args) throws Exception {
+		/*
+		MapList projectList = new MapList();
+		HashMap dataMap = (HashMap) JPO.unpackArgs(args);
+		String parentId = (String) dataMap.get("objectId");
+
+		StringList busSelects = new StringList();
+		busSelects.add(DomainConstants.SELECT_ID);
+		busSelects.add(DomainConstants.SELECT_NAME);
+		// busSelects.add(DomainConstants.SELECT_ATTRIBUTE_TITLE);
+		// busSelects.add(DomainConstants.select_relationship_attr);
+
+		StringList selectRelStmts = new StringList();
+		selectRelStmts.add(DomainRelationship.SELECT_ID);
+		String busWhere = "";
+		String relationshipName = (String) dataMap.get("relationName");
+		String strRelName = PropertyUtil.getSchemaProperty(context, relationshipName);
+		// Getting actual type name - Person
+		String strType = PropertyUtil.getSchemaProperty(context, "type_decCodeDetail");
+		String typeGroupProxy = PropertyUtil.getSchemaProperty(context, "type_GroupProxy");
+		Pattern typePattern = new Pattern(strType);
+		typePattern.addPattern(typeGroupProxy);
+
+		try {
+			if (!parentId.isEmpty()) {
+
+				DomainObject dom = DomainObject.newInstance(context, parentId);
+				projectList = dom.getRelatedObjects(context, "*", // relationship pattern
+						"decCodeDetail", // object pattern
+						busSelects, // object selects
+						selectRelStmts, // relationship selects
+						false, // to direction
+						true, // from direction
+						(short) 1, // recursion level
+						"", // object where clause
+						null); // relationship where clause
+
+				if (projectList.size() > 0) {
+					// projectList.sort(lpsConstants.SELECT_ATTRIBUTE_LPSSEQUENCEORDER, "ascending",
+					// "integer");
+				}
+				return projectList;
+			} else {
+
+				return projectList;
+
+			}
+		} catch (Exception ex) {
+			throw ex; 
+		}
+		
+		
+		*/
+		MapList codeDetailList = new MapList();
+		try {
+			HashMap dataMap = (HashMap) JPO.unpackArgs(args);
+			String parentId = (String) dataMap.get("objectId");
+			if ( StringUtils.isNotEmpty(parentId) )
+			{
+				codeDetailList = getCodeDetailList(context, null
+						, parentId, null, null
+						, null, null, null
+						, null, null
+						, null, null, false, 1, false);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return codeDetailList;
+	}
+
+	// 코드디테일의 확장기능
+	@com.matrixone.apps.framework.ui.ProgramCallable
+    public MapList getCodeDetailExpand(Context context, String[] args) throws Exception {
+        MapList projectList = new MapList();
+        HashMap dataMap = (HashMap) JPO.unpackArgs(args);
+        String parentId = (String) dataMap.get("objectId"); // + 버튼누른 오브젝트아이디를 받음
+
+        StringList busSelects = new StringList();
+        busSelects.add(DomainConstants.SELECT_ID);
+        busSelects.add(DomainConstants.SELECT_NAME);
+        busSelects.add(DomainConstants.SELECT_ATTRIBUTE_SEQUENCE_ORDER);
+        String relName = "decCodeDetailRel";
+        StringList selectRelStmts = new StringList();
+        selectRelStmts.add(DomainRelationship.SELECT_ID); // Added by hslee on 2023.07.06
+        selectRelStmts.add(DomainConstants.SELECT_ATTRIBUTE_SEQUENCE_ORDER);
+        String busWhere = "";
+
+        try {
+			if (!parentId.isEmpty()) {
+
+				DomainObject dom = DomainObject.newInstance(context, parentId);
+				projectList = dom.getRelatedObjects(context, "*", // relationship pattern
+						"decCodeDetail", // object pattern
+						busSelects, // object selects
+						selectRelStmts, // relationship selects
+						false, // to direction
+						true, // from direction
+//						(short) 0, // recursion level << 확장래밸 전체펼치기와 관련있음 . 1로 주면 하위 1래밸까지만 보여진다.
+						(short) 1, // Modified by hslee on 2023.07.06 --- 1 레벨씩 expand되도록 수정 
+						"", // object where clause
+						null); // relationship where clause
+
+				if (projectList.size() > 0) {
+					//projectList.sort("level", "ascending", "integer");
+//					for(int i = 0 ; i<= projectList.size(); i++) {
+//						Map map = new Map();
+//						
+//					}
+				}
+				return projectList;
+			} else {
+				
+				return projectList;
+
+			}
+        } catch (Exception ex) {
+            throw ex;
+        }
+    }
+	
+	/**
+	 * Code Master를 생성한다.
+	 * Project에서 생성할 경우 Project와 Code Master를 연결한다.
+	 * @param context
+	 * @param args
+	 * @return
+	 * @throws Exception
+	 */
+	@com.matrixone.apps.framework.ui.CreateProcessCallable
+	public Map createCodeMaster(Context context, String[] args) throws Exception {
+		try {
+			Map programMap = JPO.unpackArgs(args);
+			ContextUtil.startTransaction(context, true);
+			
+			Map resultMap = createCodeMaster(context, programMap);
+			
+			ContextUtil.commitTransaction(context);
+			
+			return resultMap;
+		} catch (Exception e) {
+			ContextUtil.abortTransaction(context);
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
+	public Map createCodeMaster(Context context, Map programMap) throws FrameworkException, Exception {
+		try {
+			String objectId = (String) programMap.get("objectId");
+			String masterType = (String) programMap.get("masterType");
+			String name = (String) programMap.get("Name");
+			String desc = (String) programMap.get("Description");
+			
+			// Project Code 조회
+			boolean isProject = false;
+			String revision = "-";
+			DomainObject doObj = null;
+			if ( StringUtils.isNotEmpty(objectId) )
+			{
+				doObj = DomainObject.newInstance(context, objectId);
+				
+				StringList slSelect = new StringList();
+				slSelect.add(DecConstants.SELECT_TYPE);
+				slSelect.add(DecConstants.SELECT_NAME);
+				slSelect.add("from[" + DecConstants.RELATIONSHIP_DECCODEMASTERREL + "|to.name == '" + name + "']");
+				
+				Map objInfo = doObj.getInfo(context, slSelect);
+				String type = (String) objInfo.get(DecConstants.SELECT_TYPE);
+				if ( DecConstants.TYPE_PROJECT_SPACE.equals(type) )
+				{
+					isProject = true;
+					
+					// 동일한 name이 존재하는지 체크
+					String existSameName = (String) objInfo.get("from[" + DecConstants.RELATIONSHIP_DECCODEMASTERREL + "]");
+					if ( Boolean.valueOf(existSameName) )
+					{
+						throw new FrameworkException(generateNotUniqueMessage(context, DecConstants.TYPE_DECCODEMASTER));
+					}
+
+					// Code Master의 revision 조회
+					revision = (String) objInfo.get(DecConstants.SELECT_NAME);
+				}
+				
+			}
+			
+			// Code Master 생성
+			DomainObject doCodeMaster = DomainObject.newInstance(context);
+			doCodeMaster.createObject(context, DecConstants.TYPE_DECCODEMASTER, name, revision, DecConstants.POLICY_DECCODEMASTER, DecConstants.VAULT_ESERVICE_PRODUCTION);
+			doCodeMaster.setDescription(context, desc);
+			doCodeMaster.setAttributeValue(context, DecConstants.ATTRIBUTE_DECMASTERTYPE, masterType);
+			
+			// Project와 연결
+			if ( isProject )
+			{
+				DomainRelationship.connect(context, doObj, DecConstants.RELATIONSHIP_DECCODEMASTERREL, doCodeMaster);
+			}
+			else
+			{
+				String templateId = DecMatrixUtil.getObjectId(context, DecConstants.TYPE_DECCODEMASTERTEMPLATE, "Global", DecConstants.SYMB_HYPHEN);
+				doObj = DomainObject.newInstance(context, templateId);
+				DomainRelationship.connect(context, doObj, DecConstants.RELATIONSHIP_DECCODEMASTERTEMPLATEREL, doCodeMaster);
+			}
+			
+			Map resultMap = new HashMap();
+			resultMap.put(DecConstants.SELECT_ID, doCodeMaster.getObjectId());
+			
+			return resultMap;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	public String generateNotUniqueMessage(Context context, String type) throws Exception{
+		type = i18nNow.getAdminI18NString("Type", type, context.getSession().getLanguage());
+		String message = EnoviaResourceBundle.getProperty(context, "emxFrameworkStringResource", context.getLocale(), "emxFramework.Msg.ThereisaXwiththesamename");
+		message = message.replace("${1}", type);
+		return message;
+	}
+	
+	/**
+	 * Code Detail의 revision은 부모의 revision + "_" + 부모의 name
+	 * 예외) Global Code Master의 Code Detail은 Code Master의 revision인 "-"는 제외하고 채번한다.
+	 * @param context
+	 * @param objectId
+	 * @return
+	 * @throws Exception
+	 */
+	public String getCodeDetailRevision(Context context, String objectId) throws Exception{
+		try {
+			String revision = "";
+			DomainObject doParent = DomainObject.newInstance(context, objectId);
+			
+			StringList slSelect = new StringList();
+			slSelect.add(DecConstants.SELECT_TYPE);
+			slSelect.add(DecConstants.SELECT_NAME);
+			slSelect.add(DecConstants.SELECT_REVISION);
+			
+			Map parentInfo = doParent.getInfo(context, slSelect);
+			
+			String parentType = (String) parentInfo.get(DecConstants.SELECT_TYPE);
+			String parentName = (String) parentInfo.get(DecConstants.SELECT_NAME);
+			String parentRev = (String) parentInfo.get(DecConstants.SELECT_REVISION);
+			
+			if ( DecConstants.TYPE_DECCODEMASTER.equals(parentType) )
+			{
+				if ( "-".equals(parentRev) )
+				{
+					parentRev = "";
+				}
+			}
+			
+			revision = (StringUtils.isNotEmpty(parentRev) ? parentRev + "_" : "") + parentName;
+			
+			return revision;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
+	/**
+	 * Code Detail을 생성한다.
+	 * @param context
+	 * @param args
+	 * @return
+	 * @throws Exception
+	 */
+	@com.matrixone.apps.framework.ui.CreateProcessCallable
+	public Map createCodeDetail(Context context, String[] args) throws Exception {
+		Map programMap = (Map) JPO.unpackArgs(args);
+		try {
+			ContextUtil.startTransaction(context, true);
+			
+			Map resultMap = createCodeDetail(context, programMap);
+			
+			ContextUtil.commitTransaction(context);
+			return resultMap;
+		} catch(Exception e) {
+			ContextUtil.abortTransaction(context);
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
+	/**
+	 * @param context
+	 * @param programMap
+	 * @return
+	 * @throws FrameworkException
+	 * @throws Exception
+	 */
+	public Map createCodeDetail(Context context, Map programMap) throws FrameworkException, Exception {
+		try {
+			String objectId = (String) programMap.get("objectId"); 
+			String name = (String) programMap.get("decCode"); 
+			String revision = (String) programMap.get(DecConstants.SELECT_REVISION); 
+			
+			DomainObject doParent = DomainObject.newInstance(context, objectId);
+			
+			StringList slSelect = new StringList();
+			slSelect.add(DecConstants.SELECT_NAME);
+			slSelect.add("from[" + DecConstants.RELATIONSHIP_DECCODEDETAILREL + "|to.name == '" + name + "']");
+			
+			Map parentInfo = doParent.getInfo(context, slSelect);
+			
+			// 동일한 name이 존재하는지 체크
+			String existSameName = (String) parentInfo.get("from[" + DecConstants.RELATIONSHIP_DECCODEDETAILREL + "]");
+			if ( Boolean.valueOf(existSameName) )
+			{
+				throw new FrameworkException(generateNotUniqueMessage(context, DecConstants.TYPE_DECCODEDETAIL) + " - parentId : " + objectId + " // name : " + name);
+			}
+			
+			// Code Detail 생성
+			DomainObject doCodeDetail = DomainObject.newInstance(context);
+			doCodeDetail.createObject(context, DecConstants.TYPE_DECCODEDETAIL
+					, name
+					, StringUtils.isEmpty(revision) ? getCodeDetailRevision(context, objectId) : revision
+					, DecConstants.POLICY_DECCODEMASTER
+					, DecConstants.VAULT_ESERVICE_PRODUCTION);
+			
+			// Code Detail 속성 업데이트
+			Map attrMap = new HashMap();
+			attrMap.put(DecConstants.ATTRIBUTE_DECCODE, name);
+			attrMap.put(DecConstants.ATTRIBUTE_DECCODEDETAILATT1, (String) programMap.get(DecConstants.ATTRIBUTE_DECCODEDETAILATT1));
+			attrMap.put(DecConstants.ATTRIBUTE_DECCODEDETAILATT2, (String) programMap.get(DecConstants.ATTRIBUTE_DECCODEDETAILATT2));
+			attrMap.put(DecConstants.ATTRIBUTE_DECCODEDETAILATT3, (String) programMap.get(DecConstants.ATTRIBUTE_DECCODEDETAILATT3));
+			attrMap.put(DecConstants.ATTRIBUTE_DECCODEDETAILATT4, (String) programMap.get(DecConstants.ATTRIBUTE_DECCODEDETAILATT4));
+			attrMap.put(DecConstants.ATTRIBUTE_DECCODEDETAILATT5, (String) programMap.get(DecConstants.ATTRIBUTE_DECCODEDETAILATT5));
+			
+			attrMap.put(DecConstants.ATTRIBUTE_DECCODEDETAILTYPE, (String) parentInfo.get(DecConstants.SELECT_NAME));
+			
+			doCodeDetail.setAttributeValues(context, attrMap);
+			doCodeDetail.setDescription(context, (String) programMap.get("Description"));
+			
+			// Sequence Number 채번
+			StringList childIdList = doParent.getInfoList(context, "from[" + DecConstants.RELATIONSHIP_DECCODEDETAILREL + "].to.id");
+			
+			// 부모와 연결
+			DomainRelationship drCodeDetailRel = DomainRelationship.connect(context, doParent, DecConstants.RELATIONSHIP_DECCODEDETAILREL, doCodeDetail);
+			drCodeDetailRel.setAttributeValue(context, DecConstants.ATTRIBUTE_SEQUENCE_ORDER, String.valueOf(childIdList.size() + 1));
+			
+			Map resultMap = new HashMap();
+			resultMap.put(DecConstants.SELECT_ID, doCodeDetail.getObjectId());
+			
+			return resultMap;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
+	// 코드 디테일의 순서(Sequence Order) 가져오는 함수.
+	public Vector getSequenceOrder(Context context, String[] args) throws Exception {
+		HashMap programMap = (HashMap) JPO.unpackArgs(args);
+		MapList relBusObjPageList = (MapList) programMap.get("objectList"); 
+		// detail오브젝트가 id로, id[connection]에 코드마스터와의 커낵션 담김
+		Vector vec = new Vector(relBusObjPageList.size());
+
+		try {
+			for (int i = 0; i < relBusObjPageList.size(); i++) {
+				Hashtable<?, ?> hashtable = (Hashtable<?, ?>) relBusObjPageList.get(i);
+				String connectionId = (String) hashtable.get("id");
+
+				DomainObject dom = new DomainObject(connectionId);
+//				RelationshipList fd = dom.getAllRelationship(context);
+//				String[] r = fd.getNames();
+//				DomainRelationship dom2 = DomainRelationship.newInstance(context, r[0]);
+				
+				RelationshipList fromList = dom.getToRelationship(context);
+				String[] rr = fromList.getNames();
+				DomainRelationship dom2 = DomainRelationship.newInstance(context, rr[0]);
+				
+//				System.out.println("from에 해당하는 리스트"+fromList);
+				String sooo = dom2.getAttributeValue(context, "Sequence Order");
+//				DomainRelationship domRel = new DomainRelationship(connectionId);
+//				String so = domRel.getAttributeValue(context, "Sequence Order");
+//				System.out.println("sooo:"+sooo);
+				vec.addElement(sooo);
+
+				int d = i;
+			}
+
+		} catch (Exception e) {
+			throw new Exception(e.toString());
+		}
+
+		return vec;
+	}
+
+	// 코드마스터 demote
+	public String stateDemote(Context context, String[] args) throws Exception {
+		/// HashMap programMap = (HashMap) JPO.unpackArgs(args);
+		String message ="";
+		String messageOrderName ="";
+		String OrderNameList ="";
+		String detailType = "";
+		for (int i = 0; i < args.length; i++) {
+			String ids= (String) args[i];			
+			String[] argArray = ids.split("\\|"); // '|' 기준으로 나누어 배열로 변환
+			System.out.println(Arrays.toString(argArray));
+			String ParentId = argArray[2]; // 부모개체
+			DomainObject ParentDom = new DomainObject(ParentId);
+			String decMasterType = ParentDom.getAttributeValue(context, "decMasterType");
+			if(decMasterType.equals("Table")) {
+				detailType ="Table Detail";
+			}else {
+				detailType ="Code Detail";
+			}
+			String objectId = argArray[1];
+			System.out.println(detailType +" demote 실행 : " + i + "번째 컬럼");
+			// MapList relBusObjPageList = (MapList)programMap.get("objectList");
+			DomainObject orderId = new DomainObject(objectId);
+			State state = orderId.getCurrentState(context);
+			String stateName = state.getName();
+			String active = "Active";
+			OrderNameList += orderId.getName()+", "; // 모든 state가 Active인 경우.
+			
+			if (!stateName.equals(active)) {
+				orderId.demote(context);				
+			}else {			
+				messageOrderName += orderId.getName()+", ";				
+			}
+		}
+		System.out.println("OrderNameList:"+OrderNameList);
+   
+		if(messageOrderName.isEmpty()) {
+			message = "활성화되었습니다.";
+		}else if(OrderNameList.equals(messageOrderName)){
+			 System.out.println("다같을떄messageOrderName:"+messageOrderName);
+			 System.out.println("다같을떄OrderNameList:"+OrderNameList);
+			message = "선택한 "+ detailType +"의 상태가 Active 입니다.";
+		}
+		else{
+			messageOrderName = messageOrderName.substring(0, messageOrderName.length() - 1);
+			String cutmessageOrderName = StringUtils.substring(messageOrderName, 0, -1);
+			System.out.println("자른 message:"+cutmessageOrderName);
+			message = "활성화되었습니다. \n 이미 상태가 활성화인 " +detailType+ " : "+cutmessageOrderName;
+		}
+		System.out.println("완료 message:"+message);
+		return message;
+	}
+
+	// 코드마스터 promote
+	public String statePromote(Context context, String[] args) throws Exception {
+		/// HashMap programMap = (HashMap) JPO.unpackArgs(args);
+		String message ="";
+		String messageOrderName ="";
+		String OrderNameList ="";
+		String detailType = "";
+		for (int i = 0; i < args.length; i++) {
+			String ids= (String) args[i];			
+			String[] argArray = ids.split("\\|"); // '|' 기준으로 나누어 배열로 변환
+			System.out.println(Arrays.toString(argArray));
+			String ParentId = argArray[2]; // 부모개체
+			DomainObject ParentDom = new DomainObject(ParentId);
+			String decMasterType = ParentDom.getAttributeValue(context, "decMasterType");
+			if(decMasterType.equals("Table")) {
+				detailType ="Table Detail";
+			}else {
+				detailType ="Code Detail";
+			}
+			String objectId = argArray[1];
+
+			System.out.println("코드마스터 promote 실행 : " + i + "번째 컬럼");
+			// MapList relBusObjPageList = (MapList)programMap.get("objectList");
+			DomainObject orderId = new DomainObject(objectId);
+			State state = orderId.getCurrentState(context);
+			String stateName = state.getName();
+			String inactive = "Inactive";
+			OrderNameList += orderId.getName()+", "; // 모든 state가 Active인 경우.
+			
+			if (!stateName.equals(inactive)) {
+					orderId.promote(context);				
+				}else {			
+					messageOrderName += orderId.getName()+", ";				
+				}
+		}
+		System.out.println("OrderNameList:"+OrderNameList);
+   
+		if(messageOrderName.isEmpty()) {
+			message = "비활성화되었습니다.";
+		}else if(OrderNameList.equals(messageOrderName)){
+			 System.out.println("다같을떄messageOrderName:"+messageOrderName);
+			 System.out.println("다같을떄OrderNameList:"+OrderNameList);
+			message = "선택한 "+ detailType +"의 상태가 Inactive 입니다.";
+		}
+		else{
+			messageOrderName = messageOrderName.substring(0, messageOrderName.length() - 1);
+			String cutmessageOrderName = StringUtils.substring(messageOrderName, 0, -1);
+			System.out.println("자른 message:"+cutmessageOrderName);
+			message = "비활성화되었습니다. \n 이미 상태가 비활성화인 " +detailType+ " : "+cutmessageOrderName;
+		}
+		System.out.println("완료 message:"+message);
+		return message;
+	}
+
+	// 코드마스터 수정시 name 중복 검증
+	public void codemasterNameVal(Context context, String[] args) throws Exception {
+		HashMap programMap = (HashMap) JPO.unpackArgs(args);
+		HashMap paramMap = (HashMap) programMap.get("paramMap");
+		StringList busSelects = new StringList();
+		busSelects.add(DomainConstants.SELECT_ID);
+		busSelects.add(DomainConstants.SELECT_NAME);
+	//	busSelects.add(DomainConstants.select_Attr);
+		String selectObNewName = (String) paramMap.get("New Value");
+		String selectId = (String) paramMap.get("objectId");
+		DomainObject selectIdDom = new DomainObject(selectId);
+		String boType = selectIdDom.getTypeName(context);
+		
+		
+		MapList codemasterMap = new MapList();
+
+		codemasterMap = DomainObject.findObjects(context, boType, "*", "",
+				busSelects);
+		System.out.println("코드마스터 수정시작");
+		for (int i = 0; i < codemasterMap.size(); i++) {
+			HashMap<?, ?> hashmap = (HashMap<?, ?>) codemasterMap.get(i);
+			String name = (String) hashmap.get("name");
+			
+			String id = (String) hashmap.get("id");
+			if (name.equals(selectObNewName)) {
+				System.out.println("새로운이름" + selectObNewName + "은 뒤 이름과 같습니다. <" + name);
+				throw new FrameworkException("중복된 이름의 Code Master가 존재합니다.");
+
+			} else {
+				if (id.equals(selectId)) {
+					DomainObject dom = new DomainObject(id);
+					// String fd = dom.get
+					dom.setName(context, selectObNewName);
+					
+				//	dom.setAttributeValue(context, "decCode", selectObNewName);
+					System.out.println("코드마스터 else");
+				}
+			}
+
+		}
+		System.out.println("코드마스터 for 종료");
+		// dom.getInfo(context, "");
+
+	}
+	
+	// 코드디테일이름수정
+	public void codeDetailNameVal(Context context, String[] args) throws Exception {
+		HashMap programMap = (HashMap) JPO.unpackArgs(args);
+		HashMap paramMap = (HashMap) programMap.get("paramMap");
+		HashMap requestMap = (HashMap) programMap.get("requestMap");
+		StringList busSelects = new StringList();
+		busSelects.add(DomainConstants.SELECT_ID);
+		busSelects.add(DomainConstants.SELECT_NAME);
+	//	busSelects.add(DomainConstants.select_Attr);
+		String selectObNewName = (String) paramMap.get("New Value");
+		String selectParentId = (String) requestMap.get("parentOID");
+		String selectId = (String) paramMap.get("objectId");
+		String selectName = (String) paramMap.get("name");
+		DomainObject selectIdDom = new DomainObject(selectId); // 부모아이디로 오브젝트 생성
+		String boType = selectIdDom.getTypeName(context);
+		
+		StringList selectRelStmts = new StringList();
+		selectRelStmts.add(DomainRelationship.SELECT_ID);
+		MapList detailRelList = new MapList();
+		detailRelList = selectIdDom.getRelatedObjects(context, "decCodeDetailRel", // relationship pattern
+				"*", // object pattern
+				busSelects, // object selects
+				selectRelStmts, // relationship selects
+				true, // to direction
+				false, // from direction
+				(short) 1, // recursion level
+				"", // object where clause
+				null);
+		String RelListParentName ="";
+		String RelListParentId ="";
+		for (int i = 0; i < detailRelList.size(); i++) {
+			Hashtable<?, ?> hashtable = (Hashtable<?, ?>) detailRelList.get(i);
+			RelListParentName = (String) hashtable.get("name");
+			RelListParentId = (String) hashtable.get("id");
+		}
+		// 선택한개체의 부모로 조회할것임.
+		DomainObject RelListParentIdDom = new DomainObject(RelListParentId); 
+		MapList parentRelList = new MapList();
+		parentRelList = RelListParentIdDom.getRelatedObjects(context, "decCodeDetailRel", // relationship pattern
+				"decCodeDetail", // object pattern
+				busSelects, // object selects
+				selectRelStmts, // relationship selects
+				false, // to direction
+				true, // from direction
+				(short) 1, // recursion level
+				"", // object where clause
+				null);
+		for (int i = 0; i < parentRelList.size(); i++) {
+			Hashtable<?, ?> hashtable2 = (Hashtable<?, ?>) parentRelList.get(i);
+			String sameLvName = (String) hashtable2.get("name");
+			
+			String sameLvId = (String) hashtable2.get("id");
+			if (sameLvName.equals(selectObNewName)) {
+				System.out.println("새로운이름" + selectObNewName + "은 뒤 이름과 같습니다. : " + sameLvName);
+				throw new FrameworkException("같은 Lv에 중복된 이름의 CodeDetail이 존재합니다.");
+
+			} else {
+				if (sameLvId.equals(selectId)) {
+					DomainObject dom = new DomainObject(sameLvId);
+					// String fd = dom.get
+					dom.setName(context, selectObNewName);
+					dom.setAttributeValue(context, "decCode", selectObNewName);
+					
+				}
+			}					
+		}
+		
+		Hashtable<?, ?> hashtable = (Hashtable<?, ?>) detailRelList.get(0);
+		String relId = (String) hashtable.get("id");
+		
+		DomainObject relOb = new DomainObject(relId);
+		MapList detailRelList2 = new MapList();
+		detailRelList2 = relOb.getRelatedObjects(context, "*", // relationship pattern
+				"*", // object pattern
+				busSelects, // object selects
+				selectRelStmts, // relationship selects
+				false, // to direction
+				true, // from direction
+				(short) 1, // recursion level
+				"", // object where clause
+				null);
+		
+		
+//		String codeDetailName = MqlUtil.mqlCommand(context, "temp query bus $1 $2 $3;", true, "decCodeDetail", selectName, "*");
+//		MapList codemasterMap = new MapList();
+//
+//		codemasterMap = DomainObject.findObjects(context, boType, "*", "owner==" + context.getUser(),
+//				busSelects);
+//		System.out.println("코드디테일 name 수정시작");
+//		for (int i = 0; i < detailRelList2.size(); i++) {
+//			Hashtable<?, ?> hashtable2 = (Hashtable<?, ?>) detailRelList2.get(i);
+//			String name = (String) hashtable2.get("name");
+//			
+//			String id = (String) hashtable2.get("id");
+//			if (name.equals(selectObNewName)) {
+//				System.out.println("새로운이름" + selectObNewName + "은 뒤 이름과 같습니다. <" + name);
+//				throw new FrameworkException("같은 Lv에 중복된 이름의 CodeDetail이 존재합니다.");
+//
+//			} else {
+//				if (id.equals(selectId)) {
+//					DomainObject dom = new DomainObject(id);
+//					// String fd = dom.get
+//					dom.setName(context, selectObNewName);
+//					dom.setAttributeValue(context, "decCode", selectObNewName);
+//					System.out.println("코드마스터 else");
+//				}
+//			}
+//		}
+		System.out.println("코드디테일 for 종료");
+		// dom.getInfo(context, "");
+	}
+	
+	// created by choimingi 2023/09/19 : project delete -> to[decCodeMaster] delete 
+		public String deleteProjectCodeMaster(Context context, String[] args) throws Exception{
+			try {
+				HashMap programMap = (HashMap) JPO.unpackArgs(args); // get data
+				String projectId = (String)programMap.get("projectId");
+				
+				
+				String pId = projectId; 
+				DomainObject pDom = new DomainObject(pId);
+				StringList busSelects = new StringList();
+				busSelects.add(DomainConstants.SELECT_ID);
+				StringList selectRelStmts = new StringList();
+				selectRelStmts.add(DomainRelationship.SELECT_ID);
+				selectRelStmts.add(DomainRelationship.SELECT_TYPE);
+				
+				/*
+				MapList detailRelList = pDom.getRelatedObjects(context, DecConstants.RELATIONSHIP_DECCODEMASTERREL, // relationship pattern
+						DecConstants.TYPE_DECCODEMASTER, // object pattern
+						busSelects, // object selects
+						selectRelStmts, // relationship selects
+						false, // to direction
+						true, // from direction
+						(short) 0, // recursion level
+						"", // object where clause
+						null);
+				String[] deleteObjectIds = new String[detailRelList.size()];
+				for(int i = 0; i < detailRelList.size(); i++) {
+					Hashtable<?, ?> codeMasterMap = (Hashtable<?, ?>) detailRelList.get(i);
+					String oId = (String) codeMasterMap.get("id");
+					System.out.println("삭제할 Master : "+ oId);
+					DomainObject dom = new DomainObject(oId);
+					deleteObjects(context, oId);
+					deleteObjectIds[i] = oId;
+				}
+				System.out.println("삭제할 Master 리스트 : "+ Arrays.toString(deleteObjectIds));
+				DomainObject.deleteObjects(context, deleteObjectIds);
+				System.out.println("프로젝트 코드마스터 삭제 완료");
+				*/
+				
+				Pattern relPattern = new Pattern(DecConstants.RELATIONSHIP_DECCODEMASTERREL);
+				relPattern.addPattern(DecConstants.RELATIONSHIP_DECCODEDETAILREL);
+				
+				Pattern typePattern = new Pattern(DecConstants.TYPE_DECCODEMASTER);
+				typePattern.addPattern(DecConstants.TYPE_DECCODEDETAIL);
+				
+				MapList allProjectCodeList = pDom.getRelatedObjects(context, DecConstants.RELATIONSHIP_DECCODEMASTERREL + "," + DecConstants.RELATIONSHIP_DECCODEDETAILREL
+						, DecConstants.TYPE_DECCODEMASTER + "," + DecConstants.TYPE_DECCODEDETAIL
+						, busSelects, selectRelStmts
+						, false, true
+						, (short) 0
+						, null, "type != decCodeDetailRelAdd && type != decCodeDetailRelAddTemplate"
+						, 0);
+				
+				logger.info("deleteProjectCodeMaster - allProjectCodeList.size() : " + allProjectCodeList.size());
+				
+				StringList codeIdList = decListUtil.getSelectValueListForMapList(allProjectCodeList
+						, DecConstants.SELECT_ID
+						, false // 중복 제거
+						, true);
+				
+				logger.info("deleteProjectCodeMaster - codeIdList.size() : " + codeIdList.size());
+				
+				DomainObject.deleteObjects(context, codeIdList.toStringArray());
+				
+				logger.info("deleteProjectCodeMaster - success");
+				
+				return "Success";
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw e;
+			} 
+//			return sMsg;
+		}
+		// created by choimingi 2023/09/19 : project delete -> to[decCodeMaster] delete 
+	
+		// created by thoks 2023/09/14 [S] : ProjectList에서 Project 삭제시 연결된 codeMaster 삭제 처리
+		public Map deleteObjects(Context context, String objectId) throws Exception
+		{
+			Map resultMap = new HashMap();
+			try {
+				StringList busSelects = new StringList();
+				busSelects.add(DomainConstants.SELECT_ID);
+				busSelects.add(DomainConstants.SELECT_NAME);
+
+				StringList selectRelStmts = new StringList();
+				selectRelStmts.add(DomainRelationship.SELECT_ID);
+				StringList deleteList = new StringList();
+				//HashMap paramMap = (HashMap) programMap.get("paramMap");
+				DomainObject dom = new DomainObject(objectId);
+				MapList detailRelList = new MapList();
+				detailRelList = dom.getRelatedObjects(context, "*", // relationship pattern
+						"*", // object pattern
+						busSelects, // object selects
+						selectRelStmts, // relationship selects
+						false, // to direction
+						true, // from direction
+						(short) 0, // recursion level
+						"", // object where clause
+						null);
+				int listSize = detailRelList.size();
+				String[] deleteObjectIds = new String[listSize];
+				for (int j = 0; j < detailRelList.size(); j++) {
+					Hashtable<?, ?> hashtable = (Hashtable<?, ?>) detailRelList.get(j);
+					String relObjectId = (String) hashtable.get("id");
+					DomainObject relCodeDetail = new DomainObject(relObjectId); //Lv2 오브젝트를 만든다.
+					deleteObjectIds[j] = relObjectId;
+				}
+				
+				System.out.println("삭제할 Details 리스트 : "+ Arrays.toString(deleteObjectIds));
+				DomainObject.deleteObjects(context, deleteObjectIds);
+
+				resultMap.put("result", "success");
+			} catch (FrameworkException e) {
+				e.printStackTrace();
+				resultMap.put("result", "error");
+				resultMap.put("msg", e.getMessage());
+			} catch (Exception e) {
+				e.printStackTrace();
+				resultMap.put("result", "error");
+				resultMap.put("msg", e.getMessage());
+			}
+			
+			return resultMap;
+		}
+		// created by thoks 2023/09/14 [E]
+		
+	// 코드디테일 삭제 
+	public Map deleteObjects(Context context, String[] args) throws Exception
+	{
+		Map resultMap = new HashMap();
+		try {
+			StringList busSelects = new StringList();
+			busSelects.add(DomainConstants.SELECT_ID);
+			busSelects.add(DomainConstants.SELECT_NAME);
+
+			StringList selectRelStmts = new StringList();
+			selectRelStmts.add(DomainRelationship.SELECT_ID);
+			StringList deleteList = new StringList();
+			//HashMap paramMap = (HashMap) programMap.get("paramMap");
+			System.out.println("코드디테일삭제시작");
+			for (int i = 0; i < args.length; i++) {
+				System.out.println(args.length);
+				String ids= (String) args[i];			
+				String[] argArray = ids.split("\\|"); // '|' 기준으로 나누어 배열로 변환
+				System.out.println(Arrays.toString(argArray));
+				String objectId = null;
+				if ( argArray.length >= 2 )
+				{
+					objectId = argArray[1];
+				}
+				else
+				{
+					objectId = ids;
+				}
+			//	DomainObject ids. = new DomainObject();
+				DomainObject dom = new DomainObject(objectId);
+				MapList detailRelList = new MapList();
+				detailRelList = dom.getRelatedObjects(context, "*", // relationship pattern
+						"*", // object pattern
+						busSelects, // object selects
+						selectRelStmts, // relationship selects
+						false, // to direction
+						true, // from direction
+						(short) 0, // recursion level
+						"", // object where clause
+						null);
+				int listSize = detailRelList.size()+1;
+				String[] deleteObjectIds = new String[listSize];
+				deleteObjectIds[0]=objectId;
+				for (int j = 0; j < detailRelList.size(); j++) {
+					Hashtable<?, ?> hashtable = (Hashtable<?, ?>) detailRelList.get(j);
+					String relObjectId = (String) hashtable.get("id");
+					DomainObject relCodeDetail = new DomainObject(relObjectId); //Lv2 오브젝트를 만든다.
+					deleteObjectIds[j+1] = relObjectId;
+				//System.out.println("lv1 디테일 삭제");			
+				//dom.deleteObject(context);
+				//System.out.println(objectId);
+				}
+				System.out.println("삭제할 id 리스트 : "+ deleteObjectIds.toString());
+				DomainObject.deleteObjects(context, deleteObjectIds);
+			}
+			
+			System.out.println("삭제 후 시퀀스 수정으로 이동");
+			updatedecCodeDetailSequenceOrder(context,args);
+			resultMap.put("result", "success");
+		} catch (FrameworkException e) {
+			e.printStackTrace();
+			resultMap.put("result", "error");
+			resultMap.put("msg", e.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
+			resultMap.put("result", "error");
+			resultMap.put("msg", e.getMessage());
+		}
+		
+		return resultMap;
+	}
+	
+	
+	// 코드디테일 수정시 시퀀스 번호 수정
+	@SuppressWarnings("deprecation")
+	public void updatedecCodeDetailSequenceOrder(Context context, String[] args) throws Exception {
+		System.out.println("코드디테일시퀀스수정시작");
+		
+		String type = null;
+				
+		for(int j = 0; j<args.length; j++) {
+			String ids= (String) args[j];			
+			String[] argArray = ids.split("\\|"); // '|' 기준으로 나누어 배열로 변환
+			System.out.println(Arrays.toString(argArray));
+			String parentId = argArray[2];
+			
+			if ( StringUtils.isNotEmpty(parentId) )
+			{
+				type = MqlUtil.mqlCommand(context, "print bus $1 select $2 dump", parentId, DecConstants.SELECT_TYPE);
+				if ( DecConstants.TYPE_DECCODEMASTER.equals(type) || DecConstants.TYPE_DECCODEDETAIL.equals(type) )
+				{
+					StringList busSelects = new StringList();
+					busSelects.add(DomainConstants.SELECT_ID);
+					busSelects.add(DomainConstants.SELECT_NAME);
+			
+					StringList selectRelStmts = new StringList();
+					selectRelStmts.add(DomainRelationship.SELECT_ID);
+					DomainObject dom = DomainObject.newInstance(context, parentId);
+					MapList projectList = new MapList();
+			
+							projectList = dom.getRelatedObjects(context, DecConstants.RELATIONSHIP_DECCODEDETAILREL, // relationship pattern
+									DecConstants.TYPE_DECCODEDETAIL, // object pattern
+									busSelects, // object selects
+									selectRelStmts, // relationship selects
+									false, // to direction
+									true, // from direction
+									(short) 1, // recursion level
+									"", // object where clause
+									null);
+			
+			
+					for (int i = 0; i < projectList.size(); i++) {
+						Hashtable<?, ?> hashtable = (Hashtable<?, ?>) projectList.get(i);
+						String connectionId = (String) hashtable.get("id[connection]");
+						String objectName = (String) hashtable.get("name");
+						int size = i + 1;
+						int relSize = size;
+						String seOrder = String.valueOf(relSize);
+						System.out.println("수정될 대상의 이름 :" + objectName);
+						DomainRelationship relDom = DomainRelationship.newInstance(context, connectionId);
+				
+						String currentSequenceOrder = relDom.getAttributeValue(context, "Sequence Order");
+						System.out.println("원래 순서 : "+currentSequenceOrder+ ", 변경될 번호 : "+seOrder);
+						relDom.setAttributeValue(context, "Sequence Order", seOrder);
+						String updateSequenceOrder = relDom.getAttributeValue(context, "Sequence Order");
+						System.out.println("수정된 번호: "+updateSequenceOrder);
+					}
+				}
+			}
+			
+		}
+		System.out.println("수정 종료");
+
+	}
+	
+	public Map getStateRange(Context context, String[] args) throws Exception{
+		Map rangeMap = new HashMap();
+		rangeMap.put("Active", "Active");
+		rangeMap.put("Inactive", "Inactive");
+		return rangeMap;
+	}
+	
+	public void updateDetailState(Context context, String[] args) throws Exception{
+		
+		HashMap programMap = (HashMap) JPO.unpackArgs(args);
+		HashMap paramMap = (HashMap) programMap.get("paramMap");
+		
+		String objectId = (String) paramMap.get("objectId");
+        String newValue = (String) paramMap.get("New Value");
+        
+        
+      //  for (int i = 0; i < args.length; i++) {
+		//	String objectId = args[i];
+		//	System.out.println("코드마스터 promote 실행 : " + i + "번째 컬럼");
+			// MapList relBusObjPageList = (MapList)programMap.get("objectList");
+			DomainObject orderId = new DomainObject(objectId);
+			State state = orderId.getCurrentState(context);
+			String stateName = state.getName();
+			orderId.setState(context, newValue);
+			if (stateName.equals(newValue)) {
+				throw new FrameworkException("현재 state와 같습니다.");
+			}
+			 
+		//}
+        System.out.println("수정 종료");
+	}
+	
+	public Map getCodeDetailTypeRange(Context context, String[] args) throws Exception{
+			
+			HashMap programMap = (HashMap) JPO.unpackArgs(args);
+			Map rangeMap = new HashMap();
+			StringList fieldRangeValue = new StringList();
+            StringList fieldDisplayRangeValue = new StringList();
+            
+            fieldRangeValue.add("");
+			fieldDisplayRangeValue.add("");
+			StringList busSelects = new StringList();
+			busSelects.add(DomainConstants.SELECT_ID);
+			busSelects.add(DomainConstants.SELECT_NAME);
+			StringList relSelects =
+                    new StringList(DomainConstants.SELECT_RELATIONSHIP_ID);	
+			String selectName= "Code Detail Type";
+			String selectId ="";
+			MapList ml = DomainObject.findObjects(context, "decCodeMaster", "*", "",
+					busSelects);
+			for(int i = 0 ; i<ml.size(); i++) {
+				HashMap<?, ?> hashmap = (HashMap<?, ?>) ml.get(i);
+				String objectName = (String) hashmap.get("name");
+				if(objectName.equals(selectName)) {
+					selectId = (String) hashmap.get("id");
+					break;
+				}
+			}
+			if(selectId =="") {
+
+				rangeMap.put("field_choices",fieldRangeValue);
+				rangeMap.put("field_display_choices",fieldDisplayRangeValue);
+			}else {
+			
+			DomainObject dom = new DomainObject(selectId);
+			MapList detailList = new MapList();
+			detailList = dom.getRelatedObjects(
+                    context,
+                    "decCodeDetailRel",
+                    "decCodeDetail",
+                    busSelects,
+                    relSelects,
+                    true,
+                    true,
+                    (short) 1,
+                    "",
+                    ""); // relationship where clause
+			
+			for (int i = 0; i < detailList.size(); i++) {
+				Hashtable<?, ?> hashtable = (Hashtable<?, ?>) detailList.get(i);
+				String detailTypeName = (String) hashtable.get("name");
+				//rangeMap.put(detailTypeName, detailTypeName);
+			
+				fieldRangeValue.add(detailTypeName);
+				fieldDisplayRangeValue.add(detailTypeName);
+				
+				rangeMap.put("field_choices",fieldRangeValue);
+				rangeMap.put("field_display_choices",fieldDisplayRangeValue);
+			}
+			System.out.println(rangeMap);
+			//System.out.println("디테일타입박스 완료");
+			}
+		return rangeMap;
+	}
+	
+	
+	
+	
+	// 아래 엑셀 임포트 함수에서 디테일 생성을 맡아줄 부분
+	public String importCodeMasterCreateDetail(Context context, Map sendMap)throws Exception{
+		String sReturn = null;		
+		String sTypeDetail = "decCodeDetail";
+		String sPolicy = "decCodeMaster";
+		String detailObjectIdLv = "";
+	    String sDetailName = "";
+	    String sDetailDesc = "";
+	    String sDetailType = "";
+	    String sDetailLevel1Info1= "";
+		int Lv = (int) sendMap.get("createLv");		
+		if(Lv==1) {
+			detailObjectIdLv = (String) sendMap.get("codeMasterIdLv");// 이전레벨의 id
+			sDetailName = (String) sendMap.get("sDetailName"); 
+			sDetailDesc = (String) sendMap.get("sDetailDesc"); 
+			sDetailType = (String) sendMap.get("sDetailType"); 
+			sDetailLevel1Info1 = (String) sendMap.get("sDetailLevel1Info1"); //TNR의 T 아니고 decCodeDetailType의 타입.
+		}else {
+			detailObjectIdLv = (String) sendMap.get("codeMasterIdLv");
+			sDetailName = (String) sendMap.get("sDetailName");
+			sDetailDesc = (String) sendMap.get("sDetailDesc");
+			sDetailType = (String) sendMap.get("sDetailType"); 
+		}
+		System.out.println("엑셀임포트. 외부 함수에서 코드디테일 생성 시작");
+		String revisionTime = String.valueOf(System.currentTimeMillis());
+		DomainObject doNewDetail = new DomainObject();
+		doNewDetail.createObject(context, sTypeDetail, sDetailName, revisionTime, sPolicy, "eService Production");
+		doNewDetail.setDescription(context, sDetailDesc);
+		doNewDetail.setAttributeValue(context, "decCode", sDetailName);
+		doNewDetail.setAttributeValue(context, "decCodeDetailType", sDetailType);
+		if(!sDetailLevel1Info1.isEmpty() || sDetailLevel1Info1!=null) {
+			doNewDetail.setAttributeValue(context, "decCodeDetailAtt1", sDetailLevel1Info1);
+		}
+		String detailObjectId = doNewDetail.getId(context); // 생성된 id로 STRING에 넣어서 나중에 codeDetail 오브젝트를 만든다
+		DomainRelationship.connect(context, new DomainObject(detailObjectIdLv), "decCodeDetailRel", new DomainObject(detailObjectId)); //파라미터2: from오브젝트 파라미터4: to오브젝트
+
+		// 현재 level에 해당하는 dom,rel										
+		DomainObject detailObject = new DomainObject(detailObjectId);
+		RelationshipList doRelList = detailObject.getToRelationship(context);
+		
+		String[] relId = doRelList.getNames();
+		DomainRelationship doCurrentRel = DomainRelationship.newInstance(context, relId[0]);
+
+		// 연결하고자하는 이전 레벨의 디테일 오브젝트.
+		DomainObject detailObjectBefore = new DomainObject(detailObjectIdLv);				
+		RelationshipList doAllRelListBefore = detailObjectBefore.getAllRelationship(context);
+		int doAllRelListSizeBefore = doAllRelListBefore.size()-1; 
+		if(Lv==1) {
+			doAllRelListSizeBefore ++;
+		}
+		System.out.println(doAllRelListSizeBefore);
+
+		String seqOrderCurrent = String.valueOf(doAllRelListSizeBefore); // 여긴 이전레벨갯수를 넣어야해 혼동하지마!
+		doCurrentRel.setAttributeValue(context, "Sequence Order", seqOrderCurrent);
+		System.out.println("생성된 디테일의 시퀀스 넘버:"+doCurrentRel.getAttributeValue(context, "Sequence Order"));
+		System.out.println("생성된 코드디테일 이름:"+sDetailName );
+		
+		
+		return detailObjectId;
+	}
+	
+	
+	
+  	 public String importCodeMasterExcelData(Context context, String[] args)throws Exception{
+  		 	String sReturn = null;
+     	
+	     	System.out.println("엑셀임포트 후 코드마스터생성");
+			HashMap programMap = (HashMap) JPO.unpackArgs(args); // get data
+			MapList mlObject = (MapList)programMap.get("objectList");
+			Map returnMap = new HashMap();
+			
+	     	Set<String> setProject = new HashSet<String>();
+	     	Map<String, String> mColumn = null;
+
+
+	     	String sName = "";
+    		String sDesc = "";
+    		String sDetailName1 = "";
+    		String sDetailDesc1 = "";
+    		String sDetailType1 = "";
+    		String sDetailLevel1Info1 = "";
+    		String sDetailName2 = "";
+    		String sDetailDesc2 = "";
+    		String sDetailType2 = "";
+    		String sDetailName3 = "";
+    		String sDetailDesc3 = "";
+    		String sDetailType3 = "";
+    		String sDetailName4 = "";
+    		String sDetailDesc4 = "";
+    		String sDetailType4 = "";
+    		String sDetailName5 = "";
+    		String sDetailDesc5 = "";
+    		String sDetailType5 = "";
+    		String sDetailName6 = "";
+    		String sDetailDesc6 = "";
+    		String sDetailType6 = "";
+    		String sDetailName7 = "";
+    		String sDetailDesc7 = "";
+    		String sDetailType7 = "";
+    		String sDetailName8 = "";
+    		String sDetailDesc8 = "";
+    		String sDetailType8 = "";
+    		String sDetailName9 = "";
+    		String sDetailDesc9 = "";
+    		String sDetailType9 = "";
+    		String sDetailName10 = "";
+    		String sDetailDesc10 = "";
+    		String sDetailType10 = "";
+    		String codeDetailLv1NameCheck ="";
+	     	String sType = "decCodeMaster";
+	     	String sTypeDetail = "decCodeDetail";
+			String sPolicy = "decCodeMaster";
+			String masterObjectId = "";		
+			String resultId="";
+			String last11Characters="";
+			String resultLV1ObjectId ="";
+			String resultLV2ObjectId ="";
+			String resultLV3ObjectId ="";
+			String resultLV4ObjectId ="";
+			String resultLV5ObjectId ="";
+			String resultLV6ObjectId ="";
+			String resultLV7ObjectId ="";
+			String resultLV8ObjectId ="";
+			String resultLV9ObjectId ="";
+			String resultLV10ObjectId ="";
+			
+			String codeDetailLv1revision ="";
+			String codeDetailLv2revision ="";
+			String codeDetailLv3revision ="";
+			String codeDetailLv4revision ="";
+			String codeDetailLv5revision ="";
+			String codeDetailLv6revision ="";
+			String codeDetailLv7revision ="";
+			String codeDetailLv8revision ="";
+			String codeDetailLv9revision ="";
+			String codeDetailLv10revision ="";
+			
+	     	int sequenceOrder = 1;
+	     	String seOrder = String.valueOf(sequenceOrder);
+	     	for(int mi = 0;  mi <mlObject.size(); mi++) {
+	     		
+	     		mColumn = (Map)mlObject.get(mi);     		
+	     		sName = (String) mColumn.get("Name");
+	    		sDesc = (String) mColumn.get("Description");
+	    		sDetailName1 = (String) mColumn.get("Lv1 Code");
+	    		sDetailDesc1 = (String) mColumn.get("Lv1 Value1");
+	    		sDetailType1 = (String) mColumn.get("Lv1 Type");
+	    		sDetailLevel1Info1 = (String) mColumn.get("Lv1 Value2");
+	    		
+	    		sDetailName2 = (String) mColumn.get("Lv2 Code");
+	    		sDetailDesc2 = (String) mColumn.get("Lv2 Value1");
+	    		sDetailType2 = (String) mColumn.get("Lv2 Type");
+	    		
+	    		sDetailName3 = (String) mColumn.get("Lv3 Code");
+	    		sDetailDesc3 = (String) mColumn.get("Lv3 Value1");
+	    		sDetailType3 = (String) mColumn.get("Lv3 Type");
+	    		
+	    		sDetailName4 = (String) mColumn.get("Lv4 Code");
+	    		sDetailDesc4 = (String) mColumn.get("Lv4 Value1");
+	    		sDetailType4 = (String) mColumn.get("Lv4 Type");
+	    		sDetailName5 = (String) mColumn.get("Lv5 Code");
+	    		sDetailDesc5 = (String) mColumn.get("Lv5 Value1");
+	    		sDetailType5 = (String) mColumn.get("Lv5 Type");
+	    		
+	    		sDetailName6 = (String) mColumn.get("Lv6 Code");
+	    		sDetailDesc6 = (String) mColumn.get("Lv6 Value1");
+	    		sDetailType6 = (String) mColumn.get("Lv6 Type");
+	    		
+	    		sDetailName7 = (String) mColumn.get("Lv7 Code");
+	    		sDetailDesc7 = (String) mColumn.get("Lv7 Value1");
+	    		sDetailType7 = (String) mColumn.get("Lv7 Type");
+	    		
+	    		sDetailName8 = (String) mColumn.get("Lv8 Code");
+	    		sDetailDesc8 = (String) mColumn.get("Lv8 Value1");
+	    		sDetailType8 = (String) mColumn.get("Lv8 Type");
+	    		
+	    		sDetailName9 = (String) mColumn.get("Lv9 Code");
+	    		sDetailDesc9 = (String) mColumn.get("Lv9 Value1");
+	    		sDetailType9 = (String) mColumn.get("Lv9 Type");
+	    		
+	    		sDetailName10 = (String) mColumn.get("Lv10 Code");
+	    		sDetailDesc10 = (String) mColumn.get("Lv10 Value1");
+	    		sDetailType10 = (String) mColumn.get("Lv10 Type");
+				String userOriginator = context.getUser();		
+				//System.out.println("생성된 mColumn: "+mColumn);
+							
+				DomainObject doNew = new DomainObject();
+				String sTypeCompare = "decCodeMaster";
+				// String sType = "";
+				String sdecMasterType = "Code";
+				String sCommand = (String) programMap.get("openerFrame");
+				String sCMC = "decCodeMasterCommand";
+				String sTMC = "decTableMasterCommand";
+				StringList busSelects = new StringList();
+				busSelects.add(DomainConstants.SELECT_ID);
+				busSelects.add(DomainConstants.SELECT_NAME);
+				
+			    String cmResult = MqlUtil.mqlCommand(context, "temp query bus $1 $2 $3;", true, sTypeCompare, sName, "-");;
+				try {
+					//System.out.println("엑셀임포트 코드마스터 생성 시작" +mi+"번");
+					System.out.println("생성할 mColumn: "+mColumn);
+					ContextUtil.startTransaction(context, true);
+					if(cmResult.isEmpty()) {
+						System.out.println("코드마스터 조회결과 해당 항목없으므로 코드마스터 생성" +mi+"번");
+	
+						doNew.createObject(context, sType, sName, "-", sPolicy, "eService Production");
+						masterObjectId = doNew.getId(context);
+						doNew.setDescription(context, sDesc);
+						doNew.setAttributeValue(context, "decMasterType", sdecMasterType);
+						System.out.println("create codemaster no."+mi+ " , " + "name:" + sName+ ", "+masterObjectId);
+					}else {
+						System.out.println("코드마스터 이미 존재함. name:" + sName +", "+masterObjectId);
+					}
+					
+					// lv1 이름이 엑셀에 존재하면 DB조회로 코드마스터에 LV1 이름이 존재하는지 확인하고 있으면 안만들게해야함
+					// 있다면 리비전을 알아낸 후 ID로 만들어서 파라미터로 보존해야함 << 다음 래밸 생성 및 조회를 위해서.
+					if(sDetailName1!=null && sDetailName1!="") {
+						System.out.println("엑셀임포트 코드디테일lv1 조회 시작");
+						String codeMasterType = MqlUtil.mqlCommand(context, "print bus decCodeMaster '"+sName+"' - select attribute[decMasterType].value");	
+						int lastIndex = codeMasterType.lastIndexOf("=");
+						String result = codeMasterType.substring(lastIndex + 1);						
+						 System.out.println("마지막 = 이후의 문자열:" + result);
+						MapList mlCodeMaster = DomainObject.findObjects(context, "decCodeMaster", "*", "(name=='"+ sName+"')&&(revision=='-')", busSelects);
+						HashMap<?, ?> mlCodeMasterhashmap = (HashMap<?, ?>) mlCodeMaster.get(0);
+						String codeMasterId = (String) mlCodeMasterhashmap.get("id");
+						codeDetailLv1NameCheck = MqlUtil.mqlCommand(context, "print bus decCodeMaster '"+sName+"' - select relationship[decCodeDetailRel|to.name == '"+sDetailName1+"']");	
+						if(codeDetailLv1NameCheck.contains("TRUE")) {
+							System.out.println("엑셀임포트 코드디테일lv1 이미존재함.");
+							Map queryMap = new HashMap();
+							queryMap.put("sType",sTypeCompare);
+							queryMap.put("sName",sName);
+							queryMap.put("sDetailName",sDetailName1);
+							queryMap.put("codeMasterIdLv",codeMasterId);
+							resultLV1ObjectId = getExcelImportRelatedDetailObjectId(context, queryMap);
+							System.out.println("이미존재하는 래밸1 .. resultLV1ObjectId:" + resultLV1ObjectId);
+						}//코드마스터의rel 조회결과 lv1 결과가 false면 없으니까 만들면돼.
+						else {
+							
+							System.out.println("엑셀임포트 코드디테일LV1 없으므로 생성 시작");
+							Map sendMap = new HashMap();
+							sendMap.put("createLv",1);
+							sendMap.put("sDetailName",sDetailName1);
+							sendMap.put("sDetailDesc",sDetailDesc1);
+							sendMap.put("sDetailType",sDetailType1);
+							sendMap.put("codeMasterIdLv",codeMasterId);
+							sendMap.put("sDetailLevel1Info1",sDetailLevel1Info1);
+							resultLV1ObjectId = importCodeMasterCreateDetail(context, sendMap);
+							System.out.println("resultLV1ObjectId:" + resultLV1ObjectId);
+
+						}					
+					}
+					if(sDetailName2!=null && sDetailName2!="") {
+						System.out.println("엑셀임포트 코드디테일lv2 조회 시작");
+						codeDetailLv2revision = MqlUtil.mqlCommand(context, "print bus "+resultLV1ObjectId+" select from[decCodeDetailRel|to.name =='"+sDetailName2+"']");	
+						if(codeDetailLv2revision.contains("TRUE")) {
+							System.out.println("엑셀임포트 코드디테일lv2 이미존재함.");
+							Map queryMap = new HashMap();
+							queryMap.put("sType",sTypeDetail);
+							queryMap.put("sName",sDetailName1);
+							queryMap.put("sDetailName",sDetailName2);
+							queryMap.put("codeMasterIdLv",resultLV1ObjectId);
+							resultLV2ObjectId = getExcelImportRelatedDetailObjectId(context, queryMap);
+							System.out.println("resultLV2ObjectId:" + resultLV2ObjectId);
+
+						}//코드마스터의rel 조회결과 lv1 결과가 false면 없으니까 만들면돼.
+						else {		
+							System.out.println("엑셀임포트 코드디테일LV2 생성 시작");
+							Map sendMap = new HashMap();
+							sendMap.put("createLv",2);
+							sendMap.put("sDetailName",sDetailName2);
+							sendMap.put("sDetailDesc",sDetailDesc2);
+							sendMap.put("sDetailType",sDetailType2);
+							sendMap.put("codeMasterIdLv",resultLV1ObjectId);
+							resultLV2ObjectId = importCodeMasterCreateDetail(context, sendMap);
+							System.out.println("resultLV2ObjectId:" + resultLV2ObjectId);
+
+						}				
+					}
+					if(sDetailName3!=null && sDetailName3!="") {
+						System.out.println("엑셀임포트 코드디테일lv3 조회 시작");
+						//codeDetailLv3revision = MqlUtil.mqlCommand(context, "print bus "+resultLV2ObjectId+" select relationship[decCodeDetailRel|to.name == '"+sDetailName3+"']");	
+						codeDetailLv3revision = MqlUtil.mqlCommand(context, "print bus "+resultLV2ObjectId+" select from[decCodeDetailRel|to.name == '"+sDetailName3+"']");	
+						if(codeDetailLv3revision.contains("TRUE")) {
+							
+							System.out.println("엑셀임포트 코드디테일lv3 이미존재함.");
+							Map queryMap = new HashMap();
+							queryMap.put("sType",sTypeDetail);
+							queryMap.put("sName",sDetailName2);
+							queryMap.put("sDetailName",sDetailName3);
+							queryMap.put("codeMasterIdLv",resultLV2ObjectId);
+							resultLV3ObjectId = getExcelImportRelatedDetailObjectId(context, queryMap);
+							System.out.println("resultLV3ObjectId:" + resultLV3ObjectId);
+							
+						}//코드마스터의rel 조회결과 lv2 결과가 false면 없으니까 만들면돼.
+						
+						else {		
+							System.out.println("엑셀임포트 코드디테일LV3 생성 시작");
+							Map sendMap = new HashMap();
+							sendMap.put("createLv",3);
+							sendMap.put("sDetailName",sDetailName3);
+							sendMap.put("sDetailDesc",sDetailDesc3);
+							sendMap.put("sDetailType",sDetailType3);
+							sendMap.put("codeMasterIdLv",resultLV2ObjectId);
+							resultLV3ObjectId = importCodeMasterCreateDetail(context, sendMap);
+							System.out.println("resultLV3ObjectId: " + resultLV3ObjectId);
+
+						}				
+					}
+					if(sDetailName4!=null && sDetailName4!="") {
+						System.out.println("엑셀임포트 코드디테일lv4 조회 시작");
+						codeDetailLv4revision = MqlUtil.mqlCommand(context, "print bus "+resultLV3ObjectId+" select from[decCodeDetailRel|to.name == '"+sDetailName4+"']");	
+						if(codeDetailLv4revision.contains("TRUE") && !sDetailName3.equals(sDetailName4) ) {
+							System.out.println("엑셀임포트 코드디테일lv4 이미존재함.");
+							Map queryMap = new HashMap();
+							queryMap.put("sType",sTypeDetail);
+							queryMap.put("sName",sDetailName3);
+							queryMap.put("sDetailName",sDetailName4);
+							queryMap.put("codeMasterIdLv",resultLV3ObjectId);
+							resultLV4ObjectId = getExcelImportRelatedDetailObjectId(context, queryMap);
+						}//코드마스터의rel 조회결과 lv3 결과가 false면 없으니까 만들면돼.
+						else {		
+							System.out.println("엑셀임포트 코드디테일LV4 생성 시작");
+							Map sendMap = new HashMap();
+							sendMap.put("createLv",4);
+							sendMap.put("sDetailName",sDetailName4);
+							sendMap.put("sDetailDesc",sDetailDesc4);
+							sendMap.put("sDetailType",sDetailType4);
+							sendMap.put("codeMasterIdLv",resultLV3ObjectId);
+							resultLV4ObjectId = importCodeMasterCreateDetail(context, sendMap);
+						}				
+					}
+					if(sDetailName5!=null && sDetailName5!="") {
+						System.out.println("엑셀임포트 코드디테일lv5 조회 시작");
+						codeDetailLv5revision = MqlUtil.mqlCommand(context, "print bus "+resultLV4ObjectId+" select from[decCodeDetailRel|to.name == '"+sDetailName5+"']");	
+						if(codeDetailLv5revision.contains("TRUE") && !sDetailName4.equals(sDetailName5) )  {
+							System.out.println("엑셀임포트 코드디테일lv5 이미존재함.");
+							Map queryMap = new HashMap();
+							queryMap.put("sType",sTypeDetail);
+							queryMap.put("sName",sDetailName4);
+							queryMap.put("sDetailName",sDetailName5);
+							queryMap.put("codeMasterIdLv",resultLV4ObjectId);
+							resultLV5ObjectId = getExcelImportRelatedDetailObjectId(context, queryMap);
+						}//코드마스터의rel 조회결과 lv4 결과가 false면 없으니까 만들면돼.
+						else {		
+							System.out.println("엑셀임포트 코드디테일LV5 생성 시작");
+							Map sendMap = new HashMap();
+							sendMap.put("createLv",5);
+							sendMap.put("sDetailName",sDetailName5);
+							sendMap.put("sDetailDesc",sDetailDesc5);
+							sendMap.put("sDetailType",sDetailType5);
+							sendMap.put("codeMasterIdLv",resultLV4ObjectId);
+							resultLV5ObjectId = importCodeMasterCreateDetail(context, sendMap);
+						}				
+					}
+					if(sDetailName6!=null && sDetailName6!="") {
+						System.out.println("엑셀임포트 코드디테일lv6 조회 시작");
+						codeDetailLv6revision = MqlUtil.mqlCommand(context, "print bus "+resultLV5ObjectId+" select from[decCodeDetailRel|to.name == '"+sDetailName6+"']");	
+						if(codeDetailLv6revision.contains("TRUE") && !sDetailName5.equals(sDetailName6) )  {
+							System.out.println("엑셀임포트 코드디테일lv6 이미존재함.");
+							Map queryMap = new HashMap();
+							queryMap.put("sType",sTypeDetail);
+							queryMap.put("sName",sDetailName5);
+							queryMap.put("sDetailName",sDetailName6);
+							queryMap.put("codeMasterIdLv",resultLV5ObjectId);
+							resultLV6ObjectId = getExcelImportRelatedDetailObjectId(context, queryMap);
+						}//코드마스터의rel 조회결과 lv5 결과가 false면 없으니까 만들면돼.
+						else {		
+							System.out.println("엑셀임포트 코드디테일LV6 생성 시작");
+							Map sendMap = new HashMap();
+							sendMap.put("createLv",6);
+							sendMap.put("sDetailName",sDetailName6);
+							sendMap.put("sDetailDesc",sDetailDesc6);
+							sendMap.put("sDetailType",sDetailType6);
+							sendMap.put("codeMasterIdLv",resultLV5ObjectId);
+							resultLV6ObjectId = importCodeMasterCreateDetail(context, sendMap);
+						}				
+					}
+					if(sDetailName7!=null && sDetailName7!="") {
+						System.out.println("엑셀임포트 코드디테일lv7 조회 시작");
+						codeDetailLv7revision = MqlUtil.mqlCommand(context, "print bus "+resultLV6ObjectId+" select from[decCodeDetailRel|to.name == '"+sDetailName7+"']");	
+						if(codeDetailLv7revision.contains("TRUE") && !sDetailName6.equals(sDetailName7) )  {
+							System.out.println("엑셀임포트 코드디테일lv7 이미존재함.");
+							Map queryMap = new HashMap();
+							queryMap.put("sType",sTypeDetail);
+							queryMap.put("sName",sDetailName6);
+							queryMap.put("sDetailName",sDetailName7);
+							queryMap.put("codeMasterIdLv",resultLV6ObjectId);
+							resultLV7ObjectId = getExcelImportRelatedDetailObjectId(context, queryMap);
+						}//코드마스터의rel 조회결과 lv6 결과가 false면 없으니까 만들면돼.
+						else {		
+							System.out.println("엑셀임포트 코드디테일LV7 생성 시작");
+							Map sendMap = new HashMap();
+							sendMap.put("createLv",7);
+							sendMap.put("sDetailName",sDetailName7);
+							sendMap.put("sDetailDesc",sDetailDesc7);
+							sendMap.put("sDetailType",sDetailType7);
+							sendMap.put("codeMasterIdLv",resultLV6ObjectId);
+							resultLV7ObjectId = importCodeMasterCreateDetail(context, sendMap);
+						}				
+					}
+					if(sDetailName8!=null && sDetailName8!="") {
+						System.out.println("엑셀임포트 코드디테일lv8 조회 시작");
+						codeDetailLv8revision = MqlUtil.mqlCommand(context, "print bus "+resultLV7ObjectId+" select from[decCodeDetailRel|to.name == '"+sDetailName8+"']");	
+						if(codeDetailLv8revision.contains("TRUE") && !sDetailName7.equals(sDetailName8) )  {
+							System.out.println("엑셀임포트 코드디테일lv8 이미존재함.");
+							Map queryMap = new HashMap();
+							queryMap.put("sType",sTypeDetail);
+							queryMap.put("sName",sDetailName7);
+							queryMap.put("sDetailName",sDetailName8);
+							queryMap.put("codeMasterIdLv",resultLV7ObjectId);
+							resultLV8ObjectId = getExcelImportRelatedDetailObjectId(context, queryMap);
+						}//코드마스터의rel 조회결과 lv7 결과가 false면 없으니까 만들면돼.
+						else {		
+							System.out.println("엑셀임포트 코드디테일LV8 생성 시작");
+							Map sendMap = new HashMap();
+							sendMap.put("createLv",8);
+							sendMap.put("sDetailName",sDetailName8);
+							sendMap.put("sDetailDesc",sDetailDesc8);
+							sendMap.put("sDetailType",sDetailType8);
+							sendMap.put("codeMasterIdLv",resultLV7ObjectId);
+							resultLV8ObjectId = importCodeMasterCreateDetail(context, sendMap);
+						}				
+					}
+					if(sDetailName9!=null && sDetailName9!="") {
+						System.out.println("엑셀임포트 코드디테일lv9 조회 시작");
+						codeDetailLv9revision = MqlUtil.mqlCommand(context, "print bus "+resultLV8ObjectId+" select from[decCodeDetailRel|to.name == '"+sDetailName9+"']");	
+						if(codeDetailLv9revision.contains("TRUE") && !sDetailName8.equals(sDetailName9) )  {
+							System.out.println("엑셀임포트 코드디테일lv9 이미존재함.");
+							Map queryMap = new HashMap();
+							queryMap.put("sType",sTypeDetail);
+							queryMap.put("sName",sDetailName8);
+							queryMap.put("sDetailName",sDetailName9);
+							queryMap.put("codeMasterIdLv",resultLV8ObjectId);
+							resultLV9ObjectId = getExcelImportRelatedDetailObjectId(context, queryMap);
+						}//코드마스터의rel 조회결과 lv8 결과가 false면 없으니까 만들면돼.
+						else {		
+							System.out.println("엑셀임포트 코드디테일LV9 생성 시작");
+							Map sendMap = new HashMap();
+							sendMap.put("createLv",9);
+							sendMap.put("sDetailName",sDetailName9);
+							sendMap.put("sDetailDesc",sDetailDesc9);
+							sendMap.put("sDetailType",sDetailType9);
+							sendMap.put("codeMasterIdLv",resultLV8ObjectId);
+							resultLV9ObjectId = importCodeMasterCreateDetail(context, sendMap);
+						}				
+					}
+					if(sDetailName10!=null && sDetailName10!="") {
+						System.out.println("엑셀임포트 코드디테일lv10 조회 시작");
+						codeDetailLv10revision = MqlUtil.mqlCommand(context, "print bus "+resultLV9ObjectId+" select from[decCodeDetailRel|to.name == '"+sDetailName10+"']");	
+						if(codeDetailLv10revision.contains("TRUE") && !sDetailName9.equals(sDetailName10) )  {
+							System.out.println("엑셀임포트 코드디테일lv10 이미존재함.");
+							Map queryMap = new HashMap();
+							queryMap.put("sType",sTypeDetail);
+							queryMap.put("sName",sDetailName9);
+							queryMap.put("sDetailName",sDetailName10);
+							queryMap.put("codeMasterIdLv",resultLV9ObjectId);
+							resultLV10ObjectId = getExcelImportRelatedDetailObjectId(context, queryMap);
+						}//코드마스터의rel 조회결과 lv9 결과가 false면 없으니까 만들면돼.
+						else {		
+							System.out.println("엑셀임포트 코드디테일LV10 생성 시작");
+							Map sendMap = new HashMap();
+							sendMap.put("createLv",10);
+							sendMap.put("sDetailName",sDetailName10);
+							sendMap.put("sDetailDesc",sDetailDesc10);
+							sendMap.put("sDetailType",sDetailType10);
+							sendMap.put("codeMasterIdLv",resultLV9ObjectId);
+							resultLV10ObjectId = importCodeMasterCreateDetail(context, sendMap);
+						}				
+					}
+				ContextUtil.commitTransaction(context);
+				}
+				catch (Exception e) {
+						ContextUtil.abortTransaction(context);
+						e.printStackTrace();
+						throw new FrameworkException(e);
+					}
+		      }
+	    	sReturn = "Excel Import가 완료되었습니다.";
+        	return sReturn;
+      	
+	   }
+
+  	// 오브젝트 존재하는 경우에 리비전  
+ 	@com.matrixone.apps.framework.ui.ProgramCallable
+ 	public String getExcelImportRelatedDetailObjectId(Context context, Map queryMap) throws Exception{ 
+
+		
+		String detailObjectIdLv = (String) queryMap.get("codeMasterIdLv");
+		String sType = (String) queryMap.get("sType");
+		String sName = (String) queryMap.get("sName");
+		String sDetailName = (String) queryMap.get("sDetailName");
+ 		System.out.println("임포트할 오브젝트의 id를 찾자.. 대상:" + sDetailName);
+ 		
+ 		
+ 		String codeDetailLv1revision = MqlUtil.mqlCommand(context, "print bus "+detailObjectIdLv+" select from[decCodeDetailRel|to.name == '" +sDetailName+ "'].to.revision");	
+		int length = codeDetailLv1revision.length();
+		String last13Characters = codeDetailLv1revision.substring(length - 13);
+	    System.out.println("마지막 13글자:" + last13Characters);
+	    String lv1Query = MqlUtil.mqlCommand(context, "temp query bus decCodeDetail '"+sDetailName+"' "+last13Characters+" select id");	
+	    int lastIndex = lv1Query.lastIndexOf("=");
+	    String resultDetailObjectId = lv1Query.substring(lastIndex + 1);							
+	    System.out.println("마지막 = 이후의 문자열:" + resultDetailObjectId);
+	    return resultDetailObjectId;
+ 	}
+  	 
+  	 
+
+  	// detail create form에 보여지는 선택된 디테일오브젝트. 
+  	@com.matrixone.apps.framework.ui.ProgramCallable
+	public String getRelatedDetailName(Context context, String[] args) throws Exception{
+  		
+		HashMap programMap = (HashMap) JPO.unpackArgs(args); // get data
+		HashMap requestValue = (HashMap) programMap.get(ChangeConstants.REQUEST_VALUES_MAP);
+		HashMap requestMap = (HashMap) programMap.get(ChangeConstants.REQUEST_MAP);
+		String objectId = (String)requestMap.get("objectId");
+		DomainObject orderId = new DomainObject(objectId);
+		String detailName = orderId.getInfo(context,"name");
+		System.out.println(detailName);
+		return detailName;
+	}
+  	
+  	
+  	
+  	
+  	public String selectDetails(Context context,String[] args) throws Exception
+    {
+  		String sFailMessage = EnoviaResourceBundle.getProperty(context, "emxFrameworkStringResource_ko", context.getLocale(), "emxFramework.DecCreateDetail.CreateFail");
+  		System.out.println(sFailMessage);
+  		throw new FrameworkException(sFailMessage);
+    }
+  	
+  	
+  	 // 폼 필드 엑세스 
+     public boolean showFormCodeDetailField(Context context,String[] args) throws Exception
+     {
+             boolean flDisplayField = false;
+             HashMap paramMap = (HashMap) JPO.unpackArgs(args);
+             String strObjectId    = (String)paramMap.get("objectId");
+             String strparentOID    = (String)paramMap.get("parentOID");
+
+             if(!strObjectId.equals(strparentOID)) {
+            	 flDisplayField = true;
+             }
+
+         return flDisplayField;
+     }
+     
+
+     public String getCodeMasterId(Context context, String projectId, String codeMasterId, String codeMasterName, String codeMasterRevision) throws Exception{
+ 		try {
+ 			if ( StringUtils.isEmpty(codeMasterId) )
+			{
+				if ( StringUtils.isEmpty(projectId) )
+				{
+//					codeMasterId = MqlUtil.mqlCommand(context, "print bus $1 $2 $3 select $4 dump", DecConstants.TYPE_DECCODEMASTER, codeMasterName, codeMasterRevision, DomainConstants.SELECT_ID);
+					codeMasterId = DecMatrixUtil.getObjectId(context, DecConstants.TYPE_DECCODEMASTER, codeMasterName, codeMasterRevision);
+				}
+				else
+				{
+					codeMasterId = MqlUtil.mqlCommand(context, "print bus $1 select $2 dump", projectId, "from[" + DecConstants.RELATIONSHIP_DECCODEMASTERREL + "|to.name == \"" + codeMasterName + "\"].to.id");
+				}
+				
+				// temp --- [s]
+//				if ( StringUtils.isEmpty(codeMasterId) )
+//				{
+//					codeMasterId = MqlUtil.mqlCommand(context, "print bus $1 $2 $3 select $4 dump", DecConstants.TYPE_DECCODEMASTER, codeMasterName, SYSTEM_CODE_MASTER_REVISION, DomainConstants.SELECT_ID);
+//					codeMasterId = DecMatrixUtil.getObjectId(context, DecConstants.TYPE_DECCODEMASTER, codeMasterName, SYSTEM_CODE_MASTER_REVISION);
+//				}
+				// temp --- [e]
+				
+//				if ( StringUtils.isEmpty(codeMasterId) )
+//				{
+//					throw new Exception("No Code Master Found. projectId : " + projectId + ", codeMasterId : " + codeMasterId + ", codeMasterName : " + codeMasterName + ", codeMasterRevision : " + codeMasterRevision);
+//				}
+			}
+			
+ 			return codeMasterId;
+ 		} catch (Exception e) {
+ 			e.printStackTrace();
+ 			throw e;
+ 		}
+ 	}     
+	
+    public MapList getCodeDetailList(Context context, String codeMasterId) throws Exception{
+    	return getCodeDetailList(context, null
+    			, codeMasterId, null, null
+    			, null, null, null
+    			, null, null
+    			, null, null
+    			, false, 0, false);
+    }
+    
+    public MapList getCodeDetailList(Context context, String codeMasterName, String codeMasterRevision) throws Exception{
+    	return getCodeDetailList(context, null
+    			, null, codeMasterName, codeMasterRevision
+    			, null, null, null
+    			, null, null
+    			, null, null
+    			, false, 0, false);
+    }
+    
+    public MapList getProjectCodeDetailList(Context context, String projectId, String codeMasterName) throws Exception{
+    	return getCodeDetailList(context, projectId
+    			, null, codeMasterName, null
+    			, null, null, null
+    			, null, null
+    			, null, null
+    			, false, 0, false);
+    }
+    public MapList getProjectCodeDetailList(Context context, String projectId, String codeMasterName, short level) throws Exception{
+    	return getCodeDetailList(context, projectId
+    			, null, codeMasterName, null
+    			, null, null, null
+    			, null, null
+    			, null, null
+    			, false, level, false);
+    }
+    
+	public MapList getCodeDetailList(Context context, String[] args) throws Exception{
+		StringList slSelect = new StringList();
+		slSelect.add("from[decCodeDetailRel]");
+		
+		Map programMap = (Map) JPO.unpackArgs(args);
+		if ( !programMap.containsKey("slSelectParam") )
+		{
+			programMap.put("slSelectParam", slSelect);
+		}
+		else
+		{
+			StringList slSelectParam = (StringList) programMap.get("slSelectParam");
+			slSelectParam.addAll( slSelect );
+		}
+		if ( !programMap.containsKey("expandLevelParam") )
+		{
+			programMap.put("expandLevelParam", 1);
+		}
+		
+		MapList codeDetailList = getCodeDetailList(context, programMap);
+		Map codeDetailMap = null;
+		String hasChildren = null;
+		
+		for (Object obj : codeDetailList)
+		{
+			codeDetailMap = (Map) obj; 
+			hasChildren = (String) codeDetailMap.get("from[decCodeDetailRel]");
+			if ( StringUtils.isNotEmpty(hasChildren) )
+			{
+				codeDetailMap.put("hasChildren", hasChildren);
+			}
+		}
+		
+		return codeDetailList;
+ 	}
+	
+	public StringList getDefaultCodeDetailSelectList() throws Exception{
+		StringList slSelect = new StringList();
+		slSelect.add(DomainConstants.SELECT_ID);
+		slSelect.add(DomainConstants.SELECT_NAME);
+		slSelect.add(DomainConstants.SELECT_DESCRIPTION);
+		slSelect.add("attribute[decCode]");
+		slSelect.add("attribute[decCodeDetailType]");
+		return slSelect;
+	}
+	
+	public MapList getCodeDetailList(Context context, Map paramMap) throws Exception{
+		String projectId = (String) paramMap.get("projectId");
+		
+		String parentId = (String) paramMap.get("parentId");
+		
+		String name2Start = (String) paramMap.get("name2Start");
+		String rev2Start = (String) paramMap.get("rev2Start");
+		
+		String codeMasterId = (String) paramMap.get("codeMasterId");
+		String codeMasterName = (String) paramMap.get("codeMasterName");
+		String codeMasterRevision = (String) paramMap.get("codeMasterRevision");
+		
+		String codeDetailCode = (String) paramMap.get("codeDetailCode");
+		String codeDetailType = (String) paramMap.get("codeDetailType");
+		String codeDetailLevel = (String) paramMap.get("codeDetailLevel");
+		
+		StringList slSelectParam = (StringList) paramMap.get("slSelectParam");
+		StringList slRelSelectParam = (StringList) paramMap.get("slRelSelectParam");
+		
+		boolean getFrom = (Boolean) paramMap.getOrDefault("getFrom", false);
+		boolean getTo = (Boolean) paramMap.getOrDefault("getTo", true);
+		
+		String whereParam = (String) paramMap.get("whereParam");
+		String relWhereParam = (String) paramMap.get("relWhereParam");
+		
+		boolean activeOnly = (Boolean) paramMap.getOrDefault("activeOnly", true);
+		short expandLevelParam = (short)((int) paramMap.getOrDefault("expandLevelParam", 0));
+		boolean applyFilter = (Boolean) paramMap.getOrDefault("applyFilter", false);
+		
+		MapList codeDetailList = new MapList();
+		if ( StringUtils.isNotEmpty(parentId) )
+		{
+			// 검색을 시작할 Code Id를 알고 있을 때
+			codeDetailList = getCodeDetailList(context, parentId
+					, codeDetailCode, codeDetailType, codeDetailLevel
+					, slSelectParam, slRelSelectParam
+					, getFrom, getTo
+					, whereParam, relWhereParam
+					, activeOnly, expandLevelParam, applyFilter);
+		}
+		else if ( StringUtils.isNotEmpty(name2Start) )
+		{
+			// 검색을 시작할 Code TNR을 알고 있을 때
+			codeDetailList = getCodeDetailList(context, name2Start, rev2Start
+					, codeDetailCode, codeDetailType, codeDetailLevel
+					, slSelectParam, slRelSelectParam
+					, getFrom, getTo
+					, whereParam, relWhereParam
+					, activeOnly, expandLevelParam, applyFilter);
+		}
+		else
+		{
+			// 검색을 시작할 그 외 정보를 알고 있을 때
+			codeDetailList = getCodeDetailList(context, projectId
+					, codeMasterId, codeMasterName, codeMasterRevision
+					, codeDetailCode, codeDetailType, codeDetailLevel
+					, slSelectParam, slRelSelectParam
+					, whereParam, relWhereParam
+					, activeOnly, expandLevelParam, applyFilter);
+		}
+		
+		return codeDetailList;
+	}
+
+	public MapList getCodeDetailList(Context context, String projectId // Project Info
+			, String codeMasterId, String codeMasterName, String codeMasterRevision // Code Master Info
+			, String codeDetailCode, String codeDetailType, String codeDetailLevel // Code Detail Info
+			, StringList slSelectParam,	StringList slRelSelectParam // Select List
+			, String whereParam, String relWhereParam // Where Expr
+			, boolean activeOnly, int expandLevelParam, boolean applyFilter // Extra Info
+			) throws Exception {
+		codeMasterId = getCodeMasterId(context, projectId, codeMasterId, codeMasterName, codeMasterRevision);
+		return getCodeDetailList(context, codeMasterId
+				, codeDetailCode, codeDetailType, codeDetailLevel
+				, slSelectParam, slRelSelectParam
+				, whereParam, relWhereParam
+				, activeOnly, expandLevelParam, applyFilter);
+	}
+	
+	public MapList getCodeDetailList(Context context, String name2Start, String rev2Start
+			, String codeDetailCode, String codeDetailType, String codeDetailLevel // Code Detail Info
+			, StringList slSelectParam,	StringList slRelSelectParam // Select List
+			, boolean getFrom, boolean getTo
+			, String whereParam, String relWhereParam // Where Expr
+			, boolean activeOnly, int expandLevelParam, boolean applyFilter // Extra Info
+			) throws Exception {
+		String codeId = DecMatrixUtil.getObjectId(context, DecConstants.TYPE_DECCODEDETAIL, name2Start, rev2Start);
+		return getCodeDetailList(context, codeId
+				, codeDetailCode, codeDetailType, codeDetailLevel
+				, slSelectParam, slRelSelectParam
+				, getFrom, getTo
+				, whereParam, relWhereParam
+				, activeOnly, expandLevelParam, applyFilter);
+	}
+	
+	public MapList getCodeDetailList(Context context, String codeId
+			, String codeDetailCode, String codeDetailType, String codeDetailLevel // Code Detail Info
+			, StringList slSelectParam,	StringList slRelSelectParam // Select List
+			, String whereParam, String relWhereParam // Where Expr
+			, boolean activeOnly, int expandLevelParam, boolean applyFilter // Extra Info
+			) {
+		return getCodeDetailList(context, codeId
+				, codeDetailCode, codeDetailType, codeDetailLevel
+				, slSelectParam, slRelSelectParam
+				, false, true
+				, whereParam, relWhereParam
+				, activeOnly, expandLevelParam, applyFilter);
+	}
+	
+	public MapList getCodeDetailList(Context context, String codeId
+			, String codeDetailCode, String codeDetailType, String codeDetailLevel // Code Detail Info
+			, StringList slSelectParam,	StringList slRelSelectParam // Select List
+			, boolean getFrom, boolean getTo // expand direction
+			, String whereParam, String relWhereParam // Where Expr
+			, boolean activeOnly, int expandLevelParam, boolean applyFilter // Extra Info
+			) {
+		MapList codeDetailList = new MapList();
+		try {
+			if ( StringUtils.isNotEmpty(codeId) )
+			{
+				StringList slSelect = getDefaultCodeDetailSelectList();
+				
+				if ( slSelectParam != null )
+				{
+					slSelect.addAll(slSelectParam);
+				}
+				
+				StringList slRelSelect = new StringList();
+				slRelSelect.add(DomainRelationship.SELECT_ID);
+				slRelSelect.add("attribute[Sequence Order]");
+				
+				if ( slRelSelectParam != null )
+				{
+					slRelSelect.addAll(slRelSelectParam);
+				}
+				
+				if ( applyFilter )
+				{
+					slRelSelect.add("from.id");
+				}
+				
+				StringBuffer sbWhere = new StringBuffer();
+				
+				if ( whereParam != null )
+				{
+					sbWhere.append(whereParam);
+				}
+				
+				if ( activeOnly )
+				{
+					if ( sbWhere.length() > 0 )
+					{
+						sbWhere.append(" && ");
+					}
+					sbWhere.append("current == Active");
+				}
+				
+				StringBuffer sbRelWhere = new StringBuffer();
+				
+				if ( relWhereParam != null )
+				{
+					sbRelWhere.append(relWhereParam);
+				}
+				
+				DomainObject doCode = DomainObject.newInstance(context, codeId);
+				
+				codeDetailList = doCode.getRelatedObjects(context
+						, DecConstants.RELATIONSHIP_DECCODEDETAILREL
+						, DecConstants.TYPE_DECCODEDETAIL
+						, slSelect
+						, slRelSelect
+						, getFrom
+						, getTo
+						, (short) expandLevelParam
+						, sbWhere.toString()
+						, sbRelWhere.toString()
+						, 0);
+				
+				codeDetailList.addSortKey("level", "ascending", "integer");
+				codeDetailList.addSortKey("attribute[Sequence Order]", "ascending", "integer");
+				codeDetailList.sortStructure();
+				
+				codeDetailList = filterCodeDetailList(codeDetailList, codeDetailCode, codeDetailLevel, codeDetailType);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return codeDetailList;
+	}
+	
+	public MapList filterCodeDetailList(MapList codeDetailList, String codeDetailCode, String codeDetailLevel, String codeDetailType) throws Exception{
+		try {
+			StringList slSelectExpr = new StringList();
+			StringList slCompareValue = new StringList();
+			
+			if ( StringUtils.isNotEmpty(codeDetailCode) )
+			{
+				slSelectExpr.add("attribute[decCode]");
+				slCompareValue.add(codeDetailCode);
+			}
+			if ( StringUtils.isNotEmpty(codeDetailLevel) )
+			{
+				slSelectExpr.add("level");
+				slCompareValue.add(codeDetailLevel);
+			}
+			if ( StringUtils.isNotEmpty(codeDetailType) )
+			{
+				slSelectExpr.add("attribute[decCodeDetailType]");
+				slCompareValue.add(codeDetailType);
+			}
+			
+			if ( slSelectExpr.size() > 0 )
+			{
+				codeDetailList = filterCodeDetailList(codeDetailList, slSelectExpr, slCompareValue);
+			}
+			
+			return codeDetailList;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	public MapList filterCodeDetailList(MapList codeDetailList, StringList slSelectExpr, StringList slCompareValue) throws Exception{
+		try {
+			Map codeDetailMap = null;
+			String tempValue = null;
+			String selectExpr = null;
+			String compareValue = null;
+			boolean flag = false;
+			MapList codeDetailListPostProcess = new MapList();
+			
+			for ( Object obj : codeDetailList )
+			{
+				codeDetailMap = (Map) obj;
+				
+				flag = false;
+				
+				for (int k = 0; k < slSelectExpr.size(); k++)
+				{
+					selectExpr = slSelectExpr.get(k);
+					compareValue = slCompareValue.get(k);
+					
+					tempValue = (String) codeDetailMap.get( selectExpr );
+					
+					if ( !compareValue.equals(tempValue) )
+					{
+						flag = false;
+						break;
+					}
+					else
+					{
+						flag = true;
+					}
+				}
+				
+				if ( flag )
+				{
+					codeDetailListPostProcess.add(codeDetailMap);
+				}
+			}
+			return codeDetailListPostProcess;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	/**
+	 * code master name
+	 * code master revision : objectid를 통해 generation
+	 * code detail type 
+	 * code detail level
+	 * @param context
+	 * @param args
+	 * @return
+	 * @throws Exception
+	 */
+	public Map getCodeDetailList4RangeProgram(Context context, String[] args) throws Exception{
+		try {
+			Map programMap = (Map) JPO.unpackArgs(args);
+			Map paramMap = (Map) programMap.get("paramMap");
+			Map columnMap = (Map) programMap.get("columnMap");
+			Map settingsMap = (Map) columnMap.get("settings");
+			
+			String objectId = (String)paramMap.get("objectId");
+			if ( StringUtils.isNotEmpty(objectId) )
+			{
+				String type = MqlUtil.mqlCommand(context, "print bus $1 select $2 dump", objectId, DomainConstants.SELECT_TYPE);
+				if ( DomainObject.TYPE_PROJECT_SPACE.equals(type) )
+				{
+					settingsMap.put("projectId", objectId);
+				}
+			}
+			
+			String includeEmpty = (String) settingsMap.get("includeEmpty");
+			String emptyDisplayValue = (String) settingsMap.get("emptyDisplayValue");
+			String valueKey = (String) settingsMap.get("valueKey");
+			valueKey = StringUtils.isNotEmpty(valueKey) ? valueKey : "attribute[decCode]";
+			String displayKey = (String) settingsMap.get("displayKey");
+			displayKey = StringUtils.isNotEmpty(displayKey) ? displayKey : DomainConstants.SELECT_DESCRIPTION;
+			
+			MapList codeDetailList = getCodeDetailList(context, settingsMap);
+			
+			Map<String,StringList> codeDetailMap = decCollectionUtil.extractStringList(codeDetailList
+					, valueKey
+					, displayKey);
+			
+			StringList codeList = codeDetailMap.get(valueKey);
+			StringList valueList = codeDetailMap.get(displayKey);
+			
+			if ( Boolean.valueOf(includeEmpty) )
+			{
+				codeList.add(0, "");
+				valueList.add(0, (StringUtils.isEmpty(emptyDisplayValue)) ? "All" : emptyDisplayValue);
+			}
+			
+			Map rangeMap = new HashMap();
+			rangeMap.put("field_choices", codeList);
+			rangeMap.put("field_display_choices", valueList);
+			
+			return rangeMap;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	public Map getCodeDetailListGroupBy(Context context, String[] args) throws Exception{
+		Map programMap = JPO.unpackArgs(args);
+		return getCodeDetailListGroupBy(context, programMap);
+	}
+	
+	public Map<String, MapList> getCodeDetailListGroupBy(Context context, Map programMap) throws Exception {
+		Map<String, MapList> codeDetailGroupMap = new HashMap<String, MapList>();
+		try {
+			String projectId = (String) programMap.get("projectId");
+			
+			String codeMasterId = (String) programMap.get("codeMasterId");
+			String codeMasterName = (String) programMap.get("codeMasterName");
+			String codeMasterRevision = (String) programMap.get("codeMasterRevision");
+			
+			StringList slSelectParam = (StringList) programMap.get("slSelectParam");
+			StringList slRelSelectParam = (StringList) programMap.get("slRelSelectParam");
+			
+			String whereParam = (String) programMap.get("whereParam");
+			String relWhereParam = (String) programMap.get("relWhereParam");
+			
+			boolean activeOnly = (Boolean) programMap.getOrDefault("activeOnly", true);
+			short expandLevelParam = (short)((int) programMap.getOrDefault("expandLevelParam", 0));
+			boolean applyFilter = (Boolean) programMap.getOrDefault("applyFilter", false);
+			
+			String groupBySelect = (String) programMap.get("groupBySelect");
+			String groupByValue = (String) programMap.get("groupByValue");
+			
+			String groupByDetailSelect = (String) programMap.get("groupByDetailSelect");
+			String groupByDetailValue = (String) programMap.get("groupByDetailValue");
+			
+			if ( StringUtils.isNotEmpty(groupBySelect) )
+			{
+				if ( slSelectParam == null )
+				{
+					slSelectParam = new StringList();
+				}
+				
+				if ( !slSelectParam.contains(groupBySelect) )
+				{
+					slSelectParam.add(groupBySelect);
+				}
+			}
+			
+			MapList codeDetaliList = getCodeDetailList(context, projectId
+					, codeMasterId, codeMasterName, codeMasterRevision
+					, null, null, null
+					, slSelectParam, slRelSelectParam
+					, whereParam, relWhereParam
+					, activeOnly, expandLevelParam, applyFilter);
+			
+			Map codeDetailMap = null;
+			String compareValue = null;
+			String groupByName = null;
+			MapList codeDetailList = null;
+			
+			int level = 0;
+			int groupByLevel = 0;
+			
+			for (Object obj : codeDetaliList)
+			{
+				codeDetailMap = (Map) obj;
+				compareValue = (String) codeDetailMap.get(groupBySelect);
+				level = Integer.parseInt( (String) codeDetailMap.get(DomainConstants.SELECT_LEVEL) );
+				
+				if ( compareValue.equals(groupByValue) )
+				{
+					groupByLevel = level;
+					groupByName = (String) codeDetailMap.get(DomainConstants.SELECT_NAME);
+				}
+				else
+				{
+					if ( StringUtils.isNotEmpty(groupByName) && level > groupByLevel ) // Group By 의 자식일 경우
+					{
+						compareValue = (String) codeDetailMap.get(groupByDetailSelect);
+						
+						if ( compareValue.equals(groupByDetailValue) ) // Group By Detail 조건에 해당하는 경우
+						{
+							if ( codeDetailGroupMap.containsKey(groupByName) )
+							{
+								codeDetailList = codeDetailGroupMap.get(groupByName);
+							}
+							else
+							{
+								codeDetailList = new MapList();
+								codeDetailGroupMap.put(groupByName, codeDetailList);
+							}
+							
+							codeDetailList.add(codeDetailMap);
+						}
+						else
+						{
+							// do nothing...
+						}
+					}
+					else
+					{
+						groupByName = null; // 초기화
+					}
+				}
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return codeDetailGroupMap;
+	}
+	
+	public MapList getCodeDetailListWithCodePath(Context context, String[] args) throws Exception{
+		Map programMap = JPO.unpackArgs(args);
+		return getCodeDetailListWithCodePath(context, programMap);
+	}
+
+	public MapList getCodeDetailListWithCodePath(Context context, Map programMap) throws Exception {
+		String projectId = (String) programMap.get("projectId");
+		String codeDetailCode = (String) programMap.get("codeDetailCode");
+		String codeDetailType = (String) programMap.get("codeDetailType");
+		String codeDetailLevel = (String) programMap.get("codeDetailLevel");
+		StringList slSelectParam = (StringList) programMap.get("slSelectParam");
+		StringList slRelSelectParam = (StringList) programMap.get("slRelSelectParam");
+		String whereParam = (String) programMap.get("whereParam");
+		String relWhereParam = (String) programMap.get("relWhereParam");
+		boolean activeOnly = (Boolean) programMap.getOrDefault("activeOnly", true);
+		short expandLevelParam = (short)((int) programMap.getOrDefault("expandLevelParam", 0));
+		boolean applyFilter = (Boolean) programMap.getOrDefault("applyFilter", false);
+		String[] codePathArr = (String[]) programMap.getOrDefault("codePathArr", false);
+		
+		return getCodeDetailListWithCodePath(context, projectId
+				, codeDetailCode, codeDetailType, codeDetailLevel
+				, slSelectParam, slRelSelectParam
+				, whereParam, relWhereParam
+				, activeOnly, expandLevelParam, applyFilter
+				, codePathArr);
+	}
+	
+	public MapList getCodeDetailListWithCodePath(Context context, String projectId // Project Info
+			, String codeDetailCode, String codeDetailType, String codeDetailLevel // Code Detail Info
+			, StringList slSelectParam,	StringList slRelSelectParam // Select List
+			, String whereParam, String relWhereParam // Where Expr
+			, boolean activeOnly, int expandLevelParam, boolean applyFilter
+			, String... codePathArr // Code Info to expand start
+			) throws Exception{
+		MapList codeDetailList = new MapList();
+		try {
+			String codeId = getCodeDetailDisplayValueWithCodePath(context, projectId, null, null, codePathArr[0], null, Arrays.copyOfRange(codePathArr, 1, codePathArr.length));
+			codeDetailList = getCodeDetailList(context, codeId
+					, codeDetailCode, codeDetailType, codeDetailLevel
+					, slSelectParam, slRelSelectParam
+					, whereParam, relWhereParam
+					, activeOnly, expandLevelParam, applyFilter);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return codeDetailList;
+	}
+	
+	public String getCodeDetailDisplayValueWithCodePath(Context context, String projectId, String codeMasterId, String codeMasterName, String codeMasterRevision, String... codePathArr) throws Exception{
+		return getCodeDetailDisplayValueWithCodePath(context, projectId, codeMasterId, codeMasterName, codeMasterRevision, null, codePathArr);
+	}
+	
+	public String getCodeDetailDisplayValueWithCodePath(Context context, String projectId, String codeMasterId, String codeMasterName, String codeMasterRevision, String selectDisplayExpr, String... codePathArr) throws Exception{
+		try {
+			codeMasterId = getCodeMasterId(context, projectId, codeMasterId, codeMasterName, codeMasterRevision);
+			
+			selectDisplayExpr = StringUtils.isEmpty(selectDisplayExpr) ? DomainConstants.SELECT_DESCRIPTION : selectDisplayExpr;
+			
+			StringBuffer sbSelect = new StringBuffer();
+			
+			String displayValue = null; 
+			
+			for (String codePath : codePathArr)
+			{
+				sbSelect.append("from[decCodeDetailRel].to[*|name == '").append(codePath).append("'].");
+				displayValue = codePath; // Code Master가 없을 경우 Code Path의 마지막 Code값을 반환한다.
+			}
+			
+			if ( StringUtils.isNotEmpty(codeMasterId) )
+			{
+				sbSelect.append(selectDisplayExpr);
+				
+				displayValue = MqlUtil.mqlCommand(context, "print bus $1 select $2 dump", codeMasterId, sbSelect.toString());
+			}
+			
+			return displayValue;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	public String getCodeDetailDisplayValueWithCodePathAndDetailType(Context context, String projectId, String codeMasterId, String codeMasterName, String codeMasterRevision, String selectDisplayExpr, String... codePathAndDetailTypeArr) throws Exception{
+		try {
+			codeMasterId = getCodeMasterId(context, projectId, codeMasterId, codeMasterName, codeMasterRevision);
+			
+			selectDisplayExpr = StringUtils.isEmpty(selectDisplayExpr) ? DomainConstants.SELECT_DESCRIPTION : selectDisplayExpr;
+			
+			StringBuffer sbSelect = new StringBuffer();
+			
+			StringList codePathAndDetailTypeList = null;
+			String codePath = null;
+			String detailType = null;
+			StringBuffer sbWhere = new StringBuffer();
+			String displayValue = null; 
+			
+			for (String codePathAndDetailType : codePathAndDetailTypeArr)
+			{
+				codePathAndDetailTypeList = FrameworkUtil.splitString(codePathAndDetailType, DecConstants.SYMB_VERTICAL_BAR);
+				
+				sbWhere.delete(0, sbWhere.length());
+				codePath = null;
+				detailType = null;
+				
+				if ( codePathAndDetailTypeList.size() >= 2 )
+				{
+					// Detail Type이 있는 경우
+					codePath = codePathAndDetailTypeList.get(0);
+					detailType = codePathAndDetailTypeList.get(1);
+				}
+				else if ( codePathAndDetailTypeList.size() >= 1 )
+				{
+					// Code Path만 있는 경우
+					codePath = codePathAndDetailTypeList.get(0);
+				}
+				
+				if ( StringUtils.isNotEmpty(codePath) )
+				{
+					sbWhere.append(DecConstants.SELECT_NAME).append(" == '").append(codePath).append("'");
+				}
+				
+				if ( StringUtils.isNotEmpty(detailType) )
+				{
+					if ( sbWhere.length() > 0 )
+					{
+						sbWhere.append(" && ");
+					}
+					
+					sbWhere.append(DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILTYPE).append(" == '").append(detailType).append("'");
+				}
+				
+				sbSelect.append("from[decCodeDetailRel].to[*|").append(sbWhere.toString()).append("].");
+				displayValue = codePath; // Code Master가 없을 경우 Code Path의 마지막 Code값을 반환한다.
+			}
+			
+			if ( StringUtils.isNotEmpty(codeMasterId) )
+			{
+				sbSelect.append(selectDisplayExpr);
+				
+				String execMQLCommand = DecMatrixUtil.generateMQLCommand("print bus $1 select $2 dump $3", codeMasterId, sbSelect.toString(), DecConstants.SYMB_VERTICAL_BAR);
+				
+				logger.info(execMQLCommand);
+				
+				displayValue = MqlUtil.mqlCommand(context, execMQLCommand);
+			}
+			
+			return displayValue;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	public String generateCodeDetailDisplayValue(MapList codeDetailList, String selectDisplayExpr, String delimiter) throws Exception{
+		try {
+			selectDisplayExpr = StringUtils.isEmpty(selectDisplayExpr) ? DomainConstants.SELECT_DESCRIPTION : selectDisplayExpr;
+			delimiter = StringUtils.isEmpty(delimiter) ? "|" : delimiter;
+			
+			Map<String, StringList> displayValueListMap = decCollectionUtil.extractStringList(codeDetailList, selectDisplayExpr);
+			StringList displayValueList = displayValueListMap.get(selectDisplayExpr);
+			
+			return displayValueList.join(delimiter);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	public String getCodeDetailDisplayValue(Context context, String projectId
+			, String codeMasterId, String codeMasterName, String codeMasterRevision
+			, String codeDetailCode, String codeDetailType, String codeDetailLevel
+			, String selectDisplayExpr, String delimiter) throws Exception{
+		try {
+			StringList slSelect = null;
+			if ( StringUtils.isEmpty(selectDisplayExpr) )
+			{
+				selectDisplayExpr = DomainConstants.SELECT_DESCRIPTION;
+			}
+			else
+			{
+				StringList defaultCodeDetailSelectList = getDefaultCodeDetailSelectList();
+				if ( !defaultCodeDetailSelectList.contains(selectDisplayExpr) )
+				{
+					slSelect = new StringList(selectDisplayExpr);
+				}
+			}
+			
+			MapList codeDetailList = getCodeDetailList(context, projectId
+					, codeMasterId, codeMasterName, codeMasterRevision
+					, codeDetailCode, codeDetailType, codeDetailLevel
+					, slSelect, null
+					, codeDetailType, codeDetailLevel
+					, false, 0, false);
+			
+			return generateCodeDetailDisplayValue(codeDetailList, selectDisplayExpr, delimiter);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	public String getCodeDetailDisplayValue(MapList codeDetailList
+			, String codeDetailCode, String codeDetailType, String codeDetailLevel
+			, String selectDisplayExpr, String delimiter) throws Exception{
+		codeDetailList = filterCodeDetailList(codeDetailList, codeDetailCode, codeDetailLevel, codeDetailType);
+		return generateCodeDetailDisplayValue(codeDetailList, selectDisplayExpr, delimiter);
+	}
+
+    /**
+     * jhlee Add 05-25 Code Master와 연결된 Detail 의 정보를 가져옴
+     * @param context
+     * @param args
+     * @return
+     * @throws Exception
+     */
+    public StringList getCodeMasterDesc(Context context, String[] args) throws Exception {
+    	return getCodeMasterDetailValue(context, args, DecConstants.SELECT_DESCRIPTION);
+    }
+    public StringList getCodeMasterCode(Context context, String[] args) throws Exception {
+    	return getCodeMasterDetailValue(context, args, DecConstants.SELECT_ATTRIBUTE_DECCODE);
+    }
+    
+    public StringList getCodeMasterDetailValue(Context context, String[] args, String sInfoName) throws Exception {
+    	StringList slReturn = new StringList();
+    	try {
+	    	Map programMap = JPO.unpackArgs(args);
+	    	Map paramList = (Map)programMap.get("paramList");
+	    	Map columnMap = (Map)programMap.get("columnMap");
+	    	Map settings = (Map)columnMap.get("settings");
+	    	Map mObject = null;
+	    	
+	    	MapList mlObject = (MapList)programMap.get("objectList");
+	    	
+	    	String sMasterName = (String)settings.get("MasterName");
+	    	String sAttrName = (String)settings.get("attributeName");
+	    	String sDetailType = (String)settings.get("DetailType");
+	    	String sRelWhere = (String)settings.get("RelWhere");
+	    	String sGroupByValue = (String)settings.get("GroupByValue");
+	    	String sGroupKeyAttr = (String)settings.get("GroupKeyAttr");
+	    	
+	    	String sType = (String)settings.get("type");
+	    	String sSelAttrName = DomainObject.getAttributeSelect(sAttrName);
+	    	String sSelGroupKeyAttr = DomainObject.getAttributeSelect(sGroupKeyAttr);
+	    	
+	    	String sCode = DecConstants.EMPTY_STRING;
+	    	String sKeyAttr = DecConstants.EMPTY_STRING;
+	    	
+	    	Map mParam = new HashMap();
+	    	Map mCodeDetail = null;
+	    	StringList slSelectParam = new StringList(sInfoName);
+	    	mParam.put("slSelectParam", slSelectParam);
+    		mParam.put("codeDetailType", sDetailType);
+    		mParam.put("codeMasterName", sMasterName);
+    		if(DecStringUtil.isNotEmpty(sRelWhere)) {
+        		mParam.put("relWhereParam", sRelWhere);
+    		}
+    		if(DecStringUtil.isNotEmpty(sGroupByValue)) {
+		    	mParam.put("groupBySelect", DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILTYPE);
+		    	mParam.put("groupByValue", sGroupByValue);
+		    	if(DecStringUtil.isNotEmpty(sDetailType)) {
+			    	mParam.put("groupByDetailSelect", DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILTYPE);
+			    	mParam.put("groupByDetailValue", sDetailType);
+		    	}
+    		}
+    		
+	    	String sProjectOID = (String)paramList.get("objectId");
+	    	if(DecStringUtil.isNotEmpty(sProjectOID)) {
+	    		DomainObject doPS = DomainObject.newInstance(context, sProjectOID);
+	    		doPS.open(context);
+	    		mParam.put("codeMasterRevision", doPS.getName());
+	    	}else {
+	    		mParam.put("codeMasterRevision", DecConstants.SYMB_HYPHEN);
+	    	}
+	    	MapList mlCodeDetail = null;
+	    	Map<String, MapList> mlGroupByCodeDetail = null;
+    		if(DecStringUtil.isNotEmpty(sGroupByValue)) {
+    			mlGroupByCodeDetail = getCodeDetailListGroupBy(context, mParam);
+	    	}else {
+	    		mlCodeDetail = getCodeDetailList(context, mParam);
+	    	}
+
+            int size = mlObject.size();
+            String[] strObjectIds = new String[size];
+            for (int i = 0; i < size; i++) {
+                mObject = (Map) mlObject.get(i);
+                String taskId = (String) mObject.get(DomainObject.SELECT_ID);
+                strObjectIds[i] = taskId;
+            }
+            StringList slBusSelect = new StringList();
+    		
+	    	if(DecStringUtil.equals(sType, "IWP")) {
+	    		slBusSelect.add("to[" + DecConstants.RELATIONSHIP_SUBTASK + "].from.id");
+	    		slBusSelect.add("to[" + DecConstants.RELATIONSHIP_SUBTASK + "].from." + sSelAttrName);
+	    		if(DecStringUtil.isNotEmpty(sGroupByValue)) {
+	    			slBusSelect.add("to[" + DecConstants.RELATIONSHIP_SUBTASK + "].from." + sSelGroupKeyAttr);
+	    		}
+	    	}else {
+	    		slBusSelect.add(sSelAttrName);
+	    		if(DecStringUtil.isNotEmpty(sGroupByValue)) {
+	        		slBusSelect.add(sSelGroupKeyAttr);
+	    		}     
+	    	}
+            BusinessObjectWithSelectList objectWithSelectList = ProgramCentralUtil.getObjectWithSelectList(context, strObjectIds, slBusSelect);
+    		
+	    	for(BusinessObjectWithSelect bos : objectWithSelectList) {
+		    	if(DecStringUtil.equals(sType, "IWP")) {
+		    		if(DecStringUtil.isNotEmpty(sGroupByValue)) {
+		    			sKeyAttr = bos.getSelectData("to[" + DecConstants.RELATIONSHIP_SUBTASK + "].from." + sSelGroupKeyAttr);
+		    			mlCodeDetail = mlGroupByCodeDetail.get(sKeyAttr);
+		    		}
+		    		sCode = bos.getSelectData("to[" + DecConstants.RELATIONSHIP_SUBTASK + "].from." + sSelAttrName);
+		    	}else {
+		    		if(DecStringUtil.isNotEmpty(sGroupByValue)) {
+		    			sKeyAttr = bos.getSelectData(sSelGroupKeyAttr);
+		    			mlCodeDetail = mlGroupByCodeDetail.get(sKeyAttr);
+		    		}
+		    		sCode = bos.getSelectData(sSelAttrName);
+		    	}
+	    		if(DecStringUtil.isEmpty(sCode)) {
+				   	slReturn.add(DecConstants.EMPTY_STRING);
+				   	continue;
+	    		}
+			    if(mlCodeDetail != null && !mlCodeDetail.isEmpty()) {
+			    	for(Object oCodeDetail : mlCodeDetail) {
+				   		mCodeDetail = (Map)oCodeDetail;
+				   		if(DecStringUtil.equals((String)mCodeDetail.get(DecConstants.SELECT_NAME), sCode)) {
+							slReturn.add((String)mCodeDetail.get(sInfoName));
+							break;
+				   		}
+			    	}
+			    }else {
+				   	slReturn.add(DecConstants.EMPTY_STRING);
+			    }
+	    		
+	    	}
+    	} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+    	return slReturn;
+    }
+    public StringList getDBDataCodeDetailListDesc(Context context, String[] args) throws Exception {
+    	return getDBDataCodeDetailList(context, args, DecConstants.SELECT_DESCRIPTION);
+    }
+
+    public StringList getDBDataCodeDetailList(Context context, String[] args, String sInfoName) throws Exception {
+    	StringList slReturn = new StringList();
+    	try {
+            HashMap programMap = (HashMap) JPO.unpackArgs(args);
+	    	Map paramList = (Map)programMap.get("paramList");
+	    	Map columnMap = (Map)programMap.get("columnMap");
+	    	Map settings = (Map)columnMap.get("settings");
+	    	MapList mlObject = (MapList)programMap.get("objectList");
+	    	Map mObject = null;
+	    	String sColumnName = (String)settings.get("columnName");
+	    	String sMasterName = (String)settings.get("MasterName");
+	    	String sDetailType = (String)settings.get("DetailType");
+	    	String sRelWhere = (String)settings.get("RelWhere");
+	    	String sProjectOID = (String)paramList.get("objectId");
+	    	
+	    	Map mParam = new HashMap();
+	    	Map mCodeDetail = null;
+	    	Map mCodeDetailDisplayData = new HashMap();
+	    	StringList slSelectParam = new StringList(sInfoName);
+	    	mParam.put("slSelectParam", slSelectParam);
+    		mParam.put("codeMasterName", sMasterName);
+    		mParam.put("codeDetailType", sDetailType);
+    		if(DecStringUtil.isNotEmpty(sRelWhere)) {
+        		mParam.put("relWhereParam", sRelWhere);
+    		}
+	    	if(DecStringUtil.isNotEmpty(sProjectOID)) {
+	    		DomainObject doPS = DomainObject.newInstance(context, sProjectOID);
+	    		doPS.open(context);
+	    		mParam.put("codeMasterRevision", doPS.getName());
+	    	}else {
+	    		mParam.put("codeMasterRevision", DecConstants.SYMB_HYPHEN);
+	    	}
+	    	MapList mlCodeDetail = getCodeDetailList(context, mParam);
+	    	for(Object oCodeDetail : mlCodeDetail) {
+	    		mCodeDetail = (Map)oCodeDetail;
+	    		mCodeDetailDisplayData.put(mCodeDetail.get(DecConstants.SELECT_ATTRIBUTE_DECCODE), mCodeDetail.get(sInfoName));
+	    	}
+    		
+	    	Object oData = null;
+	    	String sData = DecConstants.EMPTY_STRING;
+	    	for(Object o : mlObject) {
+	    		sData = null; // Modified by hslee on 2023.06.23
+	    		mObject = (Map)o;
+	    		oData = mObject.get(sColumnName);
+	    		if(oData instanceof String) {
+	    			sData = (String)oData;
+    			}else if(oData instanceof BigDecimal) {
+    				sData = String.valueOf(oData);
+    			}
+	    		slReturn.add((String)mCodeDetailDisplayData.get(sData));
+	    	}
+    	}catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+    	return slReturn;
+    }
+
+    /**
+     * jhlee Add 05-25  Code Master Range
+     * @param context
+     * @param args
+     * @return
+     * @throws Exception
+     */
+    public Map getCodeMasterCodeRange(Context context, String[] args) throws Exception {
+    	return getCodeMasterRange(context, args, DecConstants.SELECT_ATTRIBUTE_DECCODE);
+    }
+    public Map getCodeMasterRange(Context context, String[] args) throws Exception {
+    	return getCodeMasterRange(context, args, DecConstants.SELECT_NAME);
+    }
+    public Map getCodeMasterDescRange(Context context, String[] args) throws Exception {
+    	return getCodeMasterRange(context, args, DecConstants.SELECT_DESCRIPTION);
+    }
+    public Map getCodeMasterRangeCodeDesc(Context context, String[] args) throws Exception {
+    	return getCodeMasterRange(context, args, DecConstants.SELECT_ATTRIBUTE_DECCODE, DecConstants.SELECT_DESCRIPTION);
+    }
+    public Map getCodeMasterRange(Context context, String[] args, String... sArrInfoName) throws Exception {
+    	Map mRange = new HashMap();
+    	try {
+    		StringList slfieldRangeValue = new StringList();
+    		StringList slfieldDisplayRangeValue = new StringList();
+    		
+	    	Map programMap = JPO.unpackArgs(args);
+	    	Map columnMap = (Map)programMap.get("columnMap");
+	    	HashMap paramMap = (HashMap) programMap.get("paramMap");
+	    	Map settings = null;
+	    	if(columnMap != null) {
+		    	settings = (Map)columnMap.get("settings");
+	    	}else {
+	    		Map fieldMap = (Map)programMap.get("fieldMap");
+	    		settings = (Map)fieldMap.get("settings");
+	    	}
+	    	String sMasterName = (String)settings.get("MasterName");
+	    	String sDetailType = (String)settings.get("DetailType");
+	    	String sRelWhere = (String)settings.get("RelWhere");
+	    	Map mParam = new HashMap();
+	    	StringList slSelectParam = new StringList(DecConstants.SELECT_NAME);
+	    	mParam.put("slSelectParam", slSelectParam);
+    		mParam.put("codeMasterName", sMasterName);
+    		mParam.put("codeDetailType", sDetailType);
+    		if(DecStringUtil.isNotEmpty(sRelWhere)) {
+        		mParam.put("relWhereParam", sRelWhere);
+    		}
+	    	String sProjectOID = (String)paramMap.get(DecConstants.OBJECT_ID);
+	    	if(DecStringUtil.isEmpty(sProjectOID)) {
+	    		HashMap requestMap = (HashMap) programMap.get("requestMap");
+	    		sProjectOID = (String)requestMap.get("objId");
+	    	}
+	    	if(DecStringUtil.isNotEmpty(sProjectOID)) {
+		    	DomainObject doPS = DomainObject.newInstance(context, sProjectOID);
+		    	doPS.open(context);
+		    	if(!doPS.getTypeName().equals(DecConstants.TYPE_PROJECT_SPACE)) {
+		    		sProjectOID = doPS.getInfo(context, TASK_PROJECT_ID);
+		    		doPS = DomainObject.newInstance(context, sProjectOID);
+			    	doPS.open(context);
+		    	}
+		        mParam.put("codeMasterRevision", doPS.getName());
+	    	}else {
+		        mParam.put("codeMasterRevision", DecConstants.SYMB_HYPHEN);
+	    	}
+	    	MapList mlCodeDetail = getCodeDetailList(context, mParam);
+	    	Map mCodeDetail = null;
+	    	for(Object o : mlCodeDetail) {
+	    		mCodeDetail = (Map)o;
+	    		slfieldRangeValue.add((String)mCodeDetail.get(DecConstants.SELECT_NAME));
+	    		if(sArrInfoName.length == 1) {
+		    		slfieldDisplayRangeValue.add((String)mCodeDetail.get(sArrInfoName[0]));
+	    		}else if(sArrInfoName.length == 2) {
+		    		slfieldDisplayRangeValue.add((String)mCodeDetail.get(sArrInfoName[0]) + " " + (String)mCodeDetail.get(sArrInfoName[1]));
+	    		}
+	    	}
+	    	mRange.put("field_choices", slfieldRangeValue);
+	    	mRange.put("field_display_choices", slfieldDisplayRangeValue);
+    	} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+    	return mRange;
+    }
+    /**
+     * jhlee Add 2023-08-16
+     * @param context
+     * @param args
+     * @return
+     * @throws Exception
+     */
+    public Map getQtyType(Context context, String[] args) throws Exception {
+    	Map mRange = new HashMap();
+    	try {
+    		StringList slfieldRangeValue = new StringList();
+    		StringList slfieldDisplayRangeValue = new StringList();
+	    	Map programMap = JPO.unpackArgs(args);
+	    	HashMap paramMap = (HashMap) programMap.get("paramMap");
+    		Map fieldMap = (Map)programMap.get("fieldMap");
+    		Map settings = (Map)fieldMap.get("settings");
+	    	String sOID = (String)paramMap.get(DecConstants.OBJECT_ID);
+	    	DomainObject doObj = DomainObject.newInstance(context, sOID);
+	    	String sGetDiscipline = (String)settings.get("getDiscipline");
+	    	String sDiscipline = null;
+	    	if("CWP".equalsIgnoreCase(sGetDiscipline)) {
+	    		sDiscipline = doObj.getInfo(context, "to[" + DecConstants.RELATIONSHIP_SUBTASK + "].from." + DecConstants.SELECT_ATTRIBUTE_DECDISCIPLINE);
+	    	}else {
+	    		sDiscipline = doObj.getAttributeValue(context, DecConstants.ATTRIBUTE_DECDISCIPLINE);
+	    	}
+	    	if(DecStringUtil.isNotEmpty(sDiscipline)) {
+	    		StringList slSelect = new StringList(DecConstants.SELECT_DESCRIPTION);
+	    		slSelect.add(DecConstants.SELECT_NAME);
+	    		slSelect.add(DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILTYPE);
+	    		String sPSName = doObj.getInfo(context, TASK_PROJECT_NAME);
+	    		String sDisciplineOID =  DecMatrixUtil.getObjectId(context, DecConstants.TYPE_DECCODEDETAIL, sDiscipline, sPSName + "_Discipline");
+	    		DomainObject doDiscipline = DomainObject.newInstance(context, sDisciplineOID);
+	    		MapList mlDiscipline = doDiscipline.getRelatedObjects(context
+										, DecConstants.RELATIONSHIP_DECCODEDETAILRELADD
+										, DecConstants.TYPE_DECCODEDETAIL
+										, slSelect
+										, null
+										, false
+										, true
+										, (short) 0
+										, "current == Active"
+										, null
+										, 0);
+	    		for(Object o : mlDiscipline) {
+	    			Map mInfo = (Map)o;
+	    			String sDetailType = (String)mInfo.get(DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILTYPE);
+	    			if("BOQ Key Item".equalsIgnoreCase(sDetailType)) {
+		    			slfieldRangeValue.add((String)mInfo.get(DecConstants.SELECT_NAME));
+		    			slfieldDisplayRangeValue.add((String)mInfo.get(DecConstants.SELECT_DESCRIPTION));
+	    			}
+	    		}
+	    	}
+	    	
+	    	mRange.put("field_choices", slfieldRangeValue);
+	    	mRange.put("field_display_choices", slfieldDisplayRangeValue);
+    	} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+    	return mRange;
+    }
+    /**
+     * jhlee Add 2023-08-16
+     * @param context
+     * @param args
+     * @return
+     * @throws Exception
+     */
+    public Map getUOM(Context context, String[] args) throws Exception {
+    	Map mRange = new HashMap();
+    	try {
+    		StringList slfieldRangeValue = new StringList();
+    		StringList slfieldDisplayRangeValue = new StringList();
+	    	Map programMap = JPO.unpackArgs(args);
+	    	HashMap paramMap = (HashMap) programMap.get("paramMap");
+	    	String sOID = (String)paramMap.get(DecConstants.OBJECT_ID);
+	    	DomainObject doObj = DomainObject.newInstance(context, sOID);
+	    	String sQuentityType = doObj.getAttributeValue(context, DecConstants.ATTRIBUTE_DECKEYQUANTITYTYPE);
+	    	if(DecStringUtil.isNotEmpty(sQuentityType)) {
+	    		StringList slSelect = new StringList(DecConstants.SELECT_DESCRIPTION);
+	    		slSelect.add(DecConstants.SELECT_NAME);
+	    		slSelect.add(DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILTYPE);
+	    		String sPSName = doObj.getInfo(context, TASK_PROJECT_NAME);
+	    		String sKeyItemOID =  DecMatrixUtil.getObjectId(context, DecConstants.TYPE_DECCODEDETAIL, sQuentityType, sPSName + "_BOQ Key Item");
+	    		DomainObject doKeyItem = DomainObject.newInstance(context, sKeyItemOID);
+
+	        	StringList slCurrent = doKeyItem.getInfoList(context, "from[" + DecConstants.RELATIONSHIP_DECCODEDETAILRELADD + "].to.current");
+	        	StringList slDesc = doKeyItem.getInfoList(context, "from[" + DecConstants.RELATIONSHIP_DECCODEDETAILRELADD + "].to.description");
+	        	StringList slCode = doKeyItem.getInfoList(context, "from[" + DecConstants.RELATIONSHIP_DECCODEDETAILRELADD + "].to." + DecConstants.SELECT_ATTRIBUTE_DECCODE);
+	        	
+	        	for(int i=0; i<slCurrent.size(); i++){
+	        		if(!DecStringUtil.equals("Active", slCurrent.get(i))){
+	        			slDesc.remove(i);
+	        			slCode.remove(i);
+	        		}
+	        	}
+	        	slfieldRangeValue.addAll(slCode);
+	        	slfieldDisplayRangeValue.addAll(slDesc);
+	    	}
+	    	
+	    	mRange.put("field_choices", slfieldRangeValue);
+	    	mRange.put("field_display_choices", slfieldDisplayRangeValue);
+    	} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+    	return mRange;
+    }
+    
+    public String getWBSType(Context context, String[] args) throws Exception {
+    	String sReturn = null;
+    	try {
+	    	Map programMap = JPO.unpackArgs(args);
+	    	Map requestMap      = (HashMap) programMap.get("requestMap");
+            String rowId = (String) requestMap.get("rowId");
+            long lLevel = rowId.chars().filter(c -> c == ',').count() + 1;
+	    	Map mParam = new HashMap();
+	    	StringList slSelectParam = new StringList(DecConstants.SELECT_NAME);
+	    	String sProjectOID = (String)requestMap.get("objId");
+	    	DomainObject doPS = DomainObject.newInstance(context, sProjectOID);
+	    	doPS.open(context);
+	    	mParam.put("slSelectParam", slSelectParam);
+    		mParam.put("codeMasterName", "WBS Type");
+	        mParam.put("codeMasterRevision", doPS.getName());
+		    mParam.put("whereParam", DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILATT1 + " == '" + lLevel + "'");
+
+            String strLanguage = context.getSession().getLanguage();
+	    	MapList mlCodeDetail = getCodeDetailList(context, mParam);
+	    	if(mlCodeDetail.isEmpty()) {
+	    		throw new FrameworkException(EnoviaResourceBundle.getProperty(context, "ProgramCentral","ProgramCentral.Alert.IsNotHaveWBSTypeLevel", strLanguage));
+	    	}else {
+	    		Map mCodeDetail = (Map)mlCodeDetail.get(0);
+	    		sReturn = (String)mCodeDetail.get(DecConstants.SELECT_NAME);
+	    		if(DecStringUtil.isEmpty(sReturn)) {
+	    			throw new FrameworkException(EnoviaResourceBundle.getProperty(context, "ProgramCentral","ProgramCentral.Alert.IsNotHaveWBSType", strLanguage));
+	    		}
+	    	}
+    	} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+    	return sReturn;
+    }
+    
+    public StringList getCodeMasterRangeHTMLOutput(Context context, String[] args) throws Exception {
+    	StringList slReturn = new StringList();
+
+    	try {
+	    	Map programMap = JPO.unpackArgs(args);
+	    	Map columnMap = (Map)programMap.get("columnMap");
+	    	Map settings = null;
+	    	if(columnMap != null) {
+		    	settings = (Map)columnMap.get("settings");
+	    	}else {
+	    		Map fieldMap = (Map)programMap.get("fieldMap");
+	    		settings = (Map)fieldMap.get("settings");
+	    	}
+	    	Map mObject = null;
+	    	HashMap requestMap = (HashMap) programMap.get("requestMap");
+	    	String sProjectOID = DecConstants.EMPTY_STRING;
+	        boolean isPrinterFriendly = false;
+	    	if(requestMap != null) {
+		    	sProjectOID = (String)requestMap.get(DecConstants.OBJECT_ID);
+	    	}else {
+		    	HashMap paramList = (HashMap) programMap.get("paramList");
+		    	sProjectOID = (String)paramList.get(DecConstants.OBJECT_ID);
+		        String strPrinterFriendly = (String)paramList.get("reportFormat");
+		        if ( strPrinterFriendly != null ) {
+		            isPrinterFriendly = true;
+		        }
+	    	}
+	        
+	    	String sMasterName = (String)settings.get("MasterName");
+	    	String sGroupByValue = (String)settings.get("GroupByValue");
+	    	String sDetailType = (String)settings.get("DetailType");
+	    	String sRelWhere = (String)settings.get("RelWhere");
+	    	String sGroupKeyAttr = (String)settings.get("GroupKeyAttr"); // 오브젝트에서 가져올 속성값
+	    	String sGroupKeyAttrType = (String)settings.get("GroupKeyAttrType"); // 오브젝트에서 가져올 속성값
+	    	String sAdminType = (String)settings.get("Admin Type");
+	    	String sGroupByRelToAttr = (String)settings.get("GroupByRelToAttr");
+	    	String sGroupByRelFromAttr = (String)settings.get("GroupByRelFromAttr");
+	    	String sGroupByRelToAttrKey = (String)settings.get("GroupByRelToAttrKey");      
+	    	String sGroupByRelFromAttrKey = (String)settings.get("GroupByRelFromAttrKey");  
+	    	
+	    	String sSelectAttrName = DomainObject.getAttributeSelect(PropertyUtil.getSchemaProperty(sAdminType));
+	    	MapList objectList = (MapList)programMap.get("objectList");
+	    	StringList slSelectParam = new StringList(DecConstants.SELECT_NAME);
+	    	slSelectParam.add(DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILTYPE);
+	    	if(DecStringUtil.isNotEmpty(sGroupByRelToAttr)) {
+	    		sGroupByRelToAttr = DomainObject.getAttributeSelect(sGroupByRelToAttr);
+	    		sGroupByRelToAttrKey = "to[" + DecConstants.RELATIONSHIP_DECCODEDETAILRELADD + "].from." + sGroupByRelToAttrKey;
+	    		slSelectParam.add(sGroupByRelToAttrKey);
+	    	}
+	    	if(DecStringUtil.isNotEmpty(sGroupByRelFromAttr)) {
+	    		sGroupByRelFromAttr = DomainObject.getAttributeSelect(sGroupByRelFromAttr);
+	    		sGroupByRelFromAttrKey = "from[" + DecConstants.RELATIONSHIP_DECCODEDETAILRELADD + "].to." + sGroupByRelFromAttrKey;
+	    		slSelectParam.add(sGroupByRelFromAttrKey);
+	    	}
+	    	if("IWP".equals(sGroupKeyAttrType)) {
+	    	}else if(DecStringUtil.isNotEmpty(sGroupKeyAttr)) {
+	    		sGroupKeyAttr = DomainObject.getAttributeSelect(sGroupKeyAttr);
+	    	}
+	    	
+	    	Map mParam = new HashMap();
+	    	mParam.put("slSelectParam", slSelectParam);
+    		mParam.put("codeMasterName", sMasterName);
+    		if(DecStringUtil.isNotEmpty(sRelWhere)) {
+        		mParam.put("relWhereParam", sRelWhere);
+    		}
+	    	if(DecStringUtil.isNotEmpty(sProjectOID)) {
+		    	DomainObject doPS = DomainObject.newInstance(context, sProjectOID);
+		    	doPS.open(context);
+		        mParam.put("codeMasterRevision", doPS.getName());
+	    	}else {
+		        mParam.put("codeMasterRevision", DecConstants.SYMB_HYPHEN);
+	    	}
+	    	if(DecStringUtil.isNotEmpty(sGroupByValue)) {
+		    	mParam.put("groupBySelect", DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILTYPE);
+		    	mParam.put("groupByValue", sGroupByValue);
+		    	if(DecStringUtil.isNotEmpty(sDetailType)) {
+			    	mParam.put("groupByDetailSelect", DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILTYPE);
+			    	mParam.put("groupByDetailValue", sDetailType);
+		    	}
+	    	}
+	    	
+	    	Map<String, MapList> mlCodeDetail = getCodeDetailListGroupBy(context, mParam);
+	    	MapList mlDetailInfo = null;
+	    	Map mDetailInfo = null;
+	    	String sKeyAttr = DecConstants.EMPTY_STRING;
+	    	String sName = DecConstants.EMPTY_STRING;
+	    	String sDisplayName = DecConstants.EMPTY_STRING;
+	    	String sCode = DecConstants.EMPTY_STRING;
+	    	String sDesc = DecConstants.EMPTY_STRING;
+	    	String sAttrValue = DecConstants.EMPTY_STRING;
+	    	String sOriginValue = DecConstants.EMPTY_STRING;
+	    	String sGroupByRelToAttrValue = DecConstants.EMPTY_STRING;
+	    	String sGroupByRelFromAttrValue = DecConstants.EMPTY_STRING;
+	    	StringList slToAttr = new StringList();
+	    	StringList slFromAttr = new StringList();
+	    	StringBuilder sbReturn = new StringBuilder();
+	    	if(objectList != null) {
+	    		for(int i = 0; i<objectList.size(); i++) {
+	    			mObject = (Map)objectList.get(i);
+	    			// program에서 정보 미리 가져옴
+	    			sKeyAttr = (String)mObject.get(sGroupKeyAttr);
+	    			sAttrValue = (String)mObject.get(sSelectAttrName);
+	    			if(DecStringUtil.isNotEmpty(sKeyAttr)) {
+	    				mlDetailInfo = mlCodeDetail.get(sKeyAttr);
+	    				if(mlDetailInfo != null) {
+		    				sbReturn.append("<select class=\"row").append(i).append("\" style=\"display: none;\">");
+		    				for(Object oDetailInfo : mlDetailInfo) {
+		    					mDetailInfo = (Map)oDetailInfo;
+		    					sDetailType = (String)mDetailInfo.get(DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILTYPE);
+				    			sName = (String)mDetailInfo.get(DecConstants.SELECT_NAME);
+				    			sCode = (String)mDetailInfo.get(DecConstants.SELECT_ATTRIBUTE_DECCODE);
+				    			sDesc = (String)mDetailInfo.get(DecConstants.SELECT_DESCRIPTION);
+		    			    	if(DecStringUtil.isNotEmpty(sGroupByRelToAttr)) {
+		    			    		slToAttr = DecStringUtil.getStringListChangeObject(mDetailInfo.get(sGroupByRelToAttrKey));
+		    			    		sGroupByRelToAttrValue = (String)mObject.get(sGroupByRelToAttr);
+		    			    	}else if(DecStringUtil.isNotEmpty(sGroupByRelFromAttr)) {
+		    			    		slFromAttr = DecStringUtil.getStringListChangeObject(mDetailInfo.get(sGroupByRelFromAttrKey));
+		    			    		sGroupByRelFromAttrValue = (String)mObject.get(sGroupByRelFromAttr);
+		    			    	}
+		    			    	// To, From DetailType이 없거나 To, From DetailType중 하나가 맞을경우
+		    			    	if(DecStringUtil.isAllBlank(sGroupByRelToAttr, sGroupByRelFromAttr) || slToAttr.contains(sGroupByRelToAttrValue) || slFromAttr.contains(sGroupByRelFromAttrValue)) {
+		    			    		sbReturn.append("<option value=\"").append(sCode).append("\" ");
+						    		if(DecStringUtil.equals(sAttrValue, sCode)) {
+						    			sDisplayName = sDesc;
+						    			sOriginValue = sDesc;
+						    		}
+						    		sbReturn.append(">");
+						    		sbReturn.append(sDesc);
+						    		sbReturn.append("</option>");
+		    			    	}
+		    			    	slToAttr.clear();
+		    			    	slFromAttr.clear();
+		    				}
+		    				sbReturn.append("</select>");
+	    					sbReturn.insert(0, "<span class=\"rowDiv\">" + sDisplayName + "</span>");
+	    					sbReturn.append("<span class=\"original-value\"></span>");
+	    					sbReturn.append("<input type=\"hidden\" value=\"" + sOriginValue + "\"/>");
+	    					sDisplayName = DecConstants.EMPTY_STRING;
+	    					sOriginValue = DecConstants.EMPTY_STRING;
+	    				}
+		    			if(isPrinterFriendly) {
+			    			sbReturn.setLength(0);
+		    				sbReturn.append(sDesc);
+		    			}
+	    			}
+	    			slReturn.add(sbReturn.toString());
+	    			sbReturn.setLength(0);
+	    			sDisplayName = DecConstants.EMPTY_STRING;
+	    		}
+	    	}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+    	return slReturn;
+    }
+    
+	// 코드디테일 삭제 
+	public int deleteRelProjectCodeMaster(Context context, String[] args) throws Exception
+	{
+		int abc = 1;
+		
+		HashMap programMap = (HashMap) JPO.unpackArgs(args);
+		HashMap paramMap = (HashMap) programMap.get("paramMap");
+		
+		
+		StringList busSelects = new StringList();
+		busSelects.add(DomainConstants.SELECT_ID);
+		busSelects.add(DomainConstants.SELECT_NAME);
+
+		StringList selectRelStmts = new StringList();
+		
+		
+		
+		return abc;
+	}
+	
+	public MapList getCodeDetailAttrColumn(Context context,String[] args) throws Exception{
+    	MapList columnList;
+		try {
+			Map programMap = JPO.unpackArgs(args);
+			Map requestMap = (Map) programMap.get("requestMap");
+			String objectId = (String) requestMap.get("objectId");
+			
+			StringList slSelect = new StringList();
+			slSelect.add("attribute[decCodeDetailAttLabel1]");
+			slSelect.add("attribute[decCodeDetailAttLabel2]");
+			slSelect.add("attribute[decCodeDetailAttLabel3]");
+			slSelect.add("attribute[decCodeDetailAttLabel4]");
+			slSelect.add("attribute[decCodeDetailAttLabel5]");
+			slSelect.add("attribute[decCodeDetailRelAttLabel1]");
+			slSelect.add("attribute[decCodeDetailRelAttLabel2]");
+			slSelect.add("attribute[decCodeDetailRelAttLabel3]");
+			slSelect.add("attribute[decCodeDetailRelAttLabel4]");
+			slSelect.add("attribute[decCodeDetailRelAttLabel5]");
+			
+			Map codeMasterInfo = null;
+			if ( StringUtils.isNotEmpty(objectId) )
+			{
+				DomainObject doObj = DomainObject.newInstance(context, objectId);
+				codeMasterInfo = doObj.getInfo(context, slSelect);
+			}
+			
+			String[] attrLabelSelectArr = new String[] {"decCodeDetailAttLabel", "decCodeDetailRelAttLabel"};
+			String[] attrNameArr = new String[] {"decCodeDetailAtt", "decCodeDetailRelAtt"};
+			String[] expressionArr = new String[] {"businessobject", "relationship"};
+			String[] groupHeaderArr = new String[] {"BusinessObject", "Relationship"};
+			
+			Map columnMap = null;
+			Map settingMap = null;
+			columnList = new MapList();
+			String attrName = null;
+			String attrNameExpr = null;
+			String attrLabel = null;
+			String attrLabelSelect = null;
+			String attrLabelSelectExpr = null;
+			String groupHeader = null;
+			String expression = null;
+			String suiteKey = "Framework";
+			String propPrefix = "emxFramework.Attribute.";
+			String groupHeaderPropPrefix = "emxFramework.Label.";
+			
+			for ( int m = 0; m < attrNameArr.length; m++ )
+			{
+				attrNameExpr = attrNameArr[m];
+				attrLabelSelectExpr = attrLabelSelectArr[m];
+				groupHeader = groupHeaderArr[m];
+				expression = expressionArr[m];
+				
+				for (int k = 1; k <= 5; k++)
+				{
+					attrName = attrNameExpr + k;
+					attrLabelSelect = attrLabelSelectExpr + k;
+					
+					if ( codeMasterInfo != null )
+					{
+						attrLabel = (String) codeMasterInfo.get("attribute[" + attrLabelSelect + "]");
+						
+						if ( StringUtils.isNotEmpty(attrLabel) )
+						{
+							columnMap = new HashMap();
+							columnMap.put("name", attrName);
+							columnMap.put("label", StringUtils.isNotEmpty(attrLabel) ? attrLabel : propPrefix + attrName);
+//						columnMap.put(groupHeader, "$<attribute[attribute_" + attrName + "].value>");
+							columnMap.put("expression_" + expression, "attribute[" + attrName + "]");
+							
+							settingMap = new HashMap();
+							settingMap.put("Registered Suite", suiteKey);
+							settingMap.put("Admin Type", "attribute_" + attrName);
+							settingMap.put("Field Type", "attribute");
+							settingMap.put("Group Header", groupHeaderPropPrefix + groupHeader);
+							settingMap.put("Editable", "true");
+							
+							columnMap.put("settings", settingMap);
+							
+							columnList.add(columnMap);
+						}
+						
+					}
+							
+				}
+			}
+			
+			return columnList;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+    } 
+	
+	public void organize(Context context, String[] args) throws Exception{
+		try {
+			ContextUtil.startTransaction(context, true);
+			
+			Map programMap = JPO.unpackArgs(args);
+			String objectId = (String) programMap.get("objectId");
+			
+			Pattern typePattern = new Pattern(DecConstants.TYPE_DECCODEMASTER);
+		    typePattern.addPattern(DecConstants.TYPE_DECCODEDETAIL);
+		    
+		    Pattern relPattern = new Pattern(DecConstants.RELATIONSHIP_DECCODEMASTERREL);
+		    relPattern.addPattern(DecConstants.RELATIONSHIP_DECCODEDETAILREL);
+		    
+		    StringList slSelect = new StringList();
+			slSelect.add(DecConstants.SELECT_ID);
+			slSelect.add(DecConstants.SELECT_TYPE);
+			slSelect.add(DecConstants.SELECT_NAME);
+			slSelect.add(DecConstants.SELECT_REVISION);
+			slSelect.add(DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILTYPE);
+			
+			StringList slRelSelect = new StringList();
+			slRelSelect.add("from.id");
+			slRelSelect.add(DomainRelationship.SELECT_TYPE);
+			
+			DomainObject doProject = DomainObject.newInstance(context, objectId);
+			String projectCode = doProject.getInfo(context, DecConstants.SELECT_NAME);
+			
+			MapList codeMasterList = doProject.getRelatedObjects(context
+					, relPattern.getPattern() 
+					, typePattern.getPattern()
+					, slSelect, slRelSelect
+					, false, true
+					, (short) 0
+					, null, "type != decCodeDetailRelAdd"
+					, 0);
+			
+			Map codeMasterMap = null;
+			String id = null;
+			String name = null;
+			String codeDetailType = null;
+			Map<Integer, String> revisionCacheMap = new HashMap<Integer, String>();
+			String type = null;
+			String currCodeDetailType = null;
+			String relType = null;
+			int level = 0;
+			StringBuffer sbRev = new StringBuffer();
+			
+			for (int k = 0; k < codeMasterList.size(); k++)
+			{
+				codeMasterMap = (Map) codeMasterList.get(k);
+				type = (String) codeMasterMap.get(DecConstants.SELECT_TYPE);
+				id = (String) codeMasterMap.get(DecConstants.SELECT_ID);
+				name = (String) codeMasterMap.get(DecConstants.SELECT_NAME);
+				currCodeDetailType = (String) codeMasterMap.get(DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILTYPE);
+				relType = (String) codeMasterMap.get(DomainRelationship.SELECT_TYPE);
+				level = Integer.parseInt( (String) codeMasterMap.get(DomainRelationship.SELECT_LEVEL) );
+				
+				System.out.println("relType : " + relType);
+				
+				revisionCacheMap.put(level, name);
+				
+				if ( DecConstants.TYPE_DECCODEMASTER.equals(type) )
+				{
+					codeDetailType = name;
+				}
+				else
+				{
+					if ( StringUtils.isNotEmpty(currCodeDetailType) )
+					{
+						codeDetailType = currCodeDetailType ;
+					}
+					
+					sbRev.delete(0, sbRev.length());
+					sbRev.append(projectCode);
+					for (int m = 1; m < level; m++)
+					{
+						sbRev.append("_");
+						sbRev.append(revisionCacheMap.get(m));
+					}
+					
+					MqlUtil.mqlCommand(context, "mod bus $1 name $2 revision $3 $4 $5", id, name + "_ing", sbRev.toString(), DecConstants.ATTRIBUTE_DECCODEDETAILTYPE, codeDetailType);
+					MqlUtil.mqlCommand(context, "mod bus $1 name $2", id, name);
+				}
+			}
+			System.out.println("END");
+			ContextUtil.commitTransaction(context);
+		} catch (Exception e) {
+			ContextUtil.abortTransaction(context);
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	/**
+	 * Code Master를 Project에 맞게 Clone하고 그 결과와 로그를 반환한다.
+	 * @param context
+	 * @param args
+	 * @return
+	 * @throws Exception
+	 */
+	public Map cloneCodeMaster(Context context, String[] args) throws Exception{
+		String objectId = null;
+		String masterType = null;
+		if ( args.length == 1 )
+		{
+			objectId = args[0];
+		}
+		else
+		{
+			Map programMap = JPO.unpackArgs(args);
+			objectId = (String) programMap.get("objectId");
+			masterType = (String) programMap.get("masterType");
+		}
+		return cloneCodeMaster(context, objectId, masterType); 
+	}
+	
+	/**
+	 * Code Master를 Project에 맞게 Clone하고(revision에 Project Code값을 넣는다.) 그 결과와 로그를 반환한다.
+	 * @param context
+	 * @param projectId
+	 * @return
+	 * @throws Exception
+	 */
+	public Map cloneCodeMaster(Context context, String projectId, String masterType) throws Exception{
+    	Map resultMap = new HashMap();
+    	StringBuffer sbLog = new StringBuffer();
+    	boolean isTransactionActive = ContextUtil.isTransactionActive(context);
+    	try {
+    		if ( !isTransactionActive )
+    		{
+    			ContextUtil.startTransaction(context, true);
+    		}
+    		
+    		long lStart = System.currentTimeMillis();
+    		// projectCode 조회
+    		DomainObject doProject = DomainObject.newInstance(context, projectId);
+    		String projectCode = doProject.getInfo(context, DecConstants.SELECT_NAME);
+    		String projectRev = doProject.getInfo(context, DecConstants.SELECT_REVISION);
+    		
+    		Pattern relPattern = new Pattern(DecConstants.RELATIONSHIP_DECCODEMASTERREL);
+    		relPattern.addPattern(DecConstants.RELATIONSHIP_DECCODEDETAILREL);
+    		
+    		Pattern typePattern = new Pattern(DecConstants.TYPE_DECCODEMASTER);
+    		typePattern.addPattern(DecConstants.TYPE_DECCODEDETAIL);
+    		
+    		final String EVAL_NAME_REV = "evaluate[" + DecConstants.SELECT_NAME + " + '_' + " + DecConstants.SELECT_REVISION + "]";
+    		final String EVAL_FROM_TO = "evaluate[from.name + '_' + from.revision + '_' + to.name + '_' + to.revision]";
+    		final String ADD_CONN_MQL_TEMPLATE = "add connection $1 from $2 $3 $4 to $5 $6 $7 $8 $9 $10 $11 $12 $13 $14 $15 $16 $17 $18 $19";
+    		
+    		StringList slSelect = new StringList();
+    		slSelect.add(DecConstants.SELECT_TYPE);
+			slSelect.add(EVAL_NAME_REV);
+			
+			StringList slRelSelect = new StringList();
+			slRelSelect.add(DomainRelationship.SELECT_TYPE);
+			slRelSelect.add("from.type");
+			slRelSelect.add("from.name");
+			slRelSelect.add("from.revision");
+			slRelSelect.add(EVAL_FROM_TO);
+			slRelSelect.add("attribute[Sequence Order]");
+			slRelSelect.add(DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILRELATT1);
+			slRelSelect.add(DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILRELATT2);
+			slRelSelect.add(DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILRELATT3);
+			slRelSelect.add(DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILRELATT4);
+			slRelSelect.add(DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILRELATT5);
+    		
+    		// 기존에 연결된 대상 조회
+    		MapList projectCodeList = getAllRelatedCodeList(context, projectId, masterType, slSelect, slRelSelect);
+    		Map projectCodeMap = decListUtil.getSelectKeyDataMapForMapList(projectCodeList, EVAL_NAME_REV);
+    		Map projectCodeConnMap = decListUtil.getSelectKeyDataMapForMapList(projectCodeList, EVAL_FROM_TO);
+    		
+    		// revision이 "-"인 Code Master 조회
+    		String codeMasterTemplateId = DecMatrixUtil.getObjectId(context, DecConstants.TYPE_DECCODEMASTERTEMPLATE, "Global", DecConstants.SYMB_HYPHEN);
+    		MapList allCodeList = getAllRelatedCodeList(context, codeMasterTemplateId, masterType, slSelect, slRelSelect);
+    		
+    		Map codeMap = null;
+    		String codeId = null;
+    		String codeType = null;
+    		String codeName = null;
+    		String codeRev = null;
+    		String changeRev = null;
+    		String relType = null;
+    		String uniqueKey = null;
+    		String uniqueConnKey = null;
+    		String parentType = null;
+    		String parentName = null;
+    		String parentRev = null;
+    		String changeParentRev = null;
+    		String execMQLCommand = null;
+    		
+    		Map emptyMap = new HashMap();
+    		StringList cloneList = new StringList();
+    		
+    		List<Connection> addConnectionList = new ArrayList<Connection>();
+    		
+    		for (Object obj : allCodeList)
+    		{
+    			codeMap = (Map) obj;
+    			codeId = (String) codeMap.get(DecConstants.SELECT_ID);
+    			codeType = (String) codeMap.get(DecConstants.SELECT_TYPE);
+    			codeName = (String) codeMap.get(DecConstants.SELECT_NAME);
+    			codeRev = (String) codeMap.get(DecConstants.SELECT_REVISION);
+    			parentName = (String) codeMap.get("from.name");
+				parentRev = (String) codeMap.get("from.revision");
+    			
+    			changeRev = DecConstants.SYMB_HYPHEN.equals(codeRev) ? projectCode : projectCode + DecConstants.SYMB_UNDER_BAR + codeRev;
+    			changeParentRev = DecConstants.SYMB_HYPHEN.equals(parentRev) ? projectCode : projectCode + DecConstants.SYMB_UNDER_BAR + parentRev;
+    			
+    			uniqueKey = codeName + DecConstants.SYMB_UNDER_BAR + changeRev;
+    			uniqueConnKey = parentName + DecConstants.SYMB_UNDER_BAR + changeParentRev + DecConstants.SYMB_UNDER_BAR + codeName + DecConstants.SYMB_UNDER_BAR + changeRev;
+    			
+    			// Code Master인 경우 Project와의 연결이 있는지 체크한다.
+    			if ( DecConstants.TYPE_DECCODEMASTER.equals(codeType) )
+    			{
+    				uniqueConnKey = projectCode + DecConstants.SYMB_UNDER_BAR + projectRev + DecConstants.SYMB_UNDER_BAR + codeName + DecConstants.SYMB_UNDER_BAR + changeRev;
+    			}
+    			
+    			// Project에 Code Master/Detail 정보가 있는지 체크
+    			if ( projectCodeMap.containsKey(uniqueKey) )
+    			{
+    				// do nothing...
+    			}
+    			else
+    			{
+    				// clone
+    				MqlUtil.mqlCommand(context, "copy bus $1 to $2 $3", codeId, codeName, changeRev);
+    				projectCodeMap.put(uniqueKey, emptyMap);
+    				cloneList.add(codeName + "_" + parentRev); // 원본 데이터 정보를 cloneList에 넣는다.
+    				
+    				sbLog.append("Clone id : " + codeId + " name : " + codeName + " rev : " + changeRev + "\n");
+    			}
+    			
+    			// From / To 정보를 바탕으로 해당 relation이 있는지 조회
+    			if ( projectCodeConnMap.containsKey(uniqueConnKey) )
+				{
+    				// do nothing...
+				}
+    			else
+    			{
+    				relType = (String) codeMap.get(DomainRelationship.SELECT_TYPE);
+    				boolean isClone = cloneList.contains(parentName + "_" + parentRev);
+    				
+    				if ( DecConstants.RELATIONSHIP_DECCODEMASTERTEMPLATEREL.equals(relType) )
+    				{
+    					// Project와 연결
+    					MqlUtil.mqlCommand(context, "connect bus $1 relationship $2 to $3 $4 $5", projectId, DecConstants.RELATIONSHIP_DECCODEMASTERREL, DecConstants.TYPE_DECCODEMASTER, codeName, changeRev);
+    					projectCodeConnMap.put(uniqueConnKey, emptyMap);
+    					
+    					sbLog.append("connect decCodeMasterRel from id : " + projectId + " // to name : " + codeName + " // to rev : " + changeRev + "\n");
+    				}
+    				else if ( DecConstants.RELATIONSHIP_DECCODEDETAILREL.equals(relType) )
+    				{
+    					parentType = (String) codeMap.get("from.type");
+    					/*
+    					if ( isClone ) // 부모가 clone되었는지 여부 확인
+    					{
+        					// parent Code가 clone되면서 replicate된 connection의 to를 clone된 자식 Code로 변경
+    						execMQLCommand = DecMatrixUtil.generateMQLCommand(MOD_CONN_MQL_TEMPLATE1
+    								, parentType, parentName, changeParentRev // clone된 부모 
+    		    					, DecConstants.TYPE_DECCODEDETAIL, codeName, codeRev //기존 자식
+    		    					, DecConstants.RELATIONSHIP_DECCODEDETAILREL
+    		    					, DecConstants.TYPE_DECCODEDETAIL, codeName, changeRev);
+    						
+    						projectCodeConnMap.put(uniqueConnKey, emptyMap);
+    						
+    						logger.info(execMQLCommand);
+    						
+    						MqlUtil.mqlCommand(context, execMQLCommand);
+    						
+    						sbLog.append("connect decCodeDetailRel from name : " + parentName + " // from rev : " + projectCode + DecConstants.SYMB_UNDER_BAR + parentRev + " // to name : " + codeName  + " // to rev : " + changeRev + "\n");
+    					}
+    					else
+    					{
+    					*/
+    						execMQLCommand = DecMatrixUtil.generateMQLCommand(ADD_CONN_MQL_TEMPLATE
+    								, DecConstants.RELATIONSHIP_DECCODEDETAILREL
+    								, parentType, parentName, changeParentRev // clone된 부모 
+    		    					, DecConstants.TYPE_DECCODEDETAIL, codeName, changeRev // clone된 자식
+    		    					, DecConstants.ATTRIBUTE_SEQUENCE_ORDER, (String) codeMap.get("attribute[Sequence Order]")
+    		    					, DecConstants.ATTRIBUTE_DECCODEDETAILRELATT1, (String) codeMap.get(DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILRELATT1)
+    		    					, DecConstants.ATTRIBUTE_DECCODEDETAILRELATT2, (String) codeMap.get(DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILRELATT2)
+    		    					, DecConstants.ATTRIBUTE_DECCODEDETAILRELATT3, (String) codeMap.get(DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILRELATT3)
+    		    					, DecConstants.ATTRIBUTE_DECCODEDETAILRELATT4, (String) codeMap.get(DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILRELATT4)
+    		    					, DecConstants.ATTRIBUTE_DECCODEDETAILRELATT5, (String) codeMap.get(DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILRELATT5)
+    		    					);
+    						
+    						projectCodeConnMap.put(uniqueConnKey, emptyMap);
+    						
+    						logger.info(execMQLCommand);
+    						
+    						MqlUtil.mqlCommand(context, execMQLCommand);
+    						
+    						sbLog.append("add decCodeDetailRel from name : " + parentName + " // from rev : " + projectCode + DecConstants.SYMB_UNDER_BAR + parentRev + " // to name : " + codeName  + " // to rev : " + changeRev + "\n");
+//    					}
+    					
+    				}
+    				else if ( DecConstants.RELATIONSHIP_DECCODEDETAILRELADDTEMPLATE.equals(relType) )
+    				{
+    					addConnectionList.add(new Connection(parentName, parentRev, codeName, codeRev, codeMap));
+    				}
+    				else
+    				{
+    					throw new Exception("relType is not proper. relType : " + relType + " codeMap : " + codeMap);
+    				}
+    			}
+    		}
+    		
+    		// Add Existing된 Code Detail 처리
+    		for( Connection conn : addConnectionList )
+    		{
+    			parentName = conn.getFromName();
+    			parentRev = conn.getFromRev();
+    			codeName = conn.getToName();
+    			codeRev = conn.getToRev();
+    			codeMap = conn.getCodeMap();
+    			
+    			changeParentRev = projectCode + DecConstants.SYMB_UNDER_BAR + parentRev;
+    			changeRev = projectCode + DecConstants.SYMB_UNDER_BAR + codeRev;
+    			
+    			uniqueConnKey = parentName + DecConstants.SYMB_UNDER_BAR + changeParentRev + DecConstants.SYMB_UNDER_BAR + codeName + DecConstants.SYMB_UNDER_BAR + changeRev;
+    			
+    			if ( projectCodeConnMap.containsKey(uniqueConnKey) )
+    			{
+    				// do nothing...
+    			}
+    			else
+    			{
+    				/*
+    				if ( conn.isClone() )
+    				{
+    					// clone된 부모 Code와 기존 자식 Code의 연결을 clone된 부모 Code와 자식 Code의 연결로 변경한다.
+    					execMQLCommand = DecMatrixUtil.generateMQLCommand(MOD_CONN_MQL_TEMPLATE2
+    							, DecConstants.TYPE_DECCODEDETAIL, parentName, changeParentRev // clone된 부모 
+    							, DecConstants.TYPE_DECCODEDETAIL, codeName, codeRev //기존 자식
+    							, DecConstants.RELATIONSHIP_DECCODEDETAILRELADDTEMPLATE
+    							, DecConstants.TYPE_DECCODEDETAIL, codeName, changeRev // clone된 자식
+    							, DecConstants.RELATIONSHIP_DECCODEDETAILRELADD);
+    					
+    					logger.info(execMQLCommand);
+    					
+    					MqlUtil.mqlCommand(context, execMQLCommand);
+    					
+    					sbLog.append("connect decCodeDetailRelAdd from name : " + parentName + " // from rev : " + changeParentRev + " // to name : " + codeName  + " // to rev : " + changeRev + "\n");
+    				}
+    				else
+    				{
+    				*/
+    					execMQLCommand = DecMatrixUtil.generateMQLCommand(ADD_CONN_MQL_TEMPLATE
+    							, DecConstants.RELATIONSHIP_DECCODEDETAILRELADD
+    							, DecConstants.TYPE_DECCODEDETAIL, parentName, changeParentRev // 과거에 clone된 부모 
+    							, DecConstants.TYPE_DECCODEDETAIL, codeName, changeRev // 과거에 clone된 자식
+    							, DecConstants.ATTRIBUTE_SEQUENCE_ORDER, (String) codeMap.get("attribute[Sequence Order]")
+    							, DecConstants.ATTRIBUTE_DECCODEDETAILRELATT1, (String) codeMap.get(DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILRELATT1)
+    							, DecConstants.ATTRIBUTE_DECCODEDETAILRELATT2, (String) codeMap.get(DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILRELATT2)
+    							, DecConstants.ATTRIBUTE_DECCODEDETAILRELATT3, (String) codeMap.get(DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILRELATT3)
+    							, DecConstants.ATTRIBUTE_DECCODEDETAILRELATT4, (String) codeMap.get(DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILRELATT4)
+    							, DecConstants.ATTRIBUTE_DECCODEDETAILRELATT5, (String) codeMap.get(DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILRELATT5)
+    							);
+    					
+    					logger.info(execMQLCommand);
+    					
+    					MqlUtil.mqlCommand(context, execMQLCommand);
+    					
+    					sbLog.append("add decCodeDetailRelAdd from name : " + parentName + " // from rev : " + changeParentRev + " // to name : " + codeName  + " // to rev : " + changeRev + "\n");
+    				}
+    				
+    				projectCodeConnMap.put(uniqueConnKey, emptyMap);
+//    			}
+    			
+    		}
+  			resultMap.put("result", "Success");
+  			resultMap.put("log", sbLog.toString());
+  			
+  			long lEnd = System.currentTimeMillis();
+  			
+  			System.out.print((lEnd - lStart) / 1000d  + " sec.");
+  			
+  			if ( !isTransactionActive )
+    		{
+    			ContextUtil.commitTransaction(context);
+    		}
+		} catch (Exception e) {
+			if ( !isTransactionActive )
+    		{
+    			ContextUtil.abortTransaction(context);
+    		}
+			e.printStackTrace();
+			resultMap.put("result", "Error");
+			resultMap.put("msg", e.getMessage());
+		}
+    	return resultMap;
+    }
+	
+	class Connection{
+		private String fromName;
+		private String fromRev;
+		private String toName;
+		private String toRev;
+		private Map codeMap;
+		
+		public String getFromName() {
+			return fromName;
+		}
+
+		public void setFromName(String fromName) {
+			this.fromName = fromName;
+		}
+
+		public String getFromRev() {
+			return fromRev;
+		}
+
+		public void setFromRev(String fromRev) {
+			this.fromRev = fromRev;
+		}
+
+		public String getToName() {
+			return toName;
+		}
+
+		public void setToName(String toName) {
+			this.toName = toName;
+		}
+
+		public String getToRev() {
+			return toRev;
+		}
+
+		public void setToRev(String toRev) {
+			this.toRev = toRev;
+		}
+
+		public Connection(String fromName, String fromRev, String toName, String toRev, Map codeMap) {
+			super();
+			this.fromName = fromName;
+			this.fromRev = fromRev;
+			this.toName = toName;
+			this.toRev = toRev;
+			this.codeMap = codeMap;
+		}
+
+		public Map getCodeMap() {
+			return codeMap;
+		}
+
+		public void setCodeMap(Map codeMap) {
+			this.codeMap = codeMap;
+		}
+	}
+	
+	/**
+	 * 정해진 rootId에 연결된 Code Master, Code Detail을 전부 조회하여 반환한다.
+	 * @param context
+	 * @param rootId
+	 * @param masterType
+	 * @param slSelectParam
+	 * @param slRelSelectParam
+	 * @return
+	 * @throws Exception
+	 */
+	public MapList getAllRelatedCodeList(Context context, String rootId, String masterType, StringList slSelectParam, StringList slRelSelectParam) throws Exception{
+		try {
+			DomainObject doRoot = DomainObject.newInstance(context, rootId);
+			
+			Pattern relPattern = new Pattern(DecConstants.RELATIONSHIP_DECCODEMASTERREL);
+			relPattern.addPattern(DecConstants.RELATIONSHIP_DECCODEDETAILREL);
+			relPattern.addPattern(DecConstants.RELATIONSHIP_DECCODEMASTERTEMPLATEREL);
+			
+			Pattern typePattern = new Pattern(DecConstants.TYPE_DECCODEMASTER);
+			typePattern.addPattern(DecConstants.TYPE_DECCODEDETAIL);
+			
+			StringList slSelect = new StringList();
+			slSelect.add(DecConstants.SELECT_ID);
+			slSelect.add(DecConstants.SELECT_NAME);
+			slSelect.add(DecConstants.SELECT_REVISION);
+			if ( slSelectParam != null )
+			{
+				slSelect.addAll(slSelectParam);
+			}
+			
+			StringList slRelSelect = new StringList();
+			slRelSelect.add(DomainRelationship.SELECT_ID);
+			if ( slRelSelectParam != null )
+			{
+				slRelSelect.addAll(slRelSelectParam);
+			}
+			
+			String where = null;
+			if ( StringUtils.isNotEmpty(masterType) )
+			{
+				where = "type != decCodeMaster || (type == decCodeMaster && attribute[decMasterType] == '" + masterType + "')";
+			}
+			
+			MapList codeList = doRoot.getRelatedObjects(context, relPattern.getPattern(), typePattern.getPattern()
+					, slSelect, slRelSelect
+					, false, true
+					, (short) 0
+					, where, null
+					, 0);
+			
+			return codeList;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	public MapList compareExcelData2Create(Context context, MapList mapList, Map paramMap) throws Exception{
+		try {
+			String objectId = DecMatrixUtil.getObjectId(context, DecConstants.TYPE_DECCODEMASTERTEMPLATE, "Global", DecConstants.SYMB_HYPHEN);
+			
+			final String EVAL_NAME_REV = "evaluate[" + DecConstants.SELECT_NAME + " + '_' + " + DecConstants.SELECT_REVISION + "]";
+			
+			StringList slSelect = new StringList();
+			slSelect.add(DecConstants.SELECT_DESCRIPTION);
+			slSelect.add("attribute.value");
+			slSelect.add(EVAL_NAME_REV);
+			
+			StringList slRelSelect = new StringList();
+			slRelSelect.add("attribute.value");
+			
+			MapList allCodeList = getAllRelatedCodeList(context, objectId, "Code", slSelect, slRelSelect);
+			Map allCodeMap = decListUtil.getSelectKeyDataMapForMapList(allCodeList, EVAL_NAME_REV);
+			
+			Map excelDataMap = null;
+			
+			final String MASTER_NAME_EXPR = "Name";
+			final String MASTER_DESC_EXPR = "Description";
+			final String LEVEL_EXPR = "Lv${level} ";
+			final String DETAIL_CODE_EXPR = "Code";
+			final String DETAIL_DESC_EXPR = "Desc";
+			final String DETAIL_VALUE1_EXPR = "Value1";
+			final String DETAIL_VALUE2_EXPR = "Value2";
+			final String DETAIL_VALUE3_EXPR = "Value3";
+			final String DETAIL_VALUE4_EXPR = "Value4";
+			final String DETAIL_VALUE5_EXPR = "Value5";
+			
+			String masterName = null;
+			String detailName = null;
+			String revExpr = null;
+			String lvIdxStr = null;
+			String levelPrefix = null;
+			String masterKey = null;
+			String detailKey = null;
+			
+			List<CompareRule> compareRuleList4Master = new ArrayList<CompareRule>();
+			compareRuleList4Master.add(new CompareRule(MASTER_NAME_EXPR, DecConstants.SELECT_NAME));
+			compareRuleList4Master.add(new CompareRule(MASTER_DESC_EXPR, DecConstants.SELECT_DESCRIPTION));
+			
+			List<CompareRule> compareRuleList4Detail = null;
+			
+			Map<String, List<CompareRule>> compareRuleList4DetailCache = new HashMap<String, List<CompareRule>>();
+			
+			for ( Object obj : mapList )
+			{
+				excelDataMap = (Map) obj;
+				
+				masterName = (String) excelDataMap.get( MASTER_NAME_EXPR );
+				
+				masterKey = masterName + "_" + DecConstants.SYMB_HYPHEN;
+				
+				// check master
+				CompareUtil.checkExistence(allCodeMap, masterKey, excelDataMap, compareRuleList4Master);
+				
+				// init
+				revExpr = masterName;
+				
+				for (int lv = 1; lv <= 10; lv++)
+				{
+					lvIdxStr = String.valueOf(lv);
+					levelPrefix = LEVEL_EXPR.replace("${level}", lvIdxStr);
+					
+					detailName = (String) excelDataMap.get( levelPrefix + DETAIL_CODE_EXPR );
+					if ( StringUtils.isEmpty(detailName) )
+					{
+						break;
+					}
+					
+					detailKey = detailName + "_" + revExpr;
+					revExpr += "_" + detailName; // 다음 레벨을 위해 revision에 자신의 name을 조합
+					
+					if ( compareRuleList4DetailCache.containsKey(lvIdxStr) )
+					{
+						compareRuleList4Detail = compareRuleList4DetailCache.get(lvIdxStr);
+					}
+					else
+					{
+						compareRuleList4Detail = new ArrayList<CompareRule>();
+						compareRuleList4Detail.add(new CompareRule(levelPrefix + DETAIL_CODE_EXPR, DecConstants.SELECT_NAME));
+						compareRuleList4Detail.add(new CompareRule(levelPrefix + DETAIL_DESC_EXPR, DecConstants.SELECT_DESCRIPTION));
+						compareRuleList4Detail.add(new CompareRule(levelPrefix + DETAIL_VALUE1_EXPR, DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILATT1 + ".value"));
+						compareRuleList4Detail.add(new CompareRule(levelPrefix + DETAIL_VALUE2_EXPR, DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILATT2 + ".value"));
+						compareRuleList4Detail.add(new CompareRule(levelPrefix + DETAIL_VALUE3_EXPR, DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILATT3 + ".value"));
+						compareRuleList4Detail.add(new CompareRule(levelPrefix + DETAIL_VALUE4_EXPR, DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILATT4 + ".value"));
+						compareRuleList4Detail.add(new CompareRule(levelPrefix + DETAIL_VALUE5_EXPR, DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILATT5 + ".value"));
+						
+						compareRuleList4DetailCache.put(lvIdxStr, compareRuleList4Detail);
+					}
+					
+					// check detail
+					CompareUtil.checkExistence(allCodeMap, detailKey, excelDataMap, compareRuleList4Detail);
+				}
+				
+			}
+			
+			return mapList;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	public MapList compareExcelData2Add(Context context, MapList mapList, Map paramMap) throws Exception{
+		try {
+			final String EVAL_FROM_TO_NAME_REV = "evaluate[from.name + '_' + from.revision + '_' + to.name + '_' + to.revision]";
+			
+			String addRelRaw = MqlUtil.mqlCommand(context, "query connection type $1 select $2 $3 $4 $5 $6 $7 $8 dump $9"
+					, DecConstants.RELATIONSHIP_DECCODEDETAILRELADDTEMPLATE
+					, DecConstants.SELECT_ID
+					, EVAL_FROM_TO_NAME_REV
+					, DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILRELATT1
+					, DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILRELATT2
+					, DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILRELATT3
+					, DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILRELATT4
+					, DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILRELATT5
+					, DecConstants.SYMB_VERTICAL_BAR);
+			
+			StringList addRelRowList = FrameworkUtil.splitString(addRelRaw, "\n");
+			
+			StringList addRelColList = null;
+			String connectionId = null;
+			String connectionKey = null;
+			Map tempMap = null;
+			Map<String, Object> allConnectionMap = new HashMap<String, Object>();
+			for (String addRelRow : addRelRowList)
+			{
+				addRelColList = FrameworkUtil.splitString(addRelRow, DecConstants.SYMB_VERTICAL_BAR);
+				if ( addRelColList.size() >= 8 )
+				{
+					connectionId = addRelColList.get(1);
+					connectionKey = addRelColList.get(2);
+					
+					tempMap = new HashMap();
+					tempMap.put(DecConstants.SELECT_ID, connectionId);
+					tempMap.put(DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILRELATT1, addRelColList.get(3));
+					tempMap.put(DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILRELATT2, addRelColList.get(4));
+					tempMap.put(DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILRELATT3, addRelColList.get(5));
+					tempMap.put(DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILRELATT4, addRelColList.get(6));
+					tempMap.put(DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILRELATT5, addRelColList.get(7));
+					
+					allConnectionMap.put(connectionKey, tempMap);
+				}
+			}
+			
+			Map excelDataMap = null;
+			
+			final String FROM_NAME = "From Name";
+			final String FROM_REV = "From Rev";
+			final String TO_NAME = "To Name";
+			final String TO_REV = "To Rev";
+			
+			String fromName = null;
+			String fromRev = null;
+			String toName = null;
+			String toRev = null;
+			
+			List<CompareRule> compareRuleList = new ArrayList<CompareRule>();
+			compareRuleList.add(new CompareRule("Rel Attr 1", DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILRELATT1));
+			compareRuleList.add(new CompareRule("Rel Attr 2", DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILRELATT2));
+			compareRuleList.add(new CompareRule("Rel Attr 3", DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILRELATT3));
+			compareRuleList.add(new CompareRule("Rel Attr 4", DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILRELATT4));
+			compareRuleList.add(new CompareRule("Rel Attr 5", DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILRELATT5));
+			
+			for ( Object obj : mapList )
+			{
+				excelDataMap = (Map) obj;
+				
+				fromName = (String) excelDataMap.get( FROM_NAME );
+				fromRev = (String) excelDataMap.get( FROM_REV );
+				toName = (String) excelDataMap.get( TO_NAME );
+				toRev = (String) excelDataMap.get( TO_REV );
+				
+				connectionKey = fromName + DecConstants.SYMB_UNDER_BAR + fromRev + DecConstants.SYMB_UNDER_BAR + toName + DecConstants.SYMB_UNDER_BAR + toRev;
+				
+				// check connection
+				CompareUtil.checkExistence(allConnectionMap, connectionKey, excelDataMap, compareRuleList);
+			}
+			
+			return mapList;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	public String importExcelData2Create(Context context, String[] args) throws Exception{
+		try {
+			ContextUtil.startTransaction(context, true);
+			
+			Map programMap = JPO.unpackArgs(args);
+			MapList objectList = (MapList) programMap.get("objectList");
+			
+			String objectId = DecMatrixUtil.getObjectId(context, DecConstants.TYPE_DECCODEMASTERTEMPLATE, "Global", DecConstants.SYMB_HYPHEN);
+			
+			final String EVAL_NAME_REV = "evaluate[" + DecConstants.SELECT_NAME + " + '_' + " + DecConstants.SELECT_REVISION + "]";
+			
+			StringList slSelect = new StringList();
+			slSelect.add(DecConstants.SELECT_DESCRIPTION);
+			slSelect.add("attribute.value");
+			slSelect.add(EVAL_NAME_REV);
+			
+			StringList slRelSelect = new StringList();
+			slRelSelect.add("attribute.value");
+			
+			MapList allCodeList = getAllRelatedCodeList(context, objectId, "Code", slSelect, slRelSelect);
+			Map allCodeMap = decListUtil.getSelectKeyDataMapForMapList(allCodeList, EVAL_NAME_REV);
+			
+			Map excelDataMap = null;
+			
+			final String CODE_MASTER_TYPE = "Code";
+			final String MASTER_NAME_EXPR = "Name";
+			final String MASTER_DESC_EXPR = "Description";
+			final String LEVEL_EXPR = "Lv${level} ";
+			final String DETAIL_CODE_EXPR = "Code";
+			final String DETAIL_DESC_EXPR = "Desc";
+			final String DETAIL_VALUE1_EXPR = "Value1";
+			final String DETAIL_VALUE2_EXPR = "Value2";
+			final String DETAIL_VALUE3_EXPR = "Value3";
+			final String DETAIL_VALUE4_EXPR = "Value4";
+			final String DETAIL_VALUE5_EXPR = "Value5";
+			
+			String masterName = null;
+			String detailName = null;
+			String revExpr = null;
+			String lvIdxStr = null;
+			String levelPrefix = null;
+			String masterKey = null;
+			String detailKey = null;
+			String parentId = null;
+			
+			Map createParamMap = new HashMap();
+			Map tempMap = null;
+			Map codeMap = null;
+			
+			for ( Object obj : objectList )
+			{
+				excelDataMap = (Map) obj;
+				
+				// Action이 --- 인 경우 skip한다.
+				if ( DecConstants.SYMB_NA.equalsIgnoreCase( (String) excelDataMap.get("Action")) )
+				{
+					continue;
+				}
+				
+				masterName = (String) excelDataMap.get( MASTER_NAME_EXPR );
+				
+				masterKey = masterName + "_" + DecConstants.SYMB_HYPHEN;
+				
+				// check master
+				if ( allCodeMap.containsKey(masterKey) )
+				{
+					codeMap = (Map) allCodeMap.get(masterKey);
+					parentId = (String) codeMap.get(DecConstants.SELECT_ID);
+				}
+				else
+				{
+					// create code master
+					createParamMap.clear();
+					createParamMap.put("objectId", null);
+					createParamMap.put("masterType", CODE_MASTER_TYPE);
+					createParamMap.put(MASTER_NAME_EXPR, masterName);
+					createParamMap.put(MASTER_DESC_EXPR, (String) excelDataMap.get( MASTER_DESC_EXPR ));
+					
+					tempMap = createCodeMaster(context, createParamMap);
+					parentId = (String) tempMap.get(DecConstants.SELECT_ID);
+					
+					allCodeMap.put(masterKey, tempMap);
+				}
+				
+				// init
+				revExpr = masterName;
+				
+				for (int lv = 1; lv <= 10; lv++)
+				{
+					lvIdxStr = String.valueOf(lv);
+					levelPrefix = LEVEL_EXPR.replace("${level}", lvIdxStr);
+					
+					detailName = (String) excelDataMap.get( levelPrefix + DETAIL_CODE_EXPR );
+					if ( StringUtils.isEmpty(detailName) )
+					{
+						break;
+					}
+					
+					detailKey = detailName + "_" + revExpr;
+					
+					// check detail
+					if ( allCodeMap.containsKey(detailKey) )
+					{
+						codeMap = (Map) allCodeMap.get(detailKey);
+						parentId = (String) codeMap.get(DecConstants.SELECT_ID);
+					}
+					else
+					{
+						// create code detail
+						createParamMap.clear();
+						createParamMap.put("objectId", parentId);
+						createParamMap.put(DecConstants.ATTRIBUTE_DECCODE, detailName);
+						createParamMap.put(DecConstants.SELECT_REVISION, revExpr);
+						createParamMap.put(MASTER_DESC_EXPR, (String) excelDataMap.get(levelPrefix + DETAIL_DESC_EXPR));
+						createParamMap.put(DecConstants.ATTRIBUTE_DECCODEDETAILATT1, (String) excelDataMap.get(levelPrefix + DETAIL_VALUE1_EXPR));
+						createParamMap.put(DecConstants.ATTRIBUTE_DECCODEDETAILATT2, (String) excelDataMap.get(levelPrefix + DETAIL_VALUE2_EXPR));
+						createParamMap.put(DecConstants.ATTRIBUTE_DECCODEDETAILATT3, (String) excelDataMap.get(levelPrefix + DETAIL_VALUE3_EXPR));
+						createParamMap.put(DecConstants.ATTRIBUTE_DECCODEDETAILATT4, (String) excelDataMap.get(levelPrefix + DETAIL_VALUE4_EXPR));
+						createParamMap.put(DecConstants.ATTRIBUTE_DECCODEDETAILATT5, (String) excelDataMap.get(levelPrefix + DETAIL_VALUE5_EXPR));
+						
+						tempMap = createCodeDetail(context, createParamMap);
+						parentId = (String) tempMap.get(DecConstants.SELECT_ID);
+						
+						allCodeMap.put(detailKey, tempMap);
+					}
+					
+					revExpr += "_" + detailName; // 다음 레벨을 위해 revision에 자신의 name을 조합
+				}
+			}
+			
+			ContextUtil.commitTransaction(context);
+			
+			return "success";
+		} catch (Exception e) {
+			ContextUtil.abortTransaction(context);
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	/**
+	 * revision이 -인 Code Master인 경우에만 relationship을 decCodeDetailRelAddTemplate을 사용한다.
+	 * Project의 경우에는 relationship을 decCodeDetailRelAdd를 사용한다.
+	 * @param context
+	 * @param args
+	 * @return
+	 * @throws Exception
+	 */
+	public String importExcelData2Add(Context context, String[] args) throws Exception{
+		try {
+			ContextUtil.startTransaction(context, true);
+			
+			Map programMap = JPO.unpackArgs(args);
+			MapList objectList = (MapList) programMap.get("objectList");
+			
+			final String EVAL_FROM_TO_NAME_REV = "evaluate[from.name + '_' + from.revision + '_' + to.name + '_' + to.revision]";
+			
+			String addRelRaw = MqlUtil.mqlCommand(context, "query connection type $1 select $2 $3 dump $4"
+					, DecConstants.RELATIONSHIP_DECCODEDETAILRELADDTEMPLATE
+					, DecConstants.SELECT_ID
+					, EVAL_FROM_TO_NAME_REV
+					, DecConstants.SYMB_VERTICAL_BAR);
+			
+			StringList addRelRowList = FrameworkUtil.splitString(addRelRaw, "\n");
+			
+			StringList addRelColList = null;
+			String connectionId = null;
+			String connectionKey = null;
+			Map tempMap = null;
+			Map<String, Object> allConnectionMap = new HashMap<String, Object>();
+			for (String addRelRow : addRelRowList)
+			{
+				addRelColList = FrameworkUtil.splitString(addRelRow, DecConstants.SYMB_VERTICAL_BAR);
+				if ( addRelColList.size() >= 3 )
+				{
+					connectionId = addRelColList.get(1);
+					connectionKey = addRelColList.get(2);
+					
+					tempMap = new HashMap();
+					tempMap.put(DecConstants.SELECT_ID, connectionId);
+					
+					allConnectionMap.put(connectionKey, tempMap);
+				}
+			}
+			
+			Map excelDataMap = null;
+			
+			final String FROM_NAME = "From Name";
+			final String FROM_REV = "From Rev";
+			final String TO_NAME = "To Name";
+			final String TO_REV = "To Rev";
+			
+			String fromName = null;
+			String fromRev = null;
+			String toName = null;
+			String toRev = null;
+			
+			for ( Object obj : objectList )
+			{
+				excelDataMap = (Map) obj;
+				
+				// Action이 --- 인 경우 skip한다.
+				if ( DecConstants.SYMB_NA.equalsIgnoreCase( (String) excelDataMap.get("Action")) )
+				{
+					continue;
+				}
+				
+				fromName = (String) excelDataMap.get( FROM_NAME );
+				fromRev = (String) excelDataMap.get( FROM_REV );
+				toName = (String) excelDataMap.get( TO_NAME );
+				toRev = (String) excelDataMap.get( TO_REV );
+				
+				connectionKey = fromName + DecConstants.SYMB_UNDER_BAR + fromRev + DecConstants.SYMB_UNDER_BAR + toName + DecConstants.SYMB_UNDER_BAR + toRev;
+
+				if ( allConnectionMap.containsKey(connectionKey) )
+				{
+					MqlUtil.mqlCommand(context, "mod connection bus $1 $2 $3 to $4 $5 $6 relationship $7 $8 $9 $10 $11 $12 $13 $14 $15 $16 $17"
+							, DecConstants.TYPE_DECCODEDETAIL, fromName, fromRev
+							, DecConstants.TYPE_DECCODEDETAIL, toName, toRev
+							, DecConstants.RELATIONSHIP_DECCODEDETAILRELADDTEMPLATE
+							, DecConstants.ATTRIBUTE_DECCODEDETAILRELATT1, (String) excelDataMap.get( "Rel Attr 1" )
+							, DecConstants.ATTRIBUTE_DECCODEDETAILRELATT2, (String) excelDataMap.get( "Rel Attr 2" )
+							, DecConstants.ATTRIBUTE_DECCODEDETAILRELATT3, (String) excelDataMap.get( "Rel Attr 3" )
+							, DecConstants.ATTRIBUTE_DECCODEDETAILRELATT4, (String) excelDataMap.get( "Rel Attr 4" )
+							, DecConstants.ATTRIBUTE_DECCODEDETAILRELATT5, (String) excelDataMap.get( "Rel Attr 5" )
+							);
+				}
+				else
+				{
+					MqlUtil.mqlCommand(context, "connect bus $1 $2 $3 relationship $4 to $5 $6 $7 $8 $9 $10 $11 $12 $13 $14 $15 $16 $17"
+							, DecConstants.TYPE_DECCODEDETAIL, fromName, fromRev
+							, DecConstants.RELATIONSHIP_DECCODEDETAILRELADDTEMPLATE
+							, DecConstants.TYPE_DECCODEDETAIL, toName, toRev
+							, DecConstants.ATTRIBUTE_DECCODEDETAILRELATT1, (String) excelDataMap.get( "Rel Attr 1" )
+							, DecConstants.ATTRIBUTE_DECCODEDETAILRELATT2, (String) excelDataMap.get( "Rel Attr 2" )
+							, DecConstants.ATTRIBUTE_DECCODEDETAILRELATT3, (String) excelDataMap.get( "Rel Attr 3" )
+							, DecConstants.ATTRIBUTE_DECCODEDETAILRELATT4, (String) excelDataMap.get( "Rel Attr 4" )
+							, DecConstants.ATTRIBUTE_DECCODEDETAILRELATT5, (String) excelDataMap.get( "Rel Attr 5" )
+							);
+					
+					allConnectionMap.put(connectionKey, new HashMap());
+				}
+				
+			}
+			
+			ContextUtil.commitTransaction(context);
+			
+			return "success";
+		} catch (Exception e) {
+			ContextUtil.abortTransaction(context);
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	public String getFMCSDiscipline(Context context, String[] args) throws Exception{
+		Map programMap = JPO.unpackArgs(args);
+		String projectId = (String) programMap.get("objectId");
+		String discipline = (String) programMap.get("discipline");
+		
+		return getFMCSDiscipline(context, projectId, discipline);
+	}
+	
+	public String getFMCSDiscipline(Context context, String projectId, String discipline) throws Exception{
+		try {
+			String fmcsDisciplineRaw = getCodeDetailDisplayValueWithCodePathAndDetailType(context, projectId
+					, null, "Discipline", null
+					, DecConstants.SELECT_ATTRIBUTE_DECCODE,
+					new String[]{discipline, "|FMCS Discipline"});
+			
+			if ( fmcsDisciplineRaw.indexOf(DecConstants.SYMB_VERTICAL_BAR) > -1 )
+			{
+				throw new Exception("There are too many FMCS Discipline about " + discipline);
+			}
+			
+			return fmcsDisciplineRaw;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+
+	// 코드디테일 disconnect
+	public String disconnectCodeDetail(Context context, String[] args) throws Exception {
+		String message = DecConstants.EMPTY_STRING;
+		StringList connectionList = new StringList();
+		for (int i = 0; i < args.length; i++) {
+  		    StringList objectList = FrameworkUtil.splitString(args[i], DecConstants.SYMB_VERTICAL_BAR);
+  		    System.out.println(objectList);
+  		    String connectionId = objectList.get(0);
+  		    String parentId = objectList.get(2);
+  		    String type = MqlUtil.mqlCommand(context, "print bus $1 select $2 dump", parentId, DecConstants.SELECT_TYPE);
+  		    
+  		    if(type.equalsIgnoreCase(DecConstants.TYPE_DECCODEMASTER)) {
+  		    	message = EnoviaResourceBundle.getProperty(context, "ProgramCentral","ProgramCentral.Alert.IsNotHaveWBSTypeLevel", context.getSession().getLanguage());
+  		    	connectionList.clear();
+  		    	break;
+  		    } else {
+  		    	message = "Remove job success";
+  		    	connectionList.add(connectionId);
+  		    }
+		}
+		
+		for(String connectionId : connectionList) {
+			DomainRelationship.disconnect(context, connectionId);
+		}
+		
+		return message;
+	}
+
+	/**
+	 * jhlee Add 2023-08-09 CWP Task Form Code Detail
+	 * @param context
+	 * @param args
+	 * @return
+	 * @throws Exception
+	 */
+	public String getCodeDetailCode(Context context, String[] args) throws Exception {
+		return getCodeDetailInfo(context, args, DecConstants.SELECT_ATTRIBUTE_DECCODE);
+	}
+	public String getCodeDetailName(Context context, String[] args) throws Exception {
+		return getCodeDetailInfo(context, args, DecConstants.SELECT_NAME);
+	}
+	public String getCodeDetailDesc(Context context, String[] args) throws Exception {
+		return getCodeDetailInfo(context, args, DecConstants.SELECT_DESCRIPTION);
+	}
+	private String getCodeDetailInfo(Context context, String[] args, String sInfo) throws Exception{
+		String sReturn = null;
+        try {
+            Map programMap = (Map) JPO.unpackArgs(args);
+            Map fieldMap = (Map)programMap.get("fieldMap");
+            Map settings = (Map)fieldMap.get("settings");
+	    	String sMasterName = (String)settings.get("MasterName");
+	    	String sDetailType = (String)settings.get("DetailType");
+	    	String sRelWhere = (String)settings.get("RelWhere");
+	    	String sAttribute = (String)settings.get("attribute");
+	    	String sType = (String)settings.get("type");
+            Map requestMap = (Map) programMap.get("requestMap");
+            String objectId = (String) requestMap.get("objectId");
+            DomainObject doObj = DomainObject.newInstance(context, objectId);
+            String sSelAttr = doObj.getAttributeValue(context, sAttribute);
+	    	if(DecStringUtil.equals(sType, "IWP")) {
+	    		sSelAttr = doObj.getInfo(context, "to[" + DecConstants.RELATIONSHIP_SUBTASK + "].from." + DomainObject.getAttributeSelect(sAttribute));
+	    	}
+            String sProjectName = doObj.getInfo(context, TASK_PROJECT_NAME);
+	    	Map mParam = new HashMap();
+    		mParam.put("codeDetailType", sDetailType);
+    		mParam.put("codeMasterName", sMasterName);
+    		mParam.put("codeMasterRevision", sProjectName);
+    		if(DecStringUtil.isNotEmpty(sRelWhere)) {
+        		mParam.put("relWhereParam", sRelWhere);
+    		}
+    		MapList mlCodeDetail = getCodeDetailList(context, mParam);
+    		for(Object o : mlCodeDetail) {
+    			Map mCodeDetail = (Map)o;
+    			String sName = (String)mCodeDetail.get(DecConstants.SELECT_NAME);
+    			if(sSelAttr.equals(sName)) {
+    				sReturn = DecStringUtil.nullToEmpty(mCodeDetail.get(sInfo));
+    				break;
+    			}
+    		}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return sReturn;
+	}
+}

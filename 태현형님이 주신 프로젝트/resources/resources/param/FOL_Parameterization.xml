@@ -1,0 +1,116 @@
+<?xml version="1.0"?>
+<OOTBParameterization regSuite="WorkspaceMdl">
+<Domain id="LifecycleTopology">
+	<Family id="Workspace" collabApps="CollaborationAndApprovals">
+		<Constant id="policyID" value="Workspace"/>				
+		<Constant id="modifyTopology" value="true"/>
+		<Constant id="renameStates" value="false"/>
+		<Constant id="appType" value="CBP"/>
+		<Constant id="NLSStateFileName" value="emxFrameworkStringResource.properties"/>
+		<Constant id="lang" value="en,fr"/>
+
+		<GovernedType id="Workspace">	
+			<Constant id="typeId" value="Workspace"/>
+			<Constant id="supportedRules" value="RejectIfAnyOfTheCommonlyGovernedChildNotOnTargetState"/>
+		</GovernedType>
+		<GovernedType id="Workspace_Vault">	
+			<Constant id="typeId" value="Workspace Vault"/>
+			<Constant id="supportedRules" value="RejectIfAnyOfTheCommonlyGovernedChildNotOnTargetState"/>
+		</GovernedType>
+		
+		<State id="Create">
+			<Constant id="sysName" value="Create"/>
+			<Constant id="isRemovable" value="false"/>
+			<Constant id="NLSKey" value="emxFramework.State.Workspace.Create"/>
+			<Constant id="complementaryNLSKeys" value="current.Create"/>
+		</State>
+		<State id="Active">
+			<Constant id="sysName" value="Active"/>
+			<Constant id="isRemovable" value="false"/>
+			<Constant id="NLSKey" value="emxFramework.State.Workspace.Active"/>
+			<Constant id="complementaryNLSKeys" value="current.Active"/>
+		</State>
+		<State id="Review">
+			<Constant id="sysName" value="Review"/>
+			<Constant id="isRemovable" value="false"/>
+			<Constant id="NLSKey" value="emxFramework.State.Workspace.Review"/>
+			<Constant id="complementaryNLSKeys" value="current.Review"/>
+		</State>
+		<State id="Complete">
+			<Constant id="sysName" value="Complete"/>
+			<Constant id="isRemovable" value="false"/>
+			<Constant id="NLSKey" value="emxFramework.State.Workspace.Complete"/>
+			<Constant id="complementaryNLSKeys" value="current.Complete"/>
+			</State>
+		<State id="Archive">
+			<Constant id="sysName" value="Archive"/>
+			<Constant id="isRemovable" value="false"/>
+			<Constant id="NLSKey" value="emxFramework.State.Workspace.Archive"/>
+			<Constant id="complementaryNLSKeys" value="current.Archive"/>
+		</State>
+		
+        <Transition id="CreateToActive">
+               <Constant id="transName" value=""/>
+               <Constant id="sourceState" value="Create"/>
+               <Constant id="targetState" value="Active"/>
+               <Constant id="removal" value="false"/>
+        </Transition>
+        <Transition id="ActiveToReview">
+               <Constant id="transName" value=""/>
+               <Constant id="sourceState" value="Active"/>
+               <Constant id="targetState" value="Review"/>
+               <Constant id="removal" value="false"/>
+        </Transition>
+        <Transition id="ReviewToComplete">
+               <Constant id="transName" value=""/>
+               <Constant id="sourceState" value="Review"/>
+               <Constant id="targetState" value="Complete"/>
+               <Constant id="removal" value="false"/>
+        </Transition>
+        <Transition id="CompleteToArchive">
+               <Constant id="transName" value=""/>
+               <Constant id="sourceState" value="Complete"/>
+               <Constant id="targetState" value="Archive"/>
+               <Constant id="removal" value="false"/>
+        </Transition>
+        <Transition id="ActiveToCreate">
+               <Constant id="transName" value=""/>
+               <Constant id="sourceState" value="Active"/>
+               <Constant id="targetState" value="Create"/>
+               <Constant id="removal" value="true"/>
+               <Constant id="addition" value="true"/>
+        </Transition>
+        <Transition id="ReviewToActive">
+               <Constant id="transName" value=""/>
+               <Constant id="sourceState" value="Review"/>
+               <Constant id="targetState" value="Active"/>
+               <Constant id="removal" value="true"/>
+               <Constant id="addition" value="true"/>
+        </Transition>
+        <Transition id="CompleteToReview">
+               <Constant id="transName" value=""/>
+               <Constant id="sourceState" value="Complete"/>
+               <Constant id="targetState" value="Review"/>
+               <Constant id="removal" value="true"/>
+               <Constant id="addition" value="true"/>
+        </Transition>
+        <Transition id="ArchiveToComplete">
+               <Constant id="transName" value=""/>
+               <Constant id="sourceState" value="Archive"/>
+               <Constant id="targetState" value="Complete"/>
+               <Constant id="removal" value="true"/>
+               <Constant id="addition" value="true"/>
+        </Transition>
+	</Family>
+</Domain>
+    <Domain id="BookmarkMdl" regSuite="WorkspaceMdl">
+	    <Family id="ConfigureBookmarkExperience" icon="iconParameterizationIdentification.gif">
+		    <Parameter id="BookmarkCreateInWork" implementation="com.dassault_systemes.ootbConfiguration.deployment.impl.ParameterizationExpressionImpl" regSuite="WorkspaceMdl">
+			    <Argument id="Argument" type="boolean" input="checkbox" default="Disabled"/>
+				<Constant id="expression" value="BookmarkCreateInWork"/>
+				<Constant id="valueChecked" value="true"/>
+				<Constant id="valueUnchecked" value="false"/>
+			</Parameter>
+	    </Family>
+    </Domain>
+</OOTBParameterization>

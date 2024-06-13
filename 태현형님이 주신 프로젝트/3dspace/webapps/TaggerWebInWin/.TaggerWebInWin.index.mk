@@ -1,0 +1,12 @@
+m|SNResultUX\TaggerWebInWin.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.0.22102|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\TaggerWebInWin\TaggerWebInWin.html|1647692253|11230
+s|SNResultUX\TaggerWebInWin.mweb\src\TaggerWebInWin.html|1592217197|11230
+t|win_b64\webapps\TaggerWebInWin\TaggerWebInWin.js|1649802398|482
+s|SNResultUX\TaggerWebInWin.mweb\src\TaggerWebInWin.js|1649063511|284
+u|SNResultUX\TaggerWebInWin.mweb\src\TaggerWebInWinLeftPanel.js|1649063525|343
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

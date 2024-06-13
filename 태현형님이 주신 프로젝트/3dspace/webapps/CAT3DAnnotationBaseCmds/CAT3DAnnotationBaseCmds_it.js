@@ -1,0 +1,1 @@
+define("DS/CAT3DAnnotationBaseCmds/CAT3DAnnotationBaseCmds_it",{});define("DS/CAT3DAnnotationBaseCmds/assets/nls/CAT3DAnnotationBaseCmds",{DisplayHistorySuccessfulLbl:"Consente di visualizzare e acquisire la cronologia di visualizzazione eliminata",InfosPanelTitle:"Standard semantici",CloseButton:"Chiudi",relatedAttrPanelTitle:"Informazioni relative alle funzioni"});

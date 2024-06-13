@@ -1,0 +1,90 @@
+{
+    "dsmfg:MfgItem": {
+        "summary": "Manufacturing Item",
+        "description": "Manufacturing Item",
+        "PUBLICMasks": ["dsmfg:MfgItemMask.Default", "dsmfg:MfgItemMask.Details", "dsmfg:MfgItemMask.Config"],
+        "PROTECTEDMasks": [],
+    	"PUBLICExtensions": ["dslc:changeControl","dsmfg:ScopeEngItem","dsmfg:PartialScopeEngItem","dsmfg:ResultingEngItem", "dsmfg:AssignmentFilter", "dscfg:Configured"],
+		"PROTECTEDExtensions": ["dsmfg:AssignedOrganization", "dsmfg:ProvideEnterpriseAttributes", "dsmfg:CreateKitEnterpriseAttributes",
+                           "dsmfg:InstallationEnterpriseAttributes", "dsmfg:CreateAssemblyEnterpriseAttributes", "dsmfg:CreateMaterialEnterpriseAttributes",
+                           "dsmfg:ElementaryEndItemEnterpriseAttributes", "dsmfg:ProcessContinuousProvideEnterpriseAttributes", "dsmfg:ProcessContinuousCreateMaterialEnterpriseAttributes"],
+        "PRIVATEExtensions": [],
+        "PUBLICFields": ["dsmfg:ScopeEngItem.referencedObject","dsmfg:PartialScopeEngItem.referencedObject","dsmfg:ResultingEngItems",
+        			"dsmveno:CustomerAttributes", "dsmveno:SupportedTypes"],
+        "PROTECTEDFields": ["dsmvcfg:attribute.isConfigured"],
+        "PUBLICExcludedURIs": ["getItems", "GETAll", "DELETEBulk"]
+    },
+    "dsmfg:MfgItemInstance": {
+        "summary": "Manufacturing Item Instance",
+        "description": "Manufacturing Item Instance",
+        "PUBLICMasks": ["dsmfg:MfgItemInstanceMask.Default", "dsmfg:MfgItemInstanceMask.Details"],
+        "PROTECTEDMasks": [],
+        "PUBLICExtensions": ["dscfg:Filterable", "dsmfg:ImplementedEngOccurrence", "dsmfg:Dependency"],
+        "PROTECTEDExtensions": [],
+        "PUBLICExcludedURIs": ["getItems"]
+    },
+    "dsmfg:ScopeEngItem": {
+        "summary": "Scoped Engineering Item",
+        "description": "Gets the scoped Engineering Item from the Manufacturing reference",
+        "PUBLICMasks": ["dsmfg:ScopeEngItemMask.Default"],
+        "PROTECTEDMasks": [],
+        "PUBLICExtensions": []
+    },
+    "dsmfg:PartialScopeEngItem": {
+        "summary": "Partial Scoped Engineering Item",
+        "description": "Gets the Partial scoped Engineering Item from the Manufacturing reference",
+        "PUBLICMasks": ["dsmfg:PartialScopeEngItemMask.Default"],
+        "PROTECTEDMasks": [],
+        "PUBLICExtensions": []
+    },
+    "dsmfg:ResultingEngItem": {
+        "summary": "Resulting Engineering Item",
+        "description": "Gets the resulting Engineering Item from the Manufacturing reference",
+        "PUBLICMasks": ["dsmfg:ResultingEngItemMask.Default"],
+        "PROTECTEDMasks": [],
+        "PUBLICExtensions": [],
+        "PUBLICExcludedURIs": ["getItems", "DELETEBulk"]
+    },
+    "dsmfg:AssignmentFilter": {
+        "summary": "Assignment Filter",
+        "description": "Represents the link between MBOM reference and EBOM Instance occurrence path",
+        "PUBLICMasks": ["dsmfg:AssignmentFilterMask.Default"],
+        "PROTECTEDMasks": [],
+        "PUBLICExtensions": []
+    },
+    "dsmfg:ImplementedEngOccurrence": {
+        "summary": "Implemented Engineering Occurence",
+        "description": "Represents the link between MBOM Instance and EBOM Instance occurrence path",
+        "PUBLICMasks": ["dsmfg:ImplementedEngOccurrenceMask.Default"],
+        "PROTECTEDMasks": [],
+        "PUBLICExtensions": []
+    },
+    "dsmfg:AssignedOrganization": {
+        "summary": "Assigned Organization",
+        "description": "Assigns Organization",
+        "PUBLICMasks": [],
+        "PROTECTEDMasks": ["dsmfg:AssignedOrganizationMask.Default"],
+        "PUBLICExtensions": []
+    },
+    "dsmfg:AssignedRequirement": {
+        "summary": "Assigned Requirement",
+        "description": "Assigns Requirement",
+        "PUBLICMasks": ["dsmfg:AssignedRequirementMask.Default"],
+        "PROTECTEDMasks": [],
+    	"PUBLICExcludedURIs": ["getItems", "BULKUPDATE", "DELETEBulk"]
+    },
+    "dsmfg:ScopeRequirementSpec": {
+        "summary": "Scope requirement specifications",
+        "description": "Scope requirement specifications",
+        "PUBLICMasks": ["dsmfg:ScopeRequirementSpecMask.Default"],
+        "PROTECTEDMasks": [],
+    	"PUBLICExcludedURIs": ["getItems", "BULKUPDATE", "DELETEBulk"]
+    },
+    "dsmfg:Dependency": {
+    	"summary": "Manufacturing Instance Dependency",
+        "description": "Manufacturing Instance Dependency",
+        "PUBLICMasks": ["dsmfg:DependencyMask.Default"],
+        "PROTECTEDMasks": [],
+    	"PUBLICExcludedURIs": ["getItems", "BULKUPDATE"]
+    }
+}

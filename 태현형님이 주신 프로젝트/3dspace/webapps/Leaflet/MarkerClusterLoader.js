@@ -1,0 +1,2 @@
+/*! Copyright 2014 Dassault Syst�mes */
+"object"==typeof MarkerCluster?define("DS/Leaflet/MarkerCluster",MarkerCluster):function(){"use strict";var e=require.toUrl("DS/Leaflet/MarkerCluster");e.indexOf("?")>-1&&(e=e.substring(0,e.indexOf("?"))),require.config({paths:{"DS/Leaflet/MarkerCluster":e},shim:{"DS/Leaflet/MarkerCluster":{deps:["DS/Leaflet/Leaflet"],exports:"Leaflet"}}})}(),define("DS/Leaflet/MarkerClusterLoader",["DS/Leaflet/MarkerCluster"],function(e){"use strict";return e});

@@ -1,0 +1,67 @@
+{
+    "dsdo:DerivedOutputs": {
+        "kindOf": "root",
+        "beType": "virtual_DerivedOutputs",
+        "defaultMask": "dsmvdo:DerivedOutputsMask.Details",
+        "patchCSRF":true,
+        "rootLinks": ["dsxcad:Part", "dsxcad:Representation", "dsxcad:Drawing", "dsdrw:Drawing", "dsxcad:Symbol", "dsxcad:ElecProject" ],
+        "contentLinks": ["dsdo:DerivedOutputFiles"],
+        "attributeMappingClass": "com.dassault_systemes.enovia.xapps.dsdo.V1.dictionaries.dsdoFlowAttributeDictionary",
+        "cestamp":false,
+        "isPublic":true,
+        "optionCheck" : {
+        	"modify"      : true,
+        	"produce"     : true,
+        	"navigate"    : true
+        }
+    },
+    "dsdo:DerivedOutputFiles": {
+        "kindOf": "content",
+        "beType": "virtual_DerivedOutputFiles",
+        "defaultMask": "dsmvdo:DerivedOutputsMask.AllDetails",
+        "patchCSRF":true,
+        "attributeMappingClass": "com.dassault_systemes.enovia.xapps.dsdo.V1.dictionaries.dsdoFlowAttributeDictionary",
+        "cestamp":false,
+        "isPublic":true,
+        "optionCheck" : {
+        	"modify"      : true,
+        	"produce"     : true,
+        	"navigate"    : true
+        }
+    },
+	"dsdo:DerivedOutputRules": {
+        "kindOf": "root",
+        "beType": "virtual_DerivedOutputRules",
+        "defaultMask": "dsmvdo:DerivedOutputRulesMask.DORulesDetails",
+        "patchCSRF":false,
+        "rootLinks": [],
+        "contentLinks": [],
+        "implementationClass":   "com.dassault_systemes.enovia.xapps.dsdo.V%1.implementations.dsdoAuthoringImpl",
+        "attributeMappingClass": "com.dassault_systemes.enovia.xapps.dsdo.V1.dictionaries.dsdoFlowAttributeDictionary",
+        "cestamp":false,
+        "isPublic":true,
+        "optionCheck" : {
+        	"modify"      : false,
+        	"produce"     : false,
+        	"navigate"    : true
+        },
+        "publicResourceURI": "/resources/v1/modeler/dsdo/dsdo:DerivedOutputRules/{pid}"
+    },
+	"dsdo:DerivedOutputJobs": {
+        "kindOf": "root",
+        "beType": "virtual_DerivedOutputJobs",
+        "defaultMask": "",
+        "patchCSRF":true,
+        "rootLinks": ["dsxcad:Part", "dsxcad:Representation", "dsxcad:Drawing", "dsdrw:Drawing", "dsxcad:Symbol", "dsxcad:ElecProject", "documents"],
+        "contentLinks": [],
+        "attributeMappingClass": "com.dassault_systemes.enovia.xapps.dsdo.V1.dictionaries.dsdoFlowAttributeDictionary",
+        "cestamp":false,
+        "isPublic":true,
+        "optionCheck" : {
+        	"modify"      : false,
+        	"produce"     : true,
+        	"navigate"    : false
+        }
+    }
+    
+}

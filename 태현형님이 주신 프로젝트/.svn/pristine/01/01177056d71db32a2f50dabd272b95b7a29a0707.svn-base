@@ -1,0 +1,16 @@
+m|ENOXAppsFoundationsUX\ENOXDataDragAndDrop.mweb
+b|j|n,u
+b|c|n,m
+v|6.425.1.22327|3.2
+r|G:\R425\BSF\.
+t|ENOXAppsFoundationsUX\ENOXDataDragAndDrop.mweb\LocalGenerated\win_b64\css\ENOXDataDragAndDrop.css|1647691506|161
+s|ENOXAppsFoundationsUX\ENOXDataDragAndDrop.mweb\src\css\ENOXDataDragAndDrop.scss|1557921940|240
+t|win_b64\webapps\ENOXDataDragAndDrop\assets\ENOXDataDragAndDrop.json|1647691916|0
+s|ENOXAppsFoundationsUX\ENOXDataDragAndDrop.mweb\src\assets\ENOXDataDragAndDrop.json|1554703521|0
+t|win_b64\webapps\ENOXDataDragAndDrop\css\ENOXDataDragAndDrop.css|1669240384|129
+g|ENOXAppsFoundationsUX\ENOXDataDragAndDrop.mweb\LocalGenerated\win_b64\css\ENOXDataDragAndDrop.css|1647691506|161
+t|win_b64\webapps\ENOXDataDragAndDrop\html\ENOXDataDragAndDrop.html|1647691916|550
+s|ENOXAppsFoundationsUX\ENOXDataDragAndDrop.mweb\src\html\ENOXDataDragAndDrop.html|1556252814|550
+t|win_b64\webapps\ENOXDataDragAndDrop\js\ENOXDataDragAndDrop.js|1585552794|4091
+s|ENOXAppsFoundationsUX\ENOXDataDragAndDrop.mweb\src\js\ENOXDataDragAndDrop.js|1585552794|4091
+u|win_b64\code\toolcmds\yuicompressor-2.4.9.bat|1647654585|205

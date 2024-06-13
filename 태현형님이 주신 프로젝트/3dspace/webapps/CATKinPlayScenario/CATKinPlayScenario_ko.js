@@ -1,0 +1,1 @@
+define("DS/CATKinPlayScenario/CATKinPlayScenario_ko",{});define("DS/CATKinPlayScenario/assets/nls/CATKinPlayRegister",{CATKinPlayRegister_Title:"운동학",CATKinPlayRegister_Description:"애니메이션 재생 등록",Animation_Title:"애니메이션 플레이어",Animation_Description:"애니메이션 재생"});

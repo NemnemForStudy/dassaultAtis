@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration scan="true" scanPeriod="30 seconds">
+
+<!-- CVServlet loggers  -->
+
+<appender name="CVServletMonitoring" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${catalina.base}/logs/CVServlet.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+       <fileNamePattern>${catalina.base}/logs/CVServlet.%i.log.zip</fileNamePattern>
+       <minIndex>1</minIndex>
+       <maxIndex>9</maxIndex>
+    </rollingPolicy>
+    <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+      <maxFileSize>50MB</maxFileSize>
+    </triggeringPolicy>
+    <layout class="ch.qos.logback.classic.PatternLayout">
+      <fileHeader>#!/bin/bash
+username=$2
+requestid=$3
+sessionid=$4
+[ -z "$username" ] &amp;&amp; username=.*
+[ -z "$requestid" ] &amp;&amp; requestid=[0-9]*
+[ -z "$sessionid" ] &amp;&amp; sessionid=.*
+if [ "$1" == "dump" ]; then       cat $0 | sed -n -E ":r; /^([0-9]{0,4}[-: ,]?)*\s+\[$sessionid\]\[$username\]\[$requestid\]/{ =; p; :a; n; /^([0-9]{0,4}[-: ,]?)*\s+\[.*\]\[.*\]\[[0-9]*\]/!{=; p; ba}; br}" | sed "N;s/\n/\t/"
+elif [ "$1" == "tail" ]; then     tail -n 200 -f $0 | sed -n -E ":r; /^([0-9]{0,4}[-: ,]?)*\s+\[$sessionid\]\[$username\]\[[0-9]*\]/{ p; :a; n; /^([0-9]{0,4}[-: ,]?)*\s+\[.*\]\[.*\]\[[0-9]*\]/!{p; ba}; br}"
+else                              printf "Usage:\t/bin/bash $0 dump userregex requestid\n\t/bin/bash $0 tail userregex\n"
+fi
+exit 0
+</fileHeader>
+      <pattern>%date{ISO8601} [%X{fedSearchHash}][%X{user}][%X{id}][%thread] %-5level - [%logger{0}]%msg%n</pattern>
+    </layout>
+</appender>
+<logger name="com.dassault_systemes.federated_search.utils.Log" level="DEBUG" additivity="false">
+  <appender-ref ref="CVServletMonitoring"/>
+</logger>
+<logger name="com.dassault_systemes.cv" level="DEBUG" additivity="false">
+  <appender-ref ref="CVServletMonitoring"/>
+</logger>
+<logger name="com.dassault_systemes.misc" level="DEBUG" additivity="false">
+  <appender-ref ref="CVServletMonitoring"/>
+</logger>
+
+<appender name="CVServletStartup" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${catalina.base}/logs/CVServlet_startup.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+       <fileNamePattern>${catalina.base}/logs/CVServlet_startup.%i.log</fileNamePattern>
+       <minIndex>1</minIndex>
+       <maxIndex>9</maxIndex>
+    </rollingPolicy>
+    <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+      <maxFileSize>50MB</maxFileSize>
+    </triggeringPolicy>
+    <encoder>
+      <pattern>%d [%thread] %-5level - %msg%n</pattern>
+    </encoder>
+</appender>
+<logger name="com.dassault_systemes.federated_search.utils.Log$Startup" level="DEBUG" additivity="false">
+  <appender-ref ref="CVServletStartup"/>
+</logger>
+
+</configuration>

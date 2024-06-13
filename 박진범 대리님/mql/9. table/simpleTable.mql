@@ -1,0 +1,39 @@
+#####################################################################################################
+# Created by changseopLim
+# Create Date : 2024-05-29
+# Name : simpleTable 
+#####################################################################################################
+#del table simpleTable system
+add table simpleTable system
+column
+	name 'Id2024'
+	setting Width 5
+	setting 'Column Type' checkbox
+column
+	name 'No2024'
+	label 'emxFramework.label.No2024'
+	bus '$<name>'
+	href '${COMMON_DIR}/emxTree.jsp'
+	setting Width 15
+	setting 'Target Location' content
+	setting 'Registered Suite' 'Framework'
+column
+	name 'Name2024'
+	label 'emxFramework.label.Name2024'
+	bus '$<attribute[simpleTitle]>'
+	setting 'Field Type' attribute
+	setting 'Admin Type' attribute_Name2024
+	setting 'Registered Suite' 'Framework'
+column
+	name State2024
+	label 'emxFramework.label.State2024'
+	bus '$<current>'
+	setting 'Admin Type' 'State'
+	setting 'Registered Suite' 'Framework'
+column
+	name 'newWindow'
+	href '${COMMON_DIR}/emxTree.jsp'
+	setting 'Column Icon' 'images/iconNewWindow.gif'
+	setting 'Column Type' icon
+	setting 'Target Location' popup
+;

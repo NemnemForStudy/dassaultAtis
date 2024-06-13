@@ -1,0 +1,1 @@
+define("DS/3DPlayAnnotationUtils/3DPlayAnnotationUtils_ru",{});define("DS/3DPlayAnnotationUtils/assets/nls/3DPlayAnnotation",{PlaceHolder:"Создать текст",ClickToLaunchText:"Нажмите в виде, чтобы создать новое текстовое поле",cancelText:"Отмена",validateText:"Проверить",nextText:"Далее"});

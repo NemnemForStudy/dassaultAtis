@@ -1,0 +1,1 @@
+define("DS/DMUFormatEdition/DMUFormatEdition_de",{});define("DS/DMUFormatEdition/assets/nls/DMUFormatEdition",{formatEditionModeStarted:"Formate bearbeiten",slideEditionModeStarted:"Folien bearbeiten",currentFormatUpdatedMessage:"Blickpunkt aktualisiert",NoFormat:"Kein Format",FormatChooserPanelTitle:"Format",normalFormatTitle:"Format",generateFormat:"Format erzeugen"});

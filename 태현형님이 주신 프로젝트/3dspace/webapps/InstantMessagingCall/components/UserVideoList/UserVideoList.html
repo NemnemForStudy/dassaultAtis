@@ -1,0 +1,27 @@
+<div
+  id="im-call-user-video-list"
+>
+  <!-- Top arrow - show previous -->
+  <div
+    class="scroll-button fonticon fonticon-chevron-up"
+    v-if="isScrollableUp"
+    @click="scrollUp"
+  />
+
+  <!-- Users video list -->
+  <im-call-user-item
+    v-for="(item, index) in users"
+    :key="index"
+    :user_id="item.user_id"
+    :isSpeakerView="true"
+    v-show="isVisible(index)"
+  />
+  
+  <!-- Bottom arrow - show next -->
+  <div
+    class="scroll-button fonticon fonticon-chevron-down"
+    v-if="isScrollableDown"
+    @click="scrollDown"
+  />
+
+</div>

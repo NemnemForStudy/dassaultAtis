@@ -1,0 +1,1 @@
+define("DS/MobilePairing/MobilePairing_zh-TW",{});define("DS/MobilePairing/assets/nls/mobilePairing",{description:"請使用下列代碼將您的行動應用程式與 3DEXPERIENCE Platform 配對"});

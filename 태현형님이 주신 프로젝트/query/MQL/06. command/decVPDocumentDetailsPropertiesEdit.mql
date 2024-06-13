@@ -1,0 +1,15 @@
+################################################################################################
+# Created By choimingi : 2023. 07 . 19
+# Admin Type : command
+# Name : decVPDocumentDetailsPropertiesEdit
+################################################################################################
+#delete command decVPDocumentDetailsPropertiesEdit;
+copy command PMCProjectDetailsPropertiesEdit decVPDocumentDetailsPropertiesEdit;
+mod menu decVPDocumentDetailsToolbarActions add command 'decVPDocumentDetailsPropertiesEdit';
+mod command decVPDocumentDetailsPropertiesEdit href '${COMMON_DIR}/emxForm.jsp?form=decVPDocumentPropertiesEditForm&mode=edit&submitAction=refreshCaller&displayCDMFileSummary=true';
+
+mod command decVPDocumentDetailsPropertiesEdit
+	add setting 'hasAccess' 'PIM,AWP,WFP' 
+	add setting 'Access Program' 'decAccess'
+	add setting 'Access Function' 'hasAccess'
+;

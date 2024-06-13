@@ -1,0 +1,173 @@
+/**
+ * 
+ */
+
+// 위 아래 같은 값이 있으면 merge하기
+function fnMergeCell(mergeClassArr) {
+	for ( let idx = 0; idx < mergeClassArr.length; idx++ )
+	{
+		let klass = "." + mergeClassArr[idx]; 
+		$(klass).each(function() {
+			
+			let mergeValue = $(this).attr("mergeValue");
+			let mergeRowCnt = 0;
+			let prevRowIdx = 0;
+			let currentRowIdx = 0;
+			let mainDOM = null;
+			let slaveDOMArr = new Array();
+			
+			$("td[mergeValue = '" + mergeValue + "']").each(function() {
+				currentRowIdx = $(this).closest("tr").attr("rowIdx");
+				
+				if ( mainDOM === null )
+				{
+					mainDOM = $(this);
+					slaveDOMArr = new Array();
+					mergeRowCnt = 0;
+				} 
+				else if ( prevRowIdx + 1 !== Number(currentRowIdx) )
+				{
+					fnSetRowSpan(mergeRowCnt, mainDOM, slaveDOMArr);
+					
+					mainDOM = $(this);
+					slaveDOMArr = new Array();
+					mergeRowCnt = 0;
+				}
+				else
+				{
+					slaveDOMArr.push($(this));
+				}
+				
+				prevRowIdx = Number(currentRowIdx);
+				mergeRowCnt++;
+			});
+	
+			fnSetRowSpan(mergeRowCnt, mainDOM, slaveDOMArr);
+		});
+		
+	}
+}
+
+function fnSetRowSpan(mergeRowCnt, mainDOM, slaveDOMArr) {
+	if ( mergeRowCnt > 1 && mainDOM !== null )
+	{
+		$(mainDOM).attr("rowspan", mergeRowCnt);
+		for (let k = 0; k < slaveDOMArr.length; k++ )
+		{
+			$(slaveDOMArr[k]).remove();
+		}
+	}
+}
+
+function fnExpand(dom) {
+	let $trDOM = $(dom).closest("tr");
+	let dpCode = $(dom).closest("tr").attr("dpCode");
+	if ( "All" === dpCode )
+	{
+		$("tr.detail").show();
+		$("a.collapseAnchor").show();
+		$("a.expandAnchor").hide();
+	}
+	else
+	{
+// 		$("tr.detail").hide();
+		$("tr." + dpCode).show();
+		$(dom).hide();
+		$trDOM.find("a.collapseAnchor").show();
+	}
+}
+function fnCollapse(dom) {
+	let $trDOM = $(dom).closest("tr");
+	let dpCode = $trDOM.attr("dpCode");
+	if ( "All" === dpCode )
+	{
+		$("tr.detail").hide();
+		$("a.collapseAnchor").hide();
+		$("a.expandAnchor").show();
+	}
+	else
+	{
+		$("tr." + dpCode + ".detail").hide();
+		$(dom).hide();
+		$trDOM.find("a.expandAnchor").show();
+	}
+}
+
+function fnSetCutOffDate(cutOffDate) {
+	$("#cutOffSpan").html("<b>Cut-off Date : </b>" + cutOffDate);
+}
+
+function setFilterCmd(doInit) {
+	// draw find in control in the toolbar specified.
+	var divToolbar = parent.document.getElementById("divToolbar");
+	var divFindInWrapper = document.createElement("div");
+	divFindInWrapper.classList.add("find-in-wrapper");
+	divToolbar.appendChild(divFindInWrapper);
+
+	var divFilterBttn = document.createElement("div");
+	divFilterBttn.classList.add("toolbar");
+	divFilterBttn.classList.add("find-in-button");
+	divFilterBttn.innerHTML = "<table>"
+			+ "<tbody>"
+			+ "<tr>"
+			+ "<td title='Search' class='icon-button'><img src='../common/images/iconActionSearchSpyGlass.png' onclick='fnShowHideFilter()'></td>"
+			+ "</tr>" + "</tbody>" + "</table>";
+			
+	if ( doInit === undefined || doInit === true )
+	{
+		let filterDiv = document.createElement("div");
+		filterDiv.classList.add("filterDiv");
+		filterDiv.id = "filterDiv";
+		filterDiv.innerHTML = fnGenerateTableImplement();
+		document.body.appendChild(filterDiv);
+		
+	}
+			
+	divFindInWrapper.appendChild(divFilterBttn);
+}
+
+function fnGenerateSelectExpr(selectName, optionArr, selectedValue, includeEmpty, onchangeExpr, emptyDisplayValue) {
+	let htmlExpr = "<select id='" + selectName + "' name='" + selectName + "' " + ( onchangeExpr !== undefined ? "onchange='" + onchangeExpr + "'" : "") + ">";
+	let optionValue = null;
+	if ( includeEmpty !== undefined && includeEmpty === true )
+	{
+		htmlExpr += "<option value=''>" + (emptyDisplayValue ? emptyDisplayValue : "") + "</option>";
+	}
+	
+	for (let k = 0; k < optionArr.length; k++)
+	{
+		optionValue = optionArr[k].id;
+		
+		htmlExpr += "<option value='" + optionValue + "' " + ( optionValue === selectedValue ? "selected" : "" ) + ">";
+			htmlExpr += optionArr[k].name;
+		htmlExpr += "</option>";
+	}
+	htmlExpr += "</select>";
+	
+	return htmlExpr;
+}
+
+function fnHideFSHeader() {
+	$(parent.document).find("#ph").closest("table").hide();
+}
+
+// 화면 상에 고정할 대상의 설정 적용
+function fnAdjustStickyOption(stickyDOMId, isTable, changeTopValue) {
+	// 고정할 대상 조회
+	let stickyDOM = $("#" + stickyDOMId);
+	
+	let stickyTarget = stickyDOM;
+	if ( isTable && isTable === true )
+	{
+		stickyTarget = stickyDOM.find("thead");
+	}
+	
+	// 고정할 대상의 위치 설정
+	if ( !changeTopValue )
+	{
+		changeTopValue = stickyDOM.offset().top;
+	}
+	stickyTarget.css("top", changeTopValue);
+	
+	return changeTopValue;
+}

@@ -1,0 +1,176 @@
+<?xml version="1.0"?>
+<!-- COPYRIGHT DASSAULT SYSTEMES 2020, All rights reserved -->
+<!-- This defines the data model for IRPC types extended for -->
+<!-- Composites products -->
+<Package xmlns="PLMDictionaryUnified" Name="PLMCompositesProduct"
+    ModelerType="Top" Uuid="4A448096-9907-41DF-963B-4E3730ED7788"
+    CustomerExposition="Programmer" UseNames="PRODUCTCFG DELFmiFunctionalModelQuantity RawMaterialSpecification"
+    Architecture="All" BelongsToModeler="PLMCompositesProduct">
+
+  <Extension Name="CMP_StackingElement" Uuid="96685F73-E6AC-461C-A59A-4B75B03B9279"
+             ScopeNames="VPMInstance DELFmiFunctionIdentifiedInstance" CustomerExposition="Programmer" >
+      <Property Name="KweNew_InstanciationMethod" Value="CATEPLMCompositesDelegateInstanciation"/>
+
+      <Simple Name="V_CMP_SeqNumber" Uuid="C7D952B5-0405-4F34-A3B9-340EED9213EB"
+              Type="Integer"  Protection="External"  MultiValuated="No"/>
+
+      <Simple Name="V_CMP_PlyId" Uuid="F31A2D9F-9458-41BA-BC9A-696497874E74"
+              Type="String"  Protection="External"  MultiValuated="No"/>
+
+      <Simple Name="V_CMP_CutPieceNumber" Uuid="A875FC55-2812-4960-A95B-AFE5753C8C2B"
+               Type="Integer"  Protection="External"  MultiValuated="No"/>
+
+      <Simple Name="V_CMP_CutPieceId" Uuid="AB688FDC-4EE9-4381-9C6C-F93AEC719E9F"
+              Type="String"  Protection="External"  MultiValuated="No"/>
+
+      <Simple Name="V_CMP_Orientation" Uuid="C0CEE761-B14D-44A4-A09B-00FE2301D0F5"
+              Type="Double"  Protection="External"  MultiValuated="No"/>
+
+  </Extension>
+
+    <!-- *************************************** -->
+    <!-- *******CPD RAW MATERIAL *************** -->
+    <!-- ******* v1.0 18/06/2021 *************** -->
+    <!-- *************************************** -->
+    <!-- *************************************** -->
+
+    <!-- Composite Material  -->
+    <Class Name="CPD_Raw_Material_Composite_Material" Uuid="ac89842b-53dd-495b-a45a-9c517f834cb6" SuperName="Raw_Material" Discipline="Yes" Specializable="No" Searchable="Yes" Newable="New" CustomerExposition="Programmer" PublicResourceURI="/resources/v1/modeler/dsrm/dsrm:RawMaterial/{pid}">
+        <!--Abbreviation="" (marc blanchet) -->
+        <Property Name="IconName" Value="I_CPD_RawMaterial_Composite_Material"/>
+        <Property Name="3DIconName" Value="I_CPD_RawMaterial_Composite_Material"/>
+        <Property Name="KweNew_InstanciationMethod" Value="CATEPLMCompositesDelegateInstanciation"/>
+
+        <Simple Name="V_CPD_RM_Direction_Number" Uuid="408320e4-8e0a-4ee3-bd0a-87cf65a2a7eb" PLMImpacting="Yes" Type="Integer" MultiValuated="No" Protection="Free" DefaultValue="1">
+            <Property Name="CustoUserAccess" Value="ReadWrite"/>
+			<Range>
+				<Equal>0</Equal>
+				<Equal>1</Equal>
+				<Equal>2</Equal>
+			</Range>
+        </Simple>
+        <Simple Name="V_CPD_RM_Structural" Uuid="7c18620b-2f30-4843-b6c4-ecc6e582cb47" PLMImpacting="Yes" Type="Boolean" MultiValuated="No" Protection="Free" DefaultValue="TRUE">
+            <Property Name="CustoUserAccess" Value="ReadWrite"/>
+        </Simple>
+        <Simple Name="V_CPD_RM_Uncured_Thickness" Uuid="62664a11-f7dd-4241-9290-ea3e7eb181ce" PLMImpacting="Yes" Type="Double" MultiValuated="No" Magnitude="LENGTH" ManipulationUnit="MM" Protection="Free" DefaultValue="0.002">
+            <Property Name="CustoUserAccess" Value="ReadWrite"/>
+            <Range>
+                <GreaterThanEqual>0.</GreaterThanEqual>
+            </Range>
+        </Simple>
+        <Simple Name="V_CPD_RM_Cured_Thickness" Uuid="99bc975f-3476-4191-8b76-1a3f50854f93" PLMImpacting="Yes" Type="Double" MultiValuated="No" Magnitude="LENGTH" ManipulationUnit="MM" Protection="Free" DefaultValue="0.001">
+            <Property Name="CustoUserAccess" Value="ReadWrite"/>
+            <Range>
+                <GreaterThanEqual>0.</GreaterThanEqual>
+            </Range>
+        </Simple>
+        <Simple Name="V_CPD_RM_Max_Deformation" Uuid="db2a928b-accb-4ba4-919c-8fd41e588e73" PLMImpacting="Yes" Type="Double" MultiValuated="No" Magnitude="ANGLE" ManipulationUnit="DEGREE"  Protection="Free" DefaultValue="0.2617994">
+            <Property Name="CustoUserAccess" Value="ReadWrite"/>
+        </Simple>
+        <Simple Name="V_CPD_RM_Limit_Deformation" Uuid="ae2ac27d-409c-4114-8ce7-c1c8914c7ef4" PLMImpacting="Yes" Type="Double" MultiValuated="No" Magnitude="ANGLE" ManipulationUnit="DEGREE"  Protection="Free" DefaultValue="0.5235988">
+            <Property Name="CustoUserAccess" Value="ReadWrite"/>
+        </Simple>
+        <Simple Name="V_CPD_RM_Material_Warp_Angle" Uuid="0ce69a51-cfe9-43c6-92a2-6e8aab39a564" PLMImpacting="Yes" Type="Double" MultiValuated="No" Magnitude="ANGLE" ManipulationUnit="DEGREE"  Protection="Free" DefaultValue="0">
+            <Property Name="CustoUserAccess" Value="ReadWrite"/>
+        </Simple>
+        <Simple Name="V_CPD_RM_Warp_Weft_Angle" Uuid="e55a47c3-62ec-4048-86cb-3a52c2a9d715" PLMImpacting="Yes" Type="Double" MultiValuated="No" Magnitude="ANGLE" ManipulationUnit="DEGREE"  Protection="Free" DefaultValue="1.570796">
+            <Property Name="CustoUserAccess" Value="ReadWrite"/>
+        </Simple>
+        <Simple Name="V_CPD_RM_Warp_Weft_Ratio" Uuid="9e234230-710e-431c-8c3f-ba06a2ec046f" PLMImpacting="Yes" Type="Double" MultiValuated="No"  Protection="Free" DefaultValue="1">
+            <Property Name="CustoUserAccess" Value="ReadWrite"/>
+            <Range>
+                <GreaterThanEqual>0.</GreaterThanEqual>
+            </Range>
+        </Simple>
+        <Simple Name="V_CPD_RM_Surfacic_Mass" Uuid="b410dd84-379d-4a6a-b024-2e02d5d3b72e" PLMImpacting="Yes" Type="Double" MultiValuated="No" Magnitude="SURFACICMASS" Protection="Free" DefaultValue="0.285">
+            <Property Name="CustoUserAccess" Value="ReadWrite"/>
+            <Range>
+                <GreaterThanEqual>0.</GreaterThanEqual>
+            </Range>
+        </Simple>
+        <Simple Name="V_CPD_RM_Fabric_Width" Uuid="f60d2237-66b7-4acf-a04b-21b596af6e45" PLMImpacting="Yes" Type="Double" MultiValuated="No" Magnitude="LENGTH" ManipulationUnit="MM" Protection="Free" DefaultValue="1.2">
+            <Property Name="CustoUserAccess" Value="ReadWrite"/>
+            <Range>
+                <GreaterThanEqual>0.</GreaterThanEqual>
+            </Range>
+        </Simple>
+		<Simple Name="V_CPD_RM_OffAxis" UIAccess="None" Uuid="f70d1632-bcdc-4944-be8a-db1a65b38d20" PLMImpacting="Yes" Type="Double" MultiValuated="No" Magnitude="ANGLE" Protection="Free" DefaultValue="0">
+            <Property Name="CustoUserAccess" Value="ReadWrite"/>
+        </Simple>
+    </Class>
+
+    <!-- Core  -->
+    <Class Name="CPD_Raw_Material_Composite_Core" Uuid="8c782dde-9411-4e5b-ada3-17ee91136b69" SuperName="Raw_Material" Discipline="Yes" Specializable="No" Searchable="Yes" Newable="New" CustomerExposition="Programmer" PublicResourceURI="/resources/v1/modeler/dsrm/dsrm:RawMaterial/{pid}">
+        <Property Name="IconName" Value="I_CPD_RawMaterial_Composite_Material"/>
+        <Property Name="3DIconName" Value="I_CPD_RawMaterial_Composite_Material"/>
+        <Property Name="KweNew_InstanciationMethod" Value="CATEPLMCompositesDelegateInstanciation"/>
+
+        <Simple Name="V_CPD_RM_Direction_Number" Uuid="e2fde0da-5aad-432a-b2c3-749bbb50fe49" PLMImpacting="Yes" Type="Integer" MultiValuated="No" Protection="Free" DefaultValue="1">
+            <Property Name="CustoUserAccess" Value="ReadWrite"/>
+			<Range>
+				<Equal>0</Equal>
+				<Equal>1</Equal>
+				<Equal>2</Equal>
+			</Range>
+        </Simple>
+        <Simple Name="V_CPD_RM_Uncured_Thickness" Uuid="524be800-e0d4-4970-83ab-7b305f425528" PLMImpacting="Yes" Type="Double" MultiValuated="No" Magnitude="LENGTH" ManipulationUnit="MM" Protection="Free" DefaultValue="0.002">
+            <Property Name="CustoUserAccess" Value="ReadWrite"/>
+        </Simple>
+        <Simple Name="V_CPD_RM_Cured_Thickness" Uuid="7ada764b-7e6a-4563-9144-f5b0f47a0702" PLMImpacting="Yes" Type="Double" MultiValuated="No" Magnitude="LENGTH" ManipulationUnit="MM" Protection="Free" DefaultValue="0.001">
+            <Property Name="CustoUserAccess" Value="ReadWrite"/>
+            <Range>
+                <GreaterThanEqual>0.</GreaterThanEqual>
+            </Range>
+        </Simple>
+        <Simple Name="V_CPD_RM_Max_Deformation" Uuid="0a2df49e-ca5d-4d8d-b55f-23aa00f952ea" PLMImpacting="Yes" Type="Double" MultiValuated="No" Magnitude="ANGLE" ManipulationUnit="DEGREE"  Protection="Free" DefaultValue="0.2617994">
+            <Property Name="CustoUserAccess" Value="ReadWrite"/>
+        </Simple>
+        <Simple Name="V_CPD_RM_Limit_Deformation" Uuid="b86782df-ac8c-4e93-827a-bf76bc88b8e3" PLMImpacting="Yes" Type="Double" MultiValuated="No" Magnitude="ANGLE" ManipulationUnit="DEGREE"  Protection="Free" DefaultValue="0.5235988">
+            <Property Name="CustoUserAccess" Value="ReadWrite"/>
+        </Simple>
+        <Simple Name="V_CPD_RM_Warp_Weft_Angle" Uuid="58cbae1e-269e-467f-a252-565c11d42a57" PLMImpacting="Yes" Type="Double" MultiValuated="No" Magnitude="ANGLE" ManipulationUnit="DEGREE"  Protection="Free" DefaultValue="1.570796">
+            <Property Name="CustoUserAccess" Value="ReadWrite"/>
+        </Simple>
+        <Simple Name="V_CPD_RM_Warp_Weft_Ratio" Uuid="55b37c6f-f2d4-4d90-8229-07d78a6a728a" PLMImpacting="Yes" Type="Double" MultiValuated="No"  Protection="Free" DefaultValue="1">
+            <Property Name="CustoUserAccess" Value="ReadWrite"/>
+            <Range>
+                <GreaterThanEqual>0.</GreaterThanEqual>
+            </Range>
+        </Simple>
+        <Simple Name="V_CPD_RM_Surfacic_Mass" Uuid="d0c524e1-54b4-4aac-9850-f804a9beb688" PLMImpacting="Yes" Type="Double" MultiValuated="No" Magnitude="SURFACICMASS" Protection="Free" DefaultValue="0.285">
+            <Property Name="CustoUserAccess" Value="ReadWrite"/>
+            <Range>
+                <GreaterThanEqual>0.</GreaterThanEqual>
+            </Range>
+        </Simple>
+    </Class>
+
+    <!-- **************************************************************************************** -->
+    <!-- *******CPD HoneyComb extension for Core EXTENSION*************************************** -->
+    <!-- **************************************************************************************** -->
+    <Extension Name="CPD_Core_Honeycomb_Extension" Uuid="7177f425-9994-4628-8bf8-cf042de3aabc" ScopeNames="CPD_Raw_Material_Composite_Core" CustomerExposition="Programmer" Abstract="No" Specializable="No">
+        <Property Name="KweNew_InstanciationMethod" Value="CATEPLMCompositesDelegateInstanciation"/>
+        <Simple Name="V_CPD_RM_Honeycomb_L" Uuid="96dff7a7-f2a0-4e0f-9865-114e9866b359" PLMImpacting="Yes" Type="Double" MultiValuated="No" Magnitude="LENGTH" ManipulationUnit="MM" Protection="Free" DefaultValue="0.01">
+            <Property Name="CustoUserAccess" Value="ReadWrite"/>
+            <Range>
+                <GreaterThanEqual>0.</GreaterThanEqual>
+            </Range>
+        </Simple>
+        <Simple Name="V_CPD_RM_Honeycomb_W" Uuid="98cb915d-b044-4a13-830f-7369e72f010e" PLMImpacting="Yes" Type="Double" MultiValuated="No" Magnitude="LENGTH" ManipulationUnit="MM" Protection="Free" DefaultValue="0.01">
+            <Property Name="CustoUserAccess" Value="ReadWrite"/>
+            <Range>
+                <GreaterThanEqual>0.</GreaterThanEqual>
+            </Range>
+        </Simple>
+        <Simple Name="V_CPD_RM_Honeycomb_t" Uuid="d1f6e428-64c4-47ef-9dd0-9b8ca32f1f14" PLMImpacting="Yes" Type="Double" MultiValuated="No" Magnitude="LENGTH" ManipulationUnit="MM" Protection="Free" DefaultValue="0.01">
+            <Property Name="CustoUserAccess" Value="ReadWrite"/>
+            <Range>
+                <GreaterThanEqual>0.</GreaterThanEqual>
+            </Range>
+        </Simple>
+        <Simple Name="V_CPD_RM_Honeycomb_CoreRibbonDirection" Uuid="ee7cd61d-cb0e-47aa-9cf0-0c2821165e3a" PLMImpacting="Yes" Type="Double" MultiValuated="No" Magnitude="ANGLE" ManipulationUnit="DEGREE"  Protection="Free" DefaultValue="0">
+            <Property Name="CustoUserAccess" Value="ReadWrite"/>
+        </Simple>
+    </Extension>
+
+</Package>

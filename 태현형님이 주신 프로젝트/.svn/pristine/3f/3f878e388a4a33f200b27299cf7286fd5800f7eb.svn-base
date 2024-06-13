@@ -1,0 +1,14 @@
+m|CAT3DWebAppInfraUI\CAT3DWVideosUI.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.3.23072|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\CAT3DWVideosUI\CAT3DWVideosUI.js|1678742711|19025
+s|CAT3DWebAppInfraUI\CAT3DWVideosUI.mweb\src\CAT3DWVideo.js|1678736097|5658
+t|win_b64\webapps\CAT3DWVideosUI\assets\graphics\videoplay.png|1647691675|2728
+s|CAT3DWebAppInfraUI\CAT3DWVideosUI.mweb\src\assets\graphics\videoplay.png|1637987511|2728
+u|CAT3DWebAppInfraUI\CAT3DWVideosUI.mweb\src\CAT3DWVideoView.js|1649096192|15035
+u|CAT3DWebAppInfraUI\CAT3DWVideosUI.mweb\src\CAT3DWVideosController.js|1673043557|21394
+u|CAT3DWebAppInfraUI\CAT3DWVideosUI.mweb\src\CAT3DWVideosUI.js|1637987511|0
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

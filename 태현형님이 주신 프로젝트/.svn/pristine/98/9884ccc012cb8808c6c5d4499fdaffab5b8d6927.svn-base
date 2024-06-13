@@ -1,0 +1,24 @@
+################################################################################################
+# Create By jhlee 2023. 09. 15
+# Admin Type : command
+# Name : decCwpSummaryShopList
+################################################################################################
+
+#del command 'decCwpSummaryShopList';
+add command 'decCwpSummaryShopList'
+	description 'StandardList'
+	label 'ProgramCentral.Command.decCwpSummaryShopList'
+	alt 'ProgramCentral.Command.decCwpSummaryShopList'
+	setting 'Registered Suite' 'ProgramCentral'
+	setting 'Target Location' 'content'
+;
+add property 'command_decCwpSummaryShopList' on prog eServiceSchemaVariableMapping.tcl to command 'decCwpSummaryShopList';
+
+mod command 'decCwpSummaryShopList'
+	href '${COMMON_DIR}/emxIndentedTable.jsp?program=emxProjectSpace:getCWPTask&table=decCwpSummaryTable&header=ProgramCentral.Command.decCwpSummaryShopList&HelpMarker=emxhelpprogramlist&Export=true&sortColumnName=Name&sortDirection=ascending&StringResourceFileId=emxProgramCentralStringResource&slideinFilter=true&freezePane=CWP No,CWP Desc&pageSize=300'
+;
+
+# Modified by jhlee on 2023.09.15
+mod command 'decCwpSummaryShopList'
+	href '${COMMON_DIR}/emxIndentedTable.jsp?program=emxProjectSpace:getCWPTask&summaryType=Shop&table=decCwpSummaryTable&header=ProgramCentral.Command.decCwpSummaryShopList&HelpMarker=emxhelpprogramlist&Export=true&StringResourceFileId=emxProgramCentralStringResource&slideinFilter=true&freezePane=CWP No,CWP Desc&pageSize=300&filterParam=Material Delay:true,codeMaster:Discipline,codeMaster:Priority Group,codeMaster:Priority Number,codeMaster:CWP/IWP Stage,codeMaster:CWP/IWP Status,codeMaster:Sub-Con,codeMaster:BOQ Key Item>BOQ Key Item.UOM'
+;

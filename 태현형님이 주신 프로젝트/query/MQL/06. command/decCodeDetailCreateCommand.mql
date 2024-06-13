@@ -1,0 +1,26 @@
+### 230418 Created by CMG
+
+
+#delete command decCodeDetailCreateCommand;
+
+add command decCodeDetailCreateCommand
+	label "emxFramework.Label.decCodeDetailCreateCommand"
+	href "${COMMON_DIR}/decCreateCodeDetail.jsp?type=type_decCodeDetail&header=emxFramework.Label.decCodeDetailCreateCommand&policy=decCodeMaster&showApply=true&form=decCodeDetailCreateForm&createJPO=decCodeMaster:createCodeDetail&submitAction=refreshCaller"
+	setting "Registered Suite" "Framework"
+	setting "Image" "${COMMON_DIR}/images/iconActionCreate.png"
+	setting "Popup Modal" true
+	setting "Target Location" "slidein"
+	setting "Submit" true
+	property "installer" value "ENOVIAEngineering"
+	property "application" value "Framework"
+	property "original name" value "decCodeDetailCreateCommand"
+;
+
+mod menu decCodeDetailToolbar add command decCodeDetailCreateCommand;
+
+# Modified by choimingi on 2023.09.09
+mod command decCodeDetailCreateCommand
+	add setting 'hasAccess' 'PIM' 
+	add setting 'Access Program' 'decAccess'
+	add setting 'Access Function' 'hasAccess'
+;

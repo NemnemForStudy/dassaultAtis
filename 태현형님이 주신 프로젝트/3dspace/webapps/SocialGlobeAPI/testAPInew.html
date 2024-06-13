@@ -1,0 +1,149 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:widget="http://www.netvibes.com/ns/">
+
+<head>
+
+    <link rel="stylesheet" href="GlobeViewer2D.css" />
+    <link rel="stylesheet" href="test.css" />
+
+    <!-- AMDLoader -->
+    <script type="text/javascript" src="../AmdLoader/AmdLoader.js"></script>
+    <script type="text/javascript" src="../WebappsUtils/WebappsUtils.js"></script>
+
+    <!-- UWA -->
+    <script type="text/javascript" src="../c/UWA/js/UWA_Standalone_Alone.js"></script>
+
+    <!--script type="text/javascript" src="../WebUX/WebUX.js"></script>
+    <script type="text/javascript" src="../WebVisualization/WebVisualization.js"></script>
+    <script type="text/javascript" src="../SocialGlobe/SocialGlobe.js"></script>
+    <script type="text/javascript" src="../SocialGlobe/Globe.js"></script-->
+
+    <!-- <script src="GlobeViewer2D.js"></script> -->
+
+    <script>
+        require(["DS/SocialGlobeAPI/GlobeAPI"
+        ], function (GlobeAPI) {
+			// SET DELAY FOR TESTS
+			function sleep(ms) {
+				return new Promise(
+				resolve => setTimeout(resolve, ms)
+				);
+			}
+			function getContent(url){
+				// read text from URL location
+				var request = new XMLHttpRequest();
+				request.withCredentials = true;
+				request.open('GET', url, true);
+				request.send(null);
+				request.onreadystatechange = function () {
+					if (request.readyState === 4 && request.status === 200) {
+						var type = request.getResponseHeader('Content-Type');
+						if (type.indexOf("text") !== 1) {
+							return request.responseText;
+						}
+					}
+				}
+			}
+			
+			async function launchTest() {
+				var options = {
+					initialCoordinates: [48.786192,2.210616],
+					initialZoomLevel: 8
+				};
+				
+				// init the map
+				var globeMap = new GlobeAPI("left-map", "https://tile.openstreetmap.org/", "png", 18, options);
+				await sleep(2000);
+				
+				// load a geojson
+				var jsonContent = {
+					"type": "FeatureCollection",
+					"features": [
+					{ "type": "Feature", "properties": { "color": "#005685", "title": "<h3 style='margin-bottom: 0.1em'>RENAULT DREAM</h3>", "description": "<style>.nav td {  background-color: #f9f9f9;  border-width: 1px;  padding: 5px;  border-style: solid;  border-color: #d1d4d4;}</style><div style='max-height:600px;overflow:auto;'><table style='margin-bottom: 5px;font-size: 12px;color: #003e61;width: 100%;border-width: 1px;border-color: #ffffff;'><tbody class='nav'><tr><td>Location</td><td>Boulogne Billancour (FRANCE)</td></tr><tr><td>Users</td><td>1912 users</td></tr><tr><td>Industry</td><td>Transportation & Mobility</td></tr><tr><td>Engagement Model</td><td>Customer Solution Experience</td></tr><tr><td>Website</td><td><a href='http://www.renault.fr'>http://www.renault.fr</a></td></tr></tbody></table></div>","tags": [{"tagName":"ds6w:where/ds6w:location","tagValue": ["EUROPE","France","BOULOGNE BILLANCOURT"]},{"tagName":"ds6w:who/ds6w:Users","tagValue":">100"},{"tagName":"ds6w:what/ds6w:industry","tagValue":"Transportation & Mobility"},{ "tagName":"ds6w:how/ds6w:engagement model","tagValue":"Customer Solution Experience"}]}, "geometry": { "type": "Point", "coordinates": [2.22,48.89 ] } },
+					{ "type": "Feature", "properties": { "color": "#005685", "title": "<h3 style='margin-bottom: 0.1em'>PEUGEOT</h3>", "description": "<style>.nav td {  background-color: #f9f9f9;  border-width: 1px;  padding: 5px;  border-style: solid;  border-color: #d1d4d4;}</style><div style='max-height:600px;overflow:auto;'><table style='margin-bottom: 5px;font-size: 12px;color: #003e61;width: 100%;border-width: 1px;border-color: #ffffff;'><tbody class='nav'><tr><td>Location</td><td>Gouda (THE NETHERLANDS)</td></tr><tr><td>Users</td><td>1 users</td></tr><tr><td>Industry</td><td></td></tr><tr><td>Engagement Model</td><td>Customer Role Experience</td></tr><tr><td>Website</td><td><a href=' '> </a></td></tr></tbody></table></div>","tags": [{"tagName":"ds6w:where/ds6w:location","tagValue": ["EUROPE","The Netherlands","Gouda"]},{"tagName":"ds6w:who/ds6w:Users","tagValue":"<10"},{"tagName":"ds6w:what/ds6w:industry","tagValue":""},{ "tagName":"ds6w:how/ds6w:engagement model","tagValue":"Customer Role Experience"}]}, "geometry": { "type": "Point", "coordinates": [75.70,22.01 ] } },
+					{ "type": "Feature", "properties": { "color": "#FFD700", "title": "<h3 style='margin-bottom: 0.1em'>ANDHRA PRADESH STATE SKILL DEVELOPMENT CORPORATION</h3>", "description": "<style>.nav td {  background-color: #f9f9f9;  border-width: 1px;  padding: 5px;  border-style: solid;  border-color: #d1d4d4;}</style><div style='max-height:600px;overflow:auto;'><table style='margin-bottom: 5px;font-size: 12px;color: #003e61;width: 100%;border-width: 1px;border-color: #ffffff;'><tbody class='nav'><tr><td>Location</td><td>Vijayawada (INDIA)</td></tr><tr><td>Users</td><td>841 users</td></tr><tr><td>Industry</td><td>Business Services</td></tr><tr><td>Engagement Model</td><td>Customer Solution Experience</td></tr><tr><td>Website</td><td><a href='http://apssdc.in/'>http://apssdc.in/</a></td></tr></tbody></table></div>","tags": [{"tagName":"ds6w:where/ds6w:location","tagValue": ["ASIA","India","VIJAYAWADA"]},{"tagName":"ds6w:who/ds6w:Users","tagValue":">100"},{"tagName":"ds6w:what/ds6w:industry","tagValue":"Business Services"},{ "tagName":"ds6w:how/ds6w:engagement model","tagValue":"Customer Solution Experience"}]}, "geometry": { "type": "Point", "coordinates": [80.82,16.78 ] } },
+					{ "type": "Feature", "properties": { "color": "#005685", "title": "<h3 style='margin-bottom: 0.1em'>IOTOPUS</h3>", "description": "<style>.nav td {  background-color: #f9f9f9;  border-width: 1px;  padding: 5px;  border-style: solid;  border-color: #d1d4d4;}</style><div style='max-height:600px;overflow:auto;'><table style='margin-bottom: 5px;font-size: 12px;color: #003e61;width: 100%;border-width: 1px;border-color: #ffffff;'><tbody class='nav'><tr><td>Location</td><td>Gouda (THE NETHERLANDS)</td></tr><tr><td>Users</td><td>1 users</td></tr><tr><td>Industry</td><td></td></tr><tr><td>Engagement Model</td><td>Customer Role Experience</td></tr><tr><td>Website</td><td><a href=' '> </a></td></tr></tbody></table></div>","tags": [{"tagName":"ds6w:where/ds6w:location","tagValue": ["EUROPE","The Netherlands","Gouda"]},{"tagName":"ds6w:who/ds6w:Users","tagValue":"<10"},{"tagName":"ds6w:what/ds6w:industry","tagValue":""},{ "tagName":"ds6w:how/ds6w:engagement model","tagValue":"Customer Role Experience"}]}, "geometry": { "type": "Point", "coordinates": [4.70,52.01 ] } },
+					{ "type": "Feature", "properties": { "color": "#005685", "title": "<h3 style='margin-bottom: 0.1em'>K_DLC CO__LTD</h3>", "description": "<style>.nav td {  background-color: #f9f9f9;  border-width: 1px;  padding: 5px;  border-style: solid;  border-color: #d1d4d4;}</style><div style='max-height:600px;overflow:auto;'><table style='margin-bottom: 5px;font-size: 12px;color: #003e61;width: 100%;border-width: 1px;border-color: #ffffff;'><tbody class='nav'><tr><td>Location</td><td>Gunpo (REPUBLIC OF KOREA)</td></tr><tr><td>Users</td><td>1 users</td></tr><tr><td>Industry</td><td></td></tr><tr><td>Engagement Model</td><td>Customer Role Experience</td></tr><tr><td>Website</td><td><a href=' '> </a></td></tr></tbody></table></div>","tags": [{"tagName":"ds6w:where/ds6w:location","tagValue": ["ASIA","Republic of Korea","Gunpo"]},{"tagName":"ds6w:who/ds6w:Users","tagValue":"<10"},{"tagName":"ds6w:what/ds6w:industry","tagValue":""},{ "tagName":"ds6w:how/ds6w:engagement model","tagValue":"Customer Role Experience"}]}, "geometry": { "type": "Point", "coordinates": [126.93,37.36 ] } }]
+				};
+				globeMap.addGeoJson(jsonContent);
+				await sleep(2000);
+				
+				// move the camera without and with a distance option
+				globeMap.moveCamera(48.13729150787028, -1.6215134739695942);
+				await sleep(2000);
+				globeMap.moveCamera(48.13729150787028, -1.6215134739695942, {zoomLevel: 12});
+				await sleep(2000);
+				globeMap.moveCamera(48.13729150787028, -1.6215134739695942, {zoomLevel: 17});				
+				await sleep(2000);
+				
+				// try to set a callback
+				globeMap.setOnSelectCallback(function(data) {console.log("callback function : " + data);});
+				globeMap.setOnClickCallback(function(lat, lon) {console.log("click callback : " + lat + " - " + lon);});
+				
+				// add new markers
+				var marker1 = globeMap.addMarker(48.13729150787028, -1.6215134739695942, "Dassault Systemes", "Cesson Sevigne Office", {"color": "#ff0000"});
+				var marker2 = globeMap.addMarker(48.13729150787028, -1.6185, "Dassault Systemes 2", "Cesson Sevigne Office");
+				var marker3 = globeMap.addMarker(48.1375, -1.6185, "Dassault Systemes 3", "Cesson Sevigne Office", {"color": "#00ff00"});
+				await sleep(2000);
+				
+				// select one of the markers
+				globeMap.select([marker1]);
+				
+				await sleep(2000);
+				globeMap.unselect([marker1]);
+								
+				// add connections
+				var conn1 = globeMap.addLink([marker1, marker2]);
+
+				await sleep(2000);
+				conn1.setIcon("https://globeproc.uwglobe.com/mfe10/flowicons/planecustom.svg");
+				
+				await sleep(2000);
+				conn1.edit(marker2, marker3);
+				await sleep(2000);
+				conn1.select();
+				await sleep(2000);
+				conn1.unselect();
+
+				await sleep(2000);
+				conn1.delete();
+
+				await sleep(2000);				
+				
+				await sleep(2000);
+				marker1.delete();
+				await sleep(500);
+				marker2.delete();
+				await sleep(500);
+				marker3.delete();
+				
+				
+				// valid big geojson content
+				var bigGeoContent = '{  "type": "FeatureCollection",  "features": [    {      "type": "Feature",      "properties": {        "id": 1,        "start_city": "New York",        "start_country": "United States",        "end_city": "Paris",        "end_country": "France",        "flow_type": "Plane",        "icon": "https://globeproc.uwglobe.com/mfe10/flowicons/planecustom.svg"      },      "geometry": {        "type": "LineString",        "coordinates": [          [            -73.935242,            40.730610          ],          [            2.34428,            48.85922          ]        ]      }    },    {      "type": "Feature",      "properties": {        "id": 2,        "start_city": "Cape Town",        "start_country": "South Africa",        "end_city": "New York",        "end_country": "United States",        "flow_type": "Boat",        "icon": "https://globeproc.uwglobe.com/mfe10/flowicons/boatcustom.svg"      },      "geometry": {        "type": "LineString",        "coordinates": [          [            18.423300,            -33.918861          ],          [            -73.935242,            40.730610          ]        ]      }    },    {      "type": "Feature",      "properties": {        "id": 3,        "start_city": "Hechi",        "start_country": "China",        "end_city": "Paris",        "end_country": "France",        "flow_type": "Plane",        "icon": "https://globeproc.uwglobe.com/mfe10/flowicons/planecustom.svg"      },      "geometry": {        "type": "LineString",        "coordinates": [          [            109.6091129,            23.09653465          ],          [            2.34428,            48.85922          ]        ]      }    },    {      "type": "Feature",      "properties": {        "id": 4,        "start_city": "Paris",        "start_country": "France",        "end_city": "Abidjan",        "end_country": "Ivory Coast",        "flow_type": "Plane",        "icon": "https://globeproc.uwglobe.com/mfe10/flowicons/planecustom.svg"      },      "geometry": {        "type": "LineString",        "coordinates": [          [            2.34428,            48.85922          ],          [            -4.024429,            5.345317          ]        ]      }    },    {      "type": "Feature",      "properties": {        "id": 5,        "start_city": "Paris",        "start_country": "France",        "end_city": "Montpellier",        "end_country": "France",        "flow_type": "Truck",        "icon": "https://globeproc.uwglobe.com/mfe10/flowicons/truckcustom.svg"      },      "geometry": {        "type": "LineString",        "coordinates": [          [            2.34428,            48.85922          ],          [            3.876716,            43.610769          ]        ]      }    },    {      "type": "Feature",      "properties": {        "id": 6,        "start_city": "Helsinki",        "start_country": "Finland",        "end_city": "Cape Town",        "end_country": "South Africa",        "flow_type": "Plane",        "icon": "https://globeproc.uwglobe.com/mfe10/flowicons/planecustom.svg"      },      "geometry": {        "type": "LineString",        "coordinates": [          [            24.945831,            60.192059          ],          [            18.423300,            -33.918861          ]        ]      }    },    {      "type": "Feature",      "properties": {        "id": 7,        "start_city": "Rio de Janeiro",        "start_country": "Brasil",        "end_city": "Antananarivo",        "end_country": "Madagascar",        "flow_type": "Plane",        "icon": "https://globeproc.uwglobe.com/mfe10/flowicons/planecustom.svg"      },      "geometry": {        "type": "LineString",        "coordinates": [          [            -43.196388,            -22.908333          ],          [            47.516667,            -18.933333          ]        ]      }    },    {      "type": "Feature",      "properties": {        "id": 8,        "start_city": "New York",        "start_country": "United States",        "end_city": "Rabat",        "end_country": "Morocco",        "flow_type": "Boat",        "icon": "https://globeproc.uwglobe.com/mfe10/flowicons/boatcustom.svg"      },      "geometry": {        "type": "LineString",        "coordinates": [          [            -73.935242,            40.730610          ],          [            -6.841650,            34.020882          ]        ]      }    },    {      "type": "Feature",      "properties": {        "id": 9,        "start_city": "Paris",        "start_country": "France",        "end_city": "Melbourne",        "end_country": "Australia",        "flow_type": "Plane",        "icon": "https://globeproc.uwglobe.com/mfe10/flowicons/planecustom.svg"      },      "geometry": {        "type": "LineString",        "coordinates": [          [            2.34428,            48.85922          ],          [            144.946457,            -37.840935          ]        ]      }    }  ]}'//getContent("https://globeproc.uwglobe.com/mfe10/data-test-geojson/curved_flows/flow_test.geojson");
+				globeMap.addGeoJson(JSON.parse(bigGeoContent));
+				
+
+			}
+			
+			launchTest();
+			
+        });
+    </script>
+
+
+
+</head>
+
+<body>
+    <div>
+        <div id="left-map">
+        </div>
+        <div id="right">
+            <div id="right-left">
+            </div>
+            <div id="right-right">
+            </div>
+            </div>
+        </div>
+</body>
+
+</html>

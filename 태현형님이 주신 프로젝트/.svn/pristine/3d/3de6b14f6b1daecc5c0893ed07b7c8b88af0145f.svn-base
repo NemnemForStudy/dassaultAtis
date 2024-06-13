@@ -1,0 +1,1 @@
+define("DS/MVAInput/MVAInput_cs",{});define("DS/MVAInput/assets/nls/MVAInput",{MVA_input_Placeholder:"přidat hodnotu","The item already exists":"Položka již existuje"});

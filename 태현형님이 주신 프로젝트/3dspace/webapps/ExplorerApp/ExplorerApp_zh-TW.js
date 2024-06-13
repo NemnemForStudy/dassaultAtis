@@ -1,0 +1,1 @@
+define("DS/ExplorerApp/ExplorerApp_zh-TW",{});define("DS/ExplorerApp/assets/nls/ExplorerApp",{appLoading:"正在載入應用程式...",apptoosmall:"應用程式過小。請增加大小。",welcomescreen:{description:"以簡單有效的方式探索您的結構",recent:"最近項目",openContent:"開啟內容",openProducts:"開啟產品",openFilters:"開啟過濾器",linkUserAssistance:"使用者協助",linkUserCommunity:"使用者社群"},appMainLoading:"正在建立應用程式..."});

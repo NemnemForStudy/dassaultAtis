@@ -1,0 +1,14 @@
+{
+  "version": "1.0 0",
+  "summary": "Interpola o valor dos dados de entrada em cada etapa de execução por um segundo, levando em consideração o tempo decorrido desde a etapa de execução anterior.",
+  "description": "Esse bloco pode ser realmente útil para obter <b>animações baseadas em quadros</b>. Isso garantirá uma velocidade de animação constante, independentemente do poder de computação usado.<br><br>Um objeto animado <b>com base no tempo</b> passará <b>do ponto A</b> para o <b>ponto B</b><b> na mesma quantidade de tempo</b>, independentemente da taxa de quadros do filme. Quanto mais lenta for a taxa de quadros, <b>mais longe o objeto se moverá a cada quadro</b> para manter a mesma velocidade.<br><br>Por outro lado, se a animação <b>for baseada na taxa de quadros</b>, o objeto sempre terá o <b>mesmo número de quadros</b> para levar do <b>ponto A</b> ao <b>ponto B</b>. Quanto mais lenta for a taxa de quadros, maior será a duração, pois a distância percorrida em cada quadro não é alterada.<br><br>Em uma amostra, à medida que a taxa de quadros diminui, a animação baseada em quadros<b> também fica mais lenta</b>, e a animação baseada em tempo fica <b>instável</b>.<br>A animação baseada em tempo também é conhecida como 'independência de taxa de quadros'.",
+  "dataPorts": {
+    "Input": "corresponde ao valor de entrada para interpolar por um segundo.",
+    "Output": "corresponde ao valor de saída em que <doc-odp-name translate=no>Output</doc-odp-name> = <doc-idp-name translate=no>Input</doc-idp-name> * Tempo decorrido (em segundos).<br>O tempo decorrido reapresenta a duração de uma etapa de execução."
+  },
+  "controlPorts": {
+    "In": "dispara a execução do bloco.",
+    "Out": "é ativado quando o processo é concluído."
+  },
+  "example": null
+}

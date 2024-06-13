@@ -1,0 +1,1044 @@
+## 새로 만들어보자 crud가 물 흐르듯이 막힘없이 만들어지게!
+
+1. table 만들기
+add table reTable system
+column
+	name 'Id'
+	setting 'Column Type' checkbox
+column
+	name 'DocNo'
+	label 'emxFramework.Common.DocNo'
+	bus '$<name>'
+	href '${COMMON_DIR}/emxTree.jsp'
+	setting 'Target Location' content
+	setting 'Registered Suite' 'Framework'
+column
+	name 'Name'
+	label 'emxFramework.label.Name'
+	bus '$<attribute[reTitle]>'
+	setting 'Field Type' attribute
+	setting 'Admin Type' attribute_Title
+	setting 'Registered Suite' 'Framework'
+column
+	name 'Type'
+	label 'emxFramework.label.Type'
+	bus '$<attribute[reType]>'
+	setting 'Field Type' attribute
+	setting 'Admin Type' attribute_reType
+	setting 'Registered Suite' 'Framework'
+column
+	name 'reOrderer'
+	label 'emxFramework.label.reOrderer'
+	bus '$<attribute[reOrderer]>'
+	setting 'Field Type' attribute
+	setting 'Admin Type' attribute_reOrderer
+	setting 'Registered Suite' 'Framework'
+column
+	name 'Estimated Finish'
+	label 'emxFramework.label.EstimatedFinish'
+	bus '$<attribute[reEstimatedFinish]>'
+	setting 'format' date
+	setting 'Display Time' false
+	setting 'Field Type' attribute
+	setting 'Admin Type' attribute_EstimatedFinish
+	setting 'Registered Suite' 'Framework'
+column
+	name 'Actual Finish'
+	label 'emxFramework.label.ActualFinish'
+	bus '$<attribute[reActualFinish]>'
+	setting 'format' date
+	setting 'Display Time' false
+	setting 'Field Type' attribute
+	setting 'Admin Type' attribute_ActualFinish
+	setting 'Registered Suite' 'Framework'
+column
+	name 'Assignee'
+	label 'emxFramework.label.Assignee'
+	bus '$<from[reAssignee].to.name>'
+	setting 'Registered Suite' 'Framework'
+column
+	name 'Delay'
+	label 'emxFramework.label.Delay'
+	setting 'program' Project
+	setting 'function' showDelay
+	setting 'Column Type' programHTMLOutput
+	setting 'Registered Suite' 'Framework'
+column 
+	name 'State'
+	label 'emxFramework.label.State'
+	bus '$<current>'
+	setting 'Admin Type' 'State'
+	setting 'Registered Suite' 'Framework'
+column
+	name 'newWindow'
+	href '${COMMON_DIR}/emxTree.jsp'
+	setting 'Column Icon' 'images/iconNewWindow.gif'
+	setting 'Column Type' 'icon'
+	setting 'Target Location' popup
+;
+
+del table reTable system;
+
+## delay는 나중에 다시 넣자
+column # 얘는 보류
+	name 'Delay'
+	label 'emxFramework.label.Delay'
+	setting 'Registered Suite' 'Framework'
+
+2. command 생성
+add command Project
+	label 'emxFramework.label.Project'
+	href '${COMMON_DIR}/emxIndentedTable.jsp?program=Project:findDocument&table=reTable&header=Project'
+	setting 'Registered Suite' 'Framework'
+	setting 'Target Location' content
+;
+add property command_Project on program eServiceSchemaVariableMapping.tcl to command Project
+;
+
+3. eclipse에 file 생성
+
+4. 위 command의 href에 정의한 program 호출을 위한 JPO를 등록
+add prog Project java;
+
+5.(생성하고 왔다면) 메뉴에 command 추가
+mod menu 'My Enovia'
+	add command Project
+;
+
+6. attribute 만들기
+add attribute reOrderer
+	description 'myOrderer'
+	type String
+	range value Director
+	range value ResearchInstitute
+	range value Executive
+	range value TeamLeader
+	default TeamLeader
+;
+add property attribute_reOrderer on prog eServiceSchemaVariableMapping.tcl to attribute reOrderer
+;
+
+add attribute reTitle
+	description 'reTitle'
+	type string
+;
+add property attribute_reTitle on prog eServiceSchemaVariableMapping.tcl to attribute reTitle
+;
+
+add attribute reName
+	description 'reName'
+	type string
+;
+add property attribute_reName on prog eServiceSchemaVariableMapping.tcl to attribute reTitle
+;
+
+add attribute reCategory
+	description 'reCategory'
+	type string
+	range value ExecuteMeeting
+	range value TeamReaderMeeting
+	range value Report
+	range value Competitor
+	range value NewProduct
+	range value FutureTechnology
+	range value IndustrialTrends
+	default ExecuteMeeting
+;
+add property attribute_reCategory on prog eServiceSchemaVariableMapping.tcl to attribute reCategory
+;
+
+add attribute reType
+	description 'reType'
+	type string
+	range value Technical
+	range value Schedult
+	range value Cost
+	range value Quality
+	range value Project
+	default Technical
+;
+add property attribute_reType on prog eServiceSchemaVariableMapping.tcl to attribute reType
+;
+
+add attribute reEstimatedFinish
+	description 'reEstimatedFinish'
+	type date
+;
+add property attribute_reEstimatedFinish on prog eServiceSchemaVariableMapping.tcl to attribute reEstimatedFinish
+;
+
+add attribute reActualFinish
+	description 'reActualFinish'
+	type string
+;
+add property attribute_reActualFinish on prog eServiceSchemaVariableMapping.tcl to attribute reActualFinish
+;
+
+## Originator는 원래 만들어져 있던 타입. / current도 원래 있음.
+add type reType
+	description 'reType'
+	attribute reOrderer
+	attribute reTitle
+	attribute reName
+	attribute reCategory
+	attribute reType
+	attribute reEstimatedFinish
+	attribute reActualFinish
+	attribute Originator
+;
+add property type_reType on prog eServiceSchemaVariableMapping.tcl to type reType
+;
+
+7. 상세 조회 사용할 메뉴 생성
+add menu type_reType
+	description 'type_reType'
+	label '$<name> [$<revision>]'
+	href '${COMMON_DIR}/emxForm.jsp?editLink=true&form=type_reType&formHeader=reOrder:$<name> ($<revision>)'
+;
+add property menu_type_reType on prog eServiceSchemaVariableMapping.tcl to menu type_reType
+;
+
+mod menu type_reType
+href '${COMMON_DIR}/emxForm.jsp?editLink=true&form=reOrderDetailForm&formHeader=reOrder:$<name> ($<revision>)'
+;
+
+8. Business type 메뉴 등록
+mod menu Tree add menu type_reType;
+
+9. reTable에 기능 만들기
+# type과 policy는 1:N 관계
+add policy rePolicy
+	description 'rePolicy'
+	sequence '1,2,3,...' # revision / sequence a, b, c로 하면 a로 만들어짐.
+	store STORE # file들이 저장되는 공간
+	type reType
+	format all # file format 
+	defaultformat generic
+	state Create
+		version true
+		revision false
+		promote true
+		checkouthistory false
+		owner all
+	state Active
+		version true
+		revision false
+		promote true
+		checkouthistory false
+		owner read, show, viewform, checkout, promote, demote
+	state Closed
+		version true
+		revision true
+		checkouthistory false
+		owner read, show, viewform, checkout, demote
+		public read, show, viewform, checkout
+	property "state_Create" value "Create"
+	property "state_Active" value "Active"
+	property "state_Closed" value "Closed"
+;
+add property "policy_rePolicy" on prog eServiceSchemaVariableMapping.tcl to policy rePolicy
+;
+
+10. create, delete 툴바 추가
+add command reToolbarFunction
+	label 'emxFramework.label.CreateToolbar'
+	href 'emxCreate.jsp?type=type_reType&form=reToolbarCreateForm&nameField=auto&policy=rePolicy&vaultChooser=true&submitAction=treeContent&header=Create'
+	setting 'Registered Suite' 'Framework'
+	setting 'Target Location' popup
+;
+add property command_reToolbarFunction on prog eServiceSchemaVariableMapping.tcl to command reToolbarFunction
+;
+
+11. 새 메뉴를 추가(추가할 때 위에서 만든 command와 삭제 command 추가)
+add menu reToolbar
+	command reToolbarFunction
+	command AEFGenericDelete
+;
+add property menu_reToolbar on prog eServiceSchemaVariableMapping.tcl to menu reToolbar
+;
+
+12. 앞서 만들었던 Project href 변경(toolbar추가)
+mod command Project
+	href '${COMMON_DIR}/emxIndentedTable.jsp?program=Project:findDocument&table=reTable&header=ReOrder&toolbar=reToolbar'
+;
+
+13. create버튼 클릭 시 보여지는 form 생성
+del form reToolbarCreateForm;
+
+add form reToolbarCreateForm web
+field
+	name OrderNo
+	label 'emxFramework.label.OrderNo'
+	bus '$<name>'
+	setting 'Field Type' basic
+	setting 'Input Type' textbox
+	setting 'Registered Suite' 'Framework'
+	setting 'Access Expression' false
+	setting Required true
+	setting Editable true
+field
+	name OrderName
+	label 'emxFramework.label.OrderName'
+	bus '$<attribute[reTitle]>'
+	setting 'Field Type' attribute
+	setting 'Input Type' textbox
+	setting 'Registered Suite' 'Framework'
+	setting 'Admin Type' attribute_reTitle
+	setting Required true
+	setting Editable true
+field
+	name Orderer
+	label 'emxFramework.label.reOrderer'
+	bus '$<attribute[reOrderer]>'
+	setting 'Field Type' attribute
+	setting 'Input Type' combobox
+	setting 'Admin Type' attribute_reOrderer
+	setting 'Registered Suite' 'Framework'
+	setting Required true
+	setting Editable true
+field
+	name Category
+	label 'emxFramework.label.Category'
+	bus '$<attribute[reCategory]>'
+	setting 'Field Type' attribute
+	setting 'Input Type' combobox
+	setting 'Admin Type' attribute_reCategory
+	setting 'Registered Suite' 'Framework'
+	setting Required true
+	setting Editable true
+field
+	name OrderType
+	label 'emxFramework.label.reType'
+	bus '$<attribute[reType]>'
+	setting 'Field Type' attribute
+	setting 'Input Type' combobox
+	setting 'Admin Type' attribute_reType
+	setting 'Registered Suite' 'Framework'
+	setting Required true
+	setting Editable true
+field
+	name EstimatedFinish
+	label 'emxFramework.label.reEstimatedFinish'
+	bus '$<attribute[reEstimatedFinish]>'
+	setting 'Field Type' attribute
+	setting 'Input Type' textbox
+	setting 'Admin Type' attribute_reEstimatedFinish
+	setting 'format' date
+	setting 'Registered Suite' 'Framework'
+	setting Required true
+	setting Editable true
+field
+	name Assignees
+	label 'emxFramework.label.Assignees'
+	bus '$<from[reAssignee].to.name>'
+	range '${COMMON_DIR}/emxIndentedTable.jsp?program=Project:findPerson&table=reAssigneesPersonTable&header=Assignees&selection=multiple&submitURL=../reDocSubmit.jsp'
+	setting 'Input Type' textbox
+	setting 'Registered Suite' 'Framework'
+	setting 'program' Project
+	setting 'Update Program' Project
+	setting 'Update Function' connectPerson # connectPerson 만들기
+field
+	name description
+	label 'emxFramework.label.description'
+	bus '$<description>'
+	setting 'Field Type' basic
+	setting 'Input Type' textarea
+	setting 'Registered Suite' 'Framework'
+	setting Editable true
+	setting Required true
+;
+add property form_reToolbarCreateForm on prog eServiceSchemaVariableMapping.tcl to form reToolbarCreateForm
+;
+
+14. reAssigneesPersonTable 만들기
+add table reAssigneesPersonTable system
+column
+	name 'Id'
+	setting 'Column Type' checkbox
+column
+	name 'DocNo.'
+	label 'No.'
+	bus '$<name>'
+	href '${COMMON_DIR}/emxTree.jsp'
+	setting 'Target Location' content
+column
+	name 'City'
+	label 'City'
+	bus '$<attribute[City]>'
+column
+	name 'Country'
+	label 'Country'
+	bus '$<attribute[Country]>'
+;
+
+15. findPerson 이클립스에서 만들기
+
+16. reDocSubmit.jsp 작성
+
+17. 만들었으면 우선 Doc No를 자동으로 생성되게 해야하기 때문에 eService~ 만들어주자
+## 주의할 점! - ~~ Generator 옆에는 form이 아닌 type이 들어가야 먹힌다.(이거 때문에 시간 좀 날림)
+## object 자동 생성 코드
+add bus 'eService Object Generator' 'type_reType' ''
+	policy 'eService Object Generator'
+	vault 'eService Administration'
+	'eService Name Prefix' 'RE-'
+	'eService Processing Time Limit' 60
+	'eService Retry Count' 1
+	'eService Retry Delay' 1000
+	'eService Safety Policy' policy_rePolicy
+	'eService Safety Vault' vault_eServiceProduction
+;
+
+## Number 자동 생성
+add bus 'eService Number Generator' 'type_reType' ''
+	policy 'eService Object Generator'
+	vault 'eService Administration'
+	'eService Next Number' 00001
+;
+
+## 릴레이션 연결
+add connection 'eService Number Generator'
+	from 'eService Object Generator' type_reType ''
+	to 'eService Number Generator' type_reType ''
+;
+
+mod command reToolbarFunction
+	href 'emxCreate.jsp?type=type_reType&form=reToolbarCreateForm&nameField=auto&policy=rePolicy&valutChooser=true&submitAction=treeContent&header=Create'
+;
+
+18. 위에서 못만들었던 reAssignee를 만들자(relationship)
+add relationship reAssignee
+	description 'reAssignee'
+	nothidden
+	preventduplicates
+	from
+		type reType
+		meaning 'reTypeRelationsip'
+		cardinality many
+		revision replicate
+		clone replicate
+	to
+		type Person
+		meaning 'Person'
+		cardinality many
+		revision replicate
+		clone replicate
+;
+add property relationship_reAssignee on prog eServiceSchemaVariableMapping.tcl to relationship reAssignee
+;
+
+19. connectPerson 이클립스에서 작성.
+## 이 작업을 해줘야 connectPerson을 해줘서 form에서 update Function에서 변경될 때
+## DomainObject.connect가 되어서 table에서 값이 나오게 해준다.
+
+20. 상세 조회할 때 넣을 form -> reOrderDetailForm 작성
+del form reOrderDetailForm;
+
+add form reOrderDetailForm web
+field
+	name 'Order No'
+	label 'emxFramework.label.OrderNo'
+	bus '$<name>'
+	setting 'Field Type' basic
+	setting 'Registered Suite' 'Framework'
+	setting Editable false
+field
+	name 'Order Name'
+	label 'emxFramework.label.OrderName'
+	bus '$<attribute[reTitle]>'
+	setting 'Field Type' attribute
+	setting 'Admin Type' attribute_reTitle
+	setting 'Registered Suite' 'Framework'
+field
+	name 'Indicator'
+	label 'emxFramework.label.reOrderer'
+	bus '$<attribute[reOrderer]>'
+	setting 'Field Type' attribute
+	setting 'Admin Type' attribute_reOrderer
+	setting 'Registered Suite' 'Framework'
+field
+	name Category
+	label 'emxFramework.label.Category'
+	bus '$<attribute[reCategory]>'
+	setting 'Field Type' attribute
+	setting 'Admin Type' attribute_reCategory
+	setting 'Registered Suite' 'Framework'
+field
+	name 'Order Type'
+	label 'emxFramework.label.reType'
+	bus '$<attribute[reType]>'
+	setting 'Field Type' attribute
+	setting 'Admin Type' attribute_reType
+	setting 'Registered Suite' 'Framework'
+field # Originated는 원래 있던거.(만든 날짜, 시간이 나옴)
+	name 'Originated Date'
+	label 'emxFramework.label.OriginatedDate'
+	bus '$<Originated>'
+	setting 'Field Type' basic
+	setting 'Registered Suite' 'Framework'
+field
+	name 'Assignees'
+	label 'emxFramework.label.Assignees'
+	bus '$<from[reAssignee].to.name>'
+	setting 'Registered Suite' 'Framework'
+	setting 'Update Program' Project
+	setting 'Update Function' connectPerson
+;
+add property form_reOrderDetailForm on prog eServiceSchemaVariableMapping.tcl to form reOrderDetailForm
+;
+
+21. command 만들기
+add command reProperties
+	label 'emxFramework.label.Properties'
+	href '${COMMON_DIR}/emxForm.jsp?editLink=true&form=reOrderDetailForm'
+	setting 'Registered Suite' 'Framework'
+	setting 'Target Location' popup
+;
+add property command_reProperties on prog eServiceSchemaVariableMapping.tcl to command reProperties
+;
+
+mod menu type_reType
+	add command reProperties
+;
+
+22. promote를 해서 Closed가 될 때 actualFinish값이 뜨는 trigger 생성
+mod policy 'rePolicy'
+	state 'Active'
+	add trigger
+	promote
+	check
+	emxTriggerManager input rePolicyPromoteCheck
+;
+
+add bus 'eService Trigger Program Parameters' rePolicyPromoteCheck promoteCheck
+	policy 'eService Trigger Program Policy'
+	vault 'eService Administration'
+	'eService Program Name' Project
+	'eService Method Name' promoteCheck
+	'eService Sequence Number' 1
+	'eService Program Argument 1' ${OBJECTID}
+;
+Promote bus 'eService Trigger Program Parameters' rePolicyPromoteCheck promoteCheck
+;
+
+## 22+ 하다보니 modify가 access권한이 없어서 에러가 뜬다고 함. trigger에 추가해주자.
+mod policy rePolicy
+	state Active
+		owner read, show, viewform, checkout, promote, demote, modify
+;
+
+23. 1번에서 delay 뺀것을 넣고 이클립스에서 코드 작성
+showDelay
+
+24. portal을 만들기 전 Assignees, Resolution command를 만들어서 넣자.
+add command reAssignees
+	label 'emxFramework.label.reAssignees'
+	href '${COMMON_DIR}/emxIndentedTable.jsp?program=Project:findPerson&table=reAssigneesPersonTable&header=Assignees'
+	setting 'Registered Suite' 'Framework'
+	setting 'Target Location' content
+;
+add property command_reAssignees on prog eServiceSchemaVariableMapping.tcl to command reAssignees
+;
+
+25. reType 메뉴에 reAssignees command 추가
+mod menu type_reType
+	add command reAssignees
+;
+
+26. Resolution command 만들기
+add command reResolution
+	label 'emxFramework.label.reResolution'
+	href '${COMMON_DIR}/emxIndentedTable.jsp?program=Project:findResolution&table=reResolutionTable&header=Resolution'
+	setting 'Registered Suite' 'Framework'
+	setting 'Target Location' content
+;
+add property command_reResolution on prog eServiceSchemaVariableMapping.tcl to command reResolution
+;
+
+26 plus) href를 사용하기 위해 java 추가
+add prog reResolution java;
+
+27. menu에 command 추가
+mod menu type_reType
+	add command reResolution
+;
+
+28. reResolutionTable 만들기
+del table reResolutionTable system;
+
+add table reResolutionTable system 
+column
+	name Id
+	setting 'Column Type' checkbox
+column
+	name DocNo
+	label 'emxFramework.label.DocNo'
+	bus '$<name>'
+	href '${COMMON_DIR}/emxTree.jsp'
+	setting 'Target Location' content
+	setting 'Registered Suite' 'Framework'
+column
+	name Writer
+	label 'emxFramework.label.Writer'
+	setting 'Registered Suite' 'Framework'
+	setting 'Column Type' program
+	setting 'program' Project
+	setting 'function' findAssignee # 여기에는 Vector로 되어있는 findAssignee
+column
+	name description
+	label 'emxFramework.lable.description'
+	bus '$<description>'
+column
+	name State
+	label 'emxFramework.label.State'
+	bus '$<current>'
+	setting 'Admin Type' state
+column
+	name newWindow
+	href '${COMMON_DIR}/emxTree.jsp'
+	setting 'Column Icon' 'images/iconNewWindow.gif'
+	setting 'Column Type' icon
+	setting 'Target Location' popup
+;
+
+29. reResolution type만들기(나중에 closed가 있어야하기 때문에 미리 만들어 놓자)
+add attribute reClosed
+	description 'reClosed'
+	type string
+;
+add property attribute_reClosed on prog eServiceSchemaVariableMapping.tcl to attribute reClosed
+;
+
+add type reResolution
+	description 'ResolutionDocument'
+	attribute reOrderer
+	attribute reCategory
+	attribute reType
+	attribute reTitle
+	attribute reName
+	attribute Originator
+	attribute reClosed
+;
+add property type_reResolution on prog eServiceSchemaVariableMapping.tcl to type reResolution
+;
+
+30. 포탈 만들기
+30-1. 각각의 channel 만들어주기
+add channel rePropertiesChannel
+	description 'properties'
+	command reProperties
+;
+add property channel_rePropertiesChannel on prog eServiceSchemaVariableMapping.tcl to channel rePropertiesChannel
+;
+
+add channel reAssigneesChannel
+	description 'Assignees'
+	command reAssignees
+;
+add property channel_reAssigneesChannel on prog eServiceSchemaVariableMapping.tcl to channel reAssigneesChannel
+;
+
+add channel reResolutionChannel
+	description 'Resoltion'
+	command reResolution
+;
+add property channel_reResolutionChannel on prog eServiceSchemaVariableMapping.tcl to channel reResolutionChannel
+;
+
+30-2. portal 생성
+add portal rePortal
+	description 'portal'
+	channel 'rePropertiesChannel', 'reAssigneesChannel'
+	channel 'reResolutionChannel'
+;
+add property channel_rePortal on prog eServiceSchemaVariableMapping.tcl to portal rePortal
+;
+
+30-3. portal command 생성
+add command rePortal
+	description 'rePortal'
+	label 'testView'
+	href '${COMMON_DIR}/emxPortal.jsp?portal=rePortal&showPageHeader=false'
+;
+add property command_rePortal on prog eServiceSchemaVariableMapping.tcl to command rePortal
+;
+
+30-4. menu type_reType에 href및 command 추가
+mod menu type_reType
+	href '${COMMON_DIR}/emxPortal.jsp?portal=rePortal&showPageHeader=false'
+;
+
+31. reResolution에 toolbar도 만들어주자(command만들고 menu만들고 mod로 붙이기)
+add command reResolutionToolbar
+	label 'emxFramework.label.CreateToolbar'
+	href 'emxCreate.jsp?type=type_reResolution&form=reResolutionCreateForm&nameField=auto&policy=reResolutionPolicy&vaultChooser=true&submitAction=treeContent&header=Create'
+	setting 'Registered Suite' 'Framework'
+	setting 'Target Location' popup
+;
+add property command_reResolutionToolbar on prog eServiceSchemaVariableMapping.tcl to command reResolutionToolbar
+;
+
+32. reResolutionToolbar를 만들어 줬다면 menu에 command를 추가해주자
+add menu reResolutionCreateToolbar
+	command reResolutionToolbar
+	command AEFGenericDelete
+;
+add property menu_reResolutionCreateToolbar on prog eServiceSchemaVariableMapping.tcl to menu reResolutionCreateToolbar
+;
+
+33. 위에서 모든것을 추가해줬다면 form을 추가
+del form reResolutionCreateForm;
+
+add form reResolutionCreateForm web
+field
+	name resolutionNo
+	label 'emxFramework.label.resolutionNo'
+	bus '$<name>'
+	setting 'Field Type' basic
+	setting 'Input Type' textbox
+	setting 'Access Expression' false
+	setting 'Registered Suite' 'Framework'
+field
+	name description
+	label 'emxFramework.label.ParentDescription'
+	setting 'Field Type' program
+	setting 'program' Project
+	setting 'function' showDes
+	setting Editable false
+	setting 'Registered Suite' 'Framework'
+field
+	name parentAssignees
+	label 'emxFramework.label.Assignees'
+	range '${COMMON_DIR}/emxIndentedTable.jsp?program=Project:findPerson&table=reAssigneesPersonTable&header=Assignees&selection=multiple&submitURL=../reEditAssignees.jsp'
+	setting 'Field Type' program
+	setting 'program' Project
+	setting 'function' showAssignee	# editable false가 있으면 안됨.
+	setting 'Update Program' Project
+	setting 'Update Function' connectResolution
+	setting 'Registered Suite' 'Framework'
+field
+	name secondDescription
+	label 'emxFramework.label.description'
+	bus '$<description>'
+	setting 'Input Type' textarea
+	setting Editable true
+	setting Required true
+	setting 'Registered Suite' 'Framework'
+;
+add property form_reResolutionCreateForm on prog eServiceSchemaVariableMapping.tcl to form reResolutionCreateForm
+;
+
+이클립스에서 connectResolution 작성
+
+34. Resolution에서 만들 때 이름이 자동적으로 만들어져야 한다.
+34-1. relationship 생성
+add relationship reResolution
+	description 'reResolution'
+	nothidden
+	preventduplicates
+	from
+		type reType # 첫번째 type
+		meaning 'reType'
+		cardinality one
+		revision replicate
+		clone replicate
+	to
+		type reResolution # 두번째 type
+		meaning 'reResolution'
+		cardinality many
+		revision replicate
+		clone replicate
+;
+add property relationship_reResolution on prog eServiceSchemaVariableMapping.tcl to relationship reResolution
+;
+
+34-2 policy 추가
+add policy reResolutionPolicy
+	description 'reResolutionPolicy'
+	sequence '1,2,3,...'
+	store STORE
+	type reResolution
+	format all
+	defaultformat generic
+	state Create
+		version true
+		revision false
+		promote true
+		checkouthistory false
+		owner all
+	state Review
+		version true
+		revision false
+		promote true
+		checkouthistory false
+		owner read, show, viewform, checkout, modify, promote, demote
+	state Complete
+		version true
+		revision true
+		promote false
+		checkouthistory false
+		owner read, show, viewform, checkout, demote
+		public read, show, viewform, checkout, demote
+	property 'state_Create' value 'Create'
+	property 'state_Review' value 'Review'
+	property 'state_Complete' value 'Complete'
+;
+add property policy_reResolutionPolicy on prog eServiceSchemaVariableMapping.tcl to policy reResolutionPolicy
+;
+
+34-3. Object 자동 생성
+add bus 'eService Object Generator' 'type_reResolution' ''
+	policy 'eService Object Generator'
+	vault 'eService Administration'
+	'eService Name Prefix' 'RES-'
+	'eService Processing Time Limit' 60
+	'eService Retry Count' 1
+	'eService Retry Delay' 1000
+	'eService Safety Policy' policy_reResolutionPolicy
+	'eService Safety Vault' vault_eServiceProduction
+;
+
+add bus 'eService Number Generator' 'type_reResolution' ''
+	policy 'eService Object Generator'
+	vault 'eService Administration'
+	'eService Next Number' 00001
+;
+
+add connection 'eService Number Generator'
+	from 'eService Object Generator' 'type_reResolution' ''
+	to 'eService Number Generator' 'type_reResolution' ''
+;
+
+35. Properties에서 Assignee가 나오게 보여주자.
+이클립스에서 connectPerson 작성
+
+## 아직 맨 처음화면에서 create가 잘 됨.
+
+36. Properties edit시 이상하게 되는거 고치자.(20번)
+del form reOrderDetailForm;
+
+add form reOrderDetailForm web
+field
+	name 'Order No'
+	label 'emxFramework.label.OrderNo'
+	bus '$<name>'
+	setting 'Field Type' basic
+	setting 'Registered Suite' 'Framework'
+	setting Editable false
+field
+	name 'Order Name'
+	label 'emxFramework.label.OrderName'
+	bus '$<attribute[reTitle]>'
+	setting 'Field Type' attribute
+	setting 'Admin Type' attribute_reTitle
+	setting 'Registered Suite' 'Framework'
+field
+	name 'Indicator'
+	label 'emxFramework.label.reOrderer'
+	bus '$<attribute[reOrderer]>'
+	setting 'Input Type' combobox
+	setting 'Field Type' attribute
+	setting 'Admin Type' attribute_reOrderer
+	setting 'Registered Suite' 'Framework'
+field
+	name Category
+	label 'emxFramework.label.Category'
+	bus '$<attribute[reCategory]>'
+	setting 'Input Type' combobox
+	setting 'Field Type' attribute
+	setting 'Admin Type' attribute_reCategory
+	setting 'Registered Suite' 'Framework'
+field
+	name 'Order Type'
+	label 'emxFramework.label.reType'
+	bus '$<attribute[reType]>'
+	setting 'Input Type' combobox
+	setting 'Field Type' attribute
+	setting 'Admin Type' attribute_reType
+	setting 'Registered Suite' 'Framework'
+field # Originated는 원래 있던거.(만든 날짜, 시간이 나옴)
+	name 'Originated Date'
+	label 'emxFramework.label.OriginatedDate'
+	bus '$<Originated>'
+	setting 'Field Type' basic
+	setting 'Registered Suite' 'Framework'
+field
+	name 'Assignees'
+	label 'emxFramework.label.Assignees'
+	bus '$<from[reAssignee].to.name>'
+	range '${COMMON_DIR}/emxIndentedTable.jsp?program=Project:findPerson&table=reAssigneesPersonTable&header=Edit&selection=multiple&submitURL=../reEditAssignees.jsp'
+	setting 'Update Program' Project
+	setting 'Update Function' connectPerson
+	setting 'Registered Suite' 'Framework'
+;
+add property form_reOrderDetailForm on prog eServiceSchemaVariableMapping.tcl to form reOrderDetailForm
+;
+
+37. reDocSubmit.jsp를 하면 detailForm에서 assignees가 변경이 되지 않는다.
+그래서 reDocSubmit을 다른 jsp로 변경하자(이클립스에서 다른 jsp작성 -> reEditAssignees.jsp)
+
+## reResolution에서 create 시 만들어진다. 하나 문제점은 RE-00009에서 만든 게 
+RE-00008에서도 보인다. 만든 곳에서만 만들어지게 만들자. findResolution에서 where절에 추가해주기
+
+38. Resolution에서 만들어진 RES를 눌렀을 때 나오는 화면 연결해주기
+38-1. 우선 menu 생성
+add menu type_reResolution
+	description 'type_reResolution'
+	label '$<name> [$<revision>]'
+	href '${COMMON_DIR}/emxForm.jsp?editLink=true&form=reResolutionDetailForm&formHeader=reResolution:$<name> ($<revision>)'
+	command AEFLifecycle
+	command AEFHistory
+;
+add property menu_type_reResolution on prog eServiceSchemaVariableMapping.tcl to menu type_reResolution
+;
+
+mod menu type_reResolution
+	href '${COMMON_DIR}/emxForm.jsp?editLink=true&form=reResolutionDetailForm&formHeader=reResolution:$<name> ($<revision>)'
+;
+
+del menu type_reResolution;
+
+Business type 메뉴 등록
+mod menu Tree add menu type_reResolution;
+
+38-2. form 생성
+del form reResolutionDetailForm;
+
+add form reResolutionDetailForm web
+field
+	name resolutionNo
+	label 'emxFramework.label.reResolutionNo'
+	bus '$<name>'
+	setting 'Field Type' basic
+	setting 'Registered Suite' 'Framework'
+	setting Editable false
+field
+	name description
+	label 'emxFramework.label.description'
+	bus '$<to[reResolution].from.description>'
+	setting 'Field Type' basic
+	setting 'Input Type' textarea
+	setting 'Registered Suite' 'Framework'
+	setting Required true
+field
+	name originated
+	label 'emxFramework.label.Originated'
+	bus '$<Originated>'
+	setting 'Field Type' basic
+	setting 'Input Type' textbox
+	setting 'Registered Suite' 'Framework'
+	setting Required false
+field
+	name state
+	label 'emxFramework.label.State'
+	bus '$<current>'
+	setting 'Field Type' basic
+	setting 'Input Type' textbox
+	setting 'Registered Suite' 'Framework'
+	setting Required false
+field
+	name closed
+	label 'Closed Valid'
+	bus '$<attribute[reClosed]>'
+	setting 'Input Type' text
+	setting 'Field Type' attribute
+	setting 'Admin Type' attribute_reClosed
+	setting Editable true
+	setting 'Access Program' Project
+	setting 'Access Function' reviewCheck
+;
+add property form_reResolutionDetailForm on prog eServiceSchemaVariableMapping.tcl to form reResolutionDetailForm
+;
+
+##menu를 만들었는데 들어가지지 않는다.. 작동을 안해 
+## 09/18 : 22번에 경로가 $<COMMON_DIR>로 되어있어서 에러가 뜸. {COMMON_DIR}이잖아~
+
+지시사항이 review가 되면 edit 불가
+삭제는 create 상태일 떄만 삭제 가능
+Assignee가 Create상태에서만 수정 가능
+Closed 여부 Y or N 으로 Resolution 상태가 review인 경우에만 수정이 가능.
+
+39. 조치사항 완료 시 state 수정 위한 트리거 생성
+mod policy reResolutionPolicy
+	state 'Review'
+	add trigger
+	promote
+	action
+	emxTriggerManager input reResolutionPolicyAction
+;
+
+add bus 'eService Trigger Program Parameters' reResolutionPolicyAction setComplete
+	policy 'eService Trigger Program Policy'
+	vault 'eService Administration'
+	'eService Program Name' Project
+	'eService Method Name' setComplete
+	'eService Sequence Number' 1
+	'eService Program Argument 1' ${OBJECTID}
+;
+promote bus 'eService Trigger Program Parameters' reResolutionPolicyAction setComplete
+;
+
+40. 위에서 Trigger를 만들고 setComplete를 만들었다면 그에 대한 setComplete 메서드를 이클립스에서 생성
+
+41. reClosed가 Review일 때만 Closed가 보이게 하는 메소드 이클립스에서 생성
+
+42. Assignee가 Create 상태에서만 수정 가능
+mod policy rePolicy
+	state Create
+	add trigger
+	promote
+	action
+	emxTriggerManager input rePolicyValidation
+;
+
+add bus 'eService Trigger Program Parameters' rePolicyValidation validationAssignee
+policy 'eService Trigger Program Policy'
+	vault 'eService Administration'
+	'eService Program Name' Project
+	'eService Method Name' validationAssignee
+	'eService Sequence Number' 1
+	'eService Program Argument 1' ${OBJECTID}
+;
+promote bus 'eService Trigger Program Parameters' rePolicyValidation validationAssignee
+;
+
+43. 지시사항에 담당자 배정 안될 시 promote 못하게 막는 메소드 이클립스에서 생성
+
+44. 조치사항 생성 시 지시사항 상태가 Active 일때만 버튼 보이는 메소드 이클립스에서 생성
++) 하기 전에 create버튼에 method 추가해주자
+원래 있던 거에서 지우고 추가해줘야 함.
+del command reResolutionToolbar;
+
+add command reResolutionToolbar
+	label 'emxFramework.label.CreateToolbar'
+	href 'emxCreate.jsp?type=type_reResolution&form=reResolutionCreateForm&nameField=auto&policy=reResolutionPolicy&vaultChooser=true&submitAction=treeContent&header=Create'
+	setting 'Access Program' Project
+	setting 'Access Function' showActiveButton
+	setting 'Registered Suite' 'Framework'
+	setting 'Target Location' popup
+;
+add property command_reResolutionToolbar on prog eServiceSchemaVariableMapping.tcl to command reResolutionToolbar
+;
+
+mod menu reResolutionCreateToolbar
+	add command reResolutionToolbar
+;
+add property menu_reResolutionCreateToolbar on prog eServiceSchemaVariableMapping.tcl to menu reResolutionCreateToolbar
+;
+
+45. create를 할려하니 fromconnect가 에러가 뜬다. active에 fromconnect 추가
+mod policy rePolicy
+	state Active
+	version true
+	revision false
+	promote true
+	checkouthistory false
+	owner read, show, viewform, checkout, demote, promote, modify, fromconnect
+;
+
+46. reResolution 테이블에 있는 create버튼을 누르고 Assignee를 변경하고 확인 클릭 시 fromdisconnect
+라는 에러가 뜬다. active에 fromdisconnect추가
+mod policy rePolicy
+	state Active
+	owner read, show, viewform, checkout, demote, promote, modify, fromconnect, fromdisconnect
+;

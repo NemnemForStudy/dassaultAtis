@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE rdf:RDF [
+	<!ENTITY xml "http://www.w3.org/XML/1998/namespace" >
+	<!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+	<!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+	<!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+	<!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+	<!ENTITY ds6w "http://www.3ds.com/vocabularies/ds6w/" >  
+]>
+
+<rdf:RDF
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+	xmlns:xml="http://www.w3.org/XML/1998/namespace"
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+	xmlns:owl="http://www.w3.org/2002/07/owl#"
+	xmlns:ds6w="http://www.3ds.com/vocabularies/ds6w/"
+	xmlns:cust="http://www.3ds.com/vocabularies/cust/"
+	xml:base="http://www.3ds.com/vocabularies/cust/">
+  
+  <owl:Ontology rdf:about="http://www.3ds.com/vocabularies/cust/">
+		<rdfs:label xml:lang="en">Custom 6W Vocabulary</rdfs:label>
+		<rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">This ontology defines the custom vocabulary for DEC Project</rdfs:comment>
+		<owl:imports rdf:resource="ds6w"/>
+		<owl:versionInfo>R2023x</owl:versionInfo>
+	</owl:Ontology>
+	
+  	<owl:DatatypeProperty rdf:about="CodeDetailType">
+		<rdfs:label xml:lang="en">Code Detail Type</rdfs:label>
+		<rdfs:range rdf:resource="&xsd;string"/>
+		<rdfs:subPropertyOf rdf:resource="&ds6w;what"/>
+		<rdfs:comment xml:lang="en">Code Detail Type</rdfs:comment>
+	</owl:DatatypeProperty> 
+  	
+  	<owl:DatatypeProperty rdf:about="CWPDiscipline">
+		<rdfs:label xml:lang="en">CWP Discipline</rdfs:label>
+		<rdfs:range rdf:resource="&xsd;string"/>
+		<rdfs:subPropertyOf rdf:resource="&ds6w;what"/>
+		<rdfs:comment xml:lang="en">CWP Discipline</rdfs:comment>
+	</owl:DatatypeProperty> 
+	
+</rdf:RDF>

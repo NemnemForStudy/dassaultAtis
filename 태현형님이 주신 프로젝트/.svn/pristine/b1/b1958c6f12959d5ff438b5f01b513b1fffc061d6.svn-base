@@ -1,0 +1,1 @@
+define("DS/DMUDeprecatedReview/DMUDeprecatedReview_ko",{});define("DS/DMUDeprecatedReview/assets/nls/DMUDeprecatedReview",{NominalSlide:"공칭"});

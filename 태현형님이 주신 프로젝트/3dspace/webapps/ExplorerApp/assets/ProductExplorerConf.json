@@ -1,0 +1,117 @@
+{
+    "settings": {
+        "readOnlyApp": {
+            "value": true
+        },
+        "TreeDocModelAMD": {
+            "value": "DS/ENXNav/models/xNavTreeDoc"
+        },
+        "dgvOptions": {
+            "value": {
+                "viewMode": "comfortable",
+                "rowsHeader": false,
+                "dgv": {
+                    "defaultColumnDef": {
+                        "width": "auto",
+                        "typeRepresentation": "string"
+                    },
+                    "showContextualMenuColumnFlag": false,
+                    "showRowBorderFlag": true,
+                    "alternateBackgroundFlag": false,
+                    "showRowIndexFlag": false,
+                    "showSelectionCheckBoxesFlag": true,
+                    "cellDragEnabledFlag": true,
+                    "rowSelection": "multiple",
+                    "cellSelection": "none",
+                    "rowGroupingOptions": {
+                        "depth": 1,
+                        "hideGroupedColumns": false
+                    },
+                    "selectionBehavior": {
+                        "canInteractiveMultiselectWithCheckboxClick": true,
+                        "canMultiSelect": true,
+                        "enableFeedbackForActiveCell": true,
+                        "enableShiftSelection": true,
+                        "toggle": false,
+                        "unselectAllOnEmptyArea": true
+                    },
+                    "placeholder": "",
+                    "columns": []
+                },
+                "dgvLayout": {
+                    "rowsHeader": false,
+                    "useLastColumnWidthAutoFlag": true
+                },
+                "useAsyncPreExpand": true,
+                "activateFilterView": true,
+                "columnsDefaultfilterDefinition": {
+                    "excluded": ["ds6w:reserved", "ds6w:reserved-Instance", "ds6w:created", "ds6w:created-Instance", "ds6w:modified", "ds6w:modified-Instance"],
+                    "set": ["ds6w:responsible", "ds6wg:revision", "ds6w:cadMaster", "ds6w:type-Instance", "ds6w:type", "ds6w:status", "ds6w:status-Instance"],
+                    "keyWithTranslation": ["ds6w:type", "ds6w:status", "ds6w:type-Instance", "ds6w:status-Instance"]
+                }
+            }
+        },
+        "columnViews": {
+            "value": [{
+                    "dataIndex": "hide_show",
+                    "AMD": "DS/ENXNav/views/customize_views/commands"
+                }, {
+                    "dataIndex": "findinctx",
+                    "AMD": "DS/ENXNav/views/customize_views/commands"
+                }, {
+                    "dataIndex": "thumbnail",
+                    "AMD": "DS/ENXNav/views/customize_views/commands"
+                }, {
+                    "dataIndex": "positionMatrix-Instance",
+                    "AMD": "DS/ENXNav/views/customize_views/positionMatrix"
+                }, {
+                    "dataIndex": "ds6w:cadMaster",
+                    "AMD": "DS/ENXNav/views/private/externalColumnsViews/cadMaster"
+                }, {
+                    "dataIndex": "ds6w:reserved",
+                    "AMD": "DS/ENXNav/views/private/externalColumnsViews/lifecycleCols"
+                }, {
+                    "dataIndex": "ds6wg:PLMReference.V_isLastVersion",
+                    "AMD": "DS/ENXNav/views/private/externalColumnsViews/lifecycleCols"
+                }, {
+                    "dataIndex": "ds6w:isLastRevision",
+                    "AMD": "DS/ENXNav/views/private/externalColumnsViews/lifecycleCols"
+                },
+                {
+                    "dataIndex": "ds6w:status",
+                    "AMD": "DS/ENXNav/views/private/externalColumnsViews/lifecycleCols"
+                },
+                {
+                    "dataIndex": "ds6w:bookmarks",
+                    "AMD": "DS/ENXNav/views/private/externalColumnsViews/classification"
+                }, {
+                    "dataIndex": "ds6w:responsible",
+                    "AMD": "DS/ENXNav/views/private/externalColumnsViews/responsible"
+                }
+
+            ]
+        }
+    },
+    "columnsCusto": {
+        "default": true,
+        "baseTypes": ["VPMReference", "VPMRepReference", "3DShape"],
+        "baseInstanceTypes": ["VPMInstance", "VPMRepInstance"],
+        "selectedTypes": ["VPMReference", "VPMInstance", "VPMRepReference", "3DShape"],
+        "selectedExtensions": ["XCADExtension", "EnterpriseExtension", "MaterialUsageExtension"],
+        "order": ["tree", "ds6w:label-Instance", "positionMatrix-Instance", "ds6wg:revision", "ds6w:type", "ds6w:description", "ds6w:responsible", "ds6w:status", "ds6w:cadMaster", "hide_show", "findinctx"],
+        "attributes": [{
+            "dataIndex": "positionMatrix-Instance",
+            "ds6wFrom": "rel",
+            "ds6w": "matrixtxt",
+            "kind": "functionIcon"
+        }, {
+            "ds6w": "ds6w:cadMaster",
+            "kind": "image",
+            "width": 40
+        }, {
+            "ds6w": "ds6w:status"
+        }],
+        "commandColumns": [],
+        "typeRepresentations": {}
+    }    
+}

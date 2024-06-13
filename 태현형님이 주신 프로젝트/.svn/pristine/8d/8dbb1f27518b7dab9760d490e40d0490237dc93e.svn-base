@@ -1,0 +1,11 @@
+m|DELWKOApp\DELWKOServices.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.3.23056|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\DELWKOServices\DELWKOServices.js|1677295743|8749
+s|DELWKOApp\DELWKOServices.mweb\src\DELWKOEventsService.js|1675438172|12630
+u|DELWKOApp\DELWKOServices.mweb\src\DELWKOLandingPageService.js|1676407000|6987
+u|DELWKOApp\DELWKOServices.mweb\src\DELWKOModelService.js|1667344711|4635
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

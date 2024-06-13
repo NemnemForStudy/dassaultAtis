@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!-- COPYRIGHT DASSAULT SYSTEMES 2021, All rights reserved -->
+<!-- This defines the data model for IRPC types extended for -->
+<!-- XSoftwarePhysical system -->
+<Package xmlns="PLMDictionaryUnified" Name="PLMSheetMetalDesign"
+    ModelerType="Top" Uuid="DDAE8B3A-4188-4737-8024-4990BF8285DA"
+    CustomerExposition="Programmer" UseNames="RawMaterialSpecification"
+
+    Architecture="All" BelongsToModeler="PLMSheetMetalDesign">
+
+	<!-- *************************************** -->
+	<!-- *******SHM RAW MATERIAL EXTENSION****** -->
+	<!-- *************************************** -->
+
+	<!-- SheetMetal  -->
+	<Class Name="Raw_Material_SheetMetal"
+	 Uuid="64700149-414D-4111-AA53-36B2F765682C"
+	 SuperName="Raw_Material"
+	 Discipline="Yes"
+	 Specializable="No"
+	 Searchable="Yes"
+	 Newable="New"
+	 CustomerExposition="Programmer">
+
+		<Property Name = "IconName" Value = "I_Raw_Material_SheetMetal"/>
+		<Property Name = "3DIconName" Value = "I_Raw_Material_SheetMetal"/>
+		<Property Name = "KweNew_InstanciationMethod" Value = "CATEPLMSheetMetalDesignDelegateInstanciation"/>
+
+		<Simple Name="V_SHM_RM_Thickness" Uuid="C6F0BC36-6A69-4224-96DB-2D5360A28533" PLMImpacting="Yes" Type="Double" MultiValuated="No" Magnitude="LENGTH" Protection="Free" DefaultValue="0.002">
+			<Property Name="CustoUserAccess" Value="ReadWrite"/>
+		</Simple>
+
+		<Simple Name="V_SHM_RM_BendRadius" Uuid="ED8BB046-5107-44D2-B7DE-9048C3A988D2" PLMImpacting="Yes" Type="Double" MultiValuated="No" Magnitude="LENGTH" Protection="Free" DefaultValue="0.004">
+			<Property Name="CustoUserAccess" Value="ReadWrite"/>
+		</Simple>
+
+		<Simple Name="V_SHM_RM_KFactor" Uuid="99B0C24A-6550-4059-A0A2-14F3CEB11BA5" PLMImpacting="Yes" Type="Double" MultiValuated="No" Protection="Free" DefaultValue="0.5">
+			<Property Name="CustoUserAccess" Value="ReadWrite"/>
+		</Simple>
+
+	</Class>
+
+</Package>
+

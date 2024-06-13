@@ -1,0 +1,1 @@
+define("DS/CAT3DAnnotControllerForReview/CAT3DAnnotControllerForReview_pt-BR",{});define("DS/CAT3DAnnotControllerForReview/assets/nls/CAT3DAnnotControllerForReview",{errorWhileSettingAppCtx:"As anotações do slide não foram exibidas corretamente. Reaplique o slide."});

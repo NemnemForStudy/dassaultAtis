@@ -1,0 +1,14 @@
+# Added by hslee on 2023.09.11
+# del command decCWPMaterialStatusLink;
+add command decCWPMaterialStatusLink
+	label 'ProgramCentral.Label.Procurement_Schedule_-_Material_Status'
+	href '${COMMON_DIR}/emxIndentedTable.jsp?table=decMaterialStatusSummary&program=emxProjectSpace:getMaterialStatusList&header=ProgramCentral.Label.Procurement_Schedule_-_Material_Status&parallelLoading=true&maxCellsToDraw=2000&scrollPageSize=50&pageSize=300&showPaginationToggle=false&decExport=true&exportMode=MaterialStatus&toolbar=decCWPMaterialStatusToolbar&freezePane=IDENT_CD&slideinFilter=true&filterParam=codeMaster:Discipline,codeMaster:Sub-Con,codeMaster:Item Group,codeMaster:Group,Fab Category:true,Material Delay:true,Status_Updated:true,CWP_Plan:true&selection=multiple'
+	setting 'Target Location' 'content'
+	setting 'Registered Suite' 'ProgramCentral'
+	setting 'Access Expression' 'type == "decCWPTask" && to[Project Access Key].from.from[Project Access List].to.attribute[decProjectType] == "ongoing"'
+;
+
+# Modified by thok on 2023.10.27
+mod command decCWPMaterialStatusLink
+	href '${COMMON_DIR}/emxIndentedTable.jsp?table=decMaterialStatusSummary&program=emxProjectSpace:getMaterialStatusList&header=ProgramCentral.Label.Procurement_Schedule_-_Material_Status&parallelLoading=true&maxCellsToDraw=2000&scrollPageSize=50&pageSize=300&showPaginationToggle=false&decExport=true&exportMode=MaterialStatus&toolbar=decCWPMaterialStatusToolbar&freezePane=ISO_NO&slideinFilter=true&filterParam=codeMaster:Discipline,codeMaster:Sub-Con,codeMaster:Item Group,codeMaster:Group,Fab Category:true,Material Delay:true,Status_Updated:true,CWP_Plan:true&selection=multiple'
+;

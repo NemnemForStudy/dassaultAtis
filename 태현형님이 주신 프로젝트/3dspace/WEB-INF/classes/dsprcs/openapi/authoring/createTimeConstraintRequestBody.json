@@ -1,0 +1,155 @@
+{
+	"properties": {
+		"items": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"properties": {
+					"fromOperationOcc": {
+						"description": "Occurrence of constraining operation instance details",
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"instancePosition": {
+									"description": "Sequence number of the instance",
+									"type": "integer",
+									"example": 0
+								},
+								"instanceObject": {
+									"properties": {
+										"source": {
+											"description": "Full path to the source, including the server hostname.",
+											"type": "string",
+											"example": "https://server_name.dsone.3ds.com:443/3DSpace"
+										},
+										"type": {
+											"description": "Type of the object.",
+											"type": "string",
+											"example": "DELLmiHeaderOperationInstance"
+										},
+										"identifier": {
+											"description": "Physical ID of the object.",
+											"type": "string",
+											"example": "5C0779CEF11C472C9537094C2FA82344"
+										},
+										"relativePath": {
+											"description": "Relative path from the source to get the details of the object, including the ID of the object.",
+											"type": "string",
+											"example": "/resources/v1/modeler/dsprcs:MfgProcess/5C0779CEF11C472C9537094C2FA82355/dsprcs:MfgOperationInstance/5C0779CEF11C472C9537094C2FA82344"
+										}
+									}
+								}
+							}
+						}
+					},
+					"toOperationOcc": {
+						"description": "Occurrence of constrained operation instance details",
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"instancePosition": {
+									"description": "Sequence number of the instance",
+									"type": "integer",
+									"example": 0
+								},
+								"instanceObject": {
+									"properties": {
+										"source": {
+											"description": "Full path to the source, including the server hostname.",
+											"type": "string",
+											"example": "https://server_name.dsone.3ds.com:443/3DSpace"
+										},
+										"type": {
+											"description": "Type of the object.",
+											"type": "string",
+											"example": "DELLmiHeaderOperationInstance"
+										},
+										"identifier": {
+											"description": "Physical ID of the object.",
+											"type": "string",
+											"example": "5C0779CEF11C472C9537094C2FA82344"
+										},
+										"relativePath": {
+											"description": "Relative path from the source to get the details of the object, including the ID of the object.",
+											"type": "string",
+											"example": "/resources/v1/modeler/dsprcs:MfgProcess/5C0779CEF11C472C9537094C2FA82355/dsprcs:MfgOperationInstance/5C0779CEF11C472C9537094C2FA82344"
+										}
+									}
+								}
+							}
+						}
+					},
+					"attributes": {
+						"properties": {
+							"title": {
+								"type": "string",
+								"example": "My title"
+							},
+							"description": {
+								"type": "string",
+								"example": "My description"
+							},"dependencyType":{"description":"Indicates FinishToStart(1), StartToStart(2) or FinishToFinish(3) value.","type":"string","example":1},
+							"isProductFlow": {
+								"description": "Boolean value whether time constraint is product flow",
+								"type": "boolean",
+								"example": false
+							},
+							"delayMode": {
+								"description": "Delay mode enum value",
+								"type": "string",
+								"enum": [
+									"MaxDelay",
+									"MinDelay",
+									"Synchro"
+								]
+							},
+							"isOptional": {
+								"description": "Boolean value whether time constraint is optional",
+								"type": "boolean",
+								"example": false
+							},
+							"resourceConstraint": {
+								"description": "Resource constraint enum value",
+								"type": "string",
+								"enum": [
+									"DifferentResources",
+									"None",
+									"SameResources",
+									"SameResourcesWithReservation"
+								]
+							},
+							"delay": {
+								"description": "Delay real value",
+								"type": "number",
+								"format": "double",
+								"example": 0
+							},
+							"flowType": {
+								"description": "Product flow category enum value",
+								"type": "string",
+								"enum": [
+									"Alternative",
+									"Failed",
+									"Good",
+									"Scrapped"
+								]
+							},
+							"returnCode": {
+								"description": "Return code value",
+								"type": "string",
+								"example": "RCFail203"
+							},
+							"maximumRetries": {
+								"description": "Maximum retries value",
+								"type": "integer",
+								"example": 1
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

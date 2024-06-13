@@ -1,0 +1,1 @@
+define("DS/ApplicationFrame/ApplicationFrame_cs",{});define("DS/ApplicationFrame/assets/nls/ApplicationFrameActionBar",{hideActionBar:"Skrýt panel akcí",showActionBar:"Zobrazit panel akcí"});

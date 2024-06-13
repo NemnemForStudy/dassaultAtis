@@ -1,0 +1,1 @@
+define("DS/NotificationAPI/NotificationAPI_zh-TW",{});define("DS/NotificationAPI/assets/nls/feed",{permissionBannerTitle:"有新訊息時會收到通知",permissionBannerText:"開啟桌面通知"});

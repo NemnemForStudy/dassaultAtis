@@ -1,0 +1,11 @@
+{
+  "version": "1.0.0",
+  "summary": "Ce bloc vous aide à synchroniser votre contrôle et votre flux de données. Il active le port de contrôle de sortie dès que tous les ports de contrôle d'entrée ont été activés. Pour un scénario plus complexe (par exemple, exécuter ce bloc plusieurs fois), veuillez lire la description détaillée ci-dessous.",
+  "description": "Chaque port de contrôle d'entrée possède un compteur interne qui est incrémenté lorsque le port a été activé et décrémenté lorsque le bloc sort du port de contrôle de sortie <doc-ocp-name translate=no>Out</doc-ocp-name>. Chaque fois qu'un port de contrôle d'entrée est activé, le bloc est exécuté et sort par le port de contrôle de sortie <doc-ocp-name translate=no>Out</doc-ocp-name> uniquement si tous les compteurs internes du port de contrôle d'entrée sont strictement supérieurs à 0.",
+  "controlPorts": {
+    "In1": "déclenche l'exécution du bloc et incrémente le compteur interne associé à ce port.",
+    "In2": "déclenche l'exécution du bloc et incrémente le compteur interne associé à ce port.",
+    "Out": "est activé uniquement lorsque tous les compteurs internes du port de contrôle d'entrée sont strictement supérieurs à 0. Il décrémente tous les compteurs internes du port de contrôle d'entrée."
+  },
+  "example": null
+}

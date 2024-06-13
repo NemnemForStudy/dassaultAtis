@@ -1,0 +1,1 @@
+define("DS/MIBQueryWidget/MIBQueryWidget_zh",{});define("DS/MIBQueryWidget/assets/nls/MIBQueryWidgetNls",{CommandDialogTitle:"搜索 MIB 内容",BtnOK:"搜索",BtnCancel:"取消",BtnOk2:"打开",Query:"搜索"});

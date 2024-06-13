@@ -1,0 +1,1 @@
+define("DS/DELWebCommonCmds/DELWebCommonCmds_de",{});define("DS/DELWebCommonCmds/assets/nls/DELWeb3DFilterCmd",{"Dialog.Title":"Bestätigung","Dialog.FilterCancelled.Message":"Hinzufügen des Filters abgebrochen. Möchten Sie das Stammobjekt ohne Filter hinzufügen?","Dialog.okButtonText":"OK","Dialog.koButtonText":"Abbrechen"});

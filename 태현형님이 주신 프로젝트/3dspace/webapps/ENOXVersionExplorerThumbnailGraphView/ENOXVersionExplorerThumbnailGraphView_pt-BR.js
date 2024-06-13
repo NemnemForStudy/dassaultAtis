@@ -1,0 +1,1 @@
+define("DS/ENOXVersionExplorerThumbnailGraphView/ENOXVersionExplorerThumbnailGraphView_pt-BR",{});define("DS/ENOXVersionExplorerThumbnailGraphView/assets/nls/ThumbnailText",{imageUpdating:"Atualização de imagem...",colFilter:"Filtrar"});

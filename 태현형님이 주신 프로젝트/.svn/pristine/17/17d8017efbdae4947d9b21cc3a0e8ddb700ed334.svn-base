@@ -1,0 +1,1 @@
+define("DS/DMUSlideEdition/DMUSlideEdition_ja",{});define("DS/DMUSlideEdition/assets/nls/DMUSlideEdition",{normalSlideTitle:"スライド",createSlideMessage:"が作成されました",normalFormatTitle:"フォーマット",formatGenerated:"フォーマットが正常に生成されました",formatGenerationError:"フォーマット生成中に想定外のエラーが発生しました",generateAndEditLabel:"閉じて編集",generateFormatTitle:"フォーマットを生成"});

@@ -1,0 +1,49 @@
+################################################################################################
+# Created By thok : 2023. 06. 29
+# Admin Type : menu
+# Name : decRequestToolbarActions
+################################################################################################
+#delete menu decRequestToolbarActions;
+add menu 'decRequestToolbarActions' 
+	label 'ProgramCentral.Toolbar.Actions' 
+	command 'decRequestEdit' 
+	setting 'Registered Suite' 'ProgramCentral' 
+	setting 'Image' '${COMMON_DIR}/images/iconActionActions.png'
+	property application value 'ProgramManagementBase' 
+	property version value 'R423.HF7' 
+	property installer value 'ENOVIAEngineering' 
+	property 'installed date' value '06-29-2023' 
+	property 'original name' value 'decRequestToolbarActions'
+;
+add property menu_decRequestToolbarActions on program eServiceSchemaVariableMapping.tcl to menu 'decRequestToolbarActions'
+;
+
+# Modified By thok : 2023. 07. 06
+mod menu decRequestToolbarActions
+	add command decRequestRequest
+;
+
+# Modified By thok : 2023. 08. 10
+mod menu decRequestToolbarActions
+	add command decRequestAccept
+;
+
+# Modified By thok : 2023. 08. 10
+mod menu decRequestToolbarActions
+	add command decRequestResponse
+;
+
+# Modified By thok : 2023. 08. 10
+mod menu decRequestToolbarActions
+	add command decRequestResponseEdit
+;
+
+# Modified By thok : 2023. 08. 10
+mod menu decRequestToolbarActions
+	add command decRequestReply
+;
+
+# Modified By thok : 2023. 08. 11
+mod menu decRequestToolbarActions
+	add command decRequestComplete
+;

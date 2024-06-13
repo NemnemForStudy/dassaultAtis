@@ -1,0 +1,1 @@
+define("DS/DMUBaseUI/DMUBaseUI_zh-TW",{});define("DS/DMUBaseUI/assets/nls/DMUBaseUI",{defaultValidatedStampLabel:"已驗證",defaultRejectedStampLabel:"已拒絕"});

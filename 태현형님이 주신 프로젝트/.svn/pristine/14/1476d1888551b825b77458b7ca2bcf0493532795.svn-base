@@ -1,0 +1,24 @@
+################################################################################################
+# Create By thok 2023. 06. 29
+# Admin Type : command
+# Name : decCreateConstructionKPICommand
+################################################################################################
+#del command 'decCreateConstructionKPICommand';
+add command decCreateConstructionKPICommand
+	description 'ConstructionKPI Create'
+	label 'emxProgramCentral.Button.CreateNew'
+	alt 'emxProgramCentral.Button.CreateNew'
+	setting 'Image' '${COMMON_DIR}/images/iconActionCreate.png'
+	setting 'Registered Suite' 'ProgramCentral'
+	setting 'Target Location' 'slidein'
+	setting 'Popup Modal' true
+	setting 'Width' 100
+;
+add property 'command_decCreateConstructionKPICommand' on prog eServiceSchemaVariableMapping.tcl to command 'decCreateConstructionKPICommand'
+;
+mod command decCreateConstructionKPICommand
+	href '${COMMON_DIR}/decCreateConstructionKPIDialogFS.jsp?mode=create'
+	add setting 'hasAccess' 'PIM,CM'
+	add setting 'Access Program' 'emxProjectSpace'
+	add setting 'Access Function' 'isAccessPMCUpdate'
+;

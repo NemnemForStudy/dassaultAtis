@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!-- COPYRIGHT DASSAULT SYSTEMES 2021, All rights reserved -->
+<!-- This defines the data model for IRPC types extended for XSemiconductor system -->
+<Package xmlns="PLMDictionaryUnified" Name="XSemi"
+    ModelerType="Top" Uuid="458f317e-dc2c-49ab-89bf-311d2cb2f756"
+    CustomerExposition="Programmer" UseNames="RFLVPMLogical"
+    Architecture="All" BelongsToModeler="XSemi">
+
+    <!-- The main Semiconductor Logical Item type -->
+    <Class Uuid="635fd6ad-ea91-40d4-a6fe-e65c38e111ec" Name="SemiconductorLogicalItem"
+        Abstract="No" CustomerExposition="Programmer" SuperName="RFLVPMLogicalReference"
+        ChangeManagementSupport="Yes" Discipline="Yes" CreateInstName="RFLVPMLogicalInstance"
+        Abbreviation="xsemilogitem">
+        <Property Name="KweNew_InstanciationMethod" Value="CATELogDelegateInstanciation"></Property>
+        <Property Name="KweNew_ReturnedType" Value="RFLVPMLogicalInstance"></Property>
+        <Property Name="NonLinearVersioningAvailability" Value="ALL"></Property>
+        <Property Name="Newable" Value="All"></Property>
+        <Property Name="IconName" Value="I_XSEMISemiconductorLogicalItem"></Property>
+        <Simple Name="SCMChangeTS" Uuid="307d50b6-375d-42ac-8b14-fb5d29c88109"
+            Type="String" MaxLength="255"
+            MultiValuated="No" Protection="Internal" ResetOnCloning="Yes" ResetOnNewVersion="Yes">
+        </Simple>
+        <Method ImplementationType="None">
+            <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+        </Method>
+
+    </Class>
+
+</Package>
+

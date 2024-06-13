@@ -1,0 +1,51 @@
+{
+	"dsmvcfg:attribute.isConfigured": {
+        "property": "computed",
+        "key" : "isConfigured",
+        "example":"dscfg:[{\"isConfigured\":\"true\"}]",
+        "description":"Check if the object is Configured or not",
+        "fetchOnce":true
+    },
+    
+    "dsmvcfg:attribute.enabledCriteria": {
+        "property": "computed",
+        "key" : "enabledCriteria",
+        "example":"dscfg:[{\"enabledCriteria\":[\"Variant\", \"ModelVersion\", \"Unit\", \"ContextualDate\", \"ManufacturingPlan\"]}]",
+        "description":"Get the list of Enabled Criteria on Configured Object",
+        "fetchOnce":true
+    },
+    
+    "dsmvcfg:attribute.configurationCtxt": {
+        "property": "computed",
+        "key" : "configurationCtxt",
+        "example":"dscfg:[{\"configurationCtxt\":{\"totalItems\":1,\"member\":[{\"name\":\"Aircraft\",\"title\":\"Aircraft\",\"description\":\"Description of Model\",\"id\":\"DBE382565FBB0000E33CE65DF19A0800\",\"type\":\"Model\",\"modified\":\"Dec 3, 2019, 4:16:17 PM\",\"created\":\"Dec 3, 2019, 4:15:55 PM\",\"revision\":\" \",\"state\":\"Preliminary\",\"owner\":\"cfguser\",\"organization\":\"MyCompany\",\"collabspace\":\"3DS Collab Space\",\"cestamp\":\"DBE382565FBB0000F83CE65DABF30000\"}]}}]",
+        "description":"Get the list of config contexts(Models) attached to the Reference Object.",
+        "fetchOnce":true,
+        "mask":"dsmvpfl:ModelBaseMask",
+        "maskAppliesTo":"bus"
+    },
+    
+    "dsmvcfg:attribute.hasEffectivity": {
+        "property": "computed",
+        "key" : "hasEffectivity",
+        "example":"dscfg:[{\"hasEffectivity\":\"TRUE\"}]",
+        "description":"Check if the Instance or Relationship is having effectivity on it or not.",
+        "fetchOnce":true
+    },
+    
+    "dsmvcfg:attribute.hasChange": {
+        "property": "computed",
+        "key" : "hasChange",
+        "example":"dscfg:[{\"hasChange\":\"TRUE\"}]",
+        "description":"Check if the Change Action or Work Under Change is available.",
+        "fetchOnce":true
+    },
+    
+    "dsmvcfg:attribute.effectivityContent": {
+        "property": "computed",
+        "key" : "effectivityContent",
+        "example":"dscfg:[{\"effectivityContent\":{\"Effectivity_Variant\":\"Aircraft: Color{Blue} AND Material{Metal}\",\"Effectivity_Projected_Evolution\":\"Aircraft: Model version Aircraft-A< \",\"Effectivity_Current_Evolution\":\"Aircraft: Model version Aircraft-A< \"}}]",
+        "description":"Get the effectivity expression on instance.",
+        "fetchOnce":true
+    }
+}

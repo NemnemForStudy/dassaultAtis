@@ -1,0 +1,11 @@
+m|CAT3DWebAppInfraUI\CAT3DWQuickTour.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.0.22078|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\CAT3DWQuickTour\CAT3DWQuickTour.js|1647691674|5086
+s|CAT3DWebAppInfraUI\CAT3DWQuickTour.mweb\src\CAT3DWQuickTourEngine.js|1637987511|1565
+u|CAT3DWebAppInfraUI\CAT3DWQuickTour.mweb\src\CAT3DWQuickTourSplashScreen.js|1637987511|9124
+u|CAT3DWebAppInfraUI\CAT3DWQuickTour.mweb\src\CAT3DWQuickTourState.js|1637987511|638
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

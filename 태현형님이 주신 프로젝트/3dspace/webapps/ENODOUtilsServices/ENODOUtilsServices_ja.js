@@ -1,0 +1,1 @@
+define("DS/ENODOUtilsServices/ENODOUtilsServices_ja",{});define("DS/ENODOUtilsServices/assets/nls/enodo_notifications",{error:{title:"エラー",security_context_fail:"サーバーリクエストを送信できません : セキュリティ コンテキストの取得に失敗しました。"}});

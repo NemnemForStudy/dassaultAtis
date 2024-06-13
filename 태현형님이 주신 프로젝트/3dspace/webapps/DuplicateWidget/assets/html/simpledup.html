@@ -1,0 +1,94 @@
+<div
+  id="mainContainer"
+  class="duplicate-main-container dlg_cmd_input_container"
+>
+    <div style="display: inline-block" id="addtext-label-container" class="simpdup-option">
+      <div
+        id="addtext-label"
+        style="
+          display: inline-block;
+          font-weight: bold;
+          min-width: 90px;
+          width: auto;
+          margin-left: 1px;
+        "
+      >
+        [[dlg-prefix]]
+      </div>
+    </div>
+    <div style="display: inline-block; position: relative" id="addtext-input-container"  class="simpdup-option">
+      <!-- input validation currently needs this -->
+      <input
+        class="lifecycle-option-prefix"
+        id="addtext-input"
+        data-wuxcontrol="LineEditor"
+        data-wuxstyle="display: inline-block"
+        data-bind="event=change, function=onTextChange;event=keydown, key=13, function=duplicate"
+      />
+    </div>
+
+  <div class="simpdup-option wholestructure firstcol">
+    <input
+      id="wholestructure"
+      type="checkbox"
+      checked
+      data-wuxcontrol="Checkbox"
+      data-wuxlabel="[[dlg-incChildren]]"
+      data-bind="attribute=wuxchecked, property=includeChildren"
+    />
+    <label data-delete-element="true">[[dlg-incChildren]]</label>
+  </div>
+  <div id="wholestructureDynContainer" class="simpdup-option wholestructure firstcol">
+    <input
+      id="wholestructureDyn"
+      type="checkbox"
+      checked
+      data-wuxcontrol="Checkbox"
+      data-wuxlabel="[[dlg-incChildren-dynamic]]"
+      data-bind="attribute=wuxchecked, property=includeChildren"
+    />
+    <label data-delete-element="true">[[dlg-incChildren-dynamic]]</label>
+  </div>
+ 
+    <div class="simpdup-option firstcol"
+      id="cred-combo-label"
+      style="
+        display: inline-block;
+        font-weight: bold;
+        margin-right: 2px;
+        width: auto;
+        min-width: 90px;
+      "
+    >
+      [[dlg-credcombo]]
+    </div>
+    <wuxcombo class="simpdup-option" id="cred-combo"></wuxcombo>
+  
+  <div
+    class="advdup-content"
+    id="advanced-content"
+    style="height: 100%; display: none"
+  ></div>
+  <div
+    class="advdup-expander"
+    id="expander"
+    data-bind="event=click, function=openAdvanced"
+  >
+    [[dlg-advDup]] >
+  </div>
+   <div
+    class="advdup-expander"
+    id="collapser"
+    style="
+      position: absolute;
+      bottom: 0px;
+      right: 0px;
+      margin: 5px;
+      font-size: 12px;
+      display: none;
+    "
+    data-bind="event=click, function=closeAdvanced"
+  >
+    [[dlg-basicDup]] >
+  </div>
+</div>

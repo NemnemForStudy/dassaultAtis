@@ -1,0 +1,14 @@
+# Added by hslee on 2023.05.16
+
+# del role decSystemAdmin;
+add role decSystemAdmin
+	desc 'System Admin'
+	assign person 'admin_platform'
+;
+
+mod role decSystemAdmin
+	add assign person decAdmin_01
+;
+
+add property role_decSystemAdmin on program eServiceSchemaVariableMapping.tcl to role 'decSystemAdmin'
+;

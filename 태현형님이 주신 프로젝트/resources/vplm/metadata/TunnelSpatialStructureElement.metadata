@@ -1,0 +1,335 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!-- COPYRIGHT DASSAULT SYSTEMES 2012, All rights reserved -->
+
+<Package CustomerExposition = "Programmer" ModelerType = "Top" Name = "TunnelSpatialStructureElement" UseNames = "CivilEngineeringSpatialStructureElement" Uuid = "0202A5CF-3E86-4EF4-B6E2-7EDBB48E4966" xmlns = "PLMDictionaryUnified">
+  <Class Abbreviation = "tnl" CustomerExposition = "Programmer" Discipline = "Yes" Name = "CutCoverTunnel" SuperName = "TunnelSpatialStructureElement" Uuid = "57e4b3a5-635a-49d5-a5f8-db410006b719">
+    <Property Name = "IconName" Value = "I_CutCoverTunnel"/>
+    <Property Name = "3DIconName" Value = "I_CutCoverTunnel.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATEAECDelegateInstanciation"/>
+    <Property Name = "KweNew_ReturnedType" Value = "VPMInstance"/>
+    <Property Name = "Newable" Value = "All_Offline_CAA"/>
+    <Property Name = "InstantiationOwnerTypes" Value = "PPRContext;AecOtherSpatialStructureElement;AecSite;Building;BuildingStorey;CutCoverTunnel;Dam;Road;RoadInterchange;RoadOtherSpatialStructureElement;RoadRamp;RoadStretch;Railway;RailwayOtherSpatialStructureElement;RailwayStretch;TunnelOtherSpatialStructureElement"/>
+    <Property Name = "3DPartAvailability" Value = "UserChoiceReferenceDefault"/>
+  </Class>
+  <Class CustomerExposition = "Programmer" Discipline = "Yes" Name = "CutCoverTunnelType" SuperName = "TunnelSpatialStructureElementType" Uuid = "7575d50a-edc8-40e0-b906-3f55d61cff47" lowobjectcount = "Yes">
+    <Property Name = "IconName" Value = "I_CutCoverTunnelType"/>
+    <Property Name = "3DIconName" Value = "I_CutCoverTunnelType.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATCbaObjectTypeDelegateInstanciation"/>
+    <Property Name = "Newable" Value = "New_Offline_CAA"/>
+    <Property Name = "3DPartAvailability" Value = "ReferenceOnly"/>
+  </Class>
+  <Class Abbreviation = "tnl" CustomerExposition = "Programmer" Discipline = "Yes" Name = "Tunnel" SuperName = "TunnelSpatialStructureElement" Uuid = "56385AAE-A82E-4384-B5D9-075D7669C820">
+    <Property Name = "IconName" Value = "I_Tunnel"/>
+    <Property Name = "3DIconName" Value = "I_Tunnel.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATEAECDelegateInstanciation"/>
+    <Property Name = "KweNew_ReturnedType" Value = "VPMInstance"/>
+    <Property Name = "Newable" Value = "All_Offline_CAA"/>
+    <Property Name = "InstantiationOwnerTypes" Value = "PPRContext;AecOtherSpatialStructureElement;AecSite;Building;BuildingStorey;CutCoverTunnel;Dam;Road;RoadInterchange;RoadOtherSpatialStructureElement;RoadRamp;RoadStretch;Railway;RailwayOtherSpatialStructureElement;RailwayStretch;Tunnel;TunnelOtherSpatialStructureElement;UndergroundSpace;GeoUndergroundMine;GeoUndergroundSpace"/>
+    <Property Name = "3DPartAvailability" Value = "UserChoiceReferenceDefault"/>
+  </Class>
+  <Class CustomerExposition = "Programmer" Discipline = "Yes" Name = "TunnelBay" SuperName = "TunnelPart" Uuid = "2B0A509F-1983-440B-8FB7-B532022405F7">
+    <Property Name = "IconName" Value = "I_TunnelBay"/>
+    <Property Name = "3DIconName" Value = "I_TunnelBay.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATEAECDelegateInstanciation"/>
+    <Property Name = "KweNew_ReturnedType" Value = "VPMInstance"/>
+    <Property Name = "Newable" Value = "All_Offline_CAA"/>
+    <Property Name = "InstantiationOwnerTypes" Value = "PPRContext;AecOtherSpatialStructureElement;CutCoverTunnel;Tunnel;TunnelBay;TunnelOtherSpatialStructureElement;UndergroundSpace"/>
+    <Property Name = "3DPartAvailability" Value = "UserChoiceReferenceDefault"/>
+  </Class>
+  <Class CustomerExposition = "Programmer" Discipline = "Yes" Name = "TunnelBayType" SuperName = "TunnelPartType" Uuid = "1CD24959-98D4-46EA-80BF-F118C7D53EBF" lowobjectcount = "Yes">
+    <Property Name = "IconName" Value = "I_TunnelBayType"/>
+    <Property Name = "3DIconName" Value = "I_TunnelBayType.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATCbaObjectTypeDelegateInstanciation"/>
+    <Property Name = "Newable" Value = "New_Offline_CAA"/>
+    <Property Name = "3DPartAvailability" Value = "ReferenceOnly"/>
+  </Class>
+  <Class CustomerExposition = "Programmer" Discipline = "Yes" Name = "TunnelFullTunnelSpace" SuperName = "TunnelSpace" Uuid = "CB015CAF-E3EA-4426-A22F-62CDFAFD65C1">
+    <Property Name = "IconName" Value = "I_TunnelFullTunnelSpace"/>
+    <Property Name = "3DIconName" Value = "I_TunnelFullTunnelSpace.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATEAECDelegateInstanciation"/>
+    <Property Name = "KweNew_ReturnedType" Value = "VPMInstance"/>
+    <Property Name = "Newable" Value = "All_Offline_CAA"/>
+    <Property Name = "InstantiationOwnerTypes" Value = "PPRContext;AecOtherSpatialStructureElement;Tunnel;TunnelFullTunnelSpace;TunnelOtherSpace;TunnelOtherSpatialStructureElement;TunnelStretch"/>
+    <Property Name = "3DPartAvailability" Value = "UserChoiceReferenceDefault"/>
+  </Class>
+  <Class CustomerExposition = "Programmer" Discipline = "Yes" Name = "TunnelFullTunnelSpaceType" SuperName = "TunnelSpaceType" Uuid = "F745DB25-25DF-49A3-A8EC-D0921186EEC0" lowobjectcount = "Yes">
+    <Property Name = "IconName" Value = "I_TunnelFullTunnelSpaceType"/>
+    <Property Name = "3DIconName" Value = "I_TunnelFullTunnelSpaceType.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATCbaObjectTypeDelegateInstanciation"/>
+    <Property Name = "Newable" Value = "New_Offline_CAA"/>
+    <Property Name = "3DPartAvailability" Value = "ReferenceOnly"/>
+  </Class>
+  <Class CustomerExposition = "Programmer" Discipline = "Yes" Name = "TunnelInterchange" SuperName = "TunnelPart" Uuid = "C5FFD869-A8BD-40E0-881A-6C8F336FA462">
+    <Property Name = "IconName" Value = "I_TunnelInterchange"/>
+    <Property Name = "3DIconName" Value = "I_TunnelInterchange.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATEAECDelegateInstanciation"/>
+    <Property Name = "KweNew_ReturnedType" Value = "VPMInstance"/>
+    <Property Name = "Newable" Value = "All_Offline_CAA"/>
+    <Property Name = "InstantiationOwnerTypes" Value = "PPRContext;AecOtherSpatialStructureElement;AecSite;CutCoverTunnel;Tunnel;TunnelInterchange;TunnelOtherSpatialStructureElement;UndergroundSpace"/>
+    <Property Name = "3DPartAvailability" Value = "UserChoiceReferenceDefault"/>
+  </Class>
+  <Class CustomerExposition = "Programmer" Discipline = "Yes" Name = "TunnelInterchangeType" SuperName = "TunnelPartType" Uuid = "D6619D16-0ECB-46CA-A827-B8C9D9BCA29C" lowobjectcount = "Yes">
+    <Property Name = "IconName" Value = "I_TunnelInterchangeType"/>
+    <Property Name = "3DIconName" Value = "I_TunnelInterchangeType.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATCbaObjectTypeDelegateInstanciation"/>
+    <Property Name = "Newable" Value = "New_Offline_CAA"/>
+    <Property Name = "3DPartAvailability" Value = "ReferenceOnly"/>
+  </Class>
+  <Class CustomerExposition = "Programmer" Discipline = "Yes" Name = "TunnelOtherSpace" SuperName = "TunnelSpace" Uuid = "B8DC403F-4327-43D2-96B7-FE0A45233676">
+    <Property Name = "IconName" Value = "I_TunnelOtherSpace"/>
+    <Property Name = "3DIconName" Value = "I_TunnelOtherSpace.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATEAECDelegateInstanciation"/>
+    <Property Name = "KweNew_ReturnedType" Value = "VPMInstance"/>
+    <Property Name = "Newable" Value = "All_Offline_CAA"/>
+    <Property Name = "InstantiationOwnerTypes" Value = "PPRContext;AecOtherSpatialStructureElement;Tunnel;TunnelBay;TunnelFullTunnelSpace;TunnelInterchange;TunnelOtherSpace;TunnelOtherSpatialStructureElement;TunnelRing;TunnelStretch"/>
+    <Property Name = "3DPartAvailability" Value = "UserChoiceReferenceDefault"/>
+  </Class>
+  <Class CustomerExposition = "Programmer" Discipline = "Yes" Name = "TunnelOtherSpaceType" Specializable = "Yes" SuperName = "TunnelSpaceType" Uuid = "5D380E1E-B17F-4E08-A6D2-0FEE22A3A19A" lowobjectcount = "Yes">
+    <Property Name = "IconName" Value = "I_TunnelOtherSpaceType"/>
+    <Property Name = "3DIconName" Value = "I_TunnelOtherSpaceType.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATCbaObjectTypeDelegateInstanciation"/>
+    <Property Name = "Newable" Value = "New_Offline_CAA"/>
+    <Property Name = "3DPartAvailability" Value = "ReferenceOnly"/>
+  </Class>
+  <Class CustomerExposition = "Programmer" Discipline = "Yes" Name = "TunnelOtherSpatialStructureElement" Specializable = "Yes" SuperName = "TunnelPart" Uuid = "485CEB3E-BDA9-4EF1-8EF2-23730140F47B">
+    <Property Name = "IconName" Value = "I_TunnelOtherSpatialStructureElement"/>
+    <Property Name = "3DIconName" Value = "I_TunnelOtherSpatialStructureElement.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATEAECDelegateInstanciation"/>
+    <Property Name = "KweNew_ReturnedType" Value = "VPMInstance"/>
+    <Property Name = "Newable" Value = "All_Offline_CAA"/>
+    <Property Name = "InstantiationOwnerTypes" Value = "PPRContext;AecOtherSpatialStructureElement;AecSite;CutCoverTunnel;Tunnel;TunnelBay;TunnelInterchange;TunnelOtherSpatialStructureElement;TunnelRing;TunnelStretch;UndergroundSpace;GeoUndergroundMine;GeoUndergroundSpace"/>
+    <Property Name = "3DPartAvailability" Value = "UserChoiceReferenceDefault"/>
+  </Class>
+  <Class CustomerExposition = "Programmer" Discipline = "Yes" Name = "TunnelOtherSpatialStructureElementType" Specializable = "Yes" SuperName = "TunnelPartType" Uuid = "88F4D9DB-97C9-4C1B-984D-76D669EC53E4" lowobjectcount = "Yes">
+    <Property Name = "IconName" Value = "I_TunnelOtherSpatialStructureElementType"/>
+    <Property Name = "3DIconName" Value = "I_TunnelOtherSpatialStructureElementType.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATCbaObjectTypeDelegateInstanciation"/>
+    <Property Name = "Newable" Value = "New_Offline_CAA"/>
+    <Property Name = "3DPartAvailability" Value = "ReferenceOnly"/>
+  </Class>
+  <Class Abstract = "Yes" CustomerExposition = "Programmer" Discipline = "Yes" Name = "TunnelPart" SuperName = "TunnelSpatialStructureElement" Uuid = "C0CCAEDE-9B7B-4729-B13C-1FD1EE03399A"/>
+  <Class Abstract = "Yes" CustomerExposition = "Programmer" Discipline = "Yes" Name = "TunnelPartType" SuperName = "TunnelSpatialStructureElementType" Uuid = "B349D5D8-4B11-4558-913A-C55FDCB664FC"/>
+  <Class CustomerExposition = "Programmer" Discipline = "Yes" Name = "TunnelRing" SuperName = "TunnelSpace" Uuid = "0474C6FF-80E2-4DEE-87B5-ED232CCE654D">
+    <Property Name = "IconName" Value = "I_TunnelRing"/>
+    <Property Name = "3DIconName" Value = "I_TunnelRing.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATEAECDelegateInstanciation"/>
+    <Property Name = "KweNew_ReturnedType" Value = "VPMInstance"/>
+    <Property Name = "Newable" Value = "All_Offline_CAA"/>
+    <Property Name = "InstantiationOwnerTypes" Value = "PPRContext;AecOtherSpatialStructureElement;Tunnel;TunnelInterchange;TunnelOtherSpace;TunnelOtherSpatialStructureElement;TunnelStretch;TunnelRing"/>
+    <Property Name = "3DPartAvailability" Value = "UserChoiceReferenceDefault"/>
+  </Class>
+  <Class CustomerExposition = "Programmer" Discipline = "Yes" Name = "TunnelRingType" SuperName = "TunnelSpaceType" Uuid = "FB765B08-A69B-42D9-8508-53F31B1FF9C1" lowobjectcount = "Yes">
+    <Property Name = "IconName" Value = "I_TunnelRingType"/>
+    <Property Name = "3DIconName" Value = "I_TunnelRingType.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATCbaObjectTypeDelegateInstanciation"/>
+    <Property Name = "Newable" Value = "New_Offline_CAA"/>
+    <Property Name = "3DPartAvailability" Value = "ReferenceOnly"/>
+  </Class>
+  <Class Abstract = "Yes" CustomerExposition = "Programmer" Discipline = "Yes" Name = "TunnelSpace" SuperName = "TunnelSpatialStructureElement" Uuid = "53A4A76E-9DE0-4147-9198-2AAA8C11A1E0"/>
+  <Class Abstract = "Yes" CustomerExposition = "Programmer" Discipline = "Yes" Name = "TunnelSpaceType" SuperName = "TunnelSpatialStructureElementType" Uuid = "72B5AE83-0F21-4C32-A343-66B9EE42EDE6"/>
+  <Class Abstract = "Yes" CustomerExposition = "Programmer" Discipline = "Yes" Name = "TunnelSpatialStructureElement" SuperName = "CivilEngineeringSpatialStructureElement" Uuid = "CE09D611-22F6-4713-B4C9-E47E52A36B85">
+    <Property Name = "GroupingType" Value = "TunnelSpatialStructureElement"/>
+  </Class>
+  <Class Abstract = "Yes" CustomerExposition = "Programmer" Discipline = "Yes" Name = "TunnelSpatialStructureElementType" SuperName = "CivilEngineeringSpatialStructureElementType" Uuid = "3C945194-A70F-4CB2-84E9-69F0EBC352EE">
+    <Property Name = "GroupingType" Value = "TunnelSpatialStructureElementType"/>
+  </Class>
+  <Class CustomerExposition = "Programmer" Discipline = "Yes" Name = "TunnelStretch" SuperName = "TunnelPart" Uuid = "5E60E422-61FB-4E22-9830-F18063E41F98">
+    <Property Name = "IconName" Value = "I_TunnelStretch"/>
+    <Property Name = "3DIconName" Value = "I_TunnelStretch.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATEAECDelegateInstanciation"/>
+    <Property Name = "KweNew_ReturnedType" Value = "VPMInstance"/>
+    <Property Name = "Newable" Value = "All_Offline_CAA"/>
+    <Property Name = "InstantiationOwnerTypes" Value = "PPRContext;AecOtherSpatialStructureElement;Tunnel;TunnelInterchange;TunnelStretch;TunnelOtherSpatialStructureElement"/>
+    <Property Name = "3DPartAvailability" Value = "UserChoiceReferenceDefault"/>
+  </Class>
+  <Class CustomerExposition = "Programmer" Discipline = "Yes" Name = "TunnelStretchType" SuperName = "TunnelPartType" Uuid = "A895BA59-490A-4177-94ED-D71257A92D15" lowobjectcount = "Yes">
+    <Property Name = "IconName" Value = "I_TunnelStretchType"/>
+    <Property Name = "3DIconName" Value = "I_TunnelStretchType.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATCbaObjectTypeDelegateInstanciation"/>
+    <Property Name = "Newable" Value = "New_Offline_CAA"/>
+    <Property Name = "3DPartAvailability" Value = "ReferenceOnly"/>
+  </Class>
+  <Class CustomerExposition = "Programmer" Discipline = "Yes" Name = "TunnelType" SuperName = "TunnelSpatialStructureElementType" Uuid = "621300C8-046E-424D-B314-F477ED6F2DAE" lowobjectcount = "Yes">
+    <Property Name = "IconName" Value = "I_TunnelType"/>
+    <Property Name = "3DIconName" Value = "I_TunnelType.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATCbaObjectTypeDelegateInstanciation"/>
+    <Property Name = "Newable" Value = "New_Offline_CAA"/>
+    <Property Name = "3DPartAvailability" Value = "ReferenceOnly"/>
+  </Class>
+  <Class CustomerExposition = "Programmer" Discipline = "Yes" Name = "UndergroundAccessPortal" SuperName = "TunnelPart" Uuid = "b6e887cd-c9ae-4895-b5c1-da11a8e6768a">
+    <Property Name = "IconName" Value = "I_UndergroundAccessPortal"/>
+    <Property Name = "3DIconName" Value = "I_UndergroundAccessPortal.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATEAECDelegateInstanciation"/>
+    <Property Name = "KweNew_ReturnedType" Value = "VPMInstance"/>
+    <Property Name = "Newable" Value = "All_Offline_CAA"/>
+    <Property Name = "InstantiationOwnerTypes" Value = "PPRContext;AecOtherSpatialStructureElement;CutCoverTunnel;Tunnel;TunnelOtherSpatialStructureElement;UndergroundSpace;UndergroundAccessPortal"/>
+    <Property Name = "3DPartAvailability" Value = "UserChoiceReferenceDefault"/>
+  </Class>
+  <Class CustomerExposition = "Programmer" Discipline = "Yes" Name = "UndergroundAccessPortalType" SuperName = "TunnelPartType" Uuid = "672eb5be-fcd2-489e-b785-334792929041" lowobjectcount = "Yes">
+    <Property Name = "IconName" Value = "I_UndergroundAccessPortalType"/>
+    <Property Name = "3DIconName" Value = "I_UndergroundAccessPortalType.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATCbaObjectTypeDelegateInstanciation"/>
+    <Property Name = "Newable" Value = "New_Offline_CAA"/>
+    <Property Name = "3DPartAvailability" Value = "ReferenceOnly"/>
+  </Class>
+  <Class CustomerExposition = "Programmer" Discipline = "Yes" Name = "UndergroundAdit" SuperName = "TunnelPart" Uuid = "38dde40e-c426-497b-b8a3-8ef670a14f3b">
+    <Property Name = "IconName" Value = "I_UndergroundAdit"/>
+    <Property Name = "3DIconName" Value = "I_UndergroundAdit.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATEAECDelegateInstanciation"/>
+    <Property Name = "KweNew_ReturnedType" Value = "VPMInstance"/>
+    <Property Name = "Newable" Value = "All_Offline_CAA"/>
+    <Property Name = "InstantiationOwnerTypes" Value = "PPRContext;AecOtherSpatialStructureElement;CutCoverTunnel;Tunnel;TunnelOtherSpatialStructureElement;UndergroundSpace;UndergroundAdit"/>
+    <Property Name = "3DPartAvailability" Value = "UserChoiceReferenceDefault"/>
+  </Class>
+  <Class CustomerExposition = "Programmer" Discipline = "Yes" Name = "UndergroundAditType" SuperName = "TunnelPartType" Uuid = "388b7e2c-c36b-4b5e-a6fa-db3c10f5b1b4" lowobjectcount = "Yes">
+    <Property Name = "IconName" Value = "I_UndergroundAditType"/>
+    <Property Name = "3DIconName" Value = "I_UndergroundAditType.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATCbaObjectTypeDelegateInstanciation"/>
+    <Property Name = "Newable" Value = "New_Offline_CAA"/>
+    <Property Name = "3DPartAvailability" Value = "ReferenceOnly"/>
+  </Class>
+  <Class CustomerExposition = "Programmer" Discipline = "Yes" Name = "UndergroundCavern" SuperName = "TunnelPart" Uuid = "b710b863-296c-44aa-b65e-f3e6fe4c347e">
+    <Property Name = "IconName" Value = "I_UndergroundCavern"/>
+    <Property Name = "3DIconName" Value = "I_UndergroundCavern.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATEAECDelegateInstanciation"/>
+    <Property Name = "KweNew_ReturnedType" Value = "VPMInstance"/>
+    <Property Name = "Newable" Value = "All_Offline_CAA"/>
+    <Property Name = "InstantiationOwnerTypes" Value = "PPRContext;AecOtherSpatialStructureElement;CutCoverTunnel;Tunnel;TunnelOtherSpatialStructureElement;UndergroundSpace;UndergroundCavern"/>
+    <Property Name = "3DPartAvailability" Value = "UserChoiceReferenceDefault"/>
+  </Class>
+  <Class CustomerExposition = "Programmer" Discipline = "Yes" Name = "UndergroundCavernType" SuperName = "TunnelPartType" Uuid = "e360dcc1-1437-479a-9404-89ed885fb003" lowobjectcount = "Yes">
+    <Property Name = "IconName" Value = "I_UndergroundCavernType"/>
+    <Property Name = "3DIconName" Value = "I_UndergroundCavernType.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATCbaObjectTypeDelegateInstanciation"/>
+    <Property Name = "Newable" Value = "New_Offline_CAA"/>
+    <Property Name = "3DPartAvailability" Value = "ReferenceOnly"/>
+  </Class>
+  <Class CustomerExposition = "Programmer" Discipline = "Yes" Name = "UndergroundConnection" SuperName = "TunnelPart" Uuid = "cad363cd-8338-4642-9b84-17b0c62add35">
+    <Property Name = "IconName" Value = "I_UndergroundConnection"/>
+    <Property Name = "3DIconName" Value = "I_UndergroundConnection.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATEAECDelegateInstanciation"/>
+    <Property Name = "KweNew_ReturnedType" Value = "VPMInstance"/>
+    <Property Name = "Newable" Value = "All_Offline_CAA"/>
+    <Property Name = "InstantiationOwnerTypes" Value = "PPRContext;AecOtherSpatialStructureElement;CutCoverTunnel;Tunnel;TunnelOtherSpatialStructureElement;UndergroundSpace;UndergroundConnection"/>
+    <Property Name = "3DPartAvailability" Value = "UserChoiceReferenceDefault"/>
+  </Class>
+  <Class CustomerExposition = "Programmer" Discipline = "Yes" Name = "UndergroundConnectionType" SuperName = "TunnelPartType" Uuid = "53f2e5e4-91ee-4746-9bd0-469d6a9843db" lowobjectcount = "Yes">
+    <Property Name = "IconName" Value = "I_UndergroundConnectionType"/>
+    <Property Name = "3DIconName" Value = "I_UndergroundConnectionType.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATCbaObjectTypeDelegateInstanciation"/>
+    <Property Name = "Newable" Value = "New_Offline_CAA"/>
+    <Property Name = "3DPartAvailability" Value = "ReferenceOnly"/>
+  </Class>
+  <Class CustomerExposition = "Programmer" Discipline = "Yes" Name = "UndergroundCrossPassage" SuperName = "TunnelPart" Uuid = "427df995-2066-4d48-ad82-2ab3fa5398a5">
+    <Property Name = "IconName" Value = "I_UndergroundCrossPassage"/>
+    <Property Name = "3DIconName" Value = "I_UndergroundCrossPassage.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATEAECDelegateInstanciation"/>
+    <Property Name = "KweNew_ReturnedType" Value = "VPMInstance"/>
+    <Property Name = "Newable" Value = "All_Offline_CAA"/>
+    <Property Name = "InstantiationOwnerTypes" Value = "PPRContext;AecOtherSpatialStructureElement;CutCoverTunnel;Tunnel;TunnelOtherSpatialStructureElement;UndergroundSpace;UndergroundCrossPassage"/>
+    <Property Name = "3DPartAvailability" Value = "UserChoiceReferenceDefault"/>
+  </Class>
+  <Class CustomerExposition = "Programmer" Discipline = "Yes" Name = "UndergroundCrossPassageType" SuperName = "TunnelPartType" Uuid = "e0617b39-e422-4796-9709-8298211a708c" lowobjectcount = "Yes">
+    <Property Name = "IconName" Value = "I_UndergroundCrossPassageType"/>
+    <Property Name = "3DIconName" Value = "I_UndergroundCrossPassageType.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATCbaObjectTypeDelegateInstanciation"/>
+    <Property Name = "Newable" Value = "New_Offline_CAA"/>
+    <Property Name = "3DPartAvailability" Value = "ReferenceOnly"/>
+  </Class>
+  <Class CustomerExposition = "Programmer" Discipline = "Yes" Name = "UndergroundEnlargement" SuperName = "TunnelPart" Uuid = "660300f0-f8b5-4ac6-9352-1ba2699b22da">
+    <Property Name = "IconName" Value = "I_UndergroundEnlargement"/>
+    <Property Name = "3DIconName" Value = "I_UndergroundEnlargement.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATEAECDelegateInstanciation"/>
+    <Property Name = "KweNew_ReturnedType" Value = "VPMInstance"/>
+    <Property Name = "Newable" Value = "All_Offline_CAA"/>
+    <Property Name = "InstantiationOwnerTypes" Value = "PPRContext;AecOtherSpatialStructureElement;CutCoverTunnel;Tunnel;TunnelOtherSpatialStructureElement;UndergroundSpace;UndergroundEnlargement"/>
+    <Property Name = "3DPartAvailability" Value = "UserChoiceReferenceDefault"/>
+  </Class>
+  <Class CustomerExposition = "Programmer" Discipline = "Yes" Name = "UndergroundEnlargementType" SuperName = "TunnelPartType" Uuid = "014c790c-7dbf-4337-a483-c9ea262d2398" lowobjectcount = "Yes">
+    <Property Name = "IconName" Value = "I_UndergroundEnlargementType"/>
+    <Property Name = "3DIconName" Value = "I_UndergroundEnlargementType.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATCbaObjectTypeDelegateInstanciation"/>
+    <Property Name = "Newable" Value = "New_Offline_CAA"/>
+    <Property Name = "3DPartAvailability" Value = "ReferenceOnly"/>
+  </Class>
+  <Class CustomerExposition = "Programmer" Discipline = "Yes" Name = "UndergroundGallery" SuperName = "TunnelPart" Uuid = "510c39d1-dd40-418f-b793-2156d25e0267">
+    <Property Name = "IconName" Value = "I_UndergroundGallery"/>
+    <Property Name = "3DIconName" Value = "I_UndergroundGallery.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATEAECDelegateInstanciation"/>
+    <Property Name = "KweNew_ReturnedType" Value = "VPMInstance"/>
+    <Property Name = "Newable" Value = "All_Offline_CAA"/>
+    <Property Name = "InstantiationOwnerTypes" Value = "PPRContext;AecOtherSpatialStructureElement;CutCoverTunnel;Tunnel;TunnelOtherSpatialStructureElement;UndergroundSpace;UndergroundGallery"/>
+    <Property Name = "3DPartAvailability" Value = "UserChoiceReferenceDefault"/>
+  </Class>
+  <Class CustomerExposition = "Programmer" Discipline = "Yes" Name = "UndergroundGalleryType" SuperName = "TunnelPartType" Uuid = "19d0a3a2-1aef-4263-b818-db406c013a2d" lowobjectcount = "Yes">
+    <Property Name = "IconName" Value = "I_UndergroundGalleryType"/>
+    <Property Name = "3DIconName" Value = "I_UndergroundGalleryType.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATCbaObjectTypeDelegateInstanciation"/>
+    <Property Name = "Newable" Value = "New_Offline_CAA"/>
+    <Property Name = "3DPartAvailability" Value = "ReferenceOnly"/>
+  </Class>
+  <Class CustomerExposition = "Programmer" Discipline = "Yes" Name = "UndergroundIncline" SuperName = "TunnelPart" Uuid = "0cd56bf2-6845-4f57-9227-28fdc43f5b16">
+    <Property Name = "IconName" Value = "I_UndergroundIncline"/>
+    <Property Name = "3DIconName" Value = "I_UndergroundIncline.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATEAECDelegateInstanciation"/>
+    <Property Name = "KweNew_ReturnedType" Value = "VPMInstance"/>
+    <Property Name = "Newable" Value = "All_Offline_CAA"/>
+    <Property Name = "InstantiationOwnerTypes" Value = "PPRContext;AecOtherSpatialStructureElement;CutCoverTunnel;Tunnel;TunnelOtherSpatialStructureElement;UndergroundSpace;UndergroundIncline"/>
+    <Property Name = "3DPartAvailability" Value = "UserChoiceReferenceDefault"/>
+  </Class>
+  <Class CustomerExposition = "Programmer" Discipline = "Yes" Name = "UndergroundInclineType" SuperName = "TunnelPartType" Uuid = "a3f2c492-e636-46cd-9f7e-f7453efcf986" lowobjectcount = "Yes">
+    <Property Name = "IconName" Value = "I_UndergroundInclineType"/>
+    <Property Name = "3DIconName" Value = "I_UndergroundInclineType.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATCbaObjectTypeDelegateInstanciation"/>
+    <Property Name = "Newable" Value = "New_Offline_CAA"/>
+    <Property Name = "3DPartAvailability" Value = "ReferenceOnly"/>
+  </Class>
+  <Class CustomerExposition = "Programmer" Discipline = "Yes" Name = "UndergroundProfileTransition" SuperName = "TunnelPart" Uuid = "df7523ec-f586-4506-8fb3-77c8aaccfb49">
+    <Property Name = "IconName" Value = "I_UndergroundProfileTransition"/>
+    <Property Name = "3DIconName" Value = "I_UndergroundProfileTransition.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATEAECDelegateInstanciation"/>
+    <Property Name = "KweNew_ReturnedType" Value = "VPMInstance"/>
+    <Property Name = "Newable" Value = "All_Offline_CAA"/>
+    <Property Name = "InstantiationOwnerTypes" Value = "PPRContext;AecOtherSpatialStructureElement;CutCoverTunnel;Tunnel;TunnelOtherSpatialStructureElement;UndergroundSpace;UndergroundProfileTransition"/>
+    <Property Name = "3DPartAvailability" Value = "UserChoiceReferenceDefault"/>
+  </Class>
+  <Class CustomerExposition = "Programmer" Discipline = "Yes" Name = "UndergroundProfileTransitionType" SuperName = "TunnelPartType" Uuid = "fe3b6700-8865-45f1-bf7e-be02836d9476" lowobjectcount = "Yes">
+    <Property Name = "IconName" Value = "I_UndergroundProfileTransitionType"/>
+    <Property Name = "3DIconName" Value = "I_UndergroundProfileTransitionType.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATCbaObjectTypeDelegateInstanciation"/>
+    <Property Name = "Newable" Value = "New_Offline_CAA"/>
+    <Property Name = "3DPartAvailability" Value = "ReferenceOnly"/>
+  </Class>
+  <Class CustomerExposition = "Programmer" Discipline = "Yes" Name = "UndergroundShaft" SuperName = "TunnelPart" Uuid = "e113cb83-b1a6-4da5-9b5a-6d87dbb7f650">
+    <Property Name = "IconName" Value = "I_UndergroundShaft"/>
+    <Property Name = "3DIconName" Value = "I_UndergroundShaft.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATEAECDelegateInstanciation"/>
+    <Property Name = "KweNew_ReturnedType" Value = "VPMInstance"/>
+    <Property Name = "Newable" Value = "All_Offline_CAA"/>
+    <Property Name = "InstantiationOwnerTypes" Value = "PPRContext;AecOtherSpatialStructureElement;CutCoverTunnel;Tunnel;TunnelOtherSpatialStructureElement;UndergroundSpace;UndergroundShaft"/>
+    <Property Name = "3DPartAvailability" Value = "UserChoiceReferenceDefault"/>
+  </Class>
+  <Class CustomerExposition = "Programmer" Discipline = "Yes" Name = "UndergroundShaftType" SuperName = "TunnelPartType" Uuid = "a64d50c3-030b-444a-823a-e353ebaea0a0" lowobjectcount = "Yes">
+    <Property Name = "IconName" Value = "I_UndergroundShaftType"/>
+    <Property Name = "3DIconName" Value = "I_UndergroundShaftType.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATCbaObjectTypeDelegateInstanciation"/>
+    <Property Name = "Newable" Value = "New_Offline_CAA"/>
+    <Property Name = "3DPartAvailability" Value = "ReferenceOnly"/>
+  </Class>
+  <Class Abbreviation = "tnl" CustomerExposition = "Programmer" Discipline = "Yes" Name = "UndergroundSpace" SuperName = "TunnelSpatialStructureElement" Uuid = "8d13f963-06a9-45ad-bfd3-d02f8da38fa0">
+    <Property Name = "IconName" Value = "I_UndergroundSpace"/>
+    <Property Name = "3DIconName" Value = "I_UndergroundSpace.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATEAECDelegateInstanciation"/>
+    <Property Name = "KweNew_ReturnedType" Value = "VPMInstance"/>
+    <Property Name = "Newable" Value = "All_Offline_CAA"/>
+    <Property Name = "InstantiationOwnerTypes" Value = "PPRContext;AecOtherSpatialStructureElement;AecSite;Building;BuildingStorey;Dam;Road;RoadInterchange;RoadOtherSpatialStructureElement;RoadRamp;RoadStretch;Railway;RailwayOtherSpatialStructureElement;RailwayStretch;UndergroundSpace;GeoUndergroundMine;GeoUndergroundSpace"/>
+    <Property Name = "3DPartAvailability" Value = "UserChoiceReferenceDefault"/>
+  </Class>
+  <Class CustomerExposition = "Programmer" Discipline = "Yes" Name = "UndergroundSpaceType" SuperName = "TunnelSpatialStructureElementType" Uuid = "77f784f9-83b1-4701-9c8f-32f89ce0b3c1" lowobjectcount = "Yes">
+    <Property Name = "IconName" Value = "I_UndergroundSpaceType"/>
+    <Property Name = "3DIconName" Value = "I_UndergroundSpaceType.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATCbaObjectTypeDelegateInstanciation"/>
+    <Property Name = "Newable" Value = "New_Offline_CAA"/>
+    <Property Name = "3DPartAvailability" Value = "ReferenceOnly"/>
+  </Class>
+</Package>

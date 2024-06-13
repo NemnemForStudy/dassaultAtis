@@ -1,0 +1,1 @@
+define("DS/ENOXSplitView/ENOXSplitView_fr",{});define("DS/ENOXSplitView/assets/nls/ENOXSplitView",{minimize:"Réduire",maximize:"Agrandir"});

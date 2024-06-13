@@ -1,0 +1,694 @@
+
+@import 'variables.uikit';
+@import 'mixins.uikit';
+
+%xapp-main-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+}
+
+%xapp-button-state {
+    &:hover {
+        background-color: rgba(255, 255, 255, 0.13);
+    }
+
+    &:active {
+        background-color: rgba(255, 255, 255, 0.44);
+    }
+}
+
+%xapp-link-column-gap {
+    column-gap: 5rem;
+}
+
+.xapp-landingpage-to-scroll {
+    width: 100%;
+    height: 100%;
+}
+
+.xapp-main-container[pageType='Home'] {
+    @extend %xapp-main-container;
+}
+
+.xapp-main-container[pageType='Waiting'] {
+    @extend %xapp-main-container;
+    height: 100%;
+}
+
+.xapp-background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    object-fit: cover;
+    object-position: top;
+
+    &.xapp-background-image-top-left{
+        object-position: top left;
+    }
+    &.xapp-background-image-top-right{
+        object-position: top right;
+    }
+    &.xapp-background-image-bottom-left{
+        object-position: bottom left;
+    }
+    &.xapp-background-image-bottom-right{
+        object-position: bottom right;
+    }
+}
+
+// HOME PAGE
+.xapp-app-container {
+    padding: 2.5rem;
+    background-color: rgba(0, 60, 90, 0.9);
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+
+    @media (max-width: 579px) {
+        width: 100%;
+    }
+
+    @media (min-width: 580px) {
+        width: 33%;
+        min-width: 35rem;
+        max-width: 49.3rem;
+        align-items: center;
+    }
+
+    .xapp-app-identification {
+        color: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+
+        .xapp-app-title {
+            font-size: 4.5rem;
+            line-height: 5rem;
+
+            .xapp-appswitch-btn {
+                font-size: 0.65em;
+                line-height: 1em;
+                color: inherit;
+                cursor: pointer;
+            }
+        }
+
+        .xapp-app-motto {
+            font-size: 2.5rem;
+            margin: 1rem 0 0 0;
+        }
+
+        .xapp-app-overview {
+            margin: 2.5rem 0 0 0;
+            padding: 0.5rem;
+            border-style: solid;
+            border-width: thin;
+            border-radius: 0.4rem;
+            color: white;
+            font-size: 1.3rem;
+            cursor: pointer;
+
+            @extend %xapp-button-state;
+
+            .fonticon {
+                color: white;
+                transform: scale(0.8, 0.8);
+            }
+
+            .xapp-app-overview-title {
+                margin: 0 0.4rem 0 0.9rem;
+                white-space: nowrap;
+            }
+        }
+    }
+
+    .xapp-app-actions {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        .xapp-item-button {
+            margin: 0.5rem;
+            padding: 1.5rem 4.5rem 1.5rem 4.5rem;
+            border-style: solid;
+            border-width: thin;
+            border-radius: 0.4rem;
+            color: white;
+            font-size: 1.6rem;
+            cursor: pointer;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+
+            @extend %xapp-button-state;
+
+            .fonticon {
+                color: white;
+                transform: scale(0.9, 0.9);
+            }
+
+            .xapp-item-title {
+                margin: 0 0 0 1rem;
+                white-space: nowrap;
+                color: white;
+            }
+        }
+
+        .xapp-item-button-subMenu {
+            background-color: white;
+            //border-radius: 0.4rem 0 0 0.4rem;
+            .fonticon {
+                color: rgb(0, 60, 90);
+            }
+
+            .xapp-item-title {
+                color: rgb(0, 60, 90);
+            }
+
+            &:hover,
+            &:active {
+                background-color: white;
+            }
+        }
+
+        .xapp-app-drop {
+            margin: 1rem 0 0 0;
+            text-align: center;
+
+            .xapp-app-drop-text {
+                max-width: 220px;
+                display: inline-block;
+                color: white;
+
+                .fonticon {
+                    margin: 0 0.5rem 0 0.5rem;
+                    color: white;
+                }
+            }
+        }
+    }
+
+    .xapp-app-links {
+        color: white;
+        opacity: .9;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        .fonticon {
+            color: white;
+            min-width: 1.2rem;
+        }
+
+        .xapp-link-column[colNb='1'] {
+            @extend %xapp-link-column-gap;
+            columns: 1;
+        }
+
+        .xapp-link-column[colNb='2'] {
+            @extend %xapp-link-column-gap;
+            columns: 2;
+        }
+
+        .xapp-link-categories {
+            .xapp-link-category {
+                font-size: 1.2rem;
+                font-weight: bold;
+                padding: 0 0 1.3rem 0;
+            }
+        }
+
+        .xapp-link-items {
+            column-rule: thin solid white;
+
+            .xapp-link-item {
+                font-size: 1.2rem;
+                display: flex;
+                flex-direction: row;
+
+                .xapp-link-title {
+                    margin-left: 1rem;
+
+                    .xapp-link-anchor {
+                        color: white;
+                    }
+                }
+            }
+
+            .xapp-link-item ~ .xapp-link-item {
+                padding: 1.2rem 0 0 0;
+            }
+
+            .xapp-link-column-break {
+                break-before: column;
+            }
+
+            .xapp-link-item ~ .xapp-link-column-break {
+                padding: 0;
+            }
+        }
+    }
+}
+
+// ItemSubMenu container
+.xapp-itemSubMenu-container {
+    background-color: rgba(255, 255, 255, 0.9);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+
+    .modal-header {
+        border-bottom: 0;
+    }
+
+    @media (max-width: 879px) {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+// Drag and drop
+.xapp-dnd-fullpage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 99999;
+    background-color: white;
+    opacity: 0.9;
+    display: flex;
+    font-size: 3em;
+    @media (max-width: 768px) {
+        font-size: 2em;
+    }
+    @media (max-width: 599px) {
+        font-size: 1.5em;
+    }
+    @media (max-width: 399px) {
+        font-size: 1em;
+    }
+
+    .fonticon {
+        margin: auto;
+        color: $grey-5;
+    }
+}
+
+.xapp-dnd-item {
+    position: absolute;
+    top: 0;
+    left: 5%;
+    width: 90%;
+    height: 80%;
+    background-color: white;
+    opacity: 0.8;
+    font-size: 0.5em;
+
+    .fonticon {
+        margin: auto;
+        color: $grey-5;
+    }
+}
+
+// App overview
+.xapp-overview-modal {
+
+    .modal-wrap {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+    .modal-body {
+        word-break: keep-all;
+    }
+
+    .xapp-tip {
+
+        .indicator {
+            border: 1px solid #42A2DA !important;
+        }
+
+        .carousel-control {
+            top: auto;
+            height: 100px;
+            width: 30px;
+            background-image: none;
+            background-color: white;
+            opacity: 1;
+
+            .fonticon {
+                color: #42A2DA;
+            }
+        }
+        /*.carousel-control.right {
+            height: 290px;
+            width: 55px;
+            background-image: linear-gradient(to right,rgba(0,0,0,0.001) 0,rgba(0,0,0,0.4) 100%);
+        }
+
+        .carousel-control.left {
+            height: 290px;
+            width: 55px;
+            background-image: linear-gradient(to right,rgba(0,0,0,0.4) 0,rgba(0,0,0,0.001) 100%);
+        }*/
+        a:hover {
+            /*color: white;*/
+            .fonticon {
+                transform: scale(1.5, 1.5);
+            }
+        }
+
+        .carousel {
+            display: grid;
+        }
+
+        .carousel-indicators {
+            bottom: 0px !important;
+            top: 96% !important;
+
+            .active {
+                background-color: #42A2DA !important;
+            }
+        }
+
+        .carousel-slides {
+            text-align: center !important;
+            display: block;
+
+            > .active {
+                display: grid;
+                /*grid-template-columns: 1fr 10fr 1fr;
+                grid-template-areas: "a b" "c d";*/
+            }
+        }
+
+        .xapp-tip-img {
+            width: 100%;
+            height: 309px;
+            object-position: 50% 50%;
+            object-fit: fill;
+        }
+
+        .xapp-tip-video {
+            width: 100%;
+            height: 309px;
+            object-position: 50% 50%;
+            object-fit: fill;
+        }
+
+        .xapp-tip-footer {
+            display: grid;
+        }
+
+        .xapp-tip-text {
+            min-height: 50px;
+            width: 90%;
+            margin-left: 5%;
+            margin-top: 10px;
+            overflow-y: auto !important;
+        }
+
+        .xapp-tip-badge {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+    }
+}
+
+.xapp-data-container {
+    background-color: rgba(241, 241, 241, 0.9);
+    margin: auto;
+    border: thin solid $grey-4;
+    border-radius: 0.5rem;
+    padding: 1rem;
+
+    .xapp-data-header {
+        color: $grey-6;
+        font-weight: bold;
+    }
+
+    /*.xapp-data-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        grid-gap: 1rem;
+    }*/
+}
+
+// WAITING PAGE
+.xapp-waiting-background {
+    opacity: 0.1;
+    filter: blur(4px);
+}
+
+.xapp-progress-container {
+    margin: auto;
+    width: 43rem;
+    border-radius: 1rem;
+    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    max-width: calc(100% - 20px);
+    background-color: white;
+    z-index: 1;
+
+    .xapp-progress-modelId {
+        word-break: break-word;
+        padding-bottom: 0.5rem;
+        font-weight: bold;
+    }
+
+    .xapp-progress-bar {
+        padding: 1.5rem 1.5rem 1rem 1.5rem;
+
+        /* temporary override because of "cancel" button presence with primary color */
+        .wux-controls-progressbar-linear-bar {
+            background: #42a2da;
+            .wux-controls-progressbar-linear-bar-gradient {
+                background: linear-gradient(to left, rgba(66, 162, 218, 0.7), #42a2da), repeating-linear-gradient(-45deg, #42a2da, #42a2da 4px, white 4px, white 9px);
+            }
+        }
+    }
+
+    .xapp-progress-bar-with-stop {
+        display: flex;
+    }
+
+    .xapp-progress-bar-with-title {
+        padding: 1rem 1.5rem 0.7rem 1.5rem !important;
+    }
+
+    .xapp-progress-bar-stop {
+        margin-top: 0.7rem;
+        margin-bottom: 0.1rem;
+        margin-left: auto;
+        max-height: 2rem;
+    }
+
+    .xapp-progress-label-with-stop {
+        padding: 0rem 0rem .5rem 0rem !important;
+    }
+
+    .xapp-progress-label {
+        //white-space: nowrap;
+        padding: 0rem 1.5rem 1.5rem 1.5rem;
+        display: flex;
+        flex-direction: row;
+
+        .xapp-progress-info {
+            font-size: 1.5rem;
+            display: flex;
+            flex-direction: row;
+            font-size: smaller;
+        }
+
+        .xapp-progress-info ~ .xapp-progress-info {
+            //padding: 0 0 0 1rem;
+            //margin: 0 0 0 1rem;
+            //border-left: thin solid darkgrey;
+        }
+
+        .xapp-progress-stepIndex {
+            white-space: nowrap;
+            //font-weight: bold;
+            padding: 0 0.3rem 0 0;
+        }
+
+        .xapp-progress-stepsNb {
+            white-space: nowrap;
+            //padding: 0 0.5rem 0 0.5rem;
+        }
+
+        .xapp-progress-stepName {
+            white-space: nowrap;
+            //font-weight: bold;
+            padding: 0 0.5rem 0 0.5rem;
+        }
+
+        .xapp-progress-modelId {
+            word-break: break-word;
+            font-weight: bold;
+            font-style: italic;
+            padding: 0 0.5rem 0 0.5rem;
+        }
+    }
+}
+
+
+.xapp-waiting-container {
+    margin: auto;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .xapp-waiting-title {
+        white-space: nowrap;
+
+        .xapp-spinner-thumbnail {
+            .spinner {
+                height: 40px;
+                vertical-align: text-bottom;
+
+                .spinner-bar {
+                    width: 4px;
+                    margin: 0 3px 0 0;
+                }
+            }
+        }
+
+        @media (max-width: 768px) {
+            .xapp-spinner-thumbnail {
+                .spinner {
+                    height: 30px;
+                    vertical-align: text-bottom;
+
+                    .spinner-bar {
+                        width: 4px;
+                        margin: 0 3px 0 0;
+                    }
+                }
+            }
+        }
+
+        @media (max-width: 599px) {
+            .xapp-spinner-thumbnail {
+                .spinner {
+                    height: 25px;
+                    vertical-align: text-bottom;
+
+                    .spinner-bar {
+                        width: 3px;
+                        margin: 0 2px 0 0;
+                    }
+                }
+            }
+        }
+
+        @media (max-width: 399px) {
+            .xapp-spinner-thumbnail {
+                .spinner {
+                    height: 25px;
+                    vertical-align: baseline;
+
+                    .spinner-bar {
+                        width: 3px;
+                        margin: 0 2px 0 0;
+                    }
+                }
+            }
+        }
+
+        .xapp-waiting-type {
+            margin: 0 15px 0 25px;
+            vertical-align: baseline;
+            color: $grey-6;
+            text-align: center;
+            font-family: $font-family-sans-serif;
+            font-size: 4em;
+        }
+
+        @media (max-width: 768px) {
+            .xapp-waiting-type {
+                margin: 0 15px 0 20px;
+                color: $grey-6;
+                text-align: center;
+                font-family: $font-family-sans-serif;
+                font-size: 3em;
+            }
+        }
+
+        @media (max-width: 599px) {
+            .xapp-waiting-type {
+                margin: 0 10px 0 15px;
+                color: $grey-6;
+                text-align: center;
+                font-family: $font-family-sans-serif;
+                font-size: 2em;
+            }
+        }
+
+        @media (max-width: 399px) {
+            .xapp-waiting-type {
+                margin: 0 10px 0 10px;
+                font-size: 1.6em;
+            }
+        }
+
+        .xapp-waiting-model {
+            vertical-align: baseline;
+            color: $grey-6;
+            text-align: center;
+            font-family: $font-family-sans-serif;
+            font-size: 3em;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            .xapp-waiting-model {
+                color: $grey-6;
+                text-align: center;
+                font-family: $font-family-sans-serif;
+                font-size: 2em;
+                font-style: italic;
+            }
+        }
+
+        @media (max-width: 599px) {
+            .xapp-waiting-model {
+                color: $grey-6;
+                text-align: center;
+                font-family: $font-family-sans-serif;
+                font-size: 1.6em;
+                font-style: italic;
+            }
+        }
+
+        @media (max-width: 399px) {
+            .xapp-waiting-model {
+                font-size: 1.3em;
+            }
+        }
+    }
+
+    .xapp-waiting-cancel {
+        margin: 20px 0 20px 0;
+    }
+}
+
+
+

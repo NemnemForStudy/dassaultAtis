@@ -1,0 +1,148 @@
+function executeWidgetCode() {
+	require(['DS/decDashboardCommon/decDashboardEmbeded3DSpace', 'DS/WAFData/WAFData', 'DS/decDashboardCommon/decDashboardCommon', 'DS/PlatformAPI/PlatformAPI'],
+    	function (embeded3DSpace, WAFData, dashboardCommon, PlatformAPI) {
+	        'use strict';
+	        var myWidget = {
+				msgArr: new Array(),
+				chooseDisciplineMsg: "<p>Please choose the <b>Discipline</b> into the Preference in the upper right corner.</p>",
+				inputProjectCodeMsg: "<p>Please enter the project code into the Preference in the upper right corner.</p>",
+				init: function() {
+					// main widget에서 프로젝트 코드 지정 시 event catch
+					PlatformAPI.subscribe("ProjectInfo", myWidget.setProjectCode);
+					
+					// dashboard url을 통해 프로젝트 코드 조회
+					dashboardCommon.getProjectCode(myWidget.load);
+				},
+				setQueryStr: function( prefDisciplineVal ) {
+					var prefDisciplineValSplit = prefDisciplineVal.split("|");
+					var title = prefDisciplineValSplit[0];
+					var discipline = prefDisciplineValSplit[1];
+					
+					widget.setTitle(title);
+					
+					embeded3DSpace.setQueryStr("jsp=../programcentral/decMaterialAllocationStatus.jsp&hierarchyFrameSelection=single&filterParam=codeMaster:Sub-Con&Discipline=" + discipline);
+				},
+				displayMessage: function(msg) {
+					var flag = true;
+					// 기존에 메세지가 있으면 추가하지 않는다.
+					for (var k = 0; k < myWidget.msgArr.length; k++)
+					{
+						if ( myWidget.msgArr[k] === msg )
+						{
+							flag = false;
+							break;
+						}
+					}
+					
+					if ( flag )
+					{
+						myWidget.msgArr.push( msg );
+						widget.body.innerHTML = msg;
+					}
+				},
+				load: function() {
+					var prefDisciplineVal = widget.getValue("Discipline");
+					
+					// 공종 설정 생성
+					myWidget.addDisciplinePreference( prefDisciplineVal );
+					
+					if ( prefDisciplineVal !== "" && prefDisciplineVal !== undefined )
+					{
+						myWidget.setQueryStr( prefDisciplineVal );
+						// project code와 discipline이 다 입력되어야 화면을 그린다.
+						embeded3DSpace.load();
+					}
+					else
+					{
+						myWidget.displayMessage( myWidget.chooseDisciplineMsg );
+					}
+				},
+				setProjectCode: function (callData) {
+					dashboardCommon.setProjectCode(callData, myWidget.load);
+				},
+				addDisciplinePreference: function( defaultValue ) {
+					var projectCode = widget.getValue("projectCode");
+					if ( projectCode !== "" )
+					{
+			    		var widgetURL = widget.getUrl();
+			    		var spaceURL = widgetURL.substring(0, widgetURL.indexOf("/3dspace"));
+						WAFData.authenticatedRequest(spaceURL + "/3dspace/resources/JPO/emxProjectSpace/getDisciplineList", {
+							method: "POST",
+							type: "json",
+							data: {
+								projectCode: projectCode
+							},
+							onComplete: function (response) {
+			                	console.log('Startup params', response);
+			                	if ( response.hasOwnProperty("result") === true && response["result"].toUpperCase() === "SUCCESS")
+			               		{
+									var dataArr = response["data"];
+									if ( dataArr.length > 0 )
+									{
+										var prefOptionArr = new Array();
+										var desc = null;
+										
+										// 설정의 옵션 생성
+										for (var k = 0; k < dataArr.length; k++)
+										{
+											desc = dataArr[k]["description"];
+											prefOptionArr.push({
+												label: desc
+												, value: desc + "|" + dataArr[k]["attribute[decCode]"]
+											});
+										}
+										
+										var preferenceJson = {
+												label: "Discipline"
+												, name: "Discipline"
+												, type: "list"
+												, options: prefOptionArr
+										};
+										
+										if ( defaultValue !== undefined && defaultValue !== "" && defaultValue !== null )
+										{
+											preferenceJson["defaultValue"] = defaultValue;
+										}
+										
+										var preferenceArr = new Array();
+										preferenceArr.push( preferenceJson );
+										
+										// 설정 적용
+										widget.addPreference( preferenceJson );
+									}
+								}
+								else
+								{
+									widget.body.innerHTML += "<p>" + response["result"] + "</p>";
+								}
+			            	},
+			            	onFailure: function (e) {
+								console.log('ERROR : getDisciplineList', e);
+							},
+							onTimeout: function (e) { 
+								console.log('ERROR : getDisciplineList', e);  
+							}
+			            });
+					}
+					else
+					{
+						myWidget.displayMessage( myWidget.inputProjectCodeMsg );
+					}
+				}
+			};
+	        
+	        widget.addEvents({
+	            onLoad: myWidget.init,
+	            onRefresh: myWidget.load,
+	            onConfigChange: myWidget.init,
+	            onUpdateValue: function(){
+								
+					dashboardCommon.setProjectbox();
+					dashboardCommon.getProjectCode(myWidget.load);
+            		//myWidget.setProjectCode();
+					myWidget.init;
+				}
+	        });
+	    }
+	);
+}

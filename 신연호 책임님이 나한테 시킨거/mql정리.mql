@@ -1,0 +1,320 @@
+제목, 변경 요청자 까지만 만들어보고
+admin_platform만 삭제 가능하게 ㄱㄱ
+images/iconActionDelete.png
+
+제목, 변경 요청자, 락, 리비전, 버전, 설명, 상태, newWindow
+
+del table POATable system;
+add table POATable system
+column
+	name 'object'
+	label 'object'
+	bus '$<attribute[Title]>'
+	href '${COMMON_DIR}/emxTree.jsp?mode=insert'
+	setting 'Column Type' programHTMLOutput
+	setting 'Show Type Icon' true
+	setting 'Field Type' attribute
+	setting 'Admin Type' attribute_Title
+	setting 'Target Location' content
+	setting 'function' showObject
+	setting 'program' samPOARequset
+column
+	name 'title'
+	label 'title'
+	bus '$<name>'
+	setting 'Registered Suite' 'Framework'
+column
+	name 'Assignee'
+	label 'emxFramework.label.AssigneeRequester'
+	bus '$<attribute[attribute_Originator].value>'
+	setting 'Field Type' attribute
+	setting 'Admin Type' attribute_Originator
+	setting 'Registered Suite' 'Framework'
+column
+	name LockStatus
+	label '<img border="0" src="../common/images/iconColHeadLocked.gif"></img>'
+	setting 'Auto Filter' False
+	setting 'Column Type' programHTMLOutput
+	setting function getLockStatus
+    setting program emxCommonDocumentUI
+column
+	label emxComponents.Common.Rev
+	setting 'Style Column' 'right-align'
+	setting 'Column Type' programHTMLOutput
+	setting 'Target Location' popup
+	setting 'function' getRevisionStatus
+	setting 'program' emxCommonDocumentUI
+column
+	label emxComponents.Common.Version
+	setting 'Style Column' 'right-align'
+	setting 'Column Type' programHTMLOutput
+	setting 'Target Location' popup
+	setting 'function' getVersionStatus
+	setting 'program' emxCommonDocumentUI
+column
+	name 'State'
+	label 'emxFramework.label.State'
+	bus '$<current>'
+	setting 'Style Column' 'right-align'
+	setting 'Admin Type' 'State'
+	setting 'Registered Suite' 'Framework'
+column
+	name 'newWindow'
+	setting Width 5
+	href '${COMMON_DIR}/emxTree.jsp'
+	setting 'Column Icon' 'images/iconNewWindow.gif'
+	setting 'Column Type' 'icon'
+	setting 'Target Location' popup
+;
+
+column
+	name 'Actions'
+	label 'Actions'
+	setting 'Column Type' programHTMLOutput
+	setting program emxCommonFileUI
+	setting function getVersionFileActions
+
+add command designRequest
+	description designRequest
+	label 'emxFramework.label.designRequest'
+	href '${COMMON_DIR}/emxIndentedTable.jsp?program=samPOARequset:findDocument&table=POATable&toolbar=POAToolbar&freezePane=object&selection=multiple'
+	setting 'Registered Suite' 'Framework'
+	setting 'Target Location' content
+;
+add property command_designRequest on prog eServiceSchemaVariableMapping.tcl to command designRequest
+;
+
+mod menu 'My Enovia'
+	add command designRequest
+;
+
+add attribute POATitle
+	description POATitle
+	description POATitle
+	type string
+;
+add property attribute_POATitle on prog eServiceSchemaVariableMapping.tcl to attribute POATitle
+;
+
+add type POAType
+	description POAType
+	attribute POATitle
+;
+add property type_POAType on prog eServiceSchemaVariableMapping.tcl to attribute POAType
+;
+
+add command POACommand
+	description POACommand
+	label 'emxFramework.label.designRequest'
+	href '${COMMON_DIR}/poaUploadFile.jsp'
+	setting 'target Location' popup
+	setting Image '${COMMON_DIR}/images/iconActionUploadFile.png'
+;
+add property command_POACommand on prog eServiceSchemaVariableMapping.tcl to command POACommand
+;
+
+mod command POACommand
+	label 'emxFramework.label.designRequest'
+;
+
+mod command designRequest
+	add command POACommand
+;
+
+toolbar추가하고 command 박기
+add menu POAToolbar
+	description POAToolbar
+	command POACommand
+	command AEFGenericDelete
+;
+add property menu_POAToolbar on prog eServiceSchemaVariableMapping.tcl to menu POAToolbar
+;
+
+mod menu POAToolbar
+	add command POACommand
+	add command AEFGenericDelete
+;
+
+testType
+
+add relationship samPOARel
+	description samPOARel
+	nothidden
+	preventduplicates
+	from
+		type testType
+		meaning 'POATypeRelationship'
+		cardinality many
+		revision replicate
+		clone replicate
+	to
+		type Document
+		meaning 'Document'
+		cardinality many
+		revision replicate
+		clone replicate
+;
+add property relationship_samPOARel on prog eServiceSchemaVariableMapping.tcl to relationship samPOARel
+;
+
+del relationship samPOARel;
+
+add policy poaPolicy
+	description 'POAPolicy'
+	sequence '1,2,3...'
+	store STORE
+	type testType
+	format all
+	defaultformat generic
+	state Working
+		version true
+		revision false
+		promote true
+		checkouthistory false
+		owner all
+	state Review
+		version true
+		revision false
+		promote true
+		checkouthistory false
+		owner read, show, viewform, checkout, demote
+	state Release
+		version true
+		revision true
+		checkouthistory false
+		owner read, show, viewform, checkout, demote
+		public read, show, viewform, checkout
+	property "state_Working" value "Working"
+	property "state_Review" value "Review"
+	property "state_Release" value "Release"
+;
+add property policy_poaPolicy on prog eServiceSchemaVariableMapping.tcl to policy poaPolicy
+;
+
+insert prog C:\workspace\eclipse\project\3dspace\jpo\samPOARequset_mxJPO.java;
+
+add attribute requestCount
+	description Count
+	type Integer
+	default 0
+;
+add property attribute_requestCount on prog eServiceSchemaVariableMapping.tcl to attribute requestCount
+;
+
+mod attribute requestCount
+	description Count
+	type Integer
+	default 0
+;
+
+mod type testType
+	add attribute requestCount
+;
+
+mod type testType
+	remove attribute Count
+;
+
+del attribute requestCount;
+
+add attribute poaPath
+	description path
+	type String
+;
+add property attribute_poaPath on prog eServiceSchemaVariableMapping.tcl to attribute poaPath
+;
+
+testType, POAType
+
+mod type Document
+	add attribute poaPath
+;
+
+print type testType !hist;
+mod type testType
+	add attribute Count
+;
+
+print table testTable system !hist;
+del table testTable system;
+add table testTable system
+column
+	name 'Id'
+	setting 'Column Type' checkbox
+column
+	name 'DocNo'
+	label 'DocNo'
+	bus '$<name>'
+	href '${COMMON_DIR}/emxTree.jsp'
+	setting 'Target Location' 'content'
+	setting 'Registered Suite' 'Framework'
+column
+	name 'Name'
+	label 'Name'
+	bus '$<attribute[testName]>'
+	setting 'Field Type' attribute
+	setting 'Admin Type' attribute_testName
+	setting 'Registered Suite' 'Framework'
+column
+	name 'Count'
+	label 'emxFramework.label.Count'
+	setting 'Column Type' program
+	setting format numeric
+	setting 'program' testSubject
+	setting 'function' showCount
+	setting 'Registered Suite' 'Framework'
+column
+	name 'Type'
+	label 'Type'
+	bus '$<attribute[testType]>'
+	setting 'Field Type' attribute
+	setting 'Admin Type' attribute_testType
+	setting 'Registered Suite' 'Framework'
+column
+	name 'Indicator'
+	label 'Indicator'
+	bus '$<attribute[testIndicator]>'
+	setting 'Field Type' attribute
+	setting 'Admin Type' attribute_testIndicator
+	setting 'Registered Suite' 'Framework'
+column
+	name 'Estimated Finish'
+	label 'Estimated Finish'
+	bus '$<attribute[testEstimatedFinish]>'
+	setting 'format' date
+	setting 'Display Time' false
+	setting 'Field Type' attribute
+	setting 'Admin Type' attribute_testEstimatedFinish
+	setting 'Registered Suite' 'Framework'
+column
+	name 'Actual Finish'
+	label 'Actual Finish'
+	bus '$<attribute[testActualFinish]>'
+	setting 'format' date
+	setting 'Display Time' false
+	setting 'Field Type' attribute
+	setting 'Admin Type' attribute_testActualFinish
+	setting 'Registered Suite' 'Framework'
+column
+	name 'State'
+	label 'State'
+	bus '$<current>'
+	setting 'Admin Type' 'State'
+	setting 'Registered Suite' 'Framework'
+column
+	name 'Delay'
+	label 'Delay'
+	setting 'program' testSubject
+	setting 'function' showDelay
+	setting 'Column Type' programHTMLOutput
+	setting 'Registered Suite' 'Framework'
+column
+	name 'newWindow'
+	href '${COMMON_DIR}/emxTree.jsp'
+	setting 'Column Icon' 'images/iconNewWindow.gif'
+	setting 'Column Type' 'icon'
+	setting 'Target Location' popup
+;
+
+insert prog C:\workspace\eclipse\project\3dspace\jpo\testSubject_mxJPO.java;
+compile prog testSubject force update;

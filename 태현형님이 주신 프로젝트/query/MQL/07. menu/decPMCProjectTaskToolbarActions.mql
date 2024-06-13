@@ -1,0 +1,26 @@
+################################################################################################
+# Created by jonghunlee
+# Create Date : 2023. 08. 10
+# Admin Type : menu
+# Name : decPMCProjectTaskToolbarActions
+################################################################################################
+
+#del menu 'decPMCProjectTaskToolbarActions';
+add menu 'decPMCProjectTaskToolbarActions'
+    description ""
+    label       "ProgramCentral.Toolbar.Actions"
+    href        ""
+    alt         ""
+    setting    'Registered Suite'        "ProgramCentral"
+    command     "decCWPTaskPropertiesEdit"
+    command     "decIWPTaskPropertiesEdit"
+    property    'application'        value "ProgramManagementBase"
+    property    'installed date'     value "06-01-2023"
+    property    'installer'          value "ENOVIAEngineering"
+    property    'original name'      value "decPMCProjectTaskToolbarActions"
+    property    'version'            value "R418"
+;
+add property 'menu_decPMCProjectTaskToolbarActions' on prog eServiceSchemaVariableMapping.tcl to menu 'decPMCProjectTaskToolbarActions';
+mod menu 'decPMCProjectTaskToolbarActions'
+    add command     "decPhasePropertiesEdit"
+;

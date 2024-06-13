@@ -1,0 +1,1 @@
+define("DS/RDFFoundation/RDFFoundation_en",{});define("DS/RDFFoundation/assets/nls/RDFFoundationNLS",{"RDFFoundation.Label.NoAccess":"No Access"});

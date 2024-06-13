@@ -1,0 +1,24 @@
+################################################################################################
+# Create By jhlee 2023. 05. 11
+# Admin Type : command
+# Name : decCwpMasterList
+################################################################################################
+
+#del command 'decCwpMasterList';
+add command 'decCwpMasterList'
+	description 'StandardList'
+	label 'ProgramCentral.Command.decCwpMasterList'
+	href '${COMMON_DIR}/emxIndentedTable.jsp?program=emxProjectSpace:getCWPTask&table=decCwpMasterTable&header=ProgramCentral.Command.decCwpMasterList&toolbar=decCwpMasterListToolBar&HelpMarker=emxhelpprogramlist&Export=true&sortColumnName=Name&sortDirection=ascending&StringResourceFileId=emxProgramCentralStringResource&selection=multiple&editLink=true&postProcessJPO=emxTask:postProcessRefresh'
+	alt 'ProgramCentral.Command.decCwpMasterList'
+	setting 'Registered Suite' 'ProgramCentral'
+	setting 'Target Location' 'content'
+;
+add property 'command_decCwpMasterList' on prog eServiceSchemaVariableMapping.tcl to command 'decCwpMasterList';
+
+mod command 'decCwpMasterList'
+	href '${COMMON_DIR}/emxIndentedTable.jsp?program=emxProjectSpace:getCWPTask&table=decCwpMasterTable&header=ProgramCentral.Command.decCwpMasterList&toolbar=decCwpMasterListToolBar&HelpMarker=emxhelpprogramlist&Export=true&sortColumnName=Name&sortDirection=ascending&StringResourceFileId=emxProgramCentralStringResource&selection=multiple&editLink=true&postProcessJPO=emxTask:postProcessRefresh&slideinFilter=true&freezePane=CWP No,CWP Desc&pageSize=300'
+;
+
+mod command 'decCwpMasterList'
+	href '${COMMON_DIR}/emxIndentedTable.jsp?program=emxProjectSpace:getCWPTask&table=decCwpMasterTable&header=ProgramCentral.Command.decCwpMasterList&toolbar=decCwpMasterListToolBar&HelpMarker=emxhelpprogramlist&Export=true&sortColumnName=Name&sortDirection=ascending&StringResourceFileId=emxProgramCentralStringResource&selection=multiple&postProcessJPO=emxTask:decUpdateScheduleChanges&slideinFilter=true&filterParam=codeMaster:Discipline,codeMaster:CWP Activity Type&freezePane=CWP No,CWP Desc&pageSize=300'
+;

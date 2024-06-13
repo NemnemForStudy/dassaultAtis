@@ -1,0 +1,1 @@
+define("DS/RTwebrtcAPI/RTwebrtcAPI_ja",{});define("DS/RTwebrtcAPI/assets/nls/feed",{Call:"呼び出し",notCompatible:"この機能は現在のブラウザまたはデバイスではサポートされていません"});

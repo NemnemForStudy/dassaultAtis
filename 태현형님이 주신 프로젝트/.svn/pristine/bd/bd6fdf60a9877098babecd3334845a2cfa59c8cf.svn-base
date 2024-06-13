@@ -1,0 +1,12 @@
+m|DELWKOApp\DELWKOApplicationServices.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.3.23049|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\DELWKOApplicationServices\DELWKOApplicationServices.js|1676691165|14551
+s|DELWKOApp\DELWKOApplicationServices.mweb\src\Commands\CommandsService.js|1668018788|36478
+u|DELWKOApp\DELWKOApplicationServices.mweb\src\LayoutConfig.js|1663786671|472
+u|DELWKOApp\DELWKOApplicationServices.mweb\src\LayoutService.js|1663786679|8915
+u|DELWKOApp\DELWKOApplicationServices.mweb\src\Services.js|1663786689|509
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

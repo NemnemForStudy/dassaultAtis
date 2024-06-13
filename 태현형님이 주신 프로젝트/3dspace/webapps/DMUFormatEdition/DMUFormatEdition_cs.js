@@ -1,0 +1,1 @@
+define("DS/DMUFormatEdition/DMUFormatEdition_cs",{});define("DS/DMUFormatEdition/assets/nls/DMUFormatEdition",{formatEditionModeStarted:"Úprava formátů",slideEditionModeStarted:"Úprava snímků",currentFormatUpdatedMessage:"Pohled byl aktualizován",NoFormat:"Žádný formát",FormatChooserPanelTitle:"Formát",normalFormatTitle:"Formát",generateFormat:"Generovat formát"});

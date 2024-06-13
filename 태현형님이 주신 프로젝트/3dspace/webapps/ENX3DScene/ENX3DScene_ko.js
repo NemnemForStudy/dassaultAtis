@@ -1,0 +1,1 @@
+define("DS/ENX3DScene/ENX3DScene_ko",{});define("DS/ENX3DScene/assets/nls/ENX3DScene",{appDescription:"쉽고 효율적인 방법으로 3D 모델 탐색"});

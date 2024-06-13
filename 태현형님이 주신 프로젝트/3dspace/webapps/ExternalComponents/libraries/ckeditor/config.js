@@ -1,0 +1,1 @@
+CKEDITOR.editorConfig=function(o){o.toolbar_Basic=[["Bold","Italic","-","Styles"]],o.toolbar_Rich=[["Bold","Italic","Underline","-","TextColor","BGColor","-","Table"]]};

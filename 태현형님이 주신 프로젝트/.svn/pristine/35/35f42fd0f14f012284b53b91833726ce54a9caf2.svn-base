@@ -1,0 +1,65 @@
+.selection-state-control {
+  height: 100%;
+  width: 100%; }
+  .selection-state-control .selection-state-container {
+    height: 100%;
+    display: flex; }
+    .selection-state-control .selection-state-container .state-icon-container {
+      height: 100%;
+      flex: 1;
+      display: flex; }
+      .selection-state-control .selection-state-container .state-icon-container .editable-icon-content {
+        height: 100%;
+        flex: 1;
+        display: flex; }
+        .selection-state-control .selection-state-container .state-icon-container .editable-icon-content .state-icon-content {
+          display: flex;
+          flex: 1;
+          justify-content: center; }
+          .selection-state-control .selection-state-container .state-icon-container .editable-icon-content .state-icon-content.available-state {
+            opacity: 0; }
+            .selection-state-control .selection-state-container .state-icon-container .editable-icon-content .state-icon-content.available-state:hover {
+              opacity: 0.5; }
+          .selection-state-control .selection-state-container .state-icon-container .editable-icon-content .state-icon-content.conflict-state div {
+            color: red !important; }
+          .selection-state-control .selection-state-container .state-icon-container .editable-icon-content .state-icon-content.disable-state-change {
+            pointer-events: none; }
+        .selection-state-control .selection-state-container .state-icon-container .editable-icon-content .action-icon-content {
+          display: flex; }
+    .selection-state-control .selection-state-container .state-value-container {
+      display: none;
+      height: 100%;
+      flex: 1; }
+      .selection-state-control .selection-state-container .state-value-container .editable-value-content {
+        height: 100%;
+        flex: 1;
+        display: flex;
+        justify-content: center; }
+        .selection-state-control .selection-state-container .state-value-container .editable-value-content .state-value-content {
+          display: flex; }
+        .selection-state-control .selection-state-container .state-value-container .editable-value-content .state-value-unit {
+          padding: 0 15px; }
+    .selection-state-control .selection-state-container.value-content .state-icon-container {
+      display: none; }
+    .selection-state-control .selection-state-container.value-content .state-value-container {
+      display: flex; }
+    .selection-state-control .selection-state-container .cfg-custom-popup {
+      font-family: sans-serif;
+      font-size: 13.3px;
+      max-width: 200px;
+      padding: 3px 8px;
+      color: #77797c;
+      text-align: center;
+      text-decoration: none;
+      background-color: #f4f5f6;
+      border: 1px solid #b4b6ba;
+      border-radius: 2px;
+      -webkit-animation: fadeIn 1s;
+      animation: fadeIn 0.5s;
+      margin-left: -80px;
+      margin-top: -4px; }
+  .selection-state-control.read-only {
+    display: flex;
+    flex-direction: column; }
+    .selection-state-control.read-only > * {
+      cursor: default !important; }

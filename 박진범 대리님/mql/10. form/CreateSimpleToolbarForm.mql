@@ -1,0 +1,30 @@
+#####################################################################################################
+# Created by changseopLim
+# Create Date : 2024-05-29
+# Name : CreateSimpleToolbarForm
+#####################################################################################################
+#del form CreateSimpleToolbarForm
+add form CreateSimpleToolbarForm web
+field
+	name Name
+	label 'emxFramework.label.name'
+	bus '$<name>'
+	setting 'Field Type' basic
+	setting 'Registered Suite' 'Framework'
+field
+	name simpleTitle
+	label 'emxFramework.label.simpleTitle'
+	bus '$<attribute[simpleTitle]>'
+	setting 'Field Type' attribute
+	setting 'Admin Type' attribute_simpleTitle
+	setting 'Input Type' textbox
+	setting 'Registered Suite' 'Framework'
+	setting Editable true
+field
+	name connectObject
+	label 'emxFramework.label.connectObject'
+	range '${COMMON_DIR}/emxIndentedTable.jsp?program=secondProject:findProject2024Document&table=Table2024&selection=multiple&submitURL=../sendDocument.jsp'
+	setting 'Registered Suite' 'Framework'
+;
+add property form_CreateSimpleToolbarForm on prog eServiceSchemaVariableMapping.tcl to form CreateSimpleToolbarForm
+;

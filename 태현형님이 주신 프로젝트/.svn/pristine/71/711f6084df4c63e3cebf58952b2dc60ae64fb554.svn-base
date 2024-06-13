@@ -1,0 +1,10 @@
+m|WebApplication\WebApplication.mweb
+b|j|c,m
+b|c|n,m
+v|6.425.1.22312|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\WebApplication\WebApplication.js|1667944192|6859
+s|WebApplication\WebApplication.mweb\src\ModelLoader.js|1510763783|5564
+u|WebApplication\WebApplication.mweb\src\WebApplication.js|1666329528|15680
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

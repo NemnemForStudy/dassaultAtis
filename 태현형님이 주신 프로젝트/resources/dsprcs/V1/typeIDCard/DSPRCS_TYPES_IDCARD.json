@@ -1,0 +1,445 @@
+{
+    "dsprcs:MfgProcess": {
+        "kindOf": "root",
+        "beType": "type_DELLmiPPRSystemReference",
+        "classesTypes": "type_DELLmiHeaderWorkPlanReference,type_DELLmiWorkPlanSystemReference,type_DELLmiQtyControlProcessReference,type_DELLmiGeneralSystemReference,type_DELLmiTransformationSystemReference,type_DELLmiTransferSystemReference,type_BufferSystem,type_SinkSystem,type_SourceSystem",
+        "patchCSRF":true,
+        "search":true,
+        "contentLinks": ["dsprcs:MfgOperationInstance"
+        				,"dsprcs:MfgProcessInstance"
+        				,"dsprcs:TimeConstraint"
+        				,"dsprcs:ItemSpecification"
+        				,"dsprcs:PreAssignedWorkCenter"
+        				,"dsprcs:PrimaryCapableResource"
+        				,"dsprcs:AssignedOrganization"],
+        "extensionLinks": [ "dslc:changeControl"
+                           ,"dscfg:Configured"
+                           ,"dsprcs:AssetContext"
+                           ,"dsprcs:AllWorkPlansEnterpriseAttributes"
+        				   ,"dsprcs:WorkPlanEnterpriseAttributes"
+        				   ,"dsprcs:DELLmiQtyControlProcessReferenceEnterpriseAttributes"
+						   ,"dsprcs:DELLmiGeneralSystemReferenceEnterpriseAttributes"
+						   ,"dsprcs:DELLmiTransformationSystemReferenceEnterpriseAttributes"
+						   ,"dsprcs:DELLmiTransferSystemReferenceEnterpriseAttributes"
+						   ,"dsprcs:DELLmiStorageSystemReferenceEnterpriseAttributes"
+						   ,"dsprcs:BufferSystemEnterpriseAttributes"
+						   ,"dsprcs:SinkSystemEnterpriseAttributes"
+						   ,"dsprcs:SourceSystemEnterpriseAttributes"],
+        "cestamp":true,
+        "defaultMask":"dsprcs:MfgProcessMask.Default",
+        "customerAttribute":true,
+    	"customizationSupport": true, 
+    	"isPublic": true, 
+    	"changeSupport": true,
+        "optionCheck" : {
+        	"modify"      : true,
+        	"produce"     : true,
+        	"navigate"    : true
+        },
+        "publicResourceURI": "/resources/v1/modeler/dsprcs/dsprcs:MfgProcess/{pid}"
+    },
+    "dsprcs:MfgProcessInstance": {
+        "kindOf": "content",
+        "beType": "relationship_DELLmiPPRSystemInstance",
+        "extensionLinks": ["dscfg:Filterable"],
+        "cestamp":true,
+        "defaultMask":"dsprcs:MfgProcessInstanceMask.Default",
+        "isPublic": true,
+        "customerAttribute":true,
+    	"customizationSupport": true, 
+        "changeSupport": true,
+    	"restrictedChangeSupport": true,
+        "optionCheck" : {
+              "modify"      : true,
+              "produce"     : true,
+              "navigate"    : true
+        }
+    },
+    "dsprcs:MfgOperation": {
+        "kindOf": "root",
+        "beType": "type_DELLmiOperationPPRReference",
+        "classesTypes": "type_DELLmiHeaderOperationReference,type_DELLmiGeneralOperationReference,type_DELLmiLoadingOperationReference,type_DELLmiUnloadingOperationReference,type_DELLmiRemoveMaterialOperationReference,type_DELLmiTransferOperationReference,type_DELLmiPunctualOperationReference,type_DELLmiCurveOperationReference,type_DELLmiInterruptOperationReference,type_DELLmiBufferOperationReference,type_DELLmiSinkOperationReference,type_DELLmiSourceOperationReference",
+        "patchCSRF":true,
+        "search":true,
+        "contentLinks": ["dsprcs:MfgOperationInstance"
+        				,"dsprcs:TimeConstraint"
+        				,"dsprcs:PrimaryCapableResource"
+        				,"dsprcs:SecondaryCapableResource"
+        				,"dsprcs:AlertInstance"
+        				,"dsprcs:InstructionInstance"
+        				,"dsprcs:SignOffInstance"
+        				,"dsprcs:DataCollectInstance"
+        				,"dsprcs:DataCollectPlanInstance"
+        				,"dsprcs:PrimaryResourceLinkDetail"
+        				,"dsprcs:SecondaryResourceLinkDetail"
+        				,"dsprcs:AssignedRequirement"
+        				,"dsprcs:ScopeRequirementSpec"],
+        "extensionLinks": [ "dslc:changeControl"
+                           ,"dscfg:Configured"
+						   ,"dsprcs:HeaderOperationEnterpriseAttributes"
+						   ,"dsprcs:DELLmiGeneralOperationReferenceEnterpriseAttributes"
+						   ,"dsprcs:DELLmiLoadingOperationReferenceEnterpriseAttributes"
+						   ,"dsprcs:DELLmiUnLoadingOperationReferenceEnterpriseAttributes"
+						   ,"dsprcs:DELLmiRemoveMaterialOperationReferenceEnterpriseAttributes"
+						   ,"dsprcs:DELLmiTransferOperationReferenceEnterpriseAttributes"
+						   ,"dsprcs:DELLmiPunctualOperationReferenceEnterpriseAttributes"
+						   ,"dsprcs:DELLmiCurveOperationReferenceEnterpriseAttributes"
+						   ,"dsprcs:DELLmiInterruptOperationReferenceEnterpriseAttributes"
+						   ,"dsprcs:DELLmiBufferOperationReferenceEnterpriseAttributes"
+						   ,"dsprcs:DELLmiSinkOperationReferenceEnterpriseAttributes"
+						   ,"dsprcs:DELLmiSourceOperationReferenceEnterpriseAttributes"],
+        "cestamp":true,
+        "defaultMask":"dsprcs:MfgOperationMask.Default",
+        "customerAttribute":true,
+    	"customizationSupport": true, 
+    	"isPublic": true,
+    	"changeSupport": true,
+        "optionCheck" : {
+        	"modify"      : true,
+        	"produce"     : true,
+        	"navigate"    : true
+        },
+        "publicResourceURI": "/resources/v1/modeler/dsprcs/dsprcs:MfgOperation/{pid}"
+    },
+    "dsprcs:MfgOperationInstance": {
+        "kindOf": "content",
+        "beType": "virtual_DELLmiOperationPPRInstance",
+        "implementationClass": "com.dassault_systemes.delmia.ppr.nav.crs_utils.GenericVirtualNavContent",
+        "extensionLinks": ["dscfg:Filterable"],
+        "cestamp":true,
+        "isPublic": true,
+        "changeSupport": true,
+        "defaultMask":"dsprcs:MfgOperationInstanceMask.Default",
+        "customerAttribute":true,
+    	"customizationSupport": true, 
+        "optionCheck" : {
+        	"modify"      : true,
+        	"produce"     : true,
+        	"navigate"    : true
+        }
+    },
+    
+    "dsprcs:MfgProcessEnterpriseAttributes": {
+    	"kindOf":"extension",    
+        "beType": "XP_DELLmiProductionSystemPPR_Ext",
+        "customerAttribute":true,
+        "isPublic": false
+    },
+
+    "dsprcs:AllWorkPlansEnterpriseAttributes": {
+    	"kindOf":"extension",    
+        "beType": "XP_DELLmiWorkPlans_Ext",
+        "customerAttribute":true,
+        "isPublic": false
+    },
+    
+    "dsprcs:WorkPlanEnterpriseAttributes": {
+    	"kindOf":"extension",    
+        "beType": "XP_DELLmiWorkPlanSystemReference_Ext",
+        "customerAttribute":true,
+        "isPublic": false
+    },
+    
+    "dsprcs:HeaderWorkPlanEnterpriseAttributes": {
+    	"kindOf":"extension",    
+        "beType": "XP_DELLmiHeaderWorkPlanReference_Ext",
+        "customerAttribute":true,
+        "isPublic": false
+    },
+    
+    "dsprcs:MfgOperationEnterpriseAttributes": {
+    	"kindOf":"extension",    
+        "beType": "XP_DELLmiOperationPPRReference_Ext",
+        "isPublic": false
+    },
+    
+    "dsprcs:HeaderOperationEnterpriseAttributes": {
+    	"kindOf":"extension",    
+        "beType": "XP_DELLmiHeaderOperationReference_Ext",
+        "isPublic": false
+    },
+    
+    "dsprcs:TimeConstraint": {
+    	"kindOf": "content",
+    	"beType": "virtual_DELLmiTimeConstraintCnx",
+    	"cestamp": true,
+    	"isPublic": true,
+    	"defaultMask": "dsprcs:TimeConstraintMask.Default",
+    	"indexBulkFetchMaxLimit": 500,
+    	"optionCheck" : {
+        	"modify"      : false,
+        	"produce"     : false,
+        	"navigate"    : true
+        }
+    },
+    "dsprcs:PrimaryCapableResource": {
+    	"kindOf": "content",
+    	"beType": "virtual_DELAsmProcessCanUseCnx",
+    	"cestamp": true,
+    	"isPublic": true,
+    	"defaultMask": "dsprcs:PrimaryCapableResourceMask.Default",
+    	"indexBulkFetchMaxLimit": 500,
+    	"optionCheck" : {
+        	"modify"      : false,
+        	"produce"     : true,
+        	"navigate"    : true
+        }
+    },
+    "dsprcs:SecondaryCapableResource": {
+    	"kindOf": "content",
+    	"beType": "virtual_SecondaryCandidateResourceLink",
+    	"cestamp": true,
+    	"isPublic": true,
+    	"defaultMask": "dsprcs:SecondaryCapableResourceMask.Default",
+    	"indexBulkFetchMaxLimit": 500,
+    	"optionCheck" : {
+        	"modify"      : false,
+        	"produce"     : false,
+        	"navigate"    : true
+        }
+    },    
+    "dsprcs:ItemSpecification": {
+        "kindOf":"content",
+        "beType":"MfgProductionPlanning",
+        "defaultMask":"dsprcs:ItemSpecificationMask.Default",
+        "isPublic": true,
+        "cestamp":true,
+    	"indexBulkFetchMaxLimit": 500,
+        "optionCheck" : {
+        	"modify"      : false,
+        	"produce"     : false,
+        	"navigate"    : true
+        }
+    },
+    
+    "dsprcs:PreAssignedWorkCenter": {
+        "kindOf":"content",
+        "beType":"AllocatedResourceLink",
+        "defaultMask":"dsprcs:PreAssignedWorkCenterMask.Default",
+        "isPublic": true,
+        "cestamp":true,
+    	"indexBulkFetchMaxLimit": 500,
+        "optionCheck" : {
+        	"modify"      : false,
+        	"produce"     : false,
+        	"navigate"    : true
+        }
+    },
+    
+    "dsprcs:AssetContext": {
+        "kindOf":"extension",
+        "beType":"virtual_DELLmiPPRSystemReference",
+        "defaultMask":"dsprcs:AssetContextMask.Default",
+        "isPublic": true,
+        "optionCheck" : {
+              "modify"      : true,
+              "produce"     : true,
+              "navigate"    : true
+        }     
+    },
+    "dsprcs:PrimaryResourceLinkDetail": {
+    	"kindOf": "content",
+        "beType": "virtual_PrimaryResourceLinkDetail",
+        "patchCSRF":true,
+        "search":true,
+        "cestamp":true,
+        "defaultMask":"dsprcs:PrimaryResourceLinkDetailMask.Default",
+    	"implementationClass": "com.dassault_systemes.delmia.ppr.nav.crs_utils.GenericVirtualNavContent",
+    	"isPublic": false,
+        "optionCheck" : {
+        	"modify"      : true,
+        	"produce"     : true,
+        	"navigate"    : true
+        }
+    },
+    "dsprcs:SecondaryResourceLinkDetail": {
+    	"kindOf": "content",
+        "beType": "virtual_SecondaryResourceLinkDetail",
+        "patchCSRF":true,
+        "search":true,
+        "cestamp":true,
+        "defaultMask":"dsprcs:SecondaryResourceLinkDetailMask.Default",
+    	"implementationClass": "com.dassault_systemes.delmia.ppr.nav.crs_utils.GenericVirtualNavContent",
+    	"isPublic": false,
+        "optionCheck" : {
+        	"modify"      : true,
+        	"produce"     : true,
+        	"navigate"    : true
+        }
+    },
+    "dsprcs:AssignedOrganization": {
+    	"kindOf": "content",
+        "beType": "virtual_DELMfgResponsibilityCnx",
+        "patchCSRF":true,
+        "search":true,
+        "cestamp":true,
+        "defaultMask":"dsprcs:AssignedOrganizationMask.Default",
+    	"implementationClass": "com.dassault_systemes.delmia.ppr.nav.crs_utils.GenericVirtualNavContent",
+    	"isPublic": false,
+        "optionCheck" : {
+        	"modify"      : true,
+        	"produce"     : true,
+        	"navigate"    : true
+        }
+    },
+    "dsprcs:AssignedRequirement": {
+        "kindOf":"content",
+        "beType":"virtual_PLMReqSpecifyHowToCnx",
+        "defaultMask":"dsprcs:AssignedRequirementMask.Default",
+        "implementationClass": "com.dassault_systemes.delmia.ppr.nav.crs_utils.GenericVirtualNavContent",
+        "isPublic": true,
+        "cestamp":true,
+        "optionCheck" : {
+        	"modify"      : false,
+        	"produce"     : false,
+        	"navigate"    : true
+        }
+    },
+    "dsprcs:ScopeRequirementSpec": {
+        "kindOf":"content",
+        "beType":"virtual_PLMReqGlobalSpecifyHowToCnx",
+        "defaultMask":"dsprcs:ScopeRequirementSpecMask.Default",
+        "implementationClass": "com.dassault_systemes.delmia.ppr.nav.crs_utils.GenericVirtualNavContent",
+        "isPublic": true,
+        "cestamp":true,
+        "optionCheck" : {
+        	"modify"      : false,
+        	"produce"     : false,
+        	"navigate"    : true
+        }
+    },
+    
+    "dsprcs:DELLmiGeneralOperationReferenceEnterpriseAttributes": {
+     	"kindOf":"extension",    
+        "beType": "XP_DELLmiGeneralOperationReference_Ext",
+        "defaultMask":"dsprcs:Mask.DELLmiGeneralOperationReferenceEnterpriseAttributes.Default",
+        "isPublic": false
+    },
+    
+	"dsprcs:DELLmiLoadingOperationReferenceEnterpriseAttributes": {
+     	"kindOf":"extension",    
+        "beType": "XP_DELLmiLoadingOperationReference_Ext",
+        "defaultMask":"dsprcs:Mask.DELLmiLoadingOperationReferenceEnterpriseAttributes.Default",
+        "isPublic": false
+    },
+    
+	"dsprcs:DELLmiUnLoadingOperationReferenceEnterpriseAttributes": {
+     	"kindOf":"extension",    
+        "beType": "XP_DELLmiUnLoadingOperationReference_Ext",
+        "defaultMask":"dsprcs:Mask.DELLmiUnLoadingOperationReferenceEnterpriseAttributes.Default",
+        "isPublic": false
+    },
+    
+	"dsprcs:DELLmiRemoveMaterialOperationReferenceEnterpriseAttributes": {
+     	"kindOf":"extension",    
+        "beType": "XP_DELLmiRemoveMaterialOperationReference_Ext",
+        "defaultMask":"dsprcs:Mask.DELLmiRemoveMaterialOperationReferenceEnterpriseAttributes.Default",
+        "isPublic": false
+    },
+    
+	"dsprcs:DELLmiTransferOperationReferenceEnterpriseAttributes": {
+     	"kindOf":"extension",    
+        "beType": "XP_DELLmiTransferOperationReference_Ext",
+        "defaultMask":"dsprcs:Mask.DELLmiTransferOperationReferenceEnterpriseAttributes.Default",
+        "isPublic": false
+    },
+    
+	"dsprcs:DELLmiPunctualOperationReferenceEnterpriseAttributes": {
+     	"kindOf":"extension",    
+        "beType": "XP_DELLmiPunctualOperationReference_Ext",
+        "defaultMask":"dsprcs:Mask.DELLmiPunctualOperationReferenceEnterpriseAttributes.Default",
+        "isPublic": false
+    },
+    
+	"dsprcs:DELLmiCurveOperationReferenceEnterpriseAttributes": {
+     	"kindOf":"extension",    
+        "beType": "XP_DELLmiCurveOperationReference_Ext",
+        "defaultMask":"dsprcs:Mask.DELLmiCurveOperationReferenceEnterpriseAttributes.Default",
+        "isPublic": false
+    },
+    
+	"dsprcs:DELLmiInterruptOperationReferenceEnterpriseAttributes": {
+     	"kindOf":"extension",    
+        "beType": "XP_DELLmiInterruptOperationReference_Ext",
+        "defaultMask":"dsprcs:Mask.DELLmiInterruptOperationReferenceEnterpriseAttributes.Default",
+        "isPublic": false
+    },
+    
+	"dsprcs:DELLmiBufferOperationReferenceEnterpriseAttributes": {
+     	"kindOf":"extension",    
+        "beType": "XP_DELLmiBufferOperationReference_Ext",
+        "defaultMask":"dsprcs:Mask.DELLmiBufferOperationReferenceEnterpriseAttributes.Default",
+        "isPublic": false
+    },
+    
+	"dsprcs:DELLmiSinkOperationReferenceEnterpriseAttributes": {
+     	"kindOf":"extension",    
+        "beType": "XP_DELLmiSinkOperationReference_Ext",
+        "defaultMask":"dsprcs:Mask.DELLmiSinkOperationReferenceEnterpriseAttributes.Default",
+        "isPublic": false
+    },
+    
+	"dsprcs:DELLmiSourceOperationReferenceEnterpriseAttributes": {
+     	"kindOf":"extension",    
+        "beType": "XP_DELLmiSourceOperationReference_Ext",
+        "defaultMask":"dsprcs:Mask.DELLmiSourceOperationReferenceEnterpriseAttributes.Default",
+        "isPublic": false
+    },
+    
+    "dsprcs:DELLmiQtyControlProcessReferenceEnterpriseAttributes": {
+     	"kindOf":"extension",    
+        "beType": "XP_DELLmiQtyControlProcessReference_Ext",
+        "defaultMask":"dsprcs:Mask.DELLmiQtyControlProcessReferenceEnterpriseAttributes.Default",
+        "customerAttribute":true,
+        "isPublic": false
+    },
+    
+	"dsprcs:DELLmiGeneralSystemReferenceEnterpriseAttributes": {
+     	"kindOf":"extension",    
+        "beType": "XP_DELLmiGeneralSystemReference_Ext",
+        "defaultMask":"dsprcs:Mask.DELLmiGeneralSystemReferenceEnterpriseAttributes.Default",
+        "isPublic": false
+    },
+    
+	"dsprcs:DELLmiTransformationSystemReferenceEnterpriseAttributes": {
+     	"kindOf":"extension",    
+        "beType": "XP_DELLmiTransformationSystemReference_Ext",
+        "defaultMask":"dsprcs:Mask.DELLmiTransformationSystemReferenceEnterpriseAttributes.Default",
+        "isPublic": false
+    },
+    
+	"dsprcs:DELLmiTransferSystemReferenceEnterpriseAttributes": {
+     	"kindOf":"extension",    
+        "beType": "XP_DELLmiTransferSystemReference_Ext",
+        "defaultMask":"dsprcs:Mask.DELLmiTransferSystemReferenceEnterpriseAttributes.Default",
+        "isPublic": false
+    },
+    
+	"dsprcs:DELLmiStorageSystemReferenceEnterpriseAttributes": {
+     	"kindOf":"extension",    
+        "beType": "XP_DELLmiStorageSystemReference_Ext",
+        "defaultMask":"dsprcs:Mask.DELLmiStorageSystemReferenceEnterpriseAttributes.Default",
+        "isPublic": false
+    },
+    
+	"dsprcs:BufferSystemEnterpriseAttributes": {
+     	"kindOf":"extension",    
+        "beType": "XP_BufferSystem_Ext",
+        "defaultMask":"dsprcs:Mask.BufferSystemEnterpriseAttributes.Default",
+        "isPublic": false
+    },
+    
+	"dsprcs:SinkSystemEnterpriseAttributes": {
+     	"kindOf":"extension",    
+        "beType": "XP_SinkSystem_Ext",
+        "defaultMask":"dsprcs:Mask.SinkSystemEnterpriseAttributes.Default",
+        "isPublic": false
+    },
+    
+	"dsprcs:SourceSystemEnterpriseAttributes": {
+     	"kindOf":"extension",    
+        "beType": "XP_SourceSystem_Ext",
+        "defaultMask":"dsprcs:Mask.SourceSystemEnterpriseAttributes.Default",
+        "isPublic": false
+    }    
+}

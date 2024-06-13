@@ -1,0 +1,1 @@
+define("DS/PIMwebI3Dapp/PIMwebI3Dapp_ru",{});define("DS/PIMwebI3Dapp/assets/nls/PIMwebI3Dapp",{isr:"Открыть моделирование интерференций",itf:"Открыть показатели интерференций",customApp:"Настройте свое приложение",prefs:"Параметры",backToIssue:"Вернуться к неполадке"});

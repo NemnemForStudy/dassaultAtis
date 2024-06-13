@@ -1,0 +1,1 @@
+define("DS/ENOXEmptyContent/ENOXEmptyContent_zh-TW",{});define("DS/ENOXEmptyContent/assets/nls/ENOXEmptyContent",{defaultBottomSentence:"遵循上述準則",defaultSearchText:"在內容中搜尋",defaultDropText:"將內容置放到此處",or:"or",emptyPage:"頁面為空白。"});

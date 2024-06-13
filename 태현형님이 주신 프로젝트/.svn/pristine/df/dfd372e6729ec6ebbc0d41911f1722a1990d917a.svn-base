@@ -1,0 +1,1 @@
+define("DS/CAT3DAnnotationBaseUI/CAT3DAnnotationBaseUI_ko",{});define("DS/CAT3DAnnotationBaseUI/assets/nls/CAT3DAnnotationBaseUI",{ValueLbl:"공차",SelectAllLbl:"전체 선택",ApplyLbl:"적용",MinLbl:"최소치",MaxLbl:"최대치",FailureModes:{"0":"중요도 가장 낮음","1":"낮음","2":"중간","3":"높음","4":"매우 높음"}});

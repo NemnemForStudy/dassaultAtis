@@ -1,0 +1,1 @@
+Proj4js.defs["EPSG:5498"] = "+proj=longlat +datum=NAD83 +geoidgrids=g2012a_conus.gtx,g2012a_alaska.gtx,g2012a_guam.gtx,g2012a_hawaii.gtx,g2012a_puertorico.gtx,g2012a_samoa.gtx +vunits=m +no_defs";

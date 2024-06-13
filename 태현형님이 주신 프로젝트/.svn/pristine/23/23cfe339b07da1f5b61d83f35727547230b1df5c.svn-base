@@ -1,0 +1,1 @@
+define("DS/3DPlayAnnotationUtils/3DPlayAnnotationUtils_zh-TW",{});define("DS/3DPlayAnnotationUtils/assets/nls/3DPlayAnnotation",{PlaceHolder:"新文字",ClickToLaunchText:"在視圖中按一下以產生新的文字方塊",cancelText:"取消",validateText:"驗證",nextText:"下一個"});

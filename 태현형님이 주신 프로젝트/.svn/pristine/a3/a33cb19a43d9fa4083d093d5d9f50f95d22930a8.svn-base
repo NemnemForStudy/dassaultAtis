@@ -1,0 +1,24 @@
+################################################################################################
+# Create By jhlee : 2023. 07. 20
+# Admin Type : menu
+# Name : type_decVPDocument
+################################################################################################
+#delete menu type_decVPDocument;
+
+add menu type_decVPDocument
+    description 'decVPDocument Tree Menu'
+    label 'emxProgramCentral.Command.decVPDocumentProperties.Details'
+    href '${COMMON_DIR}/emxForm.jsp?form=decVPDocumentPropertiesForm&toolbar=decVPDocumentDetailsToolbar&HelpMarker=emxhelpdocumentproperties&Export=False&displayCDMFileSummary=true'
+    command decVPDocumentChangeHistoryList
+    setting 'Default Category Function' 'getDefaultCategoryName'
+    setting 'Default Category Program''emxProjectSpace'
+    setting 'Document Command' 'PMCTaskReferenceDocument'
+    setting 'Image' '${COMMON_DIR}/iconSmallProject.gif'
+    setting 'Registered Suite' 'ProgramCentral'
+    property 'application' value ProgramManagementBase
+    property 'installed date' value 06-01-2023
+    property 'installer' value ENOVIAEngineering
+    property 'original name' value type_ProjectSpace
+    property 'version' value R424.HF1;
+    
+mod menu Tree add  menu type_decVPDocument;

@@ -1,0 +1,1 @@
+define("DS/VCXWebVolatileGhosting/VCXWebVolatileGhosting_fr",{});define("DS/VCXWebVolatileGhosting/assets/nls/VCXWebVolatileGhosting",{VCXVolatileGhostingCmd:"Image fantôme"});

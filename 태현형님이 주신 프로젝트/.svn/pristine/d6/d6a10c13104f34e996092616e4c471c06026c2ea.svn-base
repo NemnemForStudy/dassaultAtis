@@ -1,0 +1,368 @@
+################################################################################################
+# Create By thok : 2023. 05. 03
+# Admin Type : table
+# Name : decProjectList
+################################################################################################
+#del table decProjectList system;
+add table 'decProjectList' system
+	column
+		name 'Name'
+		label 'emxProgramCentral.Label.decName'
+		alt ''
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Column Type' 'programHTMLOutput' 
+		setting 'function' 'getProjectCodeMember' 
+		setting 'program' 'emxProjectSpace'
+		setting 'filterSelectExpr' 'name'
+	column
+		name 'ProjectType'
+		label 'emxProgramCentral.Label.decProjectType'
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Column Type' 'program' 
+		setting 'function' 'getProjectTypeStatus' 
+		setting 'program' 'emxProjectSpace' 
+		setting 'columnName' 'attribute[decProjectType]'
+		setting 'project' 'type'
+	column 
+		name 'SiteName' 
+		label 'emxProgramCentral.Label.decSiteName' 
+		setting 'Registered Suite' 'ProgramCentral' 
+		setting 'Column Type' 'program' 
+		setting 'function' 'getObjectColumn' 
+		setting 'program' 'emxProjectSpace' 
+		setting 'columnName' 'attribute[decSiteName]'
+	column
+		name 'ProjectStatus' 
+		label 'emxProgramCentral.Common.ProjectStatus' 
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Column Type' 'program' 
+		setting 'function' 'getProjectTypeStatus' 
+		setting 'program' 'emxProjectSpace' 
+		setting 'columnName' 'attribute[decProjectStatus]'
+		setting 'project' 'status'
+	column 
+		name 'ProjectAdministrator' 
+		label 'emxProgramCentral.PersonDialog.ProjectAdministrator' 
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Column Type' 'program' 
+		setting 'function' 'getProjectTypeStatus' 
+		setting 'program' 'emxProjectSpace' 
+		setting 'columnName' 'id'
+		setting 'project' 'PIM'
+	column
+		name 'ProjectName'
+		label 'emxProgramCentral.Label.decProjectName'
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Column Type' 'program' 
+		setting 'function' 'getObjectColumn' 
+		setting 'program' 'emxProjectSpace' 
+		setting 'columnName' 'attribute[decProjectName]'
+	column
+		name 'SiteName_EN'
+		label 'emxProgramCentral.Label.decSiteName_EN'
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Column Type' 'program' 
+		setting 'function' 'getObjectColumn' 
+		setting 'program' 'emxProjectSpace' 
+		setting 'columnName' 'attribute[decSiteName_EN]'
+	column
+		name 'BizTypeCode'
+		label 'emxProgramCentral.Label.decBizTypeCode'
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Column Type' 'program' 
+		setting 'function' 'getObjectColumn' 
+		setting 'program' 'emxProjectSpace' 
+		setting 'columnName' 'attribute[decBizTypeCode]'
+	column
+		name 'SiteType'
+		label 'emxProgramCentral.Label.decSiteType'
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Column Type' 'program' 
+		setting 'function' 'getObjectColumn' 
+		setting 'program' 'emxProjectSpace' 
+		setting 'columnName' 'attribute[decSiteType]'
+	column
+		name 'DisciplineType'
+		label 'emxProgramCentral.Label.decDisciplineType'
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Column Type' 'program' 
+		setting 'function' 'getObjectColumn' 
+		setting 'program' 'emxProjectSpace' 
+		setting 'columnName' 'attribute[decDisciplineType]'
+	column
+		name 'LocationStandard'
+		label 'emxProgramCentral.Label.decLocationStandard'
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Column Type' 'program' 
+		setting 'function' 'getObjectColumn' 
+		setting 'program' 'emxProjectSpace' 
+		setting 'columnName' 'attribute[decLocationStandard]'
+	column
+		name 'Country'
+		label 'emxProgramCentral.Label.Country'
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Column Type' 'program'
+		setting 'program' 'emxProjectSpace'
+		setting 'function' 'getCountryList4Column'
+	column
+		name 'PM_NM'
+		label 'emxProgramCentral.Label.decPM_NM'
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Column Type' 'program' 
+		setting 'function' 'getObjectColumn' 
+		setting 'program' 'emxProjectSpace' 
+		setting 'columnName' 'attribute[decPM_NM]'
+	column
+		name 'SV_NM'
+		label 'emxProgramCentral.Label.decSV_NM'
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Column Type' 'program' 
+		setting 'function' 'getObjectColumn' 
+		setting 'program' 'emxProjectSpace' 
+		setting 'columnName' 'attribute[decSV_NM]'
+	column
+		name 'PFM_NM'
+		label 'emxProgramCentral.Label.decPFM_NM'
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Column Type' 'program' 
+		setting 'function' 'getObjectColumn' 
+		setting 'program' 'emxProjectSpace' 
+		setting 'columnName' 'attribute[decPFM_NM]'
+	column
+		name 'PCM_NM'
+		label 'emxProgramCentral.Label.decPCM_NM'
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Column Type' 'program' 
+		setting 'function' 'getObjectColumn' 
+		setting 'program' 'emxProjectSpace' 
+		setting 'columnName' 'attribute[decPCM_NM]'
+	column
+		name 'ProjectClient'
+		label 'emxProgramCentral.Label.decProjectClient'
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Column Type' 'program' 
+		setting 'function' 'getObjectColumn' 
+		setting 'program' 'emxProjectSpace' 
+		setting 'columnName' 'attribute[decProjectClient]'
+	column
+		name 'ProjectSPV'
+		label 'emxProgramCentral.Label.decProjectSPV'
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Column Type' 'program' 
+		setting 'function' 'getObjectColumn' 
+		setting 'program' 'emxProjectSpace' 
+		setting 'columnName' 'attribute[decProjectSPV]'
+	column
+		name 'ProjectDES'
+		label 'emxProgramCentral.Label.decProjectDES'
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Column Type' 'program' 
+		setting 'function' 'getObjectColumn' 
+		setting 'program' 'emxProjectSpace' 
+		setting 'columnName' 'attribute[decProjectDES]'
+	column
+		name 'EPCType'
+		label 'emxProgramCentral.Label.decEPCType'
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Column Type' 'program' 
+		setting 'function' 'getObjectColumn' 
+		setting 'program' 'emxProjectSpace' 
+		setting 'columnName' 'attribute[decEPCType]'
+	column
+		name 'Address'
+		label 'emxProgramCentral.Label.decAddress'
+		setting 'Registered Suite' 'ProgramCentral'	
+		setting 'Column Type' 'program' 
+		setting 'function' 'getObjectColumn' 
+		setting 'program' 'emxProjectSpace' 
+		setting 'columnName' 'attribute[decAddress]'
+	column
+		name 'ContractStart'
+		label 'emxProgramCentral.Label.decContractStart'
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'format' 'date'
+		setting 'Group Header' 'emxProgramCentral.Label.Group.decProjectPeriod'
+		setting 'Column Type' 'program' 
+		setting 'function' 'getObjectColumn' 
+		setting 'program' 'emxProjectSpace'
+		setting 'columnName' 'attribute[decContractStart]'
+	column
+		name 'ContractFinish'
+		label 'emxProgramCentral.Label.decContractFinish'
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'format' 'date'
+		setting 'Group Header' 'emxProgramCentral.Label.Group.decProjectPeriod'
+		setting 'Column Type' 'program' 
+		setting 'function' 'getObjectColumn' 
+		setting 'program' 'emxProjectSpace'
+		setting 'columnName' 'attribute[decContractFinish]'
+	column
+		name 'TermOfWork'
+		label 'emxProgramCentral.Label.decTermOfWork'
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Group Header' 'emxProgramCentral.Label.Group.decProjectPeriod'
+		setting 'Column Type' 'program' 
+		setting 'function' 'getObjectColumn' 
+		setting 'program' 'emxProjectSpace'
+		setting 'columnName' 'attribute[decTermOfWork]'
+	column
+		name 'ActualStartDate'
+		label 'emxProgramCentral.Label.decActualStartDate'
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'format' 'date'
+		setting 'Group Header' 'emxProgramCentral.Label.Group.decProjectPeriod'
+		setting 'Column Type' 'program' 
+		setting 'function' 'getObjectColumn' 
+		setting 'program' 'emxProjectSpace'
+		setting 'columnName' 'attribute[decActualStartDate]'
+	column
+		name 'ExpectedDate'
+		label 'emxProgramCentral.Label.decExpectedDate'
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'format' 'date'
+		setting 'Group Header' 'emxProgramCentral.Label.Group.decProjectPeriod'
+		setting 'Column Type' 'program' 
+		setting 'function' 'getObjectColumn' 
+		setting 'program' 'emxProjectSpace'
+		setting 'columnName' 'attribute[decExpectedDate]'
+	column
+		name 'TotalCost'
+		label 'emxProgramCentral.Label.decCurrencyWon'
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Group Header' 'emxProgramCentral.Label.decTotalCost'
+		setting 'Column Type' 'program' 
+		setting 'function' 'getObjectColumn' 
+		setting 'program' 'emxProjectSpace'
+		setting 'columnName' 'attribute[decTotalCost]'
+	column
+		name 'TotalCost_USD'
+		label 'emxProgramCentral.Label.decCurrencyDollar'
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Group Header' 'emxProgramCentral.Label.decTotalCost'
+		setting 'Column Type' 'program' 
+		setting 'function' 'getObjectColumn' 
+		setting 'program' 'emxProjectSpace'
+		setting 'columnName' 'attribute[decTotalCost_USD]'
+	column
+		name 'OurCompanyCost'
+		label 'emxProgramCentral.Label.decCurrencyWon'
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Group Header' 'emxProgramCentral.Label.decOurCompanyCost'
+		setting 'Column Type' 'program' 
+		setting 'function' 'getObjectColumn' 
+		setting 'program' 'emxProjectSpace'
+		setting 'columnName' 'attribute[decOurCompanyCost]'
+	column
+		name 'OurCompanyCost_USD'
+		label 'emxProgramCentral.Label.decCurrencyDollar'
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Group Header' 'emxProgramCentral.Label.decOurCompanyCost'
+		setting 'Column Type' 'program' 
+		setting 'function' 'getObjectColumn' 
+		setting 'program' 'emxProjectSpace'
+		setting 'columnName' 'attribute[decOurCompanyCost_USD]'
+	column
+		name 'SubConName'
+		label 'emxProgramCentral.Label.decSubConName'
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Group Header' 'emxProgramCentral.Label.Group.decJV'
+		setting 'Column Type' 'program' 
+		setting 'function' 'getObjectColumn' 
+		setting 'program' 'emxProjectSpace'
+		setting 'columnName' 'attribute[decSubConName]'
+	column
+		name 'ContractRate'
+		label 'emxProgramCentral.Label.decContractRate'
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Group Header' 'emxProgramCentral.Label.Group.decJV'
+		setting 'Column Type' 'program' 
+		setting 'function' 'getObjectColumn' 
+		setting 'program' 'emxProjectSpace'
+		setting 'columnName' 'attribute[decContractRate]'
+	column
+		name 'RepCompYN'
+		label 'emxProgramCentral.Label.decRepCompYN'
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Group Header' 'emxProgramCentral.Label.Group.decJV'
+		setting 'Column Type' 'program' 
+		setting 'function' 'getObjectColumn' 
+		setting 'program' 'emxProjectSpace'
+		setting 'columnName' 'attribute[decRepCompYN]'
+	column
+		name 'Category1'
+		label 'emxProgramCentral.Label.decCategory1'
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Column Type' 'program' 
+		setting 'function' 'getObjectColumn' 
+		setting 'program' 'emxProjectSpace'
+		setting 'columnName' 'attribute[decCategory1]'
+	column
+		name 'Category2'
+		label 'emxProgramCentral.Label.decCategory2'
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Column Type' 'program' 
+		setting 'function' 'getObjectColumn' 
+		setting 'program' 'emxProjectSpace'
+		setting 'columnName' 'attribute[decCategory2]'
+	column
+		name 'Category3'
+		label 'emxProgramCentral.Label.decCategory3'
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Column Type' 'program' 
+		setting 'function' 'getObjectColumn' 
+		setting 'program' 'emxProjectSpace'
+		setting 'columnName' 'attribute[decCategory3]'
+	column
+		name 'Licensor'
+		label 'emxProgramCentral.Label.decLicensor'
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Column Type' 'program' 
+		setting 'function' 'getObjectColumn' 
+		setting 'program' 'emxProjectSpace'
+		setting 'columnName' 'attribute[decLicensor]'
+;
+add property 'table_decProjectList' on program 'eServiceSchemaVariableMapping.tcl' to table 'decProjectList' system
+;
+
+# Modified by thok 2023.07.27
+mod table decProjectList system column mod 1 add setting Width 150;
+mod table decProjectList system column mod 2 add setting Width 150;
+mod table decProjectList system column mod 3 add setting Width 300;
+mod table decProjectList system column mod 4 add setting Width 150;
+mod table decProjectList system column mod 5 add setting Width 150;
+mod table decProjectList system column mod 6 add setting Width 100;
+mod table decProjectList system column mod 7 add setting Width 100;
+mod table decProjectList system column mod 8 add setting Width 100;
+mod table decProjectList system column mod 9 add setting Width 100;
+mod table decProjectList system column mod 10 add setting Width 100;
+mod table decProjectList system column mod 11 add setting Width 100;
+mod table decProjectList system column mod 12 add setting Width 100;
+mod table decProjectList system column mod 13 add setting Width 100;
+mod table decProjectList system column mod 14 add setting Width 100;
+mod table decProjectList system column mod 15 add setting Width 100;
+mod table decProjectList system column mod 11 add setting Width 100;
+mod table decProjectList system column mod 12 add setting Width 100;
+mod table decProjectList system column mod 13 add setting Width 100;
+mod table decProjectList system column mod 14 add setting Width 100;
+mod table decProjectList system column mod 15 add setting Width 100;
+mod table decProjectList system column mod 16 add setting Width 100;
+mod table decProjectList system column mod 17 add setting Width 100;
+mod table decProjectList system column mod 18 add setting Width 100;
+mod table decProjectList system column mod 19 add setting Width 100;
+mod table decProjectList system column mod 20 add setting Width 100;
+mod table decProjectList system column mod 21 add setting Width 100;
+mod table decProjectList system column mod 22 add setting Width 100;
+mod table decProjectList system column mod 23 add setting Width 100;
+mod table decProjectList system column mod 24 add setting Width 100;
+mod table decProjectList system column mod 25 add setting Width 100;
+mod table decProjectList system column mod 26 add setting Width 100;
+mod table decProjectList system column mod 27 add setting Width 100;
+mod table decProjectList system column mod 28 add setting Width 100;
+mod table decProjectList system column mod 29 add setting Width 100;
+mod table decProjectList system column mod 30 add setting Width 100;
+mod table decProjectList system column mod 31 add setting Width 100;
+mod table decProjectList system column mod 32 add setting Width 100;
+mod table decProjectList system column mod 33 add setting Width 100;
+mod table decProjectList system column mod 34 add setting Width 100;
+mod table decProjectList system column mod 35 add setting Width 100;
+mod table decProjectList system column mod 36 add setting Width 100;

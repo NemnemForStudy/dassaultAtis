@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+
+<!-- ENOVIA DICTIONARY FOR DELMIA Production System Application -->
+<!-- COPYRIGHT DASSAULT SYSTEMES 2019, All rights reserved -->
+<Package xmlns="PLMDictionaryUnified"
+         ModelerType="Top"
+         Name="DELLmiProductionHeaderProcessAbstract"
+         BelongsToModeler="DELLmiProductionSystem"
+         Uuid="A6878204-2C8D-4B43-BC4E-3D82AC3A84C2"
+         UseNames="DELLmiProductionSystemAbstract"
+         UseProcedures="ENOPsm_Procedures"
+         CustomerExposition="Programmer">
+
+  <CAAComment>
+    <ShortRole>PLM DELMIA Abstract Header Process </ShortRole>
+    <Role>This package describes the PLM DELMIA Abstract Header Process model on top of DELLmiProductionSystemAbstract</Role>
+  </CAAComment>
+
+  <Class Name="DELLmiPPRHeaderProcessReferenceAbstract"
+         Uuid="704EE52E-6DE4-4EDC-AB91-648DD6AC49B9"
+         Abstract="Yes"
+         SuperName="DELLmiAbstractProductionEntity"
+         CustomerExposition="Programmer"
+         Specializable="No"
+         CustomerExtensible="No"
+         >
+
+    <CAAComment>
+      <ShortRole>PLM DELMIA Abstract Header Process Reference</ShortRole>
+      <Role>PLM DELMIA Abstract Header Process Reference</Role>
+    </CAAComment>
+
+	<Property Name="Configurable" Value="Yes"/>
+	<Property Name="ChangeManagementSupport" Value="Yes"/>
+	<Property Name="NewMajorRevisionAvailability" Value="Yes"/>
+	<Property Name="EvolutionAvailability" Value="Yes"/>
+	<Property Name="ChangeMaturityAvailability" Value="Yes"/>
+	<Property Name="DeleteAvailability" Value="Yes"/>
+	<Property Name="TransferOwnerShipAvailability" Value="Yes"/>
+	<Property Name="EditPropertiesAvailability" Value="Yes"/>
+	<Property Name="SaveAsNewAvailability" Value="Yes"/>
+	<Property Name="LockUnlockAvailability" Value="Yes"/>
+	<Property Name="DuplicateAvailability" Value="Yes"/>
+	<Property Name="NewMinorRevisionAvailability" Value="No"/>
+	<Property Name="ManageAccessAvailability" Value="No"/>
+	<Property Name="ShareBetweenProjectsAvailability" Value="No"/>
+	<Property Name="IterationAvailability" Value="No"/>
+	
+	<Simple Name="V_CycleTime"
+            Uuid="C46EE37A-A6E4-4E00-B8E0-27B7AF2729EA"
+            Type="Double"
+            Magnitude="TIME"
+            MultiValuated="No"
+            Protection="Free"
+            Faceted="Yes"
+            CAAExposition="L0">
+      <Property Name="SIXW" Value="ds6w:estimatedDuration"/>
+    </Simple>
+
+    <Method ImplementationType="Self">
+      <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+      <ProcedureForUsage>
+        <Usage href="ExportScope.meth#Design"/>
+        <UsedProcedure href="ENOPsm_Procedures.proc#ProductionSystem_ExportAsDesign"/>
+      </ProcedureForUsage>
+      <ProcedureForUsage>
+        <Usage href="ExportScope.meth#Channel"/>
+        <UsedProcedure href="ENOPsm_Procedures.proc#ProductionSystem_ExportAsDesign"/>
+      </ProcedureForUsage>
+      <ProcedureForUsage>
+        <Usage href="ExportScope.meth#TransferSiteOwnership"/>
+        <UsedProcedure href="ENOPsm_Procedures.proc#Process_TSO_References"/>
+      </ProcedureForUsage>
+    </Method>
+
+    <Method ImplementationType="Self">
+      <RealizeMethodType href="ExchangeScope.meth#ExchangeScope"/>
+      <ProcedureForUsage>
+        <Usage href="ExchangeScope.meth#XPDM2"/>
+        <UsedProcedure href="ENOPsm_Procedures.proc#ProductionSystem_ExchangeXPDM_XPDM2"/>
+      </ProcedureForUsage>
+      <ProcedureForUsage>
+        <Usage href="ExchangeScope.meth#Execution"/>
+        <UsedProcedure href="ENOPsm_Procedures.proc#ProductionSystem_ExchangeXPDM_Execution"/>
+      </ProcedureForUsage>
+     </Method>	
+
+  </Class>
+
+</Package>
+
+

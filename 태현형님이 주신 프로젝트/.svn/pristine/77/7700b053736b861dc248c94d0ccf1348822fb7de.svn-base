@@ -1,0 +1,44 @@
+@import "./mixins.uikit";
+
+@mixin w-scrollbar {
+  $w-scroll-bg-color: rgba(255, 255, 255, 0.5);
+  $w-scroll-raduis: 15px;
+  $w-scroll-size-x: 8px;
+  $w-scroll-size-y: 6px;
+
+  // Specific for FireFox:
+  scrollbar-color: $grey-3 $w-scroll-bg-color;
+  scrollbar-width: thin;
+
+  // Specific for webkit:
+  &::-webkit-scrollbar-track {
+    border-radius: $w-scroll-raduis;
+    background-color: $w-scroll-bg-color;
+  }
+  &::-webkit-scrollbar {
+    border-radius: $w-scroll-raduis;
+    width: $w-scroll-size-y;
+    height: $w-scroll-size-x;
+    background-color: $w-scroll-bg-color;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: $w-scroll-raduis;
+    background-color: $grey-3;
+  }
+}
+
+@mixin w-icon {
+  font-size: 22px;
+  width: $w-btn-size;
+  height: $w-btn-size;
+  color: $grey-5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin w-disabled-link {
+  color: $grey-5;
+  cursor: not-allowed;
+  text-decoration: none;
+}

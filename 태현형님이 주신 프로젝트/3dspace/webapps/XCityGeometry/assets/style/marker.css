@@ -1,0 +1,386 @@
+.xcity-markers-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    word-wrap: break-word;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.xcity-marker-container {
+    position: absolute;
+    width: 200px;
+    text-align: center;
+    pointer-events: none;
+    transform: translate(-50%, -100%);
+}
+
+.xcity-marker-pin-back, .xcity-marker-pin-front, .xcity-marker-arrow, .xcity-marker-name, .xcity-marker-pin-and-name-bg {
+    pointer-events: auto;
+}
+
+.xcity-marker-container-custom {
+    position: absolute;
+    pointer-events: auto;
+}
+
+.xcity-marker-not-visible {
+    display: none;
+}
+
+.xcity-marker-fadeOut {
+    opacity: 0;
+    transition: opacity 500ms;
+}
+
+.xcity-marker-fadeOut .xcity-marker-name {
+    display:none
+}
+
+/* .xcity-marker-fadeOut .xcity-marker-pin-and-name-bg {
+    transform-origin: bottom;
+    transform: scale(0.75);
+}
+
+.xcity-marker-fadeOut .xcity-marker-pin {
+    transform-origin: bottom;
+    transform: scale(0.75);
+    transition: transform 500ms ease-in-out;
+} */
+
+.xcity-marker-fadeIn {
+    opacity: 1;
+    transition: opacity 500ms;
+}
+
+.xcity-marker-name {
+    display: inline-block;
+    padding: 5px;
+    box-shadow: 0 1px 14px rgba(0,0,0,0.4);
+    /*-webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);*/
+    /*-webkit-transition-duration: 0.2s;
+    transition-duration: 0.2s;*/
+    /*-webkit-transition-property: transform;
+    transition-property: transform;*/
+}
+
+.xcity-marker-name:empty {
+    display: none;
+}
+
+.xcity-marker-name:hover {
+    /*-webkit-transform: scale(1.05);
+    transform: translateZ(0) scale(1.05);*/
+    cursor: pointer;
+}
+
+.xcity-marker-arrow {
+    position: relative;
+}
+
+.xcity-marker-arrow:hover {
+    cursor: pointer;
+}
+
+.xcity-marker-pin {
+    display: none;
+}
+
+.xcity-marker-container:not(.xcity-marker-fadeOut) .xcity-marker-pin-back:hover,
+.xcity-marker-container:not(.xcity-marker-fadeOut) .xcity-marker-pin-front:hover {
+    cursor: pointer;
+}
+
+.xcity-marker-description {
+    display: none;
+    position: absolute;
+    left: 200px;
+    width: 300px;
+    top: 0px;
+    width: max-content;
+    max-width: 300px;
+    border-radius: 5px 5px 5px 5px;
+    cursor: pointer;
+    color: #E2E4E3;
+    text-align: justify;
+    padding: 10px;
+    box-shadow: 0 1px 14px rgba(0,0,0,0.4);
+}
+
+/*********************** DESCRIPTION *****************/
+
+.xcity-marker-description-mode-always .xcity-marker-description {
+    display: block;
+}
+
+.xcity-marker-description-mode-click.xcity-marker-selected .xcity-marker-description {
+    display: block;
+}
+
+.xcity-marker-description-mode-hover.xcity-marker-container-hover .xcity-marker-description {
+    display: block;
+}
+
+.xcity-marker-description-disable .xcity-marker-description {
+    display: none !important;
+}
+
+/*.xcity-marker-container.xcity-marker-description-mode-click.xcity-marker-selected, .xcity-marker-container.xcity-marker-description-mode-hover.xcity-marker-selected {
+    z-index: 999999999 !important;
+}*/
+
+/*****************************************************/
+
+/******************** ICON STYLE ********************/
+
+.xcity-marker-icon-style .xcity-marker-pin {
+    position: relative;
+    display: block;
+    margin-top: 5px;
+}
+
+.xcity-marker-icon-style .xcity-marker-pin-back {
+    margin-left: auto;
+    margin-right: auto;
+    width: 26px;
+    height: 26px;
+    transform: rotate(-45deg);
+    border-radius: 50% 50% 50% 0;
+}
+
+.xcity-marker-icon-style .xcity-marker-pin-front {
+    /*width: 18px;
+    height: 18px;*/
+    border-radius: 50% 50% 50% 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    position: absolute;
+    left: 50%;
+    /*z-index: 1;*/
+    /*left: 91px;*/
+    /*top: 4px;*/
+}
+.xcity-marker-font-icon, .xcity-marker-icon-image {
+    position: relative;
+    left: -50%;
+}
+
+.xcity-marker-icon-style .xcity-marker-arrow {
+    display: none;
+}
+
+/****************************************************/
+
+/******************** POINT STYLE *******************/
+
+.xcity-marker-point-style .xcity-marker-pin, .xcity-marker-annotation-icon-style .xcity-marker-pin {
+    position: relative;
+    display: block;
+    margin-top: 5px;
+}
+
+.xcity-marker-point-style .xcity-marker-pin-back, .xcity-marker-annotation-icon-style .xcity-marker-pin-back {
+    margin-left: auto;
+    margin-right: auto;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+}
+
+.xcity-marker-point-style .xcity-marker-pin-front, .xcity-marker-annotation-icon-style .xcity-marker-pin-front {
+    position: absolute;
+    /*z-index: 1;*/
+    /*left: 93px;*/
+    left: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #E2E4E3;
+    display: block;
+}
+
+.xcity-marker-point-style .xcity-marker-arrow {
+    display: none;
+}
+
+/****************************************************/
+
+/******************** PLACENAME STYLE *******************/
+
+.xcity-marker-placename-style .xcity-marker-pin {
+    display: none;
+}
+
+.xcity-marker-placename-style .xcity-marker-arrow {
+    display: none;
+}
+
+/****************************************************/
+
+/*************************** ARROW STYLE *********************/
+
+.xcity-marker-arrow-style .xcity-marker-arrow {
+    border-color: rgba(136, 183, 213, 0);
+    border-width: 10px;
+    border-style: solid;
+    border-bottom-width: 0px;
+    width: 0px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/*************************************************************/
+
+/*************************** ANNOTATION STYLE *********************/
+
+.xcity-marker-annotation-style .xcity-marker-arrow, .xcity-marker-annotation-icon-style .xcity-marker-arrow, .xcity-marker-annotation-icon-advanced-style .xcity-marker-arrow {
+    width: 1px;
+    margin-left: auto;
+    margin-right: auto;
+    height: 60px;
+    background-color: #E2E4E3;
+}
+
+/*************************************************************/
+
+/*************************** ANNOTATION ICON ADVANCED STYLE *********************/
+
+.xcity-marker-annotation-icon-advanced-style .xcity-marker-pin-and-name-container {
+    position: relative;
+    left: 43%;
+    height: 30px;
+    text-align: left;
+}
+
+.xcity-marker-annotation-icon-advanced-style .xcity-marker-pin-and-name-bg {
+    position: absolute;
+    height: 30px;
+    width: 30px;
+    background: white;
+    border: 1px solid #808080;
+    border-radius: 15px;
+    -webkit-transition: width .3s ease-in-out, height .3s ease-in-out;
+    -moz-transition: width .3s ease-in-out, height .3s ease-in-out;
+    -o-transition: width .3s ease-in-out, height .3s ease-in-out;
+    transition: width .3s ease-in-out, height .3s ease-in-out, transform 500ms ease-in-out;
+}
+
+.xcity-marker-annotation-with-badge .xcity-marker-pin-and-name-bg::before {
+    content: "\e003";
+    font-family: 'DSFONTICON';
+    text-align: center;
+    position: relative;
+    top: -9px;
+    left: -4px;
+    color:#fff;
+    background: #42a2da;
+    font-size: 10px;
+    height: 16px;
+    width: 16px;
+    border-radius:50%;
+    padding:0 1px 1px;
+    box-sizing: border-box;
+    border: 1px solid #368ec4;
+    z-index: 1;
+}
+
+.xcity-marker-annotation-icon-advanced-style .xcity-marker-pin {
+    position: relative;
+    top: 5px;
+    left: 2px;
+    display: inline-block;
+}
+
+.xcity-marker-annotation-icon-advanced-style .xcity-marker-pin-front {
+    /* transform: translateY(-50%); */
+    color: #E2E4E3;
+    display: inline-block;
+}
+
+.xcity-marker-annotation-icon-advanced-style .xcity-marker-icon-image {
+    position: relative;
+    left: 0;
+    top: -3px;
+    width: 26px;
+    border-radius: 15px;
+}
+
+.xcity-marker-annotation-icon-advanced-style .xcity-marker-font-icon {
+    position: relative;
+    left: auto;
+    width: 26px;
+    vertical-align: middle;
+    text-align: center;
+    border-radius: 15px;
+}
+
+.xcity-marker-annotation-icon-advanced-style .xcity-marker-name {
+    position: absolute;
+    left: 30px;
+    box-shadow: none;
+    text-shadow: 1px 1px 2px white;
+    opacity: 1;
+    -webkit-transition: color .3s ease-in-out, opacity .3s ease-in-out .5s;
+    -moz-transition: color .3s ease-in-out, opacity .3s ease-in-out .5s;
+    -o-transition: color .3s ease-in-out, opacity .3s ease-in-out .5s;
+    transition: color .3s ease-in-out, opacity .3s ease-in-out .5s;
+}
+
+.xcity-marker-annotation-icon-advanced-style .xcity-marker-description {
+    position: absolute;
+    top: -160px;
+    left: 0;
+    max-width: 350px;
+    max-height: 115px;
+    padding: 7px 10px 10px;
+    text-align: left;
+    border-radius: 10px;
+    border: 1px solid #808080;
+    box-shadow: none;
+    cursor: default;
+}
+
+.xcity-marker-annotation-icon-advanced-style .xcity-marker-description .xcity-marker-description-title {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.xcity-marker-annotation-icon-advanced-style .xcity-marker-description-subtitle {
+    color: #77797c;
+}
+
+.xcity-marker-annotation-icon-advanced-style .xcity-marker-description-subtitle .xcity-marker-description-subtitle-author-icon {
+    border-radius:50%;
+}
+
+
+/*************************************************************/
+
+/*** TEXT STYLE MANAGEMENT ***/
+
+.xcity-marker-button-text .xcity-marker-name {
+    border-radius: 5px 5px 5px 5px;
+    color: #E2E4E3;
+}
+
+.xcity-marker-lite-text .xcity-marker-name {
+    background-color: transparent !important;
+    color: white;
+    border: medium none currentColor;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    box-shadow: none;
+}
+
+.xcity-marker-container-hover.xcity-marker-lite-text .xcity-marker-name, .xcity-marker-lite-text.xcity-marker-selected .xcity-marker-name {
+    color: #78BEFA !important;
+}
+
+/*****************************/
+
+
+/****** ANIMATION ******/
+
+
+/***********************/

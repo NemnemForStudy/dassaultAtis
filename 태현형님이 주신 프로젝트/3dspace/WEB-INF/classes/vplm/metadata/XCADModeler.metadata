@@ -1,0 +1,198 @@
+<?xml version="1.0"?>
+<!-- edited with XMLSpy v2007 rel. 3 sp1 (http://www.altova.com) by bouhours (DASSAULT SYSTEMES) -->
+<!-- COPYRIGHT DASSAULT SYSTEMES 2017, All rights reserved -->
+<Package xmlns="PLMDictionaryUnified" ModelerType="Top" Name="XCADModeler" Uuid="40729df7-7a01-4d44-9e38-f0b9b2912fd7" UseNames="PLMCORE" CustomerExposition="Programmer" Architecture="All" BelongsToModeler="XCADModeler" UseProcedures="XCAD_Procedures">
+	<CAAComment>
+		<ShortRole>XCAD Non PS Modeler Package</ShortRole>
+		<Role>This package includes all the entities involved in the XCAD Non PS modeler.</Role>
+	</CAAComment>
+	<Comment>last update 2017-06-22</Comment>
+	<Class Name="XCADNonPSBaseRepReference" Uuid="29aaf006-5d54-4b07-84ca-83b318c064f4" Abstract="No" CustomerExposition="Programmer" SuperName="PLMCoreRepReference" Specializable="No" CustomerExtensible="No" Searchable="Yes" AggregatableTypes="None" InstantiationOwnerTypes="None" ObjectNature="Independent" Abbreviation="xcadrep" IconName="I_XCADNonPSBaseRepReference" PublicResourceURI="/resources/v1/modeler/dsxcad/dsxcad:Representation/{pid}">
+		<Property Name="ChangeManagementSupport" Value="Yes"/>
+		<Property Name="ChangeManagementReferential" Value="Yes"/>
+		<Property Name="ChangeManagementContext" Value="Yes"/>
+		<Property Name="KweNew_InstanciationMethod" Value="CATKBEXCADNonPSBaseRepReferenceDelegateInstanciation"/>
+		<!-- Used to defined XCAD Object Type -->
+		<Simple Name="V_CADObjectType" Uuid="dbff7f75-7c43-4e51-97fb-8cb18d6da0e0" Type="String" Protection="External" Faceted="Yes" MultiValuated="No" ResetOnCloning="No" ResetOnNewVersion="No" UIAccess="ReadOnly">
+			<Property Name="SIXW" Value="ds6w:kind"/>
+		</Simple>
+		<!-- PROCEDURES Declaration  -->
+		<Method ImplementationType="Self">
+			<RealizeMethodType href="ExportScope.meth#ExportScope"/>
+			<ProcedureForUsage>
+				<Usage href="ExportScope.meth#Design"/>
+				<UsedProcedure href="XCAD_Procedures.proc#XCAD_ExportNonPSRep"/>
+			</ProcedureForUsage>
+			<ProcedureForUsage>
+				<Usage href="ExportScope.meth#TransferSiteOwnership"/>
+				<UsedProcedure href="XCAD_Procedures.proc#XCAD_ExportNonPSRep"/>
+			</ProcedureForUsage>
+		</Method>
+		<!-- XPDM exchange -->
+		<Method ImplementationType="Self">
+			<RealizeMethodType href="ExchangeScope.meth#ExchangeScope"/>
+			<ProcedureForUsage>
+				<Usage href="ExchangeScope.meth#XPDM"/>
+				<UsedProcedure href="XCAD_Procedures.proc#XCAD_ExportNonPSRep"/>
+			</ProcedureForUsage>
+			<ProcedureForUsage>
+				<Usage href="ExchangeScope.meth#XPDM2"/>
+				<UsedProcedure href="XCAD_Procedures.proc#XCAD_ExportNonPSRep"/>
+			</ProcedureForUsage>
+		</Method>
+	</Class>
+	<Class Name="XCADePlanProject" Uuid="b50ed126-3012-4b88-8dd3-a131075f4b8e" SuperName="XCADNonPSBaseRepReference" Abstract="No" CustomerExposition="Programmer" Specializable="No" CustomerExtensible="No" Searchable="Yes" AggregatableTypes="None" InstantiationOwnerTypes="None" ObjectNature="Independent" Abbreviation="xcadeplan" IconName="I_XCADePlanProject">
+		<Property Name="ChangeManagementSupport" Value="Yes"/>
+		<Property Name="ChangeManagementReferential" Value="Yes"/>
+		<Property Name="ChangeManagementContext" Value="Yes"/>
+		<Property Name="KweNew_InstanciationMethod" Value="CATKBEXCADNonPSBaseRepReferenceDelegateInstanciation"/>
+		<Simple Name="V_Commission" Uuid="9f5bb4be-41b4-4c3e-84d0-04c516887378" Type="String" DefaultValue="" ResetOnCloning="No" ResetOnNewVersion="No" Protection="External" MultiValuated="No">
+	  </Simple>
+		<Simple Name="V_DrawingNumber" Uuid="79d674a5-ba98-44b4-9ab5-2d40a8f6f7b8" Type="String" DefaultValue="" ResetOnCloning="No" ResetOnNewVersion="No" Protection="External" MultiValuated="No">
+	  </Simple>
+		<Simple Name="V_CustomerName" Uuid="c28ea2ff-72fe-4565-9c6f-bb033dc32aea" Type="String" DefaultValue="" ResetOnCloning="No" ResetOnNewVersion="No" Protection="External" MultiValuated="No">
+	  </Simple>
+		<Simple Name="V_Creator" Uuid="f892cb0e-c9db-4858-a2d2-c3a188232af1" Type="String" DefaultValue="" ResetOnCloning="No" ResetOnNewVersion="No" Protection="External" MultiValuated="No">
+	  </Simple>
+		<!-- PROCEDURES Declaration  -->
+		<Method ImplementationType="Self">
+			<RealizeMethodType href="ExportScope.meth#ExportScope"/>
+			<ProcedureForUsage>
+				<Usage href="ExportScope.meth#Design"/>
+				<UsedProcedure href="XCAD_Procedures.proc#XCAD_ExportNonPSRep"/>
+			</ProcedureForUsage>
+			<ProcedureForUsage>
+				<Usage href="ExportScope.meth#TransferSiteOwnership"/>
+				<UsedProcedure href="XCAD_Procedures.proc#XCAD_ExportNonPSRep"/>
+			</ProcedureForUsage>
+		</Method>
+	</Class>
+	<Class Name="XCADElectricalProject" Uuid="6b7674e3-e2f8-40d8-b073-6ac5b897f21d" SuperName="XCADNonPSBaseRepReference" Abstract="No" CustomerExposition="Programmer" Specializable="No" CustomerExtensible="No" Searchable="Yes" AggregatableTypes="None" InstantiationOwnerTypes="None" ObjectNature="Independent" Abbreviation="xcadelecproj" IconName="I_XCADElectricalProject">
+		<Property Name="ChangeManagementSupport" Value="Yes"/>
+		<Property Name="ChangeManagementReferential" Value="Yes"/>
+		<Property Name="ChangeManagementContext" Value="Yes"/>
+		<Simple Name="V_ContractNumber" Uuid="d5e69b17-214d-4cbc-8de6-391ab95f5e7d" Type="String" DefaultValue="" ResetOnCloning="No" ResetOnNewVersion="No" Protection="External" MultiValuated="No">
+	  </Simple>
+		<Simple Name="V_CustomerName" Uuid="3217a947-89b3-42b4-ac9d-fa7269120541" Type="String" DefaultValue="" ResetOnCloning="No" ResetOnNewVersion="No" Protection="External" MultiValuated="No">
+	  </Simple>
+		<Simple Name="V_DesignOfficeName" Uuid="cd99b095-ea42-490f-979a-89795f554229" Type="String" DefaultValue="" ResetOnCloning="No" ResetOnNewVersion="No" Protection="External" MultiValuated="No">
+	  </Simple>
+		<!-- PROCEDURES Declaration  -->
+		<Method ImplementationType="Self">
+			<RealizeMethodType href="ExportScope.meth#ExportScope"/>
+			<ProcedureForUsage>
+				<Usage href="ExportScope.meth#Design"/>
+				<UsedProcedure href="XCAD_Procedures.proc#XCAD_ExportNonPSRep"/>
+			</ProcedureForUsage>
+			<ProcedureForUsage>
+				<Usage href="ExportScope.meth#TransferSiteOwnership"/>
+				<UsedProcedure href="XCAD_Procedures.proc#XCAD_ExportNonPSRep"/>
+			</ProcedureForUsage>
+		</Method>
+	</Class>
+	<Class Name="XCADSymbol" Uuid="1a6c9bdd-5b04-44f2-bdcc-0f00c7fbab2a" SuperName="XCADNonPSBaseRepReference" Abstract="No" CustomerExposition="Programmer" Specializable="No" CustomerExtensible="No" Searchable="Yes" AggregatableTypes="None" InstantiationOwnerTypes="None" ObjectNature="Independent" Abbreviation="xcadsymbol" IconName="I_XCADSymbol">
+		<Property Name="ChangeManagementSupport" Value="Yes"/>
+		<Property Name="ChangeManagementReferential" Value="Yes"/>
+		<Property Name="ChangeManagementContext" Value="Yes"/>
+		<Simple Name="V_Measurement" Uuid="d819c039-6334-45b9-b280-491fd9769000" Type="String" DefaultValue="" ResetOnCloning="No" ResetOnNewVersion="No" Protection="External" MultiValuated="No">
+	  </Simple>
+		<!-- PROCEDURES Declaration  -->
+		<Method ImplementationType="Self">
+			<RealizeMethodType href="ExportScope.meth#ExportScope"/>
+			<ProcedureForUsage>
+				<Usage href="ExportScope.meth#Design"/>
+				<UsedProcedure href="XCAD_Procedures.proc#XCAD_ExportNonPSRep"/>
+			</ProcedureForUsage>
+			<ProcedureForUsage>
+				<Usage href="ExportScope.meth#TransferSiteOwnership"/>
+				<UsedProcedure href="XCAD_Procedures.proc#XCAD_ExportNonPSRep"/>
+			</ProcedureForUsage>
+		</Method>
+	</Class>
+	<Class Name="XCADTemplate" Uuid="1920efb5-a118-4355-a99c-499c27125704" SuperName="XCADNonPSBaseRepReference" Searchable="Yes" CustomerExposition="Programmer" Abstract="No" PublicResourceURI="/resources/v1/modeler/dsxcad/dsxcad:Template/{pid}">
+		<Property Name="KweNew_InstanciationMethod" Value="CATKBEXCADNonPSBaseRepReferenceDelegateInstanciation"/>
+		<Simple Name="V_PersistencyType" Uuid="67f1a80e-9716-424f-bc2d-e1d015814b33" Type="String" MaxLength="255" DefaultValue="" ResetOnCloning="No" ResetOnNewVersion="No" Protection="Internal" MultiValuated="No">
+	  </Simple>
+		<Simple Name="V_CADInfo" Uuid="ce2ee9cc-b342-4fc4-ad3e-a00e3c6eee7e" Type="Clob" DefaultValue="" ResetOnCloning="No" ResetOnNewVersion="No" Protection="Internal" MultiValuated="No">
+	  </Simple>
+		<!-- PROCEDURES Declaration  -->
+		<Method ImplementationType="Self">
+			<RealizeMethodType href="ExportScope.meth#ExportScope"/>
+			<ProcedureForUsage>
+				<Usage href="ExportScope.meth#Design"/>
+				<UsedProcedure href="XCAD_Procedures.proc#XCAD_ExportNonPSRep"/>
+			</ProcedureForUsage>
+			<ProcedureForUsage>
+				<Usage href="ExportScope.meth#TransferSiteOwnership"/>
+				<UsedProcedure href="XCAD_Procedures.proc#XCAD_ExportNonPSRep"/>
+			</ProcedureForUsage>
+		</Method>
+	</Class>
+	<Class Name="XCADResource" Uuid="e594c24f-cfcf-47c6-bd64-23ef343faf05" SuperName="XCADNonPSBaseRepReference" Searchable="Yes" CustomerExposition="Programmer" Abstract="No">
+		<Property Name="KweNew_InstanciationMethod" Value="CATKBEXCADNonPSBaseRepReferenceDelegateInstanciation"/>
+		<!-- PROCEDURES Declaration  -->
+		<Method ImplementationType="Self">
+			<RealizeMethodType href="ExportScope.meth#ExportScope"/>
+			<ProcedureForUsage>
+				<Usage href="ExportScope.meth#Design"/>
+				<UsedProcedure href="XCAD_Procedures.proc#XCAD_ExportNonPSRep"/>
+			</ProcedureForUsage>
+			<ProcedureForUsage>
+				<Usage href="ExportScope.meth#TransferSiteOwnership"/>
+				<UsedProcedure href="XCAD_Procedures.proc#XCAD_ExportNonPSRep"/>
+			</ProcedureForUsage>
+		</Method>
+	</Class>
+	<Function Name="XCAD_AddRepInstAndRefFather">
+		<Implementation Name="XCAD_AddRepInstAndRefFather" FileLocation="XCAD_AddRepInstAndRefFather.plmql" Language="PLMQL"/>
+		<Signature href="XCADModelerSignature"/>
+	</Function>
+	<Function Name="XCAD_ExpandRefOne">
+		<Implementation Name="XCAD_ExpandRefOne" FileLocation="XCAD_ExpandRefOne.plmql" Language="PLMQL"/>
+		<Signature href="XCADModelerSignature"/>
+	</Function>
+	<Function Name="XCAD_ExpandReverseOne">
+		<Implementation Name="XCAD_ExpandReverseOne" FileLocation="XCAD_ExpandReverseOne.plmql" Language="PLMQL"/>
+		<Signature href="XCADModelerSignature"/>
+	</Function>
+	<Function Name="XCAD_GetComposedRefToRef">
+		<Implementation Name="XCAD_GetComposedRefToRef" FileLocation="XCAD_GetComposedRefToRef.plmql" Language="PLMQL"/>
+		<Signature href="XCADModelerSignature"/>
+	</Function>
+	<Function Name="XCAD_GetCompositionRefToRef">
+		<Implementation Name="XCAD_GetCompositionRefToRef" FileLocation="XCAD_GetCompositionRefToRef.plmql" Language="PLMQL"/>
+		<Signature href="XCADModelerSignature"/>
+	</Function>
+	<Function Name="XCAD_GetFamilyFromItem">
+		<Implementation Name="XCAD_GetFamilyFromItem" FileLocation="XCAD_GetFamilyFromItem.plmql" Language="PLMQL"/>
+		<Signature href="XCADModelerSignature"/>
+	</Function>
+	<Function Name="XCAD_GetItemsFromFamily">
+		<Implementation Name="XCAD_GetItemsFromFamily" FileLocation="XCAD_GetItemsFromFamily.plmql" Language="PLMQL"/>
+		<Signature href="XCADModelerSignature"/>
+	</Function>
+	<Function Name="XCAD_GetComponentFromLink">
+		<Implementation Name="XCAD_GetComponentFromLink" FileLocation="XCAD_GetComponentFromLink.plmql" Language="PLMQL"/>
+		<Signature href="XCADModelerSignature"/>
+	</Function>
+	<Function Name="XCAD_GetDependenciesRefToRef">
+		<Implementation Name="XCAD_GetDependenciesRefToRef" FileLocation="XCAD_GetDependenciesRefToRef.plmql" Language="PLMQL"/>
+		<Signature href="XCADModelerSignature"/>
+	</Function>
+	<Function Name="XCAD_GetDependenciesRefToRep">
+		<Implementation Name="XCAD_GetDependenciesRefToRep" FileLocation="XCAD_GetDependenciesRefToRep.plmql" Language="PLMQL"/>
+		<Signature href="XCADModelerSignature"/>
+	</Function>
+	<Function Name="XCAD_GetDependenciesRepToRef">
+		<Implementation Name="XCAD_GetDependenciesRepToRef" FileLocation="XCAD_GetDependenciesRepToRef.plmql" Language="PLMQL"/>
+		<Signature href="XCADModelerSignature"/>
+	</Function>
+	<Function Name="XCAD_GetDependenciesRepToRep">
+		<Implementation Name="XCAD_GetDependenciesRepToRep" FileLocation="XCAD_GetDependenciesRepToRep.plmql" Language="PLMQL"/>
+		<Signature href="XCADModelerSignature"/>
+	</Function>
+	<Signature id="XCADModelerSignature">
+		<Parameter Name="InputIds" Lower="0" Upper="-1" Direction="in" MultiValuated="Yes" DataType="PLMId"/>
+		<Parameter Name="OutputIds" Lower="0" Upper="-1" Direction="out" MultiValuated="No" DataType="PLMRouteSet"/>
+	</Signature>
+</Package>

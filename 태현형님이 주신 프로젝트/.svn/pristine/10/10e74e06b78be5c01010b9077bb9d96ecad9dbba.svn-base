@@ -1,0 +1,1 @@
+define("DS/XAppUXComponents/XAppUXComponents_it",{});define("DS/XAppUXComponents/assets/nls/XAppWaitingBar",{"WaitingBar.Stop":"Arresta"});define("DS/XAppUXComponents/assets/nls/XAppWelcomeScreenIntegrator",{"SwitchAppBtn.Hover":"Cambia app"});

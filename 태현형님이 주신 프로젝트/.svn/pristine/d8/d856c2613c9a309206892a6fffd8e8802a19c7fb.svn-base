@@ -1,0 +1,128 @@
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.Base64;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.dassault_systemes.platform.ven.jackson.databind.ObjectMapper;
+import com.dec.util.DecMatrixUtil;
+import com.dec.util.decPropertyUtil;
+import com.matrixone.json.JSONObject;
+
+import matrix.db.Context;
+import matrix.db.JPO;
+
+@SuppressWarnings({ "rawtypes", "unchecked", "deprecation" })
+public class decSSO_mxJPO {
+	
+	private static final Logger logger = LoggerFactory.getLogger(decSSO_mxJPO.class);
+
+	public Map checkSSO(Context context, String[] args) throws Exception{
+		try {
+			Map programMap = JPO.unpackArgs(args);
+			String username = (String) programMap.get("username");
+			String password = (String) programMap.get("password");
+			String token = new String(Base64.getEncoder().encode((username + ":" + password).getBytes()));
+			
+			Map resultMap = new HashMap();
+			
+			// Get SSO Check URL
+			boolean checkPlatformPassword = false;
+			DecMatrixUtil.SERVER_TYPE serverType = DecMatrixUtil.getServerType();
+			if ( "admin_platform".equals(username) )
+			{
+				checkPlatformPassword = true;
+			}
+			else
+			{
+				if ( serverType == DecMatrixUtil.SERVER_TYPE.PROD )
+//					if ( serverType == DecMatrixUtil.SERVER_TYPE.PROD || serverType == DecMatrixUtil.SERVER_TYPE.DEV )
+				{
+					Properties connectionProp = decPropertyUtil.getConnectionProperties();
+					String ssoCheckURL = connectionProp.getProperty(serverType.name() + ".ssoCheck.url");
+					String ssoCheckToken = connectionProp.getProperty(serverType.name() + ".ssoCheck.token");
+					
+					logger.info("SSO Check URL : " + ssoCheckURL);
+					logger.debug("SSO Check Token : " + ssoCheckToken);
+					
+					URL url = new URL(ssoCheckURL);
+					HttpURLConnection con = (HttpURLConnection) url.openConnection();
+					con.setRequestMethod("POST");
+					con.setRequestProperty("content-type", "application/json+sua");
+					con.setRequestProperty("dwenc-token", ssoCheckToken);
+					con.setDoOutput(true);
+					Map<String, Object> value = new HashMap<>();
+					value.put("value", token);
+					
+					Map<String, Object> postBody = new HashMap<>();
+					postBody.put("_param", value);
+					
+					ObjectMapper mapper = new ObjectMapper();
+					mapper.writeValue(con.getOutputStream(), postBody);
+					
+					int status = con.getResponseCode();
+
+					String response = null;
+					if ( status == HttpServletResponse.SC_OK )
+					{
+						response = IOUtils.toString( con.getInputStream() );
+						logger.info("OK response : " + response);
+						JSONObject jsonObject = new JSONObject( response );
+						boolean success = (Boolean) jsonObject.get("success");
+						
+						if ( success )
+						{
+							resultMap.put("SSO Check", true);
+						}
+						else
+						{
+							resultMap.put("SSO Check", false);
+							resultMap.put("message", (String) jsonObject.get("message"));
+						}
+						
+					}
+					else if ( con.getErrorStream() != null )
+					{
+						response = IOUtils.toString(con.getErrorStream());
+						logger.info("Error response : " + response);
+						JSONObject jsonObject = new JSONObject( response );
+						
+						resultMap.put("SSO Check", false);
+						resultMap.put("message", (String) jsonObject.get("message"));
+					}
+				}
+				else
+				{
+					// 개발 또는 로컬인 경우
+					checkPlatformPassword = true;
+				}
+			}
+			
+			if ( checkPlatformPassword )
+			{
+				if ( "Qwer1234".equals(password) )
+				{
+					resultMap.put("SSO Check", true);
+				}
+				else
+				{
+					resultMap.put("SSO Check", false);
+					resultMap.put("message", "Incorrect username or password.");
+				}
+			}
+			
+			return resultMap;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+}

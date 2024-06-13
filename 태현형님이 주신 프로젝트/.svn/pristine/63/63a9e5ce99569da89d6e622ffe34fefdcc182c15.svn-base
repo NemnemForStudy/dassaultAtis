@@ -1,0 +1,384 @@
+<%@page import="com.matrixone.apps.program.ProgramCentralUtil"%>
+<%@page import="com.matrixone.apps.domain.DomainConstants"%>
+<%@page import="java.text.DecimalFormat"%>
+<%@page import="com.dec.util.DecMatrixUtil"%>
+<%@page import="java.math.BigDecimal"%>
+<%@page import="java.util.Set"%>
+<%@page import="java.util.List"%>
+<%@page import="com.dec.util.DecStringUtil"%>
+<%@page import="com.matrixone.apps.domain.DomainObject"%>
+<%@page import="com.dec.util.DecConstants"%>
+<%@include file = "../emxUICommonHeaderBeginInclude.inc" %>
+<%@include file = "../emxUICommonAppInclude.inc"%>
+
+<%@page import="java.util.List"%>
+<%@page import="java.util.Map"%>
+<%@page import="java.util.HashMap"%>
+
+<%@ page import="org.apache.ibatis.session.SqlSession"%>
+<%@ page import="com.daewooenc.mybatis.main.decSQLSessionFactory"%>
+
+<script type="text/javascript" src="../common/scripts/jquery-latest.js"></script>
+<script src="https://code.highcharts.com/stock/highstock.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+<script src="../webapps/ENOAEFStructureBrowser/webroot/common/scripts/decemxUIFreezePane.js"></script>
+
+<%
+	String sLang = request.getHeader("Accept-Language");
+	String sProjectCode = emxGetParameter(request,"projectCode");
+	
+	String sSubCon = emxGetParameter(request,"Sub-Con");
+	String sConstrcutionItemType = emxGetParameter(request,"Construction Item Type");
+	String sDestination = emxGetParameter(request,"Destination");
+	String sFabCat = emxGetParameter(request,"Fab Category");
+	
+	String emxTableRowIdExpr = emxGetParameter(request, "emxTableRowIdExpr");
+	String hObjectId = null;
+	String hRowLevel = null;
+	String hRowName = null;
+	
+	if(ProgramCentralUtil.isNotNullString(emxTableRowIdExpr)){
+		StringList rowIdList = FrameworkUtil.splitString(emxTableRowIdExpr, ",");
+		hObjectId = rowIdList.get(0);
+		hRowLevel = rowIdList.get(1);
+		
+		hRowName = MqlUtil.mqlCommand(context, "print bus $1 select name dump", hObjectId);
+	}
+	
+	if(ProgramCentralUtil.isNullString(sSubCon)){
+		sSubCon = DecConstants.EMPTY_STRING;
+	}
+	if(ProgramCentralUtil.isNullString(sConstrcutionItemType)){
+		sConstrcutionItemType = DecConstants.EMPTY_STRING;
+	}
+	if(ProgramCentralUtil.isNullString(sDestination)){
+		sDestination = DecConstants.EMPTY_STRING;
+	}
+	if(ProgramCentralUtil.isNullString(sFabCat)){
+		sFabCat = DecConstants.EMPTY_STRING;
+	}
+	
+	if(ProgramCentralUtil.isNullString(hRowName)){
+		hRowName = DecConstants.EMPTY_STRING;
+	}
+	
+	String sObjectId = DecConstants.EMPTY_STRING;
+	DecimalFormat df = new DecimalFormat("###,###");
+	StringList slState = new StringList();
+	StringList slGrpShort = new StringList();
+	StringList colorList = new StringList();
+	Map<String, Integer> mGrpItem = new HashMap();
+	String objectId = DecConstants.EMPTY_STRING;
+	List<Map> statusCount = null;
+	List<Map> disciplineList = null;
+	
+	MapList FMCSDisciplineList = new MapList();
+	
+	int sum = 0;
+	int th_cnt = 0;
+	
+	String caseQty = EnoviaResourceBundle.getProperty(context, "emxProgramCentralStringResource", context.getLocale(), "emxProgramCentral.Label.case");
+	
+	StringList slProjectParam = new StringList();
+	slProjectParam.add(DecConstants.SELECT_ID);
+	MapList mlProject = DomainObject.findObjects(context, DecConstants.TYPE_PROJECT_SPACE, "*", DecConstants.SELECT_NAME + "=='" + sProjectCode + "'", slProjectParam);
+	
+	if(mlProject != null && !mlProject.isEmpty()){
+		Map mProject = (Map)mlProject.get(0);
+		sObjectId = (String)mProject.get(DecConstants.SELECT_ID);
+	}
+		  
+	StringList StringListStsCd = new StringList(); 
+		
+	try(SqlSession sqlSession = decSQLSessionFactory.getSession())
+    {
+    	Map selectParamMap = new HashMap();
+    	selectParamMap.put("SITE_CD",sProjectCode); 
+    	if(sSubCon.length() > 0){
+    		selectParamMap.put("ORG_CD",sSubCon); 
+    	}
+    	if(sConstrcutionItemType.length() > 0){
+    		selectParamMap.put("OBJ_TP_CD",sConstrcutionItemType); 
+    	}
+    	if(sDestination.length() > 0){
+    		selectParamMap.put("DELI_DEST_NM",sDestination); 
+    	}
+    	if(sFabCat.length() > 0){
+    		selectParamMap.put("FAB_CAT_NM",sFabCat); 
+    	}
+    	
+    	if(hRowName.length() > 0)
+		{
+			selectParamMap.put("PACK_LVL_CD", "PACK_LVL_CD" + hRowLevel);
+			selectParamMap.put("rowName", hRowName);
+		}
+		
+		statusCount = sqlSession.selectList("Project.selectDashMaterialStatusCount", selectParamMap);
+		disciplineList = sqlSession.selectList("Project.selectDashMaterialDisciplineList", selectParamMap);
+		
+		for(int i=0;i<statusCount.size();i++){
+			HashMap map = (HashMap) statusCount.get(i);
+			StringListStsCd.add(String.valueOf(map.get("ITEM_STS_CD")));
+			sum = sum + Integer.parseInt(String.valueOf(map.get("CNT")));
+		}
+    } catch(Exception e) {
+    	e.printStackTrace();
+		throw e;
+    }
+
+	// CodeMaster Button [S]
+	//1.FMCS Discipline 리스트 뽑기
+	StringList DCPList = new StringList();	
+
+	for(int j=0;j<disciplineList.size();j++){
+		HashMap map = (HashMap) disciplineList.get(j);
+		DCPList.add(String.valueOf(map.get("DCPLN_CD")));
+	}
+	
+	//2.현재 프로젝트 name으로 Id 뽑기
+	String sWhere = DecConstants.SELECT_NAME + "=='" + sProjectCode + "'";		
+	
+	StringList busCodeMasterSelects = new StringList();
+	busCodeMasterSelects.add(DomainConstants.SELECT_ID);
+	busCodeMasterSelects.add(DomainConstants.SELECT_NAME);
+	
+	MapList MlProjectSpace = DomainObject.findObjects(context,"Project Space",null,sWhere,busCodeMasterSelects);
+	
+	for(int i=0;i<MlProjectSpace.size();i++){
+		HashMap map = (HashMap) MlProjectSpace.get(i);
+		if(sProjectCode.equalsIgnoreCase(String.valueOf(map.get(DomainConstants.SELECT_NAME)))){
+			objectId = String.valueOf(map.get(DomainConstants.SELECT_ID));//ProjectCode로 objectId 뽑기
+		}
+	}
+	
+	//3.Revision=='현재프로젝트 name' && name=='Discipline'로 CodeMaster Discipline 뽑기
+	sWhere = DecConstants.SELECT_REVISION + "=='" + sProjectCode + "'&&" + DecConstants.SELECT_NAME + "=='" + "Discipline" + "'";
+
+	MapList MlCodeMaster = DomainObject.findObjects(context,DecConstants.TYPE_DECCODEMASTER,null,sWhere,busCodeMasterSelects);//revision=='-' 인 기본 codeMaster데이터 조회		
+
+	//4.Discipline 예하 codeDetail 모든 레벨 리스트 뽑기
+	MapList codeMasterRelatedObjects = null;
+	
+	StringList objectSelects = new StringList();//출력할 codeDetail object 정보 
+	objectSelects.add(DomainConstants.SELECT_ID);
+	objectSelects.add(DomainConstants.SELECT_NAME);
+	objectSelects.add(DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILTYPE);
+	objectSelects.add(DomainConstants.SELECT_DESCRIPTION);
+	
+	StringList relationshipSelects = new StringList();//출력할 codeDetail connection 정보 
+	relationshipSelects.add(DomainConstants.SELECT_FROM_NAME);
+	relationshipSelects.add("from." + DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILTYPE);
+	relationshipSelects.add("from." + DomainConstants.SELECT_DESCRIPTION);
+
+	for(int j=0;j<MlCodeMaster.size();j++){
+		HashMap map = (HashMap) MlCodeMaster.get(j);
+		String codeMasterId = String.valueOf(map.get(DomainConstants.SELECT_ID));
+
+		DomainObject codeMasterObject = new DomainObject(codeMasterId);
+		codeMasterRelatedObjects = codeMasterObject.getRelatedObjects(context, //codeMaster에 connect 된 codeDetail 불러오기
+				DecConstants.RELATIONSHIP_DECCODEDETAILREL, 
+				DecConstants.TYPE_DECCODEDETAIL, 
+				objectSelects, 
+				relationshipSelects, 
+				false, 
+				true, 
+				(short) 0, // 0입력으로 모든 레벨 다 가져오기
+				DecConstants.EMPTY_STRING, 
+				DecConstants.EMPTY_STRING);
+		
+		for(int i=0;i<codeMasterRelatedObjects.size();i++){
+			Hashtable codeMasterMap = (Hashtable) codeMasterRelatedObjects.get(i);
+			if(DCPList.contains(String.valueOf(codeMasterMap.get("name"))) && ("FMCS Discipline".equalsIgnoreCase(String.valueOf(codeMasterMap.get(DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILTYPE))))){
+				HashMap DCPMap = new HashMap();
+				DCPMap.put("FMCSDiscipline", String.valueOf(codeMasterMap.get(DomainConstants.SELECT_NAME)));
+				DCPMap.put("FMCSDisciplineDescription", String.valueOf(codeMasterMap.get(DomainConstants.SELECT_DESCRIPTION)));
+				DCPMap.put("Discipline", String.valueOf(codeMasterMap.get(DomainConstants.SELECT_FROM_NAME)));
+				DCPMap.put("DisciplineDescription", String.valueOf(codeMasterMap.get("from." + DomainConstants.SELECT_DESCRIPTION)));
+				DCPMap.put("Level", String.valueOf(codeMasterMap.get("level")));
+				FMCSDisciplineList.add(DCPMap);
+			}
+		}
+	}
+	// CodeMaster Button [E]
+	colorList.add("#FF0000");
+	colorList.add("#F27B35");
+	colorList.add("#F2E205");
+	colorList.add("#92D050");
+	colorList.add("#00B050");
+	colorList.add("#00B0F0");
+	colorList.add("#0070C0");
+	colorList.add("#A6A6A6");
+%>
+
+<script>
+var bDiscipline = new Map([
+	<%
+		for(int i=0;i<FMCSDisciplineList.size();i++){
+			HashMap map = (HashMap) FMCSDisciplineList.get(i);
+	%>
+		['<%=String.valueOf(map.get("DisciplineDescription"))%>','<%=String.valueOf(map.get("FMCSDiscipline"))%>'],
+	<%	
+		}
+	%>
+]);
+$(function() {
+	
+	var chart1 = new Highcharts.Chart({
+   	 title:{
+        	text : ''
+        },
+        credits: {
+            enabled: false
+        },
+        colors: [
+        			<%for(String color : colorList){%>
+        				'<%out.print(color);%>',
+        			<%}%>
+        		]
+        ,
+        chart: {
+            renderTo: 'container',
+            type: 'pie',
+            zooming: {
+                mouseWheel: false
+            }
+        },
+        plotOptions: {
+            pie: {
+                data: [
+                 <%for(int i=0;i<statusCount.size();i++){
+                	 HashMap map = (HashMap) statusCount.get(i);%>
+         			 ['<%=map.get("ITEM_STS_CD")%>',<%=map.get("CNT")%>,{id:'<%=map.get("ITEM_STS_CD")%>'}  ],
+         		<%}%>
+                ],
+                showInLegend: true,
+                cursor: 'pointer',
+            },
+            
+        },
+        series: [{
+            name: 'Total Count',
+            dataLabels: {
+                verticalAlign: 'top',
+                enabled: true,
+                color: '#000000',
+                connectorWidth: 1,
+                formatter: function() {
+                    return this.point.name + " : " + this.y.toLocaleString() + " (" + Math.round(this.percentage * 10) / 10 + "%)";
+                },
+                style: {
+                    fontSize: '15px'
+                }
+            }
+        }],
+        tooltip: {
+            style: {
+                fontSize: '1.0em',
+                fontWeight: 'bold'
+            }
+        },
+        legend: {
+	         align: 'center',
+	         layout: 'horizontal',
+	         verticalAlign: 'bottom',
+        },
+        exporting: {
+            enabled: false
+        },
+        credits: {
+            enabled: false
+        }
+    });
+	
+});
+$(window).on('resize', function(){
+	$('.left').css('height', document.documentElement.clientHeight-52 + 'px');//Detail 공간 남기기 위해 -40
+	$('.left').css('width', document.documentElement.clientWidth*0.30 + 'px');
+	$('.right').css('height', document.documentElement.clientHeight-60 + 'px');
+	$('.right').css('width', document.documentElement.clientWidth*0.67 + 'px');
+	$('#container').css('width', '100%');
+});
+</script>
+<style>
+	div {
+		display:inline-block;
+        text-align:center;
+        height:100%;
+	}
+    div.left {
+        width: 30%;
+        float:left;
+        height:100%;
+    }
+    div.right {
+    	float:left;
+        width: 69%;
+        height:100%;
+    }
+    #container{
+        width:100%;
+	}
+</style>
+<link rel="stylesheet" href="../webapps/UIKIT/UIKIT.css" type="text/css" />
+<body style="height:94%;">
+	<div style="text-align:right; width:98%;height:auto;<!-- margin-top:10px;margin-bottom:10px; -->margin-left:5px; ">
+		Material Status&emsp;<a href=JavaScript:window.open("emxTree.jsp?DefaultCategory=decProjectMaterialStatusLink&objectId=<%=sObjectId%>");><img src="images/iconActionNewWindow.png" border="0"></a>
+		&emsp;&emsp;
+		CWP Allocation&emsp;<a href=JavaScript:window.open("emxTree.jsp?DefaultCategory=decCWPMaterialSummaryLink&objectId=<%=sObjectId%>");><img src="images/iconActionNewWindow.png" border="0"></a>
+		&emsp;<img src="../common/images/iconActionSearchSpyGlass.png" 
+		onclick='showFilterSlideinDialog("objectId=<%=sObjectId%>&filterParam=codeMaster:Sub-Con,codeMaster:Construction Item Type,codeMaster:Destination,Fab Category:true")' 
+		style="cursor: pointer;">
+	</div>
+	<div style="width: 98%;">
+		<div class="left">
+			<table border="1" style="width: 100%;height: 100%;position:relative;top:50%;transform:translateY(-50%);">
+				<tr>
+					<td class="label" style="text-align:center;font-weight:bold;color:#5b5d5e;">
+						Status
+					</td>
+					<td class="label"  style="text-align:center;font-weight:bold;color:#5b5d5e;">
+						Q'ty
+					</td>
+					<td class="label"  style="text-align:center;font-weight:bold;color:#5b5d5e;">
+						OVERALL
+					</td>
+				</tr>
+				<%
+					for(int i=0;i<statusCount.size();i++){
+						HashMap map = (HashMap) statusCount.get(i);
+						Double round =  Math.round(Integer.parseInt(String.valueOf(map.get("CNT")))*1.0/sum*100 * 10 ) / 10.0;
+				%>
+				<tr>
+					<td style="text-align:center;">
+						<%=map.get("ITEM_STS_CD") %>
+					</td>
+					<td style="text-align:center;">
+						<%=df.format(map.get("CNT")) %>
+					</td>
+					<td style="text-align:center;">
+						<%=round+"%" %>
+					</td>
+				</tr>	
+				<%
+					} 
+				%>
+				
+				<tr>
+					<td class="label"  style="text-align:center;font-weight:bold;color:#5b5d5e;">
+						Total
+					</td>
+					<td class="label"  style="text-align:center;font-weight:bold;color:#5b5d5e;">
+						<%=df.format(sum) %>
+					</td>
+					<td class="label"  style="text-align:center;font-weight:bold;color:#5b5d5e;">
+						100%
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div class="right">
+			<div id="container"></div>
+		</div>
+	</div>
+	
+</body>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- COPYRIGHT DASSAULT SYSTEMES 2015, All rights reserved -->
+<Package
+	xmlns="PLMDictionaryUnified"
+	Name="CATSafetyFailureModesEffectsAnalysisRelationClass"
+	Uuid="ad6c6e13-7588-4560-a49e-4c1c929e473e"
+	UseNames="ERCoreModeler"
+	BelongsToModeler="CATSafety"
+	CustomerExposition="Programmer"
+	ModelerType="Top"
+	Architecture="Web">
+  <RelationClass
+    Name="CausalityRelationshipConfiguredEffect"
+    Uuid="f234a8fe-9774-405d-b347-8143b0623c15"
+    CustomerExposition="Programmer"
+    SuperName="RelationType"
+    CustomerExtensible="Yes"
+    Searchable="Yes"
+    Filtrable="Yes"
+  >
+  	<Property Name="ENO_Effectivity" Value="ProductRevision,FeatureOption"/>
+    <Simple Name="V_Description" Uuid="b569fd1f-3176-4b68-af1b-0bb003520824" Type="String" Protection="ExternalIN"/>
+    <Simple Name="V_Rank" Uuid="5f34c027-57e6-49a7-8060-a5c0e6e52b61" Type="Integer" Protection="ExternalIN"/>
+    <Simple Name="V_Visibility" Uuid="fa6a6b6b-1704-4fd1-82fe-acd41ffc07f8" Type="Double" Protection="ExternalIN"/>
+    <Simple Name="V_Type" Uuid="2d270fda-7c9c-4c28-adc9-ecd95c23eb79" Type="String" Protection="ExternalIN"/>
+    <Simple Name="roleSemantics" Uuid="7bf88df0-ff3d-4472-992d-af28a415f361" Type="String" Protection="Internal"/>
+    <Simple Name="V_SemanticRefinement" Uuid="aee5aefc-5892-40e0-9ba9-d757013abd14" Type="String" Protection="Internal" PLMImpacting="Yes"/>
+    <SubClause Name="from" TargetName="FailureModesEffectsAnalysisCausalityRelationship" propagatemodify="Yes" propagateconnection="Yes" cardinality="Many"/>
+    <SubClause Name="to" TargetName="FailureMode"/>
+    <SubClause Name="to" TargetName="HazardousEvent"/>
+    <Method ImplementationType="None">
+      <RealizeMethodType href="ExportScope.meth#ExportScope" />
+    </Method>
+  </RelationClass>
+  <RelationClass
+    Name="CausalityRelationshipConfiguredCause"
+    Uuid="6607d9b0-60ac-494a-8e68-1de1e165c531"
+    CustomerExposition="Programmer"
+    SuperName="RelationType"
+    CustomerExtensible="Yes"
+    Searchable="Yes"
+    Filtrable="Yes"
+  >
+  	<Property Name="ENO_Effectivity" Value="ProductRevision,FeatureOption"/>
+    <Simple Name="V_Description" Uuid="b9eefa5f-dc91-4be5-9571-cd018e4c8708" Type="String" Protection="ExternalIN"/>
+    <Simple Name="V_Type" Uuid="8582ee23-14eb-430d-a945-0ad1994eda08" Type="String" Protection="ExternalIN"/>
+    <Simple Name="roleSemantics" Uuid="80d0b2a5-b8d6-48a3-a721-18adf5ba4702" Type="String" Protection="Internal"/>
+    <Simple Name="V_SemanticRefinement" Uuid="76821faf-3f3e-415b-b50d-4e3d57848e56" Type="String" Protection="Internal" PLMImpacting="Yes"/>
+    <SubClause Name="from" TargetName="FailureModesEffectsAnalysisCausalityRelationship" propagatemodify="Yes" propagateconnection="Yes" cardinality="Many"/>
+    <SubClause Name="to" TargetName="FailureMode"/>
+    <SubClause Name="to" TargetName="HazardousEvent"/>
+    <Method ImplementationType="None">
+      <RealizeMethodType href="ExportScope.meth#ExportScope" />
+    </Method>
+  </RelationClass>
+</Package>

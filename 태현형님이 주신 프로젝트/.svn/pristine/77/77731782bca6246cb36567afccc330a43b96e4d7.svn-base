@@ -1,0 +1,50 @@
+<div 
+  class="im-call-user-item"
+  :class="{
+    hasVideo: showVideo
+  }"
+  ref="userItemContainer"
+>
+  <div
+    class="username"
+  >
+    {{ user.username }}
+  </div>
+  <vu-rtuserpresence
+    class="bgInherit noPresence"
+    :class="{ 
+      large: !isSpeakerView && !minimized && !hasCollabExperience && !isNotLarge
+    }"
+    :login="user.login"
+    :tenantId="$store.getters.tenant"
+    v-if="!showVideo"
+  />
+  <im-call-video-item
+    v-show="showVideo"
+    v-for="(stream, index) in streams"
+    :key="index"
+    :stream="stream"
+    :track_id="track_id"
+    :user_id="user_id"
+    :isSpeakerView="isSpeakerView"
+    :isAudioMuted="isAudioMuted || !isAudio"
+  />
+  <im-tel-video-item
+    v-if="isSip && asMediasource"
+  />
+  <div
+    class="stream-info-container">
+    <div
+      v-if="!isOnHold && (isAudioMuted || !isAudio)"
+      class="fonticon fonticon-microphone-off stream-info"
+    />
+    <div
+      v-if="!isOnHold && isSpeakerView && isSpeaker"
+      class="fonticon fonticon-monitor stream-info"
+    />
+    <div
+      v-if="isOnHold"
+      class="fonticon fonticon-pause stream-info"
+    />
+  </div>
+</div>

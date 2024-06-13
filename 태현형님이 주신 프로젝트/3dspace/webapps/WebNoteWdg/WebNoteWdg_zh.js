@@ -1,0 +1,1 @@
+define("DS/WebNoteWdg/WebNoteWdg_zh",{});define("DS/WebNoteWdg/assets/nls/webNote",{Title_html:"标题",typeText:"在此处键入文本",Font_html:"字体 ",FontSize_html:"字体大小 ",Small_html:"小 ",Medium_html:"中等",Big_html:"大"});

@@ -1,0 +1,57 @@
+
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:widget="http://www.netvibes.com/ns/">
+    <head>
+        <!-- Application Infos -->
+        <title>Metrics Reader</title>
+
+        <meta name="author" content="s55" />
+        <meta name="description" content="Metrics Reader" />
+        <meta name="apiVersion" content="1.3" />
+        <meta name="debugMode" content="false" />
+        <meta name="strictMode" content="false" />
+        <meta name="autoRefresh" content="0" />
+
+        <!-- Application Preferences -->
+        <widget:preferences>
+            <widget:preference name="url" type="hidden" defaultValue="" />
+            <widget:preference name="isUrlAuth" type="hidden" defaultValue="" />
+            <widget:preference name="lastScreen" type="hidden" defaultValue="" />
+            <widget:preference name="data" type="hidden" defaultValue="" />
+            <widget:preference name="originalData" type="hidden" defaultValue="" />
+            <widget:preference name="rawData" type="hidden" defaultValue="" />
+            <widget:preference name="title" type="hidden" defaultValue="" />
+            <widget:preference name="lastRefreshUrl" type="hidden" defaultValue="0" />
+            <widget:preference name="refreshUrl" type="hidden" defaultValue="0" />
+            <widget:preference name="tags" type="hidden" defaultValue="" />
+            <widget:preference name="csvSeparator" type="hidden" defaultValue="" />
+        </widget:preferences>
+
+        <link rel="stylesheet" type="text/css" href="../UIKIT/UIKIT.css" />
+
+        <!-- Application Source -->
+        <script type="text/javascript">
+            //<![CDATA[
+
+            /*global
+                require, widget
+            */
+            require([
+                'DS/GraphReaderWdg/GraphReader',
+                'TagNavigatorProxy/TagNavigatorProxy'
+            ], function (GraphReader, TagNavigatorProxy) {
+                'use strict';
+                new GraphReader({
+                    widget: widget,
+                    TagNavigatorProxy: TagNavigatorProxy
+                });
+            });
+
+            //]]>
+        </script>
+    </head>
+
+    <body></body>
+
+</html>

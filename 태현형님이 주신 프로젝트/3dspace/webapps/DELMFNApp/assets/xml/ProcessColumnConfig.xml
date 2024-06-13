@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright DASSAULT SYSTEMES 2013 -->
+<Config name="Manufacturing" xmlns="DS_DELPPWConfiguration" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="DS_DELPPWConfiguration ../xsd/ColumnConfig.xsd" Title="UI Config" Description="Sample configuration file delivered by DS.">
+    <Label dataIndex="V_Name.reference" dicoType="PLMEntity"/>
+    <Columns>
+        <Column dataIndex="PLM_ExternalID.instance" dicoType="DELFmiFunctionIdentifiedInstance"/>
+        <Column dataIndex="revision.reference" displayType='URL' dicoType="BusinessType"/>
+        <Column dataIndex="V_description.reference" dicoType="PLMEntity" Tooltip="NameRevisionOwner.tooltip"/>
+        <Column dataIndex="V_ContQuantity.instance" displayType="MultiType" display="false">
+            <dicoType dicoType="DELFmiContQuantity_Mass" />
+            <dicoType dicoType="DELFmiContQuantity_Area" />
+            <dicoType dicoType="DELFmiContQuantity_Length" />
+            <dicoType dicoType="DELFmiContQuantity_Volume" />
+        </Column>
+        <Column dataIndex="DELFmiUseCaseExt.V_UseCase.instance" dicoType="DELFmiUseCaseExt" display="false"/>
+        <Column dataIndex="V_TargetReleaseDate.reference" dicoType="DELFmiFunctionPPRCreateReference"/>
+        <Column dataIndex="V_NeedDedicatedSystem.reference" dicoType="CreateAssembly"/>
+        <Column dataIndex="ManufacturingItemUpdateStatus" displayType="BIEssentials"/>
+        <Column dataIndex="AltSubBI" displayType="BIEssentialsAltSub"/>
+       <!--  <Column dataIndex="DELFmiUseCaseExt.V_UseCase.instance" dicoType="DELFmiUseCaseExt"/> -->
+        <Column dataIndex="current.reference"  displayType='URL' dicoType="BusinessType"/>
+        <Column dataIndex="owner.reference"  displayType='URL' dicoType="BusinessType"/>
+        <Column dataIndex="organization.reference" dicoType="BusinessType"/>
+        <Column dataIndex="Scope.relation" displayType="Relation"/>
+        <Column dataIndex="Implement.relation" displayType="Relation"/>
+        <Column dataIndex="All.relation" displayType="Relation"/>
+        <Column dataIndex="documents.document" displayType="DocMgmt"/>
+        <Column dataIndex="V_isLastVersion.reference" dicoType="PLMCoreReference" displayType="NonEditable"/>
+        <Column dataIndex="EnterpriseExtension.V_PartNumber.reference"  dicoType="EnterpriseExtension" displayType="URL"/>
+        <!-- CONFIGURATION COLUMNS: start -->
+        <Column dataIndex="ConfigurationContext" displayType="CFG" display="false"/><!-- Available if atleast CFG/CSV role is valid -->
+        <Column dataIndex="Effectivity" displayType="CFG" display="false"/><!-- Available if atleast CFG/CSV role is valid -->
+        <Column dataIndex="VariantEffectivity" displayType="CFG" display="false"/><!-- Available if atleast CFG/CSV role is valid -->
+        <Column dataIndex="CurrentEvolutionEffectivity" displayType="CFG" display="false"/><!-- Available only if CHG role is valid -->
+        <Column dataIndex="ProjectedEvolutionEffectivity" displayType="CFG" display="false"/><!-- Available only if CHG role is valid -->
+        <Column dataIndex="EvolutionEffectivity" displayType="CFG" display="false"/><!-- Available only if CFG/CSV role is valid without CHG role -->
+        <!-- CONFIGURATION COLUMNS: end -->
+    </Columns>
+</Config>

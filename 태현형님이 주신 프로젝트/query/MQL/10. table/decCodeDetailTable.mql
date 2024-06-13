@@ -1,0 +1,64 @@
+###230418 Created By CMG
+# Modified by hslee on 2023.07.26
+
+# delete table decCodeDetailTable system;
+
+add table decCodeDetailTable system
+column 
+    name 'decCode'
+    bus '$<attribute[decCode]>'
+    label 'emxFramework.JavaScript.Name'
+    setting 'Registered Suite' 'Framework'
+    setting 'Update Function' 'codeDetailNameVal'
+    setting 'Update Program' 'decCodeMaster'
+column
+    name 'Description'
+    bus '$<description>'
+    label 'emxFramework.JavaScript.Description'
+    setting 'Registered Suite' 'Framework'
+    setting 'Editable' true
+    setting 'Field Type' 'basic'
+    setting 'Admin Type' 'attribute'
+column
+    name decCodeDetailType
+    label 'emxFramework.Label.decCodeDetailType'
+    bus '$<attribute[decCodeDetailType]>'
+    setting 'Field Type' 'attribute'
+    setting "Input Type" "combobox"
+    setting 'Registered Suite' 'Framework'
+    setting 'Type Icon Function' 'getIcon'
+    setting 'Range Function' 'getCodeDetailTypeRange'
+    setting 'Range Program' 'decCodeMaster'
+    setting 'Editable' false 
+column
+    name 'Sequence Order'
+    label 'emxFramework.Attribute.Sequence_Order'
+    setting "Column Type" "program"
+    setting 'Registered Suite' 'Framework'
+    setting 'format' 'numeric'
+    setting 'Sort Type' 'integer'
+    setting 'program' 'decCodeMaster'
+    setting 'function' 'getSequenceOrder'
+    setting 'Update Function' 'updatedecCodeDetailSequenceOrder'
+    setting 'Update Program' 'decCodeMaster'
+column
+	name 'DynamicColumn'
+	setting 'Column Type' 'Dynamic'
+	setting 'Dynamic Column Function' 'getCodeDetailAttrColumn'
+	setting 'Dynamic Column Program' 'decCodeMaster'
+column
+    name State
+    label 'emxFramework.History.State'
+    bus '$<current>'
+    setting 'Admin Type' 'State'
+    setting "Input Type" "combobox"
+    setting "Field Type" "policy"
+    setting 'Registered Suite' 'Framework'
+    setting 'Type Icon Function' 'getIcon'
+    setting 'Editable' true
+    setting 'Range Program' 'decCodeMaster'
+    setting 'Range Function' 'getStateRange'
+    setting 'Update Function' 'updateDetailState'
+    setting 'Update Program' 'decCodeMaster'
+
+;

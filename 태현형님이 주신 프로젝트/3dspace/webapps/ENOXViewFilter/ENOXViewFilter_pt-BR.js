@@ -1,0 +1,1 @@
+define("DS/ENOXViewFilter/ENOXViewFilter_pt-BR",{});define("DS/ENOXViewFilter/assets/nls/ENOXViewFilter",{search:"Pesquisar",clear:"Limpar"});

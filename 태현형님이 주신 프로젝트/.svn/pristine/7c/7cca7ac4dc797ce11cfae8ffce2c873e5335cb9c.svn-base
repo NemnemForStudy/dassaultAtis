@@ -1,0 +1,63 @@
+#Prog ExperienceOpen (iPLMIDSet :  #In PLMIDSet,oPLMIDSet :  #Out PLMIDSet) : VoidType
+  {/* 
+// ----------------------------------------------------------------------------------
+// Open completion for 3DExperience
+// 
+// Navigation :
+//     1- Retrieve all experiences connected to input through valid open relations 
+//		+ Humans (through to_Prototype)
+//     2- Retrieve pointed assets for those experiences
+//     3- Apply completion on 3DExp clients.
+//		As of today, clients are Product, Logical, MSR & Human
+// ----------------------------------------------------------------------------------
+*/
+
+let Ids_SRPointedExps(PLMIDSet)
+let Ids_SRPointedAssets(PLMIDSet)
+let Ids_OpenedPrds(PLMIDSet)
+let Ids_OpenedLogical(PLMIDSet)
+let Ids_OpenedMaterial(PLMIDSet)
+let Ids_OpenedAmbiance(PLMIDSet)
+let Ids_CommercialTwinSRPointedAsset(PLMIDSet)
+
+let Rts_SRPointedExps(PLMRouteSet)
+let Rts_SRPointedAssets(PLMRouteSet)
+let Rts_ChildrenPrds(PLMRouteSet)
+let Rts_Exp(PLMRouteSet)
+
+/* 1 */
+Rts_SRPointedExps=ExecutePLMFunction("PLMExpAbstract3DExperience","PLMExp_getSRPointedExps",iPLMIDSet)
+Ids_SRPointedExps=Ids(Rts_SRPointedExps)
+
+/* 2 */
+Rts_SRPointedAssets=ExecutePLMFunction("PLMExpAbstract3DExperience","PLMExp_getSRPointedAssets",Ids_SRPointedExps)
+Ids_SRPointedAssets=Ids(Rts_SRPointedAssets)
+
+/* the Commercial Twin is an Experience pointed by Asset link */
+Rts_Exp = ExecutePLMFunction("PLMExpAbstract3DExperience", "PLMExp_getSRPointedAssets", Restrict(Ids_SRPointedAssets, "PLMExp3DExperience/Abstract3DExperienceObject")) 
+Ids_CommercialTwinSRPointedAsset = Ids(Rts_Exp)
+/* 3 */
+/* Product */
+Rts_ChildrenPrds = ExecutePLMFunction("PRODUCTCFG", "ProductCfg_AddChildrenProduct", Restrict((Ids_SRPointedAssets+Ids_CommercialTwinSRPointedAsset), "PRODUCTCFG/VPMReference")) 
+Ids_OpenedPrds = ExecutePLMProcedure("VPMEditor_OpenCompletionOnReference",Ids(Rts_ChildrenPrds))
+
+
+/* Logical */
+Ids_OpenedLogical = ExecutePLMProcedure("Logical_ExportReference_Design",Restrict(Ids_SRPointedAssets, "RFLVPMLogical/RFLVPMLogicalReference"))
+
+/* Material */
+Ids_OpenedMaterial = ExecutePLMProcedure("MaterialReferenceExport",Restrict(Ids_SRPointedAssets, "CATMaterialRef/CATMatReference"))
+
+/* MSR */
+/* Do not open simulation here, it will be done by code later */
+
+
+/* Ambiance */
+Ids_OpenedAmbiance = ExecutePLMProcedure("EnvironmentExport",Restrict(Ids_SRPointedAssets, "PLM3DXAmbienceEnvironment/AmbienceEnvironment"))
+
+/* Human */
+
+/* Results */
+oPLMIDSet = Ids_SRPointedExps + Ids_SRPointedAssets + Ids_OpenedPrds + Ids_OpenedLogical + Ids_OpenedMaterial + Ids_OpenedAmbiance 
+
+}

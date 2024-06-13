@@ -1,0 +1,1 @@
+define("DS/Tree/Tree_pt-BR",{});define("DS/Tree/assets/nls/carousel",{close:"Fechar",next:"Próximo",previous:"Anterior"});

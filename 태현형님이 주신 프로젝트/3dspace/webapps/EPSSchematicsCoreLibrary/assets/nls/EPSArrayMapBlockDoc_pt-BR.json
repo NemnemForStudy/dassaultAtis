@@ -1,0 +1,20 @@
+{
+  "version": "1.0 0",
+  "summary": "Cria uma nova matriz preenchida com os resultados da chamada de um gráfico fornecido em cada elemento na matriz chamada.",
+  "description": "Este bloco é capaz de mapear qualquer tipo de matriz de <doc-idp-name translate=no>Input</doc-idp-name> para qualquer tipo de matriz de saída. <br>O gráfico interno precisa ser editado para fornecer o processo de mapeamento.",
+  "dataPorts": {
+    "Input": "A matriz de entrada a ser mapeada. <br>Essa porta de dados lida com todos os tipos de matriz.",
+    "SharedData": "Os dados a serem compartilhados em cada instância de gráfico interna. <br>Essa porta de dados lida com todos os tipos. <br>Se vários dados com tipos diferentes precisarem ser compartilhados, é recomendada a criação de um tipo de usuário.",
+    "Success": "A matriz de saída com êxito. <br>Essa porta de dados lida com todos os tipos de matriz. <br>O tamanho da matriz será sempre igual ao tamanho da matriz de <doc-idp-name translate=no>Input</doc-idp-name>.",
+    "State": "Uma matriz de <doc-valuetype translate=no>ArrayMapState</doc-valuetype> fornecendo o <doc-valuetype translate=no>EExecutionState</doc-valuetype> em cada índice da matriz de saída <doc-odp-name translate=no>Success</doc-odp-name>. <br>O tamanho dessa matriz será sempre igual ao tamanho da matriz de <doc-idp-name translate=no>Input</doc-idp-name>.",
+    "Progress": "Uma matriz de <doc-valuetype translate=no>ArrayMapProgress</doc-valuetype> fornecendo o <doc-valuetype translate=no>EExecutionState</doc-valuetype> em cada índice da matriz de entrada <doc-odp-name translate=no>Input</doc-odp-name>. <br>Esta matriz pode ser preenchida com diversos dados durante o progresso, dependendo do processo de distribuição por trás do bloco. <br>Entretanto, o tamanho dessa matriz não pode exceder o tamanho da matriz de <doc-idp-name translate=no>Input</doc-idp-name>.",
+    "Error": "Uma matriz de <doc-valuetype translate=no>ArrayMapError</doc-valuetype> apresentando um objeto de erro no índice da matriz de entrada <doc-odp-name translate=no>Input</doc-odp-name>. <br>O tamanho dessa matriz não pode exceder o tamanho da matriz de <doc-idp-name translate=no>Input</doc-idp-name>."
+  },
+  "controlPorts": {
+    "In": "dispara a execução do bloco.",
+    "Success": "é ativado quando o processo é concluído com êxito.",
+    "Progress": "é ativado cada vez que um progresso ocorrer.",
+    "Error": "é ativado quando ocorre um erro."
+  },
+  "example": null
+}

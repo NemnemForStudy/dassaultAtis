@@ -1,0 +1,1 @@
+define("DS/ExplorerApp/ExplorerApp_ko",{});define("DS/ExplorerApp/assets/nls/ExplorerApp",{appLoading:"애플리케이션 로드 중...",apptoosmall:"앱이 너무 작습니다. 크기를 늘리십시오.",welcomescreen:{description:"쉽고 효율적인 방법으로 구조 탐색",recent:"최근 항목",openContent:"콘텐츠 열기",openProducts:"제품 열기",openFilters:"필터 열기",linkUserAssistance:"사용자 지원",linkUserCommunity:"사용자 커뮤니티"},appMainLoading:"애플리케이션 빌드 중..."});

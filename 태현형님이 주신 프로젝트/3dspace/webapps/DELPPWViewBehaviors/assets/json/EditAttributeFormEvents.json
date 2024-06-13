@@ -1,0 +1,473 @@
+{
+  "DELLmiTimeConstraintCnx": {
+    "V_MaterialNeed": [
+      {
+        "event": "change",
+        "conditions": [
+          {
+            "condition": "( DELLmiTimeConstraintCnx.V_MaterialNeed === true ) AND ( DELLmiTimeConstraintCnx.V_OptionalTimeConstraint === false )",
+            "affectedAttributes": [
+              {
+                "fullName": "DELLmiTimeConstraintCategoryAbstractCusto.flowType",
+                "hide": false,
+                "resetValue": true,
+                "newValue": 0
+              },
+              {
+                "fullName": "DELLmiTimeConstraintCategoryAbstract.V_ExecutionReturnCode",
+                "hide": true
+              },
+              {
+                "fullName": "DELLmiTimeConstraintFailed.V_MaximumRetries",
+                "hide": true
+              },
+              {
+                "fullName": "DELLmiTCOverlapQtyCusto.isOverlapExist",
+                "hide": false,
+                "resetValue": true,
+                "newValue": false
+              }
+            ]
+          },
+          {
+            "condition": "DELLmiTimeConstraintCnx.V_MaterialNeed === false",
+            "affectedAttributes": [
+              {
+                "fullName": "DELLmiTimeConstraintCategoryAbstractCusto.flowType",
+                "hide": true
+              },
+              {
+                "fullName": "DELLmiTimeConstraintCategoryAbstract.V_ExecutionReturnCode",
+                "hide": true
+              },
+              {
+                "fullName": "DELLmiTimeConstraintFailed.V_MaximumRetries",
+                "hide": true
+              },
+              {
+                "fullName": "DELLmiTCOverlapQtyCusto.isOverlapExist",
+                "hide": true
+              },
+              {
+                "fullName": "DELLmiTCOverlapQtyCusto.overlapMagnitude",
+                "hide": true
+              },
+              {
+                "fullName": "DELLmiTCOverlapQty_Each.V_OverlapQty",
+                "hide": true
+              },
+              {
+                "fullName": "DELLmiTCOverlapQty_Area.V_OverlapQty",
+                "hide": true
+              },
+              {
+                "fullName": "DELLmiTCOverlapQty_Length.V_OverlapQty",
+                "hide": true
+              },
+              {
+                "fullName": "DELLmiTCOverlapQty_Volume.V_OverlapQty",
+                "hide": true
+              },
+              {
+                "fullName": "DELLmiTCOverlapQty_Weight.V_OverlapQty",
+                "hide": true
+              }
+            ]
+          },
+          {
+            "condition": "DELLmiTimeConstraintCnx.V_MaterialNeed === true",
+            "affectedAttributes": [
+              {
+                "fullName": "DELLmiTCOverlapQtyCusto.isOverlapExist",
+                "hide": false,
+                "resetValue": true,
+                "newValue": false
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "V_OptionalTimeConstraint": [
+      {
+        "event": "change",
+        "conditions": [
+          {
+            "condition": "( DELLmiTimeConstraintCnx.V_MaterialNeed === true ) AND ( DELLmiTimeConstraintCnx.V_OptionalTimeConstraint === false )",
+            "affectedAttributes": [
+              {
+                "fullName": "DELLmiTimeConstraintCategoryAbstractCusto.flowType",
+                "hide": false,
+                "resetValue": true,
+                "newValue": 0
+              },
+              {
+                "fullName": "DELLmiTimeConstraintCategoryAbstract.V_ExecutionReturnCode",
+                "hide": true
+              },
+              {
+                "fullName": "DELLmiTimeConstraintFailed.V_MaximumRetries",
+                "hide": true
+              }
+            ]
+          },
+          {
+            "condition": "( DELLmiTimeConstraintCnx.V_OptionalTimeConstraint === true ) || ( DELLmiTimeConstraintCnx.V_MaterialNeed === false )",
+            "affectedAttributes": [
+              {
+                "fullName": "DELLmiTimeConstraintCategoryAbstractCusto.flowType",
+                "hide": true
+              },
+              {
+                "fullName": "DELLmiTimeConstraintCategoryAbstract.V_ExecutionReturnCode",
+                "hide": true
+              },
+              {
+                "fullName": "DELLmiTimeConstraintFailed.V_MaximumRetries",
+                "hide": true
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "flowType": [
+      {
+        "event": "change",
+        "conditions": [
+          {
+            "condition": "DELLmiTimeConstraintCategoryAbstractCusto.flowType === EMPTY_STRING",
+            "affectedAttributes": [
+              {
+                "fullName": "DELLmiTimeConstraintCategoryAbstract.V_ExecutionReturnCode",
+                "hide": true
+              },
+              {
+                "fullName": "DELLmiTimeConstraintFailed.V_MaximumRetries",
+                "hide": true
+              }
+            ]
+          },
+          {
+            "condition": "DELLmiTimeConstraintCategoryAbstractCusto.flowType === DELLmiTimeConstraintFailed",
+            "affectedAttributes": [
+              {
+                "fullName": "DELLmiTimeConstraintCategoryAbstract.V_ExecutionReturnCode",
+                "hide": false,
+                "resetValue": true,
+                "newValue": 0,
+                "updateAuthorizedListFrom": "DELLmiTimeConstraintFailed.V_ExecutionReturnCode"
+              },
+              {
+                "fullName": "DELLmiTimeConstraintFailed.V_MaximumRetries",
+                "hide": false,
+                "resetValue": true,
+                "newValue": 1
+              }
+            ]
+          },
+          {
+            "condition": "DELLmiTimeConstraintCategoryAbstractCusto.flowType === DELLmiTimeConstraintAlternative",
+            "affectedAttributes": [
+              {
+                "fullName": "DELLmiTimeConstraintCategoryAbstract.V_ExecutionReturnCode",
+                "hide": false,
+                "resetValue": true,
+                "newValue": 0,
+                "updateAuthorizedListFrom": "DELLmiTimeConstraintAlternative.V_ExecutionReturnCode"
+              },
+              {
+                "fullName": "DELLmiTimeConstraintFailed.V_MaximumRetries",
+                "hide": true
+              }
+            ]
+          },
+          {
+            "condition": "DELLmiTimeConstraintCategoryAbstractCusto.flowType === DELLmiTimeConstraintScrapped",
+            "affectedAttributes": [
+              {
+                "fullName": "DELLmiTimeConstraintCategoryAbstract.V_ExecutionReturnCode",
+                "hide": false,
+                "resetValue": true,
+                "newValue": 0,
+                "updateAuthorizedListFrom": "DELLmiTimeConstraintScrapped.V_ExecutionReturnCode"
+              },
+              {
+                "fullName": "DELLmiTimeConstraintFailed.V_MaximumRetries",
+                "hide": true
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "isOverlapExist":[
+      {
+        "event": "change",
+        "conditions":[
+          {
+            "condition": "DELLmiTCOverlapQtyCusto.isOverlapExist === false",
+            "affectedAttributes": [
+              {
+                "fullName": "DELLmiTCOverlapQtyCusto.overlapMagnitude",
+                "hide": true
+              },
+              {
+                "fullName": "DELLmiTCOverlapQty_Each.V_OverlapQty",
+                "hide": true
+              },
+              {
+                "fullName": "DELLmiTCOverlapQty_Area.V_OverlapQty",
+                "hide": true
+              },
+              {
+                "fullName": "DELLmiTCOverlapQty_Length.V_OverlapQty",
+                "hide": true
+              },
+              {
+                "fullName": "DELLmiTCOverlapQty_Volume.V_OverlapQty",
+                "hide": true
+              },
+              {
+                "fullName": "DELLmiTCOverlapQty_Weight.V_OverlapQty",
+                "hide": true
+              }
+            ]
+          },
+          {
+            "condition": "DELLmiTCOverlapQtyCusto.isOverlapExist === true",
+            "affectedAttributes": [
+              {
+                "fullName": "DELLmiTCOverlapQtyCusto.overlapMagnitude",
+                "hide": false,
+                "resetValue": true,
+                "newValue": 0
+              },
+              {
+                "fullName": "DELLmiTCOverlapQty_Each.V_OverlapQty",
+                "hide": false
+              },
+              {
+                "fullName": "DELLmiTCOverlapQty_Area.V_OverlapQty",
+                "hide": true
+              },
+              {
+                "fullName": "DELLmiTCOverlapQty_Length.V_OverlapQty",
+                "hide": true
+              },
+              {
+                "fullName": "DELLmiTCOverlapQty_Volume.V_OverlapQty",
+                "hide": true
+              },
+              {
+                "fullName": "DELLmiTCOverlapQty_Weight.V_OverlapQty",
+                "hide": true
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "overlapMagnitude":[
+      {
+        "event": "change",
+        "conditions":[
+          {
+            "condition": "DELLmiTCOverlapQtyCusto.overlapMagnitude === DELLmiTCOverlapQty_Each",
+            "affectedAttributes": [
+              {
+                "fullName": "DELLmiTCOverlapQty_Each.V_OverlapQty",
+                "hide": false,
+                "resetValue": true,
+                "newValue": "defaultValue"
+              },
+              {
+                "fullName": "DELLmiTCOverlapQty_Area.V_OverlapQty",
+                "hide": true
+              },
+              {
+                "fullName": "DELLmiTCOverlapQty_Length.V_OverlapQty",
+                "hide": true
+              },
+              {
+                "fullName": "DELLmiTCOverlapQty_Volume.V_OverlapQty",
+                "hide": true
+              },
+              {
+                "fullName": "DELLmiTCOverlapQty_Weight.V_OverlapQty",
+                "hide": true
+              }
+            ]
+          },
+          {
+            "condition": "DELLmiTCOverlapQtyCusto.overlapMagnitude === DELLmiTCOverlapQty_Area",
+            "affectedAttributes": [
+              {
+                "fullName": "DELLmiTCOverlapQty_Each.V_OverlapQty",
+                "hide": true
+              },
+              {
+                "fullName": "DELLmiTCOverlapQty_Area.V_OverlapQty",
+                "hide": false,
+                "resetValue": true,
+                "newValue": "defaultValue"
+              },
+              {
+                "fullName": "DELLmiTCOverlapQty_Length.V_OverlapQty",
+                "hide": true
+              },
+              {
+                "fullName": "DELLmiTCOverlapQty_Volume.V_OverlapQty",
+                "hide": true
+              },
+              {
+                "fullName": "DELLmiTCOverlapQty_Weight.V_OverlapQty",
+                "hide": true
+              }
+            ]
+          },
+          {
+            "condition": "DELLmiTCOverlapQtyCusto.overlapMagnitude === DELLmiTCOverlapQty_Length",
+            "affectedAttributes": [
+              {
+                "fullName": "DELLmiTCOverlapQty_Each.V_OverlapQty",
+                "hide": true
+              },
+              {
+                "fullName": "DELLmiTCOverlapQty_Area.V_OverlapQty",
+                "hide": true
+              },
+              {
+                "fullName": "DELLmiTCOverlapQty_Length.V_OverlapQty",
+                "hide": false,
+                "resetValue": true,
+                "newValue": "defaultValue"
+              },
+              {
+                "fullName": "DELLmiTCOverlapQty_Volume.V_OverlapQty",
+                "hide": true
+              },
+              {
+                "fullName": "DELLmiTCOverlapQty_Weight.V_OverlapQty",
+                "hide": true
+              }
+            ]
+          },
+          {
+            "condition": "DELLmiTCOverlapQtyCusto.overlapMagnitude === DELLmiTCOverlapQty_Volume",
+            "affectedAttributes": [
+              {
+                "fullName": "DELLmiTCOverlapQty_Each.V_OverlapQty",
+                "hide": true
+              },
+              {
+                "fullName": "DELLmiTCOverlapQty_Area.V_OverlapQty",
+                "hide": true
+              },
+              {
+                "fullName": "DELLmiTCOverlapQty_Length.V_OverlapQty",
+                "hide": true
+              },
+              {
+                "fullName": "DELLmiTCOverlapQty_Volume.V_OverlapQty",
+                "hide": false,
+                "resetValue": true,
+                "newValue": "defaultValue"
+              },
+              {
+                "fullName": "DELLmiTCOverlapQty_Weight.V_OverlapQty",
+                "hide": true
+              }
+            ]
+          },
+          {
+            "condition": "DELLmiTCOverlapQtyCusto.overlapMagnitude === DELLmiTCOverlapQty_Weight",
+            "affectedAttributes": [
+              {
+                "fullName": "DELLmiTCOverlapQty_Each.V_OverlapQty",
+                "hide": true
+              },
+              {
+                "fullName": "DELLmiTCOverlapQty_Area.V_OverlapQty",
+                "hide": true
+              },
+              {
+                "fullName": "DELLmiTCOverlapQty_Length.V_OverlapQty",
+                "hide": true
+              },
+              {
+                "fullName": "DELLmiTCOverlapQty_Volume.V_OverlapQty",
+                "hide": true
+              },
+              {
+                "fullName": "DELLmiTCOverlapQty_Weight.V_OverlapQty",
+                "hide": false,
+                "resetValue": true,
+                "newValue": "defaultValue"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "ProcessImplementLinkOcc" : {
+    "V_Overlap":[
+      {
+        "event": "change",
+        "conditions":[
+          {
+            "condition": "MfgProductionPlanning.V_Overlap === true",
+            "affectedAttributes": [
+              {
+                "fullName": "DELLmiSendAheadQty_Area.V_SendAheadQty",
+                "hide": true
+              },
+              {
+                "fullName": "DELLmiSendAheadQty_Length.V_SendAheadQty",
+                "hide": true
+              },
+              {
+                "fullName": "DELLmiSendAheadQty_Volume.V_SendAheadQty",
+                "hide": true
+              },
+              {
+                "fullName": "DELLmiSendAheadQty_Weight.V_SendAheadQty",
+                "hide": true
+              },
+              {
+                "fullName": "DELLmiSendAheadQty_Each.V_SendAheadQty",
+                "hide": false
+              }
+            ]
+          },
+          {
+            "condition": "MfgProductionPlanning.V_Overlap === false",
+            "affectedAttributes": [
+              {
+                "fullName": "DELLmiSendAheadQty_Area.V_SendAheadQty",
+                "hide": true
+              },
+              {
+                "fullName": "DELLmiSendAheadQty_Each.V_SendAheadQty",
+                "hide": true
+              },
+              {
+                "fullName": "DELLmiSendAheadQty_Length.V_SendAheadQty",
+                "hide": true
+              },
+              {
+                "fullName": "DELLmiSendAheadQty_Volume.V_SendAheadQty",
+                "hide": true
+              },
+              {
+                "fullName": "DELLmiSendAheadQty_Weight.V_SendAheadQty",
+                "hide": true
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

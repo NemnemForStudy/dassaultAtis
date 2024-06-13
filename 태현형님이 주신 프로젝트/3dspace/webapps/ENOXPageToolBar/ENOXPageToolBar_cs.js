@@ -1,0 +1,1 @@
+define("DS/ENOXPageToolBar/ENOXPageToolBar_cs",{});define("DS/ENOXPageToolBar/assets/nls/PageToolBar",{collapse:"Sbalit",expand:"Rozbalit",information:"Informace"});

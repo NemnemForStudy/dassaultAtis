@@ -1,0 +1,31 @@
+################################################################################################
+# Created By thok : 2023. 07. 25
+# Admin Type : command
+# Name : decProjectChangeProjectCode
+################################################################################################
+#delete command decProjectChangeProjectCode;
+add command 'decProjectChangeProjectCode' 
+	description 'Change Project Code' 
+	alt 'emxProgramCentral.Common.Project.ChangeProjectCode' 
+	label 'emxProgramCentral.Common.Project.ChangeProjectCode' 
+	href '${COMMON_DIR}/decProjectChangeProjectCodeDialogFS.jsp'
+	setting 'Target Location' slidein
+	setting 'Popup Modal' true
+	setting 'Access Expression' '(current!=Complete) && (admin_platform==context.user || context.user.isassigned[decSystemAdmin])'
+	setting 'Registered Suite' 'ProgramCentral' 
+	setting 'Image' '${COMMON_DIR}/images/iconActionRichTextEditor.png'
+;
+add property command_decProjectChangeProjectCode on program eServiceSchemaVariableMapping.tcl to command 'decProjectChangeProjectCode'
+;
+
+# Modified by thok on 2023.07.26 
+mod command decProjectChangeProjectCode
+	add setting 'Access Expression' '(attribute[decProjectStatus]=="In-Progress") && (context.user.isassigned[decSystemAdmin])'
+;
+
+# Modified By thok : 2023. 09. 09
+mod command decProjectChangeProjectCode
+	add setting 'Access Expression' '(attribute[decProjectStatus]=="In-Progress")'
+	add setting 'Access Program' 'decAccess' 
+	add setting 'Access Function' 'hasAccess'
+;

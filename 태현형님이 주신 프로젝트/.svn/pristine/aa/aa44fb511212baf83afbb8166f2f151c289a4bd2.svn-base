@@ -1,0 +1,51 @@
+{
+	"downloadTicket":{
+		"url" : "/resources/v2/PLMDerivedOutputEntityWSAPI/derivedoutputentity_services/getDerivedOutputDownloadTicketFromKeys",
+		"verb" : "POST"
+	},
+	"bulkDownloadTicket" : {
+        "url"  : "/resources/PLMDerivedOutputWSAPI/derivedoutput_services/doBulkDownload",
+        "verb" : "POST",
+        "accept" : "application/zip",
+        "type" : "arraybuffer"
+	},
+	"doInformation" : {
+		"url"  : "/resources/v1/ENODerivedOutputStreamServices/derivedformat_services/getStreamAndJobInformation",
+		"verb" : "POST"
+	},
+	"generateJob": {
+		"url"  : "/resources/PLMDerivedOutputWSAPI/derivedoutput_services/createDerivedFormatJobs",
+		"verb" : "POST"
+	},
+	"retrieveFormats":{
+		"url"  : "/resources/v1/derivedoutput/derivedoutputrules/getconversionrules",
+		"verb" : "POST"
+	},
+	"navigateAndGenerateJobs": {
+		"url"  : "/resources/PLMDerivedOutputWSAPI/derivedoutput_services/expandAndCreateJobs",
+		"verb" : "POST"
+	},
+	"fetch": {
+		"url"  :"/cvservlet/fetch/v2",
+		"verb" : "POST"
+	},
+	"deleteDerivedFormat":{
+		"url"  : "/resources/v2/PLMDerivedOutputEntityWSAPI/derivedoutputentity_services/removeDerivedOutputsOnReps",
+		"verb" : "PATCH"
+	},
+	"deleteJobs":{
+		"url"  : "/resources/PLMDerivedOutputWSAPI/derivedoutput_services/deleteJobsWithIds",
+		"verb" : "POST"
+	},
+	"openJobLink":{
+		"url":"/common/emxNavigator.jsp?objectId="
+	},
+	"getConvDetails":{
+	   "url"  : "/resources/v1/modeler/conversionAdmin/derivedformatmanagement/getconversiondetails",
+	   "verb" : "POST"	   
+	},
+	"getFilterValidSC":{
+	   "url"  : "/resources/v1/ENODerivedOutputStreamServices/derivedformat_services/filterValidSC?command=vplm::EXPORT",
+	   "verb" : "GET"	   
+	}
+}

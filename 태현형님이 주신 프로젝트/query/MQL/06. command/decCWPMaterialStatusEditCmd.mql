@@ -1,0 +1,15 @@
+# Added by hslee on 2023.09.11
+# del command decCWPMaterialStatusEditCmd;
+add command decCWPMaterialStatusEditCmd
+	label 'emxProgramCentral.Button.EditDetails'
+	href 'javascript:editMode()'
+	setting 'Registered Suite' 'ProgramCentral'
+	setting 'Image' "${COMMON_DIR}/images/iconActionEdit.png"
+	setting 'Row Select' 'none'
+;
+
+mod command decCWPMaterialStatusEditCmd
+	add setting 'hasAccess' 'PIM,WFP'
+	add setting 'Access Program' 'decAccess'
+	add setting 'Access Function' 'hasAccess'
+;

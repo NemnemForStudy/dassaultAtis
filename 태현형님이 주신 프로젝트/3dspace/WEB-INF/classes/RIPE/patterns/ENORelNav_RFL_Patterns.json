@@ -1,0 +1,95 @@
+{
+    "relations": [
+    {
+        "name" : "RFL_implementScope_from",
+        "queries" :  [
+            { "definition":[{"navigationType" : "SR","qualityFilter" : {"role" : "51", "semantics" : "5"}, "direction" : "from"},
+                            {"navigationType" : "SR","qualityFilter" : {"role" : "52", "semantics" : "7"}, "direction" : "to"}],
+              "keepTypes": ["RFLPLMFunctionalReference",
+                            "RFLVPMLogicalReference",
+                            "RFLVPMSystemTypeReference",
+                            "RFLPLMFlowReference",
+                            "Requirement Group",
+                            "Requirement Specification",
+                            "Requirement",
+                            "Use Case",
+                            "VPMReference"]}
+        ]
+    },
+    {
+        "name" : "RFL_implementScope_to",
+        "queries" :  [
+            { "definition":[{"navigationType" : "SR","qualityFilter" : {"role" : "52", "semantics" : "7"}, "direction" : "from"},
+                            {"navigationType" : "SR","qualityFilter" : {"role" : "51", "semantics" : "5"}, "direction" : "to"}],
+               "keepTypes": ["RFLPLMFunctionalReference",
+                             "RFLVPMLogicalReference",
+                             "RFLVPMSystemTypeReference",
+                             "RFLPLMFlowReference",
+                             "Requirement Group",
+                             "Requirement Specification",
+                             "Requirement",
+                             "Use Case"]}
+        ]
+    }, 
+    {
+      "name": "RFL_implementOccOcc_from",
+      "instanceManagement" :  true ,
+      "keepInputTypes": ["RFLPLMFunctionalInstance",
+                            "RFLPLMFlowExpositionInstance",
+                            "RFLPLMFlowInstance",
+                            "RFLVPMLogicalInstance",
+                            "RFLVPMSystemTypeExpositionInstance",
+                            "RFLVPMSystemTypeInstance",
+                            "Sub Requirement Group",
+                            "Requirement Group Content",
+                            "Specification Structure",
+                            "Sub Requirement",
+                            "VPMInstance"],
+        "queries" :  [
+            { "definition":[{"navigationType" : "SR","qualityFilter" : {"role" : "51","semantics" : "5"}, "direction" : "from","mode":"ends"},
+                            {"navigationType" : "SR","qualityFilter" : {"role" : "52","semantics" : "7"}, "direction" : "to","mode":"last"}],
+              "keepTypes": ["RFLPLMFunctionalInstance",
+                            "RFLPLMFlowExpositionInstance",
+                            "RFLPLMFlowInstance",
+                            "RFLVPMLogicalInstance",
+                            "RFLVPMSystemTypeExpositionInstance",
+                            "RFLVPMSystemTypeInstance",
+                            "Sub Requirement Group",
+                            "Requirement Group Content",
+                            "Specification Structure",
+                            "Sub Requirement",
+                            "VPMInstance"]}
+        ]
+    },
+    {
+      "name": "RFL_implementOccOcc_to",
+      "instanceManagement" :  true ,
+		  "keepInputTypes": ["RFLPLMFunctionalInstance",
+                            "RFLPLMFlowExpositionInstance",
+                            "RFLPLMFlowInstance",
+                            "RFLVPMLogicalInstance",
+                            "RFLVPMSystemTypeExpositionInstance",
+                            "RFLVPMSystemTypeInstance",
+                            "Sub Requirement Group",
+                            "Requirement Group Content",
+                            "Specification Structure",
+                            "Sub Requirement",
+                            "VPMInstance"],
+        "queries" :  [
+            { "definition":[{"navigationType" : "SR","qualityFilter" : {"role" : "52","semantics" : "7"}, "direction" : "from","mode":"ends"},
+                            {"navigationType" : "SR","qualityFilter" : {"role" : "51","semantics" : "5"}, "direction" : "to","mode":"last"}],
+              "keepTypes": ["RFLPLMFunctionalInstance",
+                            "RFLPLMFlowExpositionInstance",
+                            "RFLPLMFlowInstance",
+                            "RFLVPMLogicalInstance",
+                            "RFLVPMSystemTypeExpositionInstance",
+                            "RFLVPMSystemTypeInstance",
+                            "Sub Requirement Group",
+                            "Requirement Group Content",
+                            "Specification Structure",
+                            "Sub Requirement",
+                            "VPMInstance"]}
+        ]
+    }
+    ]
+}

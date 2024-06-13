@@ -1,0 +1,1 @@
+define("DS/WidgetServices/WidgetServices_cs",{});define("DS/WidgetServices/assets/nls/SecurityContextNls",{ErrorSecurityContextEmpty:"Uživatel nemá preferovaný kontext zabezpečení",ErrorSecurityContext:"Při načítání kontextu zabezpečení došlo k chybě",ErrorTimeOut:"Serveru trvá načítání kontextu zabezpečení příliš dlouho"});

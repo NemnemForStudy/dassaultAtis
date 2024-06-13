@@ -1,0 +1,19 @@
+################################################################################################
+# Create By choimingi 2023. 08. 14
+# Admin Type : command
+# Name : decDILogViewDeliverable 
+################################################################################################
+
+#del command decDILogViewDeliverable;
+add command decDILogViewDeliverable
+	description 'Deliverable Interface HistoryList'
+	label 'emxFramework.Command.decDeliverableStatusCommand'
+	alt 'emxFramework.Command.decDeliverableStatusCommand'
+	setting 'Registered Suite' 'Framework'
+	setting 'Target Location' 'content'
+;
+add property 'command_decDILogViewDeliverable' on prog eServiceSchemaVariableMapping.tcl to command 'decDILogViewDeliverable';
+
+mod command 'decDILogViewDeliverable'
+    href '${COMMON_DIR}/emxIndentedTable.jsp?program=decInterfaceDV:getDILogViewList&table=decDILogViewTable&toolbar=decDILogViewToolbar&header=emxFramework.Command.decDeliverableStatusCommand&selection=multiple&sortColumnName=SITE_CD&submitAction=refreshCaller&HelpMarker=emxhelpprogramlist&sortDirection=ascending&slideinFilter=true&freezePane=IF_FLAG,IF_MSG,IF_INTERFACE_DATE&pageSize=300'
+;

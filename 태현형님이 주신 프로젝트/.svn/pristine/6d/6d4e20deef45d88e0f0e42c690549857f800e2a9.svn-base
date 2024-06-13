@@ -1,0 +1,27 @@
+################################################################################################
+# Create By jhlee 2023. 05. 16
+# Admin Type : command
+# Name : decCwpTaskDelete
+################################################################################################
+
+#del command 'decCwpTaskDelete';
+add command 'decCwpTaskDelete'
+	description 'decCwpTaskDelete'
+	label 'ProgramCentral.Command.decCwpMasterList'
+	href '${COMMON_DIR}/decCwpTaskDeleteProcess.jsp'
+	alt 'ProgramCentral.Command.decCwpMasterList'
+	setting 'Registered Suite' 'ProgramCentral'
+	setting 'Target Location' 'listHidden'
+	setting 'Image' "${COMMON_DIR}/images/iconActionDelete.png"
+	setting 'Submit' 'true'
+	setting 'Row Select' 'multi'
+	setting 'Confirm Message' 'emxProgramCentral.Common.ConfirmDelete'
+;
+add property 'command_decCwpTaskDelete' on prog eServiceSchemaVariableMapping.tcl to command 'decCwpTaskDelete';
+
+mod command decCwpTaskDelete
+ 	label 'ProgramCentral.Command.decCWPTaskDelete' 
+	add setting 'hasAccess' 'PIM,AWP'
+	add setting 'Access Program' 'emxProjectSpace'
+	add setting 'Access Function' 'isAccessPMCUpdate'
+;

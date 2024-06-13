@@ -1,0 +1,9 @@
+m|ENO6WDocumentManagementClient\3DSpaceDocumentConnector.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.0.22078|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\3DSpaceDocumentConnector\3DSpaceDocumentConnector.js|1647692386|1010
+s|ENO6WDocumentManagementClient\3DSpaceDocumentConnector.mweb\src\3DSpaceDocumentConnector.js|1629375936|4801
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

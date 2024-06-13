@@ -1,0 +1,839 @@
+{
+  "maturity": {
+    "create": "Rascunho",
+    "assign": "Pendente",
+    "active": "Em Trabalho",
+    "review": "Em Aprovação",
+    "closed": "Concluído"
+  },
+  "priorities": {
+    "title": "Prioridade",
+    "low": "Baixo",
+    "medium": "Médio",
+    "high": "Alto",
+    "urgent": "Urgente"
+  },
+  "dates": {
+    "seconds": "{number} segundos",
+    "minutes": "{number} minutos",
+    "hours": "{number} horas",
+    "days": "{number} dias",
+    "months": "{number} meses",
+    "years": "{number} anos"
+  },
+  "placeholder": {
+    "reportedAgainstPlaceholder": "Pesquise, selecione no 3D ou solte um objeto para defini-lo como Item afetado.",
+    "resolvedByPlaceholder": "Pesquise, selecione no 3D ou solte um objeto para defini-lo como Resolvido por.",
+    "resolvedItemsPlaceholder": "Pesquise, selecione no 3D ou solte um objeto para defini-lo como Item resolvido.",
+    "contextPlaceholder": "Pesquise ou solte um objeto para defini-lo como Contexto.",
+    "emptyRelatedDatagridView": "Adicine ou solte o conteúdo aqui"
+  },
+  "lifecycle": {
+    "create": "Defina o estado das emissões como 'Rascunho' para indicar que começou a trabalhar nelas.",
+    "assign": "Defina o estado das emissões como 'Pendente' para permitir que os encarregados trabalhem nelas.",
+    "active": "Defina o estado das emissões como 'Em Trabalho' para indicar que está trabalhando nelas.",
+    "review": "Defina o estado das emissões como 'Em Aprovação' para permitir a revisão da correção feita.",
+    "closed": "Defina o estado das emissões como 'Concluído' se todas elas tiverem sido corrigidas.",
+    "CREATE": "Defina o estado das emissões como '{stateDisplayName}' para indicar que começou a trabalhar nelas.",
+    "ASSIGN": "Defina o estado das emissões como '{stateDisplayName}' para permitir que os encarregados trabalhem nelas.",
+    "ACTIVE": "Defina o estado das emissões como '{stateDisplayName}' para indicar que está trabalhando nelas.",
+    "REVIEW": "Defina o estado das emissões como '{stateDisplayName}' para permitir a revisão da correção feita.",
+    "CLOSED": "Defina o estado das emissões como '{stateDisplayName}' se todas elas tiverem sido corrigidas.",
+    "partial": "Falha na operação em {number} emissões.",
+    "error": "Ocorreu um erro. Atualize sua página e tente novamente.",
+    "notSupported": "Somente emissões no mesmo estado de maturidade e processo de validação podem ser promovidas ou rebaixadas.",
+    "routeIndicatorTooltip": {
+      "rejectionTitle": "Rejeitado por:",
+      "approvalTitle": "Aprovado por:",
+      "rejectionText": "{name} em {date}.",
+      "approvalText": "{name} em {date}.",
+      "moreTooltip": {
+        "title": "{number} decisões",
+        "approvalText": "Aprovado em {date}",
+        "rejectionText": "Rejeitado em {date}"
+      },
+      "inProgressTooltip": {
+        "title": "Aguardando aprovação de:",
+        "multiSelectionTitle": "As emissões selecionados estão aguardando aprovações de vários revisores."
+      }
+    },
+    "approveModal": {
+      "reasonLabel": "Comentário",
+      "reasonPlaceholder": "Comentário para a aprovação...",
+      "header": "Aprovar a promoção para '{approveTo}'",
+      "reasonRequired": "Forneça um comentário para a aprovação.",
+      "okButton": "Aprovar",
+      "cancelButton": "Cancelar"
+    },
+    "rejectModal": {
+      "reasonLabel": "Razão",
+      "reasonPlaceholder": "A razão para sua rejeição...",
+      "header": "Rejeitar a promoção de '{approveTo}'",
+      "reasonRequired": "Forneça uma razão para sua rejeição.",
+      "okButton": "Rejeitar",
+      "cancelButton": "Cancelar"
+    },
+    "paths": {
+      "anyStateToClose": "Permitir que o proprietário defina as emissões como 'Concluídas' a partir de qualquer estado.",
+      "approve": "Aprovar",
+      "reject": "Rejeitar"
+    },
+    "orgs": {
+      "Reporting": "Organização Relatora",
+      "Responsible": "Organização Responsável"
+    },
+    "varies": "Varia",
+    "goToNextState": "Próximo estado",
+    "goToPrevState": "Estado anterior"
+  },
+  "routes": {
+    "header": {
+      "states": "Promoção de maturidade",
+      "routes": "Decisões"
+    },
+    "columns": {
+      "reviewer": "Revisor",
+      "date": "Data da decisão",
+      "reason": "Razão/Comentário",
+      "action": "Ação",
+      "attachments": "Anexos"
+    },
+    "attachmentsManagerTitle": "Decisão da promoção de maturidade [{fromState} -> {toState}] [{status}]",
+    "status": {
+      "approved": "Aprovado",
+      "rejected": "Rejeitado",
+      "inProgress": "Em Andamento"
+    },
+    "confirm": "Confirmar",
+    "approve": "Aprovar"
+  },
+  "create": {
+    "title": "emissão",
+    "titleTemplate": "modelos",
+    "templateName": "Nome do Modelo",
+    "templateDesc": "Descrição",
+    "titleActionCreate": "Novo",
+    "titleActionEdit": "Editar",
+    "templateApplySuccess": "O modelo '{name}' foi aplicado com êxito.",
+    "templateApplyError": "Ocorreu um erro ao aplicar o modelo '{name}'.",
+    "templateApplyWarningAttachments": "Alguns anexos referenciados pelo modelo não puderam ser obtidos. Eles não serão adicionados.",
+    "templateApplyWarningRelated": "Alguns objetos relacionados referenciados pelo modelo não puderam ser obtidos. Eles não serão adicionados.",
+    "issueApplySuccess": "A emissão '{title} - {name}' foi aplicada com êxito.",
+    "issueApplyError": "Ocorreu um erro ao aplicar a emissão '{title} - {name}'.",
+    "required": "O campo obrigatório não deve estar vazio.",
+    "creationSuccess": "Emissão criada com êxito.",
+    "creationTemplateSuccess": "Modelo criado com êxito.",
+    "updateTemplateSuccess": "Modelo atualizado com sucesso.",
+    "creationFailed": "Ocorreu um erro durante a criação. Tente novamente.",
+    "classificationFailed": "Ocorreu um erro ao classificar o objeto",
+    "setAttributesFailed": "Ocorreu um erro ao definir os atributos de classificação",
+    "validationFailed": "Alguns campos não estão preenchidos corretamente.",
+    "promotionSuccess": "Emissão promovida com êxito.",
+    "promotionFailed": "Ocorreu um erro durante a promoção.",
+    "uploadImagesFailed": "Ocorreu um erro ao carregar as imagens.",
+    "sendButton": "Iniciar",
+    "saveButton": "Salvar",
+    "saveAsDraftButton": "Salvar como rascunho",
+    "cancelButton": "Cancelar",
+    "settings": "Configurações",
+    "modeToggler": {
+      "multiStep": "Multietapas",
+      "fullView": "Visualização completa",
+      "tooltipMultiStep": "Alternar para a visualização multietapas",
+      "tooltipFullView": "Alternar para a visualização de forma completa"
+    },
+    "start": {
+      "title": "Criar emissões e modelos",
+      "cancelButton": "Cancelar",
+      "actionPage": {
+        "issue": {
+          "title": "Emissão",
+          "fromBlank": "Novo",
+          "fromIssue": "Duplicar uma emissão",
+          "fromTemplate": "A partir de um modelo"
+        },
+        "template": {
+          "title": "Modelo",
+          "fromBlank": "Novo",
+          "fromIssue": "A partir de uma emissão existente",
+          "edit": "Gerenciar",
+          "cloneSuffix": "[DUP]"
+        }
+      }
+    },
+    "views": {
+      "properties": "Propriedades",
+      "relatedObjects": "Conteúdo",
+      "team": "Membros",
+      "attachments": "Anexos",
+      "moreAttributes": "Mais Atributos",
+      "finalize": "Finalizar"
+    },
+    "properties": {
+      "labels": {
+        "title": "Título",
+        "titlePlaceholder": "Título da nova emissão...",
+        "titleHelper": "Um breve resumo de uma linha sobre a emissão.",
+        "required": " * ",
+        "type": "Tipo",
+        "escalationRequired": "Requer escalonamento",
+        "escalationRequired_Yes": "Sim",
+        "escalationRequired_No": "Não",
+        "typePlaceHolder": "",
+        "typeHelper": "Tipo do objeto do problema",
+        "credentials": "Credenciais",
+        "similarIssues": "Emissões semelhantes",
+        "Created": "Criado",
+        "Updated": "Atualizado",
+        "ago": "atrás",
+        "similarIssuesHelper": "Essas emissões têm um título semelhante. É melhor comentar na emissão existente do que criar uma emissão semelhante.",
+        "description": "Descrição",
+        "descriptionPlaceholder": "Escreva uma descrição...",
+        "descriptionHelper": "Uma descrição detalhada do problema.",
+        "classification": "Classificações",
+        "classificationAddBtn": "Adicionar",
+        "classificationPlaceholder": "Escolha uma classe...",
+        "classificationHelper": "Uma ou mais classificações usadas para identificar o problema.",
+        "resolutionRecommendation": "Recomendação de Resolução",
+        "resolutionRecommendationPlaceholder": "Como pode ser feito?",
+        "resolutionRecommendationHelper": "Uma recomendação que explica como a emissão pode ser corrigida.",
+        "priorityHelper": "A importância dessa emissão em relação a outras emissões.",
+        "priorityHelperUrgent": "Urgente: prioridade mais alta. Indica que essa emissão tem precedência sobre as outras.",
+        "priorityHelperHigh": "Alta: indica que essa emissão está causando um problema e requer atenção urgente.",
+        "priorityHelperMedium": "Média: indica que essa emissão tem uma importância relevante.",
+        "priorityHelperLow": "Baixa: indica que essa emissão tem um impacto relativamente pequeno.",
+        "dueDate": "Data de Vencimento",
+        "dueDatePlaceholder": "Selecionar uma Data de Vencimento...",
+        "dueDateHelper": "A data em que essa emissão deve ser concluída.",
+        "resolutionStatement": "Instrução de Resolução",
+        "resolutionStatementPlaceholder": "Como as emissões foram corrigidas?"
+      }
+    },
+    "related": {
+      "labels": {
+        "reportedAgainst": "Itens afetados",
+        "reportedAgainstshortHelper": "Adicione um ou mais objetos para os quais o problema está se manifestando.",
+        "reportedAgainstlongHelper": "Por exemplo, você pode adicionar documentos, objetos de engenharia e fabricação, tarefas ou até mesmo imagens (no destino)",
+        "reportedAgainstPlaceholder": "Pesquise, selecione no 3D ou solte um objeto para defini-lo como Item afetado.",
+        "contexts": "Contextos",
+        "contextshortHelper": "Adicione um ou mais objetos para fornecer mais detalhes sobre o contexto do problema. ",
+        "contextlongHelper": "Por exemplo, um problema tem um documento que pode ter um projeto como contexto, um material de engenharia pode ter um modelo principal como contexto.",
+        "contextPlaceholder": "Pesquise ou solte um objeto para defini-lo como Contexto."
+      },
+      "search": "Pesquisar e adicionar um objeto.",
+      "remove": "Remover os objetos selecionados.",
+      "removeErrorNoSelection": "Selecione alguns objetos para remoção.",
+      "addBalloonAvailable": "Escolha o elemento específico no 3D para adicioná-lo à emissão.",
+      "addBalloonNotAvailable": "A seleção de um recurso 3D só está disponível no 'Issue 3D Review'.",
+      "alreadyReportedAgainst": "Este objeto já foi adicionado. Selecione outro.",
+      "dropError": "Alguns objetos soltos não são suportados.",
+      "selectContextIn3D": "Escolha o elemento específico no 3D para selecionar o contexto da emissão.",
+      "contextMultiError": "A adição de vários objetos ao contexto não é suportada.",
+      "treelist": {
+        "tree": "Título",
+        "ds6w:type": "Tipo",
+        "ds6w:identifier": "Nome",
+        "ds6wg:revision": "Revisão",
+        "occurrence": "Caminho"
+      }
+    },
+    "team": {
+      "labels": {
+        "owner": "Proprietário",
+        "coOwners": "Coordenadores",
+        "ownerHelper": "A pessoa é proprietária do problema e tem todas as responsabilidades.",
+        "coOwnersHelper": "Os coordenadores têm as mesmas responsabilidades que o proprietário, mas não têm permissão para excluir.",
+        "assignees": "Encarregados",
+        "assigneesHelper": "Os designados podem visualizar, editar e resolver o problema.",
+        "reviewers": "Revisores",
+        "contributors": "Colaboradores",
+        "contributorHelper": "Os colaboradores podem visualizar e avaliar o problema.",
+        "informedUsers": "Usuários Informados",
+        "informedUserHelper": "Os usuários informados podem visualizar o problema e são notificados sobre as atualizações.",
+        "assignToMe": "Atribuir a Mim",
+        "reportingOrganization": "Organização Relatora",
+        "reportingOrganizationHelper": "Defina a organização que relata esse problema.",
+        "responsibleOrganization": "Organização Responsável",
+        "responsibleOrganizationHelper": "Defina a organização responsável por esse problema."
+      },
+      "alreadyAssigned": "{name} já foi atribuída.",
+      "removeAssignee": "Clique para remover este usuário.",
+      "cannotAddOwnerAsCoOwner": "Não é possível adicionar o proprietário como coordenador."
+    },
+    "attachments": {
+      "labels": {
+        "attachmentsshortHelper": "Adicione uma ou mais informações para ajudar na análise do problema.",
+        "attachmentslongHelper": "Por exemplo, pode ser uma imagem ou documentos relacionados ao assunto, como uma solicitação de documento de proposta ou artigos de notícias",
+        "attachmentsPlaceholder": "Carregue/solte um arquivo, pesquise/solte um objeto da 3DEXPERIENCE ou faça uma captura de tela anotada para criar e adicionar um novo anexo.",
+        "attachmentsPlaceholderNotAvailable": "Carregue/solte um arquivo ou pesquise/solte um objeto da 3DEXPERIENCE para criar e adicionar um novo anexo.",
+        "attachments": "Anexos"
+      },
+      "screenshotAvailable": "Fazer uma captura de tela.",
+      "screenshotNotAvailable": "O recurso de captura de tela só está disponível no 'Issue 3D Review'.",
+      "remove": "Remover os documentos selecionados.",
+      "removeErrorNoSelection": "Selecione alguns documentos para remover.",
+      "attach": {
+        "fromLocalDisk": "Do Disco Local",
+        "from3DX": "Adicionar Existente"
+      },
+      "annotate": "Anotar"
+    },
+    "finalize": {
+      "labels": {
+        "lifecycle": "Ciclo de vida",
+        "approval": "Aprovação",
+        "template": "Modelo",
+        "saveAsTemplate": "Salvar como Modelo",
+        "templateNamePlaceholder": "O nome do modelo (campo obrigatório)...",
+        "templateDescriptionPlaceholder": "A descrição do modelo...",
+        "templateOverwrite": "Um modelo existente com o mesmo nome será substituído."
+      },
+      "closeDialogToggle": "Fechar a caixa de diálogo após a criação.",
+      "enableApproval": "Permitir que a aprovação garanta a validação e a revisão desta emissão.",
+      "assignContentOwner": "Atribua automaticamente o proprietário do conteúdo à emissão.",
+      "saveAsTemplateToggle": "Salve a Emissão como um template reutilizável."
+    },
+    "moreAttributes": {
+      "selectPlaceholder": "Selecionar um valor",
+      "textPlaceholder": "Inserir um valor",
+      "numberPlaceholder": "Inserir um valor"
+    }
+  },
+  "templates": {
+    "title": "Selecionar um modelo",
+    "titleEdit": "Gerenciar modelos",
+    "cancelButton": "Cancelar",
+    "closeButton": "Fechar",
+    "selectButton": "Selecionar",
+    "treeList": {
+      "shared": "Compartilhado",
+      "tree": "Nome",
+      "description": "Descrição",
+      "owner": "Proprietário",
+      "isNotShared": "Este modelo é privado",
+      "isShared": "Este modelo foi compartilhado",
+      "placeholder": "Nenhum modelo disponível"
+    },
+    "iconBar": {
+      "title": "Modelos",
+      "create": "Novo",
+      "fromIssue": "Nova a partir de emissão",
+      "clone": "Duplicar",
+      "edit": "Editar",
+      "delete": "Excluir",
+      "share": "Compartilhar"
+    },
+    "lastUsed": {
+      "title": "Usado recentemente"
+    },
+    "preview": {
+      "objectCount": "objetos",
+      "noObject": "Nenhum objeto"
+    },
+    "shared": {
+      "title": "Modelo compartilhado de emissão - {owner}",
+      "description": "Este documento contém um modelo compartilhado de emissão.",
+      "file": "Modelo compartilhado de emissão - {owner}",
+      "popover": {
+        "title": "Link para este modelo compartilhado",
+        "copy": "Copiar link"
+      }
+    },
+    "confirmDelete": {
+      "title": "Excluindo {number} modelos",
+      "text": "Tem certeza de que deseja excluir os modelos selecionados? Esta ação os removerá <b>permanentemente</b> e não poderá ser desfeita.",
+      "sharedInfo": "Os modelos compartilhados que não são de sua propriedade serão removidos <b>somente da sua lista</b>.",
+      "sharedWarning": "Os modelos compartilhados que são de sua propriedade serão removido<b>de todos os usuários</b>.",
+      "okButton": "Excluir",
+      "cancelButton": "Cancelar"
+    },
+    "clonePrefix": "Duplicar de {name}",
+    "errors": {
+      "get": "Ocorreu um erro ao recuperar modelos. Atualize a página e tente novamente.",
+      "remove": "Ocorreu um erro ao remover modelos. Atualize a página e tente novamente.",
+      "save": "Ocorreu um erro ao salvar modelos. Atualize a página e tente novamente."
+    },
+    "notifications": {
+      "sharedSuccess": "Este modelo foi compartilhado e uma URL compartilhável foi gerada.",
+      "sharedTemplateAdded": "Um modelo compartilhado foi adicionado com êxito à sua lista de modelos.",
+      "sharedTemplateNotValid": "Este modelo compartilhado não é mais válido. Ele não foi adicionado à sua lista de modelos.",
+      "sharedTemplateAlreadyAdded": "Este modelo compartilhado já está em sua lista de modelos.",
+      "sharedTemplateNotAdded": "Ocorreu um erro ao adicionar o modelo compartilhado. Atualize a página e tente novamente.",
+      "sharedTemplateURL": "O URL do modelo compartilhado foi copiado para a área de transferência."
+    }
+  },
+  "open": {
+    "dialog": {
+      "title": "Abrir objetos em...",
+      "open": "Abrir",
+      "cancel": "Cancelar"
+    },
+    "labels": {
+      "placeholder": "Selecione o aplicativo",
+      "contexts": "Contextos",
+      "reportedAgainst": "Itens afetados",
+      "resolvedBy": "Resolvido por",
+      "resolvedItems": "Itens resolvidos",
+      "nothing": "Nada para abrir. Selecione outro objeto."
+    },
+    "error": "Ocorreu um erro ao abrir os objetos selecionados. Atualize e tente novamente."
+  },
+  "close": {
+    "preparing": "Preparando a alteração de estado para 'Concluído'...",
+    "titleSingle": "Definir {number} emissão como 'Concluída'",
+    "titleMultiple": "Definir {number} emissões como 'Concluídas'",
+    "nothing": "Não há emissões a serem definidas como 'Concluídas'.",
+    "close": "Definir como Concluída",
+    "cancel": "Cancelar",
+    "warning": "Tem certeza de que deseja definir estas emissões como 'Concluídas'?",
+    "closable": "Definir as seguintes emissões como 'Concluídas' impedirá qualquer modificação, a menos que elas sejam reabertas:",
+    "indelible": "As seguintes emissões já foram concluídas:",
+    "singleSuccess": "{title} foi definida como 'Concluída'.",
+    "multipleSuccess": "{number} emissões foram definidas como 'Concluídas'.",
+    "error": "Ocorreu um erro durante a alteração de estado para 'Concluída'. Tente novamente."
+  },
+  "reopen": {
+    "preparing": "Preparando-se para reabrir...",
+    "title": "Reabrindo {number} emissões",
+    "nothing": "Não há emissões para reabrir.",
+    "reopen": "Reabrir",
+    "cancel": "Cancelar",
+    "warning": "Tem certeza de que deseja reabrir essas emissões?",
+    "closable": "Reabrindo as seguintes emissões:",
+    "indelible": "As seguintes emissões ainda não foram definidas como 'Concluídas':",
+    "singleSuccess": "{title} foi reaberta.",
+    "multipleSuccess": "{number} emissões foram reabertas.",
+    "error": "Ocorreu um erro durante a reabertura das emissões. Tente novamente."
+  },
+  "delete": {
+    "preparing": "Preparando a exclusão...",
+    "title": "Excluindo {number} emissões",
+    "nothing": "Não há emissões a serem excluídas.",
+    "delete": "Excluir",
+    "cancel": "Cancelar",
+    "warning": "Tem certeza de que deseja excluir este conteúdo?",
+    "deletable": "A exclusão das seguintes emissões as removerá <b>permanentemente</b> e não poderá ser desfeita:",
+    "indelible": "As seguintes emissões não podem ser excluídas, pois não estão no estado 'Rascunho':",
+    "singleSuccess": "{title} foi excluída.",
+    "multipleSuccess": "{number} emissões foram excluídas.",
+    "error": "Ocorreu um erro durante a exclusão. Tente novamente.",
+    "deletePrivilege": "Somente o usuário Admin pode remover a rota concluída."
+  },
+  "duplicate": {
+    "titleSingle": "Duplicar {number} emissão",
+    "titleMultiple": "Duplicar {number} emissões",
+    "preparing": "Preparando a duplicação...",
+    "duplicate": "Duplicar",
+    "cancel": "Cancelar",
+    "content": "As seguintes emissões serão duplicadas (<i>as emissões duplicadas serão de sua propriedade no estado 'Rascunho'</i>):",
+    "singleSuccess": "{title} foi duplicada.",
+    "multipleSuccess": "{number} emissões foram duplicadas.",
+    "multipleCopiesSuccess": "{number} emissões foram duplicadas {multiplication} vezes.",
+    "error": "Ocorreu um erro durante a duplicação. Tente novamente.",
+    "keepRelated": "Mantenha os itens afetados existentes e o contexto em emissões duplicadas",
+    "keepAttachments": "Manter os anexos nas emissões duplicadas",
+    "advancedOptions": "Duplicação Avançada",
+    "titleModifier": "Modificadores de Título",
+    "copyCount": "Número de cópias",
+    "replace": "Substituir",
+    "replacePlaceholder": "Substituir a String de Título",
+    "suffix": "Sufixo",
+    "suffixPlaceholder": "Sufixo do Título",
+    "prefix": "Prefixo",
+    "prefixPlaceholder": "Prefixo do Título",
+    "iterator": "Iterador",
+    "iteratorPlaceholder": "Padrão do Iterador",
+    "replaceHelp": "Forneça a parte do título que será substituída como string ou expressão regular seguida da string substituta. Ambas as partes serão separadas por, por exemplo, [a-z]*:Teste substituirá todas as strings minúsculas no título por Teste",
+    "suffixHelp": "Forneça a string para o sufixo do título das emissões duplicadas",
+    "prefixHelp": "Forneça a string para o prefixo do título das emissões duplicadas",
+    "iteratorHelp": "Forneça a parte do título que será aumentada após a duplicação como string ou expressão regular. A parte numérica será aumentada",
+    "confirmTitle": "Confirmar a duplicação de {number} emissões.",
+    "confirm": "Confirmar",
+    "confirmMsg": "A emissão {title} será duplicada como"
+  },
+  "images": {
+    "title": "{count} imagens",
+    "actions": {
+      "download": "Fazer Download",
+      "upload": "Carregar",
+      "delete": "Excluir",
+      "popup": "Pop-up",
+      "annotate": "Anotar"
+    },
+    "noImages": "Nenhuma imagem a ser exibida.",
+    "popup": {
+      "title": "Exibição de Imagem",
+      "holdIssue": "Reter a emissão atual",
+      "releaseIssue": "Liberar a emissão atual"
+    },
+    "delete": {
+      "cancel": "Cancelar",
+      "confirmDeleteTitle": "Excluir Imagem",
+      "confirmDeleteMessage": "Tem certeza de que deseja excluir esta imagem permanentemente?",
+      "imageDisplayDeleteError": "Erro ao excluir imagens",
+      "okButton": "OK",
+      "pictureDeleted": "Os arquivos de imagem foram excluídos."
+    },
+    "notSupported": "Este formato de arquivo não é suportado. <br>Arquivo: {name}.",
+    "errorUpload": "Não é possível carregar a imagem {name}.",
+    "pictureUploaded": "Os arquivos de imagem foram carregados."
+  },
+  "team": {
+    "titleSingle": "{count} membro",
+    "titleMultiple": "{count} membros",
+    "error": {
+      "loadContent": "Não é possível recuperar informações da emissão.",
+      "alreadyAdded": "O usuário {name} já foi adicionado ao {role} das emissões selecionadas.",
+      "isOwner": "O usuário {name} é o proprietário das emissões selecionadas e, portanto, não pode ser adicionado como coordenador.",
+      "notSupportedDrop": "Os objetos soltos não são suportados.",
+      "notFound": "Nenhum resultado encontrado.",
+      "skipRemoveOwner": "O proprietário será ignorado da remoção.",
+      "warnRemoveOwner": "O proprietário não pode ser removido.",
+      "dropNotSupported": "Esta operação de soltar não é suportada.",
+      "notSupportedObjects": "Alguns objetos soltos não são suportados."
+    },
+    "success": {
+      "update": "{role} foram atualizados."
+    },
+    "filter": {
+      "title": "Filtrar",
+      "placeholder": "Filtrar membros de equipe",
+      "filterByName": "Filtrar por título",
+      "searchPlaceholder": "Digite o título para filtrar...",
+      "filterByResponsibilities": "Filtrar por responsabilidades",
+      "filterAll": "Tudo",
+      "filterAssignees": "Encarregados",
+      "filterCoowners": "Coordenadores",
+      "filterContributors": "Colaboradores"
+    },
+    "owner": {
+      "title": "Proprietário",
+      "label": "Proprietário",
+      "changeOwnership": "Alterar proprietário"
+    },
+    "confirmRemoveTitle": "Remover '{user}' de '{role}'",
+    "confirmRemoveText": "Tem certeza de que deseja excluir '{user}' de '{role}'?",
+    "removeOkButton": "Remover",
+    "removeCancelButton": "Cancelar",
+    "coOwners": {
+      "title": "Coordenadores",
+      "label": "Coordenador",
+      "add": "Adicionar um coordenador",
+      "propagate": "Propagar este coordenador por todas as emissões selecionadas",
+      "propagateAll": "Propagar todos os coordenador por todas as emissões selecionadas",
+      "remove": "Remover coordenador das emissões selecionadas",
+      "search": {
+        "placeholder": "Pesquisar um usuário para ser adicionado como coordenador..."
+      },
+      "addSelf": "Atribuir a Mim"
+    },
+    "assignees": {
+      "title": "Encarregados",
+      "label": "Encarregado",
+      "add": "Adicionar um encarregado",
+      "propagate": "Propagar este encarregado por todas as emissões selecionadas",
+      "propagateAll": "Propagar todos os encarregados por todas as emissões selecionadas",
+      "remove": "Remover encarregado das emissões selecionadas",
+      "search": {
+        "placeholder": "Pesquisar um usuário para ser adicionado como encarregado..."
+      },
+      "addSelf": "Atribuir a si mesmo"
+    },
+    "contributors": {
+      "title": "Colaboradores",
+      "label": "Colaborador",
+      "add": "Adicionar um colaborador",
+      "propagate": "Propagar este colaborador por todas as emissões selecionadas",
+      "propagateAll": "Propagar todos os colaboradores por todas as emissões selecionadas",
+      "remove": "Remover colaborador das emissões selecionadas",
+      "search": {
+        "placeholder": "Pesquisar um usuário para adicionar como colaborador..."
+      }
+    },
+    "informedUsers": {
+      "title": "Usuários Informados",
+      "label": "Usuário Informado",
+      "propagate": "Propagar este usuário informado por todas as emissões selecionadas",
+      "propagateAll": "Propagar todos os usuários informados por todas as emissões selecionadas",
+      "remove": "Remover usuário informado das emissões selecionadas",
+      "search": {
+        "placeholder": "Pesquisar um usuário para adicionar como usuário informado..."
+      }
+    },
+    "common": {
+      "tooltip": "Este membro está atribuído a todas as emissões selecionadas.",
+      "label": "Está Atribuído",
+      "notLabel": "Varia",
+      "varies": "Varia",
+      "allIssues": "Todas as emissões"
+    },
+    "notSaved": {
+      "tooltip": "Este membro ainda não foi salvo."
+    },
+    "changeLayout": "Alterar Layout da Vista",
+    "columns": {
+      "name": "Nome",
+      "title": "Título",
+      "memberof": "Membro de",
+      "responsibility": "Responsabilidade",
+      "actions": "Ações"
+    },
+    "toolbar": {
+      "gridView": "Exibição da Grade de Dados",
+      "tileView": "Exibição de Bloco",
+      "addMember": "Adicionar membros",
+      "assignToSelf": "Atribuir a si próprio",
+      "remove": "Remover",
+      "filter": "Filtrar",
+      "propagateCoowners": "Propagar todos os coordenadores",
+      "propagateAssignees": "Propagar todos os encarregados",
+      "propagateContributors": "Propagar todos os colaboradores",
+      "propagateInformedUsers": "Propagar todos os usuários informados"
+    },
+    "menu": {
+      "coowner": "Coordenador",
+      "assignee": "Encarregado",
+      "contributor": "Colaborador",
+      "informedUser": "Usuário Informado",
+      "remove": "Remover",
+      "profile": "Exibir perfil",
+      "propagate": "Propagar",
+      "changeOwner": "Alterar proprietário"
+    },
+    "addMember": {
+      "assignee": "Encarregados",
+      "coowner": "Coordenadores",
+      "contributor": "Colaboradores",
+      "informedUser": "Usuários Informados",
+      "typeToSearch": "solte aqui ou digite para pesquisar",
+      "noSearchFound": "Nenhuma pesquisa encontrada",
+      "add": "Adicionar",
+      "cancel": "Cancelar"
+    },
+    "datagridPlaceholder": "Nenhum objeto encontrado",
+    "removeTitle": "Remover",
+    "removeMessage": "Tem certeza de que deseja remover este membro do problema?",
+    "memberAlreadyAdded": "Alguns membros já foram adicionados."
+  },
+  "search": {
+    "error": {
+      "usersNotFound": "O usuário ou organização especificado não pode ser encontrado: {users}.",
+      "orgNotFound": "Não é possível localizar a organização."
+    },
+    "info": {
+      "expressSearch": "Pressione Enter para adicionar esses usuários."
+    }
+  },
+  "resolveIssues": {
+    "title": "Resolver emissões",
+    "okButton": "OK",
+    "cancel": "Cancelar",
+    "reportedAgainst": "Itens afetados",
+    "resolvedBy": "Resolvido por",
+    "resolvedItems": "Itens resolvidos",
+    "issue": "Emissão",
+    "item": "{count} item",
+    "items": "{count} itens",
+    "revisionFamily": "Família da revisão",
+    "addReportedAgainst": "Adicionar item afetado",
+    "addResolvedBy": "Adicionar Resolvido por",
+    "addResolvedItems": "Adicionar itens resolvidos",
+    "pickReportedAgainst": "Escolher item afetado",
+    "pickResolvedBy": "Escolher Resolvido por",
+    "pickResolvedItems": "Escolher itens resolvidos",
+    "addObjectsForReportedAgainst": "Adicionar a Itens afetados",
+    "addObjectsForResolvedBy": "Adicionar a Resolvido por",
+    "changeViewLayout": "Alterar Layout da Vista",
+    "errorSameIssue": "O mesmo objeto de Problema não pode ser adicionado como Resolvido por.",
+    "tooltips": {
+      "propagateHeaderTooltip": "Propagar",
+      "propagateTooltip": "Propagar pelas emissões selecionadas.",
+      "isLastRevision": "Esta é a revisão mais recente",
+      "isNotLastRevision": "Esta não é a revisão mais recente",
+      "noIsLastRevision": "Não aplicável"
+    },
+    "contextualMenus": {
+      "remove": "Remover",
+      "propagate": "Propagar",
+      "maturity": "Maturidade",
+      "compare": "Compare",
+      "relationalExplorer": "Relações",
+      "openWith": "Abrir com",
+      "replaceByRevision": "Substituir pela revisão",
+      "replaceByLatestRevision": "Substituir pela revisão mais recente",
+      "replaceByReleasedLatestRevision": "Substituir pela revisão mais recente liberada",
+      "replaceByStableLatestRevision": "Substitua pela revisão mais recente estável",
+      "preview": "Visualizar",
+      "edit": "Editar",
+      "undoEdit": "Desfazer edição",
+      "update": "Atualizar",
+      "information": "Informações",
+      "download": "Fazer download"
+    },
+    "label": "Título",
+    "name": "Nome",
+    "type": "Tipo",
+    "revision": "Revisão",
+    "isLastRevision": "É a revisão mais recente",
+    "actions": "Ações",
+    "common": "",
+    "propagate": "Propagar",
+    "state": "Estado de maturidade",
+    "pickupError_needtoExitInspectionMode": "Não é possível selecionar objetos no modo de inspeção.",
+    "successResolved": "Conteúdos atualizados.",
+    "attachSuccess": {
+      "reportedAgainst": "Você adicionou {count} objetos a {issue} como itens afetados.",
+      "resolvedBy": "Você adicionou {count} objetos a {issue} como Resolvido por.",
+      "resolvedItems": "Você adicionou {count} objetos a {issue} como itens resolvidos.",
+      "contexts": "Você adicionou {count} objetos a {issue} como contextos.",
+      "attachments": "Você adicionou {count} objetos a {issue} como anexos."
+    },
+    "attachSuccessMultiple": {
+      "reportedAgainst": "Você adicionou {count} objetos a diversos problemas como itens afetados.",
+      "resolvedBy": "Você adicionou {count} objetos a diversos problemas como Resolvido por.",
+      "resolvedItems": "Você adicionou {count} objetos a diversos problemas como itens resolvidos.",
+      "contexts": "Você adicionou {count} objetos a diversos problemas como contextos."
+    },
+    "errorResolved": "Não foi possível atualizar os Conteúdos.",
+    "nothingToAdd": "Os objetos selecionados já foram adicionados.",
+    "nothingToReplace": "Não há objetos a serem substituídos.",
+    "errorFetch": "Não é possível recuperar informações do objeto.",
+    "errorGetIssues": "Não é possível recuperar informações da emissão.",
+    "errorShowIssues": "Selecione emissões no estado 'Em trabalho' e tente novamente.",
+    "errorNotSupportedMultipleObject": "O objeto múltiplo não é suportado.",
+    "errorNotSupportedObject": "Este tipo de conteúdo não é suportado. Use o aplicativo apropriado do Compass para abrir esse tipo de conteúdo.",
+    "issueNotDroppable": "Este objeto não é suportado.",
+    "propertiesTitle": "Propriedades",
+    "confirmDialog": {
+      "detachTitle": "Desanexar {number} objetos de {issues} emissões",
+      "confirmDetach": "Tem certeza de que deseja desanexar os itens selecionados?",
+      "propagateTitle": "Propagar {number} objetos por {issues} emissões",
+      "confirmPropagate": "Tem certeza de que deseja propagar os objetos selecionados?",
+      "replaceByLatestRevisionTitle": "Substituir {number} objetos pela revisão mais recente em {issues} emissões",
+      "confirmReplaceByLatestRevision": "Tem certeza de que deseja substituir os objetos selecionados pela revisão mais recente?",
+      "replaceByReleasedLatestRevisionTitle": "Substituir {number} objetos pela revisão mais recente liberada em {issues} emissões",
+      "confirmReplaceByReleasedLatestRevision": "Tem certeza de que deseja substituir os objetos selecionados pela revisão mais recente liberada?",
+      "replaceByStableLatestRevisionTitle": "Substituir {number} objetos pela revisão mais recente estável em {issues} emissões",
+      "confirmReplaceByStableLatestRevision": "Tem certeza de que deseja substituir os objetos selecionados pela revisão mais recente estável?",
+      "confirmReplaceByTitleMessage": "{target} foi substituído por {latest}"
+    },
+    "contexts": {
+      "okButton": "OK",
+      "cancel": "Cancelar",
+      "contexts": "Contextos",
+      "columnTitle": "Título",
+      "columnName": "Nome",
+      "columnType": "Tipo",
+      "columnRevision": "Revisão",
+      "addContext": "Adicionar Contexto",
+      "pickContext": "Escolher Contexto",
+      "detachContext": "Desanexar Contexto",
+      "contextualMenus": {
+        "detach": "Desanexar",
+        "propagate": "Propagar",
+        "collaborativeLifecycle": "Maturidade",
+        "compare": "Compare",
+        "relationalExplorer": "Relações",
+        "openWith": "Abrir com"
+      },
+      "errorNotSupportedMultipleObject": "O objeto múltiplo não é suportado.",
+      "errorNotSupportedObject": "Este objeto não é suportado.",
+      "errorToGetContext": "Não é possível recuperar informações do objeto de contexto.",
+      "successUpdateContext": "O contexto foi atualizado.",
+      "successDetachContext": "O contexto foi desanexado.",
+      "errorUpdateContext": "Não é possível atualizar o contexto.",
+      "errorDetachContext": "Não é possível desanexar contexto.",
+      "confirmDetachContextTitle": "Desanexar Contexto",
+      "confirmDetachContextMessage": "Tem certeza de que deseja desanexar este contexto?",
+      "confirmUpdateContextTitle": "Atualizar Contexto",
+      "confirmUpdateContextMessage": "Tem certeza de que deseja atualizar este contexto?"
+    }
+  },
+  "tasks": {
+    "selectIn3D": "Forneça um objeto existente para ser adicionado, cuja origem seja um aplicativo 3D compatível.",
+    "addObjects": "Forneça alguns objetos existentes para serem adicionados.",
+    "takeScreenshot": "Forneça uma imagem para ser adicionada."
+  },
+  "helper": {
+    "states": {
+      "create": "A emissão está recebendo detalhes antes de ser atribuída.",
+      "assign": "A emissão foi atribuída e está aguardando para ser trabalhada.",
+      "active": "A emissão está sendo trabalhada pelos encarregados.",
+      "review": "A solução proposta está sendo revisada.",
+      "closed": "A solução foi aceita pelo criador e a emissão foi definida como 'Concluída'."
+    },
+    "dialog": {
+      "title": "Aplicativos do Gerenciamento de Emissões - Ajuda",
+      "tabStates": "Estados",
+      "tabShortcuts": "Atalhos",
+      "subtitleShortcuts": "Teclas de atalho",
+      "subtitleMouseOperation": "Operações com o mouse",
+      "workflow": "Fluxo de trabalho",
+      "states": {
+        "create": "A emissão está recebendo detalhes antes de ser atribuída.",
+        "assign": "A emissão foi atribuída e está aguardando para ser trabalhada.",
+        "active": "A emissão está sendo trabalhada pelos encarregados.",
+        "review": "A solução proposta para a emissão está sendo analisada.",
+        "closed": "A solução foi aceita pelo criador e a emissão foi definida como 'Concluída'."
+      },
+      "shortcut": {
+        "key": {
+          "shortcut": {
+            "delete": "Excluir",
+            "arrowUp": "Subir",
+            "arrowDown": "Descer",
+            "arrowLeft": "Esquerda",
+            "arrowRight": "Direita",
+            "enter": "Enter",
+            "shiftArrow": "Shift + Setas",
+            "ctrlA": "Ctrl + A",
+            "ctrlC": "Ctrl + C"
+          },
+          "mouse": {
+            "ctrlClick": "Ctrl + Clique",
+            "shiftClick": "Shift + Clique",
+            "doubleClick": "Clicar duas vezes"
+          }
+        },
+        "detail": {
+          "shortcut": {
+            "delete": "Excluir/Desanexar item",
+            "arrowUp": "Ir para o item anterior",
+            "arrowDown": "Ir para o próximo item",
+            "arrowLeft": "Recolher item/Ir para o item anterior",
+            "arrowRight": "Expandir item/Ir para o próximo item",
+            "enter": "Abrir o painel de propriedades/Enviar entrada de texto",
+            "shiftArrow": "Selecionar vários itens",
+            "ctrlA": "Selecionar todos os itens",
+            "ctrlC": "Copiar item selecionado"
+          },
+          "mouse": {
+            "ctrlClick": "Selecionar vários itens em que clicou/Cancelar a seleção",
+            "shiftClick": "Selecionar todos os itens no trajeto do clique",
+            "doubleClick": "Abrir o painel de propriedades/Expandir ou recolher item"
+          }
+        }
+      }
+    }
+  },
+  "users": {
+    "more": "Mais informações"
+  },
+  "toolbar": {
+    "ISU_TOOLTIP_GRID_VIEW": "Exibição da Grade de Dados",
+    "ISU_TOOLTIP_TILE_VIEW": "Exibição de Bloco",
+    "pickCommand": "Escolher Conteúdos",
+    "pickAffectedItem": "Escolher Itens afetados",
+    "pickResolvedBy": "Escolher Resolvido por",
+    "pickResolvedItems": "Escolher itens resolvidos",
+    "pickContext": "Escolher Contextos",
+    "addCommand": "Adicionar da Pesquisa",
+    "addAffectedItem": "Adicionar Itens afetados",
+    "addResolvedBy": "Adicionar Resolvido por",
+    "addResolvedItems": "Adicionar itens resolvidos",
+    "addContexts": "Adicionar Contextos"
+  },
+  "columns": {
+    "actionsColumn": "Ações"
+  }
+}

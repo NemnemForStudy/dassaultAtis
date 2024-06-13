@@ -1,0 +1,1 @@
+define("DS/ENONextGenFilterCmd/ENONextGenFilterCmd_ko",{});define("DS/ENONextGenFilterCmd/assets/nls/ENONextGenFilterCmd",{RootsToFilter:"필터링할 결재 라인 선택"});

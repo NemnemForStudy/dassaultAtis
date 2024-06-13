@@ -1,0 +1,1 @@
+Proj4js.defs["EPSG:7796"] = "+proj=geocent +ellps=GRS80 +units=m +no_defs";

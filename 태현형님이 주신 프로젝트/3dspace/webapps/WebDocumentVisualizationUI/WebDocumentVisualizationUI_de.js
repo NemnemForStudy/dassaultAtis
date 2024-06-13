@@ -1,0 +1,1 @@
+define("DS/WebDocumentVisualizationUI/WebDocumentVisualizationUI_de",{});define("DS/WebDocumentVisualizationUI/assets/nls/WebDocumentVisualizationUI",{bookmarksPanel:{title:"Lesezeichen",expandOrCollapseAll:"Ein- und Ausblenden aller Elemente umschalten"}});

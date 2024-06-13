@@ -1,0 +1,1 @@
+define("DS/ENODOUtilsServices/ENODOUtilsServices_de",{});define("DS/ENODOUtilsServices/assets/nls/enodo_notifications",{error:{title:"Fehler",security_context_fail:"Serveranfrage kann nicht gesendet werden: Fehler beim Abrufen des Sicherheitskontexts."}});

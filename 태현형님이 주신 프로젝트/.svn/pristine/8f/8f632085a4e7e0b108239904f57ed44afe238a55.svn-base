@@ -1,0 +1,1 @@
+define("DS/GraphListView/GraphListView_ko",{});define("DS/GraphListView/assets/nls/ColumnsTitles",{colGraph:"그래프",colTitle:"제목 ",colMenu:"메뉴",colIntent:"의도",colSpecification:"",colFilter:"필터"});

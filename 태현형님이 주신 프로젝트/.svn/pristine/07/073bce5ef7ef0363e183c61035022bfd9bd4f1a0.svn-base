@@ -1,0 +1,20 @@
+{
+  "version": "1.0.0",
+  "summary": "Tworzy nową tablicę wypełnioną wynikami wywołania wykresu na każdym elemencie tablicy wywołującej.",
+  "description": "Ten blok może mapować dowolny typ tablicy <doc-idp-name translate=no>Input</doc-idp-name> do dowolnego typ tablicy wyjściowej. <br>Aby umożliwić proces mapowania, należy edytować wykres wewnętrzny.",
+  "dataPorts": {
+    "Input": "Tablica wejściowa przeznaczona do zmapowania. <br>Ten port danych obsługuje wszystkie typy tablic.",
+    "SharedData": "Dane do udostępnienia w każdym wewnętrznym wystąpieniu wykresu. <br>Ten port danych obsługuje wszystkie typy. <br>Jeśli konieczne jest udostępnienie kilku danych różnych typów, zaleca się utworzenie niestandardowego typu użytkownika.",
+    "Success": "Pomyślna tablica wyjściowa. <br>Ten port danych obsługuje wszystkie typy tablic. <br>Rozmiar tej tablicy będzie zawsze równy rozmiarowi tablicy <doc-idp-name translate=no>Input</doc-idp-name>.",
+    "State": "Tablica <doc-valuetype translate=no>ArrayMapState</doc-valuetype> z podaniem <doc-valuetype translate=no>EExecutioniState</doc-valuetype> w każdym indeksie tablicy wyjściowej <doc-odp-name translate=no>Success</doc-odp-name>. <br>Rozmiar tej tablicy będzie zawsze równy rozmiarowi tablicy <doc-idp-name translate=no>Input</doc-idp-name>.",
+    "Progress": "Tablica <doc-valuetype translate=no>ArrayMapProgress</doc-valuetype> z podaniem <doc-valuetype translate=no>EExecutionState</doc-valuetype> w każdym indeksie tablicy wejściowej <doc-odp-name translate=no>Input</doc-odp-name>. <br>Tablica może zostać wypełniona kilkoma danymi w jednym przebiegu, ponieważ zależy to od procesu dystrybucji za blokiem. <br>Jednak rozmiar tej tablicy nie przekroczy rozmiaru tablicy <doc-idp-name translate=no>Input</doc-idp-name>.",
+    "Error": "Tablica <doc-valuetype translate=no>ArrayMapError</doc-valuetype> z obiektem błędu dla indeksu tablicy wejściowej <doc-odp-name translate=no>Input</doc-odp-name>. <br>Rozmiar tej tablicy nie przekroczy rozmiaru tablicy <doc-idp-name translate=no>Input</doc-idp-name>."
+  },
+  "controlPorts": {
+    "In": "wyzwala wykonanie bloku.",
+    "Success": "jest aktywowane po pomyślnym zakończeniu procesu.",
+    "Progress": "jest aktywowane za każdym razem, gdy nastąpi postęp.",
+    "Error": "jest aktywowane w przypadku wystąpienia błędu."
+  },
+  "example": null
+}

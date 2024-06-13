@@ -1,0 +1,20 @@
+{
+  "version": "1.0.0",
+  "summary": "Создает новый массив, заполненный результатами вызова предоставленного графика для каждого элемента вызывающего массива.",
+  "description": "Этот блок может сопоставить любой тип массива <doc-idp-name translate=no>Input</doc-idp-name> с любым типом массива вывода. <br>Внутренний график необходимо изменить, чтобы обеспечить процесс сопоставления.",
+  "dataPorts": {
+    "Input": "Массив ввода для сопоставления. <br>Этот порт данных поддерживает все типы массивов.",
+    "SharedData": "Данные для совместного использования в каждом экземпляре внутреннего графика. <br>Этот порт данных поддерживает все типы. <br>Рекомендуется создать пользовательский тип, если необходимо предоставить общий доступ к нескольким данным разных типов.",
+    "Success": "Массив выходных данных успешно создан. <br>Этот порт данных поддерживает все типы массивов. <br>Размер этого массива всегда будет равен размеру массива <doc-idp-name translate=no>Input</doc-idp-name>.",
+    "State": "Массив <doc-valuetype translate=no>ArrayMapState</doc-valuetype>, указывающий значение <doc-valuetype translate=no>EExecutionState</doc-valuetype> в каждом индексе массива вывода <doc-odp-name translate=no>Success</doc-odp-name>. <br>Размер этого массива всегда будет равен размеру массива <doc-idp-name translate=no>Input</doc-idp-name>.",
+    "Progress": "Массив <doc-valuetype translate=no>ArrayMapProgress</doc-valuetype>, указывающий значение <doc-valuetype translate=no>EExecutionState</doc-valuetype> в каждом индексе массива ввода <doc-odp-name translate=no>Input</doc-odp-name>. <br>Этот массив может быть заполнен несколькими данными за один период выполнения, так как он зависит от процесса распределения за блоком. <br>Но размер этого массива не должен превышать размер массива <doc-idp-name translate=no>Input</doc-idp-name>.",
+    "Error": "Массив <doc-valuetype translate=no>ArrayMapError</doc-valuetype>, указывающий объект ошибки для индекса массива ввода <doc-odp-name translate=no>Input</doc-odp-name>. <br>Размер этого массива не должен превышать размер массива <doc-idp-name translate=no>Input</doc-idp-name>."
+  },
+  "controlPorts": {
+    "In": "запускает выполнение блока.",
+    "Success": "активируется после успешного завершения процесса.",
+    "Progress": "активируется каждый раз при выполнении.",
+    "Error": "активируется при возникновении ошибки."
+  },
+  "example": null
+}

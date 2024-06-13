@@ -1,0 +1,1 @@
+define("DS/ENORIPE/ENORIPE_RelationsColumns_zh",{});define("DS/ENORIPE_RelationsColumns/assets/nls/ENORIPE_Columns",{relationsColumnsMgt:{title:"关系列选项",save:"保存",reset:"重置",cancel:"取消",columnAvailable:"树视图中可用的列",autoAdd:"自动添加到视图",autoAddInfo:"设置此选项后，关闭所有打开的对象并重新加载它们。"},ctxCommands:{showRelated:"显示关系",hideRelated:"隐藏关系"},fakeGroupingNode:{label:"关系"}});

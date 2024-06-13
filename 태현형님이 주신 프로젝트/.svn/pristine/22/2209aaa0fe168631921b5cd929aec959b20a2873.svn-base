@@ -1,0 +1,959 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <!-- Disable webview zoom -->
+        <meta name="viewport" content="width=device-width, height=device-height,initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
+
+        <!-- App Title -->
+        <title>3DPlay</title>
+
+        <!-- UWA bypass to use the RequireJS AMD loader  -->
+        <script type="text/javascript" src="../AmdLoader/AmdLoader.js"></script>
+        <script type="text/javascript" src="../WebappsUtils/WebappsUtils.js"></script>
+        <!-- UWA standalone widget -->
+        <link rel="stylesheet" type="text/css" href="../c/UWA/assets/css/standalone.css" />
+        <script type="text/javascript" src="../c/UWA/js/UWA_Standalone_Alone.js"></script>
+        <link rel="stylesheet" type="text/css" href="../Controls/nv-patch.css" />
+
+        <!-- CSS -->
+        <style type="text/css" media="screen">
+/* Main app style */
+html, body {
+    height: 100%;
+    width: 100%; 
+    background-color: transparent !important;
+}
+body {
+    position: relative;
+    overflow: hidden;
+    padding-bottom: 0px 0px 0px 0px;
+    color: white;
+    background-color: transparent !important;
+}
+#PlayWeb-Container {
+    height: 100%;
+    width: 100%;
+}
+.base64-image-container img {
+    width: 50%;
+}
+/* Standalone TopBar */
+#topbar + div {
+    --top: 0px;
+    --top: constant(safe-area-inset-top);
+    --top: env(safe-area-inset-top);
+    height: calc(100% - 43px - var(--top)) !important;  /* iOS 11.2+  for iPhone X */
+}
+#topbar.search-active .topbar-search {
+    --top: 0px;
+    --top: constant(safe-area-inset-top);
+    --top: env(safe-area-inset-top);
+    top: calc(43px + var(--top)) !important;  /* iOS 11.2+  for iPhone X */
+}
+
+#topbar {
+    --top: 0px;
+    --top: constant(safe-area-inset-top);
+    --top: env(safe-area-inset-top);
+    height: calc(43px + var(--top)) !important;
+    padding-top: var(--top) !important;
+}
+
+/* @media screen and (max-width:639px) {
+    body:not(.addinmode) #compass_ctn.topbar-compass {
+        --top: 0px;
+        --top: constant(safe-area-inset-top);
+        --top: env(safe-area-inset-top);
+        top: calc(44px + var(--top)) !important;
+    }
+    .column.left.shown {
+        --top: 0px;
+        --top: constant(safe-area-inset-top);
+        --top: env(safe-area-inset-top);
+        top: var(--top) !important;
+    }
+} */
+.dropdown-menu li.item {
+    text-align: left;
+}
+.publishSwymPanel_3DPlay .modal-wrap {
+    padding-top: 43px !important;
+}   
+#xgenerative-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+#PlayWeb-Container .modal-wrap {
+    --top: 0px;
+    --top: constant(safe-area-inset-top);
+    --top: env(safe-area-inset-top);
+    --bottom: 0px;
+    --bottom: constant(safe-area-inset-bottom);
+    --bottom: env(safe-area-inset-bottom);    
+    /* Fullscreen without TopBar */
+    height: calc(100% - var(--bottom)) !important; /* Footer's padding-bottom */
+    width: 100% !important;
+    padding: 0;
+    padding-top: calc(43px + var(--top)) !important;
+}
+#PlayWeb-Container .modal.modal-root {
+    z-index: 99999 !important; /* above the mobile action bar */
+}
+#PlayWeb-Container .modal-footer {
+    --bottom: 0px;
+    --bottom: constant(safe-area-inset-bottom);
+    --bottom: env(safe-area-inset-bottom);
+    padding-bottom: calc(14px + var(--bottom)) !important;
+}
+#PlayWeb-Container .modal-content {
+    height: 100% !important;
+}
+#PlayWeb-Container .modal-body {
+    padding: 0 !important;
+    height: calc(100% - 45px - 67px) !important; /* 100% - header - footer */
+}
+.onesearch_results.onesearch_results-root {
+    position: absolute !important;
+    height: inherit;
+}
+.my-apps-panel.compass-v3 {
+    --top: 0px;
+    --top: constant(safe-area-inset-top);
+    --top: env(safe-area-inset-top);
+    top: var(--top);
+    height: calc(100% - var(--top));
+}
+/* Hide unusable actions */
+.onesearch_results .search-content-set-actions, .onesearch_results  .onesearch_action {
+    display: none !important;
+}
+        </style>
+    </head>
+
+    <body>
+        
+        <div id="PlayWeb-Container"></div>
+        
+        <script type="text/javascript" async defer>
+
+'use strict';
+
+// ! \\ Active this mode for each hybrid app (allow specific cases in 3DPlay web)
+window.localStorage['3DPlayHybridApp'] = true;  // release <= FD01 only
+
+// Remove warning relative to the browser
+window.localStorage['3DPlay.DemoEnv'] = true;
+window.localStorage['3DPlay.SkipTestBrowser'] = true;
+
+// Avoid Tree display - IR-555212-3DEXPERIENCER2018x
+window.localStorage["3DPlay.SpecTree.Disabled"] = true;
+            
+// Disable the new landing page
+window.localStorage['3DPlay.LandingPage.disable'] = true;
+
+// Blindage utilisation de Intl dans VCXWebPropertyModel/VCXWebUnits.mweb/src/VCXUnitManager.js (non supporté par safari)
+if (undefined === window.Intl){ window.Intl = {NumberFormat: ''};}
+
+window.MODEL_NAME = 'SeatStructure.3dxml';
+window.__player = null;
+window.__topBarProxy = null;
+
+// Internal Prod
+window.myAppsURL = "https://eu1-215dsi0708-apps.3dexperience.3ds.com/enovia/resources/AppsMngt";
+
+// External Prod
+// window.myAppsURL = "https://eu1-apps.3dexperience.3ds.com/enovia/resources/AppsMngt";
+
+// POD 2020x
+// window.myAppsURL = "https://euw1-23swi10319-apps.3dx-staging.3ds.com/enovia/resources/AppsMngt";
+
+// window.DSPlatformSelectorDelegate = null;
+window.output = document.getElementById('output');
+
+window.SetWindowSize = function(size) {
+    window.innerWidth = size.width;
+    window.innerHeight = size.height;
+    var resizeEvent = new Event("resize");
+    if (typeof window.onresize === "function") {
+        window.onresize.call(this, resizeEvent);
+    }
+};
+
+// By-Pass des erreurs de console
+require(['DS/UWPClientCode/PublicAPI', 'DS/MessageBus/MessageBus'], function () { });
+// \ By-Pass des erreurs de console
+
+// App Management
+// ==============================
+require([
+    'DS/HybridInfraCore/HybridApp',
+    'DS/WebSystem/Environment',
+],
+function (HybridApp, Environment) {
+
+    // When device ready (At Startup)
+    // ===================================================================
+    HybridApp.onDeviceReady(function (args) {
+        console.log("Startup params", args);
+        window.__appArgs = args;
+
+        // Manage input form bootstrap
+        if (window.location.search) {
+            var urlParams = new URLSearchParams(window.location.search);
+            window.myAppsURL = urlParams.get('myAppsURL');
+        }
+
+        HybridApp.__getHttpNativeDelegate().then(function (httpNativeDelegate) {
+            httpNativeDelegate.execute('checkLoginOn', {myAppsURL:  window.myAppsURL}).then(function (data) {
+                getPlatformServices(window.myAppsURL).then(function(platform) {
+                    // Display Topbar
+                    displayTopBar(data.userData, platform);
+                }, function (error) {
+                    console.log("getPlatformServices failure", error);
+                });
+            }, function (error) {
+                console.log("selectPlatform failure", error);
+                HybridApp.logout();
+            });
+        });
+
+        // // Init plugins
+        // // HybridApp.interactiveLogin(window.myAppsURL).then(function (userDatas) {
+        // //     console.log('User loggued :', userDatas);
+        // //     window.userDatas = userDatas;
+        //     Promise.all([getPlatformServices(window.myAppsURL), getStartupParams(window.myAppsURL)]).then(function(values) {
+        //         console.log(values);
+        //         var platform = values[0];
+        //         var startupParams = values[1];
+        //         // Display Topbar
+        //         displayTopBar({ username: 'T4E', firstName: 'Thomas', lastName: 'LECONTE'}, platform);
+        //     }, function (error) {
+        //     });
+        // // }, console.error);
+        
+        // Add Document Browser delegate
+        HybridApp.addDelegate('DocumentBrowserDelegate').then(function (addedDelegate) {
+            window.__documentBrowser = addedDelegate;
+        }, console.error);
+
+        // Start 3DPlay
+        if (__appArgs.webFileUrl) {
+            var webFileUrl = __appArgs.webFileUrl;
+            console.log('Open model from -> ' + webFileUrl);
+            openLocalFile(webFileUrl);
+        }
+        // Load file from POD
+        else if (__appArgs.Cas && __appArgs.passportURL && __appArgs.MyAppsURL && __appArgs.object) {
+            console.log('Open model from -> ' + __appArgs.MyAppsURL);
+            open3DExpFile(__appArgs);
+        }
+        // Load default Model
+        else {
+            /*if(Environment.isSet('3DPlay.Mobile.StarttAsset')){
+                MODEL_NAME = Environment.get('3DPlay.Mobile.StarttAsset');
+            }
+            start3DPlayWith(HybridApp.getWebappsPath() + '3DPlayApp_Web/assets/models/' + MODEL_NAME);*/
+			displayLandingPage();
+        }
+    });
+    // ===================================================================
+
+    // Events from native
+    // ===================================================================
+    document.addEventListener("CONNECTION_INFO", function (data) {
+        console.log('========================================================');
+        if ("Connected" == data.detail) {
+            console.log("Connected to the network");
+        }
+        else if ("Disconnected" == data.detail) {
+            console.log("Network has been lost");
+        }
+        console.log('========================================================');
+    });
+    document.addEventListener("APP_STATE_CHANGE", function (data) {
+        var detail = event.detail;
+        var id = detail.id;
+        console.log('========================================================');
+        console.log('App state change -> ' + detail.id);
+        var args = detail.args;
+        if (args) {
+            // Open a file from app inbox
+            if (args.webFileUrl) {
+                var webFileUrl = args.webFileUrl;
+                console.log('Open model from -> ' + webFileUrl);
+                openLocalFile(webFileUrl);
+            }
+            // Open a file from POD
+            else if (args.Cas && args.passportURL && args.MyAppsURL && args.object) {
+                console.log('Open model from -> ' + args.MyAppsURL);
+                open3DExpFile(args);
+            }
+            else {
+                console.log('Params are missing');
+            }
+        }
+        console.log('========================================================');
+    });
+    document.addEventListener("APP_SYSTEM_CALL", function (data) {
+        var detail = data.detail;
+        console.log('========================================================');
+        console.log('App system call -> ' + detail.id);
+        detail.args && console.log(detail.args);
+        console.log('========================================================');
+    });
+    // ===================================================================
+});
+
+//===================================================================
+//Handler of Landing Page
+//===================================================================
+
+function displayLandingPage() { 
+    require(['DS/XAppLandingPage/XAppLandingPageCore'],
+        function (XAppLandingPageCore) {
+            var container = document.getElementById('PlayWeb-Container');
+            var xgenerativeContainer = new UWA.Element('div', {
+                id: 'xgenerative-container',
+                'class': 'xgenerative_container'
+            });
+            container.insertBefore(xgenerativeContainer, container.firstChild);
+            var options = {
+                body: xgenerativeContainer,
+                version: 'V3',
+                dragAndDrop: false,
+                items: [
+                {
+                    name: 'Search',
+                    onClick: function () {
+                        var classList = document.getElementsByClassName("search");
+                        for (var i =0; i < classList.length; i++) {
+                            if (classList[i].classList.toString().includes("topbar-cmd")) {
+                                classList[i].click();
+                            }
+                        }
+                    }
+                },
+                {
+                    name: 'Open',
+                    onClick: function () {
+                        importFile();
+                    }
+                },
+                {
+                    name: 'Sample',
+                    onClick: function () {
+                        start3DPlayWith(HybridApp.getWebappsPath() + '3DPlayApp_Web/assets/models/' + window.MODEL_NAME);
+                    }
+                }],
+                onDrop: function () {
+                    //here the d&d is disabled anyway by the dragAndDrop variable set at false
+                },
+                /*appLinks: {
+                    UserAssistance: true,
+                    socialNetworks: [
+                       {
+                           name: 'SocialLink'
+                       }
+                    ]
+                }*/
+                nlsJson: ['i18n!DS/3DPlayAppHybrid/assets/nls/MyXAppHomePage.json'],
+                rscJson: ['text!DS/3DPlayAppHybrid/assets/rsc/MyXAppHomePage.json'],
+            };
+            var landingPageCore = new XAppLandingPageCore(options);
+            landingPageCore.displayHome();
+        });
+};
+
+function removeLandingPage() {
+    if (document.getElementById('xgenerative-container') && document.getElementById('xgenerative-container').style.display !== "none") {
+        document.getElementById('xgenerative-container').style.display = "none";
+    }
+};
+
+// ===================================================================
+// Open scenarios
+// ===================================================================
+var importFile = function () {
+    if (window.__documentBrowser) {
+        // Launch the browser
+        window.__documentBrowser.execute('showDocumentBrowser', null).then(function (data) {
+            console.log('showDocumentBrowser :: onData : ', data);
+            if (data && data.DocumentURL) {
+			    removeLandingPage();
+                openLocalFile(data.DocumentURL); // Bon y'a du doublon de clé faudra que je corrige ça ^^
+            }
+            else {
+                console.log('User has not selected a file');
+            }
+        }, function (error) {
+            console.log('showDocumentBrowser :: onError : ', error);
+        });
+    }
+    else {
+        console.log('DocumentBrowserDelegate is not available');
+    }
+};
+var start3DPlayWith = function (asset) {
+    removeLandingPage();
+    var options = null;
+    if (null === __player) {
+        // Prepare data for 3DPlay
+        var args = {
+            container:'PlayWeb-Container',
+            //container: document.getElementById('PlayWeb-Container'),
+            input: {
+                asset: asset,
+            },
+            options: {
+                loading: 'autoplay',
+                callbacks: {
+                    experience: {
+                        ExperienceReady: function () {},
+                        dispose: function () { hideTopBar(); },
+                    },
+                    asset: {
+                        LoadingStarted:     function (args) {
+                            // displayTopBar('');
+                        },
+                        LoadingFinished:    function (args) {},
+                        LoadingError:       function (args) {}
+                    }
+                }
+            }
+        };
+        // Enopad mode offline
+        args.options = args.options || {};
+        args.options.enopad = args.options.enopad || {};
+        // args.options.enopad.offline = true;
+        args.options.enopad.windowOptions = args.options.enopad.windowOptions || {};
+        args.options.enopad.windowOptions.allowDnD = false;
+        // Require 3DPlay for the first launch
+        require([
+            'DS/3DPlayHelper/3DPlayHelper',
+            'DS/WebSystem/Environment',
+        ],
+        function (Helper, Environment) {
+            // Activate NR
+            if (false === Environment.isSet('3DPlay.NR.Disable')){
+                args.options.NR = {
+                    active:true
+                };
+            }
+            // Launch player with args
+            __player = new Player3DPlayWeb(args);
+        });
+    }
+    else {
+        // Retrieve intialized options
+        //options = __player.lastOptions;
+        options = UWA.clone(window.__player.lastOptions, true);
+        // Add the the asset
+        options.input = {
+            asset: asset
+        }
+        // Load the asset in 3DPlay
+        __player.load(options);
+    }
+};
+var openLocalFile = function (webFileUrl) {
+    var fileType = webFileUrl.split('.').pop();
+    var asset = {
+        filename: webFileUrl,
+        format: fileType,
+        mimetype: fileType,
+        type: fileType,
+        provider: 'FILE',
+        proxyurl: 'none',
+    };
+    start3DPlayWith(asset);
+};
+var open3DExpFile = function (args) {
+    if (args) {
+        var serviceName = null;
+        var passportUrl = null;
+        var backUrl = null;
+        var CASTGC = null;
+        // Prepare asset obj
+        var asset = {
+            requiredAuth: 'passport'
+        };
+        // [BEGIN] Build asset obj from url params
+        if (args.Url) {
+            asset.serverurl = args.Url;
+        }
+        if (args.backURL) {
+            backUrl = args.backURL;
+        }
+        if (args.object) {
+            asset.physicalid = args.object;
+        }
+        if (args.tenant) {
+            asset.tenant = args.tenant;
+            window.widget && window.widget.setValue("x3dPlatformId", asset.tenant);
+        }
+        if (args.Ctx) {
+            asset.requestsOptions = {
+                'headers': {
+                    "SecurityContext": args.Ctx.replace(/"/g, '')
+                }
+            };
+        }
+        if (args.objectType) {
+            asset.type = args.objectType.replace(/"/g, '');
+            asset.dtype = asset.type;
+        }
+        if (args.passportURL) {
+            passportUrl = args.passportURL;
+        }
+        if (args.serviceId) {
+            serviceName = args.serviceId;
+            if (serviceName === "3DDrive") {
+                // asset.type = "DOCUMENT";
+                // asset.dtype = "DOCUMENT";
+                asset.serverurl = asset.serverurl.replace("space", "drive");
+                asset.provider = '3DDRIVE';
+            }
+            else {
+                asset.provider = 'EV6';
+            }
+        }
+        if (args.MyAppsURL) {
+            asset.myAppsUrl = args.MyAppsURL;
+            // Needed for GetServiceUrl in the case of an hybrid app
+            asset._3DPlayDatas = {
+                myAppsUrl: asset.myAppsUrl
+            }
+        }
+        if (args.Cas) {
+            CASTGC = args.Cas.replace(/\"/g, '').replace(/_/g, '').split('=')[1];
+        }
+        // [END] Build asset obj from url params
+
+        // At this step if there is no asset.physicalid === Open from Platform without data
+        if (undefined === asset.physicalid) {
+            console.log('No physicalid \nOpen default visu');
+            __player.load({ input: { asset: '' } });
+            return;
+        }
+
+        // TMP fix for passport
+        if (passportUrl && asset.tenant) {
+            var tenant = asset.tenant.toLowerCase();
+            passportUrl = passportUrl.replace(tenant + "-", '');
+        }
+        // \ TMP fix for passport
+
+        // TODO : An MQL request to retrieve the type if this one isn't return by the compass
+        if (null === asset.type || '' === asset.type) {
+            console.debug("NEED A TYPE !!");
+        }
+		
+		removeLandingPage();
+        // Authentify the webview
+        HybridApp.authentifyAppWith(passportUrl, CASTGC).then(function (userData) {
+            console.log('Webview has been authentified for ', userData);
+            // Get platform services
+            getPlatformServices(asset.myAppsUrl, asset.tenant).then(function (plateformServices) {
+                asset.plateformServices = plateformServices;
+                // Load new asset
+                start3DPlayWith(asset);
+            }, function (error) {
+                console.error(error);
+            });
+        }, function (error) {
+            console.error('Auth plugin ', error);
+        });
+
+
+    }
+};
+
+
+// ==============================
+// Services
+// ==============================
+
+function getStartupParams(iMyAppsURL) {
+    return new Promise(function (resolve, reject) {
+        require(['DS/WAFData/WAFData'], function (WAFData) {
+            var plateformServices = [];
+            // Build request options
+            var reqOptions = { type: 'json', timeout: 25000, proxy: "none" };
+            reqOptions.onComplete = function (response) {
+                console.log('Startup params', response);
+                resolve(response);
+            };
+            reqOptions.onFailure = function (e) { console.log('ERROR : getStartupParams', e); reject(e); };
+            reqOptions.onTimeout = function (e) { console.log('ERROR : getStartupParams', e); reject(e); };
+            // Do the request
+            WAFData.authenticatedRequest(iMyAppsURL + "/user/startup?cors=true&roles=true", reqOptions);
+        });
+    });
+}
+
+function getPlatformServices(iMyAppsURL) {
+    return new Promise(function (resolve, reject) {
+        require(['DS/WAFData/WAFData'], function (WAFData) {
+            var plateformServices = [];
+            // Build request options
+            var reqOptions = { type: 'json', timeout: 25000, proxy: "none" };
+            reqOptions.onComplete = function (response) {     
+                if (1 < response.platforms.length) {
+                    HybridApp.addDelegate('UIKitDialogDelegate').then(function (UIKitDialogDelegate) {
+                        var choices = [];
+                        for (var i = 0; i < response.platforms.length; i++) {
+                            choices.push({
+                                index: i,
+                                id: response.platforms[i].id,
+                                name: response.platforms[i].name,
+                            });
+                        }
+                        var data = {
+                            Type: 'Picker',
+                            Title: 'Select tenant',
+                            Message: 'Please select the tenant to start',
+                            choices: choices
+                        }
+                        UIKitDialogDelegate.execute('AlertBox', data).then(function (data) {
+                            window.HybridAppArgs.platformServices = response.platforms[Number(data.index)];
+                            resolve(window.HybridAppArgs.platformServices);
+                        }, function (error) {
+                            console.error(error);
+                        });
+                    }, function (error) {
+                        console.error(error);
+                    });
+                }
+                else {
+                    window.HybridAppArgs.platformServices = response.platforms[0];
+                    resolve(window.HybridAppArgs.platformServices);
+                }
+            };
+            reqOptions.onFailure = function (e) { console.log('ERROR : getPlatformServices', e); reject(e) };
+            reqOptions.onTimeout = function (e) { console.log('ERROR : getPlatformServices', e); reject(e) };
+            // Do the request
+            WAFData.authenticatedRequest(iMyAppsURL + "/api/v1/services", reqOptions);
+        });
+    });
+};
+
+function getPlatformById(platformServices, serviceID) {
+    var retServiceURL = null;
+    for (let index = 0; index < platformServices.length; index++) {
+        const element = platformServices[index];
+        if (element.id === serviceID) {
+            retServiceURL = element.url;
+            break;
+        }
+    }
+    // Blindage passport
+    if ("3dpassport" === serviceID) retServiceURL = retServiceURL.replace("/cas", "");
+    return retServiceURL
+};
+
+function displayTopBar(userData, platform) {
+    require({ baseUrl: '../' }, [
+        // JS
+        'DS/TopFrame/TopFrame', 'DS/TopBar/TopBar', 'DS/TopBarProxy/TopBarProxy',
+        // Test JS        
+		'DS/SNSearchUX/SearchUX_TopBar', 'DS/SNInfraUX/SearchCom', 'DS/3DPlayUtils/PublishToSwym',
+        // CSS
+        'css!TopFrame/TopFrame.css', 'css!i3DXCompass/i3DXCompass.css', 'css!TopBar/TopBar.css'
+    ],
+    function (TopFrame, TopBar, TopBarProxy, SearchTopBar, SearchCom, PublishToSwym) {
+
+        // Create TopFrame
+        var options = {
+            userId: userData.username,
+            userName: userData.firstName + " " + userData.lastName,
+            // envId: platform.id,
+            // tenant: platform.id,
+            useTagger: false,
+            // activateInstantMessaging: false,
+            // is3DDriveEnabled: false,
+            // isNotificationsEnabled: false,
+            // showCoachmark: true,
+            activateNewSearch: true,
+            activateFederatedSearch: true,  
+            startupParams: {
+                "instantMessaging": [{
+                    "id": platform.id,
+                    "displayName": platform.id,
+                    "url": getPlatformById(platform.services, "rtc")
+                }],
+                "swym": [{
+                    "id": platform.id,
+                    "displayName": platform.id,
+                    "url": getPlatformById(platform.services, "swym")
+                }],
+                "search": [{
+                    "id": platform.id,
+                    "displayName": platform.id,
+                    "url": getPlatformById(platform.services, "3dsearch")
+                }],
+                "cstorage": [{
+                    "id": platform.id,
+                    "displayName": platform.id,
+                    "url": getPlatformById(platform.services, "distributedfilestore")
+                }],
+                "tagger": [{
+                    "id": platform.id,
+                    "displayName": platform.id,
+                    "url": getPlatformById(platform.services, "tagger")
+                }],
+            },
+            brand: "CATIA",
+            appId: "3DPlay",
+            application: "3DPlay",
+            lang: 'en',
+            // transparentMode: true,
+            // baseImgPath: "../plugins/Compass/html/",
+            baseImgPath: "../../webapps/i3DXCompass/assets/images",
+            baseHtmlPath: "../plugins/Compass/images/",
+            baseAppletPath: "../../WebClient/",
+            // addinMode: false,
+            activateInstantMessaging : false,
+            passportUrl: getPlatformById(platform.services, "3dpassport"),
+            // proxyTicketUrl: proxyTicketURL,
+            tagsServerUrl: getPlatformById(platform.services, "tagger"),
+            myAppsBaseURL: window.myAppsURL,
+            // picture: personImageUrl,
+            
+            //3DSearch 
+            searchParams: {
+                // Fill basic search settings
+                enable_search: true,
+                enable_search_in_this_tab : false,
+                enable_my_content: true,
+                enable_advanced_search: false,
+                enable_tenant_selection: true,
+                // enable_favorite_searches: false,
+                // enable_predefined_query: false,
+                // enable_similar_search: false,
+                search_settings: {
+                    multiSel: false,
+                    neverCheckbox: true,
+                    neverAction: true
+                },
+                open: function (openOptions) {
+                    // Override the opening of the Tagger by default
+                    TopFrame.toggleTagger = function () {
+                        console.log('TopFrame.toggleTagger has been overrided to not be open at "search open" event');
+                    }
+                    require([
+                        'DS/SNResultUX/SNResultMgt', 'DS/SNInfraUX/SearchSettings', 'DS/SNInfraUX/SearchUtils', 
+                        'DS/SNInfraUX/SearchCom', 'DS/SNInfraUX/SearchRessources', 'DS/UIKIT/Modal',
+                        'DS/TagNavigator/TagNavigator'
+                    ], function (SNResultMgt, SearchSettings, SearchUtils, SearchCom, SearchRessources, Modal, TagNavigator) {
+
+                        // Initialize search result from openOptions
+                        SearchSettings.initialize(openOptions.url_settings);
+                        var preferences_wdg = openOptions.preferences_wdg;
+                        var options_search = SearchUtils.getResultInitArgs({
+                            'preferences_wdg': preferences_wdg
+                        });
+                        var resources = preferences_wdg.search_ressources;
+                        var widget_id = UWA.Utils.getUUID();
+
+                        // Create the search result modal
+                        window.modal = new Modal({
+                            className: 'site-reset',
+                            closable: true,
+                            header: '<h4>Search results</h4>',
+                            footer: '<button type="button" class="btn btn-primary">Open</button> '
+                        }).inject(document.querySelector('#PlayWeb-Container'));
+
+                        // Adding the onclick handler to buttons inside the search modal
+                        window.modal.getContent().getElements('.btn').forEach(function (element) {
+                            element.addEvent('click', function () {
+                                // Check if data has been selected
+                                require(["DS/i3DXCompass/X3DContent"], function (X3DContent) {
+                                    // Get the selected data
+                                    var selectedData = X3DContent.getX3DContent().data.items[0];
+                                    console.log("Selected Data", selectedData);
+                                    if (undefined === selectedData.objectId) {
+                                        console.log('No physicalid \nOpen default visu');
+                                        __player.load({ input: { asset: '' } });
+                                    }
+                                    else {
+                                        var asset = {
+                                            requiredAuth: 'passport',
+                                            physicalid: selectedData.objectId,
+                                            tenant: selectedData.envId,
+                                            type: selectedData.objectType,
+                                            dtype: selectedData.objectType,
+                                            myAppsUrl: window.myAppsURL,
+                                            _3DPlayDatas: {
+                                                myAppsUrl: window.myAppsURL
+                                            },
+                                            serverurl: (selectedData.serviceId.toLowerCase() == '3ddrive') ? getPlatformById(platform.services, 'drive') : getPlatformById(platform.services, 'space'),
+                                            provider: (selectedData.serviceId.toLowerCase() == '3ddrive') ? '3DDRIVE' : 'EV6',
+                                        };
+                                        console.log("Prepared asset", asset);
+                                        start3DPlayWith(asset);
+                                    }
+                                });
+                                // Destroy modal
+                                window.modal.destroy();
+                                window.modal = null;
+                                // Hide search input & highlight
+                                document.querySelector('.search-active').classList.remove("search-active");
+                                document.querySelector('.fonticon.fonticon-search').classList.remove("active");
+                            });
+                        });
+
+                        // Init the search result content
+                        new SearchRessources(resources, function() {
+                            UWA.merge(options_search, {
+                                // tagnavigatorproxy: options_search.tagnavigatorproxy,
+                                // tagger_context_id: 'context_search',
+                                renderTo: window.modal.getBody(),
+                                widget_id: widget_id,
+                                resources: this,
+                                events: {
+                                    onReady: function (data) {
+                                        window.modal.show();
+                                        // var tagger = TagNavigator.get6WTagger("context_search");
+                                        // tagger.setAsCurrent();
+                                    }
+                                }
+                            });
+                            window.searchResultMgt = new SNResultMgt(options_search);
+                            var client_socket_id = UWA.Utils.getUUID();
+                            var searchcom_socket = SearchCom.createSocket({
+                                socket_id: client_socket_id
+                            });
+
+                            searchcom_socket.addListener('search', function (params) {
+                                console.log('TopFrameSearch :: search', params);
+                                // //leave advanced search mode
+                                // Context.getInstance().set({
+                                //     x3dsearchOptions: {
+                                //         searchRequestFromTopbar: true
+                                //     }
+                                // });
+                                // //redirect to global search page
+                                // Navigation.goToUrl('search:' + encodeURIComponent(params.searchStringToDisplayInSearchField || params.value));
+                            });
+                            searchcom_socket.dispatchEvent('onWdgCreation', {  }, ['searchtopbar_socket_id']);
+                            searchcom_socket.addListener('onSearchWdgUpd', function (search_options) {
+                                console.log('TopFrameSearch :: onSearchWdgUpd', search_options);
+                                if (searchResultMgt) {
+                                    var options_search = SearchUtils.getResultUpdateArgs({
+                                        'options': search_options
+                                    });
+                                    searchResultMgt.onSearch(options_search);
+                                }
+                            });
+                            searchcom_socket.dispatchEvent('toggleProxyFocus', {
+                                'maximized': true
+                            });	
+                        });
+                    });
+                },
+                isOpen: function (option) {
+                    return (null != window.modal && window.modal.isVisible);
+                },
+                close: function(option) {
+                    console.log('TopFrameSearch :: close', option);
+                },
+                openTagger: function(option) {
+                    console.log('TopFrameSearch :: openTagger', option);
+                }
+            },
+            topMenus: {
+                notification: false,
+                profile: true,
+                add: function () {
+                    console.log("Import button clicked");
+                    importFile();
+                },
+                share: true,
+                home: false,
+                help: true
+            },
+            events: {
+                tagger: function (parameters) {
+                    console.log("Tagger launched with " + parameters.value);
+                },
+                search: function (parameters) {
+                    console.log("Search launched with " + parameters.value);
+                },
+                clearSearch: function () {
+                    console.log("Clear Search");
+                }
+            },
+            onRightPanelMinimize: function () {
+                console.log("onRightPanelMinimize");
+            },
+        };
+        TopFrame.init(options);
+        __topBarProxy = new TopBarProxy({ 'id': 'CommandProvider1'/*, 'widget': this.widget*/ });
+        __topBarProxy.setContent({
+            profile: [
+                {
+                    label: 'Log out',
+                    onExecute: function () {
+                        console.log("Log out"); 
+                        HybridApp.logout();
+                    }
+                },
+            ],
+            share: [
+                {
+                    label: 'Publish to Communities',
+                    onExecute: function () {
+                        console.log("Publish to Communities");
+                        // Hack for 'DS/VENCKEditor'
+                        require.config({
+                            paths: {
+                                'DS/VENCKEditor': HybridApp.isAndroid() ? "file:///android_asset/VENCKEditor/4.13.1/ckeditor" : "http://localhost:8080/webapps/VENCKEditor/4.13.1/ckeditor"
+                            }
+                        });
+                        // Call publish to swyms
+                        var options = { ctx: __player.getCtx() };
+                        setTimeout(function () {
+                            new PublishToSwym(options);
+                        }, 1000);
+                    }
+                },
+                {
+                    label: 'Share as Picture',
+                    onExecute: function () {
+                        console.log("Share as Picture");
+                        var options = {
+                            onSuccess: function (iDataUrl) {
+                                var base64Data = iDataUrl.replace("data:image/png;base64,", "");
+                                console.log("screenshot succeed!", base64Data);
+                            },
+                            onFail: function () {
+                                console.log('screenshot failed!');
+                            }
+                        };
+                        __player.getExperience().getScreenShot(options);
+                    }
+                }
+            ]
+        });
+        TopBar.MainMenuBar.setActiveMenuProviders('CommandProvider1');
+        
+        // VR menu
+        if (! localStorage.getItem('3DPlay.NR.Disable')){
+            var topBarBtCtn = document.getElementsByClassName('topbar-without-extrabtn')[0];
+            var topBarBtnBurger = document.getElementsByClassName('fonticon-menu')[0];
+            var topBarBtnNR = document.createElement('div');
+            topBarBtnNR.innerHTML = '<div class="topbar-cmd fonticon fonticon-compass-simulation" title=""></div>';
+            topBarBtCtn.insertBefore(topBarBtnNR, topBarBtnBurger);
+            topBarBtnNR.onclick = function(){
+                __player.performAction('nrToggle');
+            };
+        }
+    });
+};
+
+        </script>
+    </body>
+</html>

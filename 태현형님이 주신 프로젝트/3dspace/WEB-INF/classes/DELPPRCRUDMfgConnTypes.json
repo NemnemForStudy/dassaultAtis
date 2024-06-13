@@ -1,0 +1,604 @@
+[
+    {
+        "ParsingVersion": "2.0",
+        "DeclarativeTypes": [
+            {
+                "ConceptualName": "dsmfg:ScopeEngItem",
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "DELFmiProcessImplementCnx",
+                        "Behavior": "CUSTOM",
+                        "Class": "com.dassault_systemes.delmia.crud.mbom.bytype.impl.DELMIACRUDByConceptualTypeMfgItemScopeLink"
+                    }
+                ],
+                "Dependencies": [
+                    [
+                        {
+                            "ConceptualName": "CA",
+                            "DependentAttributes": [
+                                "From_IDs"
+                            ]
+                        },
+                        {
+                            "ConceptualName": "VPMReference",
+                            "DependentAttributes": [
+                                "TO_IDs"
+                            ]
+                        }
+                    ]
+                ],
+                "Attributes": [
+                    {
+                        "ConceptualName": "From_IDs",
+                        "State": "MANDATORY",
+                        "Checkers": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.tools.checkers.AttributeNotNullAndUniqueValueChecker"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "TO_IDs",
+                        "State": "MANDATORY",
+                        "Checkers": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.tools.checkers.AttributeNotNullAndUniqueValueChecker"
+                            }
+                        ],
+                        "Getters": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.getters.ScopeEngItemFromMfgItemCustomGetter"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "scopeEngItemId",
+                        "Getters": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.getters.ScopeEngItemFromMfgItemCustomGetter"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "dsmfg:ResultingEngItem",
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "DELFmiProcessPrereqMaterializationCnx",
+                        "Behavior": "CUSTOM",
+                        "Class": "com.dassault_systemes.delmia.crud.mbom.bytype.impl.DELMIACRUDByConceptualTypeMfgItemResultingEngItemLink"
+                    }
+                ],
+                "Dependencies": [
+                    [
+                        {
+                            "ConceptualName": "CA",
+                            "DependentAttributes": [
+                                "From_IDs"
+                            ]
+                        },
+                        {
+                            "ConceptualName": "VPMReference",
+                            "DependentAttributes": [
+                                "TO_IDs"
+                            ]
+                        }
+                    ]
+                ],
+                "Attributes": [
+                    {
+                        "ConceptualName": "From_IDs",
+                        "State": "MANDATORY",
+                        "Checkers": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.tools.checkers.AttributeNotNullAndUniqueValueChecker"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "TO_IDs",
+                        "State": "MANDATORY",
+                        "Checkers": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.tools.checkers.AttributeNotNullAndUniqueValueChecker"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "resultingEngItemId",
+                        "Getters": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.getters.ResultingEngItemFromDataMaterializationCnxCustomGetter"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "usage",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "PLMEntity.V_usage"
+                            }
+                        ],
+                        "Checkers": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.tools.checkers.AttributeDefaultChecker"
+                            }
+                        ],
+                        "Setters": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.setters.AttributeResultingEngItemUsageSetter"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "productConfiguration",
+                        "Getters": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.getters.MfgItemPathSR3DSpaceGetter"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "dsmfg:AssignmentFilter",
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "PLMAssignmentFilterCnx",
+                        "Behavior": "CUSTOM",
+                        "Class": "com.dassault_systemes.delmia.crud.mbom.bytype.impl.DELMIACRUDByConceptualTypeMfgItemAssignmentFilterLink"
+                    }
+                ],
+                "Dependencies": [
+                    [
+                        {
+                            "ConceptualName": "CA",
+                            "DependentAttributes": [
+                                "From_IDs"
+                            ]
+                        },
+                        {
+                            "ConceptualName": "VPMReference",
+                            "DependentAttributes": [
+                                "TO_IDs"
+                            ]
+                        }
+                    ]
+                ],
+                "Attributes": [
+                    {
+                        "ConceptualName": "From_IDs",
+                        "State": "MANDATORY",
+                        "Checkers": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.tools.checkers.AttributeNotNullAndUniqueValueChecker"
+                            }
+                        ],
+                        "Getters": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.getters.MfgItemFromAssignmentFilterEngOccurrence"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "TO_IDs",
+                        "State": "MANDATORY",
+                        "Checkers": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.tools.checkers.AttributeNotNullAndUniqueValueCheckerEx"
+                            }
+                        ],
+                        "Getters": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.getters.AssignmentFilterCnxFromMfgItemCustomGetter"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "PartialScopeEngItem",
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "PartialScopeEngItem",
+                        "Behavior": "CUSTOM",
+                        "Class": "com.dassault_systemes.delmia.crud.mbom.bytype.impl.DELMIACRUDByConceptualTypeMfgItemPartialScopeLink"
+                    }
+                ],
+                "Dependencies": [
+                    [
+                        {
+                            "ConceptualName": "dsmfg:MfgItem",
+                            "DependentAttributes": [
+                                "From_IDs"
+                            ]
+                        },
+                        {
+                            "ConceptualName": "VPMReference",
+                            "DependentAttributes": [
+                                "TO_IDs"
+                            ]
+                        }
+                    ]
+                ],
+                "Attributes": [
+                    {
+                        "ConceptualName": "From_IDs",
+                        "State": "MANDATORY",
+                        "Checkers": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.tools.checkers.AttributeNotNullAndUniqueValueChecker"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "TO_IDs",
+                        "State": "MANDATORY",
+                        "Checkers": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.tools.checkers.AttributeNotNullAndUniqueValueChecker"
+                            }
+                        ],
+                        "Getters": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.getters.PartialScopeEngItemFromMfgItemCustomGetter"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "dsmfg:ImplementedEngOccurrence",
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "ImplementedEngOccurrence",
+                        "Behavior": "CUSTOM",
+                        "Class": "com.dassault_systemes.delmia.crud.mbom.bytype.impl.DELMIACRUDByConceptualTypeImplementedEngOccurrence"
+                    }
+                ],
+                "Dependencies": [
+                    [
+                        {
+                            "ConceptualName": "dsmfg:MfgItemInstance",
+                            "DependentAttributes": [
+                                "From_IDs"
+                            ]
+                        },
+                        {
+                            "ConceptualName": "VPMInstance",
+                            "DependentAttributes": [
+                                "TO_IDs"
+                            ]
+                        }
+                    ]
+                ],
+                "Attributes": [
+                    {
+                        "ConceptualName": "From_IDs",
+                        "State": "MANDATORY",
+                        "Checkers": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.tools.checkers.AttributeNotNullAndUniqueValueChecker"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "TO_IDs",
+                        "State": "MANDATORY",
+                        "Checkers": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.tools.checkers.AttributeNotNullAndUniqueValueChecker"
+                            }
+                        ],
+                        "Getters": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.getters.ImplementedEngOccurrenceFromMfgItemInstanceCustomGetter"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "dsmfg:AssignedOrganization",
+                "ParentType": "PLMConnection",
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "DELMfgResponsibilityCnx",
+                        "Behavior": "REFERENCE"
+                    },
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "DELMfgResponsibilityCnx",
+                        "Behavior": "CUSTOM",
+                        "Class": "com.dassault_systemes.delmia.crud.mbom.bytype.impl.DELMIACRUDMfgItemResponsibilityCnx"
+                    }
+                ],
+                "Dependencies": [
+                    [
+                        {
+                            "ConceptualName": "dsmfg:MfgItem",
+                            "DependentAttributes": [
+                                "From_IDs"
+                            ]
+                        },
+                        {
+                            "ConceptualName": "VPMReference",
+                            "DependentAttributes": [
+                                "TO_IDs"
+                            ]
+                        }
+                    ]
+                ],
+                "Attributes": [
+                    {
+                        "ConceptualName": "organizationRef",
+                        "Checkers": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.tools.checkers.AttributeNotNullAndUniqueValueChecker"
+                            }
+                        ],
+                        "Getters": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.getters.MfgItemResponsibilityOrganizationCustomGetter"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "From_IDs",
+                        "State": "MANDATORY",
+                        "Checkers": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.tools.checkers.AttributeNotNullAndUniqueValueChecker"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "TO_IDs",
+                        "State": "MANDATORY",
+                        "Checkers": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.tools.checkers.AttributeNotNullAndUniqueValueChecker"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "dsmfg:AssignedRequirement",
+                "ParentType": "PLMConnection",
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "PLMReqSpecifyHowToCnx",
+                        "Behavior": "CUSTOM",
+                        "Class": "com.dassault_systemes.delmia.crud.mbom.bytype.impl.DELMIACRUDByConceptualTypeMfgItemAssignedRequirement"
+                    },
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "PLMReqSpecifyHowToCnx",
+                        "Behavior": "REFERENCE"
+                    }
+                ],
+                "Dependencies": [
+                    [
+                        {
+                            "ConceptualName": "dsmfg:MfgItem",
+                            "DependentAttributes": [
+                                "From_IDs"
+                            ]
+                        },
+                        {
+                            "ConceptualName": "dsreq:Requirement",
+                            "DependentAttributes": [
+                                "TO_IDs"
+                            ]
+                        }
+                    ]
+                ],
+                "Attributes": [
+                    {
+                        "ConceptualName": "From_IDs",
+                        "Checkers": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.tools.checkers.AttributeNotNullAndUniqueValueChecker"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "TO_IDs",
+                        "Getters": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.getters.AssignedRequirementGetterTargetRequirement"
+                            }
+                        ],
+                        "Checkers": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.tools.checkers.AttributeNotNullAndUniqueValueChecker"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "contextualReqInfo",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "PLMReqSpecifyHowToCnx.V_Contextual_Req_Info"
+                            }
+                        ],
+                        "Setters": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.setters.AttributeAssignedRequirementContextualReqInfoSetter"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "usage",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "PLMReqSpecifyHowToCnx.V_HowToUsage"
+                            }
+                        ],
+                        "Checkers": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.checkers.AssignedRequirementAttrUsageChecker"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "isIgnored",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "PLMReqSpecifyHowToCnx.V_Ignore"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "dsmfg:ScopeRequirementSpec",
+                "ParentType": "PLMConnection",
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "PLMReqGlobalSpecifyHowToCnx",
+                        "Behavior": "CUSTOM",
+                        "Class": "com.dassault_systemes.delmia.crud.mbom.bytype.impl.DELMIACRUDByConceptualTypeScopeRequirementSpec"
+                    },
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "PLMReqGlobalSpecifyHowToCnx",
+                        "Behavior": "REFERENCE"
+                    }
+                ],
+                "Dependencies": [
+                    [
+                        {
+                            "ConceptualName": "dsmfg:MfgItem",
+                            "DependentAttributes": [
+                                "From_IDs"
+                            ]
+                        },
+                        {
+                            "ConceptualName": "dsreq:RequirementSpecification",
+                            "DependentAttributes": [
+                                "TO_IDs"
+                            ]
+                        }
+                    ]
+                ],
+                "Attributes": [
+                    {
+                        "ConceptualName": "From_IDs",
+                        "Checkers": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.tools.checkers.AttributeNotNullAndUniqueValueChecker"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "TO_IDs",
+                        "Getters": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.getters.ScopeRequirementGetterRequirementSpecification"
+                            }
+                        ],
+                        "Checkers": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.tools.checkers.AttributeNotNullAndUniqueValueChecker"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "dsmfg:Dependency",
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "DELFmiProcessPrerequisiteCnxCust",
+                        "Behavior": "CUSTOM",
+                        "Class": "com.dassault_systemes.delmia.crud.mbom.bytype.impl.DELMIACRUDByConceptualTypeDependency"
+                    },
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "DELFmiProcessPrerequisiteCnxCust",
+                        "Behavior": "REFERENCE"
+                    }
+                ],
+                "Dependencies": [
+                    [
+                        {
+                            "ConceptualName": "dsmfg:MfgItemInstance",
+                            "DependentAttributes": [
+                                "From_IDs",
+                                "TO_IDs"
+                            ]
+                        }
+                    ]
+                ],
+                "Attributes": [
+                    {
+                        "ConceptualName": "From_IDs",
+                        "Checkers": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.tools.checkers.AttributeNotNullAndUniqueValueChecker"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "TO_IDs",
+                        "Getters": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.getters.MfgItemsInstanceDependenciesGetter"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]

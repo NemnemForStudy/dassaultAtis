@@ -1,0 +1,38 @@
+################################################################################################
+# Create By jhlee : 2023. 04. 24
+# Admin Type : type
+# Name : decIWPTask
+################################################################################################
+
+#del type 'decIWPTask';
+copy type 'Task' 'decIWPTask';
+
+add property 'type_decIWPTask' on prog eServiceSchemaVariableMapping.tcl to type 'decIWPTask';
+
+mod type 'decIWPTask' add attribute decIWPType;
+mod type 'decIWPTask' add attribute decIWPSequence;
+mod type 'decIWPTask' add attribute decStage;
+mod type 'decIWPTask' add attribute decEngineer;
+mod type 'decIWPTask' add attribute decPlanner;
+mod type 'decIWPTask' add attribute decSuperintendent;
+mod type 'decIWPTask' add attribute decForeman;
+mod type 'decIWPTask' add attribute decKeyQuantityType;
+mod type 'decIWPTask' add attribute decKeyQuantityUOM;
+mod type 'decIWPTask' add attribute decKeyQuantityTotal;
+mod type 'decIWPTask' add attribute decKeyQuantityCompleted;
+mod type 'decIWPTask' add attribute decTaskForecastStartDate;
+mod type 'decIWPTask' add attribute decTaskForecastFinishDate;
+mod type 'decIWPTask' add attribute decReleasePlan;
+mod type 'decIWPTask' add attribute decReleaseForecast;
+mod type 'decIWPTask' add attribute decReleaseActual;
+mod type 'decIWPTask' add attribute decManHoursPlan;
+mod type 'decIWPTask' add attribute decManHoursActual;
+mod type 'decIWPTask' add attribute decHoldCategory;
+mod type 'decIWPTask' add attribute decRemark;
+mod type 'decIWPTask' add attribute decUPF1;
+mod type 'decIWPTask' add attribute decUPF2;
+mod type 'decIWPTask' add attribute decUPF3;
+
+## Modified by jhlee on 2023.06.23 --- [S]
+mod type 'decIWPTask' add trigger ModifyAttribute Check emxTriggerManager Input TypedecIWPTaskModifyAttributeCheck;
+## Modified by jhlee on 2023.06.23 --- [E]

@@ -1,0 +1,104 @@
+################################################################################################
+# Created       : 2023. 06. 01 04:42:31 PM
+# Last Modified : 2023. 09. 05 04:44:58 PM
+# Create By jhlee : 2023. 09. 06
+# Admin Type : table
+# Name : PMCProjectPeople
+################################################################################################
+
+copy table 'PMCProjectPeople' 'PMCProjectPeople_ootb';
+#del table "PMCProjectPeople" system;
+add table "PMCProjectPeople" system
+    column
+        name        "Project"
+        label       "emxFramework.Command.Member"
+        alt         ""
+        range       ""
+        update      ""
+        setting    'Column Type'             "program"
+        setting    'Editable'                "false"
+        setting    'Export'                  "true"
+        setting    'RMB Menu'                "false"
+        setting    'Registered Suite'        "ProgramCentral"
+        setting    'Show Type Icon'          "true"
+        setting    'function'                "getProjects"
+        setting    'program'                 "emxDomainAccess"
+#   column
+#       name        "Organization"
+#       label       "emxFramework.DomainAccessTable.Organization"
+#       alt         ""
+#       range       ""
+#       update      ""
+#       setting    'Column Type'             "program"
+#       setting    'Editable'                "false"
+#       setting    'Export'                  "true"
+#       setting    'RMB Menu'                "false"
+#       setting    'Registered Suite'        "Framework"
+#       setting    'function'                "getOrganizations"
+#       setting    'program'                 "emxDomainAccess"
+    column
+        name        "Type"
+        label       "emxFramework.Basic.Type"
+        alt         ""
+        range       ""
+        update      ""
+        setting    'Column Type'             "program"
+        setting    'Editable'                "false"
+        setting    'Export'                  "true"
+        setting    'RMB Menu'                "false"
+        setting    'Registered Suite'        "Framework"
+        setting    'function'                "getTypeInformation"
+        setting    'program'                 "emxDomainAccess"
+    column
+        name        "ProjectMemberRole"
+        label       "emxProgramCentral.Common.Role"
+        alt         ""
+        range       ""
+        update      ""
+        setting    'Column Type'             "program"
+        setting    'Editable'                "false"
+        setting    'Registered Suite'        "ProgramCentral"
+        setting    'function'                "getProjectMemberRoleList"
+        setting    'program'                 "emxProjectSpace"
+#    column
+#        name        "Access"
+#        label       " emxFramework.DomainAccessTable.Access"
+#        alt         ""
+#        range       ""
+#        update      ""
+#        setting    'Column Type'             "program"
+#        setting    'Edit Access Function'    "getCellLevelEditAccess"
+#        setting    'Edit Access Program'     "emxProjectMember"
+#        setting    'Editable'                "true"
+#        setting    'Export'                  "true"
+#        setting    'Input Type'              "combobox"
+#        setting    'Mass Update'             "false"
+#        setting    'OnFocus Handler'         "reloadAccessColumn"
+#        setting    'RMB Menu'                "false"
+#        setting    'Reload Function'         "getAccessRange"
+#        setting    'Reload Program'          "emxDomainAccess"
+#        setting    'Update Function'         "updateAccessValue"
+#        setting    'Update Program'          "emxDomainAccess"
+#        setting    'function'                "getAccesses"
+#        setting    'program'                 "emxDomainAccess"
+    column
+        name        "Comments"
+        label       "emxFramework.DomainAccessTable.Comments"
+        alt         ""
+        range       ""
+        update      ""
+        setting    'Column Type'             "program"
+        setting    'Editable'                "false"
+        setting    'Export'                  "true"
+        setting    'RMB Menu'                "false"
+        setting    'Registered Suite'        "Framework"
+        setting    'function'                "getComments"
+        setting    'program'                 "emxDomainAccess"
+    property    'application'        value "ProgramManagementBase"
+    property    'installed date'     value "06-01-2023"
+    property    'installer'          value "ENOVIAEngineering"
+    property    'original name'      value "PMCProjectPeople"
+    property    'version'            value "R421.HF7"
+;
+
+add property 'table_PMCProjectPeople' on prog eServiceSchemaVariableMapping.tcl to table 'PMCProjectPeople' system;

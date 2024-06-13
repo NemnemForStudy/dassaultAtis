@@ -1,0 +1,10 @@
+m|VENWebNippleJS\VirtualDevice.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.0.22078|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\VirtualDevice\VirtualDevice.js|1647692289|574
+s|VENWebNippleJS\VirtualDevice.mweb\src\Joystick.js|1602509489|1177
+u|VENWebNippleJS\VirtualDevice.mweb\src\VirtualDevice.js|1603114263|0
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

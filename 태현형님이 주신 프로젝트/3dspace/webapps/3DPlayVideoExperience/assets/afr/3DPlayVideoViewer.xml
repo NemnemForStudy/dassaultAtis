@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+  /*
+ * @fullreview PM3 19:05:16  Creation
+ * @quickreview PM3 19:05:31 added annotations
+  */
+  -->
+<Styles xmlns:syp="http://www.3ds.com/xsd/SYP">
+
+  <Template syp:name="3DPlayVideoAfrWorkshopInterface" Target="CATCmdInterface">
+    <CATCmdInterface  WkbInterface= "CATI3DPlayVideoAfrWorkshopConfiguration"/>
+  </Template>
+
+  <Template syp:name="3DPlayVideoAfrWorkshopHeaders" Target="CATCmdHeadersList">
+    <CATCmdHeadersList>
+    <!-- Navigation -->
+      <CATCommandHeader ID = "AnnotationCommands" ClassName = "DS/3DPlayVideoAnnotation/AnnotationCommands" ResourceFile = "3DPlay/3DPlayExperience3D" />
+      <CATCommandHeader ID = "AnnotationCommandsVideoEditShape" ClassName="DS/3DPlayVideoAnnotation/AnnotationCommandsVideoEditShape" ResourceFile="3DPlay2DExperience/3DPlay2DExperience" />
+      <CATCommandHeader ID = "AnnotationCommandsVideoText" ClassName="DS/3DPlayVideoAnnotation/AnnotationCommandsVideoText" ResourceFile="3DPlay2DExperience/3DPlay2DExperience" />
+      <CATCommandHeader ID = "AnnotationTour" ClassName = "DS/3DPlayVideoAnnotation/AnnotationTour" ResourceFile = "3DPlay/3DPlayExperience3D" />
+      <CATCommandHeader ID = "VideoTour" ClassName = "DS/3DPlayVideoAnnotation/VideoTour" ResourceFile = "3DPlay/3DPlayExperience3D" />
+    </CATCmdHeadersList>
+  </Template>
+
+  <Template syp:name="3DPlayVideoAfrWorkshopAccess" Target="CATCmdWorkbench">
+    <CATCmdWorkbench Name="3DPlayVideoWorkbench">
+      <CATCmdContainer Name = "SectionViews" Visibility = "1" RepresentationType="AfrActionBarSection">
+        <CATCmdStarter Name = "AnnotationCommands"  Command = "AnnotationCommands" />
+        <CATCmdStarter Name = "AnnotationTour"  Command = "AnnotationTour"  />
+      </CATCmdContainer>
+    </CATCmdWorkbench>
+  </Template>
+</Styles>

@@ -1,0 +1,1 @@
+define("DS/MPFStripeComponent/MPFStripeComponent_zh",{});define("DS/MPFStripeComponent/assets/nls/MPFStripeComponent",{merchant:"商家",order:"订单",amount:"总数",cardHolder:"持卡人",cardNumber:"卡号",expiryDate:"到期日期",cardHolderEmpty:"持卡人姓名无效。",pay:"支付",phase:"阶段",paymentInProgress:"正在付款... 这可能需要一些时间",failedToLoadPaymentPage:"无法加载付款页面。请稍后重试；如果问题仍然存在，请联系支持人员。"});

@@ -1,0 +1,1 @@
+define("DS/DMUReviewFacets/DMUReviewFacets_cs",{});define("DS/DMUReviewFacets/assets/nls/DMUReviewFacets",{noHighlight:"Vybraná kontrola neobsahuje žádné zvýraznění",noCheck:"Vybraná kontrola neobsahuje žádnou kontrolu"});

@@ -1,0 +1,1 @@
+define("DS/VCXWebScenarioManager/VCXWebScenarioManager_zh",{});define("DS/VCXWebScenarioManager/assets/nls/VCXWebScenarioManager",{"ScenarioManager.FPS":"FPS","ScenarioManager.startScenarioId":"启动场景 ID"});

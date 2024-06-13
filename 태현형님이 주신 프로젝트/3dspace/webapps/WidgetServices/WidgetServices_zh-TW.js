@@ -1,0 +1,1 @@
+define("DS/WidgetServices/WidgetServices_zh-TW",{});define("DS/WidgetServices/assets/nls/SecurityContextNls",{ErrorSecurityContextEmpty:"使用者沒有偏好的安全上下文",ErrorSecurityContext:"擷取安全上下文時發生錯誤",ErrorTimeOut:"伺服器在擷取安全上下文時花費太多時間"});

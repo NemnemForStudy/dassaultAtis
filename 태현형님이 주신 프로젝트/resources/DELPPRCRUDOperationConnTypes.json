@@ -1,0 +1,164 @@
+[
+    {
+        "ParsingVersion": "2.0",
+        "DeclarativeTypes": [
+            {
+                "ConceptualName": "dsprcs:AssignedRequirement",
+                "ParentType": "PLMConnection",
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "PLMReqSpecifyHowToCnx",
+                        "Behavior": "CUSTOM",
+                        "Class": "com.dassault_systemes.delmia.crud.process.bytype.threed_space.impl.DELMIACRUDSystemAssignedRequirement"
+                    },
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "PLMReqSpecifyHowToCnx",
+                        "Behavior": "REFERENCE"
+                    }
+                ],
+                "Dependencies": [
+                    [
+                        {
+                            "ConceptualName": "dsprcs:MfgOperation",
+                            "DependentAttributes": [
+                                "From_IDs"
+                            ]
+                        },
+                        {
+                            "ConceptualName": "dsreq:Requirement",
+                            "DependentAttributes": [
+                                "TO_IDs"
+                            ]
+                        }
+                    ]
+                ],
+                "Attributes": [
+                    {
+                        "ConceptualName": "From_IDs",
+                        "Checkers": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.tools.checkers.AttributeNotNullAndUniqueValueChecker"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "TO_IDs",
+                        "Getters": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.getters.AssignedRequirementGetterTargetRequirement"
+                            }
+                        ],
+                        "Checkers": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.tools.checkers.AttributeNotNullAndUniqueValueChecker"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "contextualReqInfo",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "PLMReqSpecifyHowToCnx.V_Contextual_Req_Info"
+                            }
+                        ],
+                        "Setters": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.setters.AttributeAssignedRequirementContextualReqInfoSetter"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "usage",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "PLMReqSpecifyHowToCnx.V_HowToUsage"
+                            }
+                        ],
+                        "Checkers": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.checkers.AssignedRequirementAttrUsageChecker"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "isIgnored",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "PLMReqSpecifyHowToCnx.V_Ignore"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "dsprcs:ScopeRequirementSpec",
+                "ParentType": "PLMConnection",
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "PLMReqGlobalSpecifyHowToCnx",
+                        "Behavior": "CUSTOM",
+                        "Class": "com.dassault_systemes.delmia.crud.process.bytype.threed_space.impl.DELMIACRUDSystemScopeRequirementSpec"
+                    },
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "PLMReqGlobalSpecifyHowToCnx",
+                        "Behavior": "REFERENCE"
+                    }
+                ],
+                "Dependencies": [
+                    [
+                        {
+                            "ConceptualName": "dsprcs:MfgOperation",
+                            "DependentAttributes": [
+                                "From_IDs"
+                            ]
+                        },
+                        {
+                            "ConceptualName": "dsreq:RequirementSpecification",
+                            "DependentAttributes": [
+                                "TO_IDs"
+                            ]
+                        }
+                    ]
+                ],
+                "Attributes": [
+                    {
+                        "ConceptualName": "From_IDs",
+                        "Checkers": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.tools.checkers.AttributeNotNullAndUniqueValueChecker"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "TO_IDs",
+                        "Getters": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.getters.ScopeRequirementGetterRequirementSpecification"
+                            }
+                        ],
+                        "Checkers": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.tools.checkers.AttributeNotNullAndUniqueValueChecker"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]

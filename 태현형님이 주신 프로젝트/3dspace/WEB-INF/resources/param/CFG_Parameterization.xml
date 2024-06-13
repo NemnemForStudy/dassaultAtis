@@ -1,0 +1,37 @@
+<?xml version="1.0" ?>
+<OOTBParameterization>
+	<Domain id="ConfigurationUXParameterization" regSuite="CFG">
+		<Family id="ConfigCriteriaParamActivation" icon="iconParameterizationIdentification.gif">
+			<Parameter id="CFGParameterCtxtDate" implementation="com.dassault_systemes.ootbConfiguration.deployment.impl.ParameterizationExpressionImpl" regSuite="CFG">
+				<Argument id="Argument" type="boolean" input="checkbox" default="Disabled"/>
+				<Constant id="expression" value="CFG_Parameter_CtxtDate" />
+				<Constant id="valueChecked" value="Enabled"/>
+				<Constant id="valueUnchecked" value="Disabled"/>
+			</Parameter>
+			<Parameter id="CFGParameterUnit" implementation="com.dassault_systemes.ootbConfiguration.deployment.impl.ParameterizationExpressionImpl" regSuite="CFG">
+				<Argument id="Argument" type="boolean" input="checkbox" default="Disabled"/>
+				<Constant id="expression" value="CFG_Parameter_Unit" />
+				<Constant id="valueChecked" value="Enabled"/>
+				<Constant id="valueUnchecked" value="Disabled"/>
+			</Parameter>
+			<Parameter id="CFGParameterStaticMapping" implementation="com.dassault_systemes.ootbConfiguration.deployment.impl.ParameterizationExpressionImpl" regSuite="CFG">
+				<Argument id="Argument" type="boolean" input="checkbox" default="AtLeastOneStaticMapping_CGE"/>
+				<Constant id="expression" value="StaticMappingActivation" />
+				<Constant id="valueChecked" value="AtLeastOneStaticMapping"/>
+				<Constant id="valueUnchecked" value="NoStaticMapping"/>
+			</Parameter>
+			<Parameter id="CFGParameterCompositionMatrix" implementation="com.dassault_systemes.ootbConfiguration.deployment.impl.ParameterizationExpressionImpl" regSuite="CFG">
+				<Argument id="Argument" type="boolean" input="checkbox" default="AtLeastOneCompositionMatrix_CGE"/>
+				<Constant id="expression" value="CompositionMatrixActivation" />
+				<Constant id="valueChecked" value="AtLeastOneCompositionMatrix"/>
+				<Constant id="valueUnchecked" value="NoCompositionMatrix"/>
+			</Parameter>
+			<Parameter id="CFGParameterDisableEditVariant" implementation="com.dassault_systemes.ootbConfiguration.deployment.impl.ParameterizationExpressionImpl" regSuite="CFG">
+				<Argument id="Argument" type="string" input="textfield" default=""/>
+				<Constant id="expression" value="CFG_DisableEditVariantInWebApp" />
+			</Parameter>
+		</Family>
+	</Domain>
+</OOTBParameterization>
+
+

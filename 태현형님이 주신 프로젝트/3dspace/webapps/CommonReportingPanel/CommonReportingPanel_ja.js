@@ -1,0 +1,1 @@
+define("DS/CommonReportingPanel/CommonReportingPanel_ja",{});define("DS/CommonReportingPanel/assets/nls/CommonCommandDialog",{okButton:"OK",cancelButton:"キャンセル"});define("DS/CommonReportingPanel/assets/nls/CommonReportingPanelNls",{TotalRecords:"レコード総数: ",ReportTitle:"レポート"});

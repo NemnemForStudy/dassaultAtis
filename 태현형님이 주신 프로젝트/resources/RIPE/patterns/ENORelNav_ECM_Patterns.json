@@ -1,0 +1,461 @@
+{
+  "relations": [
+    {
+      "name": "changeaction_to",
+      "queries": [
+        {
+          "definition": [
+            {
+              "navigationType": "relation",
+              "qualityFilter": { "rel_type": "Change Action" },
+              "direction": "to"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "changeaction_from",
+      "queries": [
+        {
+          "definition": [
+            {
+              "navigationType": "relation",
+              "qualityFilter": { "rel_type": "Change Action" },
+              "direction": "from"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "changeorder_to",
+      "queries": [
+        {
+          "definition": [
+            {
+              "navigationType": "relation",
+              "qualityFilter": { "rel_type": "Change Order" },
+              "direction": "to"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "changeorder_from",
+      "queries": [
+        {
+          "definition": [
+            {
+              "navigationType": "relation",
+              "qualityFilter": { "rel_type": "Change Order" },
+              "direction": "from"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "changebreakdown_to",
+      "queries": [
+        {
+          "definition": [
+            {
+              "navigationType": "relation",
+              "qualityFilter": { "rel_type": "Change Breakdown" },
+              "direction": "to"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "changebreakdown_from",
+      "queries": [
+        {
+          "definition": [
+            {
+              "navigationType": "relation",
+              "qualityFilter": { "rel_type": "Change Breakdown" },
+              "direction": "from"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "changefollower_to",
+      "queries": [
+        {
+          "definition": [
+            {
+              "navigationType": "relation",
+              "qualityFilter": { "rel_type": "Change Follower" },
+              "direction": "to"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "changefollower_from",
+      "queries": [
+        {
+          "definition": [
+            {
+              "navigationType": "relation",
+              "qualityFilter": { "rel_type": "Change Follower" },
+              "direction": "from"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "changereviewer_to",
+      "queries": [
+        {
+          "definition": [
+            {
+              "navigationType": "relation",
+              "qualityFilter": { "rel_type": "Change Reviewer" },
+              "direction": "to"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "changereviewer_from",
+      "queries": [
+        {
+          "definition": [
+            {
+              "navigationType": "relation",
+              "qualityFilter": { "rel_type": "Change Reviewer" },
+              "direction": "from"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "technicalassignee_to",
+      "queries": [
+        {
+          "definition": [
+            {
+              "navigationType": "relation",
+              "qualityFilter": { "rel_type": "Technical Assignee" },
+              "direction": "to"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "technicalassignee_from",
+      "queries": [
+        {
+          "definition": [
+            {
+              "navigationType": "relation",
+              "qualityFilter": { "rel_type": "Technical Assignee" },
+              "direction": "from"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "resolvedTo_to",
+      "queries": [
+        {
+          "definition": [
+            {
+              "navigationType": "relation",
+              "qualityFilter": { "rel_type": "Resolved To" },
+              "direction": "to"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "resolvedTo_from",
+      "queries": [
+        {
+          "definition": [
+            {
+              "navigationType": "relation",
+              "qualityFilter": { "rel_type": "Resolved To" },
+              "direction": "from"
+            }
+          ]
+        }
+      ]
+    },
+	{
+		"name": "caproposedwhere_from",
+		"queries" :  [{ "definition":[
+                             {"navigationType" : "path","qualityFilter" : {"path_type" : "Proposed Activity.Where"}, "direction" : "from"},
+							 {"navigationType" : "relation","qualityFilter" : {"rel_type" : "Proposed Activities"}, "direction" : "from"}                             
+                             ]
+                     }]
+	},
+	{
+		"name": "caproposedwhere_to",
+		"queries" :  [{ "definition":[
+                             {"navigationType" : "relation","qualityFilter" : {"rel_type" : "Proposed Activities"}, "direction" : "to"},
+                             {"navigationType" : "path","qualityFilter" : {"path_type" : "Proposed Activity.Where"}, "direction" : "to"}
+                             ]
+                     }]
+	},
+	{
+		"name": "carealizedwhere_from",
+		"queries" :  [{ "definition":[
+                             {"navigationType" : "path","qualityFilter" : {"path_type" : "Realized Activity.Where"}, "direction" : "from"},
+							 {"navigationType" : "relation","qualityFilter" : {"rel_type" : "Realized Activities"}, "direction" : "from"}
+                             ]
+                     }]
+	},
+	{
+		"name": "carealizedwhere_to",
+		"queries" :  [{ "definition":[
+                             {"navigationType" : "relation","qualityFilter" : {"rel_type" : "Realized Activities"}, "direction" : "to"},
+                             {"navigationType" : "path","qualityFilter" : {"path_type" : "Realized Activity.Where"}, "direction" : "to"}
+                             ]
+                     }]
+	},
+	{
+		"name": "cacontext_from",
+		"queries" :  [{ "definition":[
+                             {"navigationType" : "path","qualityFilter" : {"path_type" : "Change Action.Context"}, "direction" : "from"}
+                             ]
+                     }]
+	},
+	{
+		"name": "cacontext_to",
+		"queries" :  [{ "definition":[
+                             {"navigationType" : "path","qualityFilter" : {"path_type" : "Change Action.Context"}, "direction" : "to"}
+                             ]
+                     }]
+	} , 
+	{
+      "name": "changeimplementation_to",
+      "queries": [
+        {
+          "definition": [
+            {
+              "navigationType": "relation",
+              "qualityFilter": { "rel_type": "Change Implementation" },
+              "direction": "to"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "changeimplementation_from",
+      "queries": [
+        {
+          "definition": [
+            {
+              "navigationType": "relation",
+              "qualityFilter": { "rel_type": "Change Implementation" },
+              "direction": "from"
+            }
+          ]
+        }
+      ]
+    },
+	{
+      "name": "changeanalysis_to",
+      "queries": [
+        {
+          "definition": [
+            {
+              "navigationType": "relation",
+              "qualityFilter": { "rel_type": "Change Analysis" },
+              "direction": "to"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "changeanalysis_from",
+      "queries": [
+        {
+          "definition": [
+            {
+              "navigationType": "relation",
+              "qualityFilter": { "rel_type": "Change Analysis" },
+              "direction": "from"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "changecoordinator_to",
+      "queries": [
+        {
+          "definition": [
+            {
+              "navigationType": "relation",
+              "qualityFilter": { "rel_type": "Change Coordinator" },
+              "direction": "to"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "changecoordinator_from",
+      "queries": [
+        {
+          "definition": [
+            {
+              "navigationType": "relation",
+              "qualityFilter": { "rel_type": "Change Coordinator" },
+              "direction": "from"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "reportedagainst_to",
+      "queries": [
+        {
+          "definition": [
+            {
+              "navigationType": "relation",
+              "qualityFilter": { "rel_type": "Reported Against Change" },
+              "direction": "to"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "reportedagainst_from",
+      "queries": [
+        {
+          "definition": [
+            {
+              "navigationType": "relation",
+              "qualityFilter": { "rel_type": "Reported Against Change" },
+              "direction": "from"
+            }
+          ]
+        }
+      ]
+    },
+	{
+		"name": "craffecteditem_from",
+		"queries" :  [{ "definition":[
+                             {"navigationType" : "path","qualityFilter" : {"path_type" : "Change Request.Affected Item"}, "direction" : "from"}
+                             ]
+                     }]
+	},
+	{
+		"name": "craffecteditem_to",
+		"queries" :  [{ "definition":[
+                             {"navigationType" : "path","qualityFilter" : {"path_type" : "Change Request.Affected Item"}, "direction" : "to"}
+                             ]
+                     }]
+	},
+	{
+		"name": "iaimpactbasis_from",
+		"queries" :  [{ "definition":[
+                             {"navigationType" : "path","qualityFilter" : {"path_type" : "Abstract Change Analysis.Impact Basis"}, "direction" : "from"}
+                             ]
+                     }]
+	},
+	{
+		"name": "iaimpactbasis_to",
+		"queries" :  [{ "definition":[
+                             {"navigationType" : "path","qualityFilter" : {"path_type" : "Abstract Change Analysis.Impact Basis"}, "direction" : "to"}
+                             ]
+                     }]
+	},
+	{
+		"name": "iaimpacteditem_from",
+		"queries" :  [{ "definition":[
+                             {"navigationType" : "path","qualityFilter" : {"path_type" : "Abstract Change Analysis.Impacted Item"}, "direction" : "from"}
+                             ]
+                     }]
+	},
+	{
+		"name": "iaimpacteditem_to",
+		"queries" :  [{ "definition":[
+                             {"navigationType" : "path","qualityFilter" : {"path_type" : "Abstract Change Analysis.Impacted Item"}, "direction" : "to"}
+                             ]
+                     }]
+  },
+  {
+    "name": "changedecomposition_to",
+    "queries": [
+      {
+        "definition": [
+          {
+            "navigationType": "relation",
+            "qualityFilter": { "rel_type": "Change Request Decomposition" },
+            "direction": "to"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "changedecomposition_from",
+    "queries": [
+      {
+        "definition": [
+          {
+            "navigationType": "relation",
+            "qualityFilter": { "rel_type": "Change Request Decomposition" },
+            "direction": "from"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "implementingCAWithIA_to",
+    "queries" :  [{ "definition":[
+                      {"navigationType" : "relation","qualityFilter" : {"rel_type" : "Change Analysis"}, "direction" : "to"},
+                      {"navigationType" : "relation","qualityFilter" : {"rel_type" : "Change Implementation"}, "direction" : "to"}
+                    ]
+                  }]
+  },
+  {
+    "name": "implementingCAWithIA_from",
+    "queries" :  [{ "definition":[
+                      {"navigationType" : "relation","qualityFilter" : {"rel_type" : "Change Implementation"}, "direction" : "from"},
+                      {"navigationType" : "relation","qualityFilter" : {"rel_type" : "Change Analysis"}, "direction" : "from"}                       
+                    ]
+                  }]
+  } ,
+  {
+    "name": "implementingCAWithCO_to",
+    "queries" :  [{ "definition":[
+                      {"navigationType" : "relation","qualityFilter" : {"rel_type" : "Change Implementation"}, "direction" : "to"},
+                      {"navigationType" : "relation","qualityFilter" : {"rel_type" : "Change Action"}, "direction" : "to"}
+                    ]
+                  }]
+  },
+  {
+    "name": "implementingCAWithCO_from",
+    "queries" :  [{ "definition":[
+                      {"navigationType" : "relation","qualityFilter" : {"rel_type" : "Change Action"}, "direction" : "from"},
+                      {"navigationType" : "relation","qualityFilter" : {"rel_type" : "Change Implementation"}, "direction" : "from"}                
+                    ]
+                  }]
+  }
+
+  ]
+}

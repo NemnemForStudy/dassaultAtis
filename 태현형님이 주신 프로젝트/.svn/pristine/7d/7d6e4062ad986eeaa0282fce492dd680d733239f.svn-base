@@ -1,0 +1,1 @@
+define("DS/CATWebUXSlideShow/CATWebUXSlideShow_zh",{});define("DS/CATWebUXSlideShow/assets/nls/CATWebUXSlideShow",{previousSlide:"上一个视图",nextSlide:"下一个视图",exitSlideShow:"退出展示模式",slideShowCannotBeLaunched:"在展示模式下没有要显示的内容"});

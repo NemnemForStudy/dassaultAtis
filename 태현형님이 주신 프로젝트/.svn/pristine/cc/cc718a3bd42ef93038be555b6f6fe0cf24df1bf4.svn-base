@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:widget="http://www.netvibes.com/ns/" data-rec-id="CATWebUXValidationPanelInWin">
+	<head>
+		<style>
+			html, body {
+				width: 100%;
+				height: 100%;
+				margin: 0px;
+				display: inline-block;
+				overflow: hidden;
+			}
+		</style>
+		<script type="text/javascript" src="../../AmdLoader/AmdLoader.js"></script>
+		<script type="text/javascript">
+			var _objectsValPanel = null;
+			function initAndBuildWebUXValidationPanel(options) {
+				require(['DS/CATWebUXComponents/CATWebUXValidationPanel'],
+				function(CATWebUXValidationPanel) {
+						if(!_objectsValPanel)
+							_objectsValPanel = new CATWebUXValidationPanel({message: options.messageString});
+						onOkClickCB = function (data) {
+							destroyPanel();
+							var btnClickedMsg = "Ok";
+							window.dscef.sendString(JSON.stringify({ btnClicked: btnClickedMsg}));
+						}
+						
+						onCancelClickCB = function (data) {
+							destroyPanel();
+							var btnClickedMsg = "Cancel";
+							window.dscef.sendString(JSON.stringify({ btnClicked: btnClickedMsg}));
+						}
+						
+						var panel = _objectsValPanel.display(onOkClickCB, onCancelClickCB);
+						var docBody = document.body;
+						if(docBody && panel)
+							docBody.appendChild(panel);
+						
+						if(options.okBtnEnableFlag !== undefined)
+							_objectsValPanel.setButtonEnableFlag({btnId: "Ok", enableFlag: options.okBtnEnableFlag});
+						
+						destroyPanel = function(){
+							if(docBody && panel)
+								docBody.removeChild(panel);
+							_objectsValPanel.destroy();
+						}
+					}
+				)
+			};
+
+			function setBtnEnableFlag(data){
+				if(_objectsValPanel)
+					_objectsValPanel.setButtonEnableFlag(data);
+			}
+		</script>
+	</head>
+	<body>
+	</body>
+</html>

@@ -1,0 +1,11 @@
+m|WAfrFoundation\WAfrUtils.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.0.22078|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\WAfrUtils\WAfrUtils.js|1647692311|659
+s|WAfrFoundation\WAfrUtils.mweb\src\Logger.js|1513250742|876
+u|WAfrFoundation\WAfrUtils.mweb\src\PerformanceHelper.js|1555346043|1038
+u|WAfrFoundation\WAfrUtils.mweb\src\WAfrUtils.js|1516291163|0
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

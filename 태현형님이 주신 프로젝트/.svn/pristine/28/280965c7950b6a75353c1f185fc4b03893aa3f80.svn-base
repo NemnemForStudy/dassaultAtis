@@ -1,0 +1,1 @@
+define("DS/ENOFloatingPanel/ENOFloatingPanel_cs",{});define("DS/ENOFloatingPanel/assets/nls/ENOFloatingPanel",{EFP_ClosePanel:"Zavřít",EFP_MaximizePanel:"Maximalizovat",EFP_RestorePanel:"Obnovit",EFP_PinWidget:"Připnout widget",EFP_Settings:"Nastavení"});

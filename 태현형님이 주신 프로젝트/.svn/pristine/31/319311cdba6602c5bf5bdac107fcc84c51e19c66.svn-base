@@ -1,0 +1,181 @@
+################################################################################################
+# Create By jhlee : 2023. 05. 02
+# Admin Type : menu
+# Name : type_ProjectSpace
+################################################################################################
+
+copy menu type_ProjectSpace type_ProjectSpace_ootb;
+mod menu type_ProjectSpace
+	add command decProjectSpaceUnitImageList
+;
+
+## jhlee Add 2023-05-12 ##
+mod menu type_ProjectSpace
+	add command decCwpMasterList
+;
+
+## jhlee Add 2023-05-22 ##
+mod menu type_ProjectSpace
+	add command decCwpPlanList
+;
+
+## jhlee Add 2023-05-31 ##
+mod menu type_ProjectSpace
+	add command decCwpSummaryList
+	add command decCwpChangeHistoryList
+;
+
+## jhlee Add 2023-06-01 ##
+mod menu type_ProjectSpace
+	add command decIWPExcutionList
+;
+
+
+## choimingi Add 2023-06-02 ##
+mod menu type_ProjectSpace
+	add command decDeskCodeMaster,decDeskTableMaster
+;
+
+## thok Add 2023-06-12 ##
+mod menu type_ProjectSpace
+	add command decProjectSafetyStaticsView,decProjectSpacePropertiesPowerView
+;
+
+## thok Add 2023-06-13 ##
+mod menu type_ProjectSpace
+	order command decProjectSpacePropertiesPowerView 1
+;
+
+## thok Add 2023-06-13 ##
+mod menu type_ProjectSpace
+	href '${COMMON_DIR}/emxPortal.jsp?portal=decProjectPropertiesPortal&showPageHeader=false&HelpMarker=emxhelpprojectdetails'
+;
+
+## thok Add 2023-06-13 ##
+mod menu type_ProjectSpace
+	label 'Detail'
+;
+
+## thok Add 2023-06-15 ##
+mod menu type_ProjectSpace
+	add command decProjectProgressView
+;
+
+# Modified by hslee on 2023.06.20
+mod menu type_ProjectSpace
+	add command decProjectKeyQtyMgmtCmd
+;
+
+# Modified by hslee on 2023.06.20
+mod menu type_ProjectSpace
+	add command decProjectKeyQtyReportCmd
+;
+
+# Modified by jhlee on 2023.07.03
+mod menu type_ProjectSpace
+	add command decConstructionKPIList
+;
+
+# Modified by hslee on 2023.07.14
+mod menu type_ProjectSpace
+	add command decProjectMaterialStatusLink
+;
+
+
+# Modified by choimingi on 2023.07.17
+mod menu type_ProjectSpace
+	add  command decDeliverableStatusCommand
+;
+
+# Modified by choimingi on 2023.07.31
+mod menu type_ProjectSpace
+	order command PMCExecution 7
+	order command PMCWhatIfProjectExperiments 8
+	order command PMCFinancials 9
+	order command PMCFolder 10
+	order command PMCObjectives 11
+	order command PMCAccess_ResourcePlan 12
+	order command decDeskCodeMaster 13
+	order command decDeskTableMaster 14
+	order command decProjectSpaceUnitImageList 15
+	order command decProjectSafetyStaticsView 16
+	order command decProjectProgressView 17
+	order command decProjectKeyQtyMgmtCmd 18
+	order command decProjectKeyQtyReportCmd 19
+	order command decConstructionKPIList 20
+	order command decCwpMasterList 21
+	order command decCwpPlanList 22
+	order command decCwpSummaryList 23
+	order command decCwpChangeLogList 24
+	order command decIWPExcutionList 25
+	order command decProjectMaterialStatusLink 26
+	order command decDeliverableStatusCommand 27
+	order command decVPDocumentStatusCommand 28
+;
+
+# Modified by thok on 2023. 08. 01
+mod menu type_ProjectSpace
+	label 'emxProgramCentral.Label.Project.Overview'
+;
+
+# Modified by hslee on 2023. 08. 04
+mod menu type_ProjectSpace
+	add command 'decCWPMaterialSummaryLink'
+	order command 'decCWPMaterialSummaryLink' 27
+;
+
+# Modified by choimingi on 2023. 08. 08
+mod menu type_ProjectSpace
+	add command decChangeHistoryList 
+;
+
+# Modified by jhlee on 2023. 08. 16
+mod menu type_ProjectSpace
+	remove command decCwpPlanList
+	add command decCWPPlanListPortal 
+	order command decCWPPlanListPortal 22
+;
+
+mod menu type_ProjectSpace remove command decCwpChangeHistoryList;
+mod menu type_ProjectSpace add command decCwpChangeLogList;
+
+mod menu type_ProjectSpace
+	add command 'decCwpChangeLogList'
+	order command 'decCwpChangeLogList' 24
+;
+
+# Modified by hslee on 2023.08.31
+mod menu type_ProjectSpace
+	add command decBMTrackingListLink
+	order command decBMTrackingListLink 28
+;
+
+# Modified by hslee on 2023.09.12
+mod menu type_ProjectSpace
+	add menu decProjectManagementCategoryMenu
+	add menu decProjectWorkPackageCategoryMenu
+	add menu decProjectDocumentCategoryMenu
+	add menu decProjectQtyCategoryMenu
+	add menu decProjectMaterialCategoryMenu
+	add menu decProjectConstructionCategoryMenu
+;
+mod menu type_ProjectSpace
+	remove command 'decDeskCodeMaster'
+	remove command 'decDeskTableMaster'
+	remove command 'decProjectSpaceUnitImageList'
+	remove command 'decProjectSafetyStaticsView'
+	remove command 'decProjectProgressView'
+	remove command 'decCwpMasterList'
+	remove command 'decCWPPlanListPortal's
+	remove command 'decCwpSummaryList'
+	remove command 'decIWPExcutionList'
+	remove command 'decCwpChangeLogList'
+	remove command 'decDeliverableStatusCommand'
+	remove command 'decVPDocumentStatusCommand'
+	remove command 'decProjectKeyQtyMgmtCmd'
+	remove command 'decProjectKeyQtyReportCmd'
+	remove command 'decBMTrackingListLink'
+	remove command 'decProjectMaterialStatusLink'
+	remove command 'decCWPMaterialSummaryLink'
+	remove command 'decConstructionKPIList'
+;

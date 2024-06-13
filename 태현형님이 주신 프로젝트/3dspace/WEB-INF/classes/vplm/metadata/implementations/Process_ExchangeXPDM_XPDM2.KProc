@@ -1,0 +1,97 @@
+/*********************************************************************************************************************************/
+/* Exchange XPDM procedure for Process                                                                                        */
+/* --> Retrieves all agregated PLM objects (References, Ref Instances, Rep References, Rep Instances, Ports and Connections)     */
+/*********************************************************************************************************************************/
+#Prog Process_ExchangeXPDM_XPDM2( iPLMIDSet : #In PLMIDSet, oPLMIDSet : #Out PLMIDSet ) : VoidType
+{
+	let PLMRouteSetProduct (PLMRouteSet)
+	let PLMRouteSetPortsAndCnx (PLMRouteSet)
+	let PLMRouteSetParts (PLMRouteSet)
+	let PLMRouteSetProduct2 (PLMRouteSet)
+	let PLMRouteSetProductOccFilter (PLMRouteSet)
+	let PLMRouteSetProductStructure (PLMRouteSet)
+	let PLMRouteSetProductAggrRep (PLMRouteSet)
+
+	let PLMIDSetFirstStep (PLMIDSet)
+	let PLMIDSetProcessRef (PLMIDSet)
+	let PLMIDSetProcessInst (PLMIDSet)
+	let PLMIDSetProcess (PLMIDSet)
+	let PLMIDSetProduct (PLMIDSet)
+	let PLMIDSetPortsAndCnx  (PLMIDSet)
+	let PLMIDSetEBOMRel (PLMIDSet)
+	let PLMIDSetParts (PLMIDSet)
+	let PLMIDSetImplCnx (PLMIDSet)
+	let PLMIDSetScopeImplCnx (PLMIDSet)
+	let PLMIDSetValidImplCnx (PLMIDSet)
+	let PLMIDSetAssignFilterCnx (PLMIDSet)
+	let PLMIDSetProductOccFilter (PLMIDSet)
+	let PLMIDSetProductInst  (PLMIDSet)
+	let PLMIDSetProductStructure  (PLMIDSet)
+	let PLMIDSetProductRef  (PLMIDSet)
+	let PLMIDSetProductAggrRep (PLMIDSet)
+	let PLMPartialScopeIdSet(PLMIDSet)
+
+	PLMIDSetProcessRef = Restrict(iPLMIDSet, "DELFmiFunctionalModel/DELFmiFunctionReference") 
+	PLMIDSetProcessInst = Restrict(iPLMIDSet,"DELFmiFunctionalModel/DELFmiFunctionInstance") 
+	PLMIDSetProcess = PLMIDSetProcessRef + PLMIDSetProcessInst
+
+
+
+
+	/* ======= */
+	/* WARNING */
+	/* ======= */
+	/* IF YOU HAVE MODIFICATION TO DO IN THIS KPROC, PLEASE DO IT IN Process_ExchangeXPDM_XPDM2_MBOMWithoutProduct.KProc */
+	/* WHICH IS DIRECTLY CALLED IN THIS ONE,  */
+	/* THEN DO NOT FORGET TO REPORT MODIFICATION IN Process_ExchangeXPDM_XPDM2_MBOMWithoutProcess.KProc */
+	/* IF YOU HAVE ANY DOUBT, CONTACT NNU */
+
+
+
+
+
+	/* call completion without product */
+	PLMIDSetFirstStep = ExecutePLMProcedure("Process_ExchangeXPDM_XPDM2_MBOMWithoutProduct", iPLMIDSet)
+
+	/* Retrieves implement Cnx and Assignment filter Cnx needed from reference         */
+	PLMRouteSetPortsAndCnx  = ExecutePLMFunction("DELFmiFunctionalModel", "DELFmiFunctionalModel_addPortsAndCnxExceptImplCnx", PLMIDSetProcessRef)
+	PLMIDSetPortsAndCnx = Ids(PLMRouteSetPortsAndCnx,"all")
+	PLMIDSetImplCnx = Restrict(PLMIDSetPortsAndCnx, "DELFmiFunctionalModelImplementCnx/DELFmiProcessImplementCnx")
+	PLMIDSetAssignFilterCnx = Restrict(PLMIDSetPortsAndCnx, "PLMAssignmentFilter/PLMAssignmentFilterCnx")
+	
+	/* Extract only valid Implement Cnx */
+	PLMIDSetScopeImplCnx = PLMIDSetProcessRef + PLMIDSetProcessInst 
+	PLMIDSetValidImplCnx = ValidateSRs (PLMIDSetImplCnx,"PLM_ImplementLink_Source",PLMIDSetScopeImplCnx)	
+
+	/* Retrieves all implemented products from Implement Cnx*/
+	PLMRouteSetProduct = ExecutePLMFunction("DELFmiFunctionalModelImplementCnx", "DELFmiFunctionModelImplCnx_AddAllImplementedComponentsFromCnx", PLMIDSetValidImplCnx)
+
+	/* Retrieves all implemented products from SR*/
+	PLMRouteSetProduct2 = ExecutePLMFunction("DELFmiFunctionalModelImplementCnx", "DELFmiFunctionModelImplCnx_AddAllImplementedComponentsFromSR", PLMIDSetProcessInst)
+	PLMIDSetProduct = Ids(PLMRouteSetProduct2,"all") + Ids(PLMRouteSetProduct,"all")
+
+	/* Retrieves all products Occ from Assignment Filter Cnx*/
+	PLMRouteSetProductOccFilter = ExecutePLMFunction("DELAsmAssemblyModelDisciplines", "ENOPcs_Process_addProductOccFromAssignmentFilter", PLMIDSetAssignFilterCnx)
+	PLMIDSetProductOccFilter = Ids(PLMRouteSetProductOccFilter,"all") 
+
+	/* Retrieve Parts From EBOM relations */
+	PLMIDSetEBOMRel = Restrict(PLMIDSetProduct,"RelationClass/EBOM")
+	PLMRouteSetParts = ExecutePLMFunction("DELPPRContextModel", "ENOPpr_PPRData_getPartsFromEBOM", PLMIDSetEBOMRel)
+	PLMIDSetParts = Ids(PLMRouteSetParts,"all")
+
+	/* Retrieves all references and aggregating references from product instances*/
+	PLMIDSetProductInst =  Restrict(PLMIDSetProduct,"PRODUCTCFG/VPMInstance") + Restrict(PLMIDSetProductOccFilter,"PRODUCTCFG/VPMInstance")
+	PLMRouteSetProductStructure = ExecutePLMFunction("DELPPRContextModel", "ENOPpr_PPRData_addRefAndAggregatingRef", PLMIDSetProductInst)
+	PLMIDSetProductStructure = Ids(PLMRouteSetProductStructure,"all") 
+
+	/* Get aggregated representations from all Product/Resource references for coherence for 3DPart */
+	PLMIDSetProductRef = Restrict(PLMIDSetProduct,"PRODUCTCFG/VPMReference") + Restrict(PLMIDSetProductStructure,"PRODUCTCFG/VPMReference")
+	PLMRouteSetProductAggrRep= ExecutePLMFunction( "PRODUCTCFG", "ProductCfg_Add3DPartRepresentation", PLMIDSetProductRef)
+	PLMIDSetProductAggrRep = Ids(PLMRouteSetProductAggrRep,"all")
+
+	/*Partial Scope Link*/
+    PLMPartialScopeIdSet = ExecuteJavaProcedure("com.dassault_systemes.platform.model.mbom.procedures.ProcedureCalls_PartialScopeLink", PLMIDSetProcessRef)
+
+	oPLMIDSet = iPLMIDSet + PLMIDSetFirstStep + PLMIDSetAssignFilterCnx + PLMIDSetProduct + PLMIDSetParts + PLMIDSetValidImplCnx + PLMIDSetProductOccFilter + PLMIDSetProductStructure + PLMIDSetProductAggrRep + PLMPartialScopeIdSet
+	/* Even if we don't mention precedence ports in the xml output, we need to export them for futur import */
+}

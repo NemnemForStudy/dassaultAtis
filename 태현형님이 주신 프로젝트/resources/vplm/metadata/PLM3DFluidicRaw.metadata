@@ -1,0 +1,143 @@
+<?xml version="1.0"?>
+<!-- ENOVIA DICTIONARY  -->
+<!-- COPYRIGHT DASSAULT SYSTEMES 2021, All rights reserved -->
+
+<Package xmlns="PLMDictionaryUnified" ModelerType="Top" CustomerExposition="Programmer"
+         Name="PLM3DFluidicRaw" Uuid="7EF733FF-4F75-49f1-9E64-2CB92FC1AF7D"
+         UseNames="RawMaterialSpecification" Architecture="All">
+  <CAAComment>
+    <ShortRole>3D Fluidic Raw Package</ShortRole>
+    <Role>This package describes the Raw Material of 3D Fluidic modeler.</Role>
+  </CAAComment>
+
+  <Comment>[3DEXP_R2022x] Initial creation: 2021-06-22 GLY </Comment>
+
+  <Class Name="Raw_Material_PipeTube"
+       Uuid="9CE301E7-0414-4617-9FC0-5927E717BF14"
+       Abbreviation="rawpip"
+       Abstract="No"
+       CustomerExposition="Programmer"
+       SuperName="Raw_Material"
+       Discipline="Yes"
+       Specializable="No"
+       CustomerExtensible="Yes"
+       Searchable="Yes"
+       InstantiationOwnerTypes="None">
+
+    <Property Name="KweNew_InstanciationMethod" Value="CATEFluidicRawDelegateInstanciation"/>
+    <Property Name="Newable"                    Value="New"/>
+    <Property Name="IconName"                   Value="I_RawMaterialPipeTube"/>
+    <Property Name="3DIconName"                 Value="V_RawMaterialPipeTube.cgr"/>
+
+    <Simple Name="V_Standard"           Type="String" Uuid="6513DAF9-1B80-4ff7-9E0B-AB11B35C8407"  MaxLength="80"  Protection="Free"  CAAExposition="L0"  MultiValuated="No">
+      <Property Name="Controller" Value="CATPipAttributeController"/>
+    </Simple>
+    <Simple Name="V_NominalSize"        Type="String" Uuid="53B6101A-348C-45f4-8A95-D1F523B33E8C"  MaxLength="80"  Protection="Free"  CAAExposition="L0"  MultiValuated="No">
+      <Property Name="Controller" Value="CATPipAttributeController"/>
+    </Simple>
+    <Simple Name="V_Rating"             Type="String" Uuid="19628114-9A1B-4eef-AFCF-99DB36A2EBC1"  MaxLength="100" Protection="Free"  CAAExposition="L0"  MultiValuated="No">
+      <Property Name="Controller" Value="CATPipAttributeController"/>
+    </Simple>
+    <Simple Name="V_EndStyle"           Type="String" Uuid="94E98F69-BF7A-4996-8F7B-01F242E437A2"  MaxLength="40"  Protection="Free"  CAAExposition="L0"  MultiValuated="No">
+      <Property Name="Controller" Value="CATPipAttributeController"/>
+    </Simple>
+    <Simple Name="V_OutsideDiameter"  Type="Double" Uuid="E5BB1586-42DD-42fd-A93E-78B9BC184201"  Magnitude="LENGTH"  Protection="Free"  CAAExposition="L0"  MultiValuated="No">
+      <Property Name="Controller" Value="CATPipAttributeController"/>
+    </Simple>
+    <Simple Name="V_WallThickness"    Type="Double" Uuid="96C7B2F2-7AEA-474b-B493-1452760F30EB"  Magnitude="LENGTH"  Protection="Free"  CAAExposition="L0"  MultiValuated="No">
+      <Property Name="Controller" Value="CATPipAttributeController"/>
+    </Simple>
+    <Simple Name="V_Linearweight"     Type="Double" Uuid="82D24A61-92DF-4f1b-B208-73E6AE336987"  Magnitude="LINEMASS"  Protection="Free"  CAAExposition="L0"  MultiValuated="No"/>
+  </Class>
+
+  <Class Name="Raw_Material_Duct"
+       Uuid="537DBD07-E842-4947-A6A3-1E30C3EA61E2"
+       Abbreviation="rawhva"
+       Abstract="No"
+       CustomerExposition="Programmer"
+       SuperName="Raw_Material"
+       Discipline="Yes"
+       Specializable="No"
+       CustomerExtensible="Yes"
+       Searchable="Yes"
+       InstantiationOwnerTypes="None">
+
+    <Property Name="KweNew_InstanciationMethod" Value="CATEFluidicRawDelegateInstanciation"/>
+    <Property Name="Newable"                    Value="New"/>
+    <Property Name="IconName"                   Value="I_RawMaterialDuct"/>
+    <Property Name="3DIconName"                 Value="V_RawMaterialDuct.cgr"/>
+
+    <Simple Name="V_Standard"           Type="String" Uuid="17070D0D-79FB-4260-8F4A-96A7E9A3CAEC"  MaxLength="80"  Protection="Free"  CAAExposition="L0"  MultiValuated="No">
+      <Property Name="Controller" Value="CATHvaAttributeController"/>
+    </Simple>
+    <Simple Name="V_Shape"              Type="String" Uuid="DE1201B4-7E7A-4362-A515-614E4DDF7DF7"  MaxLength="80"  Protection="Free"  CAAExposition="L0"  MultiValuated="No">
+      <Property Name="Controller" Value="CATHvaAttributeController"/>
+    </Simple>
+    <Simple Name="V_EquivalentDiameter" Type="String" Uuid="22557D91-C4EB-4e0e-9F2A-EDF14E750FCF"  MaxLength="80"  Protection="Free"  CAAExposition="L0"  MultiValuated="No">
+      <Property Name="Controller" Value="CATHvaAttributeController"/>
+    </Simple>
+    <Simple Name="V_NominalSize"  Type="String" Uuid="68F62FE1-A4C2-43e9-B0F5-23D33BC78080"  MaxLength="80"  Protection="Free"  CAAExposition="L0"  MultiValuated="No">
+      <Property Name="Controller" Value="CATHvaAttributeController"/>
+    </Simple>
+    <Simple Name="V_EndStyle"           Type="String" Uuid="B3B2CF78-E95D-4848-BBB4-02EF5D5F0AA9"  MaxLength="40"  Protection="Free"  CAAExposition="L0"  MultiValuated="No">
+      <Property Name="Controller" Value="CATHvaAttributeController"/>
+    </Simple>
+    <Simple Name="V_WallThickness"  Type="Double" Uuid="445B2E7F-5BD6-4e67-A655-ABE78C1BF346"  Magnitude="LENGTH"  Protection="Free"  CAAExposition="L0"  MultiValuated="No">
+      <Property Name="Controller" Value="CATHvaAttributeController"/>
+    </Simple>
+    <Simple Name="V_Height"         Type="Double" Uuid="7D14A8B0-1748-4d06-B25B-571E1CE290C6"  Magnitude="LENGTH"  Protection="Free"  CAAExposition="L0"  MultiValuated="No">
+      <Property Name="Controller" Value="CATHvaAttributeController"/>
+    </Simple>
+    <Simple Name="V_Width"          Type="Double" Uuid="674B450C-C8CE-4305-A039-52FAD5F439E5"  Magnitude="LENGTH"  Protection="Free"  CAAExposition="L0"  MultiValuated="No">
+      <Property Name="Controller" Value="CATHvaAttributeController"/>
+    </Simple>
+    <Simple Name="V_CornerRadius"   Type="Double" Uuid="DE5ED519-71C3-4c9b-B4E9-AABA5838CD9C"  Magnitude="LENGTH"  Protection="Free"  CAAExposition="L0"  MultiValuated="No">
+      <Property Name="Controller" Value="CATHvaAttributeController"/>
+    </Simple>
+    <Simple Name="V_LinearWeight"   Type="Double" Uuid="B544D363-3ECC-4f6b-9A0C-84AD2E4BDD27"  Magnitude="LINEMASS"  Protection="Free"  CAAExposition="L0"  MultiValuated="No"/>
+  </Class>
+
+  <Class Name="Raw_Material_Tray"
+       Uuid="C3E0121C-FD15-4672-8288-0D9CE2921BEC"
+       Abbreviation="rawrcw"
+       Abstract="No"
+       CustomerExposition="Programmer"
+       SuperName="Raw_Material"
+       Discipline="Yes"
+       Specializable="No"
+       CustomerExtensible="Yes"
+       Searchable="Yes"
+       InstantiationOwnerTypes="None">
+
+    <Property Name="KweNew_InstanciationMethod" Value="CATEFluidicRawDelegateInstanciation"/>
+    <Property Name="Newable"                    Value="New"/>
+    <Property Name="IconName"                   Value="I_RawMaterialTray"/>
+    <Property Name="3DIconName"                 Value="V_RawMaterialTray.cgr"/>
+
+    <Simple Name="V_Standard"           Type="String" Uuid="B046733B-DA86-4ce2-8C8E-95A6B77936EA"  MaxLength="80"  Protection="Free"  CAAExposition="L0"  MultiValuated="No">
+      <Property Name="Controller" Value="CATRcdAttributeController"/>
+    </Simple>
+    <Simple Name="V_Shape"              Type="String" Uuid="105C3D69-7F12-4c98-BF5A-797BE819CE10"  MaxLength="80"  Protection="Free"  CAAExposition="L0"  MultiValuated="No">
+      <Property Name="Controller" Value="CATRcdAttributeController"/>
+    </Simple>
+    <Simple Name="V_NominalSize"        Type="String" Uuid="D166B327-26CA-44c3-9662-50CA2F95D57B"  MaxLength="80"  Protection="Free"  CAAExposition="L0"  MultiValuated="No">
+      <Property Name="Controller" Value="CATRcdAttributeController"/>
+    </Simple>
+    <Simple Name="V_EndStyle"           Type="String" Uuid="38286AA0-DA33-437c-BFD4-12C5FD3D6CFA"  MaxLength="40"  Protection="Free"  CAAExposition="L0"  MultiValuated="No">
+      <Property Name="Controller" Value="CATRcdAttributeController"/>
+    </Simple>
+    <Simple Name="V_WallThickness"  Type="Double" Uuid="8961F439-A9F5-42b6-A7AE-558CAC55BBAC"  Magnitude="LENGTH"  Protection="Free"  CAAExposition="L0"  MultiValuated="No">
+      <Property Name="Controller" Value="CATRcdAttributeController"/>
+    </Simple>
+    <Simple Name="V_Height"         Type="Double" Uuid="7890FC66-16FD-43fe-A2B9-B39B18109A93"  Magnitude="LENGTH"  Protection="Free"  CAAExposition="L0"  MultiValuated="No">
+      <Property Name="Controller" Value="CATRcdAttributeController"/>
+    </Simple>
+    <Simple Name="V_Width"          Type="Double" Uuid="35D26E67-C5AD-4e2d-BEE3-76A04CBE8D51"  Magnitude="LENGTH"  Protection="Free"  CAAExposition="L0"  MultiValuated="No">
+      <Property Name="Controller" Value="CATRcdAttributeController"/>
+    </Simple>
+    <Simple Name="V_LinearWeight"   Type="Double" Uuid="3A6FA638-305A-4746-AD92-632BCBF9490B"  Magnitude="LINEMASS"  Protection="Free"  CAAExposition="L0"  MultiValuated="No"/>
+  </Class>
+
+</Package>
+
+

@@ -1,0 +1,49 @@
+# Added by hslee on 2023.07.14
+# del command decProjectMaterialStatusLink;
+add command decProjectMaterialStatusLink
+	label 'ProgramCentral.Label.Procurement_Schedule_-_Material_Status'
+	href '${COMMON_DIR}/emxIndentedTable.jsp?table=decMaterialStatusSummary&program=emxProjectSpace:getMaterialStatusList&header=ProgramCentral.Label.Procurement_Schedule_-_Material_Status&editLink=true&parallelLoading=true&maxCellsToDraw=2000&scrollPageSize=50&pageSize=300&showPaginationToggle=false&decExport=true&exportMode=MaterialStatus'
+	setting 'Target Location' 'content'
+	setting 'Registered Suite' 'ProgramCentral'
+;
+
+mod command decProjectMaterialStatusLink
+	#add setting 'Access Expression' 'false'
+	remove setting 'Access Expression'
+;
+
+# Modified by hslee on 2023.07.31
+mod command decProjectMaterialStatusLink
+	add setting 'Access Expression' 'type == "Project Space" && attribute[decProjectType] == ongoing' 
+;
+
+# Modified by hslee on 2023.08.02
+mod command decProjectMaterialStatusLink
+	href '${COMMON_DIR}/emxIndentedTable.jsp?table=decMaterialStatusSummary&program=emxProjectSpace:getMaterialStatusList&header=ProgramCentral.Label.Procurement_Schedule_-_Material_Status&editLink=true&parallelLoading=true&maxCellsToDraw=2000&scrollPageSize=50&pageSize=300&showPaginationToggle=false&decExport=true&exportMode=MaterialStatus&slideinFilter=true&codeMaster=SUBCON&Material Delay=true'
+#	href '${COMMON_DIR}/emxTable.jsp?table=decMaterialStatusSummary&program=emxProjectSpace:getMaterialStatusList&header=ProgramCentral.Label.Procurement_Schedule_-_Material_Status&editLink=true&parallelLoading=true&decExport=true&exportMode=MaterialStatus&slideinFilter=true&codeMaster=SUBCON&Material Delay=true'
+	add setting 'Access Expression' '(type == "Project Space" && attribute[decProjectType] == ongoing) || (type == "decCWPTask" && to[Project Access Key].from.from[Project Access List].to.attribute[decProjectType] == ongoing)' 
+;
+
+# Modified by jhlee on 2023.08.23
+mod command decProjectMaterialStatusLink
+	href '${COMMON_DIR}/emxIndentedTable.jsp?table=decMaterialStatusSummary&program=emxProjectSpace:getMaterialStatusList&header=ProgramCentral.Label.Procurement_Schedule_-_Material_Status&editLink=true&parallelLoading=true&maxCellsToDraw=2000&scrollPageSize=50&pageSize=300&showPaginationToggle=false&decExport=true&exportMode=MaterialStatus&slideinFilter=true&codeMaster=Sub-Con&Material Delay=true'
+;
+
+# Modified by hslee on 2023.08.25
+mod command decProjectMaterialStatusLink
+	href '${COMMON_DIR}/emxIndentedTable.jsp?table=decMaterialStatusSummary&program=emxProjectSpace:getMaterialStatusList&header=ProgramCentral.Label.Procurement_Schedule_-_Material_Status&editLink=true&parallelLoading=true&maxCellsToDraw=2000&scrollPageSize=50&pageSize=300&showPaginationToggle=false&decExport=true&exportMode=MaterialStatus&slideinFilter=true&filterParam=codeMaster:Discipline,codeMaster:Sub-Con,codeMaster:Item Group,codeMaster:Group,Fab Category:true,Material Delay:true,Status_Updated:true,CWP_Plan:true'
+;
+
+# Modified by hslee on 2023.09.09
+mod command decProjectMaterialStatusLink
+	href '${COMMON_DIR}/emxIndentedTable.jsp?table=decMaterialStatusSummary&program=emxProjectSpace:getMaterialStatusList&header=ProgramCentral.Label.Procurement_Schedule_-_Material_Status&parallelLoading=true&maxCellsToDraw=2000&scrollPageSize=50&pageSize=300&showPaginationToggle=false&decExport=true&exportMode=MaterialStatus&slideinFilter=true&filterParam=codeMaster:Discipline,codeMaster:Sub-Con,codeMaster:Item Group,codeMaster:Group,Fab Category:true,Material Delay:true,Status_Updated:true,CWP_Plan:true'
+;
+# Modified by hslee on 2023.09.11
+mod command decProjectMaterialStatusLink
+	add setting 'Access Expression' 'type == "Project Space" && attribute[decProjectType] == "ongoing"'
+;
+
+# Modified by thok on 2023.10.16
+mod command decProjectMaterialStatusLink
+	href '${COMMON_DIR}/emxIndentedTable.jsp?table=decMaterialStatusSummary&program=emxProjectSpace:getMaterialStatusList&toolbar=decProjectMaterialStatusLinkToolBar&header=ProgramCentral.Label.Procurement_Schedule_-_Material_Status&editLink=true&parallelLoading=true&maxCellsToDraw=2000&scrollPageSize=50&pageSize=300&showPaginationToggle=false&decExport=true&exportMode=MaterialStatus&slideinFilter=true&codeMaster=Sub-Con&Material Delay=true'
+;

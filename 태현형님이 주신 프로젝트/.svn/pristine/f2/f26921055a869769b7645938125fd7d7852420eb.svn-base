@@ -1,0 +1,1 @@
+define("DS/W3DDriveComponent/W3DDriveComponent_ko",{});define("DS/W3DDriveComponent/assets/nls/W3DDriveComponent",{select_platform:"플랫폼 선택",myFiles:"내 파일",sharedWithMe:"공유된 파일"});

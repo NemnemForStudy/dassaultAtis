@@ -1,0 +1,20 @@
+###    230621 created by choimingi
+###    인터페이스 db insert 시작 커맨드
+
+
+#delete command decSitecdDcplnInterfaceMapping;
+
+add command decSitecdDcplnInterfaceMapping
+  description 'getEngProgress'
+  label 'emxFramework.Label.SitecdDcplnInInterfaceMapping'
+  href '${SUITE_DIR}/decInterfaceMappingProcess.jsp?commandName=decSitecdDcplnInterfaceMapping'
+  setting "Target Location" "content"
+  setting "Registered Suite" "Framework"
+  property "installer" value "ENOVIAEngineering"
+  property "application" value "Framework"
+  property "original name" value "decSitecdDcplnInterfaceMapping";
+ 
+mod menu type_ProjectSpace remove command decSitecdDcplnInterfaceMapping;
+
+#mod menu InterfaceMappingTest add command decSitecdDcplnInterfaceMapping;
+#mod menu type_ProjectSpace add menu InterfaceMappingTest;

@@ -1,0 +1,1040 @@
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.DoubleSummaryStatistics;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
+import org.apache.ibatis.session.SqlSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.daewooenc.compare.CompareRule;
+import com.daewooenc.compare.util.CompareUtil;
+import com.daewooenc.export.ExportConfig;
+import com.daewooenc.mybatis.main.decSQLSessionFactory;
+import com.dec.util.DecConstants;
+import com.dec.util.DecDateUtil;
+import com.dec.util.decFilterUtil;
+import com.dec.util.decListUtil;
+import com.matrixone.apps.domain.util.MapList;
+import com.matrixone.apps.domain.util.MqlUtil;
+
+import matrix.db.Context;
+import matrix.db.JPO;
+import matrix.util.StringList;
+
+@SuppressWarnings({ "rawtypes", "unchecked" })
+public class decMaterial_mxJPO {
+	
+	private static final Logger logger = LoggerFactory.getLogger(decMaterial_mxJPO.class);
+
+	public List<ExportConfig> getMaterialStatusExportConfig() throws Exception{
+		try {
+			List<ExportConfig> configList = new ArrayList<ExportConfig>();
+			configList.add(new ExportConfig("SITE_CD","SITE_CD"));
+			configList.add(new ExportConfig("DCPLN_CD","DCPLN_CD"));
+			configList.add(new ExportConfig("AREA_NM","AREA_NM"));
+			configList.add(new ExportConfig("UNIT_NM","UNIT_NM"));
+			configList.add(new ExportConfig("CWP_NO","CWP_NO"));
+			configList.add(new ExportConfig("SYS_NM","SYS_NM"));
+			configList.add(new ExportConfig("LINE_NO","LINE_NO"));
+			configList.add(new ExportConfig("LVL_NM","LVL_NM"));
+			configList.add(new ExportConfig("ISO_NO","ISO_NO"));
+			configList.add(new ExportConfig("REV_NO","REV_NO"));
+			configList.add(new ExportConfig("IDENT_CD","IDENT_CD"));
+			configList.add(new ExportConfig("ITEM_NO","ITEM_NO"));
+			configList.add(new ExportConfig("TIO_NO","TIO_NO"));
+			configList.add(new ExportConfig("SUB_SYS_NM","SUB_SYS_NM"));
+			configList.add(new ExportConfig("DELI_DEST_NM","DELI_DEST_NM"));
+			configList.add(new ExportConfig("PRFR_GRP_CD","PRFR_GRP_CD"));
+			configList.add(new ExportConfig("PRFR_RANK","PRFR_RANK"));
+			configList.add(new ExportConfig("ITEM_GRP_CD","ITEM_GRP_CD"));
+			configList.add(new ExportConfig("GRP_CD","GRP_CD"));
+			configList.add(new ExportConfig("GRP_SHORTDESC","GRP_SHORTDESC"));
+			configList.add(new ExportConfig("PART_CD","PART_CD"));
+			configList.add(new ExportConfig("PART_SHORTDESC","PART_SHORTDESC"));
+			configList.add(new ExportConfig("COMMODITY_CD","COMMODITY_CD"));
+			configList.add(new ExportConfig("COMMODITY_SHORTDESC","COMMODITY_SHORTDESC"));
+			configList.add(new ExportConfig("SPEC_CD","SPEC_CD"));
+			configList.add(new ExportConfig("SHRT_CD","SHRT_CD"));
+			configList.add(new ExportConfig("SIZE1","SIZE1"));
+			configList.add(new ExportConfig("SIZE2","SIZE2"));
+			configList.add(new ExportConfig("SIZE3","SIZE3"));
+			configList.add(new ExportConfig("SIZE4","SIZE4"));
+			configList.add(new ExportConfig("BASE_MAT_CD","BASE_MAT_CD"));
+			configList.add(new ExportConfig("RAT_CD","RAT_CD"));
+			configList.add(new ExportConfig("SUB_TAG_NO","SUB_TAG_NO"));
+			configList.add(new ExportConfig("PID_NO","PID_NO"));
+			configList.add(new ExportConfig("CHR_VAL1","CHR_VAL1"));
+			configList.add(new ExportConfig("CHR_VAL2","CHR_VAL2"));
+			configList.add(new ExportConfig("CHR_VAL3","CHR_VAL3"));
+			configList.add(new ExportConfig("CHR_VAL4","CHR_VAL4"));
+			configList.add(new ExportConfig("DES_QTY","DES_QTY"));
+			configList.add(new ExportConfig("ALLOC_QTY","ALLOC_QTY"));
+			configList.add(new ExportConfig("UNT_CD","UNT_CD"));
+			configList.add(new ExportConfig("WGT","WGT"));
+			configList.add(new ExportConfig("DIA_WIDTH","DIA_WIDTH"));
+			configList.add(new ExportConfig("ITEM_STS_CD","ITEM_STS_CD"));
+			configList.add(new ExportConfig("DOCNO","DOCNO"));
+			configList.add(new ExportConfig("STS_EDIT_DT","STS_EDIT_DT"));
+			configList.add(new ExportConfig("MR_NO","MR_NO"));
+			configList.add(new ExportConfig("PO_OUT_NO","PO_OUT_NO"));
+			configList.add(new ExportConfig("VOYAGE_NO","VOYAGE_NO"));
+			configList.add(new ExportConfig("PACKAGE_NO","PACKAGE_NO"));
+			configList.add(new ExportConfig("SITE_INWH_DEMYMD","SITE_INWH_DEMYMD"));
+			configList.add(new ExportConfig("DELAY_NO","DELAY_NO"));
+			configList.add(new ExportConfig("ETA","ETA"));
+			configList.add(new ExportConfig("ATA","ATA"));
+			configList.add(new ExportConfig("FNL_ETA_YMD","FNL_ETA_YMD"));
+			configList.add(new ExportConfig("MAT_STS_CD","MAT_STS_CD"));
+			configList.add(new ExportConfig("FAB_CAT_CD","FAB_CAT_CD"));
+			configList.add(new ExportConfig("STRH_CD","STRH_CD"));
+			configList.add(new ExportConfig("IWP_NO","IWP_NO"));
+			configList.add(new ExportConfig("ORG_CD","ORG_CD"));
+			configList.add(new ExportConfig("ALLOC_EXEC_NO","ALLOC_EXEC_NO"));
+			configList.add(new ExportConfig("ALLOC_DT","ALLOC_DT"));
+			configList.add(new ExportConfig("IF_DATE","IF_DATE"));
+			configList.add(new ExportConfig("ITEM_STS_NM","ITEM_STS_NM")); 
+			configList.add(new ExportConfig("NEXT_STEP_NM","NEXT_STEP_NM")); 
+			configList.add(new ExportConfig("MAT_STS_NM","MAT_STS_NM")); 
+			configList.add(new ExportConfig("OBJ_TP_CD","OBJ_TP_CD"));  
+			configList.add(new ExportConfig("OFW_QTY","OFW_QTY")); 
+			
+			return configList;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	
+	private Map generateCWPSummaryColumnMap(String columnName, String label, String suiteKey, String groupHeader, String format, boolean applyStyle, String dynamicColumnName) throws Exception{
+		return generateCWPSummaryColumnMap(columnName, label, suiteKey, "program", "emxProjectSpace", "getDBDataList", groupHeader, format, applyStyle, dynamicColumnName);
+	}
+	
+	private Map generateCWPSummaryColumnMap(String columnName, String label, String suiteKey, String columnType, String columnProgram, String columnFunction, String groupHeader, String format, boolean applyStyle, String dynamicColumnName) throws Exception{
+		try {
+			Map columnMap = new HashMap();
+			columnMap.put("name", columnName);
+			columnMap.put("label", label);
+			
+			Map settingMap = new HashMap();
+			settingMap.put("Registered Suite", suiteKey);
+			settingMap.put("Column Type", columnType);
+			settingMap.put("program", columnProgram);
+			settingMap.put("function", columnFunction);
+			if ( StringUtils.isNotEmpty(groupHeader) )
+			{
+				settingMap.put("Group Header", groupHeader);
+			}
+			settingMap.put("columnName", columnName);
+			settingMap.put("except", "string");
+			settingMap.put("Editable", "false");
+			
+			if ( "Percentage Format".equalsIgnoreCase(format) )
+			{
+				settingMap.put(format, "true");
+				settingMap.put("format", "numeric");
+				
+				if ( applyStyle )
+				{
+					settingMap.put("Style Program", "decMaterial");
+					settingMap.put("Style Function", "getCWPAllocationPercentStyle");
+				}
+			}
+			if ( "Number Format".equalsIgnoreCase(format) )
+			{
+				settingMap.put(format, "true");
+				settingMap.put("format", "numeric");
+			}
+			
+			if ( StringUtils.isNotEmpty(dynamicColumnName) )
+			{
+				settingMap.put("dynamicColumnName", dynamicColumnName);
+			}
+			columnMap.put("settings", settingMap);
+			
+			return columnMap;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	/**
+	 * Percentage 값을 가지고 있는 컬럼을 Progress Bar 형태로 출력
+	 * @param context
+	 * @param args
+	 * @return
+	 * @throws Exception
+	 */
+	public StringList getProgressBarList(Context context, String[] args) throws Exception{
+		try {
+			Map programMap =  JPO.unpackArgs(args);
+            MapList objectList = (MapList) programMap.get("objectList");
+            Map columnMap = (Map) programMap.get("columnMap");
+			Map settingsMap = (Map) columnMap.get("settings");
+			String columnName = (String) settingsMap.get("columnName");
+			
+            StringList progressBarList = new StringList();
+            
+            emxProjectSpace_mxJPO projectJPO = new emxProjectSpace_mxJPO(null);
+
+            Map CWPInfo = null;
+            String percentStr = null;
+            for (Object obj : objectList) {
+                CWPInfo = (Map) obj;
+                percentStr = String.valueOf( CWPInfo.get(columnName) );
+                progressBarList.add( projectJPO.generateProgressBarHTMLExpr(percentStr) );
+            }
+            return progressBarList;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	/**
+	 * CWP Allocation 화면에서 공종별로 다른 물량 정보를 출력하기 위한 Dynamic Column 처리
+	 * @param context
+	 * @param args
+	 * @return
+	 * @throws Exception
+	 */
+	public MapList getCWPSummaryDynamicQtyColumn(Context context, String[] args) throws Exception{
+		try {
+			Map programMap = JPO.unpackArgs(args);
+			Map requestMap = (Map) programMap.get("requestMap");
+			String Discipline = (String) requestMap.get("Discipline");
+			
+			final String SUITE_KEY = "ProgramCentral";
+			final String PROP_PREFIX = "emxProgramCentral.Label.";
+			final String NUMBER_FORMAT = "Number Format";
+			final String COLUMN_TYPE_PROGRAM_HTML_OUTPUT = "programHTMLOutput";
+			final String GROUP_HEADER_ISO = "ISO";
+			final String GROUP_HEADER_WEIGHT = "Weight(kg)";
+			final String GROUP_HEADER_WELDING_DI = "Welding DI";
+			final String GROUP_HEADER_ITEM = "Item";
+			final String GROUP_HEADER_PACKAGE = "Package";
+			final String GROUP_HEADER_CABLE_LM = "Cable LM";
+			final String DYNAMIC_COLUMN_NAME = "DynamicQtyColumn";
+
+			MapList columnList = new MapList();
+			
+			switch (Discipline) {
+			case "PP":
+				columnList.add( generateCWPSummaryColumnMap("TOT_DI_QTY", PROP_PREFIX + "Qty", SUITE_KEY, GROUP_HEADER_ISO, NUMBER_FORMAT, false, DYNAMIC_COLUMN_NAME) );
+				columnList.add( generateCWPSummaryColumnMap("ALLOC_DI_QTY", PROP_PREFIX + "Allocation", SUITE_KEY, GROUP_HEADER_ISO, NUMBER_FORMAT, false, DYNAMIC_COLUMN_NAME) );
+				columnList.add( generateCWPSummaryColumnMap("INV_DI_QTY", PROP_PREFIX + "InStock", SUITE_KEY, GROUP_HEADER_ISO, NUMBER_FORMAT, false, DYNAMIC_COLUMN_NAME) );
+//				columnList.add( generateCWPSummaryColumnMap("INV_DI_RT", PROP_PREFIX + "InStockPercent", SUITE_KEY, GROUP_HEADER_ISO, PERCENTAGE_FORMAT, false) );
+				columnList.add( generateCWPSummaryColumnMap("INV_DI_RT", PROP_PREFIX + "InStockPercent", SUITE_KEY, COLUMN_TYPE_PROGRAM_HTML_OUTPUT, "decMaterial", "getProgressBarList", GROUP_HEADER_ISO, null, false, DYNAMIC_COLUMN_NAME) );
+				
+				columnList.add( generateCWPSummaryColumnMap("TOT_WGT", PROP_PREFIX + "BOM", SUITE_KEY, GROUP_HEADER_WEIGHT, NUMBER_FORMAT, false, DYNAMIC_COLUMN_NAME) );
+				columnList.add( generateCWPSummaryColumnMap("ALLOC_WGT", PROP_PREFIX + "Allocation", SUITE_KEY, GROUP_HEADER_WEIGHT, NUMBER_FORMAT, false, DYNAMIC_COLUMN_NAME) );
+				columnList.add( generateCWPSummaryColumnMap("INV_WGT", PROP_PREFIX + "InStock", SUITE_KEY, GROUP_HEADER_WEIGHT, NUMBER_FORMAT, false, DYNAMIC_COLUMN_NAME) );
+//				columnList.add( generateCWPSummaryColumnMap("INV_WGT_RT", PROP_PREFIX + "InStockWeightPercent", SUITE_KEY, GROUP_HEADER_WEIGHT, PERCENTAGE_FORMAT, false) );
+				columnList.add( generateCWPSummaryColumnMap("INV_WGT_RT", PROP_PREFIX + "InStockPercent", SUITE_KEY, COLUMN_TYPE_PROGRAM_HTML_OUTPUT, "decMaterial", "getProgressBarList", GROUP_HEADER_WEIGHT, null, false, DYNAMIC_COLUMN_NAME) );
+				
+				columnList.add( generateCWPSummaryColumnMap("TOT_BM_QTY", PROP_PREFIX + "BOM", SUITE_KEY, GROUP_HEADER_WELDING_DI, NUMBER_FORMAT, false, DYNAMIC_COLUMN_NAME) );
+				columnList.add( generateCWPSummaryColumnMap("ALLOC_BM_QTY", PROP_PREFIX + "Allocation", SUITE_KEY, GROUP_HEADER_WELDING_DI, NUMBER_FORMAT, false, DYNAMIC_COLUMN_NAME) );
+				columnList.add( generateCWPSummaryColumnMap("INV_BM_QTY", PROP_PREFIX + "InStock", SUITE_KEY, GROUP_HEADER_WELDING_DI, NUMBER_FORMAT, false, DYNAMIC_COLUMN_NAME) );
+//				columnList.add( generateCWPSummaryColumnMap("INV_BM_RT", PROP_PREFIX + "InStockDIPercent", SUITE_KEY, GROUP_HEADER_WELDING_DI, PERCENTAGE_FORMAT, false) );
+				columnList.add( generateCWPSummaryColumnMap("INV_BM_RT", PROP_PREFIX + "InStockPercent", SUITE_KEY, COLUMN_TYPE_PROGRAM_HTML_OUTPUT, "decMaterial", "getProgressBarList", GROUP_HEADER_WELDING_DI, null, false, DYNAMIC_COLUMN_NAME) );
+				
+				break;
+			case "ME":
+				columnList.add( generateCWPSummaryColumnMap("TOT_ITEM_QTY", PROP_PREFIX + "Qty", SUITE_KEY, GROUP_HEADER_ITEM, NUMBER_FORMAT, false, DYNAMIC_COLUMN_NAME) );
+				columnList.add( generateCWPSummaryColumnMap("ALLOC_ITEM_QTY", PROP_PREFIX + "Allocation", SUITE_KEY, GROUP_HEADER_ITEM, NUMBER_FORMAT, false, DYNAMIC_COLUMN_NAME) );
+				columnList.add( generateCWPSummaryColumnMap("INV_ITEM_QTY", PROP_PREFIX + "InStock", SUITE_KEY, GROUP_HEADER_ITEM, NUMBER_FORMAT, false, DYNAMIC_COLUMN_NAME) );
+//				columnList.add( generateCWPSummaryColumnMap("INV_ITEM_RT", PROP_PREFIX + "InStockPercent", SUITE_KEY, GROUP_HEADER_ITEM, PERCENTAGE_FORMAT, false) );
+				columnList.add( generateCWPSummaryColumnMap("INV_ITEM_RT", PROP_PREFIX + "InStockPercent", SUITE_KEY, COLUMN_TYPE_PROGRAM_HTML_OUTPUT, "decMaterial", "getProgressBarList", GROUP_HEADER_ITEM, null, false, DYNAMIC_COLUMN_NAME) );
+				
+				columnList.add( generateCWPSummaryColumnMap("TOT_WGT", PROP_PREFIX + "BOM", SUITE_KEY, GROUP_HEADER_WEIGHT, NUMBER_FORMAT, false, DYNAMIC_COLUMN_NAME) );
+				columnList.add( generateCWPSummaryColumnMap("ALLOC_WGT", PROP_PREFIX + "Allocation", SUITE_KEY, GROUP_HEADER_WEIGHT, NUMBER_FORMAT, false, DYNAMIC_COLUMN_NAME) );
+				columnList.add( generateCWPSummaryColumnMap("INV_WGT", PROP_PREFIX + "InStock", SUITE_KEY, GROUP_HEADER_WEIGHT, NUMBER_FORMAT, false, DYNAMIC_COLUMN_NAME) );
+//				columnList.add( generateCWPSummaryColumnMap("INV_WGT_RT", PROP_PREFIX + "InStockWeightPercent", SUITE_KEY, GROUP_HEADER_WEIGHT, PERCENTAGE_FORMAT, false) );
+				columnList.add( generateCWPSummaryColumnMap("INV_WGT_RT", PROP_PREFIX + "InStockPercent", SUITE_KEY, COLUMN_TYPE_PROGRAM_HTML_OUTPUT, "decMaterial", "getProgressBarList", GROUP_HEADER_WEIGHT, null, false, DYNAMIC_COLUMN_NAME) );
+				
+				columnList.add( generateCWPSummaryColumnMap("TOT_PACKAGE_QTY", PROP_PREFIX + "Qty", SUITE_KEY, GROUP_HEADER_PACKAGE, NUMBER_FORMAT, false, DYNAMIC_COLUMN_NAME) );
+				columnList.add( generateCWPSummaryColumnMap("ALLOC_PACKAGE_QTY", PROP_PREFIX + "Allocation", SUITE_KEY, GROUP_HEADER_PACKAGE, NUMBER_FORMAT, false, DYNAMIC_COLUMN_NAME) );
+				columnList.add( generateCWPSummaryColumnMap("INV_PACKAGE_QTY", PROP_PREFIX + "InStock", SUITE_KEY, GROUP_HEADER_PACKAGE, NUMBER_FORMAT, false, DYNAMIC_COLUMN_NAME) );
+//				columnList.add( generateCWPSummaryColumnMap("INV_PACKAGE_RT", PROP_PREFIX + "InStockPackagePercent", SUITE_KEY, GROUP_HEADER_PACKAGE, PERCENTAGE_FORMAT, false) );
+				columnList.add( generateCWPSummaryColumnMap("INV_PACKAGE_RT", PROP_PREFIX + "InStockPackagePercent", SUITE_KEY, COLUMN_TYPE_PROGRAM_HTML_OUTPUT, "decMaterial", "getProgressBarList", GROUP_HEADER_PACKAGE, null, false, DYNAMIC_COLUMN_NAME) );
+				
+				break;
+			case "IC": case "EL":
+				columnList.add( generateCWPSummaryColumnMap("TOT_ITEM_QTY", PROP_PREFIX + "Qty", SUITE_KEY, GROUP_HEADER_ITEM, NUMBER_FORMAT, false, DYNAMIC_COLUMN_NAME) );
+				columnList.add( generateCWPSummaryColumnMap("ALLOC_ITEM_QTY", PROP_PREFIX + "Allocation", SUITE_KEY, GROUP_HEADER_ITEM, NUMBER_FORMAT, false, DYNAMIC_COLUMN_NAME) );
+				columnList.add( generateCWPSummaryColumnMap("INV_ITEM_QTY", PROP_PREFIX + "InStock", SUITE_KEY, GROUP_HEADER_ITEM, NUMBER_FORMAT, false, DYNAMIC_COLUMN_NAME) );
+//				columnList.add( generateCWPSummaryColumnMap("INV_ITEM_RT", PROP_PREFIX + "InStockPercent", SUITE_KEY, GROUP_HEADER_ITEM, PERCENTAGE_FORMAT, false) );
+				columnList.add( generateCWPSummaryColumnMap("INV_ITEM_RT", PROP_PREFIX + "InStockPercent", SUITE_KEY, COLUMN_TYPE_PROGRAM_HTML_OUTPUT, "decMaterial", "getProgressBarList", GROUP_HEADER_ITEM, null, false, DYNAMIC_COLUMN_NAME) );
+				
+				columnList.add( generateCWPSummaryColumnMap("TOT_DI_QTY", PROP_PREFIX + "BOM", SUITE_KEY, GROUP_HEADER_CABLE_LM, NUMBER_FORMAT, false, DYNAMIC_COLUMN_NAME) );
+				columnList.add( generateCWPSummaryColumnMap("ALLOC_DI_QTY", PROP_PREFIX + "Allocation", SUITE_KEY, GROUP_HEADER_CABLE_LM, NUMBER_FORMAT, false, DYNAMIC_COLUMN_NAME) );
+				columnList.add( generateCWPSummaryColumnMap("INV_DI_QTY", PROP_PREFIX + "InStock", SUITE_KEY, GROUP_HEADER_CABLE_LM, NUMBER_FORMAT, false, DYNAMIC_COLUMN_NAME) );
+//				columnList.add( generateCWPSummaryColumnMap("INV_DI_RT", PROP_PREFIX + "InStockLMPercent", SUITE_KEY, GROUP_HEADER_CABLE_LM, PERCENTAGE_FORMAT, false) );
+				columnList.add( generateCWPSummaryColumnMap("INV_DI_RT", PROP_PREFIX + "InStockPercent", SUITE_KEY, COLUMN_TYPE_PROGRAM_HTML_OUTPUT, "decMaterial", "getProgressBarList", GROUP_HEADER_CABLE_LM, null, false, DYNAMIC_COLUMN_NAME) );
+				
+				break;
+				/*
+			case "ST":
+				columnList.add( generateCWPSummaryColumnMap("TOT_ITEM_QTY", PROP_PREFIX + "ItemQty", SUITE_KEY, null, NUMBER_FORMAT) );
+				columnList.add( generateCWPSummaryColumnMap("ALLOC_ITEM_QTY", PROP_PREFIX + "AllocatedItems", SUITE_KEY, null, NUMBER_FORMAT) );
+				columnList.add( generateCWPSummaryColumnMap("INV_ITEM_QTY", PROP_PREFIX + "InStockItems", SUITE_KEY, "ProgramCentral.Label.Date", NUMBER_FORMAT) );
+				columnList.add( generateCWPSummaryColumnMap("INV_ITEM_RT", PROP_PREFIX + "InStockPercent", SUITE_KEY, "ProgramCentral.Label.Date", PERCENTAGE_FORMAT) );
+				
+				columnList.add( generateCWPSummaryColumnMap("TOT_WGT", PROP_PREFIX + "BOMWeightKg", SUITE_KEY, null, NUMBER_FORMAT) );
+				columnList.add( generateCWPSummaryColumnMap("ALLOC_WGT", PROP_PREFIX + "AllocatedWeightKg", SUITE_KEY, null, NUMBER_FORMAT) );
+				columnList.add( generateCWPSummaryColumnMap("INV_WGT", PROP_PREFIX + "InStockWeightKg", SUITE_KEY, "ProgramCentral.Label.Date", NUMBER_FORMAT) );
+				columnList.add( generateCWPSummaryColumnMap("INV_WGT_RT", PROP_PREFIX + "InStockWeightPercent", SUITE_KEY, "ProgramCentral.Label.Date", PERCENTAGE_FORMAT) );
+				
+				break;
+			case "HV": case "SA":
+				columnList.add( generateCWPSummaryColumnMap("TOT_ITEM_QTY", PROP_PREFIX + "ItemQty", SUITE_KEY, null, NUMBER_FORMAT) );
+				columnList.add( generateCWPSummaryColumnMap("ALLOC_ITEM_QTY", PROP_PREFIX + "AllocatedItems", SUITE_KEY, null, NUMBER_FORMAT) );
+				columnList.add( generateCWPSummaryColumnMap("INV_ITEM_QTY", PROP_PREFIX + "InStockItems", SUITE_KEY, "ProgramCentral.Label.Date", NUMBER_FORMAT) );
+				columnList.add( generateCWPSummaryColumnMap("INV_ITEM_RT", PROP_PREFIX + "InStockPercent", SUITE_KEY, "ProgramCentral.Label.Date", PERCENTAGE_FORMAT) );
+				
+				break;
+*/
+			default:
+				columnList.add( generateCWPSummaryColumnMap("TOT_ITEM_QTY", PROP_PREFIX + "Qty", SUITE_KEY, GROUP_HEADER_ITEM, NUMBER_FORMAT, false, DYNAMIC_COLUMN_NAME) );
+				columnList.add( generateCWPSummaryColumnMap("ALLOC_ITEM_QTY", PROP_PREFIX + "Allocation", SUITE_KEY, GROUP_HEADER_ITEM, NUMBER_FORMAT, false, DYNAMIC_COLUMN_NAME) );
+				columnList.add( generateCWPSummaryColumnMap("INV_ITEM_QTY", PROP_PREFIX + "InStock", SUITE_KEY, GROUP_HEADER_ITEM, NUMBER_FORMAT, false, DYNAMIC_COLUMN_NAME) );
+//				columnList.add( generateCWPSummaryColumnMap("INV_ITEM_RT", PROP_PREFIX + "InStockPercent", SUITE_KEY, GROUP_HEADER_ITEM, PERCENTAGE_FORMAT, false) );
+				columnList.add( generateCWPSummaryColumnMap("INV_ITEM_RT", PROP_PREFIX + "InStockPercent", SUITE_KEY, COLUMN_TYPE_PROGRAM_HTML_OUTPUT, "decMaterial", "getProgressBarList", GROUP_HEADER_ITEM, null, false, DYNAMIC_COLUMN_NAME) );
+				
+				break;
+			}
+			
+			return columnList;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+    }
+	
+	/**
+	 * CWP Allocation 화면에서 컬럼 헤더에 동적으로 일자를 출력하기 위한 Dynamic Column 처리
+	 * @param context
+	 * @param args
+	 * @return
+	 * @throws Exception
+	 */
+	public MapList getCWPSummaryDynamicAbleRateColumn(Context context, String[] args) throws Exception{
+		try {
+			final String SUITE_KEY = "ProgramCentral";
+			final String PROP_PREFIX = "emxProgramCentral.Label.";
+			final String PERCENTAGE_FORMAT = "Percentage Format";
+			final String DYNAMIC_COLUMN_NAME = "DynamicAbleRateColumn";
+			
+			MapList columnList = new MapList();
+			
+			LocalDate now = LocalDate.now();
+			LocalDate plusDate = null;
+//			Locale locale = context.getLocale();
+//			Map dateMap = null;
+			String display = null;
+			String displayDatePattern = "YYYY. M";
+			
+			String[] periodTypeArray = new String[] {"W","M"};
+			
+			for (String periodType : periodTypeArray)
+			{
+				for (int k = 1; k <=3 ; k++)
+				{
+					switch (periodType) {
+					case "W":
+						plusDate = now.plusWeeks(k);
+						display = DecDateUtil.changeLocalDateFormat(plusDate, displayDatePattern);
+//						dateMap = DecDateUtil.getCalculatedDateMap(context, now, ChronoUnit.WEEKS, k, locale);
+//						display = (String) dateMap.get("display");
+						columnList.add( generateCWPSummaryColumnMap("WEEK_ABLE_RT" + k, PROP_PREFIX + "WEEK_ABLE_RT" + k, SUITE_KEY, display, PERCENTAGE_FORMAT, true, DYNAMIC_COLUMN_NAME) );
+						
+						break;
+					case "M":
+						plusDate = now.plusMonths(k);
+						display = DecDateUtil.changeLocalDateFormat(plusDate, displayDatePattern);
+//						dateMap = DecDateUtil.getCalculatedDateMap(context, now, ChronoUnit.MONTHS, k, locale);
+//						display = (String) dateMap.get("display");
+						columnList.add( generateCWPSummaryColumnMap("MM_ABLE_RT" + k, PROP_PREFIX + "MM_ABLE_RT" + k, SUITE_KEY, display, PERCENTAGE_FORMAT, true, DYNAMIC_COLUMN_NAME) );
+						
+						break;
+
+					default:
+						break;
+					}
+				}
+			}
+			
+			columnList.add( generateCWPSummaryColumnMap("PO_OUT_NO", PROP_PREFIX + "decPO_No", SUITE_KEY, null, PERCENTAGE_FORMAT, true, DYNAMIC_COLUMN_NAME) );
+			
+			return columnList;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+    }
+	
+	/**
+	 * Percentage 값에 따라 색상을 변경할 수 있도록 class를 반환한다.
+	 * @param context
+	 * @param args
+	 * @return
+	 * @throws Exception
+	 */
+	public StringList getCWPAllocationPercentStyle(Context context, String[] args) throws Exception{
+		try {
+			Map programMap =  JPO.unpackArgs(args);
+            MapList objectList = (MapList) programMap.get("objectList");
+            Map columnMap = (Map) programMap.get("columnMap");
+			Map settingsMap = (Map) columnMap.get("settings");
+			String columnName = (String) settingsMap.get("columnName");
+			
+            StringList slStyles = new StringList();
+
+            Map CWPInfo = null;
+            String percentStr = null;
+            double percent = 0d;
+            String style = null;
+            for (Object obj : objectList) {
+                CWPInfo = (Map) obj;
+                percentStr = String.valueOf( CWPInfo.get(columnName) );
+                
+                try {
+                	percent = Double.parseDouble(percentStr);
+                } catch(Exception e) {
+                	percent = 0d;
+                }
+                
+                if ( percent >= 90 )
+                {
+                	style = "cwpAllocGreen";
+                }
+                else if ( percent >= 70 && percent < 90 )
+                {
+                	style = "cwpAllocYellow";
+                }
+                else if ( percent >= 50 && percent < 70 )
+                {
+                	style = "cwpAllocOrange";
+                }
+                else
+                {
+                	style = "cwpAllocRed";
+                }
+                
+                slStyles.add(style);
+            }
+            return slStyles;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	/**
+	 * 프로젝트 코드와 공종 코드로 Material Allocation Status 정보를 반환한다.
+	 * @param context
+	 * @param args
+	 * @return
+	 * @throws Exception
+	 */
+	public MapList getMaterialAllocationStatus(Context context, String[] args) throws Exception{
+		try ( SqlSession sqlSession = decSQLSessionFactory.getSession() ) {
+			Map programMap = JPO.unpackArgs(args);
+			String projectId = (String) programMap.get("projectId");
+			String projectCode = (String) programMap.get("projectCode");
+			String discipline = (String) programMap.get("discipline");
+			String uom = (String) programMap.get("uom");
+			String subcon = (String) programMap.get("subcon");
+			String rowLevel = (String) programMap.get("rowLevel");
+			String rowName = (String) programMap.get("rowName");
+			
+			// FMCS Discipline 조회
+			decCodeMaster_mxJPO codeJPO = new decCodeMaster_mxJPO();
+			String fmcsDiscipline = codeJPO.getFMCSDiscipline(context, projectId, discipline);
+			
+			// Material Allocation 계산
+			Map selectParamMap = new HashMap();
+			selectParamMap.put("SITE_CD", projectCode);
+			selectParamMap.put("DCPLN_CD", fmcsDiscipline);
+			selectParamMap.put("ORG_CD", subcon);
+			selectParamMap.put("uom", uom);
+			selectParamMap.put("discipline", discipline);
+			if ( StringUtils.isNotEmpty(rowLevel) )
+			{
+				selectParamMap.put("PACK_LVL_CD", "EPC.PACK_LVL_CD" + rowLevel);
+				selectParamMap.put("rowName", rowName);
+			}
+			
+			List<Map> materialAllocationStatusList = sqlSession.selectList("IF_Material.selectMaterialAllocationStatusList", selectParamMap);
+			
+			return new MapList( materialAllocationStatusList );
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	enum AGGREGATE_FUNCTION {
+		AVG
+		, COUNT
+		, MAX
+		, MIN
+		, SUM
+		, PERCENTAGE
+		, LITERAL
+	}
+	class HighChartCondition {
+		private String key;
+		private String value;
+		private String numerator; // 분자
+		private String denominator; // 분모
+		private AGGREGATE_FUNCTION aggFunc;
+		
+		public HighChartCondition(String key, decMaterial_mxJPO.AGGREGATE_FUNCTION aggFunc) {
+			super();
+			this.key = key;
+			this.aggFunc = aggFunc;
+		}
+		public HighChartCondition(String key, String value) {
+			super();
+			this.key = key;
+			this.aggFunc = AGGREGATE_FUNCTION.LITERAL;
+			this.value = value;
+		}
+		public HighChartCondition(String key, String numerator, String denominator) {
+			super();
+			this.key = key;
+			this.aggFunc = AGGREGATE_FUNCTION.PERCENTAGE;
+			this.numerator = numerator;
+			this.denominator = denominator;
+		}
+		
+		public String getKey() {
+			return key;
+		}
+		public void setKey(String key) {
+			this.key = key;
+		}
+		public AGGREGATE_FUNCTION getAggFunc() {
+			return aggFunc;
+		}
+		public void setAggFunc(AGGREGATE_FUNCTION aggFunc) {
+			this.aggFunc = aggFunc;
+		}
+		public String getNumerator() {
+			return numerator;
+		}
+		public void setNumerator(String numerator) {
+			this.numerator = numerator;
+		}
+		public String getDenominator() {
+			return denominator;
+		}
+		public void setDenominator(String denominator) {
+			this.denominator = denominator;
+		}
+		public String getValue() {
+			return value;
+		}
+		public void setValue(String value) {
+			this.value = value;
+		}
+	}
+	
+	public Map generateHighChartData(Context context, String[] args) throws Exception{
+		try {
+			Map programMap = JPO.unpackArgs(args);
+			MapList mapList = (MapList) programMap.get("mapList");
+			String completed = (String) programMap.get("completed");
+			
+			List<HighChartCondition> conditionList = new ArrayList<HighChartCondition>();
+			conditionList.add(new HighChartCondition("BOM_QTY", AGGREGATE_FUNCTION.SUM));
+			conditionList.add(new HighChartCondition("ALLOCATED_QTY", AGGREGATE_FUNCTION.SUM));
+			conditionList.add(new HighChartCondition("INSTOCK_QTY", AGGREGATE_FUNCTION.SUM));
+			conditionList.add(new HighChartCondition("COMPLETED_QTY", completed));
+			
+			conditionList.add(new HighChartCondition("BOMRATE", "100"));
+			conditionList.add(new HighChartCondition("ALLOCATEDRATE", "ALLOCATED_QTY", "BOM_QTY"));
+			conditionList.add(new HighChartCondition("INSTOCKRATE", "INSTOCK_QTY", "BOM_QTY"));
+			conditionList.add(new HighChartCondition("COMPLETEDRATE", "COMPLETED_QTY", "BOM_QTY"));
+			
+			return generateHighChartData(mapList, conditionList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	public Map generateHighChartData(MapList mapList, List<HighChartCondition> conditionList) throws Exception{
+		try {
+			Map map = null;
+			
+			String key = null;
+			String value = null;
+			AGGREGATE_FUNCTION aggFunc = null;
+			
+			Map tempMap = new HashMap();
+			List tempList = null;
+			List emptyList = new ArrayList();
+			
+			for (Object obj : mapList)
+			{
+				map = (Map) obj;
+				
+				for (HighChartCondition condition : conditionList)
+				{
+					key = condition.getKey();
+					aggFunc = condition.getAggFunc();
+					
+					if ( aggFunc != AGGREGATE_FUNCTION.PERCENTAGE && aggFunc != AGGREGATE_FUNCTION.LITERAL )
+					{
+						value = String.valueOf( map.get(key) );
+						
+						if ( tempMap.containsKey(key) )
+						{
+							tempList = (List) tempMap.get(key);
+						}
+						else
+						{
+							tempList = new ArrayList();
+							tempMap.put(key, tempList);
+						}
+						
+						tempList.add(value);
+					}
+				}
+			}
+			
+			Map resultMap = new HashMap();
+			double dNumerator = 0d;
+			double dDenominator = 0d;
+			double dFraction = 0d;
+			DoubleSummaryStatistics statistics = null;
+			for (HighChartCondition condition : conditionList)
+			{
+				aggFunc = condition.getAggFunc();
+				key = condition.getKey();
+				
+				tempList = (List) tempMap.get(key);
+				
+				if ( tempList == null )
+				{
+					tempList = emptyList;
+				}
+				
+				statistics = tempList.stream().mapToDouble(i -> Double.parseDouble(String.valueOf(i))).summaryStatistics();
+				
+				if ( aggFunc == AGGREGATE_FUNCTION.SUM )
+				{
+					resultMap.put(key, statistics.getSum());
+				}
+				else if ( aggFunc == AGGREGATE_FUNCTION.AVG )
+				{
+					resultMap.put(key, statistics.getAverage());
+				}
+				else if ( aggFunc == AGGREGATE_FUNCTION.COUNT )
+				{
+					resultMap.put(key, statistics.getCount());
+				}
+				else if ( aggFunc == AGGREGATE_FUNCTION.MAX )
+				{
+					resultMap.put(key, statistics.getMax());
+				}
+				else if ( aggFunc == AGGREGATE_FUNCTION.MIN )
+				{
+					resultMap.put(key, statistics.getMin());
+				}
+				else if ( aggFunc == AGGREGATE_FUNCTION.PERCENTAGE )
+				{
+					dNumerator = Double.parseDouble( String.valueOf( resultMap.get(condition.getNumerator() ) ) ); 
+					dDenominator = Double.parseDouble( String.valueOf( resultMap.get(condition.getDenominator() ) ) ); 
+					
+					if ( dDenominator != 0 )
+					{
+						dFraction = dNumerator / dDenominator;
+					}
+					else
+					{
+						dFraction = 0d;
+					}
+					
+					resultMap.put(key, dFraction);
+				}
+				else if ( aggFunc == AGGREGATE_FUNCTION.LITERAL )
+				{
+					resultMap.put(key, condition.getValue());
+				}
+				else
+				{
+					
+				}
+			}
+			
+			return resultMap;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	public MapList getBMTrackingList(Context context, String[] args) throws Exception{
+		try ( SqlSession sqlSession = decSQLSessionFactory.getSession() ) {
+			Map programMap = JPO.unpackArgs(args);
+			String objectId = (String) programMap.get("objectId");
+			List<Map> partCodeDescList = (List<Map>) programMap.get("partCodeDescList");
+			
+			String projectCode = MqlUtil.mqlCommand(context, "print bus $1 select $2 dump", objectId, DecConstants.SELECT_NAME);
+			
+			Map selectParamMap = new HashMap();
+			selectParamMap.put("SITE_CD", projectCode);
+			
+			List<Map> bmkTrackingHeaderList = sqlSession.selectList("IF_Material.selectBMTrackingQtyHeader", selectParamMap);
+			StringList yearMonthList = decListUtil.getSelectValueListForMapList(bmkTrackingHeaderList, "YEAR_MONTH");
+			
+			String thisMonth = "";
+			String ongoing1stMonth = "";
+			String prevMonth = "";
+			if ( yearMonthList.size() > 0 )
+			{
+				thisMonth = yearMonthList.get(yearMonthList.size() - 1);
+				ongoing1stMonth = yearMonthList.get(0);
+				
+				if ( yearMonthList.size() > 1 )
+				{
+					prevMonth = yearMonthList.get(yearMonthList.size() - 2);
+				}
+			}
+			
+			selectParamMap.put("yearMonthList", yearMonthList);
+			selectParamMap.put("thisMonth", thisMonth);
+			selectParamMap.put("ongoing1stMonth", ongoing1stMonth);
+			selectParamMap.put("prevMonth", prevMonth);
+			selectParamMap.put("partCodeDescList", partCodeDescList);
+			
+			// filter 처리
+			StringBuffer sbWhere = new StringBuffer();
+			
+			decFilterUtil_mxJPO filterJPO = new decFilterUtil_mxJPO();
+			String discipline = (String) programMap.get("Discipline");
+			sbWhere.append( filterJPO.generateFMCSDisciplineWhereExpr(context, objectId, discipline, null) );
+			
+			decFilterUtil.generateWhereExpr4RDB(programMap, "Construction Item Type", sbWhere, "OBJ_TP_CD");
+			decFilterUtil.generateWhereExpr4RDB(programMap, "Item Group", sbWhere, "ITEM_GRP_CD");
+			decFilterUtil.generateWhereExpr4RDB(programMap, "Group", sbWhere, "GRP_CD");
+			
+			Map otherWhereMap = decFilterUtil.generateOtherWhereExpr4RDB(context, args);
+    		String otherBusWhere = (String) otherWhereMap.get("busWhere");
+    		decFilterUtil.append4RDB(sbWhere, otherBusWhere);
+			
+			selectParamMap.put("whereExpr", sbWhere.toString());
+			
+			List<Map> bmkTrackingList = sqlSession.selectList("IF_Material.selectBMTrackingList", selectParamMap);
+			
+			return new MapList( bmkTrackingList );
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	public Map getBMTrackingByPartCodeDesc(Context context, String[] args) throws Exception{
+		try ( SqlSession sqlSession = decSQLSessionFactory.getSession() ) {
+			Map programMap = JPO.unpackArgs(args);
+			String objectId = (String) programMap.get("objectId");
+			List<Map> partCodeDescList = (List<Map>) programMap.get("partCodeDescList");
+			
+			String projectCode = MqlUtil.mqlCommand(context, "print bus $1 select $2 dump", objectId, DecConstants.SELECT_NAME);
+			
+			Map selectParamMap = new HashMap();
+			selectParamMap.put("SITE_CD", projectCode);
+			
+			List<Map> bmkTrackingHeaderList = sqlSession.selectList("IF_Material.selectBMTrackingQtyHeader", selectParamMap);
+			StringList yearMonthList = decListUtil.getSelectValueListForMapList(bmkTrackingHeaderList, "YEAR_MONTH", true, false, false);
+			StringList yearMonthCategoryList = decListUtil.getSelectValueListForMapList(bmkTrackingHeaderList, "YEAR_MONTH_CATEGORY", true, false, false);
+			
+			String thisMonth = "";
+			String ongoing1stMonth = "";
+			String prevMonth = "";
+			if ( yearMonthList.size() > 0 )
+			{
+				thisMonth = yearMonthList.get(yearMonthList.size() - 1);
+				ongoing1stMonth = yearMonthList.get(0);
+				
+				if ( yearMonthList.size() > 1 )
+				{
+					prevMonth = yearMonthList.get(yearMonthList.size() - 2);
+				}
+			}
+			
+			selectParamMap.put("yearMonthList", yearMonthList);
+			selectParamMap.put("thisMonth", thisMonth);
+			selectParamMap.put("ongoing1stMonth", ongoing1stMonth);
+			selectParamMap.put("prevMonth", prevMonth);
+			selectParamMap.put("partCodeDescList", partCodeDescList);
+			
+			List<Map> bmkTrackingList = sqlSession.selectList("IF_Material.selectBMTrackingByPartCodeDesc", selectParamMap);
+			Map partQtySummary = decListUtil.getSelectKeyDataMapForMapList(bmkTrackingList, "KEY");
+			
+			Map bmTrackingSummary = new HashMap();
+			bmTrackingSummary.put("partQtySummary", partQtySummary); // series data
+			bmTrackingSummary.put("yearMonthList", yearMonthList); // series data
+			bmTrackingSummary.put("yearMonthCategoryList", yearMonthCategoryList); // xAxix category
+			
+			return bmTrackingSummary;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	public MapList getBMTrackingDynamicQtyColumn(Context context, String[] args) throws Exception{
+		try ( SqlSession sqlSession = decSQLSessionFactory.getSession() ) {
+			Map programMap = JPO.unpackArgs(args);
+			Map requestMap = (Map) programMap.get("requestMap");
+			String objectId = (String) requestMap.get("objectId");
+			
+			String projectCode = MqlUtil.mqlCommand(context, "print bus $1 select $2 dump", objectId, DecConstants.SELECT_NAME);
+			
+			Map selectParamMap = new HashMap();
+			selectParamMap.put("SITE_CD", projectCode);
+			
+			List<Map> bmkTrackingHeaderList = sqlSession.selectList("IF_Material.selectBMTrackingQtyHeader", selectParamMap);
+			
+			final String SUITE_KEY = "ProgramCentral";
+			final String PROP_PREFIX = "emxProgramCentral.Label.";
+			final String GROUP_HEADER = "emxProgramCentral.Label.Qty";
+			final String NUMBER_FORMAT = "Number Format";
+			final String PERCENTAGE_FORMAT = "Percentage Format";
+//			final String DYNAMIC_COLUMN_NAME = "DynamicQtyColumn";
+			final String DYNAMIC_COLUMN_NAME = null;
+			
+			MapList columnList = new MapList();
+			columnList.add( generateCWPSummaryColumnMap("BID_QTY", "emxProgramCentral.Label.Bidding", SUITE_KEY, GROUP_HEADER, NUMBER_FORMAT, false, DYNAMIC_COLUMN_NAME) );
+			
+			String yearMonthExpr = null;
+			String yearMonth = null;
+			
+			for ( Map bmkTrackingHeaderMap : bmkTrackingHeaderList )
+			{
+				yearMonthExpr = (String) bmkTrackingHeaderMap.get("YEAR_MONTH_EXPR");
+				yearMonth = (String) bmkTrackingHeaderMap.get("YEAR_MONTH");
+				columnList.add( generateCWPSummaryColumnMap("QTY_" + yearMonth, yearMonthExpr, SUITE_KEY, GROUP_HEADER, NUMBER_FORMAT, false, DYNAMIC_COLUMN_NAME) );
+			}
+			
+			columnList.add( generateCWPSummaryColumnMap("BID_DELTA", PROP_PREFIX + "BiddingDelta", SUITE_KEY, null, PERCENTAGE_FORMAT, false, DYNAMIC_COLUMN_NAME) );
+			columnList.add( generateCWPSummaryColumnMap("ONGOING_DELTA", PROP_PREFIX + "OngoingDelta", SUITE_KEY, null, PERCENTAGE_FORMAT, false, DYNAMIC_COLUMN_NAME) );
+			columnList.add( generateCWPSummaryColumnMap("MONTH_DELTA", PROP_PREFIX + "MonthDelta", SUITE_KEY, null, PERCENTAGE_FORMAT, false, DYNAMIC_COLUMN_NAME) );
+			
+			return columnList;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+    }
+	
+	public MapList getBMTrackingBiddingList(Context context, String projectId) throws Exception{
+		try ( SqlSession sqlSession = decSQLSessionFactory.getSession() ) {
+			String projectCode = MqlUtil.mqlCommand(context, "print bus $1 select $2 dump", projectId, DecConstants.SELECT_NAME);
+			
+			Map selectParamMap = new HashMap();
+			selectParamMap.put("SITE_CD", projectCode);
+			
+			List<Map> biddingList = sqlSession.selectList("IF_Material.selectBMTrackingBiddingList", selectParamMap);
+			
+			return new MapList( biddingList );
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+	}
+	
+	public MapList getBMTrackingBiddingList(Context context, String[] args) throws Exception{
+		Map programMap = JPO.unpackArgs(args);
+		String objectId = (String) programMap.get("objectId");
+		return getBMTrackingBiddingList(context, objectId);
+		
+	}
+	
+	public MapList compareExcelBMTrackingData(Context context, MapList mapList, Map programMap) throws Exception{
+		try ( SqlSession sqlSession = decSQLSessionFactory.getSession() ) {
+			
+			String objectId = (String) programMap.get("objectId");
+			MapList biddingList = getBMTrackingBiddingList(context, objectId);
+			
+			List<CompareRule> validateRuleList = new ArrayList<CompareRule>();
+			validateRuleList.add(new CompareRule("DES_QTY", CompareRule.DATA_TYPE.REAL));
+			
+			List<CompareRule> compareRuleList = new ArrayList<CompareRule>();
+			compareRuleList.add(new CompareRule("Construction Item", "OBJ_TP_CD"));
+			compareRuleList.add(new CompareRule("Item Gropu Code", "ITEM_GRP_CD"));
+			compareRuleList.add(new CompareRule("Bidding", "DES_QTY"));
+			compareRuleList.add(new CompareRule("Group Code", "GRP_CD"));
+			compareRuleList.add(new CompareRule("Group Description", "GRP_SHORTDESC"));
+			compareRuleList.add(new CompareRule("Part Code", "PART_CD"));
+			compareRuleList.add(new CompareRule("Part Description", "PART_SHORTDESC"));
+			compareRuleList.add(new CompareRule("Commodity Code", "COMMODITY_CD"));
+			compareRuleList.add(new CompareRule("Commodity Description", "COMMODITY_SHORTDESC"));
+			compareRuleList.add(new CompareRule("Spec Code", "SPEC_CD"));
+			compareRuleList.add(new CompareRule("Short Code", "SHRT_CD"));
+			compareRuleList.add(new CompareRule("SIZE 1", "SIZE1"));
+			compareRuleList.add(new CompareRule("SIZE 2", "SIZE2"));
+			compareRuleList.add(new CompareRule("SCH 1", "SIZE3"));
+			compareRuleList.add(new CompareRule("SCH 2", "SIZE4"));
+			compareRuleList.add(new CompareRule("Base Material Code", "BASE_MAT_CD"));
+			compareRuleList.add(new CompareRule("RAT Code", "RAT_CD"));
+			compareRuleList.add(new CompareRule("UOM", "UNT_CD"));
+			
+			Map excelDataMap = null;
+			Map biddingMap = null;
+			Map compareResultMap = null;
+			String DCPLN_CD = null;
+			String AREA_NM = null;
+			String UNIT_NM = null;
+			String LVL_NM = null;
+			String IDENT_CD = null;
+			String DCPLN_CD_DB = null;
+			String AREA_NM_DB = null;
+			String UNIT_NM_DB = null;
+			String LVL_NM_DB = null;
+			String IDENT_CD_DB = null;
+			String action = null;
+			boolean exists = false;
+			
+			for ( Object obj : mapList )
+			{
+				excelDataMap = (Map) obj;
+				
+				DCPLN_CD = (String) excelDataMap.get( "DCPLN_CD" );
+				AREA_NM = (String) excelDataMap.get( "AREA_NM" );
+				UNIT_NM = (String) excelDataMap.get( "UNIT_NM" );
+				LVL_NM = (String) excelDataMap.get( "LVL_NM" );
+				IDENT_CD = (String) excelDataMap.get( "IDENT_CD" );
+				
+				// init
+				exists = false;
+				
+				if ( StringUtils.isAnyEmpty(DCPLN_CD, AREA_NM, UNIT_NM, IDENT_CD) )
+				{
+					excelDataMap.put("Action", "Error");
+					excelDataMap.put("Message", "Error");
+				}
+				else
+				{
+					for ( Object obj2 : biddingList )
+					{
+						biddingMap = (Map) obj2;
+						
+						DCPLN_CD_DB = (String) biddingMap.get( "DCPLN_CD" );
+						AREA_NM_DB = (String) biddingMap.get( "AREA_NM" );
+						UNIT_NM_DB = (String) biddingMap.get( "UNIT_NM" );
+						LVL_NM_DB = (String) biddingMap.get( "LVL_NM" );
+						IDENT_CD_DB = (String) biddingMap.get( "IDENT_CD" );
+						
+						if ( DCPLN_CD.equals(DCPLN_CD_DB) 
+								&& AREA_NM.equals(AREA_NM_DB) 
+								&& UNIT_NM.equals(UNIT_NM_DB) 
+								&& LVL_NM.equals(LVL_NM_DB) 
+								&& IDENT_CD.equals(IDENT_CD_DB) )
+						{
+							exists = true;
+							
+							// PK로 비교
+							compareResultMap = CompareUtil.compareElement(excelDataMap, biddingMap, validateRuleList, CompareRule.COMPARE_TYPE.VALIDATE);
+							action = (String) compareResultMap.get("Action");
+							
+							if ( "Error".equalsIgnoreCase(action) )
+							{
+								// validate 조건에 맞지 않을 경우
+								excelDataMap.put("Action", action);
+								excelDataMap.put("Message", compareResultMap.get("Message"));
+							}
+							else
+							{
+								compareResultMap = CompareUtil.compareElement(excelDataMap, biddingMap, compareRuleList, CompareRule.COMPARE_TYPE.COMPARE);
+								excelDataMap.put("Action", compareResultMap.get("Action"));
+								excelDataMap.put("Message", compareResultMap.get("Message"));
+							}
+							break;
+						}
+						else
+						{
+							continue;
+						}
+					}
+					
+				}
+				
+				if ( !exists )
+				{
+					excelDataMap.put("Action", "Create");
+					excelDataMap.put("Message", DecConstants.SYMB_NA);
+				}
+			}
+			
+			return mapList;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	public MapList getDistinctPartCodeAndDescList(Context context, String[] args) throws Exception{
+		try ( SqlSession sqlSession = decSQLSessionFactory.getSession() ) {
+			Map programMap = JPO.unpackArgs(args);
+			String objectId = (String) programMap.get("objectId");
+			String PART_CD = (String) programMap.get("PART_CD");
+			String PART_SHORTDESC = (String) programMap.get("PART_SHORTDESC");
+			
+			String projectCode = MqlUtil.mqlCommand(context, "print bus $1 select $2 dump", objectId, DecConstants.SELECT_NAME);
+			
+			Map selectParamMap = new HashMap();
+			selectParamMap.put("SITE_CD", projectCode);
+			selectParamMap.put("DCPLN_CD", (String) programMap.get("DCPLN_CD"));
+			if ( StringUtils.isNotEmpty(PART_CD) )
+			{
+				selectParamMap.put("PART_CD", "%" + PART_CD + "%");
+			}
+			if ( StringUtils.isNotEmpty(PART_SHORTDESC) )
+			{
+				selectParamMap.put("PART_SHORTDESC", "%" + PART_SHORTDESC + "%");
+			}
+			
+			List<Map> partList = sqlSession.selectList("IF_Material.selectDistinctPartCodeAndDescList", selectParamMap);
+			
+			return new MapList( partList );
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	public StringList getDistinctDisciplineFromBMTracking(Context context, String[] args) throws Exception{
+		try ( SqlSession sqlSession = decSQLSessionFactory.getSession(); ) {
+			Map programMap = JPO.unpackArgs(args);
+			String projectId = (String) programMap.get("projectId");
+			String projectCode = MqlUtil.mqlCommand(context, "print bus $1 select $2 dump", projectId, DecConstants.SELECT_NAME);
+			
+			Map selectParamMap = new HashMap();
+			selectParamMap.put("SITE_CD", projectCode);
+			
+			List<String> discplineList = sqlSession.selectList("IF_Material.selectDistinctDisciplineFromBMTracking", selectParamMap);
+			return new StringList( discplineList );
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+}

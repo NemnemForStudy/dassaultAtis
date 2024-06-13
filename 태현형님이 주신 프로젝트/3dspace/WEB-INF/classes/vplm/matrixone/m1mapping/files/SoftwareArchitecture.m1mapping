@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapping xmlns="http://www.3ds.com/enovia-matrixone/vplm-m1/mapping" version="9">
+
+  <!-- Package -->
+  <pattern.VPLM_PACKAGE>
+    <vplm.Package name="SoftwareArchitecture" />
+    <m1.package name="SoftwareArchitecture" />
+
+    <!-- RelationClass -->
+    <pattern.VPLM_RELATIONCLASS>
+      <vplm.PLMCoreInstance name="EEApplicationPrototype" />
+      <m1.relationship name="EEApplicationPrototype" />
+
+    </pattern.VPLM_RELATIONCLASS>
+
+    <!-- RelationClass -->
+    <pattern.VPLM_RELATIONCLASS>
+      <vplm.PLMCoreInstance name="EEComponentPrototype" />
+      <m1.relationship name="EEComponentPrototype" />
+
+    </pattern.VPLM_RELATIONCLASS>
+
+    <!-- RelationClass -->
+    <pattern.VPLM_RELATIONCLASS>
+      <vplm.PLMCoreInstance name="EEConfigurationTablePrototype" />
+      <m1.relationship name="EEConfigurationTablePrototype" />
+
+    </pattern.VPLM_RELATIONCLASS>
+
+    <!-- RelationClass -->
+    <pattern.VPLM_RELATIONCLASS>
+      <vplm.PLMCoreInstance name="EEPartitionPrototype" />
+      <m1.relationship name="EEPartitionPrototype" />
+
+      <!-- Simple -->
+      <pattern.VPLM_SIMPLE>
+        <vplm.Simple name="V_EE_ipAddress" />
+        <m1.attribute name="EEPartitionPrototype.V_EE_ipAddress" local="yes" />
+      </pattern.VPLM_SIMPLE>
+
+    </pattern.VPLM_RELATIONCLASS>
+
+    <!-- Class -->
+    <pattern.VPLM_CLASS>
+      <vplm.PLMCoreRepReference name="EEAtomicComponentTypeRep" />
+      <m1.type name="EEAtomicComponentTypeRep" />
+
+    </pattern.VPLM_CLASS>
+
+    <!-- Class -->
+    <pattern.VPLM_CLASS>
+      <vplm.PLMCoreRepReference name="EEConfigurationTableRep" />
+      <m1.type name="EEConfigurationTableRep" />
+
+    </pattern.VPLM_CLASS>
+
+    <!-- Class -->
+    <pattern.VPLM_CLASS>
+      <vplm.PLMCoreReference name="EEApplication" />
+      <m1.type name="EEApplication" />
+
+    </pattern.VPLM_CLASS>
+
+    <!-- Class -->
+    <pattern.VPLM_CLASS>
+      <vplm.PLMCoreReference name="EEAtomicComponentType" />
+      <m1.type name="EEAtomicComponentType" />
+
+      <!-- Simple -->
+      <pattern.VPLM_SIMPLE>
+        <vplm.Simple name="handleTerminationAndRestart" />
+        <m1.attribute name="EEAtomicComponentType.handleTerminationAndRestart" local="yes" />
+      </pattern.VPLM_SIMPLE>
+
+    </pattern.VPLM_CLASS>
+
+    <!-- Class -->
+    <pattern.VPLM_CLASS>
+      <vplm.PLMCoreReference name="EEConfigurationTable" />
+      <m1.type name="EEConfigurationTable" />
+
+    </pattern.VPLM_CLASS>
+
+    <!-- Class -->
+    <pattern.VPLM_CLASS>
+      <vplm.PLMCoreReference name="EEPartition" />
+      <m1.type name="EEPartition" />
+
+    </pattern.VPLM_CLASS>
+
+  </pattern.VPLM_PACKAGE>
+
+</mapping>

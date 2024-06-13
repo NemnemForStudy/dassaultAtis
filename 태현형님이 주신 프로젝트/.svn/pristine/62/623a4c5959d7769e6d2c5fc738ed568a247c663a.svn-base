@@ -1,0 +1,23 @@
+precision lowp float;
+
+uniform vec4 uColor;
+uniform float uIntensity;
+varying vec3 vTextureCoord;
+uniform float uMixProj;
+
+void main(void) 
+{	
+	vec3 vdir  = vTextureCoord.xyz - cameraPosition;
+ 	float d = length(cross(cameraPosition, vdir))/length(vdir) - 1.0;
+    bool neg = d < 0.0;
+    
+    float uStartRadius = 1.0;
+    float uEndRadius = 1.05;
+	float sigma = uEndRadius - uStartRadius;
+    float ddd = (neg ? 2.0 : 1.0)*(1.0+d - uStartRadius)/sigma;
+    float k = 0.75*exp(-0.5*ddd*ddd)*uIntensity;
+    
+	gl_FragColor = vec4(uColor.rgb, (1.0-sqrt(uMixProj))*k);
+	return;
+
+}

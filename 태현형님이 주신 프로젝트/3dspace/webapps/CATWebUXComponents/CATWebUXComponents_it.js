@@ -1,0 +1,1 @@
+define("DS/CATWebUXComponents/CATWebUXComponents_it",{});define("DS/CATWebUXComponents/assets/nls/CATWebUXComponents",{validationPanelOk:"OK",validationPanelCancel:"Annulla",replyButtonLabel:"Rispondi",addButtonLabel:"Nuovo commento",pointedPageRemoved:"La pagina su cui è posizionato il puntatore è stata rimossa"});

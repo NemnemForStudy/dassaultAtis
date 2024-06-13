@@ -1,0 +1,1 @@
+define("DS/ENOXModelListView/ENOXModelListView_ko",{});define("DS/ENOXModelListView/assets/nls/ModelListView",{_collapse_content:"콘텐츠 축소",_expand_content:"콘텐츠 확장",_groupByAction:"그룹",_color:"색상",_model:"모델",_action:"작업",_dataGridView:"데이터 그리드 보기",_tileView:"타일 보기",_thumbnailView:"섬네일 보기",_largeTileView:"큰 타일 보기"});

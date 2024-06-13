@@ -1,0 +1,20 @@
+{
+  "version": "1.0.0",
+  "summary": "Creates a new array populated with the results of calling a provided graph on every element in the calling array.",
+  "description": "This block is able to map any <doc-idp-name translate=no>Input</doc-idp-name> array type to any output array type. <br>The inner graph needs to be edited to provide the mapping process.",
+  "dataPorts": {
+    "Input": "The input array to be mapped. <br>This data port handles all array types.",
+    "SharedData": "The data to share accross each internal graph instance. <br>This data port handles all types. <br>If several data with different types need to be shared then the creation of a user type is recommended.",
+    "Success": "The success output array. <br>This data port handles all array types. <br>The size of this array will always be equal to the <doc-idp-name translate=no>Input</doc-idp-name> array size.",
+    "State": "An array of <doc-valuetype translate=no>ArrayMapState</doc-valuetype> giving the <doc-valuetype translate=no>EExecutionState</doc-valuetype> at each index of the <doc-odp-name translate=no>Success</doc-odp-name> output array. <br>The size of this array will always be equal to the <doc-idp-name translate=no>Input</doc-idp-name> array size.",
+    "Progress": "An array of <doc-valuetype translate=no>ArrayMapProgress</doc-valuetype> giving the <doc-valuetype translate=no>EExecutionState</doc-valuetype> at each index of the <doc-odp-name translate=no>Input</doc-odp-name> input array. <br>This array can be filled with several data during one progress as it depends on the distribution process behind the block. <br>But the size of this array won't exceed the <doc-idp-name translate=no>Input</doc-idp-name> array size.",
+    "Error": "An array of <doc-valuetype translate=no>ArrayMapError</doc-valuetype> giving an error object for the index of the <doc-odp-name translate=no>Input</doc-odp-name> input array. <br>The size of this array won't exceed the <doc-idp-name translate=no>Input</doc-idp-name> array size."
+  },
+  "controlPorts": {
+    "In": "triggers the block execution.",
+    "Success": "is activated when the process is completed with success.",
+    "Progress": "is activated each time a progress occurred.",
+    "Error": "is activated when an error occurred."
+  },
+  "example": null
+}

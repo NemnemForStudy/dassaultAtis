@@ -1,0 +1,219 @@
+<meta charset="UTF-8"/>
+//---------------------------------------------------------------------------
+// Check_SMBECCusto
+//---------------------------------------------------------------------------
+Check_SMBECCusto.Title="適用團隊工程的 EC 零件自訂";
+Check_SMBECCusto.Label1="選擇或取消選擇核取方塊，以選擇是否安裝 EC 零件自訂";
+Check_SMBECCusto.Resume="安裝適用團隊工程的 EC 零件自訂：/P1";
+InstallSMBECCusto="EC 零件自訂";
+
+//---------------------------------------------------------------------------
+//  SMB Server Products Selection => PRF Only w/o TES configuration selected
+//---------------------------------------------------------------------------
+TESnotSelected.Title="警告";
+TESnotSelected.Text="所選產品無法在沒有 TES 的情況下安裝；請同時選擇 TES";
+TESnotSelected.ok="確定";
+
+//---------------------------------------------------------------------------
+//  SMB Server Products Selection => PRF Only w/o MIS product selected
+//---------------------------------------------------------------------------
+PRFnotSelected.Title="警告";
+PRFnotSelected.Text="選擇的產品 MIS 無法在沒有 PRF 的情況下安裝；請同時選擇 PRF";
+PRFnotSelected.ok="確定";
+
+//---------------------------------------------------------------------------
+//  ALL IN ONE INSTALLER HIGH END
+//---------------------------------------------------------------------------
+CPFOnly.Title="警告";
+CPFOnly.Text="必須選擇 CPF 組態。請選擇 CPF";
+CPFOnly.ok="確定";
+
+Check_InstallTomcat.Title="Apache Tomcat 應用程式伺服器安裝";
+Check_InstallTomcat.Label1="選擇核取方塊以安裝 Tomcat 應用程式伺服器，並部署 ENOVIA Web 應用程式";
+Check_InstallTomcat.Resume.true="選擇 Tomcat 安裝：是";
+Check_InstallTomcat.Resume.false="選擇 Tomcat 安裝：否";
+Check_InstallTomcat.CheckButton="安裝 Tomcat 應用程式伺服器。選擇連線連接埠：";
+
+Check_BuildJ2EEArchive.Title="J2EE 封存組建與 Tomcat 安裝";
+Check_BuildJ2EEArchive.Label1="選擇核取方塊以組建 J2EE 封存 (.war & .ear)";
+Check_BuildJ2EEArchive.Resume.true="組建 J2EE 封存：是";
+Check_BuildJ2EEArchive.Resume.false="組建 J2EE 封存：否";
+Check_BuildJ2EEArchive.CheckButton="組建 .ear/.war 檔案。輸入 Web 應用程式名稱：";
+
+Text_WebAppNameAllinOne.Title="J2EE 應用程式名稱定義";
+//Text_WebAppNameAllinOne.Label1 = "Please enter the name of the web application"; 
+Text_WebAppNameAllinOne.Resume="Web 應用程式名稱：/p1";
+
+TomcatSelectedButNoWarFiles.Title="選擇不一致";
+TomcatSelectedButNoWarFiles.Text="如果您想要在 TomEE 部署應用程式，請選擇「build .war」選項！";
+
+Port_tomcaAllinOne.Title="Tomcat 連線連接埠號碼";
+//Port_tomcaAllinOne.Label1 = "Please define the Tomcat connection port number:";  
+Text_Port_tomcaAllinOne.Resume="Tomcat 連線連接埠：/P1";
+
+Text_SuperUserNameAllInOne.Title="進階使用者定義，J2EE 封存組建與 Tomcat 安裝";
+Text_SuperUserNameAllInOne.Label1="指定擁有企業和系統管理權限的使用者名稱";
+Text_SuperUserNameAllInOne.Resume="進階使用者名稱：/P1";
+
+Text_SuperUserPasswordAllInOne.Label1="指定擁有企業和系統管理權限的使用者密碼";
+
+Check_SMBProgramCentralCusto.Title="單鍵程式中央自訂設定";
+Check_SMBProgramCentralCusto.Label1="安裝單鍵程式中央自訂";
+Check_SMBProgramCentralCusto.Resume="安裝單鍵程式中央自訂：/P1";
+
+X3DCSMA_previousInstallDetected.Title="偵測到現有安裝";
+X3DCSMA_previousInstallDetected.Text="偵測到現有安裝。\n此安裝程式僅可用於全新安裝";
+
+X3DCSMA_cmdToUpdateDB.Title="資料庫更新";
+X3DCSMA_cmdToUpdateDB.Text="請在 MQL 提示中執行下列命令以更新資料庫：
+  MQL<1> 設定內容使用者建立者；
+  MQL<2> 執行 <server_installation_path>/Apps/install3DSpaceV6R2023x.tcl;\n";
+
+X3DCSMA_failure_registration_3DPassport.Title="3DPassport 中的 3DSpace 註冊";
+X3DCSMA_failure_registration_3DPassport.Text="請執行下列指令碼，完成將 3DSpace 註冊至 3Dpassport：\n<server>/<os>/code/command/3DSpaceRegistrationIn3DPassport.[sh|bat]\n執行此指令碼前，請先確定 3DPassport 已在執行中。";
+
+passportRegistration.ExecuteAppli="在 3DPassport 中註冊 3DSpace...";
+
+X3DCSMA_cmdToUpdateDBscript.Title="資料庫更新";
+X3DCSMA_cmdToUpdateDBscript.Text="請執行下列指令碼以更新資料庫：
+   <server_installation_path>/Apps/install3DSpaceR2023x[.sh|.bat];\n";
+
+certificates_repository.Title="憑證位置";
+certificates_repository.Label1="選擇憑證位置";
+certificates_repository.Label2="(應僅包含憑證檔案。";
+certificates_repository.Label3=" 若保留空白，則必須使用 keytool 公用程式手動匯入憑證)";
+certificates_repository.Resume="憑證位置：/P1";
+
+certificates_import_error.Title="憑證匯入錯誤";
+certificates_import_error.Text="至少有一個憑證未匯入。\n如需詳細資訊，請參閱以下位置中的 INFO_import_certs.log 檔案：/P1";
+
+X3DCSMA_SXI_postinstall.Title="全文搜尋組態步驟";
+X3DCSMA_SXI_postinstall.Label1="選擇核取方塊，以在安裝 3DSpace 後設定並啟動索引";
+X3DCSMA_SXI_postinstall.Label2="請勿檢查是否需要安裝其他應用程式。";
+X3DCSMA_SXI_postinstall.CheckButton="安裝 3DSpace 後，立即設定並啟動全文搜尋索引。";
+X3DCSMA_SXI_postinstall.Resume.true="全文搜尋組態步驟：是";
+X3DCSMA_SXI_postinstall.Resume.false="全文搜尋組態步驟：否";
+
+SXI_baseline_indexation.ExecuteAppli="正在執行搜尋索引組態...";
+
+
+//---------------------------------------------------------------------------
+// VPLMCentralAdminUser
+//---------------------------------------------------------------------------
+X3DCSMA_administor_name.Title="管理員定義";
+X3DCSMA_administor_name.Label1="管理員名稱：";
+X3DCSMA_administor_name.Resume="管理員名稱：/p1";
+
+//---------------------------------------------------------------------------
+// VPLMCentralAdminPwd
+//---------------------------------------------------------------------------
+X3DCSMA_administor_password.Title="管理員密碼：";
+X3DCSMA_administor_password.Label1="將會建立管理員使用者：admin_platform";
+X3DCSMA_administor_password.Label2="管理員密碼：";
+
+X3DCSMA_slashvar_notwritable="安裝需要在 /var/DassaultSystemes/ 中建立資料夾。開始安裝前，請檢查此資料夾是否存在";
+
+//---------------------------------------------------------------------------
+// Text_SuperUserName
+//---------------------------------------------------------------------------
+X3DCSMA_creator_name.Title="進階使用者//密碼";
+X3DCSMA_creator_name.Label1="指定擁有企業和系統管理權限的使用者名稱。";
+X3DCSMA_creator_name.Resume="進階使用者名稱：/p1";
+
+//---------------------------------------------------------------------------
+// Text_SuperUserPwd
+//---------------------------------------------------------------------------
+X3DCSMA_creator_password.Title="進階使用者//密碼";
+X3DCSMA_creator_password.Label1="指定擁有企業和系統管理權限的使用者密碼。";
+
+X3DCSMA_CheckCredentialsFailed.Title="驗證錯誤";
+X3DCSMA_CheckCredentialsFailed.Text="嘗試連線時回報下列錯誤：\n\n/P1";
+
+X3DCSMA_upgradefailed.Title="MQL 錯誤";
+X3DCSMA_upgradefailed.Label1="執行 MQL> 升級命令時發生錯誤：\n/P1";
+X3DCSMA_upgradefailed.ExecuteAppli="正在執行 MQL>升級...";
+
+//---------------------------------------------------------------------------
+// Reconfiguration Change creator's password
+//---------------------------------------------------------------------------
+BOOL_ChangeCreatorPassword.Title="變更進階使用者密碼 (建立者)";
+BOOL_ChangeCreatorPassword.CheckButton="變更進階使用者密碼 (建立者)";
+BOOL_ChangeCreatorPassword.Resume.true="變更進階使用者密碼：是";
+BOOL_ChangeCreatorPassword.Resume.false="變更進階使用者密碼：否";
+
+
+X3DCSMA_creator_old_password.Title="進階使用者 (建立者) 舊密碼：";
+X3DCSMA_creator_old_password.Label1="進階使用者 (建立者) 舊密碼：";
+X3DCSMA_creator_new_password.Title="進階使用者 (建立者) 新密碼：";
+X3DCSMA_creator_new_password.Label1="進階使用者 (建立者) 新密碼：";
+
+//---------------------------------------------------------------------------
+// Reconfiguration Change passwords
+//--------------------------------------------------------------------------- 
+BOOL_ChangeAdministratorPassword.Title="變更平台管理員密碼 (admin_platform)";
+BOOL_ChangeAdministratorPassword.CheckButton="變更平台管理員密碼 (admin_platform)";
+BOOL_ChangeAdministratorPassword.Resume.true="變更平台管理員密碼：是";
+BOOL_ChangeAdministratorPassword.Resume.false="變更平台管理員密碼：否";
+
+
+X3DCSMA_admin_platform_old_password.Title="平台管理員舊密碼：";
+X3DCSMA_admin_platform_old_password.Label1="平台管理員舊密碼：";
+X3DCSMA_admin_platform_new_password.Title="平台管理員新密碼：";
+X3DCSMA_admin_platform_new_password.Label1="平台管理員新密碼：";
+
+//---------------------------------------------------------------------------
+// Reconfiguration Error changing password
+//--------------------------------------------------------------------------- 
+changePasswordFailed.Title="變更密碼時發生錯誤";
+changePasswordFailed.Text="變更密碼時偵測到下列錯誤：\n/p1";
+
+//---------------------------------------------------------------------------
+// Reconfig Store path
+//---------------------------------------------------------------------------
+BOOL_ChangeStorePath.Title="變更儲存區路徑";
+BOOL_ChangeStorePath.CheckButton="是否要變更儲存區路徑？";
+BOOL_ChangeStorePath.Resume.true="變更儲存區路徑：是";
+BOOL_ChangeStorePath.Resume.false="變更儲存區路徑：否";
+
+//---------------------------------------------------------------------------
+// Reconfiguration Update Store fcurl
+//---------------------------------------------------------------------------
+BOOL_reconfigure_FCSURL.Title="變更 FCS URL";
+BOOL_reconfigure_FCSURL.CheckButton="變更儲存區 FCS URL";
+BOOL_reconfigure_FCSURL.Resume.true="變更儲存區 FCS URL：是";
+BOOL_reconfigure_FCSURL.Resume.false="變更儲存區 FCS URL：否";
+
+RECONF_X3DCSMA_FCSURL.Title="新的 FCS 服務 URL：";
+RECONF_X3DCSMA_FCSURL.Label1="FCS 服務 URL：";
+RECONF_X3DCSMA_FCSURL.Resume="FCS 服務 URL：/p1";
+
+changePasswordFailed.Title="變更儲存區的 fcsurl 時發生錯誤";
+changePasswordFailed.Text="變更儲存區的 fcsurl 時偵測到下列錯誤：\n/p1";
+
+//---------------------------------------------------------------------------
+// Reconfiguration check creator password
+//--------------------------------------------------------------------------- 
+ConnectionSuperUserFailed.Title="連線錯誤";
+ConnectionSuperUserFailed.Text="嘗試連線時偵測到下列錯誤：\n/p1";
+
+//---------------------------------------------------------------------------
+// check execution of inspectdb
+//--------------------------------------------------------------------------- 
+inspectDBKO.Title="執行 MQL 命令時發生錯誤";
+inspectDBKO.Text="執行 MQL> 清單命令時偵測到錯誤\n如需更多詳細資料，請參閱此記錄檔案：\n/P1";
+inspectDBKO.ok="確定";
+inspectDBKO.quit="結束";
+
+//---------------------------------------------------------------------------
+// /tmp in noexec mount
+//---------------------------------------------------------------------------
+test_execution_rights_script.Exceptions.actCreateProcess.Title="無法從預設的暫時資料夾執行指令碼";
+test_execution_rights_script.Exceptions.actCreateProcess.Text="若暫時資料夾 (例如：/tmp) 安裝於「noexec」模式，您需要將變數「TMPDIR」匯出至可執行指令碼的資料夾。\n然後以此變數集重新啟動安裝程式。";
+
+
+// ----------------------------------------
+// Special char in admin_platform password
+// ----------------------------------------
+X3DCSMA_Check_special_chars.Title="偵測到特殊字元";
+X3DCSMA_Check_special_chars.Text="偵測到 admin_platform 密碼中有特殊字元\n我們建議不要使用下列字元：\ [ { } ! $";
+X3DCSMA_Check_special_chars.ok="確定";

@@ -1,0 +1,1 @@
+define("DS/CAT3DAnnotControllerForReview/CAT3DAnnotControllerForReview_de",{});define("DS/CAT3DAnnotControllerForReview/assets/nls/CAT3DAnnotControllerForReview",{errorWhileSettingAppCtx:"Folienanmerkungen wurden nicht korrekt angezeigt. Wenden Sie die Folie erneut an."});

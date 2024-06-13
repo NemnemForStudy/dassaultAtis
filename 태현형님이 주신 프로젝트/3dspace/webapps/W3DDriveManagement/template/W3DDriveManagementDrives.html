@@ -1,0 +1,24 @@
+<div class="drive-management-heading">
+    <div class="search">
+        <form class="usage-form">
+            <div class="input-group">
+                <div class="search-input-wrapper">
+                    <input type="text" class="search-input form-control search-text-box box-visiblity" placeholder="{{NLS.searchFor}}">
+                    <span title="{{NLS.clear}}" class="fonticon fonticon-clear clear-search-input hidden"></span>
+                    <span title="" class="fonticon fonticon-search search-icon"></span>
+                </div>
+                <span title="{{NLS.userStatus}}" class="fonticon fonticon-clickable fonticon-filter"></span>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="drive-management-table">
+    {{#if hasDrives}}
+        <div class="drive__table">
+        </div>
+    {{else}}
+        <i class="fonticon fonticon-search no-result-icon"></i>
+        <span class="no-drives">{{NLS.noFound}}</span>
+    {{/if}}
+</div>

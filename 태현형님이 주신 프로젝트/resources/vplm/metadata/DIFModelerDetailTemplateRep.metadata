@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<!-- COPYRIGHT DASSAULT SYSTEMES 2019, All rights reserved -->
+<Package xmlns="PLMDictionaryUnified"
+         ModelerType="Top"
+         Name="DIFModelerDetailTemplateRep"
+         BelongsToModeler="DIFModeler2DTemplate"
+         UseProcedures="DIFpe_Procedures"
+         Uuid="72E271F2-21ED-44AE-8E25-B72F12E6CBB5"
+         UseNames="DIFModeler2DTemplateRepAbstract"
+         CustomerExposition="Programmer">
+  <Property Name="FormerTypingLegacy" Value="No"/>
+
+  <CAAComment>
+    <ShortRole>DIF modeler Template Rep (part 4)</ShortRole>
+    <Role>This package describes the DIF Template Rep model built on top of PLM Core2</Role>
+  </CAAComment>
+
+  <Comment>last update 2019-02-14-8.00.00</Comment> 
+
+  <!-- DIFModelerDetailTemplateRep provides :         -->
+  <!-- DIFDetailTemplate       PLMCoreRepReference -->
+
+  <!-- ******************************************* -->
+  <!-- *  DIFDetailTemplate (PLMCoreRepReference) * -->
+  <!-- ******************************************* -->
+  <Class Name="DIFDetailTemplate"
+         Uuid="772A6CCF-5862-425C-8DAD-0F5D0159FBAA"
+         Abstract="No"
+         SuperName="DIF2DTemplateRepAbstract"
+         Abbreviation="2dc"
+         CustomerExposition="Programmer"
+         Specializable="No"
+         DeleteAvailability="Yes">
+
+    <CAAComment>
+      <ShortRole>DIF Detail Text Rep Object</ShortRole>
+      <Role>DIF Detail Text Rep Object</Role>    
+    </CAAComment>
+
+    <!-- PLM New UI/KWE Scripts New -->
+    <!-- <Property Name="Newable" Value="New"/> We block plm new in + menu for now -->
+    <Property Name="Newable" Value="New"/>
+    <Property Name="KweNew_InstanciationMethod" Value="CATDifTemplateKBEDelegateInstanciation"/>
+
+    <!-- Icon and 3D Icon -->
+    <Property Name="IconName" Value="I_D3M_Detail"/>
+
+    <!-- Collaborative Space Applicability -->
+    <Property Name="ShareBetweenProjectsAvailability" Value="Yes"/>
+
+	<!-- Change Management support -->
+	<Property Name="ChangeManagementSupport" Value="Yes"/>
+
+	 <!-- Export -->
+    <Method ImplementationType="Self">
+      <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+      
+      <ProcedureForUsage>
+        <Usage href="ExportScope.meth#Design"/>
+        <UsedProcedure href="DIFpe_Procedures.proc#DIFModeler_ExportCompletion_DifAbstract2DTemplate"/>
+      </ProcedureForUsage>
+
+      <ProcedureForUsage>
+        <Usage href="ExportScope.meth#Remove"/>
+        <UsedProcedure href="DIFpe_Procedures.proc#DIFModeler_ExportCompletion_Myself"/>
+      </ProcedureForUsage>
+
+      <ProcedureForUsage>
+        <Usage href="ExportScope.meth#TransferSiteOwnership"/>
+        <UsedProcedure href="DIFpe_Procedures.proc#DIFModeler_ExportCompletion_Myself"/>
+      </ProcedureForUsage>
+    
+    </Method>
+      
+    <Simple Name="V_Scale"
+            Uuid="83A3FFF8-2234-44AB-BB63-D0A408C3055D"
+            Type="String"
+            MaxLength="255"
+            Protection="Free"
+            CAAExposition="L0"
+            DefaultValue="NormalScale">
+      <Range>
+        <Equal>NormalScale</Equal>
+        <Equal>LargeScale</Equal>
+        <Equal>ExtraLargeScale</Equal>
+        <Equal>SmallScale</Equal>
+        <Equal>ExtraSmallScale</Equal>
+        <Equal>NanometricScale</Equal>
+      </Range>
+    </Simple>
+
+   
+  </Class>
+  
+</Package>

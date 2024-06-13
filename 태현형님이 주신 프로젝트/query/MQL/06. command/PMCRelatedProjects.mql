@@ -1,0 +1,21 @@
+################################################################################################
+# Modified By thok : 2023. 07. 25
+# Admin Type : command
+# Name : PMCRelatedProjects
+################################################################################################
+copy command PMCRelatedProjects PMCRelatedProjects_ootb;
+mod command PMCRelatedProjects
+	add setting 'Access Expression' 'admin_platform==context.user'
+;
+
+# Modified By thok : 2023. 07. 28
+mod command PMCRelatedProjects
+	add setting 'Access Expression' 'context.user.isassigned[decSystemAdmin]'
+;
+
+# Modified By thok : 2023. 09. 09
+mod command PMCRelatedProjects
+	remove setting 'Access Expression'
+	add setting 'Access Program' 'decAccess' 
+	add setting 'Access Function' 'hasAccess'
+;

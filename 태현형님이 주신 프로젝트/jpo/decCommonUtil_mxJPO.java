@@ -1,0 +1,171 @@
+import java.io.File;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
+
+import com.daewooenc.export.ExportConfig;
+import com.dec.util.DecConstants;
+import com.dec.util.DecDateUtil;
+import com.dec.util.DecExcelUtil;
+import com.dec.util.decListUtil;
+import com.matrixone.apps.domain.DomainObject;
+import com.matrixone.apps.domain.util.EnoviaResourceBundle;
+import com.matrixone.apps.domain.util.FrameworkUtil;
+import com.matrixone.apps.domain.util.MapList;
+import com.matrixone.apps.domain.util.PersonUtil;
+
+import matrix.db.Context;
+import matrix.db.JPO;
+import matrix.util.MatrixException;
+import matrix.util.StringList;
+
+@SuppressWarnings({ "rawtypes", "unchecked" })
+public class decCommonUtil_mxJPO {
+
+	public Map generateRangeList(Context context, String[] args) throws Exception{
+		try {
+			Map programMap = (Map) JPO.unpackArgs(args);
+			Map columnMap = (Map) programMap.get("columnMap");
+			Map settingsMap = (Map) columnMap.get("settings");
+			
+			String rangeValueExpr = (String) settingsMap.get("Range Value");
+			String rangeDisplayExpr = (String) settingsMap.get("Range Display");
+			String rangeDelimiter = (String) settingsMap.get("Range Delimiter");
+			
+			rangeDisplayExpr = StringUtils.isNotEmpty(rangeDisplayExpr) ? rangeDisplayExpr : rangeValueExpr;
+			rangeDelimiter = StringUtils.isNotEmpty(rangeDelimiter) ? rangeDelimiter : ",";
+			
+			StringList rangeValueList = FrameworkUtil.splitString(rangeValueExpr, rangeDelimiter);
+			StringList rangeDisplayList = FrameworkUtil.splitString(rangeDisplayExpr, rangeDelimiter);
+			
+			Map rangeMap = new HashMap();
+			rangeMap.put("field_choices", rangeValueList);
+			rangeMap.put("field_display_choices", rangeDisplayList);
+			
+			return rangeMap;
+			
+		} catch (MatrixException e) { // 보안 취약 조치
+			//e.printStackTrace();
+			String eMessage = e.getMessage();
+			System.out.println(eMessage);
+			throw e;
+		}
+	}
+	
+	public Map export(Context context, String[] args) throws Exception{
+		Map resultMap = new HashMap();
+		try {
+			Map programMap = (Map) JPO.unpackArgs(args);
+			MapList objectList = (MapList) programMap.get("objectList");
+			MapList columns = (MapList) programMap.get("columns");
+			String mode = (String) programMap.get("exportMode");
+			//String exportTitle = (String) programMap.get("exportTitle");  // Modified by choimingi 2023.11.07
+			// Modified by choimingi 2023.11.07 [S]
+			String exportTitle = (String) programMap.get("exportTitle");
+			String strCommandName = EnoviaResourceBundle.getProperty(context, "ProgramCentral",
+					exportTitle, context.getSession().getLanguage());
+			
+			// Modified by choimingi 2023.11.07 [E]
+			if ( StringUtils.isEmpty(exportTitle) ) 
+			{
+				exportTitle = mode;
+			}
+			//String fileName = exportTitle + "_" + DecDateUtil.changeDateFormat(new Date(), "yyyyMMdd_HHmmss") + ".xlsx"; // Modified by choimingi 2023.11.07
+			String fileName = strCommandName + "_" + DecDateUtil.changeDateFormat(new Date(), "yyyyMMdd_HHmmss") + ".xlsx";
+			
+			List<ExportConfig> configList = null;
+			
+			switch (mode) {
+			case "MaterialStatus":
+				decMaterial_mxJPO matJPO = new decMaterial_mxJPO();
+				configList = matJPO.getMaterialStatusExportConfig();
+				break;
+			case "ProjectList":
+				emxProjectSpace_mxJPO proJPO = new emxProjectSpace_mxJPO("");
+				MapList newObjectList = new MapList();
+				Map mObject = null;
+				for(Object obj : objectList) {
+					mObject = (Map) obj;
+					
+					//1.projectType 변환
+					String projectType = (String) mObject.get("attribute[decProjectType]");
+					if(projectType.equalsIgnoreCase("bidding")) {
+						projectType = EnoviaResourceBundle.getProperty(context, "Framework","emxFramework.Range.decProjectType.bidding", context.getSession().getLanguage());
+					} else if(projectType.equalsIgnoreCase("ongoing")) {
+						projectType = EnoviaResourceBundle.getProperty(context, "Framework","emxFramework.Range.decProjectType.ongoing", context.getSession().getLanguage());
+					}
+					
+					//2.projectStatus 변환
+					String projectStatus = (String) mObject.get("attribute[decProjectStatus]");
+					if(projectStatus.equalsIgnoreCase(DecConstants.ATTRIBUTE_DECPROJECTSTATUS_RANGE_INPROGRESS)) {
+						projectStatus = EnoviaResourceBundle.getProperty(context, "Framework","emxFramework.Range.decProjectStatus.In-Progress", context.getSession().getLanguage());
+	    			} else if(projectStatus.equalsIgnoreCase(DecConstants.ATTRIBUTE_DECPROJECTSTATUS_RANGE_WIN)) {
+	    				projectStatus = EnoviaResourceBundle.getProperty(context, "Framework","emxFramework.Range.decProjectStatus.Win", context.getSession().getLanguage());
+	    			} else if(projectStatus.equalsIgnoreCase(DecConstants.ATTRIBUTE_DECPROJECTSTATUS_RANGE_WITHDRAW)) {
+	    				projectStatus = EnoviaResourceBundle.getProperty(context, "Framework","emxFramework.Range.decProjectStatus.Withdraw", context.getSession().getLanguage());
+	    			} else if(projectStatus.equalsIgnoreCase(DecConstants.ATTRIBUTE_DECPROJECTSTATUS_RANGE_EXCLUDE)) {
+	    				projectStatus = EnoviaResourceBundle.getProperty(context, "Framework","emxFramework.Range.decProjectStatus.Exclude", context.getSession().getLanguage());
+	    			} else if(projectStatus.equalsIgnoreCase(DecConstants.ATTRIBUTE_DECPROJECTSTATUS_RANGE_FAIL)) {
+	    				projectStatus = EnoviaResourceBundle.getProperty(context, "Framework","emxFramework.Range.decProjectStatus.Fail", context.getSession().getLanguage());
+	    			} else if(projectStatus.equalsIgnoreCase(DecConstants.ATTRIBUTE_DECPROJECTSTATUS_RANGE_COMPLETED)) {
+	    				projectStatus = EnoviaResourceBundle.getProperty(context, "Framework","emxFramework.Range.decProjectStatus.Completed", context.getSession().getLanguage());
+	    			} else if(projectStatus.equalsIgnoreCase(DecConstants.ATTRIBUTE_DECPROJECTSTATUS_RANGE_HOLD)) {
+	    				projectStatus = EnoviaResourceBundle.getProperty(context, "Framework","emxFramework.Range.decProjectStatus.Hold", context.getSession().getLanguage());
+	    			}
+					
+					//3.projectAdministrator 변환
+					String projectAdministrator = (String) mObject.get("id");
+					StringBuilder PIMName = new StringBuilder();
+	    			DomainObject proejctObject = new DomainObject(projectAdministrator);
+	    	        StringList PIMList = proejctObject.getInfoList(context, "from[Member|attribute[decProjectMemberRole]==PIM].to",false);
+	    	        for(String PIM : PIMList){
+	    	        	PIM = PersonUtil.getFullName(context, PIM);//name값으로 full name 불러오기
+	    	        	PIMName.append(PIM + ",");//복수일 경우 컴마(,) 로 구분
+	    	        }
+	    	        if(PIMName.length() > 0){//PIM이 존재 할 경우 삭제
+	    	        	PIMName.deleteCharAt(PIMName.length() - 1);//마지막에 컴마(,) 제거
+	    	        }
+	    	        projectAdministrator = PIMName.toString();
+					
+	    	        //4.country 변환
+	    	        String countryCode = (String) mObject.get("attribute[decCountryCode]");
+	    	        String country = DecConstants.EMPTY_STRING;
+	    	        if(countryCode.length() > 0) {
+	    	        	MapList allCountryList = proJPO.getCountryList(context, "");
+	 	    	        Map<String,Map> allCountryMap = decListUtil.getSelectKeyDataMapForMapList(allCountryList, "attribute[Country Code (2 Letter)]");
+	 	    	        Map tempCountryMap = null;
+	 	    	        tempCountryMap = allCountryMap.get(countryCode);
+	 	    	        country = (String) tempCountryMap.get(DecConstants.SELECT_NAME);
+	    	        }
+	    	        
+					mObject.put("attribute[decProjectType]", projectType);
+					mObject.put("attribute[decProjectStatus]", projectStatus);
+					mObject.put("id", projectAdministrator);
+					mObject.put("Country", country);
+					newObjectList.add(mObject);
+				}
+				objectList = newObjectList;
+				configList = proJPO.getProjectListExportConfig();
+				break;
+			default:
+				break;
+			}
+			
+			String filePath = context.createWorkspace() + File.separator + fileName;
+			
+//			resultMap = DecExcelUtil.write2Excel(objectList, configList, new File(filePath));
+			resultMap = DecExcelUtil.write2Excel2(objectList, configList, new File(filePath));
+			resultMap.put("filePath", filePath);
+			resultMap.put("fileName", fileName);
+		} catch (MatrixException e) { // 보안 취약 조치
+			resultMap.put("result", "error");
+			resultMap.put("msg", e.getMessage());
+			e.printStackTrace();
+		}
+		return resultMap;
+	}
+	
+}

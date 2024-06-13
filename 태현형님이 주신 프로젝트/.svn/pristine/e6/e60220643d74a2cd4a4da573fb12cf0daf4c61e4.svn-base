@@ -1,0 +1,107 @@
+################################################################################################
+# Create By thok : 2023. 06. 29
+# Admin Type : table
+# Name : decRequestList
+################################################################################################
+#del table decRequestList system;
+add table 'decRequestList' system
+	column
+		name 'Name'
+		label 'emxProgramCentral.Common.Number'
+		businessobject '$<name>'
+		alt ''
+		href '${COMMON_DIR}/decRequestDialogFS.jsp?mode=view'
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Target Location' slidein
+		setting 'Popup Modal' true
+	column
+		name 'Project'
+		label 'emxProgramCentral.Common.Projects'
+		alt ''
+		setting 'Registered Suite' 'ProgramCentral'
+		setting "Column Type" "programHTMLOutput"
+		setting 'function' 'getProjectWithRequest'
+		setting 'program' 'decRequest'
+	column
+		name 'Title'
+		label 'emxProgramCentral.Common.Title'
+		businessobject '$<attribute[Title].value>'
+		alt ''
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Width' 250
+	column
+		name 'decType'
+		label 'emxProgramCentral.Common.Type'
+		businessobject  '$<attribute[decType].value>'
+		alt ''
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Admin Type' 'attribute_decType'
+		setting 'Field Type' 'attribute'
+	column
+		name 'Status'
+		label 'emxProgramCentral.Policy.Status'
+		alt ''
+		setting 'Registered Suite' 'ProgramCentral'
+		setting "Column Type" "program"
+		setting 'function' 'getCurrentStatus'
+		setting 'program' 'decRequest'
+		setting 'Width' 100
+	column
+		name 'decContentData'
+		label 'emxProgramCentral.Common.Content'
+		businessobject  '$<attribute[decContentData].value>'
+		alt ''
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Width' 500
+	column
+		name 'Originator'
+		label 'emxProgramCentral.Common.Originator'
+		alt ''
+		setting 'Registered Suite' 'ProgramCentral'
+		setting "Column Type" "program"
+		setting 'function' 'getOriginator'
+		setting 'program' 'decRequest'
+		setting 'Width' 150
+	column
+		name 'originated'
+		label 'emxProgramCentral.Label.Originated'
+		businessobject  '$<originated>'
+		alt ''
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'format' 'date'
+		setting 'Width' 100
+	column
+		name 'RequestDate'
+		label 'emxProgramCentral.Label.RequestDate'
+		businessobject  '$<state[Request].actual>'
+		alt ''
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'format' 'date'
+		setting 'Width' 100
+	column
+		name 'AcceptDate'
+		label 'emxProgramCentral.Label.AcceptDate'
+		businessobject  '$<state[Accept].actual>'
+		alt ''
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'format' 'date'
+		setting 'Width' 100
+	column
+		name 'ReplyDate'
+		label 'emxProgramCentral.Label.ReplyDate'
+		businessobject  '$<state[Reply].actual>'
+		alt ''
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'format' 'date'
+		setting 'Width' 100
+	column
+		name 'CompletetDate'
+		label 'emxProgramCentral.Label.CompleteDate'
+		businessobject  '$<state[Complete].actual>'
+		alt ''
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'format' 'date'
+		setting 'Width' 100
+;
+add property 'table_decRequestList' on program 'eServiceSchemaVariableMapping.tcl' to table 'decRequestList' system
+;

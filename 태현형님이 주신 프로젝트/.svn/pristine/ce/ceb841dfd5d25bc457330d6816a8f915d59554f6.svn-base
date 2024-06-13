@@ -1,0 +1,121 @@
+<div class="dashboard-header">
+    <span class="fonticon fonticon-close new-dashboard-menu-close-btn"></span>
+</div>
+
+<div class="dashboard-menu-actions">
+    <div class="wrapper">
+        <div class="input-group search-ctn">
+            <input type="text" class="form-control" placeholder="{{nls.findDashboardsAndCockpits}}" {{#if search}}value="{{search}}"{{/if}}>
+            <span class="input-group-addon fonticon fonticon-search {{#if search}}hide{{/if}}"></span>
+            <span class="input-group-addon fonticon fonticon-clear clear-btn {{#unless search}}hide{{/unless}}"></span>
+        </div>
+        <div class="add-container btn-ctn">
+            <span class="fonticon fonticon-plus dashboard-menu-actions-item-add"></span>
+        </div>
+        <div class="manage-container btn-ctn">
+            <span class="fonticon fonticon-cog dashboard-menu-actions-item-manage"></span>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+<div class="dashboard-menu-list">
+    <div class="dashboard-menu-favorites">
+        <div class="dashboard-menu-favorites-title">
+            <p>{{nls.favoriteDashboards}}</p>
+        </div>
+        <div class="dashboard-menu-favorites-items">
+            <div class="hide favorite-placeholder favorite-placeholder-move">
+                <div class="fonticon fonticon-drag-drop fonticon-2x"></div>
+                <div class="placeholder-text">{{nls.moveFavorite}}</div>
+            </div>
+            {{#each favorites}}
+            <div class="dashboard-menu-list-item {{#if active}}active{{/if}}" data-modelId="{{modelId}}" data-type="{{type}}" data-roleIcon="{{roleIcon}}">
+                <div class="thumbnail">
+                    {{#NewDashboardMenu_shouldShowThumbnail thumbnail}}
+                        <img src="{{NewDashboardMenu_getDashThumbnailUrl modelId}}" class="thumbnail-img" draggable="false"/>
+                    {{else}}
+                        <div class="fonticon fonticon-chart-map-tree thumbnail-icon"></div>
+                    {{/NewDashboardMenu_shouldShowThumbnail}}
+                </div>
+                <div class="dashboard-menu-list-item-text{{#if data.description}}-with-description{{/if}}">
+                    <p class="dashboard-menu-list-item-text-title">{{name}}</p>
+                    {{#if data.description}}<p class="dashboard-menu-list-item-text-description">{{data.description}}</p>{{/if}}
+                </div>
+                <span class="ctx-menu-open-icon fonticon fonticon-down-open"></span>
+            </div>
+            {{/each}}
+            <div class="hide favorite-placeholder favorite-placeholder-trash">
+                <div class="fonticon fonticon-trash fonticon-2x"></div>
+                <div class="placeholder-text">{{nls.dropFavorite}}</div>
+            </div>
+            {{#if emptyFavorite}}
+                <div class="favorite-placeholder favorite-placeholder-empty">
+                    <div class="fonticon fonticon-drag-drop fonticon-2x"></div>
+                    <div class="placeholder-text">{{nls.addNewFavorite}}</div>
+                </div>
+            {{/if}}
+            <div class="hide favorite-placeholder favorite-placeholder-add">
+                <div class="fonticon fonticon-plus fonticon-2x"></div>
+                <div class="placeholder-text">{{nls.addFavorite}}</div>
+            </div>
+        </div>
+    </div>
+    <hr>
+
+    {{#unless emptyCockpits}}
+    <div class="dashboard-menu-cockptits">
+        <div class="dashboard-menu-dashboards-title">
+            <p>{{nls.cockpits}}</p>
+        </div>
+        <div class="dashboard-menu-dashboards-items">
+            {{#each cockpits}}
+            <div class="dashboard-menu-list-item {{#if active}}active{{/if}}" data-modelId="{{modelId}}" data-type="{{type}}" data-roleIcon="{{roleIcon}}">
+                <div class="thumbnail">
+                    {{#NewDashboardMenu_shouldShowThumbnail thumbnail}}
+                        <img src="{{NewDashboardMenu_getDashThumbnailUrl modelId}}" class="thumbnail-img" draggable="false"/>
+                    {{else}}
+                        <div class="fonticon fonticon-chart-map-tree thumbnail-icon"></div>
+                    {{/NewDashboardMenu_shouldShowThumbnail}}
+                </div>
+                <div class="dashboard-menu-list-item-text{{#if data.description}}-with-description{{/if}}">
+                    <p class="dashboard-menu-list-item-text-title">{{name}}</p>
+                    {{#if data.description}}
+                    <p class="dashboard-menu-list-item-text-description">{{data.description}}</p>
+                    {{/if}}
+                </div>
+                <span class="ctx-menu-open-icon fonticon fonticon-down-open"></span>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+    {{/unless}}
+    {{#unless emptyDashboards}}
+    <div class="dashboard-menu-dashboards">
+        <div class="dashboard-menu-dashboards-title">
+            <p>{{nls.myDashboards}}</p>
+        </div>
+        <div class="dashboard-menu-dashboards-items">
+            {{#each dashboards}}
+            <div class="dashboard-menu-list-item {{#if active}}active{{/if}}" data-modelId="{{modelId}}" data-type="{{type}}" data-roleIcon="{{roleIcon}}">
+                <div class="thumbnail">
+                    {{#NewDashboardMenu_shouldShowThumbnail thumbnail}}
+                        <img src="{{NewDashboardMenu_getDashThumbnailUrl modelId}}" class="thumbnail-img" draggable="false"/>
+                    {{else}}
+                        <div class="fonticon fonticon-chart-map-tree thumbnail-icon"></div>
+                    {{/NewDashboardMenu_shouldShowThumbnail}}
+                </div>
+                <div class="dashboard-menu-list-item-text{{#if data.description}}-with-description{{/if}}">
+                    <p class="dashboard-menu-list-item-text-title">{{name}}</p>
+                    {{#if data.description}}
+                    <p class="dashboard-menu-list-item-text-description">{{data.description}}</p>
+                    {{/if}}
+                </div>
+                <span class="ctx-menu-open-icon fonticon fonticon-down-open"></span>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+    {{/unless}}
+</div>

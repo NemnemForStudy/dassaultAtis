@@ -1,0 +1,1 @@
+define("UWA/Controls/FeedView/Gallery",["UWA/Core","UWA/Controls/FeedView/Carousel"],function(e,r){"use strict";var l=r.extend({viewName:"carousel gallery"});return e.namespace("Controls/FeedView_Gallery",l,e)});

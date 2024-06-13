@@ -1,0 +1,20 @@
+################################################################################################
+# Create By thok : 2023. 06. 28
+# Admin Type : relationship
+# Name : decResponseRel
+################################################################################################
+#del rel 'decResponseRel' 
+add rel 'decResponseRel' 
+	preventduplicates
+	from type decRequest 
+		cardinality 1 
+		revision none 
+		clone none 
+	to type decResponse  
+		cardinality 1 
+		revision none 
+		clone none
+;
+
+add property 'relationship_decResponseRel' on program eServiceSchemaVariableMapping.tcl to relationship 'decResponseRel'
+;

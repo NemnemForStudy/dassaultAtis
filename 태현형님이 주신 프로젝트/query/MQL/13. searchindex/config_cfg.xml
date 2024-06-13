@@ -1,0 +1,9 @@
+<!-- Predicate definitions for the Configuration -->
+<RELATIONSHIPTYPEFIELDS name="ConfigEffectivityPredicates">
+	<FIELD key="ConfigEffectivityPredicates" name="effectivitytype" 						select="CONST:" 													sixw="ds6w:effectivitytype" 					type="STRING,PARAMETRIC"/>
+	<FIELD key="ConfigEffectivityPredicates" name="configuredchange" 						select="CONST:" 													sixw="ds6w:configuredchange" 					type="STRING,PARAMETRIC"/>
+	<FIELD key="ConfigEffectivityPredicates" name="legacyeffectivity" 					select="CONST:" 													sixw="ds6w:legacyeffectivity" 				type="BOOLEAN,PARAMETRIC"/>
+	<FIELD key="ConfigEffectivityPredicates" name="ispartofconfigurationrevision" 	select="frommid[ConfigurationBaselineEffectivity]" 	sixw="ds6w:ispartofconfigurationrevision"	type="BOOLEAN,PARAMETRIC"/>
+</RELATIONSHIPTYPEFIELDS> 
+
+<RELATIONSHIPTYPE.EXTFIELDS includes="ConfigEffectivityPredicates" name="PLMInstance"/>

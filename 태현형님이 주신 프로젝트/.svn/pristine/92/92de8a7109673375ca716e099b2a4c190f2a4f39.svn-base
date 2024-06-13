@@ -1,0 +1,1 @@
+define("DS/DMUBaseUI/DMUBaseUI_ru",{});define("DS/DMUBaseUI/assets/nls/DMUBaseUI",{defaultValidatedStampLabel:"Проверено",defaultRejectedStampLabel:"Отклонено"});

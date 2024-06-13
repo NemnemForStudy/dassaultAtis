@@ -1,0 +1,1 @@
+define("DS/NotificationManager/NotificationManager_ko",{});define("DS/NotificationManager/assets/nls/feed",{openInNewTab:"새 탭에서 열기",close:"닫기"});

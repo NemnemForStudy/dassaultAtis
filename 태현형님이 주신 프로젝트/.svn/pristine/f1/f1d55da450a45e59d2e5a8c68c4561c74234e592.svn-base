@@ -1,0 +1,513 @@
+    <!-- Begin of VPM EDITOR Configurations-->
+    <BOTYPE.EXTFIELDS name="PLMActionBase" includes="basic,ECHChange"/>
+
+    <BOTYPE.EXTFIELDS name="SIMObjSimulationRepReferenceGenericDS" includes="basic"/>
+    <BOTYPE.EXTFIELDS name="SIMObjSimulationObjectGenericDS" includes="basic"/>
+    <BOTYPE.EXTFIELDS name="SIMObjSimulationV5RepReferenceGeneric" includes="basic"/>
+    <BOTYPE.EXTFIELDS name="SIMItfSimulationDS" includes="basic"/>
+    <BOTYPE.EXTFIELDS name="ENOSTItfSimulationDS" includes="basic"/>
+    <BOTYPE.EXTFIELDS name="ENOSTSimulationGenericObjectDS" includes="basic"/>
+
+    <BOTYPEFIELDS name="MaterialDomain" >
+      <FIELD name="HasCompositeIRPC" select="program[emxMaterialFlattening -method hasDomainString '${OBJECTID}' '${TYPE}' 'dsc_matref_rep_Composite']" 
+      	type="STRING,PARAMETRIC" sixw="ds6w:materialDomain" />
+	  <FIELD name="HasLEIRPC" select="program[emxMaterialFlattening -method hasDomainString '${OBJECTID}' '${TYPE}' 'dsc_matref_rep_Analysis']" 
+	  	type="STRING,PARAMETRIC" sixw="ds6w:materialDomain" />
+	  <FIELD name="HasRenderingIRPC" select="program[emxMaterialFlattening -method hasDomainString '${OBJECTID}' '${TYPE}' 'dsc_matref_rep_Rendering']" 
+	  	type="STRING,PARAMETRIC" sixw="ds6w:materialDomain" />
+	  <FIELD name="HasDraftingIRPC" select="program[emxMaterialFlattening -method hasDomainString '${OBJECTID}' '${TYPE}' 'dsc_matref_rep_Drafting']"
+	  	type="STRING,PARAMETRIC" sixw="ds6w:materialDomain" />
+	  <FIELD name="HasSimulationIRPC" select="program[emxMaterialFlattening -method hasDomainString '${OBJECTID}' '${TYPE}' 'dsc_matref_rep_SmaOptions']" 
+	  	type="STRING,PARAMETRIC" sixw="ds6w:materialDomain" />
+    </BOTYPEFIELDS>
+
+    <BOTYPE.EXTFIELDS name="CATMatReference" includes="basic,MaterialDomain,libraries,EXC_IPASSET_FIELDS,classificationAttributes"/>
+
+<BOTYPEFIELDS name="VPMRootandLeaffct">
+  <FIELD name="ToHiddenfct" select="to[PLMCoreInstance]" type="BOOLEAN,PARAMETRIC" hidden="true" />
+  <FIELD name="FromHiddenfct" select="from[PLMCoreInstance]" type="BOOLEAN,PARAMETRIC" hidden="true" />
+  <FIELD name="ContentStructurefct" select="CONST:" type="STRING,PARAMETRIC" sixw="ds6w:contentStructure" />
+</BOTYPEFIELDS>
+
+<BOTYPE.EXTFIELDS name="RFLPLMFunctionalAbstractReference" includes="basic,VPMRootandLeaffct,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+
+<BOTYPEFIELDS name="VPMRootandLeaflog">
+  <FIELD name="ToHiddenlog" select="to[PLMCoreInstance]" type="BOOLEAN,PARAMETRIC" hidden="true" />
+  <FIELD name="FromHiddenlog" select="from[PLMCoreInstance]" type="BOOLEAN,PARAMETRIC" hidden="true" />
+  <FIELD name="ContentStructurelog" select="CONST:" type="STRING,PARAMETRIC" sixw="ds6w:contentStructure" />
+</BOTYPEFIELDS>
+
+<BOTYPE.EXTFIELDS name="RFLVPMLogicalAbstractReference" includes="basic,VPMRootandLeaflog,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+
+<BOTYPEFIELDS name="VPMRootandLeafsystyp">
+  <FIELD name="ToHiddensystyp" select="to[PLMCoreInstance]" type="BOOLEAN,PARAMETRIC" hidden="true" />
+  <FIELD name="FromHiddensystyp" select="from[PLMCoreInstance]" type="BOOLEAN,PARAMETRIC" hidden="true" />
+  <FIELD name="ContentStructuresystyp" select="CONST:" type="STRING,PARAMETRIC" sixw="ds6w:contentStructure" />
+</BOTYPEFIELDS>
+
+<BOTYPE.EXTFIELDS name="RFLVPMSystemTypeReference" includes="basic,VPMRootandLeafsystyp,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+
+<BOTYPEFIELDS name="VPMRootandLeaf">
+  <FIELD name="RootHidden" select="to[PLMCoreInstance]" type="BOOLEAN,PARAMETRIC" hidden="true" />
+  <FIELD name="LeafHidden" select="from[PLMCoreInstance]" type="BOOLEAN,PARAMETRIC" hidden="true" />
+  <FIELD name="ContentStructureprd" select="CONST:" type="STRING,PARAMETRIC" sixw="ds6w:contentStructure" />
+</BOTYPEFIELDS>
+<BOTYPEFIELDS name="VPMCadOrigin">
+  <FIELD name="CadOriginprd" select="evaluate[if( not (attribute[XCADExtension.V_CADOrigin]  != '' )) then ('3DEXPERIENCE') else attribute[XCADExtension.V_CADOrigin]  ]" type="STRING,PARAMETRIC" sixw="ds6w:cadMaster" />
+</BOTYPEFIELDS>
+<BOTYPEFIELDS name="VPMCadFileOrigin">
+  <FIELD name="CadFileOriginprd" select="evaluate[if( not (attribute[XCADRepExtension.V_CADFileOrigin]  != '' )) then ('3DEXPERIENCE') else attribute[XCADRepExtension.V_CADFileOrigin]  ]" type="STRING,PARAMETRIC" sixw="ds6w:cadMaster" />
+</BOTYPEFIELDS>
+
+<BOTYPEFIELDS name="VPMPrd2ddefaultthb">
+  <FIELD name="icon_2ddefaultthb.subtype" key="2" select="evaluate[if (attribute[XCADEmbeddedCmp.V_IsEmbeddedComponent] == 'TRUE' AND attribute[PLMEntity.V_usage] == '3DPart') then ('EmbeddedComponent.3DPart') else if (attribute[XCADEmbeddedCmp.V_IsEmbeddedComponent] == 'TRUE') then ('EmbeddedComponent') else if (attribute[PLMEntity.V_usage] == '3DPart') then ('3DPart') else ('')]" type="STRING" />
+</BOTYPEFIELDS>
+
+    <BOTYPE.EXTFIELDS name="DELFmiFunctionReference" includes="basic,VPMRootandLeaf,libraries,EXC_IPASSET_FIELDS,classificationAttributes"/>
+    <BOTYPE.EXTFIELDS name="DELLmiProductionSystemReference" includes="basic,VPMRootandLeaf,libraries,EXC_IPASSET_FIELDS,classificationAttributes"/>
+    <BOTYPE.EXTFIELDS name="DELLmiOperationReference" includes="basic,VPMRootandLeaf,libraries,EXC_IPASSET_FIELDS,classificationAttributes"/>
+    <BOTYPE.EXTFIELDS name="DELTimeAnalysisRepReference" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes"/>
+
+<BOTYPE.EXTFIELDS name="VPMReference" includes="basic,VPMRootandLeaf,VPMCadOrigin,VPMPrd2ddefaultthb,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="VPMRepReference" includes="basic,VPMCadFileOrigin,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+
+    <BOTYPEFIELDS name="globalTypeConstantDoc">
+      <FIELD name="globalTypeConstantDoc" select="CONST:ds6w:Document" type="STRING" sixw="ds6w:globalType" ramBased="true"/>
+    </BOTYPEFIELDS>
+    <BOTYPEFIELDS name="globalTypeConstantPart">
+      <FIELD name="globalTypeConstantPart" select="CONST:ds6w:Part" type="STRING" sixw="ds6w:globalType" ramBased="true"/>
+    </BOTYPEFIELDS>
+    <RELATIONSHIPTYPEFIELDS name="globalTypeConstantInst">
+      <FIELD name="globalTypeConstantInst" select="CONST:ds6w:Instance" type="STRING" sixw="ds6w:globalType" ramBased="true"/>
+    </RELATIONSHIPTYPEFIELDS>
+    <BOTYPE.EXTFIELDS name="VPMRepReference" includes="globalTypeConstantDoc" />
+    <BOTYPE.EXTFIELDS name="VPMReference" includes="globalTypeConstantPart" />
+    <RELATIONSHIPTYPE.EXTFIELDS name="VPMInstance" includes="globalTypeConstantInst" />
+
+	<!-- XPDM -->
+	<BOTYPEFIELDS name="globalConstXPDM">
+      <FIELD name="dataSource" select="CONST:" type="STRING,PARAMETRIC" sixw="ds6w:dataSource" />
+	  <FIELD name="sdccode" key="ds6w.datasource" onlyForSXI="TRUE" type="STRING" select="CONST:ds6w.dataSource" hidden="true"  />
+    </BOTYPEFIELDS>
+
+	<BOTYPE.EXTFIELDS name="VPMReference" includes="globalConstXPDM" />
+	<BOTYPE.EXTFIELDS name="CATMatReference " includes="globalConstXPDM" />
+	
+	<!-- IR-545302 -->
+	<BOTYPE.EXTFIELDS name="VPMReference" includes="workspacesField" />
+	
+<!-- k8t-07/12/2016: change & add additional metas for R419 QKM webapp, updated for R421, CONST: computed by custom aggregation processors -->
+	<BOTYPE.EXTFIELDS name="PLMAssessmentResultRepReference" includes="basic,KWERelationModel" />
+    <BOTYPEFIELDS name="KWERelationModel">
+      <FIELD name="bo.plmassessmentresultrepreference.contextphysicalid" select="from[PLMCoreReferencetoPLMAssessmentResultRepReference].to.physicalid" type="STRING" />
+      <FIELD name="bo.plmassessmentresultrepreference.profilephysicalid" select="from[PLMAssessmentResultRepReferencetoSource].to.physicalid" type="STRING" />
+      <FIELD name="bo.plmassessmentresultrepreference.profilename" select="CONST:" type="STRING" />
+      <FIELD name="bo.plmassessmentresultrepreference.checkname" select="CONST:" type="STRING" />
+      <FIELD name="bo.plmassessmentresultrepreference.checkweight" select="CONST:" type="STRING" />
+      <FIELD name="bo.plmassessmentresultrepreference.qualityrangename" select="CONST:" type="STRING" />
+      <FIELD name="bo.plmassessmentresultrepreference.qualityrangemax" select="CONST:" type="STRING" />
+      <FIELD name="bo.plmassessmentresultrepreference.qualityrangemin" select="CONST:" type="STRING" />
+      <FIELD name="bo.plmassessmentresultrepreference.qualityrangeicon" select="CONST:" type="STRING" />
+      <FIELD name="bo.plmassessmentresultrepreference.qualityvariationbyprofileandcontext" select="CONST:" type="STRING" />
+      <FIELD name="bo.plmassessmentresultrepreference.islastbyprofileandcontext" select="CONST:" type="STRING" />
+	  <FIELD name="sdccode" key="qkm" onlyForSXI="TRUE" type="STRING" select="CONST:qkm" hidden="true"/>
+    </BOTYPEFIELDS>
+
+<!-- SDM-09/16/2015: Include fields declared in config.xml for the 2 VPM types below -->
+<BOTYPE.EXTFIELDS name="PLMDesignAction" includes="basic,change_management,ECHDeliverable"/>
+<BOTYPE.EXTFIELDS name="PLMManufacturingAction" includes="basic,change_management,ECHDeliverable"/>
+
+    <BOTYPEFIELDS name="ThumbnailHolder">
+	  <FIELD key="cba" name="sdc.2dthb.name" onlyForSDC="true" type="STRING" select="format[1].file.name" />
+	  <FIELD key="cba" name="sdc.2dthb.format" onlyForSDC="true" type="STRING" select="CONST:1" />
+	</BOTYPEFIELDS>
+	<BOTYPE.EXTFIELDS name="PLMDMTDocument" includes="ThumbnailHolder" />
+
+<!-- VDU-04/20/2017: new attribut on PLMEntity dedicated to Engineering Workspace application - specified under FUN063812 - this snippet of config.xml should be kept consitent with the declarative done in config_CV_Core.xml under the BOTYPEFIELDS named flattened.workspace.name.on.PLMEntity -->
+<BOTYPEFIELDS name="default.ds6w.engineering.workspace.on.PLMEntity">
+	<FIELD name="Engineering Workspace" type="STRING,PARAMETRIC" sixw="ds6w:engineeringWorkspace" select="CONST:" />
+</BOTYPEFIELDS>
+<BOTYPE.EXTFIELDS name="PLMEntity" includes="default.ds6w.engineering.workspace.on.PLMEntity" />
+
+  <!-- XCADDependencyLink -->
+  <RELATIONSHIPTYPE.EXTFIELDS name="XCADBaseDependency" includes="ro.navigation"/>
+  <RELATIONSHIPTYPE.EXTFIELDS name="XCADIsItemOf" includes="ro.navigation"/>
+  
+<!--XCADNonPSBaseRepReference-->
+<BOTYPEFIELDS name="XCADNonPSIconSubtypeFields">
+	<FIELD name="icon_2ddefaultthb.subtype" key="3" select="attribute[XCADNonPSBaseRepReference.V_CADObjectType]" type="STRING" />
+</BOTYPEFIELDS>
+
+<BOTYPE.EXTFIELDS name="XCADNonPSBaseRepReference" includes="basic,VPMCadFileOrigin,libraries,EXC_IPASSET_FIELDS,XCADNonPSIconSubtypeFields,classificationAttributes " />
+
+<!--XCADModelRepReference-->
+<BOTYPEFIELDS name="XCADModelSubtypeFields">
+	<FIELD name="icon_2ddefaultthb.subtype" key="4" select="attribute[XCADModelRepReference.V_CADFileType]" type="STRING" />
+</BOTYPEFIELDS>
+
+<BOTYPE.EXTFIELDS name="XCADModelRepReference" includes="basic,VPMCadFileOrigin,libraries,EXC_IPASSET_FIELDS,XCADModelSubtypeFields,classificationAttributes" />
+
+<!-- Connected Software -->
+<BOTYPEFIELDS name="XSFConnection" application="XSF">
+    <FIELD name="SCMInRepositoryName" select="from[SCMInRepository].to.name" sixw="ds6w:kind" type="STRING,PARAMETRIC"/>
+    <FIELD name="SCMInRepositoryAddress" select="from[SCMInRepository].attribute[SCMInRepository.address]" type="STRING" sixw="ds6w:scmConnectionSubPath"/>
+    <FIELD name="SCMInRepositoryVersion" select="from[SCMInRepository].attribute[SCMInRepository.selector]" type="STRING" sixw="ds6w:scmConnectionSelector"/>
+    <FIELD name="SCMInRepositoryPath" select="from[SCMInRepository].to.attribute[SCMRepository.path]" type="STRING" sixw="ds6w:scmConnectionRootPath"/>
+</BOTYPEFIELDS>
+<BOTYPE.EXTFIELDS name="PLMReference" includes="XSFConnection" />
+
+<!-- Classification attributes XJT / IJE / MBV -->
+
+<!-- ManufacturerEquivalentReference specific starts-->
+<BOTYPEFIELDS name="bo.ManufacturerEquivalentItemExtension_specific" >
+              <FIELD name="bo.ManufacturerEquivalentItemExtension_specific.ManufacturerName" select="evaluate[if( attribute[ManufacturerEquivalentItemExtension.ManufacturerTitle]  != '' ) then attribute[ManufacturerEquivalentItemExtension.ManufacturerTitle] else attribute[ManufacturerEquivalentItemExtension.ManufacturerName]  ]" type="STRING,PARAMETRIC" sixw="ds6w:manufacturer" />
+   </BOTYPEFIELDS>
+  <BOTYPE.EXTFIELDS name="VPMReference" includes="bo.ManufacturerEquivalentItemExtension_specific" />
+<!-- ManufacturerEquivalentReference specific Ends AA1 / R7L / MYA6 -->
+
+<!-- Reference - already defined abstract class filtered -->
+<BOTYPE.EXTFIELDS name="AecAlignmentType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="AecArchitecturalElementType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="AecBeamType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="AecCableType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="AecChimneyType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="AecColumnType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="AecCoveringType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="AecCurtainWallType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="AecDiscreteAccessoryType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="AecDoorType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="AecElementAssemblyType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="AecElementComponentType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="AecElementType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="AecFootingType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="AecFurnishingElementType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="AecMechanicalFastenerAnchorType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="AecMechanicalFastenerCouplerType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="AecMechanicalFastenerType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="AecMemberType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="AecObjectType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="AecOtherArchitecturalElementType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="AecOtherStructuralElementType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="AecPileType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="AecPlateType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="AecRailingType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="AecRampFlightType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="AecRampType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="AecReinforcingBarType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="AecReinforcingElementType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="AecReinforcingMeshType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="AecRoofType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="AecShadingDeviceType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="AecSlabType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="AecStairFlightType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="AecStairType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="AecStiffenerType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="AecStructuralElementType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="AecTendonAnchorType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="AecTendonType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="AecTransportElementType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="AecWallType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="AecWindowType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="Behavior_Continuous" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="Behavior_Continuous_BehLibRef" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="Behavior_Discrete" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="Behavior_Discrete_BehLibRef" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="Behavior_External" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="Behavior_External_BehLibRef" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="Behavior_Safety" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="Behavior_Safety_BehLibRef" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="BridgeAbutmentType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="BridgeAnchorBlockType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="BridgeArchSegmentType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="BridgeArchType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="BridgeArchitecturalElementType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="BridgeCableType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="BridgeCrossheadType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="BridgeDeckSegmentType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="BridgeDeckType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="BridgeHangerBeltType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="BridgeHangerCableType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="BridgeOtherArchitecturalElementType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="BridgeOtherSpatialStructureElementType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="BridgeOtherStructuralElementType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="BridgePartType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="BridgePierSegmentType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="BridgePierType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="BridgeSpanType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="BridgeSpatialStructureElementType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="BridgeStayBeltType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="BridgeStayCableType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="BridgeStructuralElementType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="BridgeSuspensionCableType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="BridgeSuspensionSystemType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="BridgeTowerSegmentType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="BridgeTowerType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="BridgeType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="BridgeWayType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="BuildingSpaceType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="BuildingSpatialStructureElementType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="CATReportReference" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="CATSysBehaviorLibReference" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="CivilEngineeringElementType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="CivilEngineeringSpatialStructureElementType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="DIFAbstractView" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="DIFLayout" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="DIFSheet" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="DIFView" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="DMUValidationValidation" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="DMUValidationValidationAbstract" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="DamElementType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="DamOtherElementType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="DamOtherSpatialStructureElementType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="DamPartType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="DamSpatialStructureElementType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="DamType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="EEClientServerInterface" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="Ens_CustomerTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="Ens_EndStyleTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="Ens_FluidCategoryTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="Ens_FluidTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="Ens_InsulationCustomerAdditionalSpec" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="Ens_InsulationSpecification" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="Ens_InsulationTypeTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="Ens_LogicalPartSubTypeTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="Ens_MappingPartSubTypeTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="Ens_MaterialCategoryTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="Ens_MaterialTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="Ens_PartSubTypeTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="Ens_StandardTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="EquipmentCustomerAdditionalSpec" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="EquipmentFilter" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="EquipmentSpecification" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="FailureModesEffectsAnalysis" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="FallibleReference" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="FaultTreeElement" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="HazardousEvent" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="HvaAutomatedOffsetTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="HvaAutomaticPartRuleTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="HvaAvailableBendAngleDuctTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="HvaBendDiameterTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="HvaBranchingRuleTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="HvaCompatibilityRuleTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="HvaCustomerAdditionalSpec" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="HvaCustomerAdvancedTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="HvaDirectionalLengthTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="HvaDuctReferenceDimensionTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="HvaEquivalentDiameterTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="HvaFlexDuctFabEndStyleTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="HvaFlexibleDuctFilter" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="HvaHeightTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="HvaInsulationDimensionTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="HvaInsulationFilter" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="HvaMinimumStraightLengthTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="HvaNominalBendRadiusTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="HvaPartFilter" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="HvaReducerRuleTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="HvaRigidDuctFabEndStyleTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="HvaRigidDuctFilter" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="HvaSpecification" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="HvaSpoolRuleTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="HvaTurnRuleTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="HvaWidthTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="ObjectTypeReference" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="PLMPCBLogicalComponent" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="PLMPIMMetricReference" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="PLMProfile" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="PLMProfileCheckInstance" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="PLMProfileProcessingGroup" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="PLMStopCondition" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="PipAutomatedOffsetTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="PipAutomaticPartRuleTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="PipAvailableBendAngleTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="PipBendDiameterTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="PipBendingRuleTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="PipBranchingRuleTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="PipCompatibilityRuleTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="PipConnectionTechnoFilter" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="PipConnectionTechnoTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="PipCustomerAdditionalSpec" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="PipCustomerAdvancedTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="PipDirectionalLengthTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="PipFlexPipeFabEndStyleTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="PipFlexiblePipeFilter" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="PipInsulationDimensionTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="PipInsulationFilter" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="PipMinimumStraightLengthTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="PipNominalBendRadiusTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="PipNominalSizeTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="PipOutsideDiameterTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="PipPartFilter" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="PipRatingTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="PipReducerRuleTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="PipReferenceDimensionTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="PipRigidPipeFabEndStyleTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="PipRigidPipeFilter" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="PipSpecification" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="PipSpoolRuleTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="PipTurnRuleTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="RailwayElementType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="RailwayOtherElementType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="RailwayOtherSpatialStructureElementType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="RailwayPartType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="RailwaySpatialStructureElementType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="RailwayStretchType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="RailwaySwitchType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="RailwayTrackPanelType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="RailwayTrackRailType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="RailwayTrackSleeperType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="RailwayTrackTurnoutType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="RailwayType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="RcwAutomatedOffsetTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="RcwAvailableBendAngleTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="RcwBranchingRuleTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="RcwCompatibilityRuleTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="RcwCustomerAdditionalSpec" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="RcwCustomerAdvancedTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="RcwDirectionalLengthTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="RcwGapTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="RcwHeightTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="RcwMinimumStraightLengthTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="RcwNominalSizeTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="RcwPartFilter" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="RcwRealisationTypeTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="RcwReducerRuleTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="RcwSpecification" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="RcwSpoolRuleTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="RcwTrayFilter" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="RcwTrayReferenceDimensionTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="RcwTurnRuleTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="RcwWidthTable" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="ReliabilitySource" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="Report Model" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="RoadElementType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="RoadInterchangeType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="RoadOtherElementType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="RoadOtherSpatialStructureElementType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="RoadPartType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="RoadRampType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="RoadSpatialStructureElementType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="RoadStretchType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="RoadType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="SIMItfSimulation" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="SafetyAssessment" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="SafetyCase" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="SubgradeElementType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="SubgradeExcavationWorksType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="SubgradeFillingWorksType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="SubgradeOtherElementType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="SubgradeOtherSpatialStructureElementType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="SubgradePartType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="SubgradeRetainingElementType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="SubgradeRetainingStructureType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="SubgradeSpatialStructureElementType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="SubgradeStockpileType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="SubgradeType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="TestBehavior_BehLibRef" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="TunnelBayType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="TunnelElementType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="TunnelFullTunnelSpaceType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="TunnelInterchangeType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="TunnelOtherElementType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="TunnelOtherSpaceType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="TunnelOtherSpatialStructureElementType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="TunnelPartType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="TunnelRingSegmentType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="TunnelRingType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="TunnelSpaceType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="TunnelSpatialStructureElementType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="TunnelStretchType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="TunnelType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+
+<!-- RepReference  - already defined VPMRepReference abstract class filtered -->
+<BOTYPE.EXTFIELDS name="PLMTemplateRepReference" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="Picture" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="Picture_Log" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="Schema_Snapshot" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="Schema_Snapshot_Log" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="FailureModesEffectsAnalysisRep" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="FaultTreeElementGraphicalRep" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="ReliabilityFormulaSetRep" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="SafetyAssessmentRep" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="GeolocationCoordinateReferenceSystem" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="KnowledgewareObjectType" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="ObjectTypeRepReference" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="FunctionalSurfaceTemplate" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="MechanicalInterfaceTemplate" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="DIFShapeRep" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="DIFStandardRep" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+<BOTYPE.EXTFIELDS name="DIFSymbolRefStream" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes" />
+
+<!--IP Classification FUN094495 -->
+<BOTYPE.EXTFIELDS name="LibraryFeaturePort" includes="classificationAttributes,FTAAttribute,libraries" />
+
+<!-- Libray -->
+<BOTYPE.EXTFIELDS name="CATComponentsFamilyGenericConnection" includes="sr.projection.bo" />
+<BOTYPE.EXTFIELDS name="CATComponentsFamilyProxyToElement" includes="basic,libraries,EXC_IPASSET_FIELDS,classificationAttributes,sr.projection.bo,cv.thumb.fieldcreation" />
+
+<!-- IR-775238-3DEXPERIENCER2021x: Ordered RGB color -->
+<BOTYPEFIELDS name="bo.PGPColorExtension.asString" >
+	<FIELD name="bo.PGPColorExtension.V_PGP_ColorRGB.asString" select="CONST:" type="STRING" hidden="true" fts="false" />
+</BOTYPEFIELDS>
+<BOTYPE.EXTFIELDS name="VPMReference" includes="bo.PGPColorExtension.asString" />
+<BOTYPE.EXTFIELDS name="VPMRepReference" includes="bo.PGPColorExtension.asString" />
+
+<RELATIONSHIPTYPEFIELDS name="ro.PGPColorExtension.asString" >
+   <FIELD name="ro.PGPColorExtension.V_PGP_ColorRGB.asString" select="CONST:" type="STRING" hidden="true" fts="false" />
+</RELATIONSHIPTYPEFIELDS>
+<RELATIONSHIPTYPE.EXTFIELDS name="VPMInstance" includes="ro.PGPColorExtension.asString" />
+<RELATIONSHIPTYPE.EXTFIELDS name="VPMRepInstance" includes="ro.PGPColorExtension.asString" />
+
+<!-- ProposedSolution SY6/OB -->
+<RELATIONSHIPTYPE.EXTFIELDS name="ProposedSolution" includes="ro.navigation"/>    
+
+
+<BOTYPEFIELDS name="DesignSightComputedTags">
+      <FIELD name="bo.DesignSight.analysisCaseTypes" select="CONST:" sixw="ds6w:typeCategory" type="STRING,PARAMETRIC" multiValued="TRUE"/>
+      <FIELD name="bo.DesignSight.analysisCaseSubTypes" select="CONST:" sixw="dssimul:simulationSubType" type="STRING,PARAMETRIC" multiValued="TRUE"/>
+      <FIELD name="bo.DesignSight.simulationOrigin" select="CONST:" sixw="dssimul:simulationOrigin" type="STRING,PARAMETRIC" multiValued="FALSE"/>
+      <FIELD key="bo.DesignSight" name="sdccode" onlyForSXI="TRUE" select="CONST:designSightAnalysisCaseTypes" type="STRING"/>
+</BOTYPEFIELDS>
+
+<BOTYPE.EXTFIELDS name="DesignSight" includes="DesignSightComputedTags" />
+
+<!-- FUN121548 -->
+<BOTYPEFIELDS name="bo.Media3DExperience.consolidation">
+	<FIELD name="bo.Media3DExperience.consolidation.RealtimeExperience" select="CONST:" type="STRING,PARAMETRIC" sixw="ds6w:derivedFrom" />
+	<FIELD name="bo.Media3DExperience.consolidation.Product" select="CONST:" type="STRING,PARAMETRIC" sixw="ds6w:product" />
+	<FIELD name="bo.Media3DExperience.consolidation.ProductConfiguration" select="CONST:" type="STRING,PARAMETRIC" sixw="ds6w:model" />
+	<FIELD name="bo.Media3DExperience.consolidation.Ambience" select="CONST:" type="STRING,PARAMETRIC" sixw="ds6w:context" />
+	<FIELD name="bo.Media3DExperience.consolidation.RealtimeExperienceAuthoring" select="CONST:" type="STRING" sixw="ds6w:app" />
+	<FIELD name="bo.Media3DExperience.consolidation.MediaQuality" select="CONST:" type="STRING,PARAMETRIC" sixw="ds6w:renderQuality" />
+	<FIELD name="bo.Media3DExperience.consolidation.CameraFocalLength" select="CONST:" type="STRING,PARAMETRIC" sixw="ds6w:focalLength" />
+	<FIELD name="bo.Media3DExperience.consolidation.HasAlphaChannel" select="CONST:" type="BOOLEAN,PARAMETRIC" sixw="ds6w:hasAlphaChannel" />
+	<FIELD name="bo.Media3DExperience.consolidation.MediaResolution.X" select="CONST:" type="STRING,PARAMETRIC" sixw="ds6w:pixelXDimension" />
+	<FIELD name="bo.Media3DExperience.consolidation.MediaResolution.Y" select="CONST:" type="STRING,PARAMETRIC" sixw="ds6w:pixelYDimension" />
+	<FIELD hidden="true" key="ds6w.mediavideo3dexp" name="sdccode" onlyForSXI="TRUE" select="CONST:ds6w.mediavideo3dexp" type="STRING"/>
+</BOTYPEFIELDS>
+<BOTYPE.EXTFIELDS includes="bo.Media3DExperience.consolidation" name="Media3DExperience"/>
+<RELATIONSHIPTYPEFIELDS name="ro.browsingStructure" >
+   <FIELD key="ro.browsingStructure" name="sdccode" onlyForSXI="TRUE" select="CONST:terminology" type="STRING"/>
+   <FIELD name="BrowsingStructure1" select="CONST:" type="STRING,PARAMETRIC" sixw="ds6w:browsingStructure1" />
+   <FIELD name="BrowsingStructure2" select="CONST:" type="STRING,PARAMETRIC" sixw="ds6w:browsingStructure2" />
+   <FIELD name="BrowsingStructure3" select="CONST:" type="STRING,PARAMETRIC" sixw="ds6w:browsingStructure3" />
+   <FIELD name="BrowsingStructure4" select="CONST:" type="STRING,PARAMETRIC" sixw="ds6w:browsingStructure4" />
+   <FIELD name="BrowsingStructure5" select="CONST:" type="STRING,PARAMETRIC" sixw="ds6w:browsingStructure5" />
+   <FIELD name="BrowsingStructure6" select="CONST:" type="STRING,PARAMETRIC" sixw="ds6w:browsingStructure6" />
+   <FIELD name="BrowsingStructure7" select="CONST:" type="STRING,PARAMETRIC" sixw="ds6w:browsingStructure7" />
+   <FIELD name="BrowsingStructure8" select="CONST:" type="STRING,PARAMETRIC" sixw="ds6w:browsingStructure8" />
+   <FIELD name="BrowsingStructure9" select="CONST:" type="STRING,PARAMETRIC" sixw="ds6w:browsingStructure9" />
+   <FIELD name="BrowsingStructure10" select="CONST:" type="STRING,PARAMETRIC" sixw="ds6w:browsingStructure10" />
+   <FIELD name="BrowsingStructure11" select="CONST:" type="STRING,PARAMETRIC" sixw="ds6w:browsingStructure11" />
+   <FIELD name="BrowsingStructure12" select="CONST:" type="STRING,PARAMETRIC" sixw="ds6w:browsingStructure12" />
+   <FIELD name="BrowsingStructure13" select="CONST:" type="STRING,PARAMETRIC" sixw="ds6w:browsingStructure13" />
+   <FIELD name="BrowsingStructure14" select="CONST:" type="STRING,PARAMETRIC" sixw="ds6w:browsingStructure14" />
+   <FIELD name="BrowsingStructure15" select="CONST:" type="STRING,PARAMETRIC" sixw="ds6w:browsingStructure15" />
+   <FIELD name="BrowsingStructure16" select="CONST:" type="STRING,PARAMETRIC" sixw="ds6w:browsingStructure16" />
+   <FIELD name="BrowsingStructure17" select="CONST:" type="STRING,PARAMETRIC" sixw="ds6w:browsingStructure17" />
+   <FIELD name="BrowsingStructure18" select="CONST:" type="STRING,PARAMETRIC" sixw="ds6w:browsingStructure18" />
+   <FIELD name="BrowsingStructure19" select="CONST:" type="STRING,PARAMETRIC" sixw="ds6w:browsingStructure19" />
+   <FIELD name="BrowsingStructure20" select="CONST:" type="STRING,PARAMETRIC" sixw="ds6w:browsingStructure20" />
+</RELATIONSHIPTYPEFIELDS>
+<RELATIONSHIPTYPE.EXTFIELDS name="VPMInstance" includes="ro.browsingStructure" />
+
+

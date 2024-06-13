@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<derivedformatmanagement xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="DerivedFormatDeclarative.xsd">
+    <!-- first official version for R2023x Beta2 and R2022x FD04  -->
+	<converter name="Inventor" synchronous="true"  nlsFile="emxDerivedFormatManagementInventorStringResource" comment="conversion managed synchronously at save by Inventor PowerBy connector">
+      <datasources>
+		<datasource name="INVENTOR" >    
+			<source name="IPT" type ="IPart">  <!-- IPART here is a keyword specific to Inventor, look at this key in nlsFile file -->
+				<target name="preview"  inputStreamId="authoring" outputStreamId="PNG" />
+				<target name="dwf"      inputStreamId="authoring" outputStreamId="DWF" />
+				<target name="step203"  inputStreamId="authoring" outputStreamId="STEP_AP203"/>
+				<target name="step214"  inputStreamId="authoring" outputStreamId="STEP_AP214"/>
+				<target name="pdf"      inputStreamId="authoring" outputStreamId="PDF" />
+			</source>
+					
+			<source name="IDW,DWG" type ="Drawing">
+				<target name="preview"  inputStreamId="authoring" outputStreamId="PNG" />
+				<target name="dwf"      inputStreamId="authoring" outputStreamId="DWF" />
+				<target name="pdf"      inputStreamId="authoring" outputStreamId="PDF" />
+			</source>
+	
+			<events>       
+				<event name="onXCADSave" type="interactiveUpdate" />
+			</events>
+		</datasource>
+	  </datasources>
+	</converter>
+
+</derivedformatmanagement>

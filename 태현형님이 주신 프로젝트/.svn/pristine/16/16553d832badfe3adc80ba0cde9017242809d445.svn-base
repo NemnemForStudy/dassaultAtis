@@ -1,0 +1,12 @@
+m|DELWKOApp\DELWKOPropertiesModule.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.3.23049|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\DELWKOPropertiesModule\DELWKOPropertiesModule.js|1676691169|4396
+s|DELWKOApp\DELWKOPropertiesModule.mweb\src\DELWKOPropEditWidget.js|1668457774|454
+u|DELWKOApp\DELWKOPropertiesModule.mweb\src\DELWKOPropMainController.js|1673051352|1766
+u|DELWKOApp\DELWKOPropertiesModule.mweb\src\DELWKOPropWorkOrderFacet.js|1668620443|2701
+u|DELWKOApp\DELWKOPropertiesModule.mweb\src\DELWKOPropertiesModule.js|1675986143|10670
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

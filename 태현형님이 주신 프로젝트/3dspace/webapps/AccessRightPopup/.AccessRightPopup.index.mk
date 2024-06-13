@@ -1,0 +1,16 @@
+m|ENOCollaborativeServicesWebUI\AccessRightPopup.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.3.23044|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\AccessRightPopup\AccessRightPopup.css|1669240511|308
+s|ENOCollaborativeServicesWebUI\AccessRightPopup.mweb\src\AccessRightPopup.css|1597937266|546
+t|win_b64\webapps\AccessRightPopup\AccessRightPopup.html|1647691610|11486
+s|ENOCollaborativeServicesWebUI\AccessRightPopup.mweb\src\AccessRightPopup.html|1545402839|11486
+t|win_b64\webapps\AccessRightPopup\AccessRightPopup.js|1676326032|2260
+s|ENOCollaborativeServicesWebUI\AccessRightPopup.mweb\src\AccessRightPopup.js|1675884406|8169
+t|win_b64\webapps\AccessRightPopup\AccessRightPopupMultiSel.html|1647691610|7198
+s|ENOCollaborativeServicesWebUI\AccessRightPopup.mweb\src\AccessRightPopupMultiSel.html|1545402865|7198
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240
+u|win_b64\code\toolcmds\yuicompressor-2.4.9.bat|1647654585|205

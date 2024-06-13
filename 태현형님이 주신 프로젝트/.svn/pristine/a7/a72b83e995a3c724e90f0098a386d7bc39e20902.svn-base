@@ -1,0 +1,667 @@
+  <!-- CATMaterialRefDS -->
+  <RELATIONSHIPTYPE name="CATMatRefInstanceDS" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <RELATIONSHIPTYPE name="MaterialDomainInstanceDS" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="CATMatReferenceDS" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="MaterialDomainDS" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- CATMaterialRefElementDS -->
+  <BOTYPE name="CATMatRefElemConnectionDS" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- CATReportDS -->
+  <BOTYPE name="CATReportReferenceDS" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- CATSnapshotDS -->
+  <BOTYPE name="SnapshotReferenceDS" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DELFmiFunctionalModelExpoCnx1DS -->
+  <BOTYPE name="DELFmiProcessExpoCnxCustDS" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DELFmiFunctionalModelPrecCnx1DS -->
+  <BOTYPE name="DELFmiProcessPrecCnxCustDS" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DELFmiFunctionalModelPrereqCnx1DS -->
+  <BOTYPE name="DELFmiProcessPrereqCnxCustDS" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DELFmiProcessSample -->
+  <RELATIONSHIPTYPEFIELDS name="ro.DELFmiFunctionRepresentationInstanceSample" >
+    <FIELD name="ro.DELFmiFunctionRepresentationInstanceSample.V_ReviewStatus" select="attribute[DELFmiFunctionRepresentationInstanceSample.V_ReviewStatus]" type="BOOLEAN" sixw="ds6wg:DELFmiFunctionRepresentationInstanceSample.V_ReviewStatus" />
+  </RELATIONSHIPTYPEFIELDS>
+  <RELATIONSHIPTYPE name="DELFmiFunctionRepresentationInstanceSample" includes="ro.DELFmiFunctionRepresentationInstanceSample" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <RELATIONSHIPTYPEFIELDS name="ro.DELFmiProcessInstanceSample" >
+    <FIELD name="ro.DELFmiProcessInstanceSample.V_ProcessCategory" select="attribute[DELFmiProcessInstanceSample.V_ProcessCategory]" type="STRING" sixw="ds6wg:DELFmiProcessInstanceSample.V_ProcessCategory" />
+  </RELATIONSHIPTYPEFIELDS>
+  <RELATIONSHIPTYPE name="DELFmiProcessInstanceSample" includes="ro.DELFmiProcessInstanceSample" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPEFIELDS name="bo.DELFmiFunctionRepresentationReferenceSample" >
+    <FIELD name="bo.DELFmiFunctionRepresentationReferenceSample.V_CustomerIdentifier" select="attribute[DELFmiFunctionRepresentationReferenceSample.V_CustomerIdentifier]" type="STRING" sixw="ds6wg:DELFmiFunctionRepresentationReferenceSample.V_CustomerIdentifier" />
+    <FIELD name="bo.DELFmiFunctionRepresentationReferenceSample.V_ReviewStatus" select="attribute[DELFmiFunctionRepresentationReferenceSample.V_ReviewStatus]" type="BOOLEAN" sixw="ds6wg:DELFmiFunctionRepresentationReferenceSample.V_ReviewStatus" />
+  </BOTYPEFIELDS>
+  <BOTYPE name="DELFmiFunctionRepresentationReferenceSample" includes="bo.DELFmiFunctionRepresentationReferenceSample" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPEFIELDS name="bo.DELFmiProcessReferenceSample" >
+    <FIELD name="bo.DELFmiProcessReferenceSample.E_ServiceMakeBuyCodeOutsourceDecision" select="attribute[DELFmiProcessReferenceSample.E_ServiceMakeBuyCodeOutsourceDecision]" type="STRING" sixw="ds6wg:DELFmiProcessReferenceSample.E_ServiceMakeBuyCodeOutsourceDecision" />
+    <FIELD name="bo.DELFmiProcessReferenceSample.V_ProcessType" select="attribute[DELFmiProcessReferenceSample.V_ProcessType]" type="STRING" sixw="ds6wg:DELFmiProcessReferenceSample.V_ProcessType" />
+  </BOTYPEFIELDS>
+  <BOTYPE name="DELFmiProcessReferenceSample" includes="bo.DELFmiProcessReferenceSample" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DELLmiProductionBufferOperationDS -->
+  <RELATIONSHIPTYPE name="DELLmiBufferOperationInstanceCusto" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="DELLmiBufferOperationReferenceCusto" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DELLmiProductionCurveOperationDS -->
+  <RELATIONSHIPTYPE name="DELLmiCurveOperationInstanceCusto" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="DELLmiCurveOperationReferenceCusto" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DELLmiProductionExecBufferOperationDS -->
+  <RELATIONSHIPTYPE name="DELLmiBufferOperationInstCusto" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="DELLmiExecBufferOperationRefCusto" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DELLmiProductionExecCurveOperationDS -->
+  <RELATIONSHIPTYPE name="DELLmiExecCurveOperationInstCusto" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="DELLmiExecCurveOperationRefCusto" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DELLmiProductionExecGeneralOperationDS -->
+  <RELATIONSHIPTYPE name="DELLmiExecGeneralOperationInstCusto" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="DELLmiExecGeneralOperationRefCusto" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DELLmiProductionExecGeneralSystemDS -->
+  <RELATIONSHIPTYPE name="DELLmiExecGeneralSystemInstCusto" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="DELLmiExecGeneralSystemRefCusto" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DELLmiProductionExecHeaderOperationDS -->
+  <RELATIONSHIPTYPE name="DELLmiExecHeaderOperationInstCusto" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="DELLmiExecHeaderOperationRefCusto" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DELLmiProductionExecInterruptOperationDS -->
+  <RELATIONSHIPTYPE name="DELLmiExecInterruptOperationInstCusto" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="DELLmiExecInterruptOperationRefCusto" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DELLmiProductionExecLoadingOperationDS -->
+  <RELATIONSHIPTYPE name="DELLmiExecLoadingOperationInstCusto" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="DELLmiExecLoadingOperationRefCusto" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DELLmiProductionExecPickingOperationDS -->
+  <RELATIONSHIPTYPE name="DELLmiExecPickingOperationInstCusto" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="DELLmiExecPickingOperationRefCusto" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DELLmiProductionExecPunctualOperationDS -->
+  <RELATIONSHIPTYPE name="DELLmiExecPunctualOperationInstCusto" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="DELLmiExecPunctualOperationRefCusto" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DELLmiProductionExecRemoveMatOpDS -->
+  <RELATIONSHIPTYPE name="DELLmiExecRemoveMaterialOpInstCusto" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="DELLmiExecRemoveMaterialOpRefCusto" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DELLmiProductionExecSinkOperationDS -->
+  <RELATIONSHIPTYPE name="DELLmiExecSinkOperationInstCusto" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="DELLmiExecSinkOperationRefCusto" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DELLmiProductionExecSourceOperationDS -->
+  <RELATIONSHIPTYPE name="DELLmiExecSourceOperationInstCusto" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="DELLmiExecSourceOperationRefCusto" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DELLmiProductionExecStorageSystemDS -->
+  <RELATIONSHIPTYPE name="DELLmiExecStorageSystemInstCusto" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="DELLmiExecStorageSystemRefCusto" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DELLmiProductionExecTransferOperationDS -->
+  <RELATIONSHIPTYPE name="DELLmiExecTransferOperationInstCusto" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="DELLmiExecTransferOperationRefCusto" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DELLmiProductionExecTransferSystemDS -->
+  <RELATIONSHIPTYPE name="DELLmiExecTransferSystemInstCusto" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="DELLmiExecTransferSystemRefCusto" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DELLmiProductionExecTransfoSystemDS -->
+  <RELATIONSHIPTYPE name="DELLmiExecTransfoSystemInstCusto" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="DELLmiExecTransfoSystemRefCusto" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DELLmiProductionExecUnloadOperationDS -->
+  <RELATIONSHIPTYPE name="DELLmiExecUnloadOperationInstCusto" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="DELLmiExecUnloadOperationRefCusto" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DELLmiProductionGeneralOperationDS -->
+  <RELATIONSHIPTYPE name="DELLmiGeneralOperationInstanceCusto" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="DELLmiGeneralOperationReferenceCusto" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DELLmiProductionGeneralSystemDS -->
+  <RELATIONSHIPTYPE name="DELLmiGeneralSystemInstanceCusto" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="DELLmiGeneralSystemReferenceCusto" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DELLmiProductionHeaderOperationDS -->
+  <RELATIONSHIPTYPE name="DELLmiHeaderOperationInstanceCusto" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="DELLmiHeaderOperationReferenceCusto" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DELLmiProductionInterruptOperationDS -->
+  <RELATIONSHIPTYPE name="DELLmiInterruptOperationInstanceCusto" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="DELLmiInterruptOperationReferenceCusto" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DELLmiProductionLoadingOperationDS -->
+  <RELATIONSHIPTYPE name="DELLmiLoadingOperationInstanceCusto" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="DELLmiLoadingOperationReferenceCusto" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DELLmiProductionMaterialPathCnx1DS -->
+  <BOTYPE name="DELLmiMaterialPathCnxCustDS" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DELLmiProductionPickingOperationDS -->
+  <RELATIONSHIPTYPE name="DELLmiPickingOperationInstanceCusto" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="DELLmiPickingOperationReferenceCusto" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DELLmiProductionPlanDS -->
+  <BOTYPE name="DELLmiProductionPlanCusto" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DELLmiProductionPlugDS -->
+  <RELATIONSHIPTYPE name="DELLmiProductionPlugInstanceCusto" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="DELLmiProductionPlugReferenceCusto" inheritfields="true" active="true" searchable="false" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DELLmiProductionPunctualOperationDS -->
+  <RELATIONSHIPTYPE name="DELLmiPunctualOperationInstanceCusto" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="DELLmiPunctualOperationReferenceCusto" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DELLmiProductionRemoveMaterialOpDS -->
+  <RELATIONSHIPTYPE name="DELLmiRemoveMaterialOperationInstanceCusto" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="DELLmiRemoveMaterialOperationReferenceCusto" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DELLmiProductionShiftModelDS -->
+  <RELATIONSHIPTYPE name="DELLmiProductionShiftModelInstanceCusto" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="DELLmiProductionShiftModelReferenceCusto" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DELLmiProductionSinkOperationDS -->
+  <RELATIONSHIPTYPE name="DELLmiSinkOperationInstanceCusto" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="DELLmiSinkOperationReferenceCusto" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DELLmiProductionSourceOperationDS -->
+  <RELATIONSHIPTYPE name="DELLmiSourceOperationInstanceCusto" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="DELLmiSourceOperationReferenceCusto" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DELLmiProductionStorageSystemDS -->
+  <RELATIONSHIPTYPE name="DELLmiStorageSystemInstanceCusto" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="DELLmiStorageSystemReferenceCusto" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DELLmiProductionTransferOperationDS -->
+  <RELATIONSHIPTYPE name="DELLmiTransferOperationInstanceCusto" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="DELLmiTransferOperationReferenceCusto" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DELLmiProductionTransferSystemDS -->
+  <RELATIONSHIPTYPE name="DELLmiTransferSystemInstanceCusto" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="DELLmiTransferSystemReferenceCusto" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DELLmiProductionTransformationSystemDS -->
+  <RELATIONSHIPTYPE name="DELLmiTransformationSystemInstanceCusto" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="DELLmiTransformationSystemReferenceCusto" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DELLmiProductionUnloadingOperationDS -->
+  <RELATIONSHIPTYPE name="DELLmiUnloadingOperationInstanceCusto" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="DELLmiUnloadingOperationReferenceCusto" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DELLmiProductionWorkplanSystemDS -->
+  <RELATIONSHIPTYPE name="DELLmiWorkPlanSystemInstanceCusto" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="DELLmiWorkPlanSystemReferenceCusto" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DELLmiWorkOrderDS -->
+  <RELATIONSHIPTYPE name="DELLmiWorkOrderInstanceCusto" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="DELLmiWorkOrderReferenceCusto" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DELTimeAnalysisModelCusto -->
+  <RELATIONSHIPTYPE name="DELTimeAnalysisRepInstanceCusto" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="DELTimeAnalysisRepReferenceCusto" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DELWkiAlertDS -->
+  <RELATIONSHIPTYPE name="DELWkiAlertInstanceCusto" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="DELWkiAlertReferenceCusto" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DELWkiDataCollectDS -->
+  <RELATIONSHIPTYPE name="DELWkiDataCollectInstanceCusto" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="DELWkiDataCollectReferenceCusto" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DELWkiExecAlertDS -->
+  <RELATIONSHIPTYPE name="DELWkiExecAlertInstanceCusto" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="DELWkiExecAlertReferenceCusto" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DELWkiExecDataCollectDS -->
+  <RELATIONSHIPTYPE name="DELWkiExecDataCollectInstanceCusto" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="DELWkiExecDataCollectReferenceCusto" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DELWkiExecInstructionDS -->
+  <RELATIONSHIPTYPE name="DELWkiExecInstructionInstanceCusto" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="DELWkiExecInstructionReferenceCusto" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DELWkiExecSignOffDS -->
+  <RELATIONSHIPTYPE name="DELWkiExecSignOffInstanceCusto" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="DELWkiExecSignOffReferenceCusto" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DELWkiInstructionDS -->
+  <RELATIONSHIPTYPE name="DELWkiInstructionInstanceCusto" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="DELWkiInstructionReferenceCusto" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DELWkiSignOffDS -->
+  <RELATIONSHIPTYPE name="DELWkiSignOffInstanceCusto" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="DELWkiSignOffReferenceCusto" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DFTSheetDS -->
+  <RELATIONSHIPTYPE name="DFTSheetInstanceDS" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="DFTSheetDS" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DIFModeler01DS -->
+  <BOTYPE name="DIFLayoutDS" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DIFModeler02DS -->
+  <RELATIONSHIPTYPE name="DIFSheetInstanceDS" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="DIFSheetDS" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DIFModeler03DS -->
+  <RELATIONSHIPTYPE name="DIFViewInstanceDS" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="DIFViewDS" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DIFStandardDS -->
+  <BOTYPE name="DIFStandardRepDS" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DMTDocumentDS -->
+  <BOTYPEFIELDS name="bo.PLMDMT_DocCustom" >
+    <FIELD name="bo.PLMDMT_DocCustom.V_DocumentName" select="attribute[PLMDMT_DocCustom.V_DocumentName]" type="STRING" sixw="ds6wg:PLMDMT_DocCustom.V_DocumentName" />
+  </BOTYPEFIELDS>
+  <BOTYPE name="PLMDMT_DocCustom" includes="bo.PLMDMT_DocCustom" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DMUValidationDS -->
+  <BOTYPEFIELDS name="bo.DMUValidationCheckDS" >
+    <FIELD name="bo.DMUValidationCheckDS.V_Validation_Check_Priority" select="attribute[DMUValidationCheckDS.V_Validation_Check_Priority]" type="NUM" sixw="ds6wg:DMUValidationCheckDS.V_Validation_Check_Priority" />
+  </BOTYPEFIELDS>
+  <BOTYPE name="DMUValidationCheckDS" includes="bo.DMUValidationCheckDS" inheritfields="true" active="true" searchable="false" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPEFIELDS name="bo.DMUValidationExposedPresentationDS" >
+    <FIELD name="bo.DMUValidationExposedPresentationDS.V_Validation_Presentation_Priority" select="attribute[DMUValidationExposedPresentationDS.V_Validation_Presentation_Priority]" type="NUM" sixw="ds6wg:DMUValidationExposedPresentationDS.V_Validation_Presentation_Priority" />
+  </BOTYPEFIELDS>
+  <BOTYPE name="DMUValidationExposedPresentationDS" includes="bo.DMUValidationExposedPresentationDS" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPEFIELDS name="bo.DMUValidationValidationDS" >
+    <FIELD name="bo.DMUValidationValidationDS.V_Validation_Archived" select="attribute[DMUValidationValidationDS.V_Validation_Archived]" type="BOOLEAN" sixw="ds6wg:DMUValidationValidationDS.V_Validation_Archived" />
+  </BOTYPEFIELDS>
+  <BOTYPE name="DMUValidationValidationDS" includes="bo.DMUValidationValidationDS" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DMUValidationReviewDS -->
+  <RELATIONSHIPTYPE name="DMUValidationReviewInstanceDS" inheritfields="true" active="true" searchable="false" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="DMUValidationReviewReferenceDS" inheritfields="true" active="true" searchable="false" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DesignActionDS -->
+  <RELATIONSHIPTYPE name="PLMDesignChildActionCusto" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="PLMDesignActionCusto" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- DocumentationActionDS -->
+  <RELATIONSHIPTYPE name="PLMDocChildActionCusto" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="PLMDocActionCusto" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- EmbeddedCommunications -->
+  <RELATIONSHIPTYPE name="EEGroupElement" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="EEMatrixRepresentation" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPEFIELDS name="bo.EEMatrix" >
+    <FIELD name="bo.EEMatrix.V_EE_ExtProtocol" select="attribute[EEMatrix.V_EE_ExtProtocol]" type="STRING" sixw="ds6wg:EEMatrix.V_EE_ExtProtocol" />
+    <FIELD name="bo.EEMatrix.protocol" select="attribute[EEMatrix.protocol]" type="STRING" sixw="ds6wg:EEMatrix.protocol" />
+  </BOTYPEFIELDS>
+  <BOTYPE name="EEMatrix" includes="bo.EEMatrix" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="EESystemSignal" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="EESystemSignalGroup" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- EmbeddedSoftwareHardwareMappings -->
+  <BOTYPE name="EEFunctionalRepReference" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="EELogicalRepReference" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="EESystemMappingRep" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="EECharacterizationRep" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPEFIELDS name="bo.EESystemMapping" >
+    <FIELD name="bo.EESystemMapping.category" select="attribute[EESystemMapping.category]" type="STRING" sixw="ds6wg:EESystemMapping.category" />
+  </BOTYPEFIELDS>
+  <BOTYPE name="EESystemMapping" includes="bo.EESystemMapping" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="EECharacterization" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- GphViewModelCusto1 -->
+  <RELATIONSHIPTYPE name="GphViewRepInstanceCusto1" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="GphViewRepReferenceCusto1" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- HardwareArchitecture -->
+  <RELATIONSHIPTYPEFIELDS name="ro.EERackPosition" >
+    <FIELD name="ro.EERackPosition.column" select="attribute[EERackPosition.column]" type="NUM" sixw="ds6wg:EERackPosition.column" />
+    <FIELD name="ro.EERackPosition.row" select="attribute[EERackPosition.row]" type="NUM" sixw="ds6wg:EERackPosition.row" />
+    <FIELD name="ro.EERackPosition.slot" select="attribute[EERackPosition.slot]" type="NUM" sixw="ds6wg:EERackPosition.slot" />
+  </RELATIONSHIPTYPEFIELDS>
+  <RELATIONSHIPTYPE.EXTFIELDS name="EEActuatorInstance" includes="ro.EERackPosition" />
+  <RELATIONSHIPTYPE.EXTFIELDS name="EEDeviceInstance" includes="ro.EERackPosition" />
+  <RELATIONSHIPTYPE.EXTFIELDS name="EEECUInstance" includes="ro.EERackPosition" />
+  <RELATIONSHIPTYPE.EXTFIELDS name="EEElectricalDeviceInstance" includes="ro.EERackPosition" />
+  <RELATIONSHIPTYPE.EXTFIELDS name="EESensorInstance" includes="ro.EERackPosition" />
+  <RELATIONSHIPTYPE.EXTFIELDS name="EESwitchInstance" includes="ro.EERackPosition" />
+  <BOTYPE name="EESRChannelCluster" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="EESRConnectorBus1" inheritfields="true" active="true" searchable="false" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="EESRConnectorBus" inheritfields="true" active="true" searchable="false" excludetypes="" excludepolicies="" excludestates="" />
+  <RELATIONSHIPTYPEFIELDS name="ro.EEActuatorInstance" >
+    <FIELD name="ro.EEActuatorInstance.comConfigurationGwTimeBase" select="attribute[EEActuatorInstance.comConfigurationGwTimeBase]" type="DOUBLE" sixw="ds6wg:EEActuatorInstance.comConfigurationGwTimeBase" />
+    <FIELD name="ro.EEActuatorInstance.comConfigurationRxTimeBase" select="attribute[EEActuatorInstance.comConfigurationRxTimeBase]" type="DOUBLE" sixw="ds6wg:EEActuatorInstance.comConfigurationRxTimeBase" />
+    <FIELD name="ro.EEActuatorInstance.comConfigurationTxTimeBase" select="attribute[EEActuatorInstance.comConfigurationTxTimeBase]" type="DOUBLE" sixw="ds6wg:EEActuatorInstance.comConfigurationTxTimeBase" />
+  </RELATIONSHIPTYPEFIELDS>
+  <RELATIONSHIPTYPE name="EEActuatorInstance" includes="ro.EEActuatorInstance" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <RELATIONSHIPTYPEFIELDS name="ro.EEDeviceInstance" >
+    <FIELD name="ro.EEDeviceInstance.comConfigurationGwTimeBase" select="attribute[EEDeviceInstance.comConfigurationGwTimeBase]" type="DOUBLE" sixw="ds6wg:EEDeviceInstance.comConfigurationGwTimeBase" />
+    <FIELD name="ro.EEDeviceInstance.comConfigurationRxTimeBase" select="attribute[EEDeviceInstance.comConfigurationRxTimeBase]" type="DOUBLE" sixw="ds6wg:EEDeviceInstance.comConfigurationRxTimeBase" />
+    <FIELD name="ro.EEDeviceInstance.comConfigurationTxTimeBase" select="attribute[EEDeviceInstance.comConfigurationTxTimeBase]" type="DOUBLE" sixw="ds6wg:EEDeviceInstance.comConfigurationTxTimeBase" />
+  </RELATIONSHIPTYPEFIELDS>
+  <RELATIONSHIPTYPE name="EEDeviceInstance" includes="ro.EEDeviceInstance" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <RELATIONSHIPTYPEFIELDS name="ro.EEECUInstance" >
+    <FIELD name="ro.EEECUInstance.comConfigurationGwTimeBase" select="attribute[EEECUInstance.comConfigurationGwTimeBase]" type="DOUBLE" sixw="ds6wg:EEECUInstance.comConfigurationGwTimeBase" />
+    <FIELD name="ro.EEECUInstance.comConfigurationRxTimeBase" select="attribute[EEECUInstance.comConfigurationRxTimeBase]" type="DOUBLE" sixw="ds6wg:EEECUInstance.comConfigurationRxTimeBase" />
+    <FIELD name="ro.EEECUInstance.comConfigurationTxTimeBase" select="attribute[EEECUInstance.comConfigurationTxTimeBase]" type="DOUBLE" sixw="ds6wg:EEECUInstance.comConfigurationTxTimeBase" />
+  </RELATIONSHIPTYPEFIELDS>
+  <RELATIONSHIPTYPE name="EEECUInstance" includes="ro.EEECUInstance" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <RELATIONSHIPTYPEFIELDS name="ro.EEElectricalDeviceInstance" >
+    <FIELD name="ro.EEElectricalDeviceInstance.comConfigurationGwTimeBase" select="attribute[EEElectricalDeviceInstance.comConfigurationGwTimeBase]" type="DOUBLE" sixw="ds6wg:EEElectricalDeviceInstance.comConfigurationGwTimeBase" />
+    <FIELD name="ro.EEElectricalDeviceInstance.comConfigurationRxTimeBase" select="attribute[EEElectricalDeviceInstance.comConfigurationRxTimeBase]" type="DOUBLE" sixw="ds6wg:EEElectricalDeviceInstance.comConfigurationRxTimeBase" />
+    <FIELD name="ro.EEElectricalDeviceInstance.comConfigurationTxTimeBase" select="attribute[EEElectricalDeviceInstance.comConfigurationTxTimeBase]" type="DOUBLE" sixw="ds6wg:EEElectricalDeviceInstance.comConfigurationTxTimeBase" />
+  </RELATIONSHIPTYPEFIELDS>
+  <RELATIONSHIPTYPE name="EEElectricalDeviceInstance" includes="ro.EEElectricalDeviceInstance" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <RELATIONSHIPTYPE name="EEPhysicalChannelInstance" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <RELATIONSHIPTYPE name="EERackInstance" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <RELATIONSHIPTYPEFIELDS name="ro.EESensorInstance" >
+    <FIELD name="ro.EESensorInstance.comConfigurationGwTimeBase" select="attribute[EESensorInstance.comConfigurationGwTimeBase]" type="DOUBLE" sixw="ds6wg:EESensorInstance.comConfigurationGwTimeBase" />
+    <FIELD name="ro.EESensorInstance.comConfigurationRxTimeBase" select="attribute[EESensorInstance.comConfigurationRxTimeBase]" type="DOUBLE" sixw="ds6wg:EESensorInstance.comConfigurationRxTimeBase" />
+    <FIELD name="ro.EESensorInstance.comConfigurationTxTimeBase" select="attribute[EESensorInstance.comConfigurationTxTimeBase]" type="DOUBLE" sixw="ds6wg:EESensorInstance.comConfigurationTxTimeBase" />
+  </RELATIONSHIPTYPEFIELDS>
+  <RELATIONSHIPTYPE name="EESensorInstance" includes="ro.EESensorInstance" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <RELATIONSHIPTYPE name="EESubSystem" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <RELATIONSHIPTYPEFIELDS name="ro.EESwitchInstance" >
+    <FIELD name="ro.EESwitchInstance.comConfigurationGwTimeBase" select="attribute[EESwitchInstance.comConfigurationGwTimeBase]" type="DOUBLE" sixw="ds6wg:EESwitchInstance.comConfigurationGwTimeBase" />
+    <FIELD name="ro.EESwitchInstance.comConfigurationRxTimeBase" select="attribute[EESwitchInstance.comConfigurationRxTimeBase]" type="DOUBLE" sixw="ds6wg:EESwitchInstance.comConfigurationRxTimeBase" />
+    <FIELD name="ro.EESwitchInstance.comConfigurationTxTimeBase" select="attribute[EESwitchInstance.comConfigurationTxTimeBase]" type="DOUBLE" sixw="ds6wg:EESwitchInstance.comConfigurationTxTimeBase" />
+  </RELATIONSHIPTYPEFIELDS>
+  <RELATIONSHIPTYPE name="EESwitchInstance" includes="ro.EESwitchInstance" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPEFIELDS name="bo.EEConnectorType" >
+    <FIELD name="bo.EEConnectorType.V_EE_ExtLinkTechnology" select="attribute[EEConnectorType.V_EE_ExtLinkTechnology]" type="STRING" sixw="ds6wg:EEConnectorType.V_EE_ExtLinkTechnology" />
+    <FIELD name="bo.EEConnectorType.V_EE_Multiplexed" select="attribute[EEConnectorType.V_EE_Multiplexed]" type="BOOLEAN" sixw="ds6wg:EEConnectorType.V_EE_Multiplexed" />
+    <FIELD name="bo.EEConnectorType.linkTechnology" select="attribute[EEConnectorType.linkTechnology]" type="STRING" sixw="ds6wg:EEConnectorType.linkTechnology" />
+    <FIELD name="bo.EEConnectorType.subTechnology" select="attribute[EEConnectorType.subTechnology]" type="STRING" sixw="ds6wg:EEConnectorType.subTechnology" />
+  </BOTYPEFIELDS>
+  <BOTYPE name="EEConnectorType" includes="bo.EEConnectorType" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPEFIELDS name="bo.EEGenericConnectorType" >
+    <FIELD name="bo.EEGenericConnectorType.subTechnology" select="attribute[EEGenericConnectorType.subTechnology]" type="STRING" sixw="ds6wg:EEGenericConnectorType.subTechnology" />
+  </BOTYPEFIELDS>
+  <BOTYPE name="EEGenericConnectorType" includes="bo.EEGenericConnectorType" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPEFIELDS name="bo.EESubConnectorType" >
+    <FIELD name="bo.EESubConnectorType.subTechnology" select="attribute[EESubConnectorType.subTechnology]" type="STRING" sixw="ds6wg:EESubConnectorType.subTechnology" />
+  </BOTYPEFIELDS>
+  <BOTYPE name="EESubConnectorType" includes="bo.EESubConnectorType" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <RELATIONSHIPTYPEFIELDS name="ro.EECommunicationConnector" >
+    <FIELD name="ro.EECommunicationConnector.flexRayLatestTx" select="attribute[EECommunicationConnector.flexRayLatestTx]" type="NUM" sixw="ds6wg:EECommunicationConnector.flexRayLatestTx" />
+    <FIELD name="ro.EECommunicationConnector.ipAddress" select="attribute[EECommunicationConnector.ipAddress]" type="STRING" sixw="ds6wg:EECommunicationConnector.ipAddress" />
+    <FIELD name="ro.EECommunicationConnector.isLinMasterController" select="attribute[EECommunicationConnector.isLinMasterController]" type="BOOLEAN" sixw="ds6wg:EECommunicationConnector.isLinMasterController" />
+    <FIELD name="ro.EECommunicationConnector.linProtocolVersion" select="attribute[EECommunicationConnector.linProtocolVersion]" type="STRING" sixw="ds6wg:EECommunicationConnector.linProtocolVersion" />
+    <FIELD name="ro.EECommunicationConnector.macAddress" select="attribute[EECommunicationConnector.macAddress]" type="STRING" sixw="ds6wg:EECommunicationConnector.macAddress" />
+    <FIELD name="ro.EECommunicationConnector.macMulticastAddress" select="attribute[EECommunicationConnector.macMulticastAddress]" type="STRING" sixw="ds6wg:EECommunicationConnector.macMulticastAddress" />
+    <FIELD name="ro.EECommunicationConnector.timeBase" select="attribute[EECommunicationConnector.timeBase]" type="DOUBLE" sixw="ds6wg:EECommunicationConnector.timeBase" />
+    <FIELD name="ro.EECommunicationConnector.tpAddress" select="attribute[EECommunicationConnector.tpAddress]" type="STRING" sixw="ds6wg:EECommunicationConnector.tpAddress" />
+    <FIELD name="ro.EECommunicationConnector.tpProtocol" select="attribute[EECommunicationConnector.tpProtocol]" type="STRING" sixw="ds6wg:EECommunicationConnector.tpProtocol" />
+  </RELATIONSHIPTYPEFIELDS>
+  <RELATIONSHIPTYPE name="EECommunicationConnector" includes="ro.EECommunicationConnector" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPEFIELDS name="bo.EEActuator" >
+    <FIELD name="bo.EEActuator.V_EE_PartNumber" select="attribute[EEActuator.V_EE_PartNumber]" type="STRING" sixw="ds6wg:EEActuator.V_EE_PartNumber" />
+  </BOTYPEFIELDS>
+  <BOTYPE name="EEActuator" includes="bo.EEActuator" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPEFIELDS name="bo.EECommunicationCluster" >
+    <FIELD name="bo.EECommunicationCluster.flexRayCycle" select="attribute[EECommunicationCluster.flexRayCycle]" type="DOUBLE" sixw="ds6wg:EECommunicationCluster.flexRayCycle" />
+    <FIELD name="bo.EECommunicationCluster.flexRayMiniSlotDuration" select="attribute[EECommunicationCluster.flexRayMiniSlotDuration]" type="DOUBLE" sixw="ds6wg:EECommunicationCluster.flexRayMiniSlotDuration" />
+    <FIELD name="bo.EECommunicationCluster.flexRayNumberOfMiniSlot" select="attribute[EECommunicationCluster.flexRayNumberOfMiniSlot]" type="DOUBLE" sixw="ds6wg:EECommunicationCluster.flexRayNumberOfMiniSlot" />
+    <FIELD name="bo.EECommunicationCluster.flexRayNumberOfStaticSlot" select="attribute[EECommunicationCluster.flexRayNumberOfStaticSlot]" type="DOUBLE" sixw="ds6wg:EECommunicationCluster.flexRayNumberOfStaticSlot" />
+    <FIELD name="bo.EECommunicationCluster.flexRayStaticSlotDuration" select="attribute[EECommunicationCluster.flexRayStaticSlotDuration]" type="DOUBLE" sixw="ds6wg:EECommunicationCluster.flexRayStaticSlotDuration" />
+  </BOTYPEFIELDS>
+  <BOTYPE name="EECommunicationCluster" includes="bo.EECommunicationCluster" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPEFIELDS name="bo.EEDevice" >
+    <FIELD name="bo.EEDevice.V_EE_PartNumber" select="attribute[EEDevice.V_EE_PartNumber]" type="STRING" sixw="ds6wg:EEDevice.V_EE_PartNumber" />
+  </BOTYPEFIELDS>
+  <BOTYPE name="EEDevice" includes="bo.EEDevice" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPEFIELDS name="bo.EEECU" >
+    <FIELD name="bo.EEECU.V_EE_PartNumber" select="attribute[EEECU.V_EE_PartNumber]" type="STRING" sixw="ds6wg:EEECU.V_EE_PartNumber" />
+    <FIELD name="bo.EEECU.ecuCategory" select="attribute[EEECU.ecuCategory]" type="STRING" sixw="ds6wg:EEECU.ecuCategory" />
+    <FIELD name="bo.EEECU.wakeUpOverBusSupported" select="attribute[EEECU.wakeUpOverBusSupported]" type="BOOLEAN" sixw="ds6wg:EEECU.wakeUpOverBusSupported" />
+  </BOTYPEFIELDS>
+  <BOTYPE name="EEECU" includes="bo.EEECU" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPEFIELDS name="bo.EEElectricalDevice" >
+    <FIELD name="bo.EEElectricalDevice.V_EE_PartNumber" select="attribute[EEElectricalDevice.V_EE_PartNumber]" type="STRING" sixw="ds6wg:EEElectricalDevice.V_EE_PartNumber" />
+  </BOTYPEFIELDS>
+  <BOTYPE name="EEElectricalDevice" includes="bo.EEElectricalDevice" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPEFIELDS name="bo.EEPhysicalChannel" >
+    <FIELD name="bo.EEPhysicalChannel.VLanIdentifier" select="attribute[EEPhysicalChannel.VLanIdentifier]" type="STRING" sixw="ds6wg:EEPhysicalChannel.VLanIdentifier" />
+    <FIELD name="bo.EEPhysicalChannel.V_EE_PartNumber" select="attribute[EEPhysicalChannel.V_EE_PartNumber]" type="STRING" sixw="ds6wg:EEPhysicalChannel.V_EE_PartNumber" />
+    <FIELD name="bo.EEPhysicalChannel.flexRayCycle" select="attribute[EEPhysicalChannel.flexRayCycle]" type="DOUBLE" sixw="ds6wg:EEPhysicalChannel.flexRayCycle" />
+    <FIELD name="bo.EEPhysicalChannel.flexRayMiniSlotDuration" select="attribute[EEPhysicalChannel.flexRayMiniSlotDuration]" type="DOUBLE" sixw="ds6wg:EEPhysicalChannel.flexRayMiniSlotDuration" />
+    <FIELD name="bo.EEPhysicalChannel.flexRayNumberOfMiniSlot" select="attribute[EEPhysicalChannel.flexRayNumberOfMiniSlot]" type="NUM" sixw="ds6wg:EEPhysicalChannel.flexRayNumberOfMiniSlot" />
+    <FIELD name="bo.EEPhysicalChannel.flexRayNumberOfStaticSlot" select="attribute[EEPhysicalChannel.flexRayNumberOfStaticSlot]" type="NUM" sixw="ds6wg:EEPhysicalChannel.flexRayNumberOfStaticSlot" />
+    <FIELD name="bo.EEPhysicalChannel.flexRayStaticSlotDuration" select="attribute[EEPhysicalChannel.flexRayStaticSlotDuration]" type="DOUBLE" sixw="ds6wg:EEPhysicalChannel.flexRayStaticSlotDuration" />
+    <FIELD name="bo.EEPhysicalChannel.speed" select="attribute[EEPhysicalChannel.speed]" type="DOUBLE" sixw="ds6wg:EEPhysicalChannel.speed" />
+  </BOTYPEFIELDS>
+  <BOTYPE name="EEPhysicalChannel" includes="bo.EEPhysicalChannel" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPEFIELDS name="bo.EERack" >
+    <FIELD name="bo.EERack.V_EE_PartNumber" select="attribute[EERack.V_EE_PartNumber]" type="STRING" sixw="ds6wg:EERack.V_EE_PartNumber" />
+    <FIELD name="bo.EERack.nbOfColumns" select="attribute[EERack.nbOfColumns]" type="NUM" sixw="ds6wg:EERack.nbOfColumns" />
+    <FIELD name="bo.EERack.nbOfRows" select="attribute[EERack.nbOfRows]" type="NUM" sixw="ds6wg:EERack.nbOfRows" />
+    <FIELD name="bo.EERack.nbOfSlotsPerUnit" select="attribute[EERack.nbOfSlotsPerUnit]" type="NUM" sixw="ds6wg:EERack.nbOfSlotsPerUnit" />
+  </BOTYPEFIELDS>
+  <BOTYPE name="EERack" includes="bo.EERack" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPEFIELDS name="bo.EESensor" >
+    <FIELD name="bo.EESensor.V_EE_PartNumber" select="attribute[EESensor.V_EE_PartNumber]" type="STRING" sixw="ds6wg:EESensor.V_EE_PartNumber" />
+  </BOTYPEFIELDS>
+  <BOTYPE name="EESensor" includes="bo.EESensor" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPEFIELDS name="bo.EESwitch" >
+    <FIELD name="bo.EESwitch.V_EE_PartNumber" select="attribute[EESwitch.V_EE_PartNumber]" type="STRING" sixw="ds6wg:EESwitch.V_EE_PartNumber" />
+  </BOTYPEFIELDS>
+  <BOTYPE name="EESwitch" includes="bo.EESwitch" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPEFIELDS name="bo.EETopology" >
+    <FIELD name="bo.EETopology.V_EE_PartNumber" select="attribute[EETopology.V_EE_PartNumber]" type="STRING" sixw="ds6wg:EETopology.V_EE_PartNumber" />
+  </BOTYPEFIELDS>
+  <BOTYPE name="EETopology" includes="bo.EETopology" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- KnowHowCheckDS -->
+  <RELATIONSHIPTYPE name="PLMCheckInstanceCusto" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="PLMCheckCusto" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- KnowHowExtractionRuleDS -->
+  <BOTYPE name="PLMExtractionRuleCusto" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- KnowHowRuleDS -->
+  <RELATIONSHIPTYPE name="PLMRuleInstanceCusto" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="PLMRuleCusto" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- KnowHowRuleSetDS -->
+  <RELATIONSHIPTYPE name="PLMRuleSetInstanceCusto" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="PLMRuleSetCusto" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- MaintenanceActionDS -->
+  <RELATIONSHIPTYPE name="PLMMaintChildActionCusto" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="PLMMaintActionCusto" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- ManufacturingActionDS -->
+  <RELATIONSHIPTYPE name="PLMMfgChildActionCusto" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="PLMMfgActionCusto" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- PLMGroupOfInstancesModelDS -->
+  <BOTYPE name="PLMGroupOfInstancesCustDS" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- PLMKbaAppliComponentDS -->
+  <RELATIONSHIPTYPE name="PLMKbaAppliCompositionItemDS" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="PLMKbaAppliComponentDS" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- PLMKbaAppliConfigDS -->
+  <BOTYPE name="PLMKbaAppliConfigAggregationLinkToRZipDS" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="PLMKbaAppliConfigurationDS" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- PLMKbaApplicationDS -->
+  <BOTYPE name="PLMKbaAppliPublishedDefinitionDS" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="PLMKbaAppliResolutionElementDS" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <RELATIONSHIPTYPE name="PLMKbaConfigCompositionItemDS" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="PLMKbaBusinessApplicationDS" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- PLMProductDS -->
+  <BOTYPE name="PLMConnectionDS" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="PLMPortDS" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <RELATIONSHIPTYPE name="PLMProductInstanceDS" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPEFIELDS name="bo.PLMProductDS" >
+    <FIELD name="bo.PLMProductDS.V_BOM" select="attribute[PLMProductDS.V_BOM]" type="STRING" sixw="ds6wg:PLMProductDS.V_BOM" />
+    <FIELD name="bo.PLMProductDS.V_IndustryCode" select="attribute[PLMProductDS.V_IndustryCode]" type="STRING" sixw="ds6wg:PLMProductDS.V_IndustryCode" />
+    <FIELD name="bo.PLMProductDS.V_StdNumber" select="attribute[PLMProductDS.V_StdNumber]" type="STRING" sixw="ds6wg:PLMProductDS.V_StdNumber" />
+    <FIELD name="bo.PLMProductDS.V_Supplier" select="attribute[PLMProductDS.V_Supplier]" type="BOOLEAN" sixw="ds6wg:PLMProductDS.V_Supplier" />
+    <FIELD name="bo.PLMProductDS.V_SupplierName" select="attribute[PLMProductDS.V_SupplierName]" type="STRING" sixw="ds6wg:PLMProductDS.V_SupplierName" />
+  </BOTYPEFIELDS>
+  <BOTYPE name="PLMProductDS" includes="bo.PLMProductDS" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <RELATIONSHIPTYPE name="PLMRepresentationInstanceDS" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPEFIELDS name="bo.PLMRepresentationDS" >
+    <FIELD name="bo.PLMRepresentationDS.V_RepKind" select="attribute[PLMRepresentationDS.V_RepKind]" type="STRING" sixw="ds6wg:PLMRepresentationDS.V_RepKind" />
+  </BOTYPEFIELDS>
+  <BOTYPE name="PLMRepresentationDS" includes="bo.PLMRepresentationDS" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- PLMPrototypeCnxDS -->
+  <BOTYPE name="PLMPrototypeInstantiationCnxCustDS" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- RFLPLMAgnosticFreeConnectionSampleCusto -->
+  <BOTYPEFIELDS name="bo.RFLPLMAgnosticFreeConnectionSampleCusto" >
+    <FIELD name="bo.RFLPLMAgnosticFreeConnectionSampleCusto.V_SampleAttribute" select="attribute[RFLPLMAgnosticFreeConnectionSampleCusto.V_SampleAttribute]" type="STRING" sixw="ds6wg:RFLPLMAgnosticFreeConnectionSampleCusto.V_SampleAttribute" />
+  </BOTYPEFIELDS>
+  <BOTYPE name="RFLPLMAgnosticFreeConnectionSampleCusto" includes="bo.RFLPLMAgnosticFreeConnectionSampleCusto" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- RFLPLMFlowCusto1 -->
+  <RELATIONSHIPTYPE name="RFLPLMFlowInstanceCusto1" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPEFIELDS name="bo.RFLPLMFlowReferenceCusto1" >
+    <FIELD name="bo.RFLPLMFlowReferenceCusto1.SpecifiedType" select="attribute[RFLPLMFlowReferenceCusto1.SpecifiedType]" type="STRING" sixw="ds6wg:RFLPLMFlowReferenceCusto1.SpecifiedType" />
+  </BOTYPEFIELDS>
+  <BOTYPE name="RFLPLMFlowReferenceCusto1" includes="bo.RFLPLMFlowReferenceCusto1" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- RFLPLMFlowDS -->
+  <RELATIONSHIPTYPE name="RFLPLMFlowInstanceDS" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="RFLPLMFlowReferenceDS" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- RFLPLMFunctionalCommunicationCusto1 -->
+  <RELATIONSHIPTYPE name="RFLPLMFunctionalCommunicationInstanceCusto1" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="RFLPLMFunctionalCommunicationReferenceCusto1" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- RFLPLMFunctionalCommunicationDS -->
+  <RELATIONSHIPTYPE name="RFLPLMFunctionalCommunicationInstanceDS" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="RFLPLMFunctionalCommunicationReferenceDS" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- RFLPLMFunctionalCusto1 -->
+  <BOTYPE name="RFLPLMFunctionalConnectionCusto1" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPEFIELDS name="bo.RFLPLMFunctionalConnectorCusto1" >
+    <FIELD name="bo.RFLPLMFunctionalConnectorCusto1.QualityOfService" select="attribute[RFLPLMFunctionalConnectorCusto1.QualityOfService]" type="STRING" sixw="ds6wg:RFLPLMFunctionalConnectorCusto1.QualityOfService" />
+    <FIELD name="bo.RFLPLMFunctionalConnectorCusto1.SymbolName" select="attribute[RFLPLMFunctionalConnectorCusto1.SymbolName]" type="STRING" sixw="ds6wg:RFLPLMFunctionalConnectorCusto1.SymbolName" />
+  </BOTYPEFIELDS>
+  <BOTYPE name="RFLPLMFunctionalConnectorCusto1" includes="bo.RFLPLMFunctionalConnectorCusto1" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <RELATIONSHIPTYPE name="RFLPLMFunctionalInstanceCusto1" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <RELATIONSHIPTYPE name="RFLPLMFunctionalRepInstanceCusto1" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="RFLPLMFunctionalRepReferenceCusto1" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPEFIELDS name="bo.RFLPLMFunctionalReferenceCusto1" >
+    <FIELD name="bo.RFLPLMFunctionalReferenceCusto1.Boolean_List" select="attribute[RFLPLMFunctionalReferenceCusto1.Boolean_List]" type="BOOLEAN" sixw="ds6wg:RFLPLMFunctionalReferenceCusto1.Boolean_List" />
+    <FIELD name="bo.RFLPLMFunctionalReferenceCusto1.CatalogName" select="attribute[RFLPLMFunctionalReferenceCusto1.CatalogName]" type="STRING" sixw="ds6wg:RFLPLMFunctionalReferenceCusto1.CatalogName" />
+    <FIELD name="bo.RFLPLMFunctionalReferenceCusto1.Comment" select="attribute[RFLPLMFunctionalReferenceCusto1.Comment]" type="STRING" sixw="ds6wg:RFLPLMFunctionalReferenceCusto1.Comment" />
+    <FIELD name="bo.RFLPLMFunctionalReferenceCusto1.Complexity" select="attribute[RFLPLMFunctionalReferenceCusto1.Complexity]" type="STRING" sixw="ds6wg:RFLPLMFunctionalReferenceCusto1.Complexity" />
+    <FIELD name="bo.RFLPLMFunctionalReferenceCusto1.Critical" select="attribute[RFLPLMFunctionalReferenceCusto1.Critical]" type="BOOLEAN" sixw="ds6wg:RFLPLMFunctionalReferenceCusto1.Critical" />
+    <FIELD name="bo.RFLPLMFunctionalReferenceCusto1.Criticality" select="attribute[RFLPLMFunctionalReferenceCusto1.Criticality]" type="STRING" sixw="ds6wg:RFLPLMFunctionalReferenceCusto1.Criticality" />
+    <FIELD name="bo.RFLPLMFunctionalReferenceCusto1.Date_List" select="attribute[RFLPLMFunctionalReferenceCusto1.Date_List]" type="DATE" sixw="ds6wg:RFLPLMFunctionalReferenceCusto1.Date_List" />
+    <FIELD name="bo.RFLPLMFunctionalReferenceCusto1.Double_List" select="attribute[RFLPLMFunctionalReferenceCusto1.Double_List]" type="DOUBLE" sixw="ds6wg:RFLPLMFunctionalReferenceCusto1.Double_List" />
+    <FIELD name="bo.RFLPLMFunctionalReferenceCusto1.Enum_List" select="attribute[RFLPLMFunctionalReferenceCusto1.Enum_List]" type="STRING" sixw="ds6wg:RFLPLMFunctionalReferenceCusto1.Enum_List" />
+    <FIELD name="bo.RFLPLMFunctionalReferenceCusto1.Integer_List" select="attribute[RFLPLMFunctionalReferenceCusto1.Integer_List]" type="NUM" sixw="ds6wg:RFLPLMFunctionalReferenceCusto1.Integer_List" />
+    <FIELD name="bo.RFLPLMFunctionalReferenceCusto1.Level" select="attribute[RFLPLMFunctionalReferenceCusto1.Level]" type="NUM" sixw="ds6wg:RFLPLMFunctionalReferenceCusto1.Level" />
+    <FIELD name="bo.RFLPLMFunctionalReferenceCusto1.Obsolescence_Date" select="attribute[RFLPLMFunctionalReferenceCusto1.Obsolescence_Date]" type="DATE" sixw="ds6wg:RFLPLMFunctionalReferenceCusto1.Obsolescence_Date" />
+    <FIELD name="bo.RFLPLMFunctionalReferenceCusto1.Reliability" select="attribute[RFLPLMFunctionalReferenceCusto1.Reliability]" type="DOUBLE" sixw="ds6wg:RFLPLMFunctionalReferenceCusto1.Reliability" />
+    <FIELD name="bo.RFLPLMFunctionalReferenceCusto1.String_List" select="attribute[RFLPLMFunctionalReferenceCusto1.String_List]" type="STRING" sixw="ds6wg:RFLPLMFunctionalReferenceCusto1.String_List" />
+    <FIELD name="bo.RFLPLMFunctionalReferenceCusto1.SymbolName" select="attribute[RFLPLMFunctionalReferenceCusto1.SymbolName]" type="STRING" sixw="ds6wg:RFLPLMFunctionalReferenceCusto1.SymbolName" />
+  </BOTYPEFIELDS>
+  <BOTYPE name="RFLPLMFunctionalReferenceCusto1" includes="bo.RFLPLMFunctionalReferenceCusto1" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- RFLPLMFunctionalDS -->
+  <BOTYPE name="RFLPLMFunctionalConnectionDS" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="RFLPLMFunctionalConnectorDS" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <RELATIONSHIPTYPE name="RFLPLMFunctionalInstanceDS" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <RELATIONSHIPTYPE name="RFLPLMFunctionalRepInstanceDS" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="RFLPLMFunctionalRepReferenceDS" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="RFLPLMFunctionalReferenceDS" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- RFLPLMImplementConnectionDS -->
+  <BOTYPEFIELDS name="bo.RFLPLMImplementConnectionDS" >
+    <FIELD name="bo.RFLPLMImplementConnectionDS.V_ScorecardValidation" select="attribute[RFLPLMImplementConnectionDS.V_ScorecardValidation]" type="BOOLEAN" sixw="ds6wg:RFLPLMImplementConnectionDS.V_ScorecardValidation" />
+  </BOTYPEFIELDS>
+  <BOTYPE name="RFLPLMImplementConnectionDS" includes="bo.RFLPLMImplementConnectionDS" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- RFLPLMReqChapterCusto1 -->
+  <RELATIONSHIPTYPE name="RFLPLMReqChapterInstanceCusto1" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="RFLPLMReqChapterReferenceCusto1" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- RFLPLMReqCommentCusto1 -->
+  <RELATIONSHIPTYPE name="RFLPLMReqCommentInstanceCusto1" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <RELATIONSHIPTYPE name="RFLPLMReqCommentRepInstanceCusto1" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="RFLPLMReqCommentRepReferenceCusto1" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="RFLPLMReqCommentReferenceCusto1" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- RFLPLMReqSpecificationCusto1 -->
+  <RELATIONSHIPTYPE name="RFLPLMReqSpecificationInstanceCusto1" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <RELATIONSHIPTYPE name="RFLPLMReqSpecificationRepInstanceCusto1" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="RFLPLMReqSpecificationRepReferenceCusto1" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="RFLPLMReqSpecificationReferenceCusto1" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- RFLPLMRequirementCusto1 -->
+  <BOTYPE name="RFLPLMRequirementConnectionCusto1" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <RELATIONSHIPTYPE name="RFLPLMRequirementInstanceCusto1" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <RELATIONSHIPTYPE name="RFLPLMRequirementRepInstanceCusto1" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="RFLPLMRequirementRepReferenceCusto1" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="RFLPLMRequirementReferenceCusto1" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- RFLVPMLogical3DRepDS -->
+  <RELATIONSHIPTYPE name="RFLVPMLogical3DRepInstanceDS" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="RFLVPMLogical3DRepReferenceDS" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- RFLVPMLogicalCommunicationDS -->
+  <RELATIONSHIPTYPE name="RFLVPMLogicalCommunicationInstanceDS" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="RFLVPMLogicalCommunicationReferenceDS" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- RFLVPMLogicalDS -->
+  <BOTYPE name="RFLVPMLogicalConnectionDS" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="RFLVPMLogicalPortDS" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <RELATIONSHIPTYPE name="RFLVPMLogicalInstanceDS" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <RELATIONSHIPTYPE name="RFLVPMLogicalRepInstanceDS" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="RFLVPMLogicalRepReferenceDS" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="RFLVPMLogicalReferenceDS" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- RFLVPMLogicalPublicationDS -->
+  <BOTYPE name="RFLVPMLogicalPublicationDS" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- RFLVPMLogicalServicesDS -->
+  <RELATIONSHIPTYPE name="RFLVPMServicesExpositionInstanceDS" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="RFLVPMServicesReferenceDS" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- RFLVPMSystemTypeDS -->
+  <BOTYPE name="RFLVPMSystemTypeReferenceDS" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <RELATIONSHIPTYPE name="RFLVPMSystemTypeInstanceDS" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- ResourceSetRepDS -->
+  <BOTYPE name="PLMResourceSetRepReferenceCusto" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- SIMItfInterfereDS -->
+  <BOTYPE name="SIMItfContextOfInterferenceDS" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- SIMItfInterferenceDS -->
+  <BOTYPEFIELDS name="bo.SIMItfInterferenceDS" >
+    <FIELD name="bo.SIMItfInterferenceDS.V_ItfCusto_Relevancy" select="attribute[SIMItfInterferenceDS.V_ItfCusto_Relevancy]" type="STRING" sixw="ds6wg:SIMItfInterferenceDS.V_ItfCusto_Relevancy" />
+    <FIELD name="bo.SIMItfInterferenceDS.V_Itf_Quant1" select="attribute[SIMItfInterferenceDS.V_Itf_Quant1]" type="DOUBLE" sixw="ds6wg:SIMItfInterferenceDS.V_Itf_Quant1" />
+    <FIELD name="bo.SIMItfInterferenceDS.V_Itf_Quant2" select="attribute[SIMItfInterferenceDS.V_Itf_Quant2]" type="DOUBLE" sixw="ds6wg:SIMItfInterferenceDS.V_Itf_Quant2" />
+  </BOTYPEFIELDS>
+  <BOTYPE name="SIMItfInterferenceDS" includes="bo.SIMItfInterferenceDS" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="SIMItfSimulationDS" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- SIMObjSimulationGenericDS -->
+  <BOTYPE name="SIMObjSimulationConnectionGenericDS" inheritfields="true" active="true" searchable="false" excludetypes="" excludepolicies="" excludestates="" />
+  <RELATIONSHIPTYPE name="SIMObjSimulationRepInstanceGenericDS" inheritfields="true" active="true" searchable="false" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="SIMObjSimulationObjectGenericDS" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="SIMObjSimulationRepReferenceGenericDS" inheritfields="true" active="true" searchable="false" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- SignoffActionDS -->
+  <RELATIONSHIPTYPE name="PLMSignoffChildActionCusto" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="PLMSignoffActionCusto" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- SoftwareArchitecture -->
+  <RELATIONSHIPTYPE name="EEApplicationPrototype" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <RELATIONSHIPTYPE name="EEComponentPrototype" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <RELATIONSHIPTYPE name="EEConfigurationTablePrototype" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <RELATIONSHIPTYPEFIELDS name="ro.EEPartitionPrototype" >
+    <FIELD name="ro.EEPartitionPrototype.V_EE_ipAddress" select="attribute[EEPartitionPrototype.V_EE_ipAddress]" type="STRING" sixw="ds6wg:EEPartitionPrototype.V_EE_ipAddress" />
+  </RELATIONSHIPTYPEFIELDS>
+  <RELATIONSHIPTYPE name="EEPartitionPrototype" includes="ro.EEPartitionPrototype" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="EEAtomicComponentTypeRep" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="EEConfigurationTableRep" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="EEApplication" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPEFIELDS name="bo.EEAtomicComponentType" >
+    <FIELD name="bo.EEAtomicComponentType.handleTerminationAndRestart" select="attribute[EEAtomicComponentType.handleTerminationAndRestart]" type="STRING" sixw="ds6wg:EEAtomicComponentType.handleTerminationAndRestart" />
+  </BOTYPEFIELDS>
+  <BOTYPE name="EEAtomicComponentType" includes="bo.EEAtomicComponentType" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="EEConfigurationTable" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="EEPartition" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- SoftwareArchitecture1 -->
+  <BOTYPE name="EEAbstractType" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPEFIELDS name="bo.EESenderReceiverInterface" >
+    <FIELD name="bo.EESenderReceiverInterface.V_EE_MessageNbMax" select="attribute[EESenderReceiverInterface.V_EE_MessageNbMax]" type="NUM" sixw="ds6wg:EESenderReceiverInterface.V_EE_MessageNbMax" />
+    <FIELD name="bo.EESenderReceiverInterface.V_EE_MessageSizeMax" select="attribute[EESenderReceiverInterface.V_EE_MessageSizeMax]" type="NUM" sixw="ds6wg:EESenderReceiverInterface.V_EE_MessageSizeMax" />
+    <FIELD name="bo.EESenderReceiverInterface.queueLength" select="attribute[EESenderReceiverInterface.queueLength]" type="NUM" sixw="ds6wg:EESenderReceiverInterface.queueLength" />
+  </BOTYPEFIELDS>
+  <BOTYPE name="EESenderReceiverInterface" includes="bo.EESenderReceiverInterface" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPEFIELDS name="bo.EEVariableDataPrototype" >
+    <FIELD name="bo.EEVariableDataPrototype.dataType" select="attribute[EEVariableDataPrototype.dataType]" type="STRING" sixw="ds6wg:EEVariableDataPrototype.dataType" />
+    <FIELD name="bo.EEVariableDataPrototype.initValue" select="attribute[EEVariableDataPrototype.initValue]" type="STRING" sixw="ds6wg:EEVariableDataPrototype.initValue" />
+    <FIELD name="bo.EEVariableDataPrototype.isDeviceManagerMode" select="attribute[EEVariableDataPrototype.isDeviceManagerMode]" type="BOOLEAN" sixw="ds6wg:EEVariableDataPrototype.isDeviceManagerMode" />
+  </BOTYPEFIELDS>
+  <BOTYPE name="EEVariableDataPrototype" includes="bo.EEVariableDataPrototype" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <RELATIONSHIPTYPE name="EEAbstractVariableSpecification" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <RELATIONSHIPTYPEFIELDS name="ro.EEPortPrototype" >
+    <FIELD name="ro.EEPortPrototype.V_EE_MessageNbMax" select="attribute[EEPortPrototype.V_EE_MessageNbMax]" type="NUM" sixw="ds6wg:EEPortPrototype.V_EE_MessageNbMax" />
+    <FIELD name="ro.EEPortPrototype.V_EE_MessageSizeMax" select="attribute[EEPortPrototype.V_EE_MessageSizeMax]" type="NUM" sixw="ds6wg:EEPortPrototype.V_EE_MessageSizeMax" />
+    <FIELD name="ro.EEPortPrototype.V_EE_SWInterfaceModeEnum" select="attribute[EEPortPrototype.V_EE_SWInterfaceModeEnum]" type="STRING" sixw="ds6wg:EEPortPrototype.V_EE_SWInterfaceModeEnum" />
+  </RELATIONSHIPTYPEFIELDS>
+  <RELATIONSHIPTYPE name="EEPortPrototype" includes="ro.EEPortPrototype" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <RELATIONSHIPTYPE name="EEVariableDataPrototypeInstance" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="EEArrayType" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPEFIELDS name="bo.EEPrimitiveType" >
+    <FIELD name="bo.EEPrimitiveType.V_EE_BitSize" select="attribute[EEPrimitiveType.V_EE_BitSize]" type="NUM" sixw="ds6wg:EEPrimitiveType.V_EE_BitSize" />
+    <FIELD name="bo.EEPrimitiveType.V_EE_Encoding" select="attribute[EEPrimitiveType.V_EE_Encoding]" type="STRING" sixw="ds6wg:EEPrimitiveType.V_EE_Encoding" />
+    <FIELD name="bo.EEPrimitiveType.V_EE_EnumerationValues" select="attribute[EEPrimitiveType.V_EE_EnumerationValues]" type="STRING" sixw="ds6wg:EEPrimitiveType.V_EE_EnumerationValues" />
+    <FIELD name="bo.EEPrimitiveType.V_EE_IsSigned" select="attribute[EEPrimitiveType.V_EE_IsSigned]" type="BOOLEAN" sixw="ds6wg:EEPrimitiveType.V_EE_IsSigned" />
+  </BOTYPEFIELDS>
+  <BOTYPE name="EEPrimitiveType" includes="bo.EEPrimitiveType" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="EERecordType" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPEFIELDS name="bo.EETcpInterface" >
+    <FIELD name="bo.EETcpInterface.V_EE_VirtualLinkId" select="attribute[EETcpInterface.V_EE_VirtualLinkId]" type="NUM" sixw="ds6wg:EETcpInterface.V_EE_VirtualLinkId" />
+  </BOTYPEFIELDS>
+  <BOTYPE name="EETcpInterface" includes="bo.EETcpInterface" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPEFIELDS name="bo.EEUdpInterface" >
+    <FIELD name="bo.EEUdpInterface.V_EE_VirtualLinkId" select="attribute[EEUdpInterface.V_EE_VirtualLinkId]" type="NUM" sixw="ds6wg:EEUdpInterface.V_EE_VirtualLinkId" />
+  </BOTYPEFIELDS>
+  <BOTYPE name="EEUdpInterface" includes="bo.EEUdpInterface" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <RELATIONSHIPTYPEFIELDS name="ro.EEArrayVariableSpecification" >
+    <FIELD name="ro.EEArrayVariableSpecification.V_EE_MaxSize" select="attribute[EEArrayVariableSpecification.V_EE_MaxSize]" type="NUM" sixw="ds6wg:EEArrayVariableSpecification.V_EE_MaxSize" />
+    <FIELD name="ro.EEArrayVariableSpecification.V_EE_MinSize" select="attribute[EEArrayVariableSpecification.V_EE_MinSize]" type="NUM" sixw="ds6wg:EEArrayVariableSpecification.V_EE_MinSize" />
+  </RELATIONSHIPTYPEFIELDS>
+  <RELATIONSHIPTYPE name="EEArrayVariableSpecification" includes="ro.EEArrayVariableSpecification" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <RELATIONSHIPTYPEFIELDS name="ro.EEPrimitiveVariableSpecification" >
+    <FIELD name="ro.EEPrimitiveVariableSpecification.V_EE_MaxValue" select="attribute[EEPrimitiveVariableSpecification.V_EE_MaxValue]" type="DOUBLE" sixw="ds6wg:EEPrimitiveVariableSpecification.V_EE_MaxValue" />
+    <FIELD name="ro.EEPrimitiveVariableSpecification.V_EE_MinValue" select="attribute[EEPrimitiveVariableSpecification.V_EE_MinValue]" type="DOUBLE" sixw="ds6wg:EEPrimitiveVariableSpecification.V_EE_MinValue" />
+    <FIELD name="ro.EEPrimitiveVariableSpecification.V_EE_Offset" select="attribute[EEPrimitiveVariableSpecification.V_EE_Offset]" type="DOUBLE" sixw="ds6wg:EEPrimitiveVariableSpecification.V_EE_Offset" />
+    <FIELD name="ro.EEPrimitiveVariableSpecification.V_EE_Resolution" select="attribute[EEPrimitiveVariableSpecification.V_EE_Resolution]" type="DOUBLE" sixw="ds6wg:EEPrimitiveVariableSpecification.V_EE_Resolution" />
+    <FIELD name="ro.EEPrimitiveVariableSpecification.V_EE_Unit" select="attribute[EEPrimitiveVariableSpecification.V_EE_Unit]" type="STRING" sixw="ds6wg:EEPrimitiveVariableSpecification.V_EE_Unit" />
+  </RELATIONSHIPTYPEFIELDS>
+  <RELATIONSHIPTYPE name="EEPrimitiveVariableSpecification" includes="ro.EEPrimitiveVariableSpecification" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <RELATIONSHIPTYPE name="EERecordVariableSpecification" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <RELATIONSHIPTYPEFIELDS name="ro.EETcpPortPrototype" >
+    <FIELD name="ro.EETcpPortPrototype.V_EE_PortNumber" select="attribute[EETcpPortPrototype.V_EE_PortNumber]" type="NUM" sixw="ds6wg:EETcpPortPrototype.V_EE_PortNumber" />
+  </RELATIONSHIPTYPEFIELDS>
+  <RELATIONSHIPTYPE name="EETcpPortPrototype" includes="ro.EETcpPortPrototype" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <RELATIONSHIPTYPEFIELDS name="ro.EEUdpPortPrototype" >
+    <FIELD name="ro.EEUdpPortPrototype.V_EE_PortNumber" select="attribute[EEUdpPortPrototype.V_EE_PortNumber]" type="NUM" sixw="ds6wg:EEUdpPortPrototype.V_EE_PortNumber" />
+  </RELATIONSHIPTYPEFIELDS>
+  <RELATIONSHIPTYPE name="EEUdpPortPrototype" includes="ro.EEUdpPortPrototype" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- SoftwareArchitecture2 -->
+  <BOTYPE name="EEExecutableEntityRep" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="EECompositionType" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- SoftwareArchitecture3 -->
+  <RELATIONSHIPTYPEFIELDS name="ro.EEClientServerPortPrototype" >
+    <FIELD name="ro.EEClientServerPortPrototype.V_EE_MessageNbMax" select="attribute[EEClientServerPortPrototype.V_EE_MessageNbMax]" type="NUM" sixw="ds6wg:EEClientServerPortPrototype.V_EE_MessageNbMax" />
+    <FIELD name="ro.EEClientServerPortPrototype.V_EE_MessageSizeMax" select="attribute[EEClientServerPortPrototype.V_EE_MessageSizeMax]" type="NUM" sixw="ds6wg:EEClientServerPortPrototype.V_EE_MessageSizeMax" />
+    <FIELD name="ro.EEClientServerPortPrototype.V_EE_SWInterfaceModeEnum" select="attribute[EEClientServerPortPrototype.V_EE_SWInterfaceModeEnum]" type="STRING" sixw="ds6wg:EEClientServerPortPrototype.V_EE_SWInterfaceModeEnum" />
+  </RELATIONSHIPTYPEFIELDS>
+  <RELATIONSHIPTYPE name="EEClientServerPortPrototype" includes="ro.EEClientServerPortPrototype" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPEFIELDS name="bo.EEClientServerInterface" >
+    <FIELD name="bo.EEClientServerInterface.V_EE_MessageNbMax" select="attribute[EEClientServerInterface.V_EE_MessageNbMax]" type="NUM" sixw="ds6wg:EEClientServerInterface.V_EE_MessageNbMax" />
+    <FIELD name="bo.EEClientServerInterface.V_EE_MessageSizeMax" select="attribute[EEClientServerInterface.V_EE_MessageSizeMax]" type="NUM" sixw="ds6wg:EEClientServerInterface.V_EE_MessageSizeMax" />
+    <FIELD name="bo.EEClientServerInterface.isSynchronous" select="attribute[EEClientServerInterface.isSynchronous]" type="BOOLEAN" sixw="ds6wg:EEClientServerInterface.isSynchronous" />
+    <FIELD name="bo.EEClientServerInterface.queueLength" select="attribute[EEClientServerInterface.queueLength]" type="NUM" sixw="ds6wg:EEClientServerInterface.queueLength" />
+  </BOTYPEFIELDS>
+  <BOTYPE name="EEClientServerInterface" includes="bo.EEClientServerInterface" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="EEClientServerInterfaceRep" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPEFIELDS name="bo.EEExecutableEntity" >
+    <FIELD name="bo.EEExecutableEntity.WCET" select="attribute[EEExecutableEntity.WCET]" type="DOUBLE" sixw="ds6wg:EEExecutableEntity.WCET" />
+    <FIELD name="bo.EEExecutableEntity.minimalIntervalStart" select="attribute[EEExecutableEntity.minimalIntervalStart]" type="DOUBLE" sixw="ds6wg:EEExecutableEntity.minimalIntervalStart" />
+  </BOTYPEFIELDS>
+  <BOTYPE name="EEExecutableEntity" includes="bo.EEExecutableEntity" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- TaskActionDS -->
+  <RELATIONSHIPTYPE name="PLMTaskChildActionCusto" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="PLMTaskActionCusto" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <!-- VPMViewsDS -->
+  <BOTYPE name="CAAVPMRefViewConnection" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPE name="CAAVPMRefViewPort" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <RELATIONSHIPTYPE name="CAAVPMRefViewInstance" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPEFIELDS name="bo.CAAVPMReferenceView" >
+    <FIELD name="bo.CAAVPMReferenceView.E_viewName" select="attribute[CAAVPMReferenceView.E_viewName]" type="STRING" sixw="ds6wg:CAAVPMReferenceView.E_viewName" />
+  </BOTYPEFIELDS>
+  <BOTYPE name="CAAVPMReferenceView" includes="bo.CAAVPMReferenceView" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  <RELATIONSHIPTYPE name="CAAVPMRepViewInstance" inheritfields="true" active="true" searchable="true" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPEFIELDS name="bo.CAAVPMRepresentationView" >
+    <FIELD name="bo.CAAVPMRepresentationView.E_viewName" select="attribute[CAAVPMRepresentationView.E_viewName]" type="STRING" sixw="ds6wg:CAAVPMRepresentationView.E_viewName" />
+  </BOTYPEFIELDS>
+  <BOTYPE name="CAAVPMRepresentationView" includes="bo.CAAVPMRepresentationView" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />

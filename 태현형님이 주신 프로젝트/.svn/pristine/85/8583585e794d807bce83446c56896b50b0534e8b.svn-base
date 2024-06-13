@@ -1,0 +1,824 @@
+
+<%@page import="com.matrixone.apps.program.ProgramCentralUtil"%>
+<%@page import="com.daewooenc.mybatis.main.decSQLSessionFactory"%>
+<%@page import="org.apache.ibatis.session.SqlSession"%>
+<%@page import="java.sql.Timestamp"%>
+<%@page import="java.math.RoundingMode"%>
+<%@page import="java.math.BigDecimal"%>
+<%@page import="com.dec.util.DecMatrixUtil"%>
+<%@page import="java.time.temporal.ChronoUnit"%>
+<%@page import="java.time.Period"%>
+<%@page import="java.time.temporal.WeekFields"%>
+<%@page import="java.time.temporal.IsoFields"%>
+<%@page import="java.time.LocalDate"%>
+<%@page import="java.util.Set"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.List"%>
+<%@page import="com.dec.util.DecStringUtil"%>
+<%@page import="com.dec.util.DecDateUtil"%>
+<%@page import="com.matrixone.apps.domain.DomainObject"%>
+<%@page import="com.dec.util.DecConstants"%>
+<%@include file = "../emxUICommonHeaderBeginInclude.inc" %>
+<%@include file = "../emxUICommonAppInclude.inc"%>
+
+<script type="text/javascript" src="../common/scripts/jquery-latest.js"></script>
+<script src="https://code.highcharts.com/stock/highstock.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+<script src="../webapps/ENOAEFStructureBrowser/webroot/common/scripts/decemxUIFreezePane.js"></script>
+<%
+	String sLang = request.getHeader("Accept-Language");
+	String sObjectId = DecConstants.EMPTY_STRING;
+	String sWBSType = DecConstants.EMPTY_STRING;
+	String sProjectCode = emxGetParameter(request,"projectCode");
+	String sDiscipline = emxGetParameter(request,"Discipline");
+	String sBOQKeyItem = emxGetParameter(request,"BOQKeyItem");
+	String sUnit = emxGetParameter(request,"Unit");
+	String sFrom = emxGetParameter(request,"Select_Date_Start");
+	String sTo = emxGetParameter(request,"Select_Date_End");
+	sFrom = DecDateUtil.changeDateFormat(sFrom, "yyyy-MM-dd");
+	sTo = DecDateUtil.changeDateFormat(sTo,  "yyyy-MM-dd");
+	String sWhere = DecConstants.EMPTY_STRING;
+    String sName = DecConstants.EMPTY_STRING;
+    String sTaskId = DecConstants.EMPTY_STRING;
+    String sUOMdesc = DecConstants.EMPTY_STRING;
+    String sKPIDay = DecConstants.EMPTY_STRING;
+    
+	StringList slProjectParam = new StringList();
+	slProjectParam.add(DecConstants.SELECT_ID);
+	
+	boolean bValidateTask = true;
+
+	StringList slSubTaskParam = new StringList();
+	slSubTaskParam.add(DecConstants.SELECT_NAME);
+	slSubTaskParam.add(DecConstants.SELECT_ID);
+	slSubTaskParam.add(DecConstants.SELECT_ATTRIBUTE_DECWBSTYPE);
+	StringList slDiscipline = new StringList();
+	StringList slUnit = new StringList();
+	StringList slUnitOID = new StringList();
+	StringList slItem = new StringList();
+	StringList slCurrentItem = new StringList();
+	DomainObject doCodeMaster = DomainObject.newInstance(context);
+
+	if(DecStringUtil.isEmpty(sDiscipline)){
+		sDiscipline = "PP";
+	}
+	if(DecStringUtil.isNotEmpty(sProjectCode)){
+		sWhere = DecConstants.SELECT_NAME + "=='" + sProjectCode + "'";
+	}
+	
+	MapList mlProject = DomainObject.findObjects(context, DecConstants.TYPE_PROJECT_SPACE, "*", sWhere, slProjectParam);
+	MapList mlCodeDetail = new MapList();
+	List<Map> lKPIASCData = null;
+	List<Map> lKPIItem = new ArrayList<Map>();
+	Map mProject = null;
+	Map mCodeDetail = null;
+	Map mWhere = new HashMap();
+	Map<String, String> mBOQItem = new HashMap();
+	Map<String, String> mDisciplineDesc = new HashMap();
+	Map<String, String> mDPHierarchy = new HashMap();
+	Map<String, String> mDPHierarchyUOM = new HashMap();
+	Map<String, String> mUnitDesc = new HashMap();
+	Map<String, Boolean> mHasDPHierarchyCheck = new HashMap();
+	Map<String, Integer> mPlanMonthCnt = new HashMap();
+	Set<String> setUnit = new HashSet();
+	int iYearPlan			 = 0;
+	int iMonthPlan			 = 0;
+	int iRemainder			 = 0;
+	int iCnt				 = 0;
+	
+	
+	WeekFields wfs = WeekFields.of(Locale.getDefault());
+	
+	BigDecimal bdBetween = null;
+	
+	Date dFrom = null;
+	Date dTo = null;
+	
+	if(mlProject != null && !mlProject.isEmpty()){
+		try ( SqlSession sqlSession = decSQLSessionFactory.getSession() ) {
+		mProject = (Map)mlProject.get(0);
+		sObjectId = (String)mProject.get(DecConstants.SELECT_ID);
+		DomainObject doPS = DomainObject.newInstance(context, sObjectId);
+		sKPIDay = doPS.getAttributeValue(context, DecConstants.ATTRIBUTE_DECKPIDAY).toLowerCase();
+		mWhere.put("SITE_CD", sProjectCode);
+		List<Map> lKPIAllItem = sqlSession.selectList("Project.selectConstructionKPIItem", mWhere);
+		for(int i=0; i<lKPIAllItem.size(); i++){
+			Map mItem = lKPIAllItem.get(i);
+			String sItem = (String)mItem.get("CONSTRUCTION_ITEM");
+			String sUnitOID = (String)mItem.get("UNIT_ID");
+			String sDisc = (String)mItem.get("DISCIPLINE");
+			if(DecStringUtil.isEmpty(sUnit)){
+				sUnit = DecMatrixUtil.getInfo(context, sUnitOID, DecConstants.SELECT_NAME);
+			}
+			if(DecStringUtil.isEmpty(sBOQKeyItem) && sDisc.equals(sDiscipline)){
+				slCurrentItem.add(sItem);
+			}
+			slUnitOID.add(sUnitOID);
+			lKPIItem.add(mItem);
+		}
+		slUnitOID.uniq();
+		String[] sArrUnitOID = slUnitOID.toStringArray();
+		StringList slUnitParam = new StringList();
+		slUnitParam.add(DecConstants.SELECT_ID);
+		slUnitParam.add(DecConstants.SELECT_NAME);
+		slUnitParam.add(DecConstants.SELECT_DESCRIPTION);
+		BusinessObjectWithSelectList bwsl = ProgramCentralUtil.getObjectWithSelectList(context, sArrUnitOID, slUnitParam);
+		Map<String, BusinessObjectWithSelect> mUnitInfo = new HashMap();
+		for(BusinessObjectWithSelect bws : bwsl){
+			slUnit.add(bws.getSelectData(DecConstants.SELECT_NAME));
+			mUnitDesc.put(bws.getSelectData(DecConstants.SELECT_NAME), bws.getSelectData(DecConstants.SELECT_DESCRIPTION));
+		}
+		
+		doCodeMaster.setId(DecMatrixUtil.getObjectId(context, DecConstants.TYPE_DECCODEMASTER, "BOQ Key Item", sProjectCode));
+		
+
+		StringList slSelectParam = new StringList();
+		slSelectParam.add(DecConstants.SELECT_NAME);
+		slSelectParam.add(DecConstants.SELECT_DESCRIPTION);
+		slSelectParam.add("to[" + DecConstants.RELATIONSHIP_DECCODEDETAILRELADD + "].from");
+		slSelectParam.add("to[" + DecConstants.RELATIONSHIP_DECCODEDETAILRELADD + "].from." + DecConstants.SELECT_ATTRIBUTE_DECCODE);
+		slSelectParam.add("to[" + DecConstants.RELATIONSHIP_DECCODEDETAILRELADD + "].from." + DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILTYPE);
+		slSelectParam.add("to[" + DecConstants.RELATIONSHIP_DECCODEDETAILRELADD + "].from." + DecConstants.SELECT_DESCRIPTION);
+		slSelectParam.add("from[" + DecConstants.RELATIONSHIP_DECCODEDETAILREL + "|" + DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILRELATT1 + " == \"Y\"].to.description");
+		
+		
+		mlCodeDetail = doCodeMaster.getRelatedObjects(context
+				, DecConstants.RELATIONSHIP_DECCODEDETAILREL
+				, DecConstants.TYPE_DECCODEDETAIL
+				, slSelectParam
+				, null
+				, false
+				, true
+				, (short) 0
+				, "current == Active && to[" + DecConstants.RELATIONSHIP_DECCODEDETAILRELADD + "].from." + DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILTYPE + " == Discipline"
+				, DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILRELATT1 + " == Y"
+				, 0);
+		
+		for(Object o : mlCodeDetail){
+			mCodeDetail = (Map)o;
+			String sItemName = (String)mCodeDetail.get(DecConstants.SELECT_NAME);
+			String sItemDesc = (String)mCodeDetail.get(DecConstants.SELECT_DESCRIPTION);
+			StringList slDisciplineName = DecStringUtil.getStringListChangeObject(mCodeDetail.get("to[" + DecConstants.RELATIONSHIP_DECCODEDETAILRELADD + "].from"));
+			StringList slDisciplineType = DecStringUtil.getStringListChangeObject(mCodeDetail.get("to[" + DecConstants.RELATIONSHIP_DECCODEDETAILRELADD + "].from." + DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILTYPE));
+			StringList slDisciplineDesc = DecStringUtil.getStringListChangeObject(mCodeDetail.get("to[" + DecConstants.RELATIONSHIP_DECCODEDETAILRELADD + "].from." + DecConstants.SELECT_DESCRIPTION));
+			sUOMdesc = (String)mCodeDetail.get("from[" + DecConstants.RELATIONSHIP_DECCODEDETAILRELADD + "].to.description");
+			for(int i = 0; i<slDisciplineName.size(); i++){
+				if("Discipline".equals(slDisciplineType.get(i))){
+					mDisciplineDesc.put(slDisciplineName.get(i), slDisciplineDesc.get(i));
+					slDiscipline.add(slDisciplineName.get(i));
+					if(slDisciplineName.get(i).equals(sDiscipline)){
+						slItem.add(sItemName);
+						mDPHierarchy.put(sItemName, sItemDesc);
+						mDPHierarchyUOM.put(sItemName, sUOMdesc);
+						if(DecStringUtil.isEmpty(sBOQKeyItem) && slCurrentItem.contains(sItemName)){
+							sBOQKeyItem = sItemName;
+						}
+					}
+				}
+			}
+		}
+		slDiscipline.uniq();
+		if(DecStringUtil.isEmpty(sBOQKeyItem)){
+			sBOQKeyItem = slItem.get(0);
+		}
+		mWhere.put("CONSTRUCTION_ITEM", sBOQKeyItem);
+		mWhere.put("DISCIPLINE", sDiscipline);
+		lKPIASCData = sqlSession.selectList("Project.selectConstructionKPIASC", mWhere);
+		if(!lKPIASCData.isEmpty()){
+			dFrom = new Date(((Timestamp)lKPIASCData.get(0).get("KPIDATE")).getTime());
+			dTo = new Date(((Timestamp)lKPIASCData.get(lKPIASCData.size()-1).get("KPIDATE")).getTime());
+		}
+		if(DecStringUtil.isNotEmpty(sFrom)){
+			dFrom = DecDateUtil.autoChangeDate(sFrom);
+		}
+		
+		if(DecStringUtil.isNotEmpty(sTo)){
+			dTo = DecDateUtil.autoChangeDate(sTo);
+		}
+		
+		if(dFrom != null && dTo != null){
+			mWhere.put("KPIDATE_FROM", sFrom);
+			mWhere.put("KPIDATE_TO", sTo);
+		}
+		lKPIASCData = sqlSession.selectList("Project.selectConstructionKPIASC", mWhere);
+		}catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	BigDecimal bdTarget = null;
+	BigDecimal bdActual = null;
+	BigDecimal bdTotal = null;
+	String sDate = null;
+	int iTargetSum = 0;
+	int iActualSum = 0;
+	Timestamp tsDate = null;
+	Date dDate = null;
+	
+	LocalDate localDate = LocalDate.now();
+%>
+<style>
+	table tr td {
+		border : 2px solid #ffffff;
+		text-align: center;
+	}
+	table .week{
+		min-width: 116px;
+		text-align: center;
+		height: 48px;
+	}
+	table td{
+		height : 30px;
+	}
+	.currentDis{
+		overflow: visible;
+		color: #5b5d5e;
+		background-color: rgb(230, 233, 255);
+		border: 0px;
+		overflow: visible;
+		border-radius: 1px;
+		transition: background-color 2s font-weight 2s;
+		margin: 0px 0px;
+		font-weight: bold; 
+	}
+	.Dis{
+		overflow: visible;
+		color: #5b5d5e;
+		background-color: #F7F7F7;
+		border: 0px;
+		overflow: visible;
+		border-radius: 1px;
+		transition: background-color 2s font-weight 2s;
+	}
+	.column{
+		text-align: left;
+	}
+    body {
+        height: 100%;
+    }
+	summary {
+		cursor: pointer;
+	}
+	.todayColumn{
+		text-align: left;
+		background-color: skyblue !important; 
+	}
+</style>
+<script>
+$(function() {
+	var tableDivleft = document.getElementById('tableDivleft');
+	var scheduleTable = document.getElementById('scheduleTable');
+	var tableDivright = document.getElementById('tableDivright');
+	var summaryTable = document.getElementById('summaryTable');
+	var tableDivBorder = document.getElementById('tableDivBorder');
+	var column = document.getElementById('column');
+	var container = document.getElementById('container');
+	var popup = document.getElementById('popup');
+	var columnWidth = column.clientWidth;
+	var summaryTableClientWidth = summaryTable.clientWidth;
+	var tableDivBorderWidth = tableDivBorder.clientWidth;
+	var actual = new Date(<%=dFrom != null ? dFrom.getTime() : ""%>);
+	var expect = new Date(<%=dTo != null ? dTo.getTime() : ""%>);
+	var actualTime = actual.getTime();
+	var expectTime = expect.getTime();
+	var tableDivleftWidth = 0;
+	var tableDivRightWidth = 0;
+	var todayDate = new Date();
+	tableDivleft.style.width = summaryTableClientWidth + "px";
+	tableDivright.style.width = summaryTableClientWidth + "px";
+	tableDivleft.style.overflow = "hidden";
+    /* chart type은 chart, series안에서도 각각 줄수가 있다. */
+    
+	const observer1 = new ResizeObserver(entries => {
+		setContainerHeight();
+	});
+	observer1.observe(scheduleTable);
+	function setContainerHeight(){
+		container.style.height = (document.body.clientHeight - popup.clientHeight - 40 - scheduleTable.clientHeight) + "px";
+	}
+	setContainerHeight();
+    var chart1 = new Highcharts.stockChart({
+        rangeSelector: {
+        	buttonPosition: {
+            	align: 'left',
+            	x:-32
+        	},
+            buttons: [
+          // week 기준으로 1m는 항상 비활성화
+          //{
+          //    type: 'month',
+          //    count: 1,
+          //    text: '1m',
+          //    events: {
+          //        click: function () {
+          //       	 var minDate = new Date().setDate(todayDate.getDate()-15);
+          //       	 var maxDate = new Date().setDate(todayDate.getDate()+15);
+          //       	 if(actualTime > minDate){
+          //       		 minDate = actualTime;
+          //       		 maxDate += (actualTime-minDate);
+          //       	 }
+          //       	 if(expectTime < maxDate){
+          //       		 maxDate = expectTime; 
+          //       		 minDate -= (maxDate-expectTime);
+          //       	 }
+          //       	 chart1.xAxis[0].setExtremes(minDate, maxDate);
+          //       	 return false;
+          //        }
+          //    }
+          //}, 
+            {
+                type: 'month',
+                count: 3,
+                text: '3m',
+                events: {
+                    click: function () {
+                   	 var minDate = new Date().setDate(todayDate.getDate()-45);
+                   	 var maxDate = new Date().setDate(todayDate.getDate()+45);
+                   	 if(actualTime > maxDate && expectTime > maxDate){
+                   		 return true;
+                   	 }else if(actualTime < minDate && expectTime < minDate){
+                   		 return true;
+                   	 }
+                   	 if(actualTime > minDate){
+                   		 maxDate += (actualTime-minDate);
+                   		 minDate = actualTime;
+                   	 }
+                   	 if(expectTime < maxDate){
+                   		 minDate -= (maxDate-expectTime);
+                   		 maxDate = expectTime;
+                   	 }
+                   	 chart1.xAxis[0].setExtremes(minDate, maxDate);
+                   	 return false;
+                    }
+                }
+            }, {
+                type: 'month',
+                count: 6,
+                text: '6m',
+                events: {
+                    click: function () {
+                   	 var minDate = new Date(todayDate).setMonth(todayDate.getMonth()-3);
+                   	 var maxDate = new Date(todayDate).setMonth(todayDate.getMonth()+3);
+                   	 if(actualTime > maxDate && expectTime > maxDate){
+                   		 return true;
+                   	 }else if(actualTime < minDate && expectTime < minDate){
+                   		 return true;
+                   	 }
+                   	 if(actualTime > minDate){
+                   		 maxDate += (actualTime-minDate);
+                   		 minDate = actualTime;
+                   	 }
+                   	 if(expectTime < maxDate){
+                   		 minDate -= (maxDate-expectTime);
+                   		 maxDate = expectTime;
+                   	 }
+                   	 chart1.xAxis[0].setExtremes(minDate, maxDate);
+                   	 return false;
+                    }
+                }
+            }, {
+                type: 'year',
+                count: 1,
+                text: '1y',
+                events: {
+                    click: function () {
+                   	 var minDate = new Date(todayDate).setMonth(todayDate.getMonth()-6);
+                   	 var maxDate = new Date(todayDate).setMonth(todayDate.getMonth()+6);
+                   	 if(actualTime > maxDate && expectTime > maxDate){
+                   		 return true;
+                   	 }else if(actualTime < minDate && expectTime < minDate){
+                   		 return true;
+                   	 }
+                   	 if(actualTime > minDate){
+                   		 maxDate += (actualTime-minDate);
+                   		 minDate = actualTime;
+                   	 }
+                   	 if(expectTime < maxDate){
+                   		 minDate -= (maxDate-expectTime);
+                   		 maxDate = expectTime;
+                   	 }
+                   	 chart1.xAxis[0].setExtremes(minDate, maxDate);
+                   	 return false;
+                    }
+                }
+            }, {
+                type: 'all',
+                text: 'All'
+            }]
+        },
+    	 title:{
+         	text : ''
+         },
+         credits: {
+             enabled: false
+         },
+         chart: {
+             renderTo: 'container',
+             type: 'line'
+
+         },
+         legend: {
+     	    enabled: true,
+     	    labelFormatter: function() {
+     	        return this.name;
+     	    }
+         },
+         tooltip: {
+             //   valueSuffix: '',
+                  split: false,
+                  distance: 30,
+                  padding : 5
+         },
+         xAxis: {
+        	 <%
+	 	    	Map<String, Integer> mDayNum = new HashMap();
+	 	    	mDayNum.put("monday"   , 1);
+	 	    	mDayNum.put("tuesday"  , 2);
+	 	    	mDayNum.put("wednesday", 3);
+	 	    	mDayNum.put("thursday" , 4);
+	 	    	mDayNum.put("friday"   , 5);
+	 	    	mDayNum.put("saturday" , 6);
+	 	    	mDayNum.put("sunday"   , 7);
+	 	    	Integer iDayNum = mDayNum.get(localDate.getDayOfWeek().name().toLowerCase());
+	 	    	// 오늘이 토/일인 경우
+	 	    	if(iDayNum > 5){
+		 	    	localDate = localDate.plusDays(7);
+	 	    	}
+	 	    	localDate = localDate.minusDays(iDayNum);
+	 	    	iDayNum = mDayNum.getOrDefault(sKPIDay, 0);
+	 	    	localDate = localDate.plusDays(iDayNum);
+	 	    	Date dTodayKey = java.sql.Date.valueOf(localDate);
+	 	    	String sTodayKey = DecDateUtil.changeDateFormat(dTodayKey, new SimpleDateFormat("dd-MMM-yy", Locale.ENGLISH));
+	 	    	localDate = localDate.minusDays(3);
+        	 %>
+        	 plotBands: [{
+        		    color: 'skyblue', // Color value
+        		    from: new Date("<%=localDate.getYear()%>/<%=localDate.getMonthValue()%>/<%=localDate.getDayOfMonth()%> 01:00:00").getTime(), // Start of the plot band
+        		    <%localDate = localDate.plusDays(6);%>
+        		    to: new Date("<%=localDate.getYear()%>/<%=localDate.getMonthValue()%>/<%=localDate.getDayOfMonth()%> 24:00:00").getTime() // End of the plot band
+        	 }],
+        	 events: {
+                 setExtremes: function(e) {
+                	 if(tableDivBorderWidth < summaryTableClientWidth){
+	                	 var min = e.min;
+	                	 var max = e.max;
+	                	 var minDate = new Date(min); 
+	                	 var maxDate = new Date(max);
+	                	 if(minDate > maxDate){
+	                		 minDate = new Date(max);
+	                    	 maxDate = new Date(min);
+	                	 }
+	                	 var changeLeftWidth = 0;
+	                	 var changeRightWidth = 0;
+	                	 if(minDate > actual){
+	                		 changeLeftWidth = Math.floor((minDate - actual) / 604800000) * columnWidth;
+	                	 }else{
+	                		 changeLeftWidth = 0;
+	                	 }
+	                	 if(maxDate < expect){
+	                		 changeRightWidth = Math.floor((expect - maxDate) / 604800000) * columnWidth;
+	                	 }else{
+	                		 changeRightWidth = 0;
+	                	 }
+	            		 tableDivleftWidth = (summaryTableClientWidth - changeLeftWidth - changeRightWidth);
+	            		 tableDivRightWidth = (summaryTableClientWidth - changeRightWidth);
+	                	 if(tableDivleftWidth < tableDivBorderWidth){
+	                		 tableDivleftWidth = tableDivBorderWidth + columnWidth - (tableDivBorderWidth % columnWidth);
+	                	 }
+	                	 if(tableDivRightWidth < tableDivBorderWidth){
+	                		 tableDivRightWidth = tableDivBorderWidth + columnWidth - (tableDivBorderWidth % columnWidth);
+	                	 }
+	                	 if(tableDivBorderWidth > (tableDivRightWidth - changeLeftWidth)){
+	                		 tableDivRightWidth = (tableDivBorderWidth + changeLeftWidth) - (tableDivBorderWidth % columnWeekWidth);
+	                		 if(tableDivRightWidth > summaryTableClientWidth){
+	                			 tableDivRightWidth = summaryTableClientWidth;
+	                		 }
+	                	 }
+	                     tableDivleft.style.width = tableDivleftWidth + "px";
+	                     tableDivright.style.width = tableDivRightWidth + "px";
+                	 }
+                 }
+             }
+         },
+         yAxis : [{// Primary yAxis
+        	 min: 0,
+             gridLineWidth: 0,
+             labels: {
+               format: '{value:1f}',
+               style: {
+                 color: Highcharts.getOptions().colors[1]
+               }
+             },
+             title: {
+         //    text: 'Weekly',
+               text: '<%=mDPHierarchy.getOrDefault(sBOQKeyItem, DecConstants.EMPTY_STRING)%>(<%=sBOQKeyItem%>)',
+               style: {
+                 color: Highcharts.getOptions().colors[1]
+               }
+             },
+             opposite: false
+         },{ // Secondary yAxis
+        	 min: 0,
+             gridLineWidth: 0,
+             title: {
+               text: 'Cumulative',
+               style: {
+                 color: Highcharts.getOptions().colors[0]
+               }
+             },
+             labels: {
+               format: '{value:1f}',
+               style: {
+                 color: Highcharts.getOptions().colors[0]
+               }
+             }
+         }],
+         series: [
+             {
+                 name: 'Target Weekly',
+                 yAxis: 0,
+                 type: 'column',
+                 data: [
+                	 <%for(Map mKPIData : lKPIASCData){
+                		 bdTarget = (BigDecimal)mKPIData.get("TARGET");
+                		 tsDate = (Timestamp)mKPIData.get("KPIDATE");
+                		 dDate = DecDateUtil.autoChangeDate(tsDate.toString());
+                		 sDate = DecDateUtil.changeDateFormat(dDate, "yyyy/MM/dd");
+                	 %>
+                	 [new Date("<%=sDate%>" + " 12:00:00").getTime(),<%=bdTarget.intValue()%>], 
+                	 <%}%>
+                	 ]
+             }
+             ,
+             {
+                 name: 'Actual Weekly',
+                 yAxis: 0,
+                 type: 'column',
+                 data: [
+                	 <%for(Map mKPIData : lKPIASCData){
+                		 bdActual = (BigDecimal)mKPIData.get("ACTUAL");
+                		 tsDate = (Timestamp)mKPIData.get("KPIDATE");
+                		 dDate = DecDateUtil.autoChangeDate(tsDate.toString());
+                		 sDate = DecDateUtil.changeDateFormat(dDate, "yyyy/MM/dd");
+                	 %>
+                	 [new Date("<%=sDate%>" + " 12:00:00").getTime(),<%=bdActual.intValue()%>], 
+                	 <%}%>
+                	 ]
+             }
+             ,
+             {
+                 name: 'Target Cumulative',
+                 yAxis: 1,
+                 data: [
+                	 <%for(Map mKPIData : lKPIASCData){
+                		 bdTarget = (BigDecimal)mKPIData.get("TARGET");
+                		 iTargetSum += bdTarget.intValue();
+                		 tsDate = (Timestamp)mKPIData.get("KPIDATE");
+                		 dDate = DecDateUtil.autoChangeDate(tsDate.toString());
+                		 sDate = DecDateUtil.changeDateFormat(dDate, "yyyy/MM/dd");
+                	 %>
+                	 [new Date("<%=sDate%>" + " 12:00:00").getTime(),<%=iTargetSum%>], 
+                	 <%}%>
+                	 ]
+             }
+             ,
+             {
+                 name: 'Actual Cumulative',
+                 yAxis: 1,
+                 data: [
+                	 <%for(Map mKPIData : lKPIASCData){
+                		 bdActual = (BigDecimal)mKPIData.get("ACTUAL");
+                		 iActualSum += bdActual.intValue();
+                		 tsDate = (Timestamp)mKPIData.get("KPIDATE");
+                		 dDate = DecDateUtil.autoChangeDate(tsDate.toString());
+                		 sDate = DecDateUtil.changeDateFormat(dDate, "yyyy/MM/dd");
+                	 %>
+                	 [new Date("<%=sDate%>" + " 12:00:00").getTime(),<%=iActualSum%>], 
+                	 <%}%>
+                	 ]
+             }
+             ,
+             {
+                 name: 'Total Q\'ty',
+                 yAxis: 1,
+                 data: [
+                	 <%for(Map mKPIData : lKPIASCData){
+                		 bdTotal = (BigDecimal)mKPIData.get("TOTAL");
+                		 tsDate = (Timestamp)mKPIData.get("KPIDATE");
+                		 dDate = DecDateUtil.autoChangeDate(tsDate.toString());
+                		 sDate = DecDateUtil.changeDateFormat(dDate, "yyyy/MM/dd");
+                	 %>
+                	 [new Date("<%=sDate%>" + " 12:00:00").getTime(),<%=bdTotal.intValue()%>], 
+                	 <%}%>
+                	 ]
+             }
+             ]
+     });
+	window.onresize = function() {
+    	setContainerHeight();
+    	columnWidth = column.clientWidth;
+    	summaryTableClientWidth = summaryTable.clientWidth;
+    	tableDivBorderWidth = tableDivBorder.clientWidth;
+    	tableDivleft.style.width = summaryTableClientWidth + "px";
+    	tableDivright.style.width = summaryTableClientWidth + "px";
+        setChangeHeader();
+	}
+    function setChangeHeader(){
+	  	toolBtn = document.getElementsByClassName('highcharts-label');
+	   	var x = toolBtn[0].getBoundingClientRect().x;
+	   	document.getElementById('changeHeader').style.marginLeft = x + 'px';
+    }
+    setChangeHeader();
+ });
+ function linkUnit(val){
+	 document.location.href='<%=XSSUtil.encodeForJavaScript(context,"decDashboardConstructionKPI.jsp?projectCode=" + sProjectCode + "&Unit=")%>' + val;
+ }
+</script>
+<%
+iTargetSum = 0;
+iActualSum = 0;
+%>
+<link rel="stylesheet" href="../webapps/UIKIT/UIKIT.css" type="text/css" />
+<body>
+	<header id="changeHeader" style="margin-left: 10px;">
+	<div style="text-align: left; margin-bottom:10px; margin-top:10px; display:flow-root;">
+	<select name="Unit" onchange="linkUnit(this.value);">
+	<%for(int i=0; i<slUnit.size(); i++){ %>
+	<%	String sUnitName = slUnit.get(i); 
+		String sUnitDesc = mUnitDesc.get(sUnitName);
+	%>
+	<%if(DecStringUtil.equals(sUnit, sUnitName)){ %>
+	<option value="<%=sUnitName%>" selected="selected" ><%=sUnitName %> <%=sUnitDesc%></option>
+	<%}else{%>
+	<option value="<%=sUnitName%>"><%=sUnitName%> <%=sUnitDesc%></option>
+	<%} %>
+	<%} %>
+	</select>
+	</div>
+	<header style="text-align: left; margin-bottom:10px; margin-top:10px; box-sizing: border-box;">
+	<%for(String sPline : slDiscipline){%>
+		<%if(sPline.equals(sDiscipline)){%>
+		<button class="currentDis">
+		<%}else{ %>
+		<button class="Dis" onclick="location.href='<%=XSSUtil.encodeForJavaScript(context,"decDashboardConstructionKPI.jsp?projectCode=" + sProjectCode + "&Discipline=" + sPline + "&Unit=" + sUnit)%>'">
+		<%} %>
+		<%=mDisciplineDesc.get(sPline)%>
+	</button>
+	<%} %>
+	</header>
+	<div style="display:flow-root;">
+	<header style="text-align: left; margin-bottom:3px; box-sizing: border-box;">
+	<%for(String sItem : slItem){ %>
+		<%if(DecStringUtil.equals(sItem, sBOQKeyItem)){ %>
+		<button class="currentDis">
+		<%}else{%>
+		<button class="Dis" onclick="location.href='<%=XSSUtil.encodeForJavaScript(context,"decDashboardConstructionKPI.jsp?projectCode=" + sProjectCode + "&Discipline=" + sDiscipline + "&BOQKeyItem=" + sItem + "&Unit=" + sUnit)%>'">
+		<%} %>
+		<%=mDPHierarchy.get(sItem)%>
+		</button>
+	<%} %>
+		<header id="popup" style="text-align: right;  float: right; box-sizing: border-box; margin-right: 10px;">
+		<h4 style="margin-top:0px; margin-bottom:0px;">
+		Construction KPI&emsp;
+		<a href=JavaScript:window.open("emxTree.jsp?DefaultCategory=decConstructionKPIList&objectId=<%=sObjectId%>");><img src="images/iconActionNewWindow.png" border="0"></a>
+		&emsp;<img src="../common/images/iconActionSearchSpyGlass.png" onclick='showFilterSlideinDialog("objectId=<%=sObjectId%>&filterParam=Select_Date:true&showHierarchyFrame=false")' style="cursor: pointer;">
+		</h4>
+		</header>
+	</header>
+	</div>
+	</header>
+	<div id="container"></div>
+   <details id="scheduleTable">
+   	<summary>Summary</summary>
+   		<div style="float: left;">
+		   	<table class="grid">
+		   		<tbody>
+		   			<tr>
+		   				<th class="week">Unit</th>
+		   				<th class="week">Construction Item</th>
+		   				<th class="week" colspan="2">Target/Actual</th>
+		   				<th class="week">UOM</th>
+		   			</tr>
+		   			<tr>
+		   				<td rowspan="5"><%=DecStringUtil.nullToEmpty(sUnit)%></td>
+		   				<td rowspan="5"><%=DecStringUtil.nullToEmpty(mDPHierarchy.get(sBOQKeyItem))%></td>
+		   				<td colspan="2">Total Q'ty</td>
+		   				<td rowspan="5"><%=DecStringUtil.nullToEmpty(mDPHierarchyUOM.get(sBOQKeyItem))%></td>
+		   			</tr>
+		   			<tr>
+		   				<td rowspan="2">Target</td>
+		   				<td>Weekly</td>
+		   			</tr>
+		   			<tr>
+		   				<td>Cumulative</td>
+		   			</tr>
+		   			<tr>
+		   				<td rowspan="2">Actual</td>
+		   				<td>Weekly</td>
+		   			</tr>
+		   			<tr>
+		   				<td>Cumulative</td>
+		   			</tr>
+		   		</tbody>
+		   	</table>
+		</div>
+   	<div id="tableDivBorder" style="overflow: auto;">
+	   	<div id="tableDivleft" style="float:left;">
+	   	<div id="tableDivright" style="float:right;">
+		   	<table id="summaryTable" class="grid">
+		   		<tbody>
+		   			<tr> 
+		   			<%for(Map mKPIData : lKPIASCData){
+                		tsDate = (Timestamp)mKPIData.get("KPIDATE");
+                		dDate = DecDateUtil.autoChangeDate(tsDate.toString());
+                		sDate = DecDateUtil.changeDateFormat(dDate, new SimpleDateFormat("dd-MMM-yy", Locale.ENGLISH));
+                	%>
+		   				<th id="column" class="week">
+		   					<%=sDate%>
+		   				</th>
+		   			<%}%>
+		   			</tr>
+		   			<tr>
+		   			<%for(Map mKPIData : lKPIASCData){
+		   				bdTotal = (BigDecimal)mKPIData.get("TOTAL");
+               			tsDate = (Timestamp)mKPIData.get("KPIDATE");
+               			dDate = DecDateUtil.autoChangeDate(tsDate.toString());
+               			sDate = DecDateUtil.changeDateFormat(dDate, new SimpleDateFormat("dd-MMM-yy", Locale.ENGLISH));
+               			if(sTodayKey.equals(sDate)){
+                	%>
+			   			<td class="todayColumn">
+		   				<%}else{%>
+		   				<td class="column">
+		   				<%} %>
+		   				<%=bdTotal.intValue()%></td>
+		   			<%}%>
+		   			</tr>
+		   			<tr>
+		   			<%for(Map mKPIData : lKPIASCData){
+		   				bdTarget = (BigDecimal)mKPIData.get("TARGET");
+                		tsDate = (Timestamp)mKPIData.get("KPIDATE");
+                		dDate = DecDateUtil.autoChangeDate(tsDate.toString());
+                		sDate = DecDateUtil.changeDateFormat(dDate, new SimpleDateFormat("dd-MMM-yy", Locale.ENGLISH));
+               			if(sTodayKey.equals(sDate)){
+                	%>
+			   			<td class="todayColumn">
+		   				<%}else{%>
+		   				<td class="column">
+		   				<%} %>
+		   				<%=bdTarget.intValue()%></td>
+		   			<%}%>
+		   			</tr>
+		   			<tr>
+		   			<%for(Map mKPIData : lKPIASCData){
+		   				bdTarget = (BigDecimal)mKPIData.get("TARGET");
+                		tsDate = (Timestamp)mKPIData.get("KPIDATE");
+                		dDate = DecDateUtil.autoChangeDate(tsDate.toString());
+                		sDate = DecDateUtil.changeDateFormat(dDate, new SimpleDateFormat("dd-MMM-yy", Locale.ENGLISH));
+		   				iTargetSum += bdTarget.intValue();
+               			if(sTodayKey.equals(sDate)){
+                	%>
+			   			<td class="todayColumn">
+		   				<%}else{%>
+		   				<td class="column">
+		   				<%} %>
+		   				<%=iTargetSum%></td>
+		   			<%}%>
+		   			</tr>
+		   			<tr>
+		   			<%for(Map mKPIData : lKPIASCData){
+		   			 	bdActual = (BigDecimal)mKPIData.get("ACTUAL");
+                		tsDate = (Timestamp)mKPIData.get("KPIDATE");
+                		dDate = DecDateUtil.autoChangeDate(tsDate.toString());
+                		sDate = DecDateUtil.changeDateFormat(dDate, new SimpleDateFormat("dd-MMM-yy", Locale.ENGLISH));
+               			if(sTodayKey.equals(sDate)){
+                	%>
+			   			<td class="todayColumn">
+		   				<%}else{%>
+		   				<td class="column">
+		   				<%} %>
+		   				<%=bdActual.intValue()%></td>
+		   			<%}%>
+		   			</tr>
+		   			<tr>
+		   			<%for(Map mKPIData : lKPIASCData){
+		   				bdActual = (BigDecimal)mKPIData.get("ACTUAL");
+                		tsDate = (Timestamp)mKPIData.get("KPIDATE");
+                		dDate = DecDateUtil.autoChangeDate(tsDate.toString());
+                		sDate = DecDateUtil.changeDateFormat(dDate, new SimpleDateFormat("dd-MMM-yy", Locale.ENGLISH));
+		   				iActualSum += bdActual.intValue();
+               			if(sTodayKey.equals(sDate)){
+                	%>
+			   			<td class="todayColumn">
+		   				<%}else{%>
+		   				<td class="column">
+		   				<%} %>
+		   				<%=iActualSum%></td>
+		   			<%}%>
+		   			</tr>
+		   		</tbody>
+		   	</table>
+	   	</div>
+	   	</div>
+   	</div>
+   </details>
+</body>

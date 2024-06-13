@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Styles xmlns:syp="http://www.3ds.com/xsd/SYP">
+
+    <!-- Command headers -->
+    <Template syp:name="CompareHeaders" Target="CATCmdHeadersList">
+         <CATCmdHeadersList>
+            <CATCommandHeader ID="OverviewHomeHdr" HelpResourceFile="CompareWidget/help" ClassName="DS/CompareWidget/CompareWidgetCmd" ResourceFile="CompareWidget/CompareWidgetCmd" Available="1" />
+            <CATCommandHeader ID="OverviewUpHdr" HelpResourceFile="CompareWidget/help" ClassName="DS/CompareWidget/CompareWidgetCmd" ResourceFile="CompareWidget/CompareWidgetCmd" Available="1" />
+            <CATCommandHeader ID="OverviewDownHdr" HelpResourceFile="CompareWidget/help" ClassName="DS/CompareWidget/CompareWidgetCmd" ResourceFile="CompareWidget/CompareWidgetCmd" Available="1" />
+ 
+            <CATCommandHeader ID="ToggleViewHdr" HelpResourceFile="CompareWidget/help" ClassName="DS/CompareWidget/CompareWidgetCmd" ResourceFile="CompareWidget/CompareWidgetCmd" Available="1" />
+            <CATCommandHeader ID="ToggleAttrHdr" HelpResourceFile="CompareWidget/help" ClassName="DS/CompareWidget/CompareWidgetCmd" ResourceFile="CompareWidget/CompareWidgetCmd" Available="1" />
+            <CATCommandHeader ID="ToggleOverviewHdr" HelpResourceFile="CompareWidget/help" ClassName="DS/CompareWidget/CompareWidgetCmd" ResourceFile="CompareWidget/CompareWidgetCmd" Available="1" />
+            <CATCommandHeader ID="ToggleLegendHdr" HelpResourceFile="CompareWidget/help" ClassName="DS/CompareWidget/CompareWidgetCmd" ResourceFile="CompareWidget/CompareWidgetCmd" Available="1" />
+ 
+            <CATCommandHeader ID="CustomizeRowsHdr" HelpResourceFile="CompareWidget/help" ClassName="DS/CompareWidget/CompareWidgetCmd" ResourceFile="CompareWidget/CompareWidgetCmd" Available="1" />
+            <CATCommandHeader ID="CompareExportHdr" HelpResourceFile="CompareWidget/help" ClassName="DS/CompareWidget/CompareWidgetCmd" ResourceFile="CompareWidget/CompareWidgetCmd" Available="1" />
+            <CATCommandHeader ID="SwapColumnsHdr" HelpResourceFile="CompareWidget/help" ClassName="DS/CompareWidget/CompareWidgetCmd" ResourceFile="CompareWidget/CompareWidgetCmd" Available="1" />
+
+            <CATCommandHeader ID="RefreshHdr" HelpResourceFile="CompareWidget/help" ClassName="DS/CompareWidget/CompareWidgetCmd" ResourceFile="CompareWidget/CompareWidgetCmd" Available="1" />
+            <CATCommandHeader ID="RemoveAllHdr" HelpResourceFile="CompareWidget/help" ClassName="DS/CompareWidget/CompareWidgetCmd" ResourceFile="CompareWidget/CompareWidgetCmd" Available="1" />
+        </CATCmdHeadersList>
+    </Template>
+
+    <!-- Command Starters -->
+    <Template syp:name="CompareWkbAccess" Target="CATCmdWorkbench">
+        <CATCmdWorkbench Name="CompareWkb">
+            <CATCmdContainer Name="Compare" RepresentationType="AfrActionBarSection">
+                <CATCmdStarter Name="OverviewHome" Command="OverviewHomeHdr" />
+                <CATCmdStarter Name="OverviewUp" Command="OverviewUpHdr" />
+                <CATCmdStarter Name="OverviewDown" Command="OverviewDownHdr" />
+                <CATCmdSeparator />
+                <CATCmdStarter Name="ToggleListView" Command="ToggleViewHdr" />
+                <CATCmdStarter Name="ToggleAttr" Command="ToggleAttrHdr" />
+                <CATCmdStarter Name="ToggleOverview" Command="ToggleOverviewHdr" />
+                <CATCmdStarter Name="ToggleLegend" Command="ToggleLegendHdr" />
+                <CATCmdSeparator />
+                <CATCmdStarter Name="CustomizeRows" Command="CustomizeRowsHdr" />
+                <CATCmdStarter Name="CompareExport" Command="CompareExportHdr" />
+                <CATCmdStarter Name="SwapColumns" Command="SwapColumnsHdr" />
+                <CATCmdSeparator />
+                <CATCmdStarter Name="Refresh" Command="RefreshHdr" />
+                <CATCmdStarter Name="RemoveAll" Command="RemoveAllHdr" />
+            </CATCmdContainer>
+        </CATCmdWorkbench>
+    </Template>
+</Styles>

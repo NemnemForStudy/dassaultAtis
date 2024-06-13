@@ -1,0 +1,1 @@
+define("DS/IPClassifyUtil/IPClassifyUtil_de",{});define("DS/IPClassifyUtil/assets/nls/IPClassifyUtil",{msg_InfoAction_Timeout:"Keine Antwort von der gestarteten Aktion innerhalb der Zeitüberschreitung erhalten. Die Ausführung kann mehr Zeit beanspruchen. Das Ergebnis wird kurz nach der manuellen Aktualisierung angezeigt."});

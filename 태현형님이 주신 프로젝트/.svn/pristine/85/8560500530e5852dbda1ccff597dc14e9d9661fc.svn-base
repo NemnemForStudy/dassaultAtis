@@ -1,0 +1,1 @@
+define("DS/DELWeb3DUtils/DELWeb3DUtils_ja",{});define("DS/DELWeb3DUtils/assets/nls/Messages",{"Warn.Timeout.Message":"Web サービス要求がタイムアウトしました。タイムアウトを延長するか、しばらくしてからやり直してください"});

@@ -1,0 +1,854 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="IF_Material">
+	<select id="selectMaterialList" parameterType="map" resultType="map">
+		SELECT rownum, RESULT.* 
+		  FROM (
+				SELECT MAT.SITE_CD, MAT.DCPLN_CD, MAT.AREA_NM, MAT.UNIT_NM, MAT.CWP_NO
+					 , MAT.SYS_NM, MAT.LINE_NO, MAT.LVL_NM, MAT.ISO_NO, MAT.REV_NO
+					 , MAT.IDENT_CD, MAT.ITEM_NO, MAT.TIO_NO, MAT.SUB_SYS_NM, MAT.DELI_DEST_NM
+					 , MAT.PRFR_GRP_CD, MAT.PRFR_RANK, MAT.ITEM_GRP_CD, MAT.GRP_CD, MAT.GRP_SHORTDESC
+					 , MAT.PART_CD, MAT.PART_SHORTDESC, MAT.COMMODITY_CD, MAT.COMMODITY_SHORTDESC, MAT.SPEC_CD
+					 , MAT.SHRT_CD, MAT.SIZE1, MAT.SIZE2, MAT.SIZE3, MAT.SIZE4
+					 , MAT.BASE_MAT_CD, MAT.RAT_CD, MAT.SUB_TAG_NO, MAT.PID_NO, MAT.CHR_VAL1
+					 , MAT.CHR_VAL2, MAT.CHR_VAL3, MAT.CHR_VAL4, MAT.DES_QTY, MAT.ALLOC_QTY
+					 , MAT.UNT_CD, MAT.WGT, MAT.DIA_WIDTH, MAT.ITEM_STS_CD, MAT.DOCNO, MAT.STS_EDIT_DT
+					 , MAT.MR_NO, MAT.PO_OUT_NO, MAT.VOYAGE_NO, MAT.PACKAGE_NO, MAT.SITE_INWH_DEMYMD
+					 , MAT.DELAY_NO, MAT.ETA, MAT.ATA, MAT.FNL_ETA_YMD, MAT.MAT_STS_CD
+					 , MAT.FAB_CAT_CD, MAT.STRH_CD, MAT.ORG_CD, MAT.ALLOC_EXEC_NO
+					 , MAT.ALLOC_DT, MAT.FAB_CAT_NM
+					 , MAT.ITEM_STS_NM, MAT.NEXT_STEP_NM, MAT.MAT_STS_NM, MAT.OBJ_TP_CD, MAT.OFW_QTY
+					 <choose>
+					 	<when test="@com.dec.util.DecStringUtil@isNotEmpty(CWP_NO)">
+					 	, MAT.SITE_CD || '@' || MAT.CWP_NO || '@' || MAT.LINE_NO || '@' || MAT.ISO_NO || '@' || MAT.IDENT_CD AS ID
+					 	</when>
+					 	<otherwise>
+					 	, CWP.OBJECTID AS ID
+					 	</otherwise>
+					 </choose>
+					 , MAT.CWP_NO AS NAME
+					 , NVL(IWP.IWP_NO, MAT.IWP_NO) AS IWP_NO
+				  FROM X3DDEC_ADMIN.IF_MATERIAL_LIST_IN MAT
+				  LEFT OUTER JOIN X3DDEC_ADMIN.IF_CWP_LIST_OUT CWP
+				  ON (
+				  	MAT.SITE_CD = CWP.SITE_CD 
+				  	AND MAT.DCPLN_CD = CWP.DCPLN_CD 
+				  	AND MAT.CWP_NO = CWP.CWP_NO 
+				  )
+				  LEFT OUTER JOIN X3DDEC_ADMIN.DEC_IWP_MATERIAL_LIST IWP
+				  ON (
+				  	MAT.SITE_CD = IWP.SITE_CD 
+				  	AND MAT.CWP_NO  = IWP.CWP_NO 
+				  	AND MAT.LINE_NO = IWP.LINE_NO 
+				  	AND MAT.ISO_NO = IWP.ISO_NO 
+				  	AND MAT.IDENT_CD = IWP.IDENT_CD
+				  )
+				 WHERE MAT.SITE_CD = #{SITE_CD}
+			 	<if test="@com.dec.util.DecStringUtil@isNotEmpty(CWP_NO)">AND MAT.CWP_NO = #{CWP_NO}</if>
+			 	<if test="@com.dec.util.DecStringUtil@isNotEmpty(STS_EDIT_DT_FROM) and @com.dec.util.DecStringUtil@isNotEmpty(STS_EDIT_DT_TO)">
+			 		AND MAT.STS_EDIT_DT BETWEEN #{STS_EDIT_DT_FROM} AND #{STS_EDIT_DT_TO}
+			 	</if>
+			 	<if test="@com.dec.util.DecStringUtil@isNotEmpty(whereExpr)">AND ${whereExpr}</if>
+		  ) RESULT
+	</select>
+	
+	<select id="selectCWPMaterialList" parameterType="map" resultType="map">
+		SELECT *
+		  FROM (
+			SELECT FMCS.SITE_CD, EPC.CWA_NO, FMCS.DCPLN_CD, FMCS.CWP_NO, FMCS.FAB_CAT_CD, FMCS.FAB_CAT_NM
+				 , FMCS.UNIT_NM, FMCS.AREA_NM, FMCS.ORG_CD, FMCS.SYS_NM, FMCS.SUB_SYS_NM
+				 , FMCS.PRFR_GRP_CD, FMCS.PRFR_RANK, FMCS.OBJ_TP_CD, FMCS.ITEM_GRP_CD, FMCS.WKOP_ABLE_YMD
+				 , FMCS.MAT_STS_CD, FMCS.MAT_STS_NM
+				 , FMCS.TOT_ITEM_QTY, FMCS.ALLOC_ITEM_QTY, FMCS.INV_ITEM_QTY, FMCS.INV_ITEM_RT AS INV_ITEM_RT
+				 , FMCS.TOT_DI_QTY, FMCS.ALLOC_DI_QTY, FMCS.INV_DI_QTY, FMCS.INV_DI_RT AS INV_DI_RT
+				 , FMCS.TOT_BM_QTY, FMCS.ALLOC_BM_QTY, FMCS.INV_BM_QTY, FMCS.INV_BM_RT AS INV_BM_RT
+				 , FMCS.TOT_WGT, FMCS.ALLOC_WGT, FMCS.INV_WGT, FMCS.INV_WGT_RT AS INV_WGT_RT
+				 , FMCS.TOT_PACKAGE_QTY, FMCS.ALLOC_PACKAGE_QTY, FMCS.INV_PACKAGE_QTY, FMCS.INV_PACKAGE_RT AS INV_PACKAGE_RT
+				 , FMCS.WEEK_ABLE_RT1 AS WEEK_ABLE_RT1, FMCS.WEEK_ABLE_RT2 AS WEEK_ABLE_RT2, FMCS.WEEK_ABLE_RT3 AS WEEK_ABLE_RT3
+				 , FMCS.MM_ABLE_RT1 AS MM_ABLE_RT1, FMCS.MM_ABLE_RT2 AS MM_ABLE_RT2, FMCS.MM_ABLE_RT3 AS MM_ABLE_RT3
+				 , TRUNC(FMCS.PO_OUT_NO) AS PO_OUT_NO
+				 , FMCS.FST_ETA_YMD
+				 , FMCS.FNL_ETA_YMD, FMCS.ALLOC_EXEC_NO, FMCS.ALLOC_DT, FMCS.FST_REG_DT, FMCS.FST_REG_USER_ID
+				 , FMCS.FNL_EDIT_DT, FMCS.FNL_EDIT_USER_ID, FMCS.OGG_CD, FMCS.OGG_TIME, FMCS.IF_DATE
+				 , EPC.PLAN_ST_YMD, EPC.SITE_INWH_DEMYMD
+				 , FMCS.DELI_DEST_NM, FMCS.DELY_DCNT
+			  FROM X3DDEC_ADMIN.IF_CWP_MATERIAL_LIST_IN FMCS
+			  LEFT OUTER JOIN X3DDEC_ADMIN.IF_CWP_LIST_OUT EPC
+			    ON (
+					FMCS.SITE_CD = EPC.SITE_CD
+					AND FMCS.CWP_NO = EPC.CWP_NO
+				)
+			 WHERE FMCS.SITE_CD = #{SITE_CD}
+		 	<if test="@com.dec.util.DecStringUtil@isNotEmpty(workPackageExpr)">AND ${workPackageExpr}</if>
+		  )
+		<where>
+		 	<if test="@com.dec.util.DecStringUtil@isNotEmpty(whereExpr)">
+		 		AND ${whereExpr}
+		 	</if>
+		 	<choose>
+		 		<when test="@com.dec.util.DecStringUtil@isNotEmpty(FROM_PLAN_ST_YMD) and @com.dec.util.DecStringUtil@isNotEmpty(TO_PLAN_ST_YMD)">
+		 			AND TO_DATE(PLAN_ST_YMD, 'YYYYMMDD') BETWEEN #{FROM_PLAN_ST_YMD} AND #{TO_PLAN_ST_YMD}
+		 		</when>
+		 		<when test="@com.dec.util.DecStringUtil@isNotEmpty(FROM_PLAN_ST_YMD)">
+		 			<![CDATA[ AND TO_DATE(PLAN_ST_YMD, 'YYYYMMDD') >= #{FROM_PLAN_ST_YMD} ]]>
+		 		</when>
+		 		<when test="@com.dec.util.DecStringUtil@isNotEmpty(TO_PLAN_ST_YMD)">
+		 			<![CDATA[ AND TO_DATE(PLAN_ST_YMD, 'YYYYMMDD') <= #{TO_PLAN_ST_YMD} ]]>
+		 		</when>
+		 	</choose>
+		</where>
+	</select>
+	
+	<select id="selectMaterialAllocationStatus" parameterType="map" resultType="map">
+		SELECT 
+			<choose>
+				<when test='uom != null and ("ISO Qty".equalsIgnoreCase(uom) or "LM".equalsIgnoreCase(uom))'>
+					SUM(FMCS.TOT_DI_QTY) AS BOM, 100 AS BOMRate
+					, SUM(FMCS.ALLOC_DI_QTY) AS Allocated, NVL(DECODE(SUM(FMCS.TOT_DI_QTY), 0, NULL, SUM(FMCS.ALLOC_DI_QTY) / SUM(FMCS.TOT_DI_QTY)), 0) AS AllocatedRate
+					, SUM(FMCS.INV_DI_QTY) AS InStock, NVL(DECODE(SUM(FMCS.TOT_DI_QTY), 0, NULL, SUM(FMCS.INV_DI_QTY) / SUM(FMCS.TOT_DI_QTY)), 0) AS InStockRate
+					, #{COMPLETED} AS Completed, NVL(DECODE(SUM(FMCS.TOT_DI_QTY), 0, NULL, #{COMPLETED} / SUM(FMCS.TOT_DI_QTY)), 0) AS CompletedRate
+				</when>
+				<when test='uom != null and "kg".equalsIgnoreCase(uom)'>
+					SUM(TOT_WGT) AS BOM, 100 AS BOMRate
+					, SUM(ALLOC_WGT) AS Allocated, NVL(DECODE(SUM(TOT_WGT), 0, NULL, SUM(ALLOC_WGT) / SUM(TOT_WGT)), 0) AS AllocatedRate
+					, SUM(INV_WGT) AS InStock, NVL(DECODE(SUM(TOT_WGT), 0, NULL, SUM(INV_WGT) / SUM(TOT_WGT)), 0) AS InStockRate
+					, #{COMPLETED} AS Completed, NVL(DECODE(SUM(TOT_WGT), 0, NULL, #{COMPLETED} / SUM(TOT_WGT)), 0) AS CompletedRate
+				</when>
+				<when test='uom != null and "DI".equalsIgnoreCase(uom)'>
+					SUM(TOT_BM_QTY) AS BOM, 100 AS BOMRate
+					, SUM(ALLOC_BM_QTY) AS Allocated, NVL(DECODE(SUM(TOT_BM_QTY), 0, NULL, SUM(ALLOC_BM_QTY) / SUM(TOT_BM_QTY)), 0) AS AllocatedRate
+					, SUM(INV_BM_QTY) AS InStock, NVL(DECODE(SUM(TOT_BM_QTY), 0, NULL, SUM(INV_BM_QTY) / SUM(TOT_BM_QTY)), 0) AS InStockRate
+					, #{COMPLETED} AS Completed, NVL(DECODE(SUM(TOT_BM_QTY), 0, NULL, #{COMPLETED} / SUM(TOT_BM_QTY)), 0) AS CompletedRate
+				</when>
+				<when test='uom != null and "Item Qty".equalsIgnoreCase(uom)'>
+					SUM(TOT_ITEM_QTY) AS BOM, 100 AS BOMRate
+					, SUM(ALLOC_ITEM_QTY) AS Allocated, NVL(DECODE(SUM(TOT_ITEM_QTY), 0, NULL, SUM(ALLOC_ITEM_QTY) / SUM(TOT_ITEM_QTY)), 0) AS AllocatedRate
+					, SUM(INV_ITEM_QTY) AS InStock, NVL(DECODE(SUM(TOT_ITEM_QTY), 0, NULL, SUM(INV_ITEM_QTY) / SUM(TOT_ITEM_QTY)), 0) AS InStockRate
+					, #{COMPLETED} AS Completed, NVL(DECODE(SUM(TOT_ITEM_QTY), 0, NULL, #{COMPLETED} / SUM(TOT_ITEM_QTY)), 0) AS CompletedRate
+				</when>
+				<when test='uom != null and "Package Qty".equalsIgnoreCase(uom)'>
+					SUM(TOT_PACKAGE_QTY) AS BOM, 100 AS BOMRate
+					, SUM(ALLOC_PACKAGE_QTY) AS Allocated, NVL(DECODE(SUM(TOT_PACKAGE_QTY), 0, NULL, SUM(ALLOC_PACKAGE_QTY) / SUM(TOT_PACKAGE_QTY)), 0) AS AllocatedRate
+					, SUM(INV_PACKAGE_QTY) AS InStock, NVL(DECODE(SUM(TOT_PACKAGE_QTY), 0, NULL, SUM(INV_PACKAGE_QTY) / SUM(TOT_PACKAGE_QTY)), 0) AS InStockRate
+					, #{COMPLETED} AS Completed, NVL(DECODE(SUM(TOT_PACKAGE_QTY), 0, NULL, #{COMPLETED} / SUM(TOT_PACKAGE_QTY)), 0) AS CompletedRate
+				</when>
+				<otherwise>
+					0 AS BOM, 0 AS BOMRate
+					, 0 AS Allocated, 0 AS AllocatedRate
+					, 0 AS InStock, 0 AS InStockRate
+					, 0 AS Completed, 0 AS CompletedRate
+				</otherwise>
+			</choose>
+		  FROM X3DDEC_ADMIN.IF_CWP_MATERIAL_LIST_IN FMCS
+		  LEFT OUTER JOIN X3DDEC_ADMIN.IF_CWP_LIST_OUT EPC
+		    ON (
+				FMCS.SITE_CD = EPC.SITE_CD
+				AND FMCS.CWP_NO = EPC.CWP_NO
+			)
+		 WHERE FMCS.SITE_CD = #{SITE_CD}
+		   AND FMCS.DCPLN_CD = #{DCPLN_CD}
+		   <if test="@com.dec.util.DecStringUtil@isNotEmpty(ORG_CD)">AND FMCS.ORG_CD = #{ORG_CD}</if>
+		   <if test="@com.dec.util.DecStringUtil@isNotEmpty(PACK_LVL_CD)">AND ${PACK_LVL_CD} = #{rowName}</if>
+	</select>
+	
+	
+	<select id="selectMaterialAllocationStatusList" parameterType="map" resultType="map">
+		SELECT FMCS.SITE_CD
+			 , FMCS.DCPLN_CD
+			 , FMCS.CWP_NO
+			 , FMCS.FAB_CAT_NM
+			 , FMCS.UNIT_NM
+			 , FMCS.AREA_NM
+			 , NVL(FMCS.ORG_CD, '---') AS ORG_CD
+			 <choose>
+			 	<when test='uom != null and ("M".equalsIgnoreCase(uom) or "LM".equalsIgnoreCase(uom))'>
+			 		, NVL(FMCS.TOT_DI_QTY,0) AS BOM_QTY
+			 		, NVL(FMCS.ALLOC_DI_QTY,0) AS ALLOCATED_QTY
+			 		, NVL(FMCS.INV_DI_QTY,0) AS INSTOCK_QTY
+			 	</when>
+			 	<when test='uom != null and "Ton".equalsIgnoreCase(uom)'>
+			 		, NVL(FMCS.TOT_WGT / 1000,0) AS BOM_QTY
+			 		, NVL(FMCS.ALLOC_WGT / 1000,0) AS ALLOCATED_QTY
+			 		, NVL(FMCS.INV_WGT / 1000,0) AS INSTOCK_QTY
+			 	</when>
+			 	<when test='uom != null and "KG".equalsIgnoreCase(uom)'>
+			 		, NVL(FMCS.TOT_WGT,0) AS BOM_QTY
+			 		, NVL(FMCS.ALLOC_WGT,0) AS ALLOCATED_QTY
+			 		, NVL(FMCS.INV_WGT,0) AS INSTOCK_QTY
+			 	</when>
+			 	<when test='uom != null and "DI".equalsIgnoreCase(uom)'>
+			 		, NVL(FMCS.TOT_BM_QTY,0) AS BOM_QTY
+			 		, NVL(FMCS.ALLOC_BM_QTY,0) AS ALLOCATED_QTY
+			 		, NVL(FMCS.INV_BM_QTY,0) AS INSTOCK_QTY
+			 	</when>
+			 	<when test='uom != null and "EA".equalsIgnoreCase(uom) and discipline != null and !"ME".equalsIgnoreCase(discipline)'>
+			 		, NVL(FMCS.TOT_ITEM_QTY,0) AS BOM_QTY
+			 		, NVL(FMCS.ALLOC_ITEM_QTY,0) AS ALLOCATED_QTY
+			 		, NVL(FMCS.INV_ITEM_QTY,0) AS INSTOCK_QTY
+			 	</when>
+			 	<when test='uom != null and "EA".equalsIgnoreCase(uom) and discipline != null and "ME".equalsIgnoreCase(discipline)'>
+			 		, NVL(FMCS.TOT_PACKAGE_QTY,0) AS BOM_QTY
+			 		, NVL(FMCS.ALLOC_PACKAGE_QTY,0) AS ALLOCATED_QTY
+			 		, NVL(FMCS.INV_PACKAGE_QTY,0) AS INSTOCK_QTY
+			 	</when>
+			 	<otherwise>
+					, 0 AS BOM_QTY
+					, 0 AS ALLOCATED_QTY
+					, 0 AS INSTOCK_QTY
+				</otherwise>
+			 </choose>
+		  FROM X3DDEC_ADMIN.IF_CWP_MATERIAL_LIST_IN FMCS
+		  LEFT OUTER JOIN X3DDEC_ADMIN.IF_CWP_LIST_OUT EPC
+		    ON (
+				FMCS.SITE_CD = EPC.SITE_CD
+				AND FMCS.CWP_NO = EPC.CWP_NO
+			)
+		 WHERE FMCS.SITE_CD = #{SITE_CD}
+		   AND FMCS.DCPLN_CD = #{DCPLN_CD}
+		   <if test="@com.dec.util.DecStringUtil@isNotEmpty(ORG_CD)">AND FMCS.ORG_CD = #{ORG_CD}</if>
+		   <if test="@com.dec.util.DecStringUtil@isNotEmpty(PACK_LVL_CD)">AND ${PACK_LVL_CD} = #{rowName}</if>
+	</select>
+	
+	<select id="selectCWPKeyQtyList" parameterType="map" resultType="map">
+		SELECT SITE_CD 
+			 , CWP_NO 
+			 , OBJ_TP_CD 
+			 , MAX(TOT_ITEM_QTY) AS TOT_ITEM_QTY
+			 , MAX(TOT_DI_QTY) AS TOT_DI_QTY
+			 , MAX(TOT_BM_QTY) AS TOT_BM_QTY
+			 , MAX(TOT_WGT) AS TOT_WGT
+			 , MAX(TOT_PACKAGE_QTY) AS TOT_PACKAGE_QTY
+		  FROM IF_CWP_MATERIAL_LIST_IN 
+		 WHERE SITE_CD = #{SITE_CD}
+		 GROUP BY SITE_CD 
+			 , CWP_NO 
+			 , OBJ_TP_CD 
+	</select>
+	
+	<update id="updateCWPKeyQtyIFResult" parameterType="map">
+		UPDATE IF_CWP_MATERIAL_LIST_IN
+		   SET IF_FLAG = #{IF_FLAG}
+		   <if test="@com.dec.util.DecStringUtil@isNotEmpty(IF_MSG)">, IF_MSG = #{IF_MSG}</if>
+		 WHERE SITE_CD = #{SITE_CD}
+		   AND CWP_NO = #{CWP_NO} 
+	</update>
+	
+	<select id="selectISOMaterialList" parameterType="map" resultType="map">
+		SELECT FMCS.SITE_CD, FMCS.CWP_NO, FMCS.ISO_NO, FMCS.FAB_CAT_CD, FMCS.UNIT_NM
+			 , FMCS.AREA_NM, FMCS.ORG_CD, FMCS.OBJ_TP_CD, FMCS.PRFR_GRP_CD, FMCS.PRFR_RANK
+			 , FMCS.LVL_NM, FMCS.LINE_NO, FMCS.ISO_STAGE_CD, FMCS.DIA_WIDTH, FMCS.WGT
+			 , FMCS.SITE_INWH_DEMYMD, FMCS.WKOP_ABLE_YMD, FMCS.MAT_STS_CD, FMCS.FST_REG_DT
+			 , FMCS.FST_REG_USER_ID, FMCS.FNL_EDIT_DT, FMCS.FNL_EDIT_USER_ID, FMCS.OGG_CD, FMCS.OGG_TIME
+			 , FMCS.FAB_CAT_NM, FMCS.MAT_STS_NM, FMCS.OFW_QTY, FMCS.ISSUE_DATE, EPC.CWA_NO
+		  FROM X3DDEC_ADMIN.IF_ISO_MATERIAL_LIST_IN FMCS
+		  LEFT OUTER JOIN X3DDEC_ADMIN.IF_CWP_LIST_OUT EPC
+		    ON (
+				FMCS.SITE_CD = EPC.SITE_CD
+				AND FMCS.CWP_NO = EPC.CWP_NO
+			)
+		 WHERE FMCS.SITE_CD = #{SITE_CD}
+	 	<if test="@com.dec.util.DecStringUtil@isNotEmpty(cwpNoList)">
+	 		AND FMCS.CWP_NO IN (
+		   	<foreach item="cwpNo" index="index" collection="cwpNoList" open="" separator="," close="">
+				#{cwpNo}
+		   	</foreach> 
+		   	)
+	 	</if>
+	 	<if test="@com.dec.util.DecStringUtil@isNotEmpty(DCPLN_CD)">AND EPC.DCPLN_CD = #{DCPLN_CD}</if>
+	 	<if test="@com.dec.util.DecStringUtil@isNotEmpty(ORG_CD)">AND FMCS.ORG_CD = #{ORG_CD}</if>
+	</select>
+	
+	<select id="selectMaxMinYearMonthForWorkFront" parameterType="map" resultType="map">
+		SELECT MIN(DATE_VAL) AS FROM_YEAR_MONTH
+		 	 , MAX(DATE_VAL) AS TO_YEAR_MONTH
+		  FROM (
+		  		SELECT SUBSTR(SITE_INWH_DEMYMD, 1, 6) AS DATE_VAL FROM IF_ISO_MATERIAL_LIST_IN WHERE SITE_CD = #{SITE_CD}
+				 UNION
+				SELECT SUBSTR(WKOP_ABLE_YMD, 1, 6) AS DATE_VAL FROM IF_ISO_MATERIAL_LIST_IN WHERE SITE_CD = #{SITE_CD}
+				 UNION
+				SELECT TO_CHAR(ISSUE_DATE,'YYYYMM') AS DATE_VAL FROM IF_ISO_MATERIAL_LIST_IN WHERE SITE_CD = #{SITE_CD}
+		  )
+	</select>
+	
+	<select id="selectISOMaterialListForWorkFront" parameterType="map" resultType="map">
+		SELECT YEAR_MONTH 
+			 , INITCAP(TO_CHAR(TO_DATE(YEAR_MONTH, 'YYYYMM'), 'YY MON', 'NLS_DATE_LANGUAGE = American')) AS YEAR_MONTH_EXPR
+			 , NVL(RAS, 0) * #{SHOP_RATIO} AS RAS
+			 , (SUM(NVL(RAS, 0)) OVER(ORDER BY YEAR_MONTH)) * #{SHOP_RATIO} AS RAS_CUM
+			 , NVL(AVAIL, 0) * #{SHOP_RATIO}  AS AVAIL
+			 , (SUM(NVL(AVAIL, 0)) OVER(ORDER BY YEAR_MONTH)) * #{SHOP_RATIO} AS AVAIL_CUM
+			 , NVL(ISSUE, 0) * #{SHOP_RATIO}  AS ISSUE
+			 , (SUM(NVL(ISSUE, 0)) OVER(ORDER BY YEAR_MONTH)) * #{SHOP_RATIO} AS ISSUE_CUM
+			 , NVL(TOTAL, 0) * #{SHOP_RATIO}  AS TOTAL
+		  FROM (
+				SELECT YEAR_MONTH
+					 , SUM(RAS) AS RAS
+					 , SUM(AVAIL) AS AVAIL
+					 , SUM(ISSUE) AS ISSUE
+					 , SUM(TOTAL) AS TOTAL
+				  FROM (
+				  		SELECT SUBSTR(FMCS.SITE_INWH_DEMYMD, 1, 6) AS YEAR_MONTH
+							 , SUM(${QTY_COL_NAME}) AS RAS
+							 , 0 AS AVAIL
+							 , 0 AS ISSUE
+							 , 0 AS TOTAL
+						  FROM IF_ISO_MATERIAL_LIST_IN FMCS
+						  LEFT OUTER JOIN IF_CWP_LIST_OUT EPC
+						    ON (
+						    	FMCS.SITE_CD = EPC.SITE_CD
+						    	AND FMCS.CWP_NO = EPC.CWP_NO
+						    )
+						 WHERE FMCS.SITE_CD = #{SITE_CD}
+						   AND FMCS.SITE_INWH_DEMYMD IS NOT NULL
+						   <if test="@com.dec.util.DecStringUtil@isNotEmpty(FROM_DATE) and @com.dec.util.DecStringUtil@isNotEmpty(TO_DATE) ">
+						   		AND TO_DATE(FMCS.SITE_INWH_DEMYMD, 'YYYYMMDD') BETWEEN TO_DATE(#{FROM_DATE}, 'YYYYMM') AND TO_DATE(#{TO_DATE}, 'YYYYMM')
+						   </if>
+						   AND FMCS.DCPLN_CD IN (
+					    	<foreach item="fmcsDiscipline" index="index" collection="fmcsDisciplineList" open="" separator="," close="">
+						    	#{fmcsDiscipline}
+					    	</foreach>
+					    	)
+						   <if test="@com.dec.util.DecStringUtil@isNotEmpty(PACK_LVL_CD)">AND ${PACK_LVL_CD} = #{rowName}</if>
+						 GROUP BY SUBSTR(FMCS.SITE_INWH_DEMYMD, 1, 6) 
+					
+						UNION 
+						
+						SELECT SUBSTR(FMCS.WKOP_ABLE_YMD, 1, 6) AS YEAR_MONTH
+							 , 0 AS RAS
+							 , SUM(${QTY_COL_NAME}) AS AVAIL
+							 , 0 AS ISSUE
+							 , 0 AS TOTAL
+						  FROM IF_ISO_MATERIAL_LIST_IN FMCS
+						  LEFT OUTER JOIN IF_CWP_LIST_OUT EPC
+						    ON (
+						    	FMCS.SITE_CD = EPC.SITE_CD
+						    	AND FMCS.CWP_NO = EPC.CWP_NO
+						    )
+						 WHERE FMCS.SITE_CD = #{SITE_CD}
+						   AND FMCS.WKOP_ABLE_YMD IS NOT NULL 
+						   <if test="@com.dec.util.DecStringUtil@isNotEmpty(FROM_DATE) and @com.dec.util.DecStringUtil@isNotEmpty(TO_DATE) ">
+						   		AND TO_DATE(FMCS.WKOP_ABLE_YMD, 'YYYYMMDD') BETWEEN TO_DATE(#{FROM_DATE}, 'YYYYMM') AND TO_DATE(#{TO_DATE}, 'YYYYMM')
+						   </if>
+						   AND FMCS.DCPLN_CD IN (
+					    	<foreach item="fmcsDiscipline" index="index" collection="fmcsDisciplineList" open="" separator="," close="">
+						    	#{fmcsDiscipline}
+					    	</foreach>
+					    	)
+						   <if test="@com.dec.util.DecStringUtil@isNotEmpty(PACK_LVL_CD)">AND ${PACK_LVL_CD} = #{rowName}</if>
+						 GROUP BY SUBSTR(FMCS.WKOP_ABLE_YMD, 1, 6)
+						  
+						UNION
+						
+						SELECT TO_CHAR(FMCS.ISSUE_DATE, 'YYYYMM') AS YEAR_MONTH
+							 , 0 AS RAS
+							 , 0 AS AVAIL
+							 , SUM(OFW_QTY) AS ISSUE
+							 , 0 AS TOTAL
+						  FROM IF_ISO_MATERIAL_LIST_IN FMCS
+						  LEFT OUTER JOIN IF_CWP_LIST_OUT EPC
+						    ON (
+						    	FMCS.SITE_CD = EPC.SITE_CD
+						    	AND FMCS.CWP_NO = EPC.CWP_NO
+						    )
+						 WHERE FMCS.SITE_CD = #{SITE_CD}
+						   AND FMCS.ISSUE_DATE IS NOT NULL 
+						   <if test="@com.dec.util.DecStringUtil@isNotEmpty(FROM_DATE) and @com.dec.util.DecStringUtil@isNotEmpty(TO_DATE) ">
+						   		AND ISSUE_DATE BETWEEN TO_DATE(#{FROM_DATE}, 'YYYYMM') AND TO_DATE(#{TO_DATE}, 'YYYYMM')
+						   </if>
+						   AND FMCS.DCPLN_CD IN (
+					    	<foreach item="fmcsDiscipline" index="index" collection="fmcsDisciplineList" open="" separator="," close="">
+						    	#{fmcsDiscipline}
+					    	</foreach>
+					    	)
+						   <if test="@com.dec.util.DecStringUtil@isNotEmpty(PACK_LVL_CD)">AND ${PACK_LVL_CD} = #{rowName}</if>
+						 GROUP BY TO_CHAR(FMCS.ISSUE_DATE, 'YYYYMM')
+						 <choose>
+						 	<when test="@com.dec.util.DecStringUtil@isNotEmpty(TOTAL_WELDING_TOTAL_FORECAST_QTY_CD)">
+						 		UNION
+						 
+								 SELECT CUT_OFF_YEAR || LPAD(CUT_OFF_MONTH,2,'0') AS YEAR_MONTH
+								 	  , 0 AS RAS
+								 	  , 0 AS AVAIL
+								 	  , 0 AS ISSUE
+									  , SUM(ENG_TOTAL_FORECAST_QTY) AS TOTAL
+								   FROM DEC_KEY_QUANTITY_MONTLY_DATA
+								  WHERE SITE_CD = #{SITE_CD}
+								    AND KEY_CD = #{TOTAL_WELDING_TOTAL_FORECAST_QTY_CD}
+								    <if test="@com.dec.util.DecStringUtil@isNotEmpty(FROM_DATE) and @com.dec.util.DecStringUtil@isNotEmpty(TO_DATE) ">
+								   		AND CUT_OFF_DATE BETWEEN TO_DATE(#{FROM_DATE}, 'YYYYMM') AND TO_DATE(#{TO_DATE}, 'YYYYMM')
+								   	</if>
+								  GROUP BY CUT_OFF_YEAR || LPAD(CUT_OFF_MONTH,2,'0')
+						 	</when>
+						 	<when test="@com.dec.util.DecStringUtil@isNotEmpty(TOTAL_ISSUE_DES_QTY)">
+						 	UNION
+						
+							SELECT YEAR_MONTH
+								 , 0 AS RAS
+								 , 0 AS AVAIL
+								 , 0 AS ISSUE
+								 , SUM_QTY AS TOTAL
+							  FROM IF_MATERIAL_QTY_SUMMARY_IN 
+							  WHERE SITE_CD = #{SITE_CD}
+							   <if test="@com.dec.util.DecStringUtil@isNotEmpty(FROM_DATE) and @com.dec.util.DecStringUtil@isNotEmpty(TO_DATE) ">
+							   		AND TO_DATE(YEAR_MONTH, 'YYYYMM') BETWEEN TO_DATE(#{FROM_DATE}, 'YYYYMM') AND TO_DATE(#{TO_DATE}, 'YYYYMM')
+							   </if>
+							   AND DCPLN_CD IN (
+						    	<foreach item="fmcsDiscipline" index="index" collection="fmcsDisciplineList" open="" separator="," close="">
+							    	#{fmcsDiscipline}
+						    	</foreach>
+						    	)
+						 	</when>
+						 	<otherwise>
+						 	</otherwise>
+						 </choose>
+					  )
+					  WHERE RAS > 0 
+					     OR AVAIL > 0
+					     OR ISSUE > 0
+					     OR TOTAL > 0
+					  GROUP BY YEAR_MONTH
+		) 
+		ORDER BY YEAR_MONTH 	
+	</select>
+	
+	<select id="selectBMTrackingList" parameterType="map" resultType="map">
+		SELECT rownum, SUMMARY.*
+		  FROM (
+		  		SELECT META.*
+				 <foreach item="yearMonth" index="index" collection="yearMonthList" open="" separator="" close="">
+			 	 	, QTY.QTY_${yearMonth}
+			 	 </foreach>
+			 	 <choose>
+			 	 	<when test="@com.dec.util.DecStringUtil@isNotEmpty(thisMonth)">
+			 	 		, DECODE(META.BID_QTY, 0, 0, TRUNC(QTY.QTY_${thisMonth} / META.BID_QTY * 100)) AS BID_DELTA
+			 	 	</when>
+			 	 	<otherwise>
+			 	 		, 0 AS BID_DELTA
+			 	 	</otherwise>
+			 	 </choose>
+			 	 <choose>
+			 	 	<when test="@com.dec.util.DecStringUtil@isNotEmpty(thisMonth) and @com.dec.util.DecStringUtil@isNotEmpty(ongoing1stMonth)">
+			 	 		, DECODE(QTY.QTY_${ongoing1stMonth}, 0, 0, TRUNC(QTY.QTY_${thisMonth} / QTY.QTY_${ongoing1stMonth} * 100)) AS ONGOING_DELTA
+			 	 	</when>
+			 	 	<otherwise>
+			 	 		, 0 AS ONGOING_DELTA
+			 	 	</otherwise>
+			 	 </choose>
+			 	 <choose>
+			 	 	<when test="@com.dec.util.DecStringUtil@isNotEmpty(thisMonth) and @com.dec.util.DecStringUtil@isNotEmpty(prevMonth)">
+			 	 		, DECODE(QTY.QTY_${prevMonth}, 0, 0, TRUNC(QTY.QTY_${thisMonth} / QTY.QTY_${prevMonth} * 100)) AS MONTH_DELTA
+			 	 	</when>
+			 	 	<otherwise>
+			 	 		, 0 AS MONTH_DELTA
+			 	 	</otherwise>
+			 	 </choose>
+			  FROM (
+				  	SELECT NVL(LATEST.SITE_CD, BID.SITE_CD) AS SITE_CD 
+						 , NVL(LATEST.DCPLN_CD, BID.DCPLN_CD) AS DCPLN_CD 
+						 , NVL(LATEST.AREA_NM, BID.AREA_NM) AS AREA_NM 
+						 , NVL(LATEST.UNIT_NM, BID.UNIT_NM) AS UNIT_NM 
+						 , NVL(LATEST.LVL_NM, BID.LVL_NM) AS LVL_NM 
+						 , NVL(LATEST.IDENT_CD, BID.IDENT_CD) AS IDENT_CD 
+						 , NVL(LATEST.OBJ_TP_CD, BID.OBJ_TP_CD) AS OBJ_TP_CD 
+						 , NVL(LATEST.ITEM_GRP_CD  , BID.ITEM_GRP_CD) AS ITEM_GRP_CD 
+						 , NVL(LATEST.GRP_CD  , BID.GRP_CD) AS GRP_CD 
+						 , NVL(LATEST.GRP_SHORTDESC  , BID.GRP_SHORTDESC) AS GRP_SHORTDESC 
+						 , NVL(LATEST.PART_CD  , BID.PART_CD) AS PART_CD 
+						 , NVL(LATEST.PART_SHORTDESC  , BID.PART_SHORTDESC) AS PART_SHORTDESC 
+						 , NVL(LATEST.COMMODITY_CD  , BID.COMMODITY_CD) AS COMMODITY_CD
+						 , NVL(LATEST.COMMODITY_SHORTDESC  , BID.COMMODITY_SHORTDESC) AS COMMODITY_SHORTDESC
+						 , NVL(LATEST.SPEC_CD  , BID.SPEC_CD) AS SPEC_CD
+						 , NVL(LATEST.SHRT_CD  , BID.SHRT_CD) AS SHRT_CD
+						 , NVL(LATEST.SIZE1  , BID.SIZE1) AS SIZE1
+						 , NVL(LATEST.SIZE2  , BID.SIZE2) AS SIZE2
+						 , NVL(LATEST.SIZE3  , BID.SIZE3) AS SCH1
+						 , NVL(LATEST.SIZE4  , BID.SIZE4) AS SCH2
+						 , NVL(LATEST.BASE_MAT_CD  , BID.BASE_MAT_CD) AS BASE_MAT_CD
+						 , NVL(LATEST.RAT_CD  , BID.RAT_CD) AS RAT_CD
+						 , NVL(LATEST.UNT_CD  , BID.UNT_CD) AS UNT_CD
+						 , NVL(BID.DES_QTY, 0) AS BID_QTY
+					  FROM DEC_BM_TRK_BIDDING BID
+					FULL OUTER JOIN (SELECT DISTINCT SITE_CD
+										  , DCPLN_CD
+										  , AREA_NM
+										  , UNIT_NM
+										  , LVL_NM
+										  , IDENT_CD
+										  , OBJ_TP_CD
+										  , ITEM_GRP_CD
+										  , GRP_CD
+										  , GRP_SHORTDESC
+										  , PART_CD
+										  , PART_SHORTDESC
+										  , COMMODITY_CD
+										  , COMMODITY_SHORTDESC
+										  , SPEC_CD
+										  , SHRT_CD
+										  , SIZE1
+										  , SIZE2
+										  , SIZE3
+										  , SIZE4
+										  , BASE_MAT_CD
+										  , RAT_CD
+										  , UNT_CD
+									FROM IF_BM_TRK_IN TRK 
+								   WHERE SITE_CD = #{SITE_CD} 
+								     AND IF_DATE = (SELECT MAX(IF_DATE) 
+								     				  FROM IF_BM_TRK_IN 
+								     				 WHERE SITE_CD = #{SITE_CD}
+								     				)
+								     ) LATEST
+					ON (
+						BID.SITE_CD = LATEST.SITE_CD 
+						AND BID.DCPLN_CD  = LATEST.DCPLN_CD 
+						AND BID.AREA_NM  = LATEST.AREA_NM
+						AND BID.UNIT_NM  = LATEST.UNIT_NM
+						AND BID.LVL_NM  = LATEST.LVL_NM
+						AND BID.IDENT_CD  = LATEST.IDENT_CD
+						AND BID.SITE_CD = #{SITE_CD}
+						<if test="@org.apache.commons.collections4.CollectionUtils@isNotEmpty(partCodeDescList)">
+							AND BID.PART_CD = LATEST.PART_CD
+							AND BID.PART_SHORTDESC = LATEST.PART_SHORTDESC
+							<foreach item="partCodeDesc" index="index" collection="partCodeDescList" open="" separator="" close="">
+								OR (BID.PART_CD = #{partCodeDesc.partCode} AND BID.PART_SHORTDESC = #{partCodeDesc.partDesc})
+							</foreach>
+						</if>
+					)
+			  ) META
+			LEFT OUTER JOIN (
+				SELECT SITE_CD 
+					 , DCPLN_CD 
+					 , AREA_NM 
+					 , UNIT_NM 
+					 , LVL_NM 
+					 , IDENT_CD
+					 <if test="@org.apache.commons.collections4.CollectionUtils@isNotEmpty(partCodeDescList)">
+					 	, PART_CD
+					 	, PART_SHORTDESC
+					 </if>
+					 <foreach item="yearMonth" index="index" collection="yearMonthList" open="" separator="" close="">
+				 	 	, SUM(DECODE(TO_CHAR(IF_DATE, 'YYYYMM'), #{yearMonth}, DES_QTY, 0)) AS QTY_${yearMonth}
+				 	 </foreach>
+				  FROM IF_BM_TRK_IN  
+				 WHERE SITE_CD = #{SITE_CD}
+				 <if test="@org.apache.commons.collections4.CollectionUtils@isNotEmpty(partCodeDescList)">
+					<foreach item="partCodeDesc" index="index" collection="partCodeDescList" open="" separator="" close="">
+						OR (PART_CD = #{partCodeDesc.partCode} AND PART_SHORTDESC = #{partCodeDesc.partDesc})
+					</foreach>
+				</if>
+				 GROUP BY SITE_CD 
+					 , DCPLN_CD 
+					 , AREA_NM 
+					 , UNIT_NM 
+					 , LVL_NM 
+					 , IDENT_CD
+					 <if test="@org.apache.commons.collections4.CollectionUtils@isNotEmpty(partCodeDescList)">
+					 	, PART_CD
+					 	, PART_SHORTDESC
+					 </if>
+			) QTY
+			ON (
+				META.SITE_CD = QTY.SITE_CD 
+				AND META.DCPLN_CD = QTY.DCPLN_CD 
+				AND META.AREA_NM = QTY.AREA_NM 
+				AND META.UNIT_NM = QTY.UNIT_NM 
+				AND META.LVL_NM = QTY.LVL_NM 
+				AND META.IDENT_CD = QTY.IDENT_CD 
+				<if test="@org.apache.commons.collections4.CollectionUtils@isNotEmpty(partCodeDescList)">
+					AND META.PART_CD = QTY.PART_CD
+					AND META.PART_SHORTDESC = QTY.PART_SHORTDESC
+				</if>
+			)
+		 ) SUMMARY
+		<where>
+			<if test="@com.dec.util.DecStringUtil@isNotEmpty(whereExpr)">AND ${whereExpr}</if>
+		</where>
+	</select>
+	
+	<select id="selectBMTrackingByPartCodeDesc" parameterType="map" resultType="map">
+		SELECT META.*
+			 , META.PART_CD || '@@@' || META.PART_SHORTDESC AS KEY
+			 <foreach item="yearMonth" index="index" collection="yearMonthList" open="" separator="" close="">
+		 	 	, QTY.QTY_${yearMonth}
+		 	 </foreach>
+		  FROM (
+			  	SELECT NVL(LATEST.PART_CD, BID.PART_CD) AS PART_CD 
+					 , NVL(LATEST.PART_SHORTDESC, BID.PART_SHORTDESC) AS PART_SHORTDESC 
+					 , BID.BID_QTY
+				  FROM (
+				  		SELECT PART_CD
+				  			 , PART_SHORTDESC
+				  			 , SUM(DES_QTY) AS BID_QTY
+				  		  FROM DEC_BM_TRK_BIDDING
+				  		 WHERE SITE_CD = #{SITE_CD}
+				  		 GROUP BY PART_CD
+				  		 	 , PART_SHORTDESC 
+				  ) BID
+				FULL OUTER JOIN (SELECT DISTINCT PART_CD
+									  , PART_SHORTDESC
+								   FROM IF_BM_TRK_IN TRK 
+								  WHERE SITE_CD = #{SITE_CD} 
+								    AND IF_DATE = (
+								    	SELECT MAX(IF_DATE) FROM IF_BM_TRK_IN WHERE SITE_CD = #{SITE_CD}
+								    )
+				) LATEST
+				ON (
+					BID.PART_CD = LATEST.PART_CD
+					AND BID.PART_SHORTDESC = LATEST.PART_SHORTDESC
+				)
+				WHERE 
+				<foreach item="partCodeDesc" index="index" collection="partCodeDescList" open=" (" separator="OR" close=")">
+					(NVL(LATEST.PART_CD, BID.PART_CD) = #{partCodeDesc.partCode} 
+					AND NVL(LATEST.PART_SHORTDESC, BID.PART_SHORTDESC) = #{partCodeDesc.partDesc}) 
+				</foreach>
+		  ) META
+		LEFT OUTER JOIN (
+			SELECT PART_CD
+			 	 , PART_SHORTDESC
+				 <foreach item="yearMonth" index="index" collection="yearMonthList" open="" separator="" close="">
+			 	 	, SUM(DECODE(TO_CHAR(IF_DATE, 'YYYYMM'), #{yearMonth}, DES_QTY, 0)) AS QTY_${yearMonth}
+			 	 </foreach>
+			  FROM IF_BM_TRK_IN  
+			 WHERE SITE_CD = #{SITE_CD}
+			 <foreach item="partCodeDesc" index="index" collection="partCodeDescList" open=" AND (" separator=" OR " close=")">
+			 	(PART_CD = #{partCodeDesc.partCode} AND PART_SHORTDESC = #{partCodeDesc.partDesc})
+			 </foreach>
+			 GROUP BY PART_CD
+			 	 , PART_SHORTDESC
+		) QTY
+		ON (
+			META.PART_CD = QTY.PART_CD 
+			AND META.PART_SHORTDESC = QTY.PART_SHORTDESC 
+		)
+	</select>
+	
+	<select id="selectBMTrackingQtyHeader" parameterType="map" resultType="map">
+		SELECT TO_CHAR(IF_DATE, 'YYYY. fmMM') AS YEAR_MONTH_EXPR
+			 , TO_CHAR(IF_DATE, 'YYYYMM') AS YEAR_MONTH
+			 , '`' || INITCAP(TO_CHAR(IF_DATE, 'YY MON', 'NLS_DATE_LANGUAGE = American')) AS YEAR_MONTH_CATEGORY
+		  FROM IF_BM_TRK_IN 
+		 WHERE SITE_CD = #{SITE_CD}
+		 GROUP BY TO_CHAR(IF_DATE, 'YYYY. fmMM')
+			 , TO_CHAR(IF_DATE, 'YYYYMM')
+			 , '`' || INITCAP(TO_CHAR(IF_DATE, 'YY MON', 'NLS_DATE_LANGUAGE = American'))
+		 ORDER BY TO_CHAR(IF_DATE, 'YYYYMM')
+	</select>
+	
+	<select id="selectBMTrackingBiddingList" parameterType="map" resultType="map">
+		SELECT * FROM X3DDEC_ADMIN.DEC_BM_TRK_BIDDING WHERE SITE_CD = #{SITE_CD}
+	</select>
+	
+	<select id="selectBMTrackingBiddingCount" parameterType="map" resultType="map">
+		SELECT count(*) AS COUNT FROM X3DDEC_ADMIN.DEC_BM_TRK_BIDDING WHERE SITE_CD = #{SITE_CD}
+	</select>
+	
+	<select id="selectDistinctPartCodeAndDescList" parameterType="map" resultType="map">
+		SELECT * FROM (
+			SELECT NVL(BM_TRK.DCPLN_CD, BIDDING.DCPLN_CD) AS DCPLN_CD
+				 , NVL(BM_TRK.PART_CD, BIDDING.PART_CD) AS PART_CD
+				 , NVL(BM_TRK.PART_SHORTDESC, BIDDING.PART_SHORTDESC) AS PART_SHORTDESC
+			  FROM ( 
+			  	SELECT DISTINCT DCPLN_CD
+			  		 , PART_CD
+			  		 , PART_SHORTDESC 
+			  	  FROM IF_BM_TRK_IN
+			  	 WHERE SITE_CD = #{SITE_CD}
+			  	   AND IF_DATE = (
+			  	   	SELECT MAX(IF_DATE) 							
+			  	   	  FROM IF_BM_TRK_IN  							
+			  	   	 WHERE SITE_CD = #{SITE_CD}
+			  	   ) 							
+		  	   	 <![CDATA[ AND DES_QTY > 0 ]]>
+			  ) BM_TRK 		
+			  FULL OUTER JOIN ( 			
+			  	SELECT DISTINCT DCPLN_CD 
+			  		 , PART_CD
+			  		 , PART_SHORTDESC 
+			  	  FROM DEC_BM_TRK_BIDDING
+			  	 WHERE SITE_CD = #{SITE_CD}
+			  	 <![CDATA[ AND DES_QTY > 0 ]]>
+			  ) BIDDING 		
+			  ON BM_TRK .DCPLN_CD = BIDDING .DCPLN_CD 
+			  AND BM_TRK.PART_CD = BIDDING.PART_CD  		
+			  AND BM_TRK.PART_SHORTDESC = BIDDING.PART_SHORTDESC	
+		)
+	  <where>
+		  <if test="@com.dec.util.DecStringUtil@isNotEmpty(DCPLN_CD)">AND DCPLN_CD = #{DCPLN_CD}</if>
+		  <if test="@com.dec.util.DecStringUtil@isNotEmpty(PART_CD)">AND UPPER(PART_CD) LIKE UPPER(#{PART_CD})</if>
+		  <if test="@com.dec.util.DecStringUtil@isNotEmpty(PART_SHORTDESC)">AND UPPER(PART_SHORTDESC) LIKE UPPER(#{PART_SHORTDESC})</if>
+	  </where>
+		ORDER BY DCPLN_CD, PART_CD, PART_SHORTDESC
+	</select>
+	
+	<delete id="deleteIWPMaterialList" parameterType="map">
+		DELETE FROM X3DDEC_ADMIN.DEC_IWP_MATERIAL_LIST
+		 WHERE SITE_CD = #{SITE_CD}
+		   AND CWP_NO = #{CWP_NO}
+		   AND LINE_NO = #{LINE_NO} 
+		   AND ISO_NO = #{ISO_NO} 
+		   AND IDENT_CD = #{IDENT_CD} 
+	</delete>
+	
+	<insert id="insertIWPMaterialList" parameterType="map">
+ 	  INSERT INTO X3DDEC_ADMIN.DEC_IWP_MATERIAL_LIST (
+ 	  		SITE_CD
+ 	  		, CWP_NO
+ 	  		, LINE_NO
+ 	  		, ISO_NO
+ 	  		, IDENT_CD
+ 	  		, IWP_NO
+ 	  		, IWP_OID
+ 	  )
+ 	  VALUES (
+ 	  		#{SITE_CD}
+ 	  		, #{CWP_NO}
+ 	  		, #{LINE_NO}
+ 	  		, #{ISO_NO}
+ 	  		, #{IDENT_CD}
+ 	  		, #{IWP_NO}
+ 	  		, #{IWP_OID}
+ 	  )
+	</insert>
+	
+	<select id="selectDistinctDisciplineFromBMTracking" parameterType="map" resultType="String">
+		SELECT NVL(TRK.DCPLN_CD, BID.DCPLN_CD) AS DCPLN_CD 
+	 		 , SUM(NVL(TRK.CNT,0) + NVL(BID.CNT,0)) AS CNTSUM
+		  FROM (
+		  		SELECT SITE_CD, DCPLN_CD, COUNT(*) AS CNT 
+		  		  FROM IF_BM_TRK_IN
+		  		 GROUP BY SITE_CD, DCPLN_CD
+		  ) TRK 
+		  FULL OUTER JOIN (
+		  		SELECT SITE_CD, DCPLN_CD, COUNT(*) AS CNT
+		  		  FROM DEC_BM_TRK_BIDDING
+		  		 GROUP BY SITE_CD, DCPLN_CD
+		  ) BID
+		  ON (
+		  		TRK.SITE_CD = BID.SITE_CD 
+		  		AND TRK.DCPLN_CD = BID.DCPLN_CD 
+		  )
+		  WHERE NVL(TRK.SITE_CD, BID.SITE_CD) = #{SITE_CD}
+		  GROUP BY NVL(TRK.DCPLN_CD, BID.DCPLN_CD)
+		  ORDER BY CNTSUM DESC
+	</select>
+	
+	<select id="selectCWPSummaryFieldAllocation" parameterType="map" resultType="map">
+	SELECT 
+	CWP_NO, 
+	DP_CD,
+	BOM,
+	Allocation,
+	Stock1,
+	Stock2,
+	Description,
+	DELY_DCNT,
+	FNL_EDIT_DT
+	FROM (
+		SELECT 
+		SITE_CD, CWP_NO, 
+		DCPLN_CD AS DP_CD, 
+		TOT_DI_QTY AS BOM,
+		ALLOC_DI_QTY AS Allocation,
+		INV_DI_QTY AS Stock1,
+		INV_DI_RT AS Stock2,
+		'Welding KG' AS Description,
+		DELY_DCNT,
+		FNL_EDIT_DT
+		FROM IF_CWP_MATERIAL_LIST_IN   
+		WHERE DCPLN_CD = 'P'
+		AND  FAB_CAT_CD = 'F'
+		UNION 
+		SELECT
+		SITE_CD, CWP_NO,
+		DCPLN_CD AS DP_CD, 
+		TOT_BM_QTY AS BOM,
+		ALLOC_BM_QTY AS Allocation,
+		INV_BM_QTY AS Stock1,
+		INV_BM_RT AS Stock2,
+		'Cable LM' AS Description,
+		DELY_DCNT,
+		FNL_EDIT_DT
+		FROM IF_CWP_MATERIAL_LIST_IN  
+		WHERE (DCPLN_CD = 'E' OR DCPLN_CD='I')
+		AND  FAB_CAT_CD = 'F'
+		UNION 
+		SELECT 
+		SITE_CD, CWP_NO,
+		DCPLN_CD AS DP_CD, 
+		TOT_ITEM_QTY AS BOM,
+		ALLOC_ITEM_QTY AS Allocation,
+		INV_ITEM_QTY AS Stock1,
+		INV_ITEM_RT AS Stock2,
+		'Item Qty' AS Description,
+		DELY_DCNT,
+		FNL_EDIT_DT
+		FROM IF_CWP_MATERIAL_LIST_IN  
+		WHERE DCPLN_CD != 'P' 
+		AND  DCPLN_CD != 'E' 
+		AND  DCPLN_CD != 'I'
+		AND  FAB_CAT_CD = 'F'
+	    )    
+	WHERE 1=1
+	AND SITE_CD = #{SITE_CD}
+	</select>
+	<select id="selectCWPSummaryShopAllocation" parameterType="map" resultType="map">
+	SELECT 
+	CWP_NO, 
+	DP_CD,
+	BOM,
+	Allocation,
+	Stock1,
+	Stock2,
+	Description,
+	DELY_DCNT,
+	FNL_EDIT_DT
+	FROM (
+		SELECT 
+		SITE_CD, CWP_NO, 
+		DCPLN_CD AS DP_CD, 
+		TOT_DI_QTY AS BOM,
+		ALLOC_DI_QTY AS Allocation,
+		INV_DI_QTY AS Stock1,
+		INV_DI_RT AS Stock2,
+		'Welding DI' AS Description,
+		DELY_DCNT,
+		FNL_EDIT_DT
+		FROM IF_CWP_MATERIAL_LIST_IN   
+		WHERE DCPLN_CD = 'P'
+		AND  FAB_CAT_CD = 'S'
+		UNION 
+		SELECT
+		SITE_CD, CWP_NO,
+		DCPLN_CD AS DP_CD, 
+		TOT_BM_QTY AS BOM,
+		ALLOC_BM_QTY AS Allocation,
+		INV_BM_QTY AS Stock1,
+		INV_BM_RT AS Stock2,
+		'Cable LM' AS Description,
+		DELY_DCNT,
+		FNL_EDIT_DT
+		FROM IF_CWP_MATERIAL_LIST_IN  
+		WHERE (DCPLN_CD = 'E' OR DCPLN_CD='I')
+		AND  FAB_CAT_CD = 'S'
+		UNION 
+		SELECT 
+		SITE_CD, CWP_NO,
+		DCPLN_CD AS DP_CD, 
+		TOT_ITEM_QTY AS BOM,
+		ALLOC_ITEM_QTY AS Allocation,
+		INV_ITEM_QTY AS Stock1,
+		INV_ITEM_RT AS Stock2,
+		'Item Qty' AS Description,
+		DELY_DCNT,
+		FNL_EDIT_DT
+		FROM IF_CWP_MATERIAL_LIST_IN  
+		WHERE DCPLN_CD != 'P' 
+		AND  DCPLN_CD != 'E' 
+		AND  DCPLN_CD != 'I'
+		AND  FAB_CAT_CD = 'S'
+	    )    
+	WHERE 1=1
+	AND SITE_CD = #{SITE_CD}
+	</select>
+</mapper>

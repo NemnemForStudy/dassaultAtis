@@ -1,0 +1,1 @@
+define("DS/NotificationAPI/NotificationAPI_it",{});define("DS/NotificationAPI/assets/nls/feed",{permissionBannerTitle:"Ricevi notifiche di nuovi messaggi",permissionBannerText:"Attiva le notifiche sul desktop"});

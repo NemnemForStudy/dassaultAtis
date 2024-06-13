@@ -1,0 +1,80 @@
+{
+  "relations": [
+    {
+      "name": "Fsx_Fasten_from",
+      "queries": [
+        {
+          "definition": [
+            {"navigationType": "SR","qualityFilter": {"role": "467","semantics": "1"},"direction": "from","mode":"ends"},
+            {"navigationType": "relation","qualityFilter": { "rel_type": "VPLMrel/PLMConnection/V_Owner" },"direction": "from"}
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Fsx_Fasten_to",
+      "queries": [
+        {
+          "definition": [
+            {"navigationType": "relation","qualityFilter": { "rel_type": "VPLMrel/PLMConnection/V_Owner" },"direction": "to"},
+            {"navigationType": "SR","qualityFilter": {"role": "467","semantics": "1"},"direction": "to","mode":"last"}
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Fsx_Skeleton_from",
+      "queries": [
+        {
+          "definition": [
+            {"navigationType": "SR","qualityFilter": {"role": "527","semantics": "1"},"direction": "from","mode":"ends"},
+            {"navigationType": "relation","qualityFilter": { "rel_type": "BundleFastenerInstance" },"direction": "to", "mode":"stop_at_bo"}
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Fsx_Skeleton_to",
+      "queries": [
+        {
+          "definition": [
+            {"navigationType": "relation","qualityFilter": { "rel_type": "BundleFastenerInstance" },"direction": "from", "mode":"stop_at_rel"},
+            {"navigationType": "SR","qualityFilter": {"role": "527","semantics": "1"},"direction": "to","mode":"last"}
+          ]
+        }
+      ]
+    },
+    {
+      "name": "VPMInstance_to",
+      "instanceManagement" : true,
+      "queries": [
+        {
+          "definition": [
+            {"navigationType": "relation","qualityFilter": { "rel_type": "VPMInstance" },"direction": "to"}
+          ],"removeTypes": ["BundleFastenerInstance"]
+        },
+        {
+          "definition": [
+            {"navigationType": "relation","qualityFilter": { "rel_type": "VPMRepInstance" },"direction": "to"}
+          ]
+        }
+      ]
+    },
+    {
+      "name": "VPMInstance_from",
+      "instanceManagement" : true,
+      "queries": [
+        {
+          "definition": [
+            {"navigationType": "relation","qualityFilter": { "rel_type": "VPMInstance" },"direction": "from"}
+          ]
+        },
+        {
+          "definition": [
+            {"navigationType": "relation","qualityFilter": { "rel_type": "VPMRepInstance" },"direction": "from"}
+          ]
+        }
+      ]
+    }
+  ]
+}

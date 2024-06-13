@@ -1,0 +1,107 @@
+/* Reset */
+a:link,
+a:visited {
+  text-decoration: none;
+  color: #369de0;
+}
+
+/* Widget container */
+.mail {
+  font: 1em;
+  height: inherit;
+}
+
+.mail .provider-list {
+  margin: 11px 0 0 0;
+}
+
+/* Provider list */
+.mail .email-provider {
+  height: 85px;
+  border-top: 1px solid #e8e8e8;
+  -webkit-transition: background-color 0.3s;
+  -moz-transition: background-color 0.3s;
+  transition: background-color 0.3s;
+}
+
+.mail .email-provider:first-child {
+  border-top: none;
+}
+
+.mail .email-provider:hover {
+  background: #fbfbfb;
+}
+
+.mail .email-provider-link {
+  text-align: center;
+  line-height: 85px;
+  margin: 0;
+  cursor: pointer;
+  width: 100%;
+  vertical-align: middle;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.mail .email-provider-logo {
+  max-height: 70px;
+  max-width: 50%;
+  height: auto;
+  vertical-align: middle;
+}
+
+.mail .email-provider-text {
+  font-family: "3ds";
+  font-size: 2.25em;
+  color: grey;
+}
+
+/* Message body facet */
+.mail .message-body iframe {
+  overflow: auto;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0px;
+}
+
+.mail .message-body .alert {
+  margin: 10px 20px 0 20px;
+}
+
+.mail .message-body .display-link {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* Message attachments facet */
+.mail .message-attachments .attachment-link {
+  width: 100%;
+}
+
+.mail .message-attachments .attachment-link .fonticon {
+  /* hack due to massive * CSS rules from TileView */
+  font-family: entypo;
+  line-height: 60px;
+  font-size: 50px;
+}
+
+.mail .message-attachments .attachment-size {
+  text-align: center;
+}
+
+.mail .message-attachments .attachment .tile-header img {
+  max-height: 50%;
+}
+
+.mail .message-attachments .attachment .tile-body {
+  padding: 4px !important;
+}
+
+/* TileView overrides to avoid display images when necessary */
+.mail.no-thumbnail .tile-header {
+  display: none;
+}
+.mail.no-thumbnail .list-container .tile-body {
+  margin-left: 15px; /* Only for ListView (list-container), no for GridView (grid-container). */
+}

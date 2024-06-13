@@ -1,0 +1,11 @@
+m|XCTInfrastructureWeb\XCTInfWebApplication.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.0.22078|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\XCTInfWebApplication\XCTInfWebApplication.js|1647692367|1770
+s|XCTInfrastructureWeb\XCTInfWebApplication.mweb\src\XCTApplicationBase.js|1573545386|2447
+u|XCTInfrastructureWeb\XCTInfWebApplication.mweb\src\XCTFactory.js|1508844136|1308
+u|XCTInfrastructureWeb\XCTInfWebApplication.mweb\src\XCTInfWebApplication.js|1498656105|114
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

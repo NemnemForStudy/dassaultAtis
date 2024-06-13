@@ -1,0 +1,50 @@
+<div class="table-layout">
+    <table class="table table-responsive">
+        <tr>
+            <th>
+                {{NLS.fname}}
+                <span class="sortable fonticon fonticon-clickable fonticon-expand-up fname"></span>
+            </th>
+            <th>
+                {{NLS.lname}}
+                <span class="sortable fonticon fonticon-clickable fonticon-expand-up lname"></span>
+            </th>
+            <th>{{NLS.email}}</th>
+            <th class="centered">
+                {{NLS.quota}}
+            </th>
+            <th class="centered">
+                {{NLS.usage}}
+            </th>
+            <th class="centered">
+                {{NLS.ownerStatus}}
+                <span class="sortable fonticon fonticon-clickable centered fonticon-expand-up ownerstatus"></span>
+            </th>
+            <th class="centered">
+                {{NLS.manageDrive}}
+            </th>
+        </tr>
+        {{#each users}}
+        <tr>
+            <td title="{{fname}}">{{fname}}</td>
+            <td title="{{lname}}">{{lname}}</td>
+            <td title="{{email}}">{{email}}</td>
+            <td title="{{quota}}" class="centered">
+                {{quota}} {{../NLS.gb}}
+            </td>
+            <td class="{{#ifCond ratio '>=' 100}}red{{/ifCond}} {{#ifCond ratio '>=' 80}}yellow{{/ifCond}} centered" title="{{ratio}}">{{usageNLS}} {{#ifCond quota '>' 0}} / {{ratio}} % {{/ifCond}}</td>
+            <td title="{{ownerstatus}}" class="centered">
+                {{#ifCond ownerstatus '===' 'active'}} {{../NLS.active}} {{/ifCond}}
+                {{#ifCond ownerstatus '===' 'inactive'}} {{../NLS.inactive}} {{/ifCond}}
+            </td>
+            <td title="" class="centered">
+                <span class="fonticon fonticon-clickable fonticon-cog action" data-model-id="{{physicalid}}"></span>
+                {{#ifCond ownerstatus '!==' 'active'}}
+                    <span class="fonticon fonticon-clickable fonticon-trash action" data-model-id="{{physicalid}}"></span>
+                {{/ifCond}}
+            </td>
+        </tr>
+        {{/each}}
+    </table>
+    <div class="pager"></div> 
+</div>

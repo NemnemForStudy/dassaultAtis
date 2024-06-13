@@ -1,0 +1,16 @@
+m|MPFModels\MPFCompanyConstraintsModel.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.1.22330|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\MPFCompanyConstraintsModel\MPFCompanyConstraintsModel.js|1669432474|1673
+s|MPFModels\MPFCompanyConstraintsModel.mweb\src\CompanyConstraintsCollection.js|1669417586|801
+t|win_b64\webapps\MPFCompanyConstraintsModel\MPFCompanyConstraintsModel_en.js|1669432475|711
+s|MPFModels\MPFCompanyConstraintsModel.mweb\src\assets\nls\CompanyConstraintsModel_en.json|1669417586|648
+t|win_b64\webapps\MPFCompanyConstraintsModel\assets\nls\CompanyConstraintsModel_en.json|1669432472|648
+s|MPFModels\MPFCompanyConstraintsModel.mweb\src\assets\nls\CompanyConstraintsModel_en.json|1669417586|648
+u|MPFModels\MPFCompanyConstraintsModel.mweb\src\CompanyConstraintsDataProxy.js|1669417586|929
+u|MPFModels\MPFCompanyConstraintsModel.mweb\src\CompanyConstraintsModel.js|1669417586|3245
+u|MPFModels\MPFCompanyConstraintsModel.mweb\src\MPFCompanyConstraintsModel.js|1669417586|0
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

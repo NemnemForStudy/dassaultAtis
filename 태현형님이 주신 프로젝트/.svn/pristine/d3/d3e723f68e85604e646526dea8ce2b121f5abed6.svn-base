@@ -1,0 +1,13 @@
+m|MPFModels\MPFPricingModel.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.1.22330|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\MPFPricingModel\MPFPricingModel.js|1669432493|2590
+s|MPFModels\MPFPricingModel.mweb\src\MPFPricingModel.js|1669417587|0
+u|MPFModels\MPFPricingModel.mweb\src\PricingDataProxy.js|1669417587|1382
+u|MPFModels\MPFPricingModel.mweb\src\PricingFactory.js|1669417587|2512
+u|MPFModels\MPFPricingModel.mweb\src\PricingModel.js|1669417587|2842
+u|MPFModels\MPFPricingModel.mweb\src\ShopPricingDataProxy.js|1669417587|1598
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

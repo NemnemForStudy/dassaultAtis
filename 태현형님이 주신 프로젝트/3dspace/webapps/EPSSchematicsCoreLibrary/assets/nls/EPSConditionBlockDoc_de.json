@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0",
+  "summary": "Vergleicht den Wert mehrerer Eingabedaten anhand eines festgelegten Ausdrucks.",
+  "description": "Dieser Block ist dynamisch, sodass die Anzahl der Eingabedaten über die Blockkonfiguration geändert werden kann.<br>Der Datenanschlusswert kann alle Datentypen verarbeiten.<br>Der in der Einstellung <doc-setting-name translate=no>Expression</doc-setting-name> angegebene Variablenname muss dem Namen der Eingabedaten entsprechen, sonst gilt der Ausdruck als ungültig.<br><br>Der festgelegte Ausdruckswert ermöglicht einen erweiterten Ausdrucksvergleich:<ul><li><doc-value translate=no>&quot;Value1 === Value2&quot;</doc-value>: Prüft, ob <doc-idp-name translate=no>Value1</doc-idp-name> gleich <doc-idp-name translate=no>Value2</doc-idp-name> ist.</li><li><doc-value translate=no>&quot;Value3 > Value3 && Value3 < Value2&quot;</doc-value>: Prüft, ob <doc-idp-name translate=no>Value3</doc-idp-name> zwischen <doc-idp-name translate=no>Value1</doc-idp-name> und <doc-idp-name translate=no>Value2</doc-idp-name> liegt (<doc-idp-name translate=no>Value1</doc-idp-name>, <doc-idp-name translate=no>Value2</doc-idp-name> und <doc-idp-name translate=no>Value3</doc-idp-name> sind Zahlen).</li><li><doc-value translate=no>&quot;Value1 !== Value2 || Value1 !== Value3&quot;</doc-value>: Prüft, ob <doc-idp-name translate=no>Value1</doc-idp-name> sich von <doc-idp-name translate=no>Value2</doc-idp-name> oder <doc-idp-name translate=no>Value3</doc-idp-name> unterscheidet.</li></ul>",
+  "dataPorts": {
+    "Value1": "Erster zu vergleichender Wert.",
+    "Value2": "Zweiter zu vergleichender Wert."
+  },
+  "controlPorts": {
+    "In": "löst die Blockausführung aus.",
+    "True": "Wird aktiviert, wenn das Ergebnis des Ausdrucks für die jeweiligen angegebenen Eingabedatenwerte positiv ist.",
+    "False": "Wird aktiviert, wenn das Ergebnis des Ausdrucks für die jeweiligen angegebenen Eingabedatenwerte negativ ist."
+  },
+  "settings": {
+    "Expression": "Wert des Ausdrucks, der den Vergleich der Eingabedatenwerte beschreibt."
+  },
+  "example": null
+}

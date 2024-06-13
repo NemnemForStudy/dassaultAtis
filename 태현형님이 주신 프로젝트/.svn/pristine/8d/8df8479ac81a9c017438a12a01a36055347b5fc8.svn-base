@@ -1,0 +1,73 @@
+<div class="enox-collection-toolbar-v2-container">
+
+    <!-- LEFT MENU - Multiselect check and item counter -->
+
+	{{#if withmultisel}}
+		<div id="checkBoxMulticell" class="enox-collection-toolbar-withmultisel" ></div>
+	{{/if}}
+    {{#if showItemCount}}
+    <div id='collectionToolbarItemCountContainer' class="enox-collection-toolbar-item-count">
+      	<div class="enox-collection-toolbar-item-count-inner-wrapper">
+      		<div class="enox-collection-toolbar-item-count-inner">
+      		</div>
+      	</div>
+    </div>
+    {{/if}}
+
+	<div class="enox-collection-toolbar-right-menu-wrapper">
+		<div class="enox-collection-toolbar-right-menu">
+
+
+
+
+			{{#unless withStableActions}}
+						{{#if filter}}
+						<div id="enox-collection-toolbar-search" class="enox-collection-toolbar-search-textbox-container"></div>
+						{{/if}}
+			{{/unless}}
+
+
+		{{#if showBarAction}}
+
+			{{#unless withStableActions}}
+
+				{{#if components}}
+					<div class="enox-collection-toolbar-finalItem"></div>
+				{{/if}}
+					<div class="enox-collection-toolbar-actions"></div>
+
+			{{else}}
+					<div class="enox-collection-toolbar-actions"></div>
+					<!-- for the fixed actions-->
+					<div class="enox-collection-toolbar-fixed-actions">
+						<div class="enox-divider-search"></div>
+						{{#if filter}}
+							<div id="enox-collection-toolbar-search" class="enox-collection-toolbar-search-textbox-container"></div>
+						{{/if}}
+
+					</div>
+				{{/unless}}
+    	{{/if}}
+
+			{{#if sort}}
+				{{#each sort}}
+					<div id="enox-collection-toolbar-sort-item-{{this.id}}"  class = "enox-collection-toolbar-sort-order" style="display:none">
+					{{#sort_type_check2 this.type 'string'}}
+						<span class = "fonticon fonticon-sort-alpha-asc enox-collection-toolbar-order-style order-asc"></span>
+						<span class = "fonticon fonticon-sort-alpha-desc enox-collection-toolbar-order-style order-desc"></span>
+					{{else}}
+						{{#sort_type_check2 this.type 'integer'}}
+							<span class = "fonticon fonticon-sort-num-asc enox-collection-toolbar-order-style order-asc"></span>
+							<span class = "fonticon fonticon-sort-num-desc enox-collection-toolbar-order-style order-desc"></span>
+						{{else }}
+							<span class = "fonticon fonticon-date-sorting-1-31 enox-collection-toolbar-order-style order-asc"></span>
+							<span class = "fonticon fonticon-date-sorting-31-1 enox-collection-toolbar-order-style order-desc"></span>
+						{{/sort_type_check2}}
+					{{/sort_type_check2}}
+					</div>
+				{{/each}}
+			{{/if}}
+
+		</div>
+	</div>
+</div>

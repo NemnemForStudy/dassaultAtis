@@ -1,0 +1,1 @@
+define("DS/etree/etree_pt-BR",{});define("DS/etree/assets/nls/overviewui",{zoom_in:"Mais zoom",zoom_out:"Menos zoom",zoom_default:"Restaurar zoom padrão",zoom_fit:"Ajustar tudo"});

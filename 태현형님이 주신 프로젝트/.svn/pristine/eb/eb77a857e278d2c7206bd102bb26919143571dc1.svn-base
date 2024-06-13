@@ -1,0 +1,62 @@
+################################################################################################
+# Create By choimingi 2023. 08. 078
+# Admin Type : menu
+# Name : decChangeHistoryCreateForm
+################################################################################################
+
+# delete form decChangeHistoryCreateForm;
+
+
+add form decChangeHistoryCreateForm web
+field
+    name "Project_Code"
+    label "emxProgramCentral.Label.decProject_Code"
+    setting "Registered Suite" "ProgramCentral"	
+    setting "function" "getRelatedDetailName"
+    setting "program" "decProjectChangeHistory"
+    setting 'Editable' false
+    setting 'Field Type' 'program'
+    setting 'Input Type' 'textbox'
+field
+    name "REQUEST_DATE"
+    label "emxProgramCentral.Label.decRequest_Date"
+    setting "Registered Suite" "ProgramCentral"
+    setting "Field Type" "basic"
+    setting "Input Type" "textbox"
+    setting "Required" "true"
+    setting "format" "date"
+field
+    name "INPUT_DATE"
+    label "emxProgramCentral.Label.Input_Date"
+    setting "Registered Suite" "ProgramCentral"
+    setting "Field Type" "basic"
+    setting "Input Type" "textbox"
+    setting "Required" "true"
+    setting "format" "date"
+field
+    name "CHANGE_ORIGINATOR"
+    label "emxProgramCentral.Label.decChange_Originator"
+    range '${COMMON_DIR}/emxFullSearch.jsp?type=PERSON_CHOOSER&selection=multiple'
+    setting 'Popup Modal' 'true'
+    setting 'Target Location' 'popup'
+    setting "Registered Suite" "ProgramCentral"
+    setting "Field Type" "basic"
+    setting "Input Type" "textbox"
+    setting "Required" "true"
+    setting 'Window Height' '500'
+    setting 'Window Width' '700'
+    setting 'format' 'user'
+    setting 'Show Clear Button' true
+field
+    name "ORIGINATOR"
+    label "emxProgramCentral.Label.Originator"
+    businessobject  "description"
+    setting "Registered Suite" "ProgramCentral"
+    setting "Field Type" "basic"
+    setting "Input Type" "textbox"
+    setting "Required" "true"
+property "installer" value "ENOVIAEngineering"
+property "application" value "Framework"
+property "original name" value "decChangeHistoryCreateForm";
+
+

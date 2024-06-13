@@ -1,0 +1,1 @@
+define("DS/PlatformManagementLayout/PlatformManagementLayout_zh-TW",{});define("DS/PlatformManagementLayout/assets/nls/PlatformManagementLayout",{welcome:"歡迎使用 ",platformManagement:"平台管理",more:"更多",less:"更少"});

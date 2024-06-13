@@ -1,0 +1,1 @@
+define("DS/MutatorWdg/MutatorWdg_ru",{});define("DS/MutatorWdg/assets/nls/mutator",{errorUrl:"Не удалось загрузить виджет",errorApi:"Не указан ИД для API виджета"});

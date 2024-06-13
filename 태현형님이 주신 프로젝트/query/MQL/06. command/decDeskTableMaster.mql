@@ -1,0 +1,28 @@
+### 230418 Created by CMG
+
+
+#delete command decDeskTableMaster;
+
+add command decDeskTableMaster
+	label "emxFramework.Command.decTableMasterCommand"
+	href "${COMMON_DIR}/emxPortal.jsp?portal=decTableMasterPortal&header=emxFramework.Label.decTableMasterPortal"
+	setting "Registered Suite" "Framework"
+	setting "Target Location" "content"
+	property "installer" value "ENOVIAEngineering"
+	property "application" value "Framework"
+	property "original name" value "decDeskTableMaster";
+
+#mod menu decManagerDesk add command decDeskTableMaster;
+
+add property command_decDeskTableMaster on program eServiceSchemaVariableMapping.tcl to command decDeskTableMaster;
+
+# Modified by hslee on 2023.07.26
+mod command decDeskTableMaster
+	href '${COMMON_DIR}/emxPortal.jsp?portal=decTableMasterPortal&header=emxFramework.Type.decTableMaster'
+;
+
+mod command decDeskTableMaster
+	add setting 'hasAccess' 'PIM' 
+	add setting 'Access Program' 'decAccess'
+	add setting 'Access Function' 'hasAccess'
+;

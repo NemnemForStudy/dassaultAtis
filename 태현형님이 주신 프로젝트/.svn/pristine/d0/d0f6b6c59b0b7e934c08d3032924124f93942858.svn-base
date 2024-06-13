@@ -1,0 +1,12 @@
+m|WebRecordEnabler\WebRecordBase.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.0.22078|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\WebRecordBase\WebRecordBase.js|1647692316|7319
+s|WebRecordEnabler\WebRecordBase.mweb\src\Constants.js|1557512078|9549
+u|WebRecordEnabler\WebRecordBase.mweb\src\TraceManager.js|1605171802|28756
+u|WebRecordEnabler\WebRecordBase.mweb\src\Utils.js|1560420225|4410
+u|WebRecordEnabler\WebRecordBase.mweb\src\WebRecordBase.js|1499699710|124
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

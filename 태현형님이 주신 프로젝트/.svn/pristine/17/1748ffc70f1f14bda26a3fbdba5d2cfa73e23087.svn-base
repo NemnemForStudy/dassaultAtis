@@ -1,0 +1,1159 @@
+<%--  emxCollectionsEditDialog.jsp   - Dialog page to take input for editing a Collection.
+
+   Copyright (c) 2003-2020 Dassault Systemes.All Rights Reserved.
+   This program contains proprietary and trade secret information of MatrixOne,Inc.
+   Copyright notice is precautionary only and does not evidence any actual or intended publication of such program
+
+   decemxProjectDetailsViewFormDialog.jsp 
+   Created By thok 2023-05-30
+--%>
+   
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.List"%>
+<%@page import="org.apache.commons.lang3.StringUtils"%>
+<%@page import="com.dec.util.DecConstants"%>
+<%@page import="com.matrixone.apps.program.ProgramCentralUtil"%>
+<%@page import ="java.text.NumberFormat"%>
+<%@page import ="com.matrixone.apps.domain.DomainObject" %>
+<%@page import ="com.matrixone.apps.program.ProgramCentralConstants" %>
+<%@page import ="com.matrixone.apps.domain.util.SetUtil,
+                 com.matrixone.apps.domain.util.XSSUtil"%>
+<%@page import="com.dec.util.decCollectionUtil"%>
+
+<script language="JavaScript" src="scripts/emxUICollections.js" type="text/javascript"></script>
+<script language="JavaScript" src="scripts/emxUIFormUtil.js" type="text/javascript"></script>
+
+<script language="javascript" type="text/javascript" src="../common/scripts/emxUIConstants.js"></script>
+<script language="javascript" type="text/javascript" src="../common/scripts/emxUICore.js"></script>
+<script language="javascript" type="text/javascript" src="../common/scripts/emxUICoreMenu.js"></script>
+<script language="javascript" type="text/javascript" src="../common/scripts/emxUICalendar.js"></script>
+<link rel="stylesheet" href="../common/styles/emxUICalendar.css">
+
+<%@include file = "../emxTagLibInclude.inc" %>
+<%@include file = "../emxUICommonAppInclude.inc"%>
+<%@include file = "../emxUICommonHeaderBeginInclude.inc"%>
+
+<%@ page import="org.apache.ibatis.session.SqlSession"%>
+<%@ page import="com.daewooenc.mybatis.main.decSQLSessionFactory"%>
+
+<emxUtil:localize id="i18nId" bundle="emxProgramCentralStringResource" locale='<xss:encodeForHTMLAttribute><%= request.getHeader("Accept-LanemxUICommonAppIncludeguage") %></xss:encodeForHTMLAttribute>' />
+<%!
+	public String dateConvert(Context context,String timeZone,String inputDate){
+		String convertDate = DecConstants.EMPTY_STRING;
+		
+		try{
+			if(inputDate.length() > 0){
+				StringBuffer dateBuffer = new StringBuffer(inputDate.substring(0, 4));
+				dateBuffer.append("/");
+				dateBuffer.append(inputDate.substring(4, 6));
+				dateBuffer.append("/");
+				dateBuffer.append(inputDate.substring(6, 8));
+				dateBuffer.append(" 12:00:00");
+				convertDate = dateBuffer.toString();
+				
+				Locale locale 		= context.getLocale();
+				double clientTZOffset = (new Double(timeZone)).doubleValue();
+				
+				String myDate = convertDate;
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+				Date date = sdf.parse(myDate);
+				long millis = date.getTime();
+				convertDate = eMatrixDateFormat.getDateValue(context, String.valueOf(millis), timeZone, locale);
+			}
+		} catch(Exception e) {
+	    	e.printStackTrace();
+	    }
+		
+		return convertDate;
+	}
+
+	public String dateConvertMillisecond(Context context,String timeZone,String inputDate){
+		String convertDate = DecConstants.EMPTY_STRING;
+		
+		try{
+			if(inputDate.length() > 0){
+				Date date = new Date(inputDate);
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+				
+				String myDate =  sdf.format(date);
+				Date dateM = sdf.parse(myDate);
+				long millis = dateM.getTime();
+				convertDate = String.valueOf(millis);
+			}
+		} catch(Exception e) {
+	    	e.printStackTrace();
+	    }
+		
+		return convertDate;
+	}
+	
+	public String dateConvertDisplay(Context context,String timeZone,String inputDate){
+		String convertDate = DecConstants.EMPTY_STRING;
+		
+		try{
+			if(inputDate.length() > 0){
+				Locale locale 		= context.getLocale();
+				double clientTZOffset = (new Double(timeZone)).doubleValue();
+				
+				Date date = new Date(inputDate);
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+				
+				String myDate =  sdf.format(date);
+				Date dateM = sdf.parse(myDate);
+				long millis = dateM.getTime();
+				
+				convertDate = eMatrixDateFormat.getDateValue(context, String.valueOf(millis), timeZone, locale);
+			}
+		} catch(Exception e) {
+	    	e.printStackTrace();
+	    }
+		
+		return convertDate;
+	}
+%>
+<%
+try{
+  String languageStr = request.getHeader("Accept-Language");
+  String jsTreeID    = emxGetParameter(request,"jsTreeID");
+  String suiteKey    = emxGetParameter(request,"suiteKey");
+  String strSetId = emxGetParameter(request, "relId");
+  String sCharSet    = Framework.getCharacterEncoding(request);
+
+  String mode    = emxGetParameter(request,"mode");
+  DomainObject projectObject = new DomainObject(strSetId);
+  String objectName = projectObject.getName(context);
+  String objectId = strSetId;
+
+  DomainObject object = new DomainObject(strSetId);
+  String decName = (String) object.getInfo(context,"name");
+  String decOwner = (String) object.getInfo(context,"owner");
+  String decOwnerId = PersonUtil.getPersonObjectID(context, decOwner);
+  String decProjectType = (String) object.getAttributeValue(context, "decProjectType");
+  Map mp =  object.getAttributeMap(context,false);
+  // Added by hslee on 2023.07.13 --- [s]
+  String countryCode = (String) mp.get("decCountryCode");
+  Map programMap = new HashMap();
+  String country = "";
+  if ( StringUtils.isNotEmpty(countryCode) )
+  {
+	  programMap.put(DecConstants.ATTRIBUTE_DECCOUNTRYCODE, countryCode);
+	  country = JPO.invoke(context, "emxProjectSpace", null, "getCountry", JPO.packArgs(programMap), String.class);
+  }
+  
+  String timeZone = (String)session.getAttribute("timeZone");
+  
+  StringBuffer countrySearchURL = new StringBuffer("../common/emxFullSearch.jsp");
+  countrySearchURL.append("?field=TYPES=type_Country");
+  countrySearchURL.append("&table=AEFGeneralSearchResults");
+  countrySearchURL.append("&selection=single");
+  countrySearchURL.append("&submitURL=../common/AEFSearchUtil.jsp");
+  countrySearchURL.append("&fieldNameDisplay=decCountryCodeDisplay");
+  countrySearchURL.append("&fieldNameActual=decCountryCode");
+  countrySearchURL.append("&selectExpr=attribute[Country Code (2 Letter)]");
+  
+  // Added by hslee on 2023.07.13 --- [e]
+  StringList projectExecutionRelNameList = decProjectType.equalsIgnoreCase("bidding") ? object.getInfoList(context, "from[decProjectExecutionRel].to.name") : object.getInfoList(context, "to[decProjectExecutionRel].from.name");
+  StringList projectExecutionRelIdList = decProjectType.equalsIgnoreCase("bidding") ? object.getInfoList(context, "from[decProjectExecutionRel].to.id") : object.getInfoList(context, "to[decProjectExecutionRel].from.id");
+  
+  int projectExecutionRelListSize = projectExecutionRelNameList.size();
+  NumberFormat numf = NumberFormat.getInstance(Locale.getDefault());
+ 
+  int decTotalCost = 0;
+  int decTotalCost_USD = 0;
+  int decOurCompanyCost = 0;
+  int decOurCompanyCost_USD = 0;
+  
+  try {
+		decTotalCost = Integer.parseInt((String) mp.get("decTotalCost"));
+		decTotalCost_USD = Integer.parseInt((String) mp.get("decTotalCost_USD"));
+		decOurCompanyCost = Integer.parseInt((String) mp.get("decOurCompanyCost"));
+		decOurCompanyCost_USD = Integer.parseInt((String) mp.get("decOurCompanyCost_USD"));
+	} catch (NumberFormatException e) {
+		decTotalCost = 0;
+		decTotalCost_USD = 0;
+		decOurCompanyCost= 0;
+		decOurCompanyCost_USD = 0;
+	}
+  
+  
+  
+  StringBuffer personSearchUrl = new StringBuffer("../common/emxFullSearch.jsp");
+  personSearchUrl.append("?relId=&field=TYPES=type_Person:CURRENT=policy_Person.state_Active:TYPES=type_Person:USERROLE=Project Lead,VPLMProjectLeader");
+  personSearchUrl.append("&form=PMCCommonPersonSearchForm");
+  personSearchUrl.append("&selection=single");
+  personSearchUrl.append("&fieldNameActual=decOwner");
+  personSearchUrl.append("&parentOID="+strSetId);
+  personSearchUrl.append("&suiteKey=ProgramCentral");
+  personSearchUrl.append("&fieldNameOID=decOwnerOID");
+  personSearchUrl.append("&type=PERSON_CHOOSER");
+  personSearchUrl.append("&table=PMCCommonPersonSearchTable");
+  personSearchUrl.append("&objectId="+strSetId);
+  personSearchUrl.append("&fieldNameDisplay=decOwnerDisplay");
+  personSearchUrl.append("&submitURL=../common/AEFSearchUtil.jsp");
+  personSearchUrl.append("&form=AEFSearchPersonForm");
+  personSearchUrl.append("&selection=single");
+  personSearchUrl.append("&table=AEFPersonChooserDetails");
+  
+  StringBuffer projectSearchUrl = new StringBuffer("../common/emxFullSearch.jsp");
+  projectSearchUrl.append("?includeOIDprogram=emxProjectSpace:includeCompleteBiddingProject");
+  projectSearchUrl.append("&field=TYPES=type_ProjectSpace");
+  projectSearchUrl.append("&selection=single");
+  projectSearchUrl.append("&fieldNameActual=decBiddingProject");
+  projectSearchUrl.append("&suiteKey=ProgramCentral");
+  projectSearchUrl.append("&fieldNameOID=decBiddingProjectOID");
+  projectSearchUrl.append("&table=PMCProjectSummaryForProjects");
+  projectSearchUrl.append("&showInitialResults=true");
+  projectSearchUrl.append("&fieldNameDisplay=decBiddingProjectDisplay");
+  projectSearchUrl.append("&submitURL=AEFSearchUtil.jsp");
+  
+  
+  	DomainObject doObj = DomainObject.newInstance(context, objectId);
+  	String decEPCType = object.getAttributeValue(context,"decEPCType")==null ? "" : (String) object.getAttributeValue(context,"decEPCType");
+  	String decCategory1 = object.getAttributeValue(context,"decCategory1")==null ? "" : (String) object.getAttributeValue(context,"decCategory1");
+  	String decCategory2 = object.getAttributeValue(context,"decCategory2")==null ? "" : (String) object.getAttributeValue(context,"decCategory2");
+  	String decCategory3 = object.getAttributeValue(context,"decCategory3")==null ? "" : (String) object.getAttributeValue(context,"decCategory3");
+  	
+  	String AWP_YN = object.getAttributeValue(context,"decAWP_YN")==null ? "" : (String) object.getAttributeValue(context,"decAWP_YN");
+  	String IWP_YN = object.getAttributeValue(context,"decIWP_YN")==null ? "" : (String) object.getAttributeValue(context,"decIWP_YN");
+
+  	Map<String, String> realCodeMap = new HashMap();
+  	realCodeMap.put("EPC Category",decEPCType);
+  	realCodeMap.put("Project Category 1",decCategory1);
+  	realCodeMap.put("Project Category 2",decCategory2);
+  	realCodeMap.put("Project Category 3",decCategory3);
+  	
+  	Map<String, String> realCodeNameMap = new HashMap();
+  	realCodeNameMap.put("EPC Category","emxProgramCentral.Label.decEPCType");
+  	realCodeNameMap.put("Project Category 1","emxProgramCentral.Label.decCategory1");
+  	realCodeNameMap.put("Project Category 2","emxProgramCentral.Label.decCategory2");
+  	realCodeNameMap.put("Project Category 3","emxProgramCentral.Label.decCategory3");
+  	
+	StringList slSelect = new StringList();
+	slSelect.add("name");
+	
+	Map objInfo = doObj.getInfo(context, slSelect);
+	String projectCode = (String) objInfo.get("name");
+  
+  	String codeMasterParam = "EPC Category|Project Category:1>Project Category:2>Project Category:3";
+	// Get Code Master
+	Map<String, StringList> codeListMap = new HashMap();
+	Map<String, StringList> valueListMap = new HashMap();
+	Map<String, StringList> parentIdListMap = new HashMap();
+	Map<String, StringList> selfIdListMap = new HashMap();
+	MapList codeMasterList = null;
+	Map<String,StringList> codeMasterMap = null;
+	StringList codeList = null;
+	StringList valueList = null;
+	StringList parentIdList = null;
+	StringList selfIdList = null;
+	StringList tempDescendantList = new StringList();
+	StringList descendantList = new StringList(); // selectbox가 onchange되었을 때 함께 변경될 자식 selectbox 목록
+	String descendant = null; // selectbox가 onchange되었을 때 함께 변경될 자식 selectbox 이름
+	String codeMaster = null;
+	StringList slCodeMasterWithDetailType = null;
+	StringList slCodeMaster2HTML = new StringList(); // html tag로 출력될 Code Master 순서
+			
+	StringList slCodeMasterSplitByPipeline = FrameworkUtil.splitString(codeMasterParam, "|");
+	StringList slCodeMasterSplitByGT = null;
+	String codeMasterTemp = null;
+	
+	for ( String codeMasterSplitByPipeline : slCodeMasterSplitByPipeline )
+	{
+		slCodeMasterSplitByGT = FrameworkUtil.splitString(codeMasterSplitByPipeline, ">");
+		
+		tempDescendantList.clear();
+		
+		for (int k = 0; k < slCodeMasterSplitByGT.size(); k++)
+		{
+			codeMasterTemp = slCodeMasterSplitByGT.get(k);
+
+			programMap.clear();
+			programMap.put("projectId", objectId);
+			programMap.put("codeMasterRevision", projectCode);
+			programMap.put("applyFilter", true);
+			
+			if ( codeMasterTemp.contains(".") )
+			{
+				slCodeMasterWithDetailType = FrameworkUtil.splitString(codeMasterTemp, ".");
+				
+				if ( slCodeMasterWithDetailType.size() >= 2 )
+				{
+					codeMaster = slCodeMasterWithDetailType.get(1);
+					
+					programMap.put("codeMasterName", slCodeMasterWithDetailType.get(0));
+					programMap.put("codeDetailType", codeMaster);
+				}
+				else
+				{
+					throw new Exception("Syntax of Code Master Parameter is not proper. codeMaster parameter : " + codeMasterParam);
+				}
+			}
+			else if ( codeMasterTemp.contains(":") )
+			{
+				slCodeMasterWithDetailType = FrameworkUtil.splitString(codeMasterTemp, ":");
+
+				if ( slCodeMasterWithDetailType.size() >= 2 )
+				{
+					codeMaster = codeMasterTemp.replace(":", " ");
+					
+					programMap.put("codeMasterName", slCodeMasterWithDetailType.get(0));
+					programMap.put("codeDetailLevel", slCodeMasterWithDetailType.get(1));
+				}
+				else
+				{
+					throw new Exception("Syntax of Code Master Parameter is not proper. codeMaster parameter : " + codeMasterParam);
+				}
+			}
+			else
+			{
+				codeMaster = codeMasterTemp;
+				
+				programMap.put("codeMasterName", codeMasterTemp);
+				programMap.put("expandLevelParam", 1);
+			}
+			
+			if(codeMasterTemp.contains("Project Category")){
+				programMap.put("expandLevelParam", 0);//expandLevelParam 0 으로 모든 값 level expand 해서 불러오기
+			}
+			
+			codeMasterList = JPO.invoke(context, "decCodeMaster", null, "getCodeDetailList", JPO.packArgs(programMap), MapList.class);
+
+			codeMasterMap = decCollectionUtil.extractStringList(codeMasterList, "attribute[decCode]", "description", "from.id", "id");
+			
+			codeList = codeMasterMap.get("attribute[decCode]");
+			valueList = codeMasterMap.get("description");
+			parentIdList = codeMasterMap.get("from.id");
+			selfIdList = codeMasterMap.get("id");
+			
+			codeList.add(0, "");
+// 			valueList.add(0, "All");
+			valueList.add(0, "");
+			parentIdList.add(0, "");
+			selfIdList.add(0, "");
+			
+			codeListMap.put(codeMaster, codeList);
+			valueListMap.put(codeMaster, valueList);
+			parentIdListMap.put(codeMaster, parentIdList);
+			selfIdListMap.put(codeMaster, selfIdList);
+			
+			if ( k == 0 )
+			{
+				descendant = "";
+			}
+			else
+			{
+				descendant = codeMaster;
+			}
+
+			slCodeMaster2HTML.add(codeMaster);
+			tempDescendantList.add(descendant);
+		}
+		
+		// tempDescendantList 정리
+		// 1. idx:0의 데이터를 제거하고 --> 현재 tempDescendantList는 idx 하나씩 밀려있음.
+		// 2. 마지막에 ""을 add한다. --> 마지막 Code Master는 변경될 자식 없음.
+		tempDescendantList.remove(0);
+		tempDescendantList.add("");
+		descendantList.addAll(tempDescendantList);
+	}
+	
+	String decEPCTypeValue = "";
+  	String decCategoryValue1 = "";
+  	String decCategoryValue2 = "";
+  	String decCategoryValue3 = "";
+	
+	for (String codeMaster2HTML : slCodeMaster2HTML)
+	{
+		codeList = codeListMap.get(codeMaster2HTML);
+		valueList = valueListMap.get(codeMaster2HTML);
+		for (int k = 0; k < codeList.size(); k++)
+		{
+			if(codeList.get(k).equalsIgnoreCase(decEPCType) && codeMaster2HTML.equalsIgnoreCase("EPC Category")){
+				decEPCTypeValue = valueList.get(k);
+			} else if(codeList.get(k).equalsIgnoreCase(decCategory1) && codeMaster2HTML.equalsIgnoreCase("Project Category 1")){
+				decCategoryValue1 = valueList.get(k);
+			} else if(codeList.get(k).equalsIgnoreCase(decCategory2) && codeMaster2HTML.equalsIgnoreCase("Project Category 2")){
+				decCategoryValue2 = valueList.get(k);
+			} else if(codeList.get(k).equalsIgnoreCase(decCategory3) && codeMaster2HTML.equalsIgnoreCase("Project Category 3")){
+				decCategoryValue3 = valueList.get(k);
+			}
+		}
+	}
+	
+	String REAL_CONST_YMD = DecConstants.EMPTY_STRING;
+	String REAL_CONEND_YMD = DecConstants.EMPTY_STRING;
+	
+	try(SqlSession sqlSession = decSQLSessionFactory.getSession())
+    {
+    	Map selectParamMap = new HashMap();
+    	selectParamMap.put("SITE_CD",objectName); 
+		
+    	List<Map> resultMax = sqlSession.selectList("Project.selectProjectScheduleMax", selectParamMap);
+		
+		for(int i=0;i<resultMax.size();i++){
+			HashMap map = (HashMap) resultMax.get(i);
+			REAL_CONST_YMD = String.valueOf(map.get("REAL_CONST_YMD"));
+			REAL_CONEND_YMD = String.valueOf(map.get("REAL_CONEND_YMD"));
+		}
+    } catch(Exception e) {
+    	e.printStackTrace();
+		throw e;
+    }
+	Date date = new Date("8/10/2023 12:00:00 PM");
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+	String str = sdf.format(date);
+	System.out.println(str);
+%>
+
+<script type="text/javascript" src="../common/scripts/jquery-latest.js"></script>
+<script language="Javascript" >
+$(document).ready(function() {
+	$('input[name="AWP"]').change(function() {
+	    var value = $(this).val();             
+		var checked = $(this).prop('checked');
+	    if(value=="N" && checked==true){
+	    	$('input[name="IWP"][value="N"]').each(function() {
+		        $(this).prop('checked',true);  //AWP가 N으로 변경될 경우 IWP 강제 N 처리
+		    });
+	    }
+	});
+	$('input[name="IWP"]').change(function() {
+		$('input[name="AWP"][value="N"]').each(function() {
+			var value = $(this).val();             
+			var checked = $(this).prop('checked');
+			if(checked==true){ //IWP가 N에서 Y로 변경 할때 AWP가 N이면 변경 안되게 설정
+				alert("<emxUtil:i18nScript localize="i18nId">emxProgramCentral.Error.IWPchangeN</emxUtil:i18nScript>");
+		        $('input[name="IWP"][value="N"]').each(function() {
+			        $(this).prop('checked',true);  
+		    	});	
+			}
+	        
+		});
+	});
+	$('input[name="decPipingShopRatio"]').change(function() {
+		var value = $(this).val();   
+		if(value > 100){
+			alert("<emxUtil:i18nScript localize="i18nId">emxProgramCentral.Alert.EnterLessThanOneHundred</emxUtil:i18nScript>");
+            document.editForm.decPipingShopRatio.focus();
+            document.editForm.decPipingShopRatio.value = "0";
+			return;
+		}
+	});
+	console.log($(document).parentNode);
+	console.log(this.parentNode);
+});
+  function cancelMethod()
+  {
+     getTopWindow().closeWindow();
+  }
+  function doneMethod()
+  {  
+	 var siteNameValue = document.editForm.decSiteName.value;
+     siteNameValue = siteNameValue.trim();
+     
+     var projectAdminValue = document.editForm.decOwner.value;
+     var projectAdmin = document.editForm.decOwner;
+     var projectAdminId = document.editForm.decOwnerOID;
+     var projectAdminDisplay = document.editForm.decOwnerDisplay;
+     projectAdminValue = projectAdminValue.trim();
+     
+     var originalProjectAdminId = document.editForm.originaldecOwnerId.value;
+     var originalProjectAdminDisplay = document.editForm.originaldecOwnerDisplay.value;
+     var originalProjectAdmin = document.editForm.originaldecOwner.value;
+     
+     var changedProjectAdminId = document.editForm.decOwnerOID.value;
+     
+     var originalBiddingProjectId = document.editForm.originalBiddingProjectId.value;
+     var changedBiddingProjectId = document.editForm.decBiddingProjectOID.value;
+     
+     var decPipingShopRatio = document.editForm.decPipingShopRatio.value;
+     
+     if(originalProjectAdminId!=changedProjectAdminId){
+    	 var confirmMsg = confirm("<emxUtil:i18nScript localize="i18nId">emxProgramCentral.alarm.changeProjectAdmin</emxUtil:i18nScript>");
+    	 if(confirmMsg){
+    		 document.editForm.decOwnerChangeYN.value = "true";
+    	 } else{
+    		 projectAdmin.value = document.editForm.originaldecOwner.value;
+    		 projectAdminId.value = document.editForm.originaldecOwnerId.value;
+    		 projectAdminDisplay.value = document.editForm.originaldecOwnerDisplay.value;
+        	 return;
+    	 }
+     }
+     
+     if(originalBiddingProjectId!=changedBiddingProjectId){
+    	 document.editForm.biddingProjectChangeYN.value = "true";
+     }
+
+     //validate that all required fields are entered
+     if(siteNameValue==null || siteNameValue=="") {
+          alert("<emxUtil:i18nScript localize="i18nId">emxProgramCentral.input.decSiteName</emxUtil:i18nScript>");
+          document.editForm.decSiteName.focus();
+          return;
+      }else if(projectAdminValue==null || projectAdminValue=="") {
+          alert("<emxUtil:i18nScript localize="i18nId">emxProgramCentral.input.ProjectAdministrator</emxUtil:i18nScript>");
+          document.editForm.decOwner.focus();
+          return;
+      }else if(decPipingShopRatio==null || decPipingShopRatio=="") {
+          alert("<emxUtil:i18nScript localize="i18nId">emxProgramCentral.Common.NumericValues</emxUtil:i18nScript>");
+          document.editForm.decPipingShopRatio.focus();
+          document.editForm.decPipingShopRatio.value = "0";
+          return;
+      } else {
+        document.editForm.submit();
+     }
+  }
+  
+  function fnApplyMasterFilter(selectDOM) {
+		let descendant = $(selectDOM).attr("descendant");
+		let selectedValue = $(selectDOM).val();
+		let selectedDOMOptionCnt = $(selectDOM).find("option").not("[style*='display: none']").length;
+		let selfId = $(selectDOM).find("option:selected").attr("selfid");
+		
+		if ( descendant !== "" )
+		{
+			$("select[name='" + descendant + "']").each(function() {
+				if ( selectedValue === "" && selectedDOMOptionCnt > 1 )
+				{
+					// 선택된 값이 없을 경우 전체 목록이 나오도록 한다.
+					$(this).find("option").show();
+					$(this).find("option:eq(0)").prop("selected", true);
+				}
+				else
+				{
+					$(this).find("option:gt(0)").hide();
+					
+					let $toBeAppliedOptionArr = $(this).find("option[parentid='" + selfId + "']");
+					$toBeAppliedOptionArr.show();
+					
+					if ( $toBeAppliedOptionArr.length === 1 )
+					{
+						let optIdx = $toBeAppliedOptionArr.index();
+						$(this).find("option:eq(" + optIdx + ")").prop("selected", true);
+					}
+					else
+					{
+						$(this).find("option:eq(0)").prop("selected", true);
+					}
+				}
+				$(this).trigger("change");
+			});
+		}
+		else
+		{
+			parent.fnReloadHierarchyFrame();
+		}
+	}
+  
+  function refreshPage(){
+	  var objValue = document.editForm.objId;
+	  location.href = "../common/emxTree.jsp?DefaultCategory=decProjectSpacePropertiesPowerView&objectId="+objValue.value;
+  }
+  function pageBack(){
+	  window.history.back();
+  }
+</script>
+
+<%@include file = "../emxUICommonHeaderEndInclude.inc" %>
+<%
+
+    // ----------- set up the url to do the edit and refresh itself.
+    StringBuffer editURL = new StringBuffer("decemxProjectDetailsViewFormProcess.jsp?objectName=");
+    
+    editURL.append(XSSUtil.encodeForURL(context, objectName));
+    editURL.append("&jsTreeID=");
+    editURL.append(XSSUtil.encodeForURL(context,jsTreeID));
+    editURL.append("&suiteKey=");
+    editURL.append(XSSUtil.encodeForURL(context, suiteKey));
+    editURL.append("&relId=");
+    editURL.append(XSSUtil.encodeForURL(context,strSetId));
+    
+%>
+<!-- \\XSSOK -->
+<%
+	if("view".equalsIgnoreCase(mode))
+	{
+%>
+<table border="0" width="100%" cellpadding="5" cellspacing="2">
+  <tr>
+    <td class="labelRequired"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decName</emxUtil:i18n></td>
+    <td class="field" style="width:39%;"><%=decName%></td>
+    <td class="labelRequired"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decSiteName</emxUtil:i18n></td>
+    <td class="field"><%=mp.get("decSiteName")%></td>
+  </tr>
+  <tr>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decProjectName</emxUtil:i18n></td>
+    <td class="field"><%=mp.get("decProjectName")%></td>
+    <td class="labelRequired"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.ProjectAdministrator</emxUtil:i18n></td>
+    <td class="field"><%=PersonUtil.getFullName(context, decOwner)%></td>
+  </tr>
+  <tr>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decSiteName_EN</emxUtil:i18n></td>
+    <td class="field"><%=mp.get("decSiteName_EN")%></td>
+    <%
+    if(decProjectType.equalsIgnoreCase("bidding")){//입찰 프로젝트
+    	if(projectExecutionRelListSize>0){ //연결된 수행 프로젝트 있을경우
+    %>
+    	<td class="label" rowspan=<%=projectExecutionRelListSize%>><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.OngoingProject</emxUtil:i18n></td>
+    	<td class="field">
+    		<a href="#" onclick="javascript:window.open('../common/emxTree.jsp?objectId=<%=projectExecutionRelIdList.get(0)%>&mode=replace&AppendParameters=true&reloadAfterChange=true'); return false">
+   				<%=projectExecutionRelNameList.get(0)%>
+   			</a> <!-- 새탭 -->
+    		<!--
+    		<a href="#" onclick="javascript:findFrame(getTopWindow(),'content').location.href = '../common/emxTree.jsp?objectId=<%=projectExecutionRelIdList.get(0)%>'; return false">
+    			<%=projectExecutionRelNameList.get(0)%>
+    		</a> // 기존 탭
+    		<a href="#" onclick="javascript:showModalDialog('../common/emxTree.jsp?objectId=<%=projectExecutionRelIdList.get(0)%>', '760', '600'); return false">
+    			<img src="images/I_SimulationRep.png">
+    		</a> // 팝업
+    		-->
+	    </td>
+	    <% } else { %>
+	    	<td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.OngoingProject</emxUtil:i18n></td>
+	    	<td class="field"></td>
+	    <% } 
+    } else if(decProjectType.equalsIgnoreCase("ongoing")) {//수행 프로젝트
+    	if(projectExecutionRelListSize>0){ 
+    %>
+    	<td class="label" rowspan=<%=projectExecutionRelListSize%>><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.BiddingProject</emxUtil:i18n></td>
+    	<td class="field">
+    		<a href="#" onclick="javascript:window.open('../common/emxTree.jsp?objectId=<%=projectExecutionRelIdList.get(0)%>&mode=replace&AppendParameters=true&reloadAfterChange=true'); return false">
+    			<%=projectExecutionRelNameList.get(0)%>
+    		</a>
+    	</td>
+    	<% } else { %>
+    		<td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.BiddingProject</emxUtil:i18n></td>
+    		<td class="field"></td>
+    	<% }
+    }
+    %>
+  </tr>
+  <% for(int i=1;projectExecutionRelListSize>i;i++) // connection 된 프로젝트 > 1일 경우 rowspan 뒤에 값들
+  		{ %>
+  	<tr>
+  		<td class="field"></td>
+  		<td class="field"></td>
+  		<td class="field">
+  			<a href="#" onclick="javascript:window.open('../common/emxTree.jsp?objectId=<%=projectExecutionRelIdList.get(i)%>&mode=replace&AppendParameters=true&reloadAfterChange=true'); return false">
+    			<%=projectExecutionRelNameList.get(i)%>
+    		</a>
+  		</td>
+  	</tr>	
+  	<%
+  		}
+  %>
+  <tr>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decBizTypeCode</emxUtil:i18n></td>
+    <td class="field"><%=mp.get("decBizTypeCode")%></td>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decSiteType</emxUtil:i18n></td>
+    <td class="field"><%=mp.get("decSiteType")%></td>
+  </tr>
+  <tr>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decDisciplineType</emxUtil:i18n></td>
+    <td class="field"><%=mp.get("decDisciplineType")%></td>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decLocationStandard</emxUtil:i18n></td>
+    <td class="field"><%=mp.get("decLocationStandard")%></td>
+  </tr>
+  <tr>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decArea</emxUtil:i18n></td>
+    <td class="field"><%=mp.get("decArea")%></td>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.Country</emxUtil:i18n></td>
+    <td class="field"><%=country%></td>
+  </tr>
+  <tr>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decPM_NM</emxUtil:i18n></td>
+    <td class="field"><%=mp.get("decPM_NM")%></td>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decSV_NM</emxUtil:i18n></td>
+    <td class="field"><%=mp.get("decSV_NM")%></td>
+  </tr>
+  <tr>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decPFM_NM</emxUtil:i18n></td>
+    <td class="field"><%=mp.get("decPFM_NM")%></td>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decPCM_NM</emxUtil:i18n></td>
+    <td class="field"><%=mp.get("decPCM_NM")%></td>
+  </tr>
+  <tr>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decProjectClient</emxUtil:i18n></td>
+    <td class="field"><%=mp.get("decProjectClient")%></td>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decProjectClientCode</emxUtil:i18n></td>
+    <td class="field"><%=mp.get("decProjectClientCode")%></td>
+  </tr>
+  <tr>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decProjectSPV</emxUtil:i18n></td>
+    <td class="field"><%=mp.get("decProjectSPV")%></td>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decProjectDES</emxUtil:i18n></td>
+    <td class="field"><%=mp.get("decProjectDES")%></td>
+  </tr>
+  <tr>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decCategory1</emxUtil:i18n></td>
+    <td class="field"><%=decCategoryValue1%></td>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decEPCType</emxUtil:i18n></td>
+    <td class="field"><%=decEPCTypeValue%></td>
+  </tr>
+  <tr>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decCategory2</emxUtil:i18n></td>
+    <td class="field"><%=decCategoryValue2%></td>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decLicensor</emxUtil:i18n></td>
+    <td class="field"><%=mp.get("decLicensor")%></td>
+  </tr>
+  <tr>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decCategory3</emxUtil:i18n></td>
+    <td class="field"><%=decCategoryValue3%></td>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decTaxAddress</emxUtil:i18n></td>
+    <td class="field"><%=mp.get("decTaxAddress")%></td>
+  </tr>
+  <tr>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decAddress</emxUtil:i18n></td>
+    <td class="field"><%=mp.get("decAddress")%></td>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decDetailAddress</emxUtil:i18n></td>
+    <td class="field"><%=mp.get("decDetailAddress")%></td>
+  </tr>
+  <tr>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.ConstructionPeriod</emxUtil:i18n></td>
+    <td class="field"><%=dateConvert(context,timeZone,REAL_CONST_YMD)%><%=dateConvert(context,timeZone,REAL_CONST_YMD)!="" ? " ~ " : "" %><%=dateConvert(context,timeZone,REAL_CONEND_YMD)%></td>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.W1BaseDate</emxUtil:i18n></td>
+    <td class="field"><%=dateConvertDisplay(context,timeZone,String.valueOf(mp.get("decProjectStartDate")))%></td>
+  </tr>
+  <tr>
+    <td class="label" rowspan="2"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decTotalCost</emxUtil:i18n></td>
+    <td class="field"><%=numf.format(decTotalCost)%><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decCurrencyWon</emxUtil:i18n></td>
+    <td class="label" rowspan="2"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decOurCompanyCost</emxUtil:i18n></td>
+    <td class="field"><%=numf.format(decOurCompanyCost)%><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decCurrencyWon</emxUtil:i18n></td>
+  </tr>
+  <tr>
+    <td class="field"><%=numf.format(decTotalCost_USD)%><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decCurrencyDollar</emxUtil:i18n></td>
+    <td class="field"><%=numf.format(decOurCompanyCost_USD)%><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decCurrencyDollar</emxUtil:i18n></td>
+  </tr>
+  <tr>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.AWP</emxUtil:i18n></td>
+    <td class="field"><%=AWP_YN%>
+    </td>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.IWP</emxUtil:i18n></td>
+    <td class="field"><%=IWP_YN%>
+    </td>
+  </tr>
+  <%
+  	if(decProjectType.equalsIgnoreCase("ongoing") && (context.getUser().equalsIgnoreCase(decOwner) || context.isAssigned("decSystemAdmin"))){
+  %>
+  	<tr>
+    	<td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decDashboardURL</emxUtil:i18n></td>
+    	<td class="field"><%=mp.get("decDashboardURL")%></td>
+    	<td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decKPIDay</emxUtil:i18n></td>
+    	<td class="field"><%=mp.get("decKPIDay")%></td>
+  	</tr>
+  <% 
+  	}
+  %>
+  <tr>
+   	<td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decPipingShopRatio</emxUtil:i18n></td>
+   	<td class="field"><%=mp.get("decPipingShopRatio")%> %</td>
+  </tr>
+</table>
+<%
+	} else{ //mode=edit
+%>
+<form name="editForm" method="post" target="pagehidden" onsubmit="doneMethod(); return false" action="<%=editURL.toString()%>" style="height:auto;">
+<table border="0" width="100%" cellpadding="5" cellspacing="2">
+  <input type="hidden" name="decOwnerChangeYN" value="false">
+  <input type="hidden" name="biddingProjectChangeYN" value="false">
+  <input type="hidden" name="decProjectType" value="<%=decProjectType%>">
+  <input type="hidden" name="originaldecOwnerId" value="<%=decOwnerId%>">
+  <input type="hidden" name="originaldecOwnerDisplay" value="<%=PersonUtil.getFullName(context, decOwner)%>">
+  <input type="hidden" name="originaldecOwner" value="<%=decOwner%>">
+  <input type="hidden" name="originalBiddingProjectId" value="<%=projectExecutionRelIdList.size()>0 ? projectExecutionRelIdList.get(0) : ""%>">
+  <input type="hidden" name="originalBiddingProjectDisplay" value="<%=projectExecutionRelIdList.size()>0 ? projectExecutionRelNameList.get(0) : ""%>">
+  <input type="hidden" name="originalBiddingProject" value="<%=projectExecutionRelIdList.size()>0 ? projectExecutionRelNameList.get(0) : ""%>">
+  <input type="hidden" name="objId" value="<%=strSetId%>">
+  <tr>
+    <td class="labelRequired"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decName</emxUtil:i18n></td>
+    <td class="field"><%=decName%><input type="hidden" name="decName"  value="<%=decName%>"/></td>
+    <%
+    	if(decProjectType.equalsIgnoreCase("bidding")){
+    %>
+    <td class="labelRequired"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decSiteName</emxUtil:i18n></td>
+    <td class="inputField"><input type="text" name="decSiteName"  value="<%=mp.get("decSiteName")%>" onFocus="this.select()" /></td>
+  </tr>
+  <tr>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decProjectName</emxUtil:i18n></td>
+    <td class="field"><input type="text" name="decProjectName"  value="<%=mp.get("decProjectName")%>" onFocus="this.select()" /></td>
+    <%
+    	} else{
+    %>	
+    <td class="labelRequired"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decSiteName</emxUtil:i18n></td>
+    <td class="field"><%=mp.get("decSiteName")%><input type="hidden" name="decSiteName"  value="<%=mp.get("decSiteName")%>"/></td>
+  </tr>
+  <tr>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decProjectName</emxUtil:i18n></td>
+    <td class="field"><%=mp.get("decProjectName")%><input type="hidden" name="decProjectName"  value="<%=mp.get("decProjectName")%>"/></td>
+    <%
+    	}
+    %>
+    <td class="labelRequired"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.ProjectAdministrator</emxUtil:i18n></td>
+   	<td class="inputField" style="width:39%;"><input type="text" name="decOwnerDisplay"  value="<%=PersonUtil.getFullName(context, decOwner)%>" onFocus="this.select()" readonly/>
+   	<%
+   		if(context.isAssigned("decSystemAdmin")){ 
+   	%>
+   	<input type="button" value = "..." name = "btnProjectAdmin" id = "btnProjectAdmin" onclick = "showChooser('<%=personSearchUrl.toString()%>')" />
+	<a class = "dialogClear" href = "javascript:;" onclick = "document.editForm.decOwner.value = '', document.editForm.decOwnerOID.value = '',document.editForm.decOwnerDisplay.value = ''">
+		<emxUtil:i18n localize="i18nId">emxProgramCentral.Common.Clear</emxUtil:i18n>
+	</a>
+	<%
+		} 
+	%>
+	<input type="hidden" name="decOwner"  value="<%=decOwner%>">
+	<input type="hidden" name="decOwnerOID"  value="<%=decOwnerId%>">
+  </tr>
+  <tr>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decSiteName_EN</emxUtil:i18n></td>
+    
+    <%
+    	if(decProjectType.equalsIgnoreCase("bidding")){
+    %>
+    
+    <td class="field"><input type="text" name="decSiteName_EN"  value="<%=mp.get("decSiteName_EN")%>" onFocus="this.select()" /></td>
+    
+    <%
+    	} else {
+    %>
+    <td class="field"><%=mp.get("decSiteName_EN")%><input type="hidden" name="decSiteName_EN"  value="<%=mp.get("decSiteName_EN")%>"/></td>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.BiddingProject</emxUtil:i18n></td>
+    <td class="inputField"><input type="text" name="decBiddingProjectDisplay"  value="<%=projectExecutionRelListSize>0 ? projectExecutionRelNameList.get(0) : ""%>" onFocus="this.select()" readonly/>
+    <input type="button" value = "..." name = "btndecBiddingProject" id = "btndecBiddingProject" onclick = "showChooser('<%=projectSearchUrl.toString()%>')" />
+	<a class = "dialogClear" href = "javascript:;" onclick = "document.editForm.decBiddingProjectOID.value = '',document.editForm.decBiddingProjectDisplay.value = ''">
+		<emxUtil:i18n localize="i18nId">emxProgramCentral.Common.Clear</emxUtil:i18n>
+	</a>
+	
+    <%
+    	}
+    %>
+    <input type="hidden" name="decBiddingProject"  value="<%=projectExecutionRelListSize>0 ? projectExecutionRelNameList.get(0) : ""%>" onFocus="this.select()" size=1>
+	<input type="hidden" name="decBiddingProjectOID"  value="<%=projectExecutionRelListSize>0 ? projectExecutionRelIdList.get(0) : ""%>" onFocus="this.select()" size=1>
+  </tr>
+  <tr>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decBizTypeCode</emxUtil:i18n></td>
+    
+    <%
+    	if(decProjectType.equalsIgnoreCase("bidding")){
+    %>
+    
+    <td class="field"><input type="text" name="decBizTypeCode"  value="<%=mp.get("decBizTypeCode")%>" onFocus="this.select()" /></td>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decSiteType</emxUtil:i18n></td>
+    <td class="field"><input type="text" name="decSiteType"  value="<%=mp.get("decSiteType")%>" onFocus="this.select()" /></td>
+  </tr>
+  <tr>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decDisciplineType</emxUtil:i18n></td>
+    <td class="field"><input type="text" name="decDisciplineType"  value="<%=mp.get("decDisciplineType")%>" onFocus="this.select()" /></td>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decLocationStandard</emxUtil:i18n></td>
+    <td class="field"><input type="text" name="decLocationStandard"  value="<%=mp.get("decLocationStandard")%>" onFocus="this.select()" /></td>
+  </tr>
+  <tr>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decArea</emxUtil:i18n></td>
+    <td class="field"><input type="text" name="decArea"  value="<%=mp.get("decArea")%>" onFocus="this.select()" /></td>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.Country</emxUtil:i18n></td>
+    <td class="field">
+    	<input type="text" name="decCountryCodeDisplay"  value="<%=country%>" onFocus="this.select()" readonly/>
+    	<input type="hidden" name="decCountryCode"  value="<%=mp.get("decCountryCode")%>" onFocus="this.select()" readonly/>
+    	<input type="button" value="..." onclick = "showChooser('<%=countrySearchURL.toString()%>')" />
+    	<a class = "dialogClear" href = "javascript:;" onclick = "document.editForm.decCountryCode.value = '', document.editForm.decCountryCodeDisplay.value = ''">
+			<emxUtil:i18n localize="i18nId">emxProgramCentral.Common.Clear</emxUtil:i18n>
+		</a>
+    </td>
+<%--     <td class="field"><input type="text" name="decCountryCode"  value="<%=country%>" onFocus="this.select()" /></td> --%>
+  </tr>
+  <tr>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decPM_NM</emxUtil:i18n></td>
+    <td class="field"><input type="text" name="decPM_NM"  value="<%=mp.get("decPM_NM")%>" onFocus="this.select()" /></td>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decSV_NM</emxUtil:i18n></td>
+    <td class="field"><input type="text" name="decSV_NM"  value="<%=mp.get("decSV_NM")%>" onFocus="this.select()" /></td>
+  </tr>
+  <tr>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decPFM_NM</emxUtil:i18n></td>
+    <td class="field"><input type="text" name="decPFM_NM"  value="<%=mp.get("decPFM_NM")%>" onFocus="this.select()" /></td>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decPCM_NM</emxUtil:i18n></td>
+    <td class="field"><input type="text" name="decPCM_NM"  value="<%=mp.get("decPCM_NM")%>" onFocus="this.select()" /></td>
+  </tr>
+  <tr>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decProjectClient</emxUtil:i18n></td>
+    <td class="field"><input type="text" name="decProjectClient"  value="<%=mp.get("decProjectClient")%>" onFocus="this.select()" /></td>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decProjectClientCode</emxUtil:i18n></td>
+    <td class="field"><input type="text" name="decProjectClientCode"  value="<%=mp.get("decProjectClientCode")%>" onFocus="this.select()" /></td>
+  </tr>
+  <tr>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decProjectSPV</emxUtil:i18n></td>
+    <td class="field"><input type="text" name="decProjectSPV"  value="<%=mp.get("decProjectSPV")%>" onFocus="this.select()" /></td>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decProjectDES</emxUtil:i18n></td>
+    <td class="field"><input type="text" name="decProjectDES"  value="<%=mp.get("decProjectDES")%>" onFocus="this.select()" /></td>
+  </tr>
+  
+  <%
+    	} else{
+  %>
+  	<td class="field"><%=mp.get("decBizTypeCode")%><input type="hidden" name="decBizTypeCode"  value="<%=mp.get("decBizTypeCode")%>"/></td>
+  	<td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decSiteType</emxUtil:i18n></td>
+    <td class="field"><%=mp.get("decSiteType")%><input type="hidden" name="decSiteType"  value="<%=mp.get("decSiteType")%>"/></td>
+  </tr>
+  <tr>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decDisciplineType</emxUtil:i18n></td>
+    <td class="field"><%=mp.get("decDisciplineType")%><input type="hidden" name="decDisciplineType"  value="<%=mp.get("decDisciplineType")%>"/></td>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decLocationStandard</emxUtil:i18n></td>
+    <td class="field"><%=mp.get("decLocationStandard")%><input type="hidden" name="decLocationStandard"  value="<%=mp.get("decLocationStandard")%>"/></td>
+  </tr>
+  <tr>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decArea</emxUtil:i18n></td>
+    <td class="field"><%=mp.get("decArea")%><input type="hidden" name="decArea"  value="<%=mp.get("decArea")%>"/></td>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.Country</emxUtil:i18n></td>
+    <td class="field"><%=country%><input type="hidden" name="decCountryCode"  value="<%=mp.get("decCountryCode")%>"/></td>
+  </tr>
+  <tr>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decPM_NM</emxUtil:i18n></td>
+    <td class="field"><%=mp.get("decPM_NM")%><input type="hidden" name="decPM_NM"  value="<%=mp.get("decPM_NM")%>"/></td>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decSV_NM</emxUtil:i18n></td>
+    <td class="field"><%=mp.get("decSV_NM")%><input type="hidden" name="decSV_NM"  value="<%=mp.get("decSV_NM")%>"/></td>
+  </tr>
+  <tr>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decPFM_NM</emxUtil:i18n></td>
+    <td class="field"><%=mp.get("decPFM_NM")%><input type="hidden" name="decPFM_NM"  value="<%=mp.get("decPFM_NM")%>"/></td>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decPCM_NM</emxUtil:i18n></td>
+    <td class="field"><%=mp.get("decPCM_NM")%><input type="hidden" name="decPCM_NM"  value="<%=mp.get("decPCM_NM")%>"/></td>
+  </tr>
+  <tr>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decProjectClient</emxUtil:i18n></td>
+    <td class="field"><%=mp.get("decProjectClient")%><input type="hidden" name="decProjectClient"  value="<%=mp.get("decProjectClient")%>"/></td>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decProjectClientCode</emxUtil:i18n></td>
+    <td class="field"><%=mp.get("decProjectClientCode")%><input type="hidden" name="decProjectClientCode"  value="<%=mp.get("decProjectClientCode")%>"/></td>
+  </tr>
+  <tr>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decProjectSPV</emxUtil:i18n></td>
+    <td class="field"><%=mp.get("decProjectSPV")%><input type="hidden" name="decProjectSPV"  value="<%=mp.get("decProjectSPV")%>"/></td>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decProjectDES</emxUtil:i18n></td>
+    <td class="field"><%=mp.get("decProjectDES")%><input type="hidden" name="decProjectDES"  value="<%=mp.get("decProjectDES")%>"/></td>
+  </tr>		
+  <%
+    	}
+  %>
+  
+  <%
+		int descendantIdx = 1;
+		for (int i=1;i<slCodeMaster2HTML.size();i++)//EPC구분 값 제외하고 반복
+		{
+			String codeMaster2HTML = slCodeMaster2HTML.get(i);
+			String realCode = realCodeMap.get(codeMaster2HTML);
+			String realCodeName = realCodeNameMap.get(codeMaster2HTML);
+			codeList = codeListMap.get(codeMaster2HTML);
+			valueList = valueListMap.get(codeMaster2HTML);
+			parentIdList = parentIdListMap.get(codeMaster2HTML);
+			selfIdList = selfIdListMap.get(codeMaster2HTML);
+			descendant = descendantList.get(descendantIdx++);
+	%>
+		<tr>
+			<td class="label"><emxUtil:i18n localize="i18nId"><%=realCodeName%></emxUtil:i18n></td>
+			<td class="field">
+				<select name="<%=codeMaster2HTML%>" onchange="fnApplyMasterFilter(this)" descendant="<%=descendant %>">
+	<%
+				for (int k = 0; k < codeList.size(); k++)
+				{
+	%>
+					<option value="<%=codeList.get(k) %>" parentId="<%=parentIdList.get(k) %>" selfId="<%=selfIdList.get(k) %>" <%=codeList.get(k).replace(" ","").equalsIgnoreCase(realCode.replace(" ","")) ? "selected" : "" %>><%=valueList.get(k) %></option>
+	<%
+				}
+	%>
+				</select>
+			</td>
+	<% 
+			if(codeMaster2HTML.substring(codeMaster2HTML.length()-1).equalsIgnoreCase("1")){//세분류2와 같은 라인; EPCType 세분류 1 오른쪽에 배치
+				codeMaster2HTML = slCodeMaster2HTML.get(0);
+				realCode = realCodeMap.get(codeMaster2HTML);
+				realCodeName = realCodeNameMap.get(codeMaster2HTML);
+				codeList = codeListMap.get(codeMaster2HTML);
+				valueList = valueListMap.get(codeMaster2HTML);
+				parentIdList = parentIdListMap.get(codeMaster2HTML);
+				selfIdList = selfIdListMap.get(codeMaster2HTML);
+				descendant = descendantList.get(0);
+	%>
+			<td class="label"><emxUtil:i18n localize="i18nId"><%=realCodeName%></emxUtil:i18n></td>
+			<td class="field">
+				<select name="<%=codeMaster2HTML%>" onchange="fnApplyMasterFilter(this)" descendant="<%=descendant %>">
+	<%
+				for (int k = 0; k < codeList.size(); k++)
+				{
+	%>
+					<option value="<%=codeList.get(k) %>" parentId="<%=parentIdList.get(k) %>" selfId="<%=selfIdList.get(k) %>" <%=codeList.get(k).replace(" ","").equalsIgnoreCase(realCode.replace(" ","")) ? "selected" : "" %>><%=valueList.get(k) %></option>
+	<%
+				}
+	%>
+				</select>
+			</td>
+	<%
+			} else if(codeMaster2HTML.substring(codeMaster2HTML.length()-1).equalsIgnoreCase("2")){ //세분류2와 같은 라인
+	%>
+			<td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decLicensor</emxUtil:i18n></td>
+    		<td class="field"><input type="text" name="decLicensor"  value="<%=mp.get("decLicensor")%>" onFocus="this.select()" /></td>
+	<%		
+			} else if(codeMaster2HTML.substring(codeMaster2HTML.length()-1).equalsIgnoreCase("3")) { //세분류3와 같은 라인
+				if(decProjectType.equalsIgnoreCase("bidding")){
+	%>
+		    	<td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decTaxAddress</emxUtil:i18n></td>
+		    	<td class="field"><input type="text" name="decTaxAddress"  value="<%=mp.get("decTaxAddress")%>" onFocus="this.select()" /></td>
+	<% 
+			} else { 
+	%>
+		  		<td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decTaxAddress</emxUtil:i18n></td>
+		    	<td class="field"><%=mp.get("decTaxAddress")%><input type="hidden" name="decTaxAddress"  value="<%=mp.get("decTaxAddress")%>"/></td>
+	<% 
+			} 
+	%>
+	<% 
+		} 
+	%>
+		</tr>
+	<%
+		}
+  %>
+  
+  
+  <tr>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decAddress</emxUtil:i18n></td>
+  <%
+    	if(decProjectType.equalsIgnoreCase("bidding")){
+  %>
+    <td class="field"><input type="text" name="decAddress"  value="<%=mp.get("decAddress")%>" onFocfus="this.select()" /></td>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decDetailAddress</emxUtil:i18n></td>
+    <td class="field"><input type="text" name="decDetailAddress"  value="<%=mp.get("decDetailAddress")%>" onFocus="this.select()" /></td>
+  </tr>
+  <tr>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.ConstructionPeriod</emxUtil:i18n></td>
+    <td class="field"><%=dateConvert(context,timeZone,REAL_CONST_YMD)%><%=dateConvert(context,timeZone,REAL_CONST_YMD)!="" ? " ~ " : "" %><%=dateConvert(context,timeZone,REAL_CONEND_YMD)%></td>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.W1BaseDate</emxUtil:i18n></td>
+    <td class="inputField"><input type="text" name="decProjectStartDate" value="<%=dateConvertDisplay(context,timeZone,String.valueOf(mp.get("decProjectStartDate")))%>" onFocus="this.select()" readonly/><!-- XSSOK -->
+    <input type="hidden" name="decProjectStartDate_msvalue" value="<%=dateConvertMillisecond(context,timeZone,String.valueOf(mp.get("decProjectStartDate")))%>"/>
+    <a href="javascript:showCalendar('editForm', 'decProjectStartDate', '', '', '');" name="decProjectStartDate_date" id="formDateChooser"><img border="0" alt="Date Picker" src="../common/images/iconSmallCalendar.gif"></a>
+    	<a class = "dialogClear" href = "javascript:;" onclick = "document.editForm.decProjectStartDate_msvalue.value = '', document.editForm.decProjectStartDate.value = ''">
+				<emxUtil:i18n localize="i18nId">emxProgramCentral.Common.Clear</emxUtil:i18n>
+		</a>
+	</td>
+  </tr>
+  <tr>
+    <td class="label" rowspan="2"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decTotalCost</emxUtil:i18n></td>
+    <td class="field">
+    	<input type="text" value=<%=decTotalCost%> oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" name="decTotalCost"/>
+    	<emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decCurrencyWon</emxUtil:i18n>
+    </td>
+    <td class="label" rowspan="2"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decOurCompanyCost</emxUtil:i18n></td>
+    <td class="field">
+    	<input type="text" value=<%=decOurCompanyCost%> oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" name="decOurCompanyCost"/>
+    	<emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decCurrencyWon</emxUtil:i18n>
+    </td>
+  </tr>
+  <tr>
+    <td class="field">
+    	<input type="text" value=<%=decTotalCost_USD%> oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" name="decTotalCost_USD"/>
+    	<emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decCurrencyDollar</emxUtil:i18n>
+    </td>
+    <td class="field">
+    	<input type="text" value=<%=decOurCompanyCost_USD%> oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" name="decOurCompanyCost_USD"/>
+    	<emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decCurrencyDollar</emxUtil:i18n>
+    </td>
+  <%
+  	} else {
+  %>
+  <td class="field"><%=mp.get("decAddress")%><input type="hidden" name="decAddress"  value="<%=mp.get("decAddress")%>"/></td>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decDetailAddress</emxUtil:i18n></td>
+    <td class="field"><%=mp.get("decDetailAddress")%><input type="hidden" name="decDetailAddress"  value="<%=mp.get("decDetailAddress")%>"/></td>
+  </tr>
+  <tr>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.ConstructionPeriod</emxUtil:i18n></td>
+    <td class="field"><%=dateConvert(context,timeZone,REAL_CONST_YMD)%><%=dateConvert(context,timeZone,REAL_CONST_YMD)!="" ? " ~ " : "" %><%=dateConvert(context,timeZone,REAL_CONEND_YMD)%></td>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.W1BaseDate</emxUtil:i18n></td>
+    <td class="inputField"><input type="text" name="decProjectStartDate" value="<%=dateConvertDisplay(context,timeZone,String.valueOf(mp.get("decProjectStartDate")))%>" onFocus="this.select()" readonly/><!-- XSSOK -->
+    <input type="hidden" name="decProjectStartDate_msvalue" value="<%=dateConvertMillisecond(context,timeZone,String.valueOf(mp.get("decProjectStartDate")))%>"/>
+    <a href="javascript:showCalendar('editForm', 'decProjectStartDate', '', '', '');" name="decProjectStartDate_date" id="formDateChooser"><img border="0" alt="Date Picker" src="../common/images/iconSmallCalendar.gif"></a>
+    	<a class = "dialogClear" href = "javascript:;" onclick = "document.editForm.decProjectStartDate_msvalue.value = '', document.editForm.decProjectStartDate.value = ''">
+				<emxUtil:i18n localize="i18nId">emxProgramCentral.Common.Clear</emxUtil:i18n>
+		</a>
+	</td>
+  </tr>
+  <tr>
+    <td class="label" rowspan="2"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decTotalCost</emxUtil:i18n></td>
+    <td class="field">
+    	<%=numf.format(decTotalCost)%>
+    	<input type="hidden" value=<%=decTotalCost%> name="decTotalCost"/>
+    	<emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decCurrencyWon</emxUtil:i18n>
+    </td>
+    <td class="label" rowspan="2"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decOurCompanyCost</emxUtil:i18n></td>
+    <td class="field">
+    	<%=numf.format(decOurCompanyCost)%>
+    	<input type="hidden" value=<%=decOurCompanyCost%> name="decOurCompanyCost"/>
+    	<emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decCurrencyWon</emxUtil:i18n>
+    </td>
+  </tr>
+  <tr>
+    <td class="field">
+    	<%=numf.format(decTotalCost_USD)%>
+    	<input type="hidden" value=<%=decTotalCost_USD%> name="decTotalCost_USD"/>
+    	<emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decCurrencyDollar</emxUtil:i18n>
+    </td>
+    <td class="field">
+    	<%=numf.format(decOurCompanyCost_USD)%>
+    	<input type="hidden" value=<%=decOurCompanyCost_USD%> name="decOurCompanyCost_USD"/>
+    	<emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decCurrencyDollar</emxUtil:i18n>
+    </td>
+  <%
+  	}
+  %>
+  </tr>
+  <tr>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.AWP</emxUtil:i18n></td>
+    <td class="field">
+    	Y <input type='radio' name ='AWP' value='Y' <%if(AWP_YN.equalsIgnoreCase("Y")){%>checked<%}%>/>
+    	N <input type='radio' name ='AWP' value='N' <%if(AWP_YN.equalsIgnoreCase("N")){%>checked<%}%>/>
+    </td>
+    <td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.IWP</emxUtil:i18n></td>
+    <td class="field"> 
+    	Y <input type='radio' name ='IWP' value='Y' <%if(IWP_YN.equalsIgnoreCase("Y")){%>checked<%}%> />
+    	N <input type='radio' name ='IWP' value='N' <%if(IWP_YN.equalsIgnoreCase("N")){%>checked<%}%> />
+    </td>
+  </tr>
+  <%
+  	if(decProjectType.equalsIgnoreCase("ongoing")){
+  %>
+  	<tr>
+    	<td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decDashboardURL</emxUtil:i18n></td>
+    	<td class="field"><input type="text" name="decDashboardURL"  value="<%=mp.get("decDashboardURL")%>" onFocus="this.select()" /></td>
+    	<td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decKPIDay</emxUtil:i18n></td>
+    	<td class="field">
+    		<select name="decKPIDay" onFocus="this.select()">
+    			<option value="Monday" <%=String.valueOf(mp.get("decKPIDay")).equalsIgnoreCase("Monday") ? "selected" : "" %>>Monday</option>
+    			<option value="Tuesday" <%=String.valueOf(mp.get("decKPIDay")).equalsIgnoreCase("Tuesday") ? "selected" : "" %>>Tuesday</option>
+    			<option value="Wednesday" <%=String.valueOf(mp.get("decKPIDay")).equalsIgnoreCase("Wednesday") ? "selected" : "" %>>Wednesday</option>
+    			<option value="Thursday" <%=String.valueOf(mp.get("decKPIDay")).equalsIgnoreCase("Thurday") ? "selected" : "" %>>Thursday</option>
+    			<option value="Friday" <%=String.valueOf(mp.get("decKPIDay")).equalsIgnoreCase("Friday") ? "selected" : "" %>>Friday</option>
+    			<option value="Saterday" <%=String.valueOf(mp.get("decKPIDay")).equalsIgnoreCase("Saturday") ? "selected" : "" %>>Saterday</option>
+    			<option value="Sunday" <%=String.valueOf(mp.get("decKPIDay")).equalsIgnoreCase("Sunday") ? "selected" : "" %>>Sunday</option>
+    		</select>
+    	</td>
+  	</tr>
+  <% 
+  	} else if (decProjectType.equalsIgnoreCase("bidding")){
+  %>
+  	<input type="hidden" name="decDashboardURL" value="<%=mp.get("decDashboardURL")%>"/>
+  	<input type="hidden" name="decKPIDay" value="<%=mp.get("decKPIDay")%>"/>
+  <%
+  	}
+  %>
+  <tr>
+   	<td class="label"><emxUtil:i18n localize="i18nId">emxProgramCentral.Label.decPipingShopRatio</emxUtil:i18n></td>
+   	<td class="field"><input type="text" value=<%=mp.get("decPipingShopRatio")%> oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" name="decPipingShopRatio"/> %</td>
+  </tr>
+</table>
+</form>
+<%
+	}
+
+
+}
+catch(Exception e)
+{
+	e.printStackTrace();
+	throw e;
+}
+%>
+<%@include file = "../emxUICommonEndOfPageInclude.inc" %>

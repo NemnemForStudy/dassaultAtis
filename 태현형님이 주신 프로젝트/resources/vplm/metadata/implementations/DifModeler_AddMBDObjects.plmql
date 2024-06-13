@@ -1,0 +1,20 @@
+EXPAND 
+	T0.PLMID, T1.PLMID, T2.PLMID, T3.PLMID, T4.PLMID, T5.PLMID, T6.PLMID, T7.PLMID, T8.PLMID, T9.PLMID, T10.PLMID, T11.PLMID,
+	T0.PLM_ExternalID, T1.PLM_ExternalID, T2.PLM_ExternalID, T3.PLM_ExternalID,
+	T4.PLM_ExternalID, T5.PLM_ExternalID, T6.PLM_ExternalID, T7.PLM_ExternalID,
+	T8.PLM_ExternalID, T9.PLM_ExternalID, T10.PLM_ExternalID, T11.PLM_ExternalID
+FROM	
+	DIFModelerAbstractView/DIFAbstractView  T0,	
+	DIFModelerAbstractView/DIFAbstractViewInstance T1,
+	DIFModeler03/DIFViewStream T2,	
+	DIFModeler03/DIFViewStreamInstance T3,
+	DIFModeler04/DIFBackgroundViewRep T4,	
+	DIFModeler04/DIFBackgroundViewRepInstance T5,
+    DIFStandard/DIFStandardRep T6,
+    DIFStandard/DIFStandardRepInstance T7,
+    DIFModelerAnnotationSet/DIFSupplementalGeometry T8,
+    DIFModelerAnnotationSet/DIFSupplementalGeometryInstance T9,
+    DIFModelerAnnotationSet/DIF3DShape T10,
+    DIFModelerAnnotationSet/DIF3DShapeInstance T11
+FROM_ROOTS  [?1?]
+;

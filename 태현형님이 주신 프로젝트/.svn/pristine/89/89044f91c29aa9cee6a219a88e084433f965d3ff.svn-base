@@ -1,0 +1,276 @@
+package com.daewooenc.compare.util;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
+
+import com.daewooenc.compare.CompareRule;
+import com.dec.util.DecConstants;
+import com.dec.util.DecDateUtil;
+
+@SuppressWarnings({"rawtypes", "unchecked"})
+public class CompareUtil {
+
+	public static Map<String,String> compareElement(Map sourceMap, Map targetMap, List<CompareRule> compareRuleList, CompareRule.COMPARE_TYPE compareType) throws Exception{
+		try {
+			String key4Source = null;
+			String key4Target = null;
+			String value4Source = null;
+			String value4Target = null;
+			CompareRule.DATA_TYPE dataType = null;
+			
+			String action = DecConstants.SYMB_NA;
+			String message = DecConstants.SYMB_NA;
+			String errorColumnName = null;
+			StringBuffer sbMessage = new StringBuffer("<li>");
+			
+			StringBuffer sbFnFocus2ErrorCell = new StringBuffer();
+			sbFnFocus2ErrorCell.append("<a href='#' onclick='parent.fnFocus2ErrorCell(\"${1}\")' target='listHidden'>${2}");
+			sbFnFocus2ErrorCell.append("</a>");
+			
+//			String fnFocus2ErrorCellScript = sbFnFocus2ErrorCell.toString();
+			
+			for ( CompareRule rule : compareRuleList )
+			{
+				key4Source = rule.getKey4Source();
+				key4Target = rule.getKey4Target();
+				
+				value4Source = String.valueOf( sourceMap.getOrDefault(key4Source, "") );
+				
+				if ( StringUtils.isEmpty(key4Target) )
+				{
+					dataType = rule.getDataType();
+					switch ( dataType ) {
+					case INTEGER:
+						try {
+							if ( StringUtils.isNotEmpty(value4Source) )
+							{
+								Integer.parseInt(value4Source);
+							}
+						} catch (NumberFormatException ne) {
+							action = "Error";
+							sbMessage.append(key4Source).append(" must be Number. : ").append(value4Source).append("<br/>");
+							errorColumnName = key4Source;
+						}
+						break;
+					case REAL:
+						try {
+							if ( StringUtils.isNotEmpty(value4Source) )
+							{
+								Double.parseDouble(value4Source);
+							}
+						} catch (NumberFormatException ne) {
+							action = "Error";
+							sbMessage.append(key4Source).append(" must be Number. : ").append(value4Source).append("<br/>");
+							errorColumnName = key4Source;
+						}
+						break;
+					case DATE:
+						if ( StringUtils.isNotEmpty(value4Source) )
+						{
+							if(DecDateUtil.autoChangeDate(value4Source) == null) {
+								action = "Error";
+								sbMessage.append(key4Source).append(" must be Date. : ").append(value4Source).append("<br/>");
+								errorColumnName = key4Source;
+							}
+						}
+						break;
+					case NOTNULL:
+						if ( StringUtils.isEmpty(value4Source) )
+						{
+							action = "Error";
+							sbMessage.append(key4Source).append(" must not be empty.<br/>");
+							errorColumnName = key4Source;
+						}
+						break;
+					default:
+						break;
+					}
+				}
+				else
+				{
+					value4Target = String.valueOf( targetMap.getOrDefault(key4Target, "") );
+					
+					if ( value4Source.equals(value4Target) )
+					{
+						// do nothing...
+					}
+					else
+					{
+						if ( compareType == CompareRule.COMPARE_TYPE.VALIDATE )
+						{
+							action = "Error";
+							sbMessage.append(key4Source).append(" is different. It must be same. : ").append(value4Target).append(" -> ").append(value4Source).append("<br/>");
+							errorColumnName = key4Source;
+							break;
+						}
+						else
+						{
+							action = "Modify";
+							sbMessage.append(key4Source).append(" : ").append(value4Target).append(" -> ").append(value4Source).append("<br/>");
+						}
+					}
+					
+				}
+				
+			}
+			sbMessage.append("</li>");
+			
+			Map<String,String> resultMap = new HashMap<String,String>();
+			resultMap.put("Action", action);
+			resultMap.put("Message", sbMessage.length() > 0 ? sbMessage.toString() : message);
+			resultMap.put("Error Column Name", errorColumnName);
+//			resultMap.put("Message", sbMessage.length() > 0 
+//					? fnFocus2ErrorCellScript.replace("${1}", key4Source).replace("${2}", sbMessage.toString()) 
+//							: message);
+			
+			return resultMap;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	public static void checkExistence(Map allDataMap, String key, Map resultMap, List<CompareRule> compareRuleList) throws Exception{
+		try {
+			if ( allDataMap.containsKey(key) )
+			{
+				Map codeMap = (Map) allDataMap.get(key);
+				resultMap.putAll(compareElement(resultMap, codeMap, compareRuleList, CompareRule.COMPARE_TYPE.COMPARE));
+			}
+			else
+			{
+				resultMap.put("Action", "Create");
+				resultMap.put("Message", DecConstants.SYMB_NA);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+
+	/**
+	 * jhlee Add 2023-08-10 key값을 대소문자 구별안하기위해 전부 소문자로 변경
+	 * @param sourceMap
+	 * @param targetMap
+	 * @param compareRuleList
+	 * @param compareType
+	 * @return
+	 * @throws Exception
+	 */
+	public static Map<String,String> compareElementToLowerCase(Map sourceMap, Map targetMap, List<CompareRule> compareRuleList, CompareRule.COMPARE_TYPE compareType) throws Exception{
+		try {
+			String key4Source = null;
+			String key4Target = null;
+			String value4Source = null;
+			String value4Target = null;
+			CompareRule.DATA_TYPE dataType = null;
+			
+			String action = DecConstants.SYMB_NA;
+			String message = DecConstants.SYMB_NA;
+			StringBuffer sbMessage = new StringBuffer();
+			
+			StringBuffer sbFnFocus2ErrorCell = new StringBuffer();
+			sbFnFocus2ErrorCell.append("<a href='#' onclick='parent.fnFocus2ErrorCell(\"${1}\")' target='listHidden'>${2}");
+			sbFnFocus2ErrorCell.append("</a>");
+			
+//			String fnFocus2ErrorCellScript = sbFnFocus2ErrorCell.toString();
+			
+			for ( CompareRule rule : compareRuleList )
+			{
+				key4Source = rule.getKey4Source();
+				key4Target = rule.getKey4Target();
+				
+				value4Source = String.valueOf( sourceMap.getOrDefault(key4Source, "") );
+				
+				if ( StringUtils.isEmpty(key4Target) )
+				{
+					dataType = rule.getDataType();
+					switch ( dataType ) {
+					case INTEGER:
+						try {
+							if ( StringUtils.isNotEmpty(value4Source) )
+							{
+								Integer.parseInt(value4Source);
+							}
+						} catch (NumberFormatException ne) {
+							action = "Error";
+							sbMessage.append(key4Source).append(" must be Number. : ").append(value4Source).append("<br/>");
+						}
+						break;
+					case REAL:
+						try {
+							if ( StringUtils.isNotEmpty(value4Source) )
+							{
+								Double.parseDouble(value4Source);
+							}
+						} catch (NumberFormatException ne) {
+							action = "Error";
+							sbMessage.append(key4Source).append(" must be Number. : ").append(value4Source).append("<br/>");
+						}
+						break;
+					case DATE:
+						if ( StringUtils.isNotEmpty(value4Source) )
+						{
+							if(DecDateUtil.autoChangeDate(value4Source) == null) {
+								action = "Error";
+								sbMessage.append(key4Source).append(" must be Date. : ").append(value4Source).append("<br/>");
+							}
+						}
+						break;
+					case NOTNULL:
+						if ( StringUtils.isEmpty(value4Source) )
+						{
+							action = "Error";
+							sbMessage.append(key4Source).append(" must not be empty. : ").append(value4Source).append("<br/>");
+						}
+						break;
+					default:
+						break;
+					}
+				}
+				else
+				{
+					value4Target = String.valueOf( targetMap.getOrDefault(key4Target, "") );
+					
+					if ( value4Source.equalsIgnoreCase(value4Target) )
+					{
+						// do nothing...
+					}
+					else
+					{
+						if ( compareType == CompareRule.COMPARE_TYPE.VALIDATE )
+						{
+							action = "Error";
+							sbMessage.append(key4Source).append(" is different. It must be same. : ").append(value4Target).append(" -> ").append(value4Source).append("<br/>");
+							break;
+						}
+						else
+						{
+							action = "Modify";
+							sbMessage.append(key4Source).append(" : ").append(value4Target).append(" -> ").append(value4Source).append("<br/>");
+						}
+					}
+					
+				}
+				
+			}
+			
+			Map<String,String> resultMap = new HashMap<String,String>();
+			resultMap.put("Action", action);
+			resultMap.put("Message", sbMessage.length() > 0 ? sbMessage.toString() : message);
+//			resultMap.put("Message", sbMessage.length() > 0 
+//					? fnFocus2ErrorCellScript.replace("${1}", key4Source).replace("${2}", sbMessage.toString()) 
+//							: message);
+			
+			return resultMap;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+}

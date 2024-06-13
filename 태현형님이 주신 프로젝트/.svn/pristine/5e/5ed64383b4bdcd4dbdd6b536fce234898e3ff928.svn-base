@@ -1,0 +1,1 @@
+define("DS/CAT3DWInfraWizard/CAT3DWInfraWizard_ko",{});define("DS/CAT3DWInfraWizard/assets/nls/CAT3DWWizardStep",{validateBtnLabel:"다음",cancelBtnLabel:"뒤로"});

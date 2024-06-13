@@ -1,0 +1,18 @@
+################################################################################################
+# Created By choimingi : 2023. 07 . 19
+# Admin Type : command
+# Name : decDeliverableDocDetailsPropertiesEdit
+################################################################################################
+#delete command decDeliverableDocDetailsPropertiesEdit;
+copy command PMCProjectDetailsPropertiesEdit decDeliverableDocDetailsPropertiesEdit;
+mod command decDeliverableDocDetailsPropertiesEdit href '${COMMON_DIR}/emxForm.jsp?form=decDeliverableDocPropertiesEditForm&mode=edit&submitAction=refreshCaller&displayCDMFileSummary=true';
+
+add property command_decProjectDetailsToolbar on program eServiceSchemaVariableMapping.tcl to command 'decDeliverableDocDetailsPropertiesEdit'
+;
+
+# Modified by choimingi on 2023.09.09
+mod command decDeliverableDocDetailsPropertiesEdit
+	add setting 'hasAccess' 'PIM,AWP,WFP'
+	add setting 'Access Program' 'decAccess'
+	add setting 'Access Function' 'hasAccess'
+;

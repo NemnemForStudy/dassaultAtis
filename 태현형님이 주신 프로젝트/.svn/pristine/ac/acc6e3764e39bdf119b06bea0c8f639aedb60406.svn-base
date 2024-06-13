@@ -1,0 +1,29 @@
+################################################################################################
+# Create By jhlee 2023. 05. 31
+# Admin Type : command
+# Name : decCwpSummaryList
+################################################################################################
+
+#del command 'decCwpSummaryList';
+add command 'decCwpSummaryList'
+	description 'StandardList'
+	label 'ProgramCentral.Command.decCwpSummaryList'
+	alt 'ProgramCentral.Command.decCwpSummaryList'
+	setting 'Registered Suite' 'ProgramCentral'
+	setting 'Target Location' 'content'
+;
+add property 'command_decCwpSummaryList' on prog eServiceSchemaVariableMapping.tcl to command 'decCwpSummaryList';
+
+mod command 'decCwpSummaryList'
+	href '${COMMON_DIR}/emxIndentedTable.jsp?program=emxProjectSpace:getCWPTask&table=decCwpSummaryTable&header=ProgramCentral.Command.decCwpSummaryList&HelpMarker=emxhelpprogramlist&Export=true&sortColumnName=Name&sortDirection=ascending&StringResourceFileId=emxProgramCentralStringResource&slideinFilter=true&freezePane=CWP No,CWP Desc&pageSize=300'
+;
+
+# Modified by jhlee on 2023.09.05
+mod command 'decCwpSummaryList'
+	href '${COMMON_DIR}/emxIndentedTable.jsp?program=emxProjectSpace:getCWPTask&table=decCwpSummaryTable&header=ProgramCentral.Command.decCwpSummaryList&HelpMarker=emxhelpprogramlist&Export=true&sortColumnName=Name&sortDirection=ascending&StringResourceFileId=emxProgramCentralStringResource&slideinFilter=true&freezePane=CWP No,CWP Desc&pageSize=300&filterParam=Material Delay:true,codeMaster:Discipline,codeMaster:Priority Group,codeMaster:Priority Number,codeMaster:CWP/IWP Stage,codeMaster:CWP/IWP Status,codeMaster:Sub-Con,codeMaster:BOQ Key Item>BOQ Key Item.UOM'
+;
+
+# Modified by jhlee on 2023.09.15
+mod command 'decCwpSummaryList'
+	href '${COMMON_DIR}/emxPortal.jsp?portal=decCWPSummaryPortal&showPageHeader=false&HelpMarker=emxhelpprojectdetails' 
+;

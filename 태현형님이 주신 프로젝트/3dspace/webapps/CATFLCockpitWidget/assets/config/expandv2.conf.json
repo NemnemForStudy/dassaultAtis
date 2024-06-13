@@ -1,0 +1,79 @@
+{
+  "onlySynthesisJson": {
+     "batch":{
+        "expands":[
+           {
+              "label":"",
+              "root":{
+                 "physical_id":""
+              },
+              "parameters":{
+                 "limit_max_path":20000
+              },
+              "filter": {
+                "all": 1
+              },
+              "aggregation_processors":[
+                 {
+                    "synthesis":{
+                       "name":"ProgressiveExpand_FlatSynthesis",
+                       "mode":"flat"
+                    }
+                 },
+                 {
+                    "synthesis":{
+                       "name":"ProgressiveExpand_OccSynthesis",
+                       "mode":"occurence"
+                    }
+                 },
+                 {
+                    "synthesis":{
+                       "name":"ProgressiveExpand_LeafSynthesis",
+                       "mode":"tree_leaf",
+                       "synthesis_only":1
+                    }
+                 }
+              ]
+           }
+        ]
+     },
+     "outputs":{
+        "synthesis":[
+           "ProgressiveExpand_FlatSynthesis",
+           "ProgressiveExpand_OccSynthesis",
+           "ProgressiveExpand_LeafSynthesis"
+        ]
+     }
+  },
+  "withConfigFilter_FlatSynth_Json": {
+  	"batch": {
+  		"expands": [{
+  			"label": "",
+  			"root": {
+  			},
+  			"filter": {
+  			},
+  			"aggregation_processors": [{
+  				"synthesis": {
+  					"name": "FlatSynthesis",
+  					"mode": "flat",
+  					"synthesis_only": 1
+  				}
+  			}],
+  			"graph": {
+  				"descending_condition_object": {
+  					"uql": "(flattenedtaxonomies:\"types/RFLVPMLogicalReference\")"
+  				},
+  				"descending_condition_relation": {
+  					"uql": "(flattenedtaxonomies:\"reltypes/RFLVPMLogicalInstance\")"
+  				}
+  			}
+  		}]
+  	},
+  	"outputs": {
+  		"synthesis": [
+  			"FlatSynthesis"
+  		]
+  	}
+  }
+}

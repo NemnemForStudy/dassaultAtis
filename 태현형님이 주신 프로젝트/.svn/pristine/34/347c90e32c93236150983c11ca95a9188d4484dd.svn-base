@@ -1,0 +1,17 @@
+{
+  "version": "1.0.0",
+  "summary": "文字列内に別の文字列が含まれているかどうかを判断します。",
+  "description": "文字列の文字は左から右にインデックス付けされます。<br>最初の文字のインデックスは <doc-value translate=no>0</doc-value> で <doc-value translate=no>stringName</doc-value> と呼ばれる文字列の最後の文字のインデックスは、<doc-value translate=no>stringName.length - 1</doc-value> です。<br>文字列検索では大文字と小文字が区別されます。",
+  "dataPorts": {
+    "Input String": "文字列値のリファレンス。",
+    "Searched String": "検索する文字列値。",
+    "From Index": "検索を開始するインデックスを表す整数。デフォルト値は <doc-value translate=no>0</doc-value> です。<br><doc-idp-name translate=no>From Index</doc-idp-name> の値が <doc-value translate=no>0</doc-value> を下回る、または <doc-idp-name translate=no>Input String</doc-idp-name> の長さを上回る場合、検索はそれぞれインデックス <doc-value translate=no>0</doc-value> と <doc-idp-name translate=no>Input String</doc-idp-name> の長さから開始します。",
+    "Found Index": "<doc-idp-name translate=no>Searched String</doc-idp-name> の最初のオカレンスのインデックス、見つからない場合は <doc-value translate=no>-1</doc-value> 。<br>空の文字列 <doc-idp-name translate=no>Searched String</doc-idp-name> は、<doc-value translate=no>0</doc-value> と <doc-idp-name translate=no>Input String</doc-idp-name> の長さの間のインデックスで照合されます。"
+  },
+  "controlPorts": {
+    "In": "ブロック実行をトリガーします。",
+    "True": "<doc-idp-name translate=no>Input String</doc-idp-name> 文字列値に <doc-idp-name translate=no>Searched String</doc-idp-name> 検索文字列値を含む場合に活動化されます。",
+    "False": "<doc-idp-name translate=no>Input String</doc-idp-name> 文字列値に <doc-idp-name translate=no>Searched String</doc-idp-name> 検索文字列値を含まない場合に活動化されます。"
+  },
+  "example": null
+}

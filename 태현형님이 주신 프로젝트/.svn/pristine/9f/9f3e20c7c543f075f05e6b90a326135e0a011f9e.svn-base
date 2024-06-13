@@ -1,0 +1,1 @@
+define("DS/MPFSheerIdVerificationModel/MPFSheerIdVerificationModel_ko",{});define("DS/MPFSheerIdVerificationModel/assets/nls/MPFSheerIdVerificationModel",{firstName:"이름",lastName:"성",emailAddress:"이메일 주소",birthData:"생년월일",organization:"조직",phoneNumber:"전화번호",xIsInvalid:"{x}이(가) 올바르지 않습니다.",xIsRequired:"{x}이(가) 필요합니다."});

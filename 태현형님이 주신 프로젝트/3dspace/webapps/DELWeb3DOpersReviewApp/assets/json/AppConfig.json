@@ -1,0 +1,578 @@
+{
+   "Components":{
+       "Viewer":{
+           "code":"DS/DELWeb3DViewerComp/DELWeb3DViewer",
+           "options":{
+               "viewerType": 2,
+               "quickToolBar": true,
+               "showLevelSelectorLabel":true,
+               "defaultViewerMode":"WorkInstructions",
+               "viewerOptions":{
+                   "delviewer":{
+                       "layout_options":{
+                           "frmWindow_opts":{
+                               "workbench":"DELWeb3DOpersReviewApp.xml",
+                               "workbenchModule":"DELWeb3DOpersReviewApp",
+                               "allowDnD":false,
+                               "contextualMenuContent":{
+                                   "geometry":{
+                                       "firstLevel":[
+                                           "FocusOnHdr",
+                                           "ReframeOnHdr"
+                                       ]
+                                   }
+                               }
+                           },
+                           "wkiview_opts":{
+                            "panelOptions":{
+                                "currentDockArea":8
+                            }
+                           }
+                       },
+                       "run_options":{
+                           "activateVolumeFilter":{
+                               "value":true
+                           },
+                           "authorized_root_types":{
+                               "value":[
+                                   "VPMReference",
+                                   "DELFmiFunctionReference"
+                               ]
+                           },
+                           "unsupported_root_types":{
+                               "value":[
+                                   "PPRContext"
+                               ]
+                            },
+                            "propertiesFacet":{
+                                "value":[
+                                {
+                                    "require":"DS/DELWebViewerFacets/DELWkiInstructionsFacet",
+                                    "facet":{
+                                        "name":"work_instructions",
+                                        "icon":"fonticon fonticon-book-open"
+                                    },
+                                    "position":0,
+                                    "alwaysVisible":false
+                                }
+                                ]
+                            }
+                        }
+                    }
+               },
+               "dragAndDrop":true,
+               "activateWidgetLink": true
+           }
+       },
+       "LandingPage":{
+           "code":"DS/DELWebLandingPage/DELWebLandingPage",
+           "options":{
+               "attributes":["ds6w:label", "ds6w:type", "ds6wg:revision", "ds6w:status", "ds6w:responsible", "ds6w:modified"]
+           }
+       },
+       "MBOM":{
+           "code":"DS/DELWebPPRNavigator/DELWebPPRNavigator",
+           "options":{
+               "model":{
+                   "graph":{
+                       "descending_condition_relation":{
+                           "uql":"((taxonomies:*DELFmiFunctionIdentifiedInstance*) AND (expand3d:true)) OR ((taxonomies:*DELFmiProcessImplementCnx*) AND (expand3d:true)) OR ((type:DELFmiProcessOutputPrereqMaterializationCnx) AND (expand3d:true)) OR ((taxonomies:*VPMInstance*) OR (taxonomies:*VPMRepInstance*))"
+                       }
+                   },
+                   "aggregation_processors":[
+                       {
+                           "truncate":{
+                               "match_only_refs":1,
+                               "sequence_filter":{
+                                   "sequence":[
+                                       {
+                                           "uql":"((taxonomies:*DELFmiFunctionReference*))"
+                                       },
+                                       {
+                                           "statement":"END"
+                                       }
+                                   ]
+                               }
+                           }
+                       }
+                   ]
+               },
+               "icon":"I_InsertCreateAssemblyProcess.png",
+               "dockArea":"LeftDockArea",
+               "ColumnConfig":{
+                   "Label":{
+                       "name":"Title",
+                       "dicoType":"PLMEntity",
+                       "dataIndex":"ds6w:label.reference"
+                   },
+                   "Columns":[
+                       {
+                           "name":"InstanceLabel",
+                           "dicoType":"DELFmiFunctionIdentifiedInstance",
+                           "dataIndex":"ds6w:label.instance"
+                       },
+                       {
+                           "name":"PositionMatrix",
+                           "dicoType":"DELFmiFunctionIdentifiedInstance",
+                           "dataIndex":"matrixtxt.instance"
+                       },
+                       {
+                           "name":"Revision",
+                           "dicoType":"BusinessType",
+                           "dataIndex":"ds6wg:revision.reference"
+                       },
+                       {
+                           "name":"Description",
+                           "dicoType":"BusinessType",
+                           "dataIndex":"ds6w:description.reference"
+                       },
+                       {
+                           "name":"Maturity",
+                           "dicoType":"BusinessType",
+                           "dataIndex":"ds6w:status.reference"
+                       },
+                       {
+                           "name":"Owner",
+                           "dicoType":"BusinessType",
+                           "dataIndex":"ds6w:responsible.reference"
+                       },
+                       {
+                           "name" : "Effectivity",
+                           "dataIndex": "Effectivity",
+                           "columnProperties":{
+                               "visibleFlag":false
+                           }
+                       },
+                       {
+                           "name" : "VariantEffectivity",
+                           "dataIndex": "VariantEffectivity",
+                           "columnProperties":{
+                               "visibleFlag":false
+                           }
+                       },
+                       {
+                           "name" : "EvolutionEffectivity",
+                           "dataIndex": "EvolutionEffectivity",
+                           "columnProperties":{
+                               "visibleFlag":false
+                           }
+                       },
+                       {
+                           "name" : "CurrentEvolutionEffectivity",
+                           "dataIndex": "CurrentEvolutionEffectivity",
+                           "columnProperties":{
+                               "visibleFlag":false
+                           }
+                       },
+                       {
+                           "name" : "ProjectedEvolutionEffectivity",
+                           "dataIndex": "ProjectedEvolutionEffectivity",
+                           "columnProperties":{
+                               "visibleFlag":false
+                           }
+                       },
+                       {
+                           "name" : "ConfigurationContext",
+                           "dataIndex": "ConfigurationContext",
+                           "columnProperties":{
+                               "visibleFlag":false
+                           }
+                       }
+                   ],
+                   "showHideShow3D":true,
+                   "showMenu":true
+               },
+               "contextualMenu":[
+                   "expandAll",
+                   "collapseAll",
+                   "reframe",
+                   "showAll",
+                   "showOnly"
+               ]
+           }
+       },
+       "PRODUCT":{
+           "code":"DS/DELWebPPRNavigator/DELWebPPRNavigator",
+           "options":{
+               "model":{
+
+               },
+               "icon":"I_PhysicalProduct.png",
+               "dockArea":"LeftDockArea",
+               "ColumnConfig":{
+                   "Label":{
+                       "name":"Title",
+                       "dicoType":"PLMEntity",
+                       "dataIndex":"ds6w:label.reference"
+                   },
+                   "Columns":[
+                       {
+                           "name":"InstanceLabel",
+                           "dicoType":"DELFmiFunctionIdentifiedInstance",
+                           "dataIndex":"ds6w:label.instance"
+                       },
+                       {
+                           "name":"PositionMatrix",
+                           "dicoType":"DELFmiFunctionIdentifiedInstance",
+                           "dataIndex":"matrixtxt.instance"
+                       },
+                       {
+                           "name":"Revision",
+                           "dicoType":"BusinessType",
+                           "dataIndex":"ds6wg:revision.reference"
+                       },
+                       {
+                           "name":"Description",
+                           "dicoType":"BusinessType",
+                           "dataIndex":"ds6w:description.reference"
+                       },
+                       {
+                           "name":"Maturity",
+                           "dicoType":"BusinessType",
+                           "dataIndex":"ds6w:status.reference"
+                       },
+                       {
+                           "name":"Owner",
+                           "dicoType":"BusinessType",
+                           "dataIndex":"ds6w:responsible.reference"
+                       },
+                       {
+                           "name" : "Effectivity",
+                           "dataIndex": "Effectivity",
+                           "columnProperties":{
+                               "visibleFlag":false
+                           }
+                       },
+                       {
+                           "name" : "VariantEffectivity",
+                           "dataIndex": "VariantEffectivity",
+                           "columnProperties":{
+                               "visibleFlag":false
+                           }
+                       },
+                       {
+                           "name" : "EvolutionEffectivity",
+                           "dataIndex": "EvolutionEffectivity",
+                           "columnProperties":{
+                               "visibleFlag":false
+                           }
+                       },
+                       {
+                           "name" : "CurrentEvolutionEffectivity",
+                           "dataIndex": "CurrentEvolutionEffectivity",
+                           "columnProperties":{
+                               "visibleFlag":false
+                           }
+                       },
+                       {
+                           "name" : "ProjectedEvolutionEffectivity",
+                           "dataIndex": "ProjectedEvolutionEffectivity",
+                           "columnProperties":{
+                               "visibleFlag":false
+                           }
+                       },
+                       {
+                           "name" : "ConfigurationContext",
+                           "dataIndex": "ConfigurationContext",
+                           "columnProperties":{
+                               "visibleFlag":false
+                           }
+                       }
+                   ],
+                   "showHideShow3D":true,
+                   "showMenu":true
+               },
+               "contextualMenu":[
+                   "expandAll",
+                   "collapseAll",
+                   "reframe",
+                   "showAll",
+                   "showOnly"
+               ]
+           }
+       },
+       "RESOURCE":{
+           "code":"DS/DELWebPPRNavigator/DELWebPPRNavigator",
+           "options":{
+               "model":{
+
+               },
+               "icon":"I_DELRMOrganizationalSystem.png",
+               "dockArea":"LeftDockArea",
+               "ColumnConfig":{
+                   "Label":{
+                       "name":"Title",
+                       "dicoType":"PLMEntity",
+                       "dataIndex":"ds6w:label.reference"
+                   },
+                   "Columns":[
+                       {
+                           "name":"InstanceLabel",
+                           "dicoType":"DELFmiFunctionIdentifiedInstance",
+                           "dataIndex":"ds6w:label.instance"
+                       },
+                       {
+                           "name":"PositionMatrix",
+                           "dicoType":"DELFmiFunctionIdentifiedInstance",
+                           "dataIndex":"matrixtxt.instance"
+                       },
+                       {
+                           "name":"Revision",
+                           "dicoType":"BusinessType",
+                           "dataIndex":"ds6wg:revision.reference"
+                       },
+                       {
+                           "name":"Description",
+                           "dicoType":"BusinessType",
+                           "dataIndex":"ds6w:description.reference"
+                       },
+                       {
+                           "name":"Maturity",
+                           "dicoType":"BusinessType",
+                           "dataIndex":"ds6w:status.reference"
+                       },
+                       {
+                           "name":"Owner",
+                           "dicoType":"BusinessType",
+                           "dataIndex":"ds6w:responsible.reference"
+                       },
+                       {
+                           "name" : "Effectivity",
+                           "dataIndex": "Effectivity",
+                           "columnProperties":{
+                               "visibleFlag":false
+                           }
+                       },
+                       {
+                           "name" : "VariantEffectivity",
+                           "dataIndex": "VariantEffectivity",
+                           "columnProperties":{
+                               "visibleFlag":false
+                           }
+                       },
+                       {
+                           "name" : "EvolutionEffectivity",
+                           "dataIndex": "EvolutionEffectivity",
+                           "columnProperties":{
+                               "visibleFlag":false
+                           }
+                       },
+                       {
+                           "name" : "CurrentEvolutionEffectivity",
+                           "dataIndex": "CurrentEvolutionEffectivity",
+                           "columnProperties":{
+                               "visibleFlag":false
+                           }
+                       },
+                       {
+                           "name" : "ProjectedEvolutionEffectivity",
+                           "dataIndex": "ProjectedEvolutionEffectivity",
+                           "columnProperties":{
+                               "visibleFlag":false
+                           }
+                       },
+                       {
+                           "name" : "ConfigurationContext",
+                           "dataIndex": "ConfigurationContext",
+                           "columnProperties":{
+                               "visibleFlag":false
+                           }
+                       }
+                   ],
+                   "showHideShow3D":true,
+                   "showMenu":true
+               },
+               "contextualMenu":[
+                   "expandAll",
+                   "collapseAll",
+                   "reframe",
+                   "showAll",
+                   "showOnly"
+               ]
+           }
+       },
+       "PROCESS":{
+           "code":"DS/DELWebPPRNavigator/DELWebPPRNavigator",
+           "options":{
+               "model":{
+                   "graph":{
+                       "descending_condition_relation":{
+                           "uql" : "((taxonomies:*DELLmiPPRSystemInstance*)) OR ((taxonomies:*DELLmiOperationPPRInstance*))"
+                       }
+                   }
+               },
+               "icon":"I_PPRGeneralSystem.png",
+               "dockArea":"LeftDockArea",
+               "ColumnConfig":{
+                   "Label":{
+                       "name":"Title",
+                       "dicoType":"PLMEntity",
+                       "dataIndex":"title.reference"
+                   },
+                   "Columns":[
+                       {
+                           "name":"InstanceLabel",
+                           "dicoType":"DELFmiFunctionIdentifiedInstance",
+                           "dataIndex":"name.instance"
+                       },
+                       {
+                           "name":"Revision",
+                           "dicoType":"BusinessType",
+                           "dataIndex":"revision.reference"
+                       },
+                       {
+                           "name":"Description",
+                           "dicoType":"BusinessType",
+                           "dataIndex":"description.reference"
+                       },
+                       {
+                           "name":"Maturity",
+                           "dicoType":"BusinessType",
+                           "dataIndex":"state.reference"
+                       },
+                       {
+                           "name":"EstimatedTime",
+                           "dicoType":"DELLmiOperationReference",
+                           "dataIndex":"V_EstimatedTime.reference"
+                       },
+                       {
+                           "name":"TimeMode",
+                           "dicoType":"DELLmiOperationReference",
+                           "dataIndex":"V_TimeMode.reference"
+                       },
+                       {
+                           "name":"MeasuredTime",
+                           "dicoType":"DELLmiOperationReference",
+                           "dataIndex":"V_MeasuredTime.reference",
+                           "columnProperties":{
+                               "visibleFlag":false
+                           }
+                       },
+                       {
+                           "name":"Owner",
+                           "dicoType":"BusinessType",
+                           "dataIndex":"ds6w:responsible.reference"
+                       },
+                       {
+                           "name" : "Effectivity",
+                           "dataIndex": "Effectivity",
+                           "columnProperties":{
+                               "visibleFlag":false
+                           }
+                       },
+                       {
+                           "name" : "VariantEffectivity",
+                           "dataIndex": "VariantEffectivity",
+                           "columnProperties":{
+                               "visibleFlag":false
+                           }
+                       },
+                       {
+                           "name" : "EvolutionEffectivity",
+                           "dataIndex": "EvolutionEffectivity",
+                           "columnProperties":{
+                               "visibleFlag":false
+                           }
+                       },
+                       {
+                           "name" : "CurrentEvolutionEffectivity",
+                           "dataIndex": "CurrentEvolutionEffectivity",
+                           "columnProperties":{
+                               "visibleFlag":false
+                           }
+                       },
+                       {
+                           "name" : "ProjectedEvolutionEffectivity",
+                           "dataIndex": "ProjectedEvolutionEffectivity",
+                           "columnProperties":{
+                               "visibleFlag":false
+                           }
+                       },
+                       {
+                           "name" : "ConfigurationContext",
+                           "dataIndex": "ConfigurationContext",
+                           "columnProperties":{
+                               "visibleFlag":false
+                           }
+                       }
+                   ],
+                   "activateBuildUp":true,
+                   "showMenu":true
+               },
+               "contextualMenu":[
+                   "expandAll",
+                   "collapseAll"
+               ]
+           }
+       },
+       "OpenControl":{
+           "code":"DS/DELWebOpen/OpenControl"
+       }
+   },
+   "AppOptions":{
+       "supported_types":[
+            "VPMReference",
+            "DELFmiFunctionReference",
+            "DELLmiPPRSystemReference",
+            "DELLmiHeaderWorkPlanReference"
+       ],
+       "unsupported_types":[
+            "PPRContext"
+       ],
+       "unsupported_multiroot_types":[
+            "PPRContext",
+            "DELLmiPPRSystemReference",
+            "DELLmiHeaderWorkPlanReference"
+       ], 
+       "widget_linkability": {
+           "appIds": [],
+           "open": false,
+           "uses": ["ENXOpen", "ENXContent", "ENXContentSync3D","ENXContentSync","ENXContentSync2D","ENXEnrich"],
+           "implements": ["DELViewerContent", "DELViewer2DContent","DELViewerBuildUp","DELViewerContentSync"]
+       },
+       "preferences": [
+        {
+                "name": "defaultViewerMode",
+                "type": "list",
+                "label": "Preferences.DefaultViewerMode.Label",
+                "defaultValue": "WorkInstructions",
+                "options": [{
+                    "label": "Preferences.DefaultViewerMode.WorkInstructions.Label",
+                    "value": "WorkInstructions"
+                }, {
+                    "label": "Preferences.DefaultViewerMode.BuildUp.Label",
+                    "value": "BuildUp"
+                }
+                ]
+            }, {
+                "name": "installVolumeOffSet",
+                "type": "text",
+                "label": "Preferences.InstallVolumeOffSet.Label",
+                "defaultValue": "50"
+            },{
+                "name": "webTimeout",
+                "type": "text",
+                "label": "Preferences.WebTimeout.Label",
+                "defaultValue": "70000"
+            }, {
+                "name": "installAutoApplyVolume",
+                "type": "boolean",
+                "label": "Preferences.InstallAutoApplyVolume.Label",
+                "defaultValue": "false"
+            }, {
+                "name": "usePublishedContent",
+                "type": "boolean",
+                "label": "Preferences.UsePublishedContent.Label",
+                "defaultValue": "false",
+                "platform": "OnPremise"
+            }, {
+                "name": "usePublishedContent",
+                "type": "hidden",
+                "label": "Preferences.UsePublishedContent.Label",
+                "defaultValue": true,
+                "value": true,
+                "platform": "OnCloud"
+            }
+            ]
+        }
+}

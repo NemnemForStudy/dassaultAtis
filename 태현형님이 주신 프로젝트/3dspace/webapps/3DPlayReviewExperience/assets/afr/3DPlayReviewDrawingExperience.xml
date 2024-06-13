@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<Styles xmlns:syp="http://www.3ds.com/xsd/SYP">
+
+  <Template syp:name="3DPlayReviewExperienceHeaders" Target="CATCmdHeadersList">
+    <CATCmdHeadersList>
+      <!--3DPlay command headers-->
+      <CATCommandHeader ID="ShareTo3DSwYm" Available="0" ClassName="DS/3DPlayCommands/CmdShareTo3DSwYm" HelpResourceFile = "3DPlayCommands/3DPlayHelpForCommands" ResourceFile="3DPlay/3DPlay" />
+      <CATCommandHeader ID="SharePrint" Available="0" ClassName="DS/3DPlayCommands/CmdSharePrint" HelpResourceFile = "3DPlayCommands/3DPlayHelpForCommands" ResourceFile="3DPlay/3DPlay" />
+      <CATCommandHeader ID="ShareDownload" Available="0" ClassName="DS/3DPlayCommands/CmdShareDownload" HelpResourceFile = "3DPlayCommands/3DPlayHelpForCommands" ResourceFile="3DPlay/3DPlay" />
+      <CATCommandHeader ID="CATWebUXSlideShowHdr" ClassName="DS/CATWebUXSlideShow/CATWebUXSlideShowCmd" ResourceFile="CATWebUXSlideShow/CATWebUXSlideShow" HelpResourceFile="CATWebUXSlideShow/CATWebUXSlideShow" Behavior="CATAfrHeaderCheck">
+        <CATAfrCommandHeaderArgs>
+          <CATCommandHeaderArg ID="ControllerID" Value="DMU3DMarkupSlideShow" Mode="In" />
+        </CATAfrCommandHeaderArgs>
+      </CATCommandHeader>
+
+      <CATCommandHeader ID = "VisuZoomView"                         ClassName = "DS/ViewerCommands/VisuZoomViewCmd"                                   ResourceFile = "ViewerCommands/ViewerCommands"                 HelpResourceFile = "ViewerCommands/ViewerCommandsIDs"    SharedLibraryName = "ShareUI" />
+      <CATCommandHeader ID = "VisuPanView"                          ClassName = "DS/ViewerCommands/VisuPanViewCmd"                                    ResourceFile = "ViewerCommands/ViewerCommands"                 HelpResourceFile = "ViewerCommands/ViewerCommandsIDs"    SharedLibraryName = "ShareUI" />
+      <CATCommandHeader ID = "VisuReframeView"                      ClassName = "DS/ViewerCommands/VisuReframeViewCmd"                                ResourceFile = "ViewerCommands/ViewerCommands"                 HelpResourceFile = "ViewerCommands/ViewerCommandsIDs"    SharedLibraryName = "ShareUI" />
+      <CATCommandHeader ID="DMUSwitch3DMarkersResponsiveDisplayHdr" ClassName="DS/DMUBaseCommands/DMUSwitch3DMarkersResponsiveDisplayCmd" ResourceFile="DMUBaseCommands/DMUBaseWebCommands" HelpResourceFile="DMUBaseCommands/DMUBaseCommands"/>
+      <CATCommandHeader ID="CATWebUXPreferencesHdr" ClassName="DS/CATWebUXPreferences/CATWebUXPreferencesCmd" ResourceFile="CATWebUXPreferences/CATWebUXPreferences"    HelpResourceFile = "CATWebUXPreferences/CATWebUXPreferences" />
+      <CATCommandHeader ClassName="DS/DMUBaseCommands/DMURightSidePanelCmd" ID="RightSidePanel" HelpResourceFile="PADUtils/PADUtilsHelpForCommands" ResourceFile="PADUtils/PADUtils" Available="1" Behavior="CATAfrHeaderCheck">
+        <CATAfrCommandHeaderArgs>
+          <CATCommandHeaderArg ID="PropertiesReadOnly" Value="true" Mode="In" />
+        </CATAfrCommandHeaderArgs>
+      </CATCommandHeader>
+    </CATCmdHeadersList>
+  </Template>
+
+  <Template syp:name="3DPlayReviewExperienceAccess" Target="CATCmdWorkbench">
+    <CATCmdWorkbench Name="3DPlayReviewExperienceWorkbench">
+
+      <CATCmdContainer Name="Fixed Area" RepresentationType="AfrActionBarFixedSection">
+        <CATCmdStarter Name="CATWebUXSlideShowHdrStr" Command="CATWebUXSlideShowHdr" />
+        <CATCmdSeparator Name = "VisuMode_Separator"/>
+        <CATCmdContainer Name = "Share" Visibility = "1" RepresentationType="AfrActionBarDropDown">
+          <CATCmdStarter Name = "ShareTo3DSwYm"  Command = "ShareTo3DSwYm" />
+          <CATCmdStarter Name = "ShareDownload"  Command = "ShareDownload" />
+          <CATCmdStarter Name = "SharePrint"  Command = "SharePrint" />
+        </CATCmdContainer>
+      </CATCmdContainer>
+
+      <CATCmdContainer Name = "SectionViews" Visibility = "1" RepresentationType="AfrActionBarSection">
+        <CATCmdStarter Name="DMUSwitch3DMarkersResponsiveDisplayStr" Command="DMUSwitch3DMarkersResponsiveDisplayHdr" />
+        <CATCmdStarter Name = "VisuReframeViewStr"       Command = "VisuReframeView" />
+        <CATCmdStarter Name = "VisuPanViewStr"           Command = "VisuPanView" />
+        <CATCmdStarter Name = "VisuZoomViewStr"          Command = "VisuZoomView" />
+
+        <CATCmdSeparator Name = "Markup_Separator"/>
+        <CATCmdStarter Name = "CATWebUXPreferencesStr"                 Command = "CATWebUXPreferencesHdr" />
+        <CATCmdSeparator Name="RSP_Separator"/>
+        <CATCmdStarter Name="RightSidePanel" Command="RightSidePanel" />
+      </CATCmdContainer>
+
+    </CATCmdWorkbench>
+  </Template>
+</Styles>

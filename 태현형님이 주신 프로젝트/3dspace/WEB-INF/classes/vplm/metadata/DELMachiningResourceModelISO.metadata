@@ -1,0 +1,893 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!-- COPYRIGHT DASSAULT SYSTEMES 2022, All rights reserved -->
+<Package BelongsToModeler = "DELMachiningResourceModel" CustomerExposition = "Programmer" ModelerType = "Top" Name = "DELMachiningResourceModelISO" UseNames = "DELRmiResourceModel" Uuid = "ceca4fc8-49a6-471b-a78a-24561e6a21ba" xmlns = "PLMDictionaryUnified">
+  <!--*****************************************-->
+  <!--* ResourceNCToolISO *-->
+  <!--*****************************************-->
+  <Extension Abstract = "Yes" CustomerExposition = "Programmer" Discipline = "Yes" Name = "ResourceNCToolISO" Specializable = "Yes" SuperName = "ToolDevice" Uuid = "d7f71860-ecd5-470e-937e-cc09a3734eaa">
+    <Property Name = "KweNew_InstanciationMethod" Value = "DELMfgKweInstanciation"/>
+    <Simple MaxLength = "128" MultiValuated = "No" Name = "V_Comment" Protection = "External" Type = "String" Uuid = "08a5e558-8605-4cbf-b9f9-6893a2892da8"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_Usage_Type" Protection = "External" Type = "String" Uuid = "bab49e48-40bb-435b-97f7-960d3719d49a"/>
+    <Simple MaxLength = "72" MultiValuated = "Yes" Name = "V_FeedAndSpeed_Config" Protection = "External" Type = "String" Uuid = "32c92c52-db80-4f05-8a4f-a0cb99b9091c"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_HAND" Protection = "External" Type = "String" Uuid = "798eb273-70ad-4ddd-b60c-0ac1b94635dd"/>
+    <Simple Magnitude = "MASS" MultiValuated = "No" Name = "V_WT" Protection = "External" Type = "Double" Uuid = "a09255d6-d7a8-4c50-94be-9346d5cb4f32"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_BMC" Protection = "External" Type = "String" Uuid = "cb7cc118-59f6-4a0c-a9f3-348092a76623"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_TSYC" Protection = "External" Type = "String" Uuid = "0f7d7b43-c0ca-4cd9-ac07-77053129a20c"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_ISYC" Protection = "External" Type = "String" Uuid = "2d01f503-6948-4ede-8588-5fa4a281729c"/>
+    <Simple MultiValuated = "Yes" Name = "V_CICT" Protection = "External" Type = "Integer" Uuid = "88e76358-4c5f-4016-a46c-244723f9c677"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_CNSC" Protection = "External" Type = "String" Uuid = "4c3032a4-7e46-4125-9018-3da15dc4fb53"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_CXSC" Protection = "External" Type = "String" Uuid = "c8bda21a-000c-4af6-8685-7cc3a7e37174"/>
+    <Simple MultiValuated = "No" Name = "V_CSP" Protection = "External" Type = "Integer" Uuid = "5773e015-8748-4707-a73a-a3bce6420906"/>
+    <Simple Magnitude = "TIME" MultiValuated = "No" Name = "V_Max_Machining_Time" Protection = "External" Type = "Double" Uuid = "84ab6ce4-17a4-4883-8f3a-f2d7d5da429a"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_Max_Machining_Length" Protection = "External" Type = "Double" Uuid = "c14bd95f-108c-4523-924d-fcf492ec80c0"/>
+    <Simple MultiValuated = "No" Name = "V_NOI" Protection = "External" Type = "Integer" Uuid = "579c3119-fed7-48f3-bf77-d7132a433a1c"/>
+    <Simple MaxLength = "72" MultiValuated = "Yes" Name = "V_CCMS" Protection = "External" Type = "String" Uuid = "8b50ad20-d9c6-4c00-b086-48f1a6d525b9"/>
+    <Simple MaxLength = "72" MultiValuated = "Yes" Name = "V_CCTMS" Protection = "External" Type = "String" Uuid = "e701fadd-1056-4465-95a4-79fa37c27515"/>
+    <Simple MaxLength = "72" MultiValuated = "Yes" Name = "V_CCWS" Protection = "External" Type = "String" Uuid = "80d140cb-5d88-4092-8c2b-4d1be57dce19"/>
+    <Simple MaxLength = "72" MultiValuated = "Yes" Name = "V_CCTWS" Protection = "External" Type = "String" Uuid = "4d0a18d0-c21f-446f-927e-1c2c9d1ae773"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_LSCMS" Protection = "External" Type = "Double" Uuid = "ae29950f-71e1-43ac-9ce6-71cb7b050f9f"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_LSCWS" Protection = "External" Type = "Double" Uuid = "971ca039-0801-4388-acf1-456e07c45f5b"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_CF" Protection = "External" Type = "Double" Uuid = "076f4185-3c1e-431c-93a9-8086046c251c"/>
+    <Simple MultiValuated = "No" Name = "V_BSC" Protection = "External" Type = "Integer" Uuid = "fbb4e8c6-66df-45c7-ac07-b1332ee3f880"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_OAL" Protection = "External" Type = "Double" Uuid = "03e952e5-9213-4fc4-8940-33043c2e73f6"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_LF" Protection = "External" Type = "Double" Uuid = "ac43d21b-583b-4d72-9580-279742023a32"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_LU" Protection = "External" Type = "Double" Uuid = "0fa7e8e1-6a29-45b7-b8c9-5fd69a1e2713"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_LUX" Protection = "External" Type = "Double" Uuid = "5dc6b385-f8b6-4e23-bde2-9212535e6f72"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_LH" Protection = "External" Type = "Double" Uuid = "14d660ad-6d00-4598-83a3-b02d4fc25c3c"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_LB" Protection = "External" Type = "Double" Uuid = "bdfa833d-a2f3-4bc8-979e-27158ce06fcb"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_LS" Protection = "External" Type = "Double" Uuid = "f7535fc7-0e9e-4eed-9673-a5921744279a"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_LPR" Protection = "External" Type = "Double" Uuid = "eab24d3e-bb7a-4e8a-bfc4-bfda5959774f"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_LTA" Protection = "External" Type = "Double" Uuid = "6fd27a00-7e95-4895-a1d8-8fa1aef568d6"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_HTA" Protection = "External" Type = "Double" Uuid = "95785cf0-7381-4293-9b56-1c33e5cd3d23"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_WTA" Protection = "External" Type = "Double" Uuid = "e6e7bb9a-3eff-4412-8f42-75a5e5ecd6cc"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_DCONMS" Protection = "External" Type = "Double" Uuid = "9c8bba65-d081-402b-9836-3cb9ef918a2b"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "No" Name = "V_KAPR" Protection = "External" Type = "Double" Uuid = "c3a5bb88-0e34-4a9a-8124-140955dc186e"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_GRDMFG" Protection = "External" Type = "String" Uuid = "7c4b2b8c-e474-4e5f-9d5f-db60bb62c600"/>
+    <Simple MaxLength = "72" MultiValuated = "Yes" Name = "V_MIID" Protection = "External" Type = "String" Uuid = "28e6f1b5-0456-48cc-b6bf-e3b560d41a9f"/>
+    <Simple MaxLength = "72" MultiValuated = "Yes" Name = "V_IIC" Protection = "External" Type = "String" Uuid = "4446dbde-f90a-4c83-87a5-4cf3760812be"/>
+    <Simple MaxLength = "72" MultiValuated = "Yes" Name = "V_SC" Protection = "External" Type = "String" Uuid = "d03aee8c-6494-4f05-a551-492fe94b029c"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "Yes" Name = "V_IC_min" Protection = "External" Type = "Double" Uuid = "bb851998-42dd-4f0f-a405-aeb60c4483cf"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "Yes" Name = "V_IC_max" Protection = "External" Type = "Double" Uuid = "5376073c-6ae7-4c9b-9e96-9af54dbba923"/>
+  </Extension>
+  <!--*****************************************-->
+  <!--* ResourceNCMillAndDrillToolISO *-->
+  <!--*****************************************-->
+  <Extension Abstract = "Yes" CustomerExposition = "Programmer" Discipline = "Yes" Name = "ResourceNCMillAndDrillToolISO" Specializable = "Yes" SuperName = "ResourceNCToolISO" Uuid = "a8c30646-8588-4cb5-869c-cebbf3020b1b">
+    <Property Name = "KweNew_InstanciationMethod" Value = "DELMfgKweInstanciation"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_APMX" Protection = "External" Type = "Double" Uuid = "624176ed-f943-4cce-948d-e93362da8bd3"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "Yes" Name = "V_DC" Protection = "External" Type = "Double" Uuid = "f69f4361-e1af-497c-bfd7-c808e6f8a643"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_DCN" Protection = "External" Type = "Double" Uuid = "3617a972-5b6a-4ba8-a365-be444443d89f"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_DCX" Protection = "External" Type = "Double" Uuid = "f0dacc96-9314-4ccc-b2db-5684eacf055c"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_DN" Protection = "External" Type = "Double" Uuid = "a86d840c-2260-479a-a4ec-abed94935f75"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "No" Name = "V_GAMF" Protection = "External" Type = "Double" Uuid = "734e8338-b1a6-429f-b045-70c3e50e00fe"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "No" Name = "V_GAMP" Protection = "External" Type = "Double" Uuid = "38bf26b8-7f5f-41d9-8c04-a2c9b3ecb147"/>
+    <Simple MultiValuated = "No" Name = "V_ZEFF" Protection = "External" Type = "Integer" Uuid = "90e7b118-3386-4792-80f3-549ccfd68008"/>
+    <Simple MultiValuated = "No" Name = "V_ZEFP" Protection = "External" Type = "Integer" Uuid = "b234ea8a-5229-403c-b8bd-76c2010ba3ea"/>
+    <Simple MultiValuated = "No" Name = "V_ZNF" Protection = "External" Type = "Integer" Uuid = "6560259b-f742-435c-808a-0c12024e65ce"/>
+    <Simple MultiValuated = "No" Name = "V_NOF" Protection = "External" Type = "Integer" Uuid = "41921eca-0d5c-4ace-8ad0-f9ab055e4470"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_Composition" Protection = "External" Type = "String" Uuid = "5f516f1a-cfba-4013-9cff-4e4b92a47e96"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "Yes" Name = "V_RE" Protection = "External" Type = "Double" Uuid = "7d1beae9-6423-4a14-9e59-3405afd231c3"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "Yes" Name = "V_EPSR" Protection = "External" Type = "Double" Uuid = "dc763842-64b8-4859-81ad-43124af32839"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_BD" Protection = "External" Type = "Double" Uuid = "cd0a4473-7a62-49b2-89a3-160f5ede62a1"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_BDX" Protection = "External" Type = "Double" Uuid = "02dc5d82-6e26-4efe-9dc1-e8978538aab9"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_DF" Protection = "External" Type = "Double" Uuid = "c1178a00-5070-4117-b3d3-e7bb98d0d0c3"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "No" Name = "V_FHA" Protection = "External" Type = "Double" Uuid = "38c5b06b-7c3c-40a1-a432-15194ff67210"/>
+    <Simple Magnitude = "ANGULARSPINDLESPEED" MultiValuated = "No" Name = "V_RPMX" Protection = "External" Type = "Double" Uuid = "097ba450-5814-4d82-927d-d4c5c60ee034"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "No" Name = "V_KCH" Protection = "External" Type = "Double" Uuid = "e7b8a722-ba9b-4fe2-a8de-dbc0564df550"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_CHW" Protection = "External" Type = "Double" Uuid = "fe353ab5-3da4-4b2d-a1a1-74d13f312be5"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_BCH" Protection = "External" Type = "Double" Uuid = "d1d6939b-82a0-45b7-b2f7-446668064818"/>
+    <Simple MultiValuated = "No" Name = "V_CNID" Protection = "External" Type = "Integer" Uuid = "b7a254d9-5188-4e8c-97d6-67b9548a7927"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_COATP" Protection = "External" Type = "String" Uuid = "cc946acb-b979-4bdb-98eb-14e6862a425d"/>
+  </Extension>
+  <!--*****************************************-->
+  <!--* ResourceNCMillToolsISO *-->
+  <!--*****************************************-->
+  <Extension Abstract = "Yes" CustomerExposition = "Programmer" Discipline = "Yes" Name = "ResourceNCMillToolsISO" Specializable = "Yes" SuperName = "ResourceNCMillAndDrillToolISO" Uuid = "93d08df4-054e-46e5-8bd1-be75bdcb32f6">
+    <Property Name = "KweNew_InstanciationMethod" Value = "DELMfgKweInstanciation"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "No" Name = "V_PNA" Protection = "External" Type = "Double" Uuid = "3e4c96da-a8b1-4f80-9ac4-f6d8687cb0a1"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_PRFRAD" Protection = "External" Type = "Double" Uuid = "88c0083b-082a-4a32-ad8e-657916b0dc4a"/>
+  </Extension>
+  <!--*****************************************-->
+  <!--* ResourceNCEndMillToolISO *-->
+  <!--*****************************************-->
+  <Extension CustomerExposition = "Programmer" Discipline = "Yes" Name = "ResourceNCEndMillToolISO" Specializable = "Yes" SuperName = "ResourceNCMillToolsISO" Uuid = "35384107-9641-4be4-9e7a-c21691003cb8">
+    <Property Name = "KweNew_InstanciationMethod" Value = "DELMfgKweInstanciation"/>
+    <Property Name = "TypeForDisciplineValuation" Value = "ToolDevice"/>
+    <Property Name = "GroupingType" Value = "ToolDevice"/>
+    <Property Name = "IconName" Value = "I_DELMachiningEndMillToolISO"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_Corner_Style" Protection = "External" Type = "String" Uuid = "1ae142cf-0b49-4908-9085-59fa819d987b"/>
+    <Simple MultiValuated = "No" Name = "V_Ball_Type" Protection = "External" Type = "Boolean" Uuid = "61d13b5c-bcb9-4fa5-a43a-65b7c2aa2a73"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "No" Name = "V_RMPX" Protection = "External" Type = "Double" Uuid = "fefb76ed-253e-4de1-950b-2747a22bb7c7"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_AZ" Protection = "External" Type = "Double" Uuid = "5ed3f562-5399-4b5d-ab0d-fcb7f23622e1"/>
+    <Simple MultiValuated = "No" Name = "V_ZNP" Protection = "External" Type = "Integer" Uuid = "6b8d1868-c266-44d7-a9e8-3a79a51a28b4"/>
+  </Extension>
+  <!--*****************************************-->
+  <!--* ResourceNCFaceMillToolISO *-->
+  <!--*****************************************-->
+  <Extension CustomerExposition = "Programmer" Discipline = "Yes" Name = "ResourceNCFaceMillToolISO" Specializable = "Yes" SuperName = "ResourceNCMillToolsISO" Uuid = "e9d7d2a4-e0e8-4158-8e7b-22a65f91eba8">
+    <Property Name = "KweNew_InstanciationMethod" Value = "DELMfgKweInstanciation"/>
+    <Property Name = "TypeForDisciplineValuation" Value = "ToolDevice"/>
+    <Property Name = "GroupingType" Value = "ToolDevice"/>
+    <Property Name = "IconName" Value = "I_DELMachiningFaceMillToolISO"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_Corner_Style" Protection = "External" Type = "String" Uuid = "a212e98e-983b-446b-b2e5-3ea45ac57c4f"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "No" Name = "V_RMPX" Protection = "External" Type = "Double" Uuid = "a3e4f040-7a31-41ed-9eb8-f4da36fec117"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_AZ" Protection = "External" Type = "Double" Uuid = "5f143114-b70f-4ede-b4f3-7e89160c790b"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_DCCB" Protection = "External" Type = "Double" Uuid = "2c0dfddd-7585-4be2-bf81-347cb242d36d"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_DHUB" Protection = "External" Type = "Double" Uuid = "82811959-a1df-4b0d-b9f8-238b534dd2c4"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_THUB" Protection = "External" Type = "Double" Uuid = "0d8468bf-0fae-41c3-aecc-5814866776e9"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_LCCB" Protection = "External" Type = "Double" Uuid = "8768e49f-365f-4db2-bc87-d0c3ce763ff0"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_CWX" Protection = "External" Type = "Double" Uuid = "12b56646-b4c8-400b-9e2f-386e9d8a3f2b"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_CWN" Protection = "External" Type = "Double" Uuid = "8a692b5c-b473-4b3e-a262-5fea81dbb218"/>
+  </Extension>
+  <!--*****************************************-->
+  <!--* ResourceNCConicalMillToolISO *-->
+  <!--*****************************************-->
+  <Extension CustomerExposition = "Programmer" Discipline = "Yes" Name = "ResourceNCConicalMillToolISO" Specializable = "Yes" SuperName = "ResourceNCMillToolsISO" Uuid = "42f7e610-3089-4716-8b6c-f5d080515056">
+    <Property Name = "KweNew_InstanciationMethod" Value = "DELMfgKweInstanciation"/>
+    <Property Name = "TypeForDisciplineValuation" Value = "ToolDevice"/>
+    <Property Name = "GroupingType" Value = "ToolDevice"/>
+    <Property Name = "IconName" Value = "I_DELMachiningConicalMillToolISO"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_Corner_Style" Protection = "External" Type = "String" Uuid = "5287ae2c-5eca-40b6-a0e0-932537db8481"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "No" Name = "V_RMPX" Protection = "External" Type = "Double" Uuid = "af1340a4-c445-484c-b999-d548d928fb99"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "No" Name = "V_PRFA" Protection = "External" Type = "Double" Uuid = "662d84cf-18a2-4eff-b9f4-ff0fdb4b9ff4"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "No" Name = "V_TA" Protection = "External" Type = "Double" Uuid = "b4190e00-1fd7-44d6-9bbc-17a5b151b096"/>
+  </Extension>
+  <!--*****************************************-->
+  <!--* ResourceNCTSlotterMillToolISO *-->
+  <!--*****************************************-->
+  <Extension CustomerExposition = "Programmer" Discipline = "Yes" Name = "ResourceNCTSlotterMillToolISO" Specializable = "Yes" SuperName = "ResourceNCMillToolsISO" Uuid = "1cb41cc8-214a-4a23-b595-6016f97c1372">
+    <Property Name = "KweNew_InstanciationMethod" Value = "DELMfgKweInstanciation"/>
+    <Property Name = "TypeForDisciplineValuation" Value = "ToolDevice"/>
+    <Property Name = "GroupingType" Value = "ToolDevice"/>
+    <Property Name = "IconName" Value = "I_DELMachiningTSlotterMillToolISO"/>
+    <Simple MultiValuated = "No" Name = "V_Ball_Type" Protection = "External" Type = "Boolean" Uuid = "f6621372-8ad6-402f-9ff8-a77d69dccd26"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_DHUB" Protection = "External" Type = "Double" Uuid = "7fbfe169-5f59-400f-8d0b-d4c994635cb0"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_THUB" Protection = "External" Type = "Double" Uuid = "40226c69-ad62-4830-abff-d80a7361a270"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_CW" Protection = "External" Type = "Double" Uuid = "8b6129a8-79d6-463a-bce0-bcaf106e7d1e"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_CWX" Protection = "External" Type = "Double" Uuid = "d70208a1-e854-496a-9c6b-a48e39c0c71d"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_CWN" Protection = "External" Type = "Double" Uuid = "1b4ab186-68f2-407b-bfb9-a138e12ecb40"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_CDX" Protection = "External" Type = "Double" Uuid = "24a8d981-5a50-41dd-a5d4-f6baa54b96d0"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_AZ" Protection = "External" Type = "Double" Uuid = "8a939cde-7bca-4782-9740-7bfccc275b16"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_BCD" Protection = "External" Type = "Double" Uuid = "fdbd2dfd-633d-43a3-ac60-9d63cd29f113"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_DCCB" Protection = "External" Type = "Double" Uuid = "afec5ce9-931a-4c98-b61a-5ee3a09a5c33"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_LCC" Protection = "External" Type = "Double" Uuid = "86614a2d-1f0f-467b-a821-c851e6ec2450"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_LCCB" Protection = "External" Type = "Double" Uuid = "638d4a8f-9fa1-478c-a13e-e3816684734b"/>
+  </Extension>
+  <!--*****************************************-->
+  <!--* ResourceNCBarrelMillToolISO *-->
+  <!--*****************************************-->
+  <Extension CustomerExposition = "Programmer" Discipline = "Yes" Name = "ResourceNCBarrelMillToolISO" Specializable = "Yes" SuperName = "ResourceNCMillToolsISO" Uuid = "699690e5-1926-4c24-b269-65e6dd5cd307">
+    <Property Name = "KweNew_InstanciationMethod" Value = "DELMfgKweInstanciation"/>
+    <Property Name = "TypeForDisciplineValuation" Value = "ToolDevice"/>
+    <Property Name = "GroupingType" Value = "ToolDevice"/>
+    <Property Name = "IconName" Value = "I_DELMachiningBarrelMillToolISO"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "No" Name = "V_TFBA" Protection = "External" Type = "Double" Uuid = "005d02a4-c3d4-4cfc-b359-3e9c903cf533"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "No" Name = "V_RMPX" Protection = "External" Type = "Double" Uuid = "e4d14168-40cb-4648-9282-38a5a2108104"/>
+  </Extension>
+  <!--*****************************************-->
+  <!--* ResourceNCLensMillToolISO *-->
+  <!--*****************************************-->
+  <Extension CustomerExposition = "Programmer" Discipline = "Yes" Name = "ResourceNCLensMillToolISO" Specializable = "Yes" SuperName = "ResourceNCMillToolsISO" Uuid = "0ae0410a-d7b3-4a00-8e82-a694485c5496">
+    <Property Name = "KweNew_InstanciationMethod" Value = "DELMfgKweInstanciation"/>
+    <Property Name = "TypeForDisciplineValuation" Value = "ToolDevice"/>
+    <Property Name = "GroupingType" Value = "ToolDevice"/>
+    <Property Name = "IconName" Value = "I_DELMachiningLensMillToolISO"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_BSR" Protection = "External" Type = "Double" Uuid = "79810f63-c7db-446d-9d4f-4f26d0a7cba5"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "No" Name = "V_RMPX" Protection = "External" Type = "Double" Uuid = "b113c999-cb56-473a-9c4e-37e469729471"/>
+  </Extension>
+  <!--*****************************************-->
+  <!--* ResourceNCThreadMillToolISO *-->
+  <!--*****************************************-->
+  <Extension CustomerExposition = "Programmer" Discipline = "Yes" Name = "ResourceNCThreadMillToolISO" Specializable = "Yes" SuperName = "ResourceNCMillToolsISO" Uuid = "a7f69455-9512-4036-8ca5-a928165550a8">
+    <Property Name = "KweNew_InstanciationMethod" Value = "DELMfgKweInstanciation"/>
+    <Property Name = "TypeForDisciplineValuation" Value = "ToolDevice"/>
+    <Property Name = "GroupingType" Value = "ToolDevice"/>
+    <Property Name = "IconName" Value = "I_DELMachiningThreadMillToolISO"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_TCTR" Protection = "External" Type = "String" Uuid = "ae31dc59-3aaf-4e17-b573-0c09d855c7a7"/>
+    <Simple MultiValuated = "No" Name = "V_THSTS" Protection = "External" Type = "Integer" Uuid = "54187535-5612-4c75-a576-132a63890b95"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_TP" Protection = "External" Type = "Double" Uuid = "ebbda6a8-10f2-40da-a85a-05d393b796fd"/>
+    <Simple MultiValuated = "No" Name = "V_TPI" Protection = "External" Type = "Double" Uuid = "8ec5cbe1-70a3-4c6c-8bf4-3a35889b67c1"/>
+    <Simple MultiValuated = "No" Name = "V_TPIN" Protection = "External" Type = "Double" Uuid = "dd720b71-af07-410d-8715-41163971dee9"/>
+    <Simple MultiValuated = "No" Name = "V_TPIX" Protection = "External" Type = "Double" Uuid = "8a9148c8-13ec-4375-8412-a4676d34e4d2"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_THFT" Protection = "External" Type = "String" Uuid = "d2e8ee7e-e650-4bc6-95a6-8cbd5b160d33"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_TCPD" Protection = "External" Type = "Double" Uuid = "cb4773a0-5bd9-434a-8b6d-45d406be5aee"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_PHD" Protection = "External" Type = "Double" Uuid = "3f537035-7a8c-4712-807c-84163ca44659"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_THL" Protection = "External" Type = "Double" Uuid = "94d67a2a-3889-428a-9ad5-0414428389fa"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_PDZ" Protection = "External" Type = "Double" Uuid = "1e6ee7c7-3280-48d5-9d23-8c9267073588"/>
+    <Simple MultiValuated = "No" Name = "V_TG" Protection = "External" Type = "Double" Uuid = "9ebd70d8-b0ff-40c9-8dbb-6c3839e779fb"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_THID" Protection = "External" Type = "String" Uuid = "1e267617-4d15-43e5-ada9-27f1ec4bbc46"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_THOD" Protection = "External" Type = "String" Uuid = "51237b4a-6e09-4e00-a3d0-bd9c10ec4e1e"/>
+  </Extension>
+  <!--*****************************************-->
+  <!--* ResourceNCDrillToolsISO *-->
+  <!--*****************************************-->
+  <Extension Abstract = "Yes" CustomerExposition = "Programmer" Discipline = "Yes" Name = "ResourceNCDrillToolsISO" Specializable = "Yes" SuperName = "ResourceNCMillAndDrillToolISO" Uuid = "42ec687e-60c8-4872-a1be-a6d8ff63a509">
+    <Property Name = "KweNew_InstanciationMethod" Value = "DELMfgKweInstanciation"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "No" Name = "V_SIG" Protection = "External" Type = "Double" Uuid = "2c13c30d-80a5-4735-868b-ffe36351ceeb"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_PL" Protection = "External" Type = "Double" Uuid = "fd8676a1-8f1a-4d23-a2e9-40975801bf07"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_LCF" Protection = "External" Type = "Double" Uuid = "6d6830ba-590e-4617-a62b-14de0cdd2bf7"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_PHD" Protection = "External" Type = "Double" Uuid = "b43d074c-a1e7-4a0c-8513-5af5c8e4adbc"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_TCDH" Protection = "External" Type = "String" Uuid = "71ecc880-4fdf-4e42-9289-c01fc819c1b5"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_ULDR" Protection = "External" Type = "Double" Uuid = "fe92a1db-7dfa-499f-af21-9d4b541a719f"/>
+  </Extension>
+  <!--*****************************************-->
+  <!--* ResourceNCDrillToolISO *-->
+  <!--*****************************************-->
+  <Extension CustomerExposition = "Programmer" Discipline = "Yes" Name = "ResourceNCDrillToolISO" Specializable = "Yes" SuperName = "ResourceNCDrillToolsISO" Uuid = "b110c8ab-e815-4c62-aaab-2db4456f194e">
+    <Property Name = "KweNew_InstanciationMethod" Value = "DELMfgKweInstanciation"/>
+    <Property Name = "TypeForDisciplineValuation" Value = "ToolDevice"/>
+    <Property Name = "GroupingType" Value = "ToolDevice"/>
+    <Property Name = "IconName" Value = "I_DELMachiningDrillToolISO"/>
+  </Extension>
+  <!--*****************************************-->
+  <!--* ResourceNCSpotDrillToolISO *-->
+  <!--*****************************************-->
+  <Extension CustomerExposition = "Programmer" Discipline = "Yes" Name = "ResourceNCSpotDrillToolISO" Specializable = "Yes" SuperName = "ResourceNCDrillToolsISO" Uuid = "c70b290e-ad84-46e1-a03e-f7a396174d9f">
+    <Property Name = "KweNew_InstanciationMethod" Value = "DELMfgKweInstanciation"/>
+    <Property Name = "TypeForDisciplineValuation" Value = "ToolDevice"/>
+    <Property Name = "GroupingType" Value = "ToolDevice"/>
+    <Property Name = "IconName" Value = "I_DELMachiningSpotDrillToolISO"/>
+  </Extension>
+  <!--*****************************************-->
+  <!--* ResourceNCCenterDrillToolISO *-->
+  <!--*****************************************-->
+  <Extension CustomerExposition = "Programmer" Discipline = "Yes" Name = "ResourceNCCenterDrillToolISO" Specializable = "Yes" SuperName = "ResourceNCDrillToolsISO" Uuid = "882199f7-5533-4813-9ff9-225b7a70eea8">
+    <Property Name = "KweNew_InstanciationMethod" Value = "DELMfgKweInstanciation"/>
+    <Property Name = "TypeForDisciplineValuation" Value = "ToolDevice"/>
+    <Property Name = "GroupingType" Value = "ToolDevice"/>
+    <Property Name = "IconName" Value = "I_DELMachiningCenterDrillToolISO"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "Yes" Name = "V_STA" Protection = "External" Type = "Double" Uuid = "54bc4b30-085d-4eaa-95da-91b9e17d8c11"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "Yes" Name = "V_SD" Protection = "External" Type = "Double" Uuid = "b9148c36-6d4a-455c-913f-af87827549fb"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "Yes" Name = "V_SDL" Protection = "External" Type = "Double" Uuid = "df670901-629d-4cf1-b292-dad2e8626591"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "No" Name = "V_TA" Protection = "External" Type = "Double" Uuid = "cbdff026-a231-4fba-96da-b9c442b83bc0"/>
+    <Simple MultiValuated = "No" Name = "V_NOS" Protection = "External" Type = "Integer" Uuid = "b6d8ff95-555c-40eb-b1f0-3b93063f8a90"/>
+  </Extension>
+  <!--*****************************************-->
+  <!--* ResourceNCMultiDiameterDrillToolISO *-->
+  <!--*****************************************-->
+  <Extension CustomerExposition = "Programmer" Discipline = "Yes" Name = "ResourceNCMultiDiameterDrillToolISO" Specializable = "Yes" SuperName = "ResourceNCDrillToolsISO" Uuid = "65b3a643-b889-4556-952d-24c2c062e97b">
+    <Property Name = "KweNew_InstanciationMethod" Value = "DELMfgKweInstanciation"/>
+    <Property Name = "TypeForDisciplineValuation" Value = "ToolDevice"/>
+    <Property Name = "GroupingType" Value = "ToolDevice"/>
+    <Property Name = "IconName" Value = "I_DELMachiningMultiDiameterDrillToolISO"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "Yes" Name = "V_STA" Protection = "External" Type = "Double" Uuid = "aae98c48-0d79-4529-a3fa-37a7bf06dda8"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "Yes" Name = "V_SD" Protection = "External" Type = "Double" Uuid = "82a64b3c-794c-4d9f-8fb6-7fa97881b77c"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "Yes" Name = "V_SDL" Protection = "External" Type = "Double" Uuid = "bdf2c583-acf2-4592-ab08-2a7362c0bfd7"/>
+    <Simple MultiValuated = "No" Name = "V_NOS" Protection = "External" Type = "Integer" Uuid = "aab8f1cc-c22b-4d27-aed8-54ab5289803a"/>
+  </Extension>
+  <!--*****************************************-->
+  <!--* ResourceNCBoringAndChamferToolISO *-->
+  <!--*****************************************-->
+  <Extension CustomerExposition = "Programmer" Discipline = "Yes" Name = "ResourceNCBoringAndChamferToolISO" Specializable = "Yes" SuperName = "ResourceNCDrillToolsISO" Uuid = "1ab8ac3b-1c36-424b-943d-6e04770ba837">
+    <Property Name = "KweNew_InstanciationMethod" Value = "DELMfgKweInstanciation"/>
+    <Property Name = "TypeForDisciplineValuation" Value = "ToolDevice"/>
+    <Property Name = "GroupingType" Value = "ToolDevice"/>
+    <Property Name = "IconName" Value = "I_DELMachiningBoringAndChamferToolISO"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "Yes" Name = "V_STA" Protection = "External" Type = "Double" Uuid = "02cf5b3c-0d7b-4b42-b5a6-4c7f4623a385"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "Yes" Name = "V_SD" Protection = "External" Type = "Double" Uuid = "90bc401e-2143-48c4-988b-547ebd1bd0be"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "Yes" Name = "V_SDL" Protection = "External" Type = "Double" Uuid = "8a6d86aa-d76b-4ae3-b25e-858105bb0299"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_DCINTF" Protection = "External" Type = "Double" Uuid = "282ec9cc-faf1-4123-81cc-ed6cf5b35df6"/>
+    <Simple MultiValuated = "No" Name = "V_NOS" Protection = "External" Type = "Integer" Uuid = "91359342-2c11-4656-a523-6474a26141fb"/>
+  </Extension>
+  <!--*****************************************-->
+  <!--* ResourceNCReamerToolISO *-->
+  <!--*****************************************-->
+  <Extension CustomerExposition = "Programmer" Discipline = "Yes" Name = "ResourceNCReamerToolISO" Specializable = "Yes" SuperName = "ResourceNCDrillToolsISO" Uuid = "66b4ae7e-8bdc-47c1-8521-209d518b8a3f">
+    <Property Name = "KweNew_InstanciationMethod" Value = "DELMfgKweInstanciation"/>
+    <Property Name = "TypeForDisciplineValuation" Value = "ToolDevice"/>
+    <Property Name = "GroupingType" Value = "ToolDevice"/>
+    <Property Name = "IconName" Value = "I_DELMachiningReamerToolISO"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "No" Name = "V_STA" Protection = "External" Type = "Double" Uuid = "5835c41d-2537-4c4b-ba9a-94a773b91ad0"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_SD" Protection = "External" Type = "Double" Uuid = "c71cb424-86ad-43e9-a66f-0676dcf1674f"/>
+    <Simple MultiValuated = "No" Name = "V_ZNP" Protection = "External" Type = "Integer" Uuid = "54d0eddd-01a1-4b69-bed0-88c7b04cdb9a"/>
+    <Simple MultiValuated = "No" Name = "V_NOS" Protection = "External" Type = "Integer" Uuid = "01f08a90-a90a-4fd8-980c-32e6c0aece0b"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_DCINTF" Protection = "External" Type = "Double" Uuid = "20364619-6093-489c-b4f7-80b069d74df9"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_L" Protection = "External" Type = "Double" Uuid = "b07b73cc-d25a-4857-83f0-f5c35f1797f6"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "No" Name = "V_PLGANG" Protection = "External" Type = "Double" Uuid = "a7cbb54e-4992-4f43-9783-85fa404cd872"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_PLGL" Protection = "External" Type = "Double" Uuid = "5d4463db-ec06-42f6-900a-1b201bcd88c3"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_DTAX" Protection = "External" Type = "Double" Uuid = "83872111-e3c6-4b2e-be19-31ed7b986443"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_DTAN" Protection = "External" Type = "Double" Uuid = "f15cce08-03c2-4161-aad5-2e22e7c84426"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_LDC" Protection = "External" Type = "Double" Uuid = "70e1b7ff-6940-46b8-88a0-332989c8ac0a"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "No" Name = "V_PRFA" Protection = "External" Type = "Double" Uuid = "37f3cbac-16c7-4c5d-b92e-190416d0254e"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_DHUB" Protection = "External" Type = "Double" Uuid = "6f5c0aa2-ae9f-4dc3-9837-489b0bf38a74"/>
+  </Extension>
+  <!--*****************************************-->
+  <!--* ResourceNCCounterSinkToolISO *-->
+  <!--*****************************************-->
+  <Extension CustomerExposition = "Programmer" Discipline = "Yes" Name = "ResourceNCCounterSinkToolISO" Specializable = "Yes" SuperName = "ResourceNCDrillToolsISO" Uuid = "602740fa-0c6f-4c38-9648-31da37534484">
+    <Property Name = "KweNew_InstanciationMethod" Value = "DELMfgKweInstanciation"/>
+    <Property Name = "TypeForDisciplineValuation" Value = "ToolDevice"/>
+    <Property Name = "GroupingType" Value = "ToolDevice"/>
+    <Property Name = "IconName" Value = "I_DELMachiningCounterSinkToolISO"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_DCINTF" Protection = "External" Type = "Double" Uuid = "6289c899-ade0-4aa7-869b-96f2a2968cc3"/>
+  </Extension>
+  <!--*****************************************-->
+  <!--* ResourceNCCounterBoreToolISO *-->
+  <!--*****************************************-->
+  <Extension CustomerExposition = "Programmer" Discipline = "Yes" Name = "ResourceNCCounterBoreToolISO" Specializable = "Yes" SuperName = "ResourceNCDrillToolsISO" Uuid = "19ddaa57-888c-4f80-816c-6359351f027e">
+    <Property Name = "KweNew_InstanciationMethod" Value = "DELMfgKweInstanciation"/>
+    <Property Name = "TypeForDisciplineValuation" Value = "ToolDevice"/>
+    <Property Name = "GroupingType" Value = "ToolDevice"/>
+    <Property Name = "IconName" Value = "I_DELMachiningCounterBoreToolISO"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_DCINTF" Protection = "External" Type = "Double" Uuid = "904d291c-c9d7-41c9-b868-ba1907abdc0a"/>
+  </Extension>
+  <!--*****************************************-->
+  <!--* ResourceNCTapToolISO *-->
+  <!--*****************************************-->
+  <Extension CustomerExposition = "Programmer" Discipline = "Yes" Name = "ResourceNCTapToolISO" Specializable = "Yes" SuperName = "ResourceNCDrillToolsISO" Uuid = "fb88188e-c9f8-4069-a0ec-0087bf65c3bb">
+    <Property Name = "KweNew_InstanciationMethod" Value = "DELMfgKweInstanciation"/>
+    <Property Name = "TypeForDisciplineValuation" Value = "ToolDevice"/>
+    <Property Name = "GroupingType" Value = "ToolDevice"/>
+    <Property Name = "IconName" Value = "I_DELMachiningTapToolISO"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_TCTR" Protection = "External" Type = "String" Uuid = "60ef7f34-0e80-4c05-baa2-7c3f8e970d88"/>
+    <Simple MultiValuated = "No" Name = "V_THSTS" Protection = "External" Type = "Integer" Uuid = "2731c3e6-85f5-4583-9c3b-eb20390bc88a"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_THFT" Protection = "External" Type = "String" Uuid = "b38be9c7-15bb-4526-a627-1d1bbd400ef3"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_TP" Protection = "External" Type = "Double" Uuid = "86a21ab1-b6f5-4467-b650-9a9886cb26b5"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_TCPD" Protection = "External" Type = "Double" Uuid = "89482c75-116e-488e-8cd7-b7df61a6ea2b"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_TCL" Protection = "External" Type = "Double" Uuid = "0f32bdc0-46a9-4c00-871e-cda2aca374e6"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_TD" Protection = "External" Type = "Double" Uuid = "e52eccdf-e112-4b46-ac0d-339e3e996e81"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_THL" Protection = "External" Type = "Double" Uuid = "f7e6e78e-9a88-42c8-ab9b-f05dded4d2b5"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_TDZ" Protection = "External" Type = "Double" Uuid = "3ff002db-b56f-4519-bb29-7e68706af346"/>
+    <Simple MultiValuated = "No" Name = "V_TG" Protection = "External" Type = "Double" Uuid = "7a93a9b1-f0d4-43db-bbbd-d66fd5d91b2a"/>
+  </Extension>
+  <!--*****************************************-->
+  <!--* ResourceNCTurningToolsISO *-->
+  <!--*****************************************-->
+  <Extension Abstract = "Yes" CustomerExposition = "Programmer" Discipline = "Yes" Name = "ResourceNCTurningToolsISO" Specializable = "Yes" SuperName = "ResourceNCToolISO" Uuid = "82d9d715-4238-4a00-97f2-8ed20d6e8b6f">
+    <Property Name = "KweNew_InstanciationMethod" Value = "DELMfgKweInstanciation"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_WF" Protection = "External" Type = "Double" Uuid = "56103aaa-d840-4888-b131-7c1786cbe6df"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_WFA" Protection = "External" Type = "Double" Uuid = "5bbb2e60-a52a-4099-8141-d4e0fa2b13a7"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "No" Name = "V_LAMS" Protection = "External" Type = "Double" Uuid = "9edd5617-127e-4103-82cf-f8c14dc21f9a"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "No" Name = "V_HEA" Protection = "External" Type = "Double" Uuid = "4464433e-a4ec-4cd5-999f-a1b05666a442"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "No" Name = "V_ECA" Protection = "External" Type = "Double" Uuid = "b5214dfd-d5bb-405f-9b36-a744264e2997"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_ECD" Protection = "External" Type = "Double" Uuid = "1121cdfe-0f60-43d6-b7ad-0a980ec5e9bf"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_B" Protection = "External" Type = "Double" Uuid = "372cee7b-d784-471b-aebd-eb4467231305"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_H" Protection = "External" Type = "Double" Uuid = "44f3a2f8-3c63-4ab2-974b-2311d04a91c2"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_HF" Protection = "External" Type = "Double" Uuid = "aa54240d-fd13-43c3-ba90-2349395edd14"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "No" Name = "V_RMPX" Protection = "External" Type = "Double" Uuid = "09144806-7829-454b-9f59-137fa4e36ec7"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_RE" Protection = "External" Type = "Double" Uuid = "7a927cb3-2da5-4969-a3cf-8ed38a4c6f62"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "No" Name = "V_EPSR" Protection = "External" Type = "Double" Uuid = "d4d59c72-bda0-4006-8477-68f9da85d3d1"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_LFA" Protection = "External" Type = "Double" Uuid = "8b16fb40-ec93-4bf5-9d6a-b8c41a5a9da2"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_CW" Protection = "External" Type = "Double" Uuid = "c7d025ca-0bab-4a5e-8ac1-354219467b69"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_CWX" Protection = "External" Type = "Double" Uuid = "a98433a3-0b16-4ab0-b6a7-71b677ee4000"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_CWN" Protection = "External" Type = "Double" Uuid = "b63ccd82-082b-4bb4-9d49-1c0dd3e273f9"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_OAH" Protection = "External" Type = "Double" Uuid = "32a51115-838d-4299-aa38-b334d2dd173a"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_OAW" Protection = "External" Type = "Double" Uuid = "02c38c1a-c6f9-4dfe-8d16-b4077715582c"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_CUTDIA" Protection = "External" Type = "Double" Uuid = "4954c500-9e11-4f46-bc20-35db33c000f5"/>
+  </Extension>
+  <!--*****************************************-->
+  <!--* ResourceNCExternalTurningToolISO *-->
+  <!--*****************************************-->
+  <Extension CustomerExposition = "Programmer" Discipline = "Yes" Name = "ResourceNCExternalTurningToolISO" Specializable = "Yes" SuperName = "ResourceNCTurningToolsISO" Uuid = "e3ae50d4-55c0-46cf-ac19-331ca4637efd">
+    <Property Name = "KweNew_InstanciationMethod" Value = "DELMfgKweInstanciation"/>
+    <Property Name = "TypeForDisciplineValuation" Value = "ToolDevice"/>
+    <Property Name = "GroupingType" Value = "ToolDevice"/>
+    <Property Name = "IconName" Value = "I_DELMachiningExternalTurningToolISO"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "No" Name = "V_Trailing_Angle" Protection = "External" Type = "Double" Uuid = "ee5412d4-5b81-48bb-9d06-4244e85d00bf"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "No" Name = "V_Leading_Angle" Protection = "External" Type = "Double" Uuid = "2ce8bd99-9819-4bb1-b244-44e8cafbb44c"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_Max_Rec_Depth" Protection = "External" Type = "Double" Uuid = "80c7bef5-0514-4b02-a76e-1231c9db1fc1"/>
+	<Simple MaxLength = "72" MultiValuated = "No" Name = "V_Holder_Capability" Protection = "External" Type = "String" Uuid = "45e38604-b6db-4d64-8f5a-b9628798cbfc"/>
+  </Extension>
+  <!--*****************************************-->
+  <!--* ResourceNCInternalTurningToolISO *-->
+  <!--*****************************************-->
+  <Extension CustomerExposition = "Programmer" Discipline = "Yes" Name = "ResourceNCInternalTurningToolISO" Specializable = "Yes" SuperName = "ResourceNCTurningToolsISO" Uuid = "80718602-96aa-4af7-96ea-1702211c3f09">
+    <Property Name = "KweNew_InstanciationMethod" Value = "DELMfgKweInstanciation"/>
+    <Property Name = "TypeForDisciplineValuation" Value = "ToolDevice"/>
+    <Property Name = "GroupingType" Value = "ToolDevice"/>
+    <Property Name = "IconName" Value = "I_DELMachiningInternalTurningToolISO"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "No" Name = "V_Trailing_Angle" Protection = "External" Type = "Double" Uuid = "ebb5eb50-ef9d-4001-9b2a-fe0b7256dc5a"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "No" Name = "V_Leading_Angle" Protection = "External" Type = "Double" Uuid = "bf96eaf5-6512-46d8-b6c0-7b273ba75899"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_Max_Rec_Depth" Protection = "External" Type = "Double" Uuid = "ff1dda33-b087-40d8-8312-908213c6d670"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_Max_Boring_Depth" Protection = "External" Type = "Double" Uuid = "d2223f2e-bd7b-4ece-99de-7c2829f73e41"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_DMIN" Protection = "External" Type = "Double" Uuid = "9290b8c8-1a93-475f-99dd-6dcc3269aae4"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_BD" Protection = "External" Type = "Double" Uuid = "ac02ff13-7f35-477e-ac9c-4804e3b98d38"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_LDRED" Protection = "External" Type = "Double" Uuid = "20f7be77-f6cf-4074-83ae-1f3311dd2a23"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_BDRED" Protection = "External" Type = "Double" Uuid = "b57078e6-63cc-4b13-b75d-dd3d7ce3c797"/>
+  </Extension>
+  <!--*****************************************-->
+  <!--* ResourceNCExternalGrooveTurningToolISO *-->
+  <!--*****************************************-->
+  <Extension CustomerExposition = "Programmer" Discipline = "Yes" Name = "ResourceNCExternalGrooveTurningToolISO" Specializable = "Yes" SuperName = "ResourceNCTurningToolsISO" Uuid = "c93fbc1e-ce6f-4bcd-aa9c-5b77d7ad49cf">
+    <Property Name = "KweNew_InstanciationMethod" Value = "DELMfgKweInstanciation"/>
+    <Property Name = "TypeForDisciplineValuation" Value = "ToolDevice"/>
+    <Property Name = "GroupingType" Value = "ToolDevice"/>
+    <Property Name = "IconName" Value = "I_DELMachiningExternalGrooveTurningToolISO"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_CDX" Protection = "External" Type = "Double" Uuid = "999a0a0a-b7a5-480f-aeec-6bf4e01f5ab0"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "No" Name = "V_Gouging_Angle" Protection = "External" Type = "Double" Uuid = "1be8939d-75ce-4cca-b6da-7cdbeeb45a15"/>
+  </Extension>
+  <!--*****************************************-->
+  <!--* ResourceNCInternalGrooveTurningToolISO *-->
+  <!--*****************************************-->
+  <Extension CustomerExposition = "Programmer" Discipline = "Yes" Name = "ResourceNCInternalGrooveTurningToolISO" Specializable = "Yes" SuperName = "ResourceNCTurningToolsISO" Uuid = "9f0228b6-8582-4d01-ab85-cd6627360f94">
+    <Property Name = "KweNew_InstanciationMethod" Value = "DELMfgKweInstanciation"/>
+    <Property Name = "TypeForDisciplineValuation" Value = "ToolDevice"/>
+    <Property Name = "GroupingType" Value = "ToolDevice"/>
+    <Property Name = "IconName" Value = "I_DELMachiningInternalGrooveTurningToolISO"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_BD" Protection = "External" Type = "Double" Uuid = "868782ae-034a-4331-ac65-27698c6b65a8"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_LDRED" Protection = "External" Type = "Double" Uuid = "205c95bf-c583-47bc-b7ff-57528cf8448e"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_BDRED" Protection = "External" Type = "Double" Uuid = "452bf273-d181-4e1d-aa1c-f8bc15c4d04a"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_CDX" Protection = "External" Type = "Double" Uuid = "47b3c5a3-014b-4b3d-9dc0-d10ce9aca718"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_DMIN" Protection = "External" Type = "Double" Uuid = "31cb1124-747a-48c3-8568-26670a381385"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "No" Name = "V_Gouging_Angle" Protection = "External" Type = "Double" Uuid = "06f2cda3-c9d3-48f8-85e3-0acfbacef921"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "No" Name = "V_Hand_Angle" Protection = "External" Type = "Double" Uuid = "264a2b07-e1b8-40ef-91c4-82cbd35e4631"/>
+  </Extension>
+  <!--*****************************************-->
+  <!--* ResourceNCFrontalGrooveTurningToolISO *-->
+  <!--*****************************************-->
+  <Extension CustomerExposition = "Programmer" Discipline = "Yes" Name = "ResourceNCFrontalGrooveTurningToolISO" Specializable = "Yes" SuperName = "ResourceNCTurningToolsISO" Uuid = "2eaee7bc-d771-4c2d-bd07-8ba67a7bfeea">
+    <Property Name = "KweNew_InstanciationMethod" Value = "DELMfgKweInstanciation"/>
+    <Property Name = "TypeForDisciplineValuation" Value = "ToolDevice"/>
+    <Property Name = "GroupingType" Value = "ToolDevice"/>
+    <Property Name = "IconName" Value = "I_DELMachiningFrontalGrooveTurningToolISO"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_CDX" Protection = "External" Type = "Double" Uuid = "36cbbe62-a825-4db7-8792-d757c78c6863"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "No" Name = "V_Gouging_Angle" Protection = "External" Type = "Double" Uuid = "dc306463-0560-489d-9b51-0dec10e8dd98"/>
+  </Extension>
+  <!--*****************************************-->
+  <!--* ResourceNCExternalThreadTurningToolISO *-->
+  <!--*****************************************-->
+  <Extension CustomerExposition = "Programmer" Discipline = "Yes" Name = "ResourceNCExternalThreadTurningToolISO" Specializable = "Yes" SuperName = "ResourceNCTurningToolsISO" Uuid = "5ff9bb4a-4a9c-4ea3-987f-15d1e0b30dbb">
+    <Property Name = "KweNew_InstanciationMethod" Value = "DELMfgKweInstanciation"/>
+    <Property Name = "TypeForDisciplineValuation" Value = "ToolDevice"/>
+    <Property Name = "GroupingType" Value = "ToolDevice"/>
+    <Property Name = "IconName" Value = "I_DELMachiningExternalThreadTurningToolISO"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_TD" Protection = "External" Type = "Double" Uuid = "600d9d94-c67e-4a21-a3b5-0039290edcb3"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_TCTR" Protection = "External" Type = "String" Uuid = "d1510bc2-d136-4e61-bf7c-9b7d3782b4e4"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_THID" Protection = "External" Type = "String" Uuid = "a506df4f-9af9-4099-bbcb-315959a21695"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_THOD" Protection = "External" Type = "String" Uuid = "be23357b-d14d-49a8-bce0-6a2cb8b7c732"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_THFT" Protection = "External" Type = "String" Uuid = "2b60a160-e8c9-4fa1-8dbe-7f940d871403"/>
+  </Extension>
+  <!--*****************************************-->
+  <!--* ResourceNCInternalThreadTurningToolISO *-->
+  <!--*****************************************-->
+  <Extension CustomerExposition = "Programmer" Discipline = "Yes" Name = "ResourceNCInternalThreadTurningToolISO" Specializable = "Yes" SuperName = "ResourceNCTurningToolsISO" Uuid = "ee59c5a8-40b9-4357-aa49-8642514691bc">
+    <Property Name = "KweNew_InstanciationMethod" Value = "DELMfgKweInstanciation"/>
+    <Property Name = "TypeForDisciplineValuation" Value = "ToolDevice"/>
+    <Property Name = "GroupingType" Value = "ToolDevice"/>
+    <Property Name = "IconName" Value = "I_DELMachiningInternalThreadTurningToolISO"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_BD" Protection = "External" Type = "Double" Uuid = "3d425a5c-4bf5-4392-bdd2-0d7c607c2542"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_LDRED" Protection = "External" Type = "Double" Uuid = "43083b46-0e95-407f-ae4b-8f0a1f1f49b8"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_BDRED" Protection = "External" Type = "Double" Uuid = "2520eb6f-bd26-49ee-8928-adebbcdd9d52"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_DMIN" Protection = "External" Type = "Double" Uuid = "bbe031df-506c-4098-9a12-00495b402afd"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_TD" Protection = "External" Type = "Double" Uuid = "4630d7f0-3943-4d97-8245-7c52015164b8"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_TCTR" Protection = "External" Type = "String" Uuid = "8c588fb8-335d-4a6e-aaa2-d3cf47bdb497"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_THID" Protection = "External" Type = "String" Uuid = "4daadbe1-afe3-4329-9697-c037dd625cf4"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_THOD" Protection = "External" Type = "String" Uuid = "0e274487-42fb-4cbd-86a4-d02ab3578dd1"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_THFT" Protection = "External" Type = "String" Uuid = "d9c9a43f-8b37-4d56-a2d4-10a4a3454690"/>
+  </Extension>
+  <!--*****************************************-->
+  <!--* ResourceNCCartridgeToolISO *-->
+  <!--*****************************************-->
+  <Extension CustomerExposition = "Programmer" Discipline = "Yes" Name = "ResourceNCCartridgeToolISO" Specializable = "Yes" SuperName = "ResourceNCToolISO" Uuid = "f5dab326-6b5f-497b-b7b8-6df2e9ac4b2b">
+    <Property Name = "KweNew_InstanciationMethod" Value = "DELMfgKweInstanciation"/>
+    <Property Name = "TypeForDisciplineValuation" Value = "ToolDevice"/>
+    <Property Name = "GroupingType" Value = "ToolDevice"/>
+    <Property Name = "IconName" Value = "I_DELMachiningCartridgeToolISO"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_B" Protection = "External" Type = "Double" Uuid = "e8c4b876-8fa7-46fd-8489-3524e87a78f8"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_H" Protection = "External" Type = "Double" Uuid = "5bbea419-4260-4c44-90e8-4752fd5feeff"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_HF" Protection = "External" Type = "Double" Uuid = "974c2fd7-58f2-4650-a56e-dfa881f82f9d"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_WF" Protection = "External" Type = "Double" Uuid = "957d58df-3917-4811-93c4-188bcae44b74"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_WFA" Protection = "External" Type = "Double" Uuid = "bd9356c4-920a-4545-b3d5-aaa1e7382f6a"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "No" Name = "V_GAMF" Protection = "External" Type = "Double" Uuid = "e6efe636-9c10-4fc9-897a-0ac3d41741d0"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "No" Name = "V_GAMN" Protection = "External" Type = "Double" Uuid = "199a7d86-5944-4f2d-b480-0fe1467fc5f2"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "No" Name = "V_GAMP" Protection = "External" Type = "Double" Uuid = "01630821-6ac0-4485-8e30-aa051ab20fa0"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_DMIN" Protection = "External" Type = "Double" Uuid = "f8f27989-733f-44da-b700-b8d676769334"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_CWX" Protection = "External" Type = "Double" Uuid = "c33ca46a-607e-4afa-8171-e87cf7ec6086"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_CWN" Protection = "External" Type = "Double" Uuid = "35f75d11-685e-40e7-af40-a1e688ac3d4f"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "No" Name = "V_LAMS" Protection = "External" Type = "Double" Uuid = "b283154f-1d2f-4595-9014-ffb2f59968c6"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_OAH" Protection = "External" Type = "Double" Uuid = "af4b0a03-8d2e-4703-a9c4-5aba46ef0dc3"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_OAW" Protection = "External" Type = "Double" Uuid = "dca51629-5c7a-4857-b6a5-ac867536f1ba"/>
+    <Simple MultiValuated = "No" Name = "V_ADJBY" Protection = "External" Type = "Integer" Uuid = "fb0b94ce-f31c-48f1-b8d3-aa3b6ad39f20"/>
+  </Extension>
+  <!--*****************************************-->
+  <!--* ResourceNCInsertISO *-->
+  <!--*****************************************-->
+  <Extension Abstract = "Yes" CustomerExposition = "Programmer" Discipline = "Yes" Name = "ResourceNCInsertISO" Specializable = "Yes" SuperName = "ToolDevice" Uuid = "a332487f-ffe2-4380-b2a2-82e9b7519a86">
+    <Property Name = "KweNew_InstanciationMethod" Value = "DELMfgKweInstanciation"/>
+    <Simple MaxLength = "128" MultiValuated = "No" Name = "V_Comment" Protection = "External" Type = "String" Uuid = "beacae4c-4651-4166-a887-c0b7003ea3dc"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_Usage_Type" Protection = "External" Type = "String" Uuid = "dd48858f-ecbf-47fb-9dd0-6a2f11d59469"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_RE" Protection = "External" Type = "Double" Uuid = "b9dd136f-cec8-4669-aebc-d96145587045"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_REN" Protection = "External" Type = "Double" Uuid = "75282acc-952a-4560-a526-4c8138be979c"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_IC" Protection = "External" Type = "Double" Uuid = "ab3146f3-1cc0-43c7-86a9-e15ff9d1664f"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_IIC" Protection = "External" Type = "String" Uuid = "4530a65e-053d-4cbe-bc91-ef8a4989c3ed"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "No" Name = "V_AN" Protection = "External" Type = "Double" Uuid = "75425759-aff2-4e2c-9b00-2c7f1266ae98"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_INSL" Protection = "External" Type = "Double" Uuid = "f38053c0-8525-4b33-8796-9a94a7523c2e"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_INSBD" Protection = "External" Type = "Double" Uuid = "c99f7969-1739-49b0-91fc-1830e53b40d7"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_L" Protection = "External" Type = "Double" Uuid = "72bad8ad-4111-4370-8c86-77db0d80caa2"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_S" Protection = "External" Type = "Double" Uuid = "047250e9-4514-49ef-9286-6f651a60b8c7"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_S1" Protection = "External" Type = "Double" Uuid = "6dcc3d86-768d-4c17-87a9-af671e3cdb67"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_SC" Protection = "External" Type = "String" Uuid = "610391b6-c814-4544-a80a-7fac1d9f3700"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_SSC" Protection = "External" Type = "String" Uuid = "6c04b202-7f2c-4d71-a640-042f428af4ad"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "No" Name = "V_EPSR" Protection = "External" Type = "Double" Uuid = "afbafb9d-f046-44ef-8928-785ea8c0b3ab"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_W1" Protection = "External" Type = "Double" Uuid = "4c0a684a-af7d-42d6-a211-ffabad40b8d0"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_M" Protection = "External" Type = "Double" Uuid = "8da73fe4-6e80-4cfe-97f4-8d290186f64b"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_M2" Protection = "External" Type = "Double" Uuid = "6c73a101-242a-4f79-a82a-3c33319ceaeb"/>
+    <Simple MultiValuated = "No" Name = "V_NOI" Protection = "External" Type = "Integer" Uuid = "9b4a07ed-ad4b-48b0-9d0f-b0aa379aae65"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_HAND" Protection = "External" Type = "String" Uuid = "68b889c2-e4b6-4545-a2a4-4647a1880c4b"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_BMC" Protection = "External" Type = "String" Uuid = "6d7f0097-9970-4ff2-a3c1-dbecda220e46"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_TSYC" Protection = "External" Type = "String" Uuid = "9b8a6b9c-cb2e-4e78-ae6e-27d99ad6af29"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_ISYC" Protection = "External" Type = "String" Uuid = "7f16d0b6-d3a9-45f9-b260-fee7207d052b"/>
+    <Simple Magnitude = "MASS" MultiValuated = "No" Name = "V_WT" Protection = "External" Type = "Double" Uuid = "f779a52f-d29c-4beb-8f5e-167d4ef9c394"/>
+    <Simple MultiValuated = "No" Name = "V_CEDC" Protection = "External" Type = "Integer" Uuid = "7848514f-357b-4448-a63f-67513eb5544d"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_GRDMFG" Protection = "External" Type = "String" Uuid = "588f24e8-ef62-400f-8031-7700d274e76b"/>
+    <Simple MultiValuated = "No" Name = "V_WEP" Protection = "External" Type = "Integer" Uuid = "c35d7f9a-1f8d-498a-824e-25a7f5b33d95"/>
+    <Simple MultiValuated = "No" Name = "V_NIS" Protection = "External" Type = "Integer" Uuid = "d5445204-bc00-45d9-91c1-64e2641fe921"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_CBMD" Protection = "External" Type = "String" Uuid = "631cff18-3bad-4dc0-92ea-a7735d916f94"/>
+    <Simple MultiValuated = "No" Name = "V_CNC" Protection = "External" Type = "Integer" Uuid = "4096be82-e801-4a89-8401-1c57bc16f646"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_D1" Protection = "External" Type = "Double" Uuid = "997b66d2-2117-4fe1-9d2d-25530af27652"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_LE" Protection = "External" Type = "Double" Uuid = "5e9579af-f002-4f5f-9afa-6d9d65797987"/>
+    <Simple MultiValuated = "No" Name = "V_IFS" Protection = "External" Type = "Integer" Uuid = "4d129a47-d42d-4efd-bb6a-e919426ca91d"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_COATP" Protection = "External" Type = "String" Uuid = "e1f5200b-fec8-4c9c-a837-57680375534e"/>
+  </Extension>
+  <!--*****************************************-->
+  <!--* ResourceNCDiamondInsertISO *-->
+  <!--*****************************************-->
+  <Extension CustomerExposition = "Programmer" Discipline = "Yes" Name = "ResourceNCDiamondInsertISO" Specializable = "Yes" SuperName = "ResourceNCInsertISO" Uuid = "0af42640-893e-461c-8041-feba9124caa1">
+    <Property Name = "KweNew_InstanciationMethod" Value = "DELMfgKweInstanciation"/>
+    <Property Name = "TypeForDisciplineValuation" Value = "ToolDevice"/>
+    <Property Name = "GroupingType" Value = "ToolDevice"/>
+    <Property Name = "IconName" Value = "I_DELMachiningDiamondInsertISO"/>
+  </Extension>
+  <!--*****************************************-->
+  <!--* ResourceNCSquareInsertISO *-->
+  <!--*****************************************-->
+  <Extension CustomerExposition = "Programmer" Discipline = "Yes" Name = "ResourceNCSquareInsertISO" Specializable = "Yes" SuperName = "ResourceNCInsertISO" Uuid = "9f46de28-a835-45ed-879d-626b8c64f330">
+    <Property Name = "KweNew_InstanciationMethod" Value = "DELMfgKweInstanciation"/>
+    <Property Name = "TypeForDisciplineValuation" Value = "ToolDevice"/>
+    <Property Name = "GroupingType" Value = "ToolDevice"/>
+    <Property Name = "IconName" Value = "I_DELMachiningSquareInsertISO"/>
+  </Extension>
+  <!--*****************************************-->
+  <!--* ResourceNCTriangularInsertISO *-->
+  <!--*****************************************-->
+  <Extension CustomerExposition = "Programmer" Discipline = "Yes" Name = "ResourceNCTriangularInsertISO" Specializable = "Yes" SuperName = "ResourceNCInsertISO" Uuid = "42fe153d-fb0e-4e1e-abbe-848d0a0d5d91">
+    <Property Name = "KweNew_InstanciationMethod" Value = "DELMfgKweInstanciation"/>
+    <Property Name = "TypeForDisciplineValuation" Value = "ToolDevice"/>
+    <Property Name = "GroupingType" Value = "ToolDevice"/>
+    <Property Name = "IconName" Value = "I_DELMachiningTriangularInsertISO"/>
+  </Extension>
+  <!--*****************************************-->
+  <!--* ResourceNCTrigonInsertISO *-->
+  <!--*****************************************-->
+  <Extension CustomerExposition = "Programmer" Discipline = "Yes" Name = "ResourceNCTrigonInsertISO" Specializable = "Yes" SuperName = "ResourceNCInsertISO" Uuid = "7785775c-9062-4101-9f00-c3e7b22e84d8">
+    <Property Name = "KweNew_InstanciationMethod" Value = "DELMfgKweInstanciation"/>
+    <Property Name = "TypeForDisciplineValuation" Value = "ToolDevice"/>
+    <Property Name = "GroupingType" Value = "ToolDevice"/>
+    <Property Name = "IconName" Value = "I_DELMachiningTrigonInsertISO"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_CEMR" Protection = "External" Type = "Double" Uuid = "e66ac61d-2d7b-4ce8-9f86-37ad4ee8dad5"/>
+  </Extension>
+  <!--*****************************************-->
+  <!--* ResourceNCHexagonalInsertISO *-->
+  <!--*****************************************-->
+  <Extension CustomerExposition = "Programmer" Discipline = "Yes" Name = "ResourceNCHexagonalInsertISO" Specializable = "Yes" SuperName = "ResourceNCInsertISO" Uuid = "8022a281-f67b-4fd6-b66f-24ce0815c710">
+    <Property Name = "KweNew_InstanciationMethod" Value = "DELMfgKweInstanciation"/>
+    <Property Name = "TypeForDisciplineValuation" Value = "ToolDevice"/>
+    <Property Name = "GroupingType" Value = "ToolDevice"/>
+    <Property Name = "IconName" Value = "I_DELMachiningHexagonalInsertISO"/>
+  </Extension>
+  <!--*****************************************-->
+  <!--* ResourceNCRectangularInsertISO *-->
+  <!--*****************************************-->
+  <Extension CustomerExposition = "Programmer" Discipline = "Yes" Name = "ResourceNCRectangularInsertISO" Specializable = "Yes" SuperName = "ResourceNCInsertISO" Uuid = "248a7a6f-74c2-4b66-b237-1c0cee23d7c7">
+    <Property Name = "KweNew_InstanciationMethod" Value = "DELMfgKweInstanciation"/>
+    <Property Name = "TypeForDisciplineValuation" Value = "ToolDevice"/>
+    <Property Name = "GroupingType" Value = "ToolDevice"/>
+    <Property Name = "IconName" Value = "I_DELMachiningRectangularInsertISO"/>
+  </Extension>
+  <!--*****************************************-->
+  <!--* ResourceNCOctagonalInsertISO *-->
+  <!--*****************************************-->
+  <Extension CustomerExposition = "Programmer" Discipline = "Yes" Name = "ResourceNCOctagonalInsertISO" Specializable = "Yes" SuperName = "ResourceNCInsertISO" Uuid = "083113c8-d9a4-4d92-a906-783576df1831">
+    <Property Name = "KweNew_InstanciationMethod" Value = "DELMfgKweInstanciation"/>
+    <Property Name = "TypeForDisciplineValuation" Value = "ToolDevice"/>
+    <Property Name = "GroupingType" Value = "ToolDevice"/>
+    <Property Name = "IconName" Value = "I_DELMachiningOctagonalInsertISO"/>
+  </Extension>
+  <!--*****************************************-->
+  <!--* ResourceNCParallelogramInsertISO *-->
+  <!--*****************************************-->
+  <Extension CustomerExposition = "Programmer" Discipline = "Yes" Name = "ResourceNCParallelogramInsertISO" Specializable = "Yes" SuperName = "ResourceNCInsertISO" Uuid = "1d43a913-d196-4bb0-aa3d-a2767d7cc36e">
+    <Property Name = "KweNew_InstanciationMethod" Value = "DELMfgKweInstanciation"/>
+    <Property Name = "TypeForDisciplineValuation" Value = "ToolDevice"/>
+    <Property Name = "GroupingType" Value = "ToolDevice"/>
+    <Property Name = "IconName" Value = "I_DELMachiningParallelogramInsertISO"/>
+  </Extension>
+  <!--*****************************************-->
+  <!--* ResourceNCPentagonalInsertISO *-->
+  <!--*****************************************-->
+  <Extension CustomerExposition = "Programmer" Discipline = "Yes" Name = "ResourceNCPentagonalInsertISO" Specializable = "Yes" SuperName = "ResourceNCInsertISO" Uuid = "cc81bd04-1c9b-4815-8b42-aea50368dcd8">
+    <Property Name = "KweNew_InstanciationMethod" Value = "DELMfgKweInstanciation"/>
+    <Property Name = "TypeForDisciplineValuation" Value = "ToolDevice"/>
+    <Property Name = "GroupingType" Value = "ToolDevice"/>
+    <Property Name = "IconName" Value = "I_DELMachiningPentagonalInsertISO"/>
+  </Extension>
+  <!--*****************************************-->
+  <!--* ResourceNCThreadInsertISO *-->
+  <!--*****************************************-->
+  <Extension CustomerExposition = "Programmer" Discipline = "Yes" Name = "ResourceNCThreadInsertISO" Specializable = "Yes" SuperName = "ResourceNCInsertISO" Uuid = "47080ced-e767-4a3b-91b7-5545baf84535">
+    <Property Name = "KweNew_InstanciationMethod" Value = "DELMfgKweInstanciation"/>
+    <Property Name = "TypeForDisciplineValuation" Value = "ToolDevice"/>
+    <Property Name = "GroupingType" Value = "ToolDevice"/>
+    <Property Name = "IconName" Value = "I_DELMachiningThreadInsertISO"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_THL" Protection = "External" Type = "Double" Uuid = "59ab8c4d-feee-4df5-91c6-b7ad2f4d6b31"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_TCTR" Protection = "External" Type = "String" Uuid = "660a677d-2bef-40b8-8740-2a36b74219c5"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_TP" Protection = "External" Type = "Double" Uuid = "e1253dbe-cbdf-41af-831d-6912aa7a8402"/>
+    <Simple MultiValuated = "No" Name = "V_TPI" Protection = "External" Type = "Double" Uuid = "20f96e1a-6368-470a-8666-a3d4ca2a5d1d"/>
+    <Simple MultiValuated = "No" Name = "V_TPIN" Protection = "External" Type = "Double" Uuid = "6d277580-f16a-49a6-b71f-9cc121166e0a"/>
+    <Simple MultiValuated = "No" Name = "V_TPIX" Protection = "External" Type = "Double" Uuid = "672d3317-abd2-4cdf-80c8-e3b102b375a3"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_THFT" Protection = "External" Type = "String" Uuid = "6ccfea64-208a-4e96-8393-7f9bef04bfbe"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_LIG" Protection = "External" Type = "Double" Uuid = "7f3b6033-e5a0-4b50-a7ea-120672185607"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_BW" Protection = "External" Type = "Double" Uuid = "253ab0a5-cd1e-4721-ad08-0bf236a2f972"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "No" Name = "V_GAN" Protection = "External" Type = "Double" Uuid = "f22047f1-ff47-49ae-8b44-fe3ef3a2d922"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_RER" Protection = "External" Type = "Double" Uuid = "ef6ce0aa-56f0-4c56-9768-5946b0069769"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_REL" Protection = "External" Type = "Double" Uuid = "f70e26d2-5fec-482f-8ab5-170074760886"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_RETR" Protection = "External" Type = "Double" Uuid = "aa66d581-f5ed-46b0-9ee0-f0cd7f51c8e1"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_RETL" Protection = "External" Type = "Double" Uuid = "01f428ea-694e-4ea2-a6ad-18bbb1df8c21"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_CW" Protection = "External" Type = "Double" Uuid = "7a953d40-5ee1-4d80-a008-e2e2d4f2413e"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_CF" Protection = "External" Type = "Double" Uuid = "72d321d6-856b-4d0b-be1e-444d48b4f59c"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "No" Name = "V_PNA" Protection = "External" Type = "Double" Uuid = "3bd431d3-fc98-48ec-8b47-0c7548b1c804"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_PDX" Protection = "External" Type = "Double" Uuid = "cab31ec7-7530-46c4-9554-d3a053d39603"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_PDY" Protection = "External" Type = "Double" Uuid = "26742cb0-ace9-4898-b7b7-cfe294a6e8e3"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "No" Name = "V_PAL" Protection = "External" Type = "Double" Uuid = "cc9de4ad-2786-49e0-9afa-fd500e3daf73"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "No" Name = "V_PAR" Protection = "External" Type = "Double" Uuid = "9c356e27-92d7-4201-bb0e-5892bdb3c924"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_PDPT" Protection = "External" Type = "Double" Uuid = "17817514-7635-4673-a41a-8803a61e1af0"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_THID" Protection = "External" Type = "String" Uuid = "c2315dd2-8373-42e4-ba85-59f287463776"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_THOD" Protection = "External" Type = "String" Uuid = "94d0e410-6f7c-4adb-b44a-a5c9ee324934"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_TTP" Protection = "External" Type = "String" Uuid = "5eb545b8-04ec-4841-83b0-e333893ab297"/>
+  </Extension>
+  <!--*****************************************-->
+  <!--* ResourceNCGrooveInsertISO *-->
+  <!--*****************************************-->
+  <Extension CustomerExposition = "Programmer" Discipline = "Yes" Name = "ResourceNCGrooveInsertISO" Specializable = "Yes" SuperName = "ResourceNCInsertISO" Uuid = "df35dffc-b183-41b9-97d2-963d27783613">
+    <Property Name = "KweNew_InstanciationMethod" Value = "DELMfgKweInstanciation"/>
+    <Property Name = "TypeForDisciplineValuation" Value = "ToolDevice"/>
+    <Property Name = "GroupingType" Value = "ToolDevice"/>
+    <Property Name = "IconName" Value = "I_DELMachiningGrooveInsertISO"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_LIG" Protection = "External" Type = "Double" Uuid = "7f968eb4-82a6-4e3d-874d-94e1bd87389a"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_BW" Protection = "External" Type = "Double" Uuid = "83ef52a0-3f8f-4c24-89a2-0cacf024a591"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "No" Name = "V_GAN" Protection = "External" Type = "Double" Uuid = "2f0592f2-a33d-4ada-9b04-ad9b4658fc39"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_RER" Protection = "External" Type = "Double" Uuid = "5b52e7a3-d92c-4062-b578-23b0e8b97e19"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_REL" Protection = "External" Type = "Double" Uuid = "87ae7bc7-f832-4942-ba8a-24229702feee"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_CW" Protection = "External" Type = "Double" Uuid = "cf74ad75-ec54-4ee0-b6ff-364209d89057"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_CF" Protection = "External" Type = "Double" Uuid = "59ed4479-e0a5-4234-adbd-342eaccb6683"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_CDX" Protection = "External" Type = "Double" Uuid = "a8d2adfc-358e-45e8-ad54-91fc50a697bb"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "No" Name = "V_PNA" Protection = "External" Type = "Double" Uuid = "6ccd8b23-a8eb-4ff5-a69e-6e41303defa9"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_WF" Protection = "External" Type = "Double" Uuid = "57826caf-ee57-49b4-b27f-e19088d001a5"/>
+  </Extension>
+  <!--*****************************************-->
+  <!--* ResourceNCSpecificProfileInsertISO *-->
+  <!--*****************************************-->
+  <Extension CustomerExposition = "Programmer" Discipline = "Yes" Name = "ResourceNCSpecificProfileInsertISO" Specializable = "Yes" SuperName = "ResourceNCInsertISO" Uuid = "140dc65d-167a-4e7c-9c5a-c38688118a44">
+    <Property Name = "KweNew_InstanciationMethod" Value = "DELMfgKweInstanciation"/>
+    <Property Name = "TypeForDisciplineValuation" Value = "ToolDevice"/>
+    <Property Name = "GroupingType" Value = "ToolDevice"/>
+    <Property Name = "IconName" Value = "I_DELMachiningSpecificProfileInsertISO"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_THL" Protection = "External" Type = "Double" Uuid = "0b8f9d76-4e5d-45ec-b35b-4a639f4db7bd"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_TCTR" Protection = "External" Type = "String" Uuid = "63451177-82be-4556-89bf-26a97df0d26f"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_TP" Protection = "External" Type = "Double" Uuid = "a33f832d-9951-4d10-b18a-e65f55e2fd69"/>
+    <Simple MultiValuated = "No" Name = "V_TPI" Protection = "External" Type = "Double" Uuid = "ea7659f3-87ae-4c41-b965-d79db4fe0cfc"/>
+    <Simple MultiValuated = "No" Name = "V_TPIN" Protection = "External" Type = "Double" Uuid = "0a70e1ed-e424-4013-8907-dc318daa2119"/>
+    <Simple MultiValuated = "No" Name = "V_TPIX" Protection = "External" Type = "Double" Uuid = "37157d3a-b3d1-4998-a612-59390e1f8aa0"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_THFT" Protection = "External" Type = "String" Uuid = "74c56208-0de7-4e38-aa5b-dc0facdb013c"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_PRFRAD" Protection = "External" Type = "Double" Uuid = "2cfbd565-4703-488b-a2ab-e398c4271fda"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_LIG" Protection = "External" Type = "Double" Uuid = "aa26d402-efab-483d-8ac6-5874773bbf22"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_CEMR" Protection = "External" Type = "Double" Uuid = "4c7bb1d2-b80d-48b4-a3f2-6179f5373b97"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_BW" Protection = "External" Type = "Double" Uuid = "21750b37-517e-4368-af4e-d2f8a38d91f1"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "No" Name = "V_GAN" Protection = "External" Type = "Double" Uuid = "78a3bfbb-d5ab-42ea-b097-35ac34aa0770"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_RER" Protection = "External" Type = "Double" Uuid = "339e2d0b-6b72-485a-977f-7faa1659a505"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_REL" Protection = "External" Type = "Double" Uuid = "5e2cf9b8-43bf-4647-bad1-0da2b2a7177c"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_RETR" Protection = "External" Type = "Double" Uuid = "a82d7775-cdec-4987-8209-3aee1346d050"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_RETL" Protection = "External" Type = "Double" Uuid = "0894c124-55de-42b4-ae25-2f8557e334f2"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_CW" Protection = "External" Type = "Double" Uuid = "b55c6ff9-3923-4945-aaa9-0fc250775b49"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_CF" Protection = "External" Type = "Double" Uuid = "8b876dc4-c62d-45b6-925e-63b7c367cb4d"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_CDX" Protection = "External" Type = "Double" Uuid = "36a76631-8ad0-4131-bcac-f7b9fe444658"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "No" Name = "V_PNA" Protection = "External" Type = "Double" Uuid = "53ab488f-c2ae-4e5c-8d5a-f2af7492cb36"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_PDX" Protection = "External" Type = "Double" Uuid = "d57d3e5b-0f05-470a-bc22-2dea23962920"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_PDY" Protection = "External" Type = "Double" Uuid = "edb662ef-194c-4957-8734-e55eac9494ab"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "No" Name = "V_PAL" Protection = "External" Type = "Double" Uuid = "2ad85d8b-59c8-4f50-ab56-a440e616200f"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "No" Name = "V_PAR" Protection = "External" Type = "Double" Uuid = "5b060bd7-15b7-4e58-a6ac-8fb5c41451c2"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_PDPT" Protection = "External" Type = "Double" Uuid = "5709fd4b-d156-491a-b039-1efbdb7c0323"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "No" Name = "V_KCH" Protection = "External" Type = "Double" Uuid = "e544bbfc-df58-4b21-a668-ea2268c931aa"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "No" Name = "V_KCHL" Protection = "External" Type = "Double" Uuid = "109cbb51-808a-4c76-9678-1ff5a0e9baf4"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "No" Name = "V_KCHR" Protection = "External" Type = "Double" Uuid = "b85af0c8-021f-45ab-9197-32199ab5a8be"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_BCH" Protection = "External" Type = "Double" Uuid = "104e3eda-58f5-4a6f-9da0-aa930dd793b3"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_CHW" Protection = "External" Type = "Double" Uuid = "afa6188f-2d61-470f-8252-a8825ca0dc60"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_CHWL" Protection = "External" Type = "Double" Uuid = "38f8a3b8-4497-4ce6-812f-67908b867d9a"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_CHWR" Protection = "External" Type = "Double" Uuid = "bf508ff8-c3ae-49bb-893a-fae0b2d2510e"/>
+    <Simple MultiValuated = "No" Name = "V_CNID" Protection = "External" Type = "Integer" Uuid = "0893f75b-b4bd-4d28-ba2a-99e5b1cbcd87"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_LF" Protection = "External" Type = "Double" Uuid = "35ca3cfa-4c72-43ce-9a29-75549610114b"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_LPR" Protection = "External" Type = "Double" Uuid = "33eaa53e-d3a3-4190-90a1-c87592f338a8"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_LTA" Protection = "External" Type = "Double" Uuid = "70b730f9-9fa1-459a-861d-2470aecfdd9e"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_WTA" Protection = "External" Type = "Double" Uuid = "674fa7cb-31e8-4ed8-b03c-6defebeb23d2"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_WF" Protection = "External" Type = "Double" Uuid = "fa1f243a-53cf-46a4-8d1b-4d437327be0d"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_DCINS" Protection = "External" Type = "Double" Uuid = "882aa0a8-bd9e-4b96-bf8a-b8572aefadae"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_THID" Protection = "External" Type = "String" Uuid = "df6737f1-0ddc-4154-9c88-c8351ddd0979"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_THOD" Protection = "External" Type = "String" Uuid = "638afdc0-813b-473a-b19a-37aba151d0f8"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_TTP" Protection = "External" Type = "String" Uuid = "9a58ad86-c6da-4d3d-98a2-76420093028c"/>
+  </Extension>
+  <!--*****************************************-->
+  <!--* ResourceNCDrillingInsertISO *-->
+  <!--*****************************************-->
+  <Extension CustomerExposition = "Programmer" Discipline = "Yes" Name = "ResourceNCDrillingInsertISO" Specializable = "Yes" SuperName = "ResourceNCInsertISO" Uuid = "d13a3233-099c-49cc-8d77-dc695b9320bb">
+    <Property Name = "KweNew_InstanciationMethod" Value = "DELMfgKweInstanciation"/>
+    <Property Name = "TypeForDisciplineValuation" Value = "ToolDevice"/>
+    <Property Name = "GroupingType" Value = "ToolDevice"/>
+    <Property Name = "IconName" Value = "I_DELMachiningDrillingInsertISO"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "No" Name = "V_SIG" Protection = "External" Type = "Double" Uuid = "94aa0473-63d2-49b0-b285-9fc30f15719e"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_PL" Protection = "External" Type = "Double" Uuid = "f65a77af-fa3e-437f-bd9b-832bdb3c7dcf"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_BW" Protection = "External" Type = "Double" Uuid = "89b19b18-43eb-4cc8-a0ae-2d95cfc3f89f"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_DCINS" Protection = "External" Type = "Double" Uuid = "020de814-f738-4b75-b848-cee78393b642"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_DC" Protection = "External" Type = "Double" Uuid = "5b8984cf-918e-4f28-af27-48d54b11b3af"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_LF" Protection = "External" Type = "Double" Uuid = "d9c894fa-48d3-49a6-81bc-ff46cc81e636"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_LPR" Protection = "External" Type = "Double" Uuid = "8c42859e-d91b-45c4-8f65-735af6eb1c2b"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_LTA" Protection = "External" Type = "Double" Uuid = "ff3e8db7-f2ab-41c4-ba64-7eb823b1d7e8"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_MW" Protection = "External" Type = "Double" Uuid = "e0f010c2-41e1-4a0c-9ce8-814fe3f5ece4"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_LRGRD" Protection = "External" Type = "Double" Uuid = "daebee48-0436-4737-a17c-80aba89866d2"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "No" Name = "V_CEA" Protection = "External" Type = "Double" Uuid = "0d306bf6-6e3e-49d4-b6ae-5083dfce0018"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_CNSC" Protection = "External" Type = "String" Uuid = "bee749ca-daf2-4764-aabc-f38df962925b"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_CXSC" Protection = "External" Type = "String" Uuid = "dd4261d2-758e-4549-8662-8d81c59b205b"/>
+    <Simple MultiValuated = "No" Name = "V_CSP" Protection = "External" Type = "Integer" Uuid = "85a204ab-5eab-4208-93ac-b1cc95decf27"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_TCDH" Protection = "External" Type = "String" Uuid = "c5b74af9-3bab-4d26-aacd-f91312d074f1"/>
+  </Extension>
+  <!--*****************************************-->
+  <!--* ResourceNCAdaptorISO *-->
+  <!--*****************************************-->
+  <Extension Abstract = "Yes" CustomerExposition = "Programmer" Discipline = "Yes" Name = "ResourceNCAdaptorISO" Specializable = "Yes" SuperName = "ToolDevice" Uuid = "9865d97d-dd28-44cd-baff-d144e77913e0">
+    <Property Name = "KweNew_InstanciationMethod" Value = "DELMfgKweInstanciation"/>
+    <Simple MaxLength = "128" MultiValuated = "No" Name = "V_Comment" Protection = "External" Type = "String" Uuid = "4edf0a5b-cc9c-4084-bcd3-2ba2ad299b66"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_Usage_Type" Protection = "External" Type = "String" Uuid = "0e0c86fb-ecb4-4744-905a-6dfd26c500a7"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_OAL" Protection = "External" Type = "Double" Uuid = "1b51c64c-0fa7-4515-831c-0b71870f354e"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_LF" Protection = "External" Type = "Double" Uuid = "278515b9-7c2b-4311-bca0-3984c02e6dbf"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_LTA" Protection = "External" Type = "Double" Uuid = "e5582756-5968-4646-9e8a-16826ff8bf13"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_LPR" Protection = "External" Type = "Double" Uuid = "768791ac-4466-4e6c-aa2b-a7aaa19a23ca"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_RADH" Protection = "External" Type = "Double" Uuid = "81ce9497-7ea6-4c45-8397-d9dfc7fdc425"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "Yes" Name = "V_BD" Protection = "External" Type = "Double" Uuid = "5665e282-2bfe-44f3-ab5c-af0f379ffaf8"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "Yes" Name = "V_BTED" Protection = "External" Type = "Double" Uuid = "73d7f71e-ab4b-42b1-838f-d0ce6f69dc9c"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_DCONMS" Protection = "External" Type = "Double" Uuid = "d7049dd8-6ef5-4dbb-b644-5b2346b604f2"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_DCONWS" Protection = "External" Type = "Double" Uuid = "b5cc3de2-8bcd-4be3-8c5a-8fc55044020c"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_DCONXWS" Protection = "External" Type = "Double" Uuid = "29ec6db7-868f-44dd-9748-f043ce78a5a4"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_DCONNWS" Protection = "External" Type = "Double" Uuid = "16fd0db6-7991-429c-9ee0-9c0e676dda08"/>
+    <Simple MaxLength = "72" MultiValuated = "Yes" Name = "V_CCMS" Protection = "External" Type = "String" Uuid = "5fb3adde-0284-499f-a711-a7e06bb6de50"/>
+    <Simple MaxLength = "72" MultiValuated = "Yes" Name = "V_CCTMS" Protection = "External" Type = "String" Uuid = "dec33747-22ff-4290-bd27-925038c5e8a9"/>
+    <Simple MaxLength = "72" MultiValuated = "Yes" Name = "V_CCWS" Protection = "External" Type = "String" Uuid = "f7a38839-18e1-4fd3-a7ee-5b9962d2cd68"/>
+    <Simple MaxLength = "72" MultiValuated = "Yes" Name = "V_CCTWS" Protection = "External" Type = "String" Uuid = "466c1c22-6628-4eb1-8f6b-2c5a7ba53a94"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_LSCMS" Protection = "External" Type = "Double" Uuid = "de52a376-017a-48e4-a84d-41a5a55fd354"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_LSCWS" Protection = "External" Type = "Double" Uuid = "0e49dddc-a425-4e01-9fb8-d344982a0152"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_DF" Protection = "External" Type = "Double" Uuid = "93fda7a1-67e5-4b49-a281-32088cfdbd35"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_HF" Protection = "External" Type = "Double" Uuid = "4660deec-c809-4ea6-88ae-b589d9db1118"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "Yes" Name = "V_BHTA" Protection = "External" Type = "Double" Uuid = "bb846d42-5a31-4d7a-91fe-9732032cc3a4"/>
+    <Simple MultiValuated = "No" Name = "V_BSC" Protection = "External" Type = "Integer" Uuid = "f8b7a52a-3ca3-4abd-8810-93048fbdc391"/>
+    <Simple Magnitude = "MASS" MultiValuated = "No" Name = "V_WT" Protection = "External" Type = "Double" Uuid = "d78ecf46-199f-4e1d-9d36-c347291c8753"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_BMC" Protection = "External" Type = "String" Uuid = "b1d88e2f-e02b-4c4f-afc7-54dec75a9827"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_TSYC" Protection = "External" Type = "String" Uuid = "515d9723-e34d-486c-b983-b1cae6e1eb3a"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_ISYC" Protection = "External" Type = "String" Uuid = "c4fee982-75ad-4f0f-832a-e8734b026571"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_CNSC" Protection = "External" Type = "String" Uuid = "58a1e123-9056-46f7-8cb4-dbcd3e65e104"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_CXSC" Protection = "External" Type = "String" Uuid = "4003a1ab-e3ea-4745-8186-b0309408eac9"/>
+    <Simple MultiValuated = "No" Name = "V_CSP" Protection = "External" Type = "Integer" Uuid = "2f80966c-4164-4eb8-8895-3136e0afc7f3"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_THID" Protection = "External" Type = "String" Uuid = "b198d0b8-1bac-449a-8bd6-0d8c7ad3133d"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_THOD" Protection = "External" Type = "String" Uuid = "da4dc3b7-d8c7-4d3d-b3ec-6d0b30a857c0"/>
+    <Simple Magnitude = "ANGULARSPINDLESPEED" MultiValuated = "No" Name = "V_RPMX" Protection = "External" Type = "Double" Uuid = "8eb56e4b-f968-43f0-ab6d-199c98f7dfa4"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_Holder_Min_Gage" Protection = "External" Type = "Double" Uuid = "78560fcb-5d92-49de-869f-d743c899ffe6"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_Holder_Max_Gage" Protection = "External" Type = "Double" Uuid = "4c7bd6e7-39ef-48c4-9d0a-a3aab0e7d9ac"/>
+  </Extension>
+  <!--*****************************************-->
+  <!--* ResourceNCColletISO *-->
+  <!--*****************************************-->
+  <Extension CustomerExposition = "Programmer" Discipline = "Yes" Name = "ResourceNCColletISO" Specializable = "Yes" SuperName = "ResourceNCAdaptorISO" Uuid = "985ad943-9d54-4755-a28e-20d9311434bb">
+    <Property Name = "KweNew_InstanciationMethod" Value = "DELMfgKweInstanciation"/>
+    <Property Name = "TypeForDisciplineValuation" Value = "ToolDevice"/>
+    <Property Name = "GroupingType" Value = "ToolDevice"/>
+    <Property Name = "IconName" Value = "I_DELMachiningColletISO"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_DFC" Protection = "External" Type = "Double" Uuid = "fdae6066-0f05-4fc2-adb5-cb81703e2200"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "Yes" Name = "V_TA" Protection = "External" Type = "Double" Uuid = "2c40e939-65ef-4042-8c54-c562c8c5564e"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "Yes" Name = "V_TAD" Protection = "External" Type = "Double" Uuid = "6cef135a-65b7-4a92-896d-411636dfdb54"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "Yes" Name = "V_TPL" Protection = "External" Type = "Double" Uuid = "bb69bf28-6f76-47a1-becc-f152267250e6"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_LCOL" Protection = "External" Type = "Double" Uuid = "265ba85d-c551-4d58-b5aa-c1cecfabdc75"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_DCLC" Protection = "External" Type = "Double" Uuid = "8502016b-a9ac-47b6-ba1a-78e0e7b04ab2"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_DCOB" Protection = "External" Type = "Double" Uuid = "a728be72-fb9f-40c9-8573-a60a082168ee"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_LCLC" Protection = "External" Type = "Double" Uuid = "d642bc5b-c911-4286-aa51-14263390896c"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_LCOB" Protection = "External" Type = "Double" Uuid = "447e5aa1-a412-489d-9576-af1079c93987"/>
+    <Simple MultiValuated = "No" Name = "V_COLST" Protection = "External" Type = "Integer" Uuid = "090db6fe-bc86-4cd7-a75e-1580790659fb"/>
+  </Extension>
+  <!--*****************************************-->
+  <!--* ResourceNCConverterISO *-->
+  <!--*****************************************-->
+  <Extension CustomerExposition = "Programmer" Discipline = "Yes" Name = "ResourceNCConverterISO" Specializable = "Yes" SuperName = "ResourceNCAdaptorISO" Uuid = "fc3c83cc-f39b-4506-861d-f6b52b6e9d7c">
+    <Property Name = "KweNew_InstanciationMethod" Value = "DELMfgKweInstanciation"/>
+    <Property Name = "TypeForDisciplineValuation" Value = "ToolDevice"/>
+    <Property Name = "GroupingType" Value = "ToolDevice"/>
+    <Property Name = "IconName" Value = "I_DELMachiningConverterISO"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "Yes" Name = "V_LB" Protection = "External" Type = "Double" Uuid = "be278841-832b-46f2-b765-9c1bb69fe7f3"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_LBX" Protection = "External" Type = "Double" Uuid = "277656c4-d027-4dd4-8a5b-218654985e1b"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_BDX" Protection = "External" Type = "Double" Uuid = "e590090c-f043-47f8-87f3-809704946458"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_RADW" Protection = "External" Type = "Double" Uuid = "1d7c8508-4564-44c3-a73c-b4df1f3e6f6c"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_OAH" Protection = "External" Type = "Double" Uuid = "c3221c58-40a4-4583-b65f-a169616bfb52"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_OAW" Protection = "External" Type = "Double" Uuid = "e93ebab0-3769-4c7b-be2e-cf08953a2799"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_WF" Protection = "External" Type = "Double" Uuid = "44053e89-2ba4-4a7b-925c-2d4846a956d7"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_WTA" Protection = "External" Type = "Double" Uuid = "1f5c6ff3-0c2a-4249-a559-4da9f3079410"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_HTA" Protection = "External" Type = "Double" Uuid = "c67b9301-e646-41d4-a8fc-fb4ddc590d9a"/>
+  </Extension>
+  <!--*****************************************-->
+  <!--* ResourceNCToolAssemblyISO *-->
+  <!--*****************************************-->
+  <Extension Abstract = "Yes" CustomerExposition = "Programmer" Discipline = "Yes" Name = "ResourceNCToolAssemblyISO" Specializable = "Yes" SuperName = "ToolDevice" Uuid = "472d551d-3e08-4403-b18e-805abdec0240">
+    <Property Name = "KweNew_InstanciationMethod" Value = "DELMfgKweInstanciation"/>
+    <Simple MaxLength = "128" MultiValuated = "No" Name = "V_Comment" Protection = "External" Type = "String" Uuid = "922e722e-e3cc-4448-9901-dd2adafab48c"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_Usage_Type" Protection = "External" Type = "String" Uuid = "65662d0d-94fb-4e69-a29f-494868c03b40"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "Yes" Name = "V_Gages" Protection = "External" Type = "Double" Uuid = "9c3a93ec-2323-4b47-bf63-ea6568dcb03a"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_Tool_Gage" Protection = "External" Type = "Double" Uuid = "bbaa2878-d6f1-4cf6-a3d6-234c3821aabd"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_Composition" Protection = "External" Type = "String" Uuid = "ba1bf81f-5380-4491-9443-2790b7d98130"/>
+    <Simple MultiValuated = "No" Name = "V_ToolNumber" Protection = "External" Type = "Integer" Uuid = "d4df6402-885e-4c41-bff3-1816f8084887"/>
+    <Simple MultiValuated = "No" Name = "V_Power" Protection = "External" Type = "Integer" Uuid = "a5f56588-7b81-469a-bcdf-1cdeea02859d"/>
+    <Simple MaxLength = "72" MultiValuated = "Yes" Name = "V_Tool_Type" Protection = "External" Type = "String" Uuid = "72df4af5-a62b-4b84-a73c-0e54dbfbd0c8"/>
+    <Simple MaxLength = "72" MultiValuated = "Yes" Name = "V_Insert_Type" Protection = "External" Type = "String" Uuid = "192a66b0-76a0-4c9e-83a3-ae7f1d2cf2d6"/>
+    <Simple MaxLength = "72" MultiValuated = "Yes" Name = "V_FeedAndSpeed_Config" Protection = "External" Type = "String" Uuid = "27e067d5-f0a3-4a6b-bca1-c700f13ec003"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_Corner_Style" Protection = "External" Type = "String" Uuid = "1397e019-6bed-47f9-9629-f4de4ee9066e"/>
+    <Simple MultiValuated = "No" Name = "V_ADJBY" Protection = "External" Type = "Integer" Uuid = "23451937-5aec-48a1-b618-8460e98300d3"/>
+    <Simple MaxLength = "72" MultiValuated = "Yes" Name = "V_IIC" Protection = "External" Type = "String" Uuid = "4f28e760-bd96-4621-a3aa-f66c99070758"/>
+    <Simple MaxLength = "72" MultiValuated = "Yes" Name = "V_CCMS" Protection = "External" Type = "String" Uuid = "2cc8d8e7-cddc-43ba-bfe4-1a5507702f3a"/>
+    <Simple MaxLength = "72" MultiValuated = "Yes" Name = "V_CCTMS" Protection = "External" Type = "String" Uuid = "3b5af204-c3dc-44f7-b14b-9317e7629a73"/>
+    <Simple MaxLength = "72" MultiValuated = "Yes" Name = "V_CCWS" Protection = "External" Type = "String" Uuid = "02f26db7-051f-4ffe-9dc7-b23085159009"/>
+    <Simple MaxLength = "72" MultiValuated = "Yes" Name = "V_CCTWS" Protection = "External" Type = "String" Uuid = "be062dad-18b1-4fc0-aa27-25a344f1ceeb"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_LSCMS" Protection = "External" Type = "Double" Uuid = "46ba7c28-11b0-4087-b863-bca7a61e494d"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_LSCWS" Protection = "External" Type = "Double" Uuid = "b0775af0-27a2-43f1-9467-39a3e2f8c2ff"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_CNSC" Protection = "External" Type = "String" Uuid = "02ac4ae4-f7b6-4137-849a-bfc76284e597"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_CXSC" Protection = "External" Type = "String" Uuid = "b79c25a1-eb63-4f27-ae0d-e3eac8ae234a"/>
+    <Simple MultiValuated = "No" Name = "V_CSP" Protection = "External" Type = "Integer" Uuid = "d8a3c0b8-4eaa-4640-bfee-2a7e668a4580"/>
+    <Simple MaxLength = "72" MultiValuated = "No" Name = "V_HAND" Protection = "External" Type = "String" Uuid = "9a9d94e0-d067-4539-a874-5c7a8f022fc0"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_LPR" Protection = "External" Type = "Double" Uuid = "20636303-24c7-457d-887f-f32c91ca5e40"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_LU" Protection = "External" Type = "Double" Uuid = "e3696455-a314-47e5-b360-c3232232f15e"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_LUX" Protection = "External" Type = "Double" Uuid = "b6e98998-3805-4315-81e9-253190b8cf51"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_LF" Protection = "External" Type = "Double" Uuid = "e95876c5-a834-4cde-b821-9031e3918c29"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_WF" Protection = "External" Type = "Double" Uuid = "6a9beca7-0538-4b41-8a4e-e4b7e79520da"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_HF" Protection = "External" Type = "Double" Uuid = "77fe163a-00d0-4fd4-892c-6d176e3e0e8f"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_HTA" Protection = "External" Type = "Double" Uuid = "cd79a4e9-e4b2-4c40-8537-8250dfc73dd1"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_LTA" Protection = "External" Type = "Double" Uuid = "bda5ae22-c70c-4a01-a417-7a1667d66829"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_OAH" Protection = "External" Type = "Double" Uuid = "67ea4c49-60fb-4479-a482-2a0edbfc8732"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_OAL" Protection = "External" Type = "Double" Uuid = "705ac5ae-5b14-44c2-8948-c363cd8a82ed"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_OAW" Protection = "External" Type = "Double" Uuid = "60b1a07b-c85e-44c5-9b85-3d25fa0306ec"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_WTA" Protection = "External" Type = "Double" Uuid = "115f864a-124e-459b-ae06-a81b2a89d96e"/>
+    <Simple Magnitude = "MASS" MultiValuated = "No" Name = "V_WT" Protection = "External" Type = "Double" Uuid = "3cf4251d-b24a-4d9f-89a1-d62f5ce682e0"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_DCX" Protection = "External" Type = "Double" Uuid = "26f11ec6-a8db-4ea8-98c8-04c08b4909b7"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_DCN" Protection = "External" Type = "Double" Uuid = "d8bd140b-40d9-4855-bbd5-901b2325dcaf"/>
+    <Simple Magnitude = "ANGULARSPINDLESPEED" MultiValuated = "No" Name = "V_RPMX" Protection = "External" Type = "Double" Uuid = "0896bc12-9d9d-43b5-b0de-1736bc5abb06"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "No" Name = "V_KCH" Protection = "External" Type = "Double" Uuid = "b837be0b-c203-4587-9fb7-dba8d2671761"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "No" Name = "V_KCHL" Protection = "External" Type = "Double" Uuid = "2d815b5a-b662-4784-9614-4238c93039ba"/>
+    <Simple Magnitude = "ANGLE" MultiValuated = "No" Name = "V_KCHR" Protection = "External" Type = "Double" Uuid = "239abc35-8cf9-470d-a18f-453f8f7da342"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_CHW" Protection = "External" Type = "Double" Uuid = "d2dc8c56-5db6-4516-9dde-a6ac9a9b8c6a"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_CHWL" Protection = "External" Type = "Double" Uuid = "f42094ba-4bcc-4980-b63a-811e3b1497fe"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_CHWR" Protection = "External" Type = "Double" Uuid = "73d42924-f200-4cf1-8ce2-f39a37254aab"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_RE" Protection = "External" Type = "Double" Uuid = "a3843363-c7bc-4e18-8401-d4e980d51c4b"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_REL" Protection = "External" Type = "Double" Uuid = "0a1f2f5c-0923-438c-8f22-572091b15bf4"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_RER" Protection = "External" Type = "Double" Uuid = "c33330fa-5347-4f96-b567-a833446a210b"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_DC" Protection = "External" Type = "Double" Uuid = "69b1d00e-1df9-487d-8473-a7055f7fbea5"/>
+    <Simple Magnitude = "LENGTH" MultiValuated = "No" Name = "V_CW" Protection = "External" Type = "Double" Uuid = "dffb6887-565e-4b10-9b12-fc2231da3e3f"/>
+  </Extension>
+  <!--*****************************************-->
+  <!--* ResourceNCMillAndDrillAssemblyISO *-->
+  <!--*****************************************-->
+  <Extension CustomerExposition = "Programmer" Discipline = "Yes" Name = "ResourceNCMillAndDrillAssemblyISO" Specializable = "Yes" SuperName = "ResourceNCToolAssemblyISO" Uuid = "2905e772-483f-438e-870c-555e7c64118e">
+    <Property Name = "KweNew_InstanciationMethod" Value = "DELMfgKweInstanciation"/>
+    <Property Name = "TypeForDisciplineValuation" Value = "ToolDevice"/>
+    <Property Name = "GroupingType" Value = "ToolDevice"/>
+    <Property Name = "IconName" Value = "I_DELMachiningMillAndDrillAssemblyISO"/>
+  </Extension>
+  <!--*****************************************-->
+  <!--* ResourceNCTurningToolAssemblyISO *-->
+  <!--*****************************************-->
+  <Extension CustomerExposition = "Programmer" Discipline = "Yes" Name = "ResourceNCTurningToolAssemblyISO" Specializable = "Yes" SuperName = "ResourceNCToolAssemblyISO" Uuid = "a731facb-a445-4acc-ba67-37bce4607300">
+    <Property Name = "KweNew_InstanciationMethod" Value = "DELMfgKweInstanciation"/>
+    <Property Name = "TypeForDisciplineValuation" Value = "ToolDevice"/>
+    <Property Name = "GroupingType" Value = "ToolDevice"/>
+    <Property Name = "IconName" Value = "I_DELMachiningTurningToolAssemblyISO"/>
+  </Extension>
+  <!--*****************************************-->
+  <!--* ResourceNCBoringAssemblyISO *-->
+  <!--*****************************************-->
+  <Extension CustomerExposition = "Programmer" Discipline = "Yes" Name = "ResourceNCBoringAssemblyISO" Specializable = "Yes" SuperName = "ResourceNCToolAssemblyISO" Uuid = "01974f2d-0435-437f-8753-bc47ebc69128">
+    <Property Name = "KweNew_InstanciationMethod" Value = "DELMfgKweInstanciation"/>
+    <Property Name = "TypeForDisciplineValuation" Value = "ToolDevice"/>
+    <Property Name = "GroupingType" Value = "ToolDevice"/>
+    <Property Name = "IconName" Value = "I_DELMachiningBoringAssemblyISO"/>
+  </Extension>
+</Package>

@@ -1,0 +1,2485 @@
+/*
+**  emxAEFCollectionBase
+**
+**  Copyright (c) 1992-2020 Dassault Systemes.
+**  All Rights Reserved.
+**  This program contains proprietary and trade secret information of MatrixOne,
+**  Inc.  Copyright notice is precautionary only
+**  and does not evidence any actual or intended publication of such program
+**
+**   This JPO contains the implementation of emxAEFCollectionBase
+*/
+/*
+insert program C:/workspace_test/3dspace_FD02/jpo/decInterfaceDV_mxJPO.java;
+compile prog decInterfaceDV force update;
+execute program decInterfaceDV -method getDeliverableStatus;	
+execute program decInterfaceDV -method getVendorPrint;
+mql -c "set cont user creator;execute program decInterfaceDV -method getDeliverableStatus;"
+ */
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Hashtable;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.apache.ibatis.session.SqlSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.daewooenc.mybatis.main.decSQLSessionFactory;
+import com.dassault_systemes.delmia.tools.DELLifeCycleCouplingCommonConstants;
+import com.dec.util.DecConstants;
+import com.dec.util.DecDateUtil;
+import com.dec.util.DecStringUtil;
+import com.matrixone.apps.common.CommonDocument;
+import com.matrixone.apps.domain.DomainConstants;
+import com.matrixone.apps.domain.DomainObject;
+import com.matrixone.apps.domain.DomainRelationship;
+import com.matrixone.apps.domain.util.ContextUtil;
+import com.matrixone.apps.domain.util.EnoviaResourceBundle;
+import com.matrixone.apps.domain.util.FrameworkException;
+import com.matrixone.apps.domain.util.MapList;
+import com.matrixone.apps.domain.util.MqlUtil;
+import com.matrixone.apps.domain.util.XSSUtil;
+
+import kr.co.rosis.ecm.service.client.EcmClient;
+import matrix.db.Context;
+import matrix.db.JPO;
+import matrix.util.StringList;
+/**
+ * The <code>emxAEFCollectionBase</code> class contains methods for the
+ * "Collection" Common Component.
+ *
+ * @version AEF 10.0.Patch1.0 - Copyright (c) 2003, MatrixOne, Inc.
+ */
+
+public class decProjectChangeHistory_mxJPO {
+	
+	private static final String EMX_COMPONENTS_STRING_RESOURCE = "emxComponentsStringResource";
+	private static final Logger logger = LoggerFactory.getLogger(decProjectChangeHistory_mxJPO.class);
+	
+	public void getDeliverableStatus(Context context, String[] args) throws Exception {
+				
+		String sType	              = "";
+	    String sName                  = "";
+		String sPolicy 	              = "";
+		String sRevision		      = "";
+		String sSiteCd        		  = "";
+		String sCwpno       		  = "";
+		String sDescription           = "";
+		String sDecDiscipline         = "";
+		String sDecUnitNm             = "";
+		String sDecDwgAreaNm          = "";
+		String sDecDocType            = "";
+		String sDecSubDocNo           = "";
+		String sDecAddDocNo           = "";
+		String sDecTagNumber          = "";
+		String sDecCWPNo              = "";
+		String sDecEWPNo              = "";
+		String sDecASB_YN             = "";
+		String sDecDocStage           = "";
+		String sDecReviseDate         = "";
+		String sDecWorkFlow           = "";
+		String sDecPlanDate           = "";
+		String sDecForecastDate       = "";
+		String sDecActualDate         = "";
+		String sDecNextAction         = "";
+		String sDecNextActionPlanDate = "";
+		String sDecIFCPlanDate        = "";
+		String sDecIFCForecastDate    = "";
+		String sDecIFCActualDate      = "";
+		String sDecFileRef_ID         = "";
+		String sDecFile_ID            = "";
+		String sDecFile_Name          = "";
+		String sDecTurnover_YN 		  = "";
+		String sDecIWPNumber 		  = "";
+		String id_decCWPTask		  = "";
+		String sSeq      			  = "";
+		StringList strErrorMessage = new StringList();
+		
+		LocalDate now = LocalDate.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+		String formatedNow = now.format(formatter);
+		
+		System.out.println("time :"+formatedNow);
+		String projectType = "Project Space";
+		StringList busSelects = new StringList();
+		busSelects.add(DomainConstants.SELECT_ID);
+		busSelects.add(DomainConstants.SELECT_NAME);
+		
+		String busId = "";
+		Map returnObjectIdMap = new HashMap();
+		List<Map> documentList = new MapList();
+		List<Map> errorList = new MapList();
+		
+		try {
+			try ( SqlSession sqlSession = decSQLSessionFactory.getBatchSession() ){
+					Map selectParamMap = new HashMap();
+					selectParamMap.put("limit","100");
+					List<Map> resultList = sqlSession.selectList("Interface.selectDeliverableFile", selectParamMap);
+					System.out.println("resultList:"+resultList);
+					documentList =  resultList;
+					
+					// DELIVERABLE IF_FLAG UPDATE //
+					for(int i=0; i<resultList.size(); i++){					
+						HashMap<?, ?> deliverableMap = (HashMap<?, ?>) resultList.get(i);
+						String cSitecd = (String) deliverableMap.get("SITE_CD");
+						String cDocno = (String) deliverableMap.get("DOC_NO");
+						String cRevision = (String) deliverableMap.get("REVISION");
+						String cSeq = String.valueOf(deliverableMap.get("IF_SEQ"));
+						
+						Map KeyMap = new HashMap();
+						KeyMap.put("siteCd", cSitecd);
+						KeyMap.put("docNo", cDocno);
+						KeyMap.put("revision", cRevision);
+						KeyMap.put("ifSeq", cSeq);
+	
+						sqlSession.update("Interface.updateDeliverableIfFlag", KeyMap);
+					}
+					sqlSession.commit();
+			}catch(Exception e) {
+						e.printStackTrace();
+						throw e;
+			} finally {
+			}
+				int checkNewOrUpdate = 0;
+				Map errorMap = new HashMap();
+				// DELIVERABLE BUSINESS OBJECT //
+				for(int i=0; i<documentList.size(); i++){
+					System.out.println("DELIVERABLE Business Object Create Start");
+					HashMap<?, ?> deliverableMap = (HashMap<?, ?>) documentList.get(i);
+					DomainObject doNew = new DomainObject();
+					//Map errorMap = new HashMap();
+					try {
+												
+						ContextUtil.startTransaction(context, true);
+						sType				    = 	"decDeliverableDoc";
+						sPolicy 			    =	"decIFDocument";
+						sName 					= 	(String) deliverableMap.get("DOC_NO");
+						sRevision 				=   (String) deliverableMap.get("REVISION");
+						sDescription            =   (String) deliverableMap.get("DOC_TITLE"); 
+						sDecDiscipline          =   (String) deliverableMap.get("DCPLN_NM"); 
+						sDecUnitNm      	    =   (String) deliverableMap.get("UNIT_NM"); 
+						sDecDwgAreaNm           =   (String) deliverableMap.get("DWG_AREA_NM"); 
+						sDecDocType             =   (String) deliverableMap.get("DOC_TYPE_NM"); 
+						sDecSubDocNo            =   (String) deliverableMap.get("SUB_DOCNO"); 
+						sDecAddDocNo            =   (String) deliverableMap.get("ADD_DOCNO"); 
+						sDecTagNumber           =   (String) deliverableMap.get("TITLE_GRP"); 
+						sDecCWPNo               =   (String) deliverableMap.get("CWP_NO"); 
+						sDecEWPNo               =   (String) deliverableMap.get("EWP_NO"); 
+						sDecASB_YN              =   (String) deliverableMap.get("ASB_YN"); 
+						sDecDocStage            =   (String) deliverableMap.get("STAGE"); 
+						sDecReviseDate          =   (String) deliverableMap.get("REVISN_REG_YMD"); 
+						sDecWorkFlow            =   (String) deliverableMap.get("WORKFLOW"); 
+						sDecPlanDate            =   (String) deliverableMap.get("PLAN"); 
+						sDecForecastDate        =   (String) deliverableMap.get("FORECAST"); 
+						sDecActualDate          =   (String) deliverableMap.get("ACTUAL"); 
+						sDecNextAction          =   (String) deliverableMap.get("NEXT_ACTION"); 
+						sDecNextActionPlanDate  =   (String) deliverableMap.get("NEXT_ACTION_PLAN"); 
+						sDecIFCPlanDate         =   (String) deliverableMap.get("IFC_PLAN"); 
+						sDecIFCForecastDate     =   (String) deliverableMap.get("IFC_FORECAST"); 
+						sDecIFCActualDate       =   (String) deliverableMap.get("IFC_ACTUAL"); 
+						sDecFileRef_ID          =   String.valueOf(deliverableMap.get("FILE_ATCH_ID")); 
+						sDecFile_ID             =   String.valueOf(deliverableMap.get("FILE_ID")); 
+						sDecFile_Name           =   (String) deliverableMap.get("FILE_NM"); 
+						sDecTurnover_YN           =   (String) deliverableMap.get("TURNOVER_YN"); 
+						sDecIWPNumber           =   (String) deliverableMap.get("IWP_NO"); 
+						sSeq            		=   String.valueOf(deliverableMap.get("IF_SEQ")); 
+						sSiteCd            		=   (String) deliverableMap.get("SITE_CD"); 
+						sCwpno            		=   (String) deliverableMap.get("CWP_NO"); 
+						
+						
+						Map KeyMap = new HashMap();
+						KeyMap.put("siteCd", sSiteCd);
+						KeyMap.put("docNo", sName);
+						KeyMap.put("revision", sRevision);
+						KeyMap.put("ifSeq", sSeq);
+						errorMap = KeyMap;
+						
+						if(DecStringUtil.isEmpty(sDecFile_Name)) {
+							String e = "FILE_NM is Null";
+							throw new Exception(e); 
+						}
+						
+						String extractedUnitValue = "";
+						String extractedAreaValue = "";
+						Pattern pattern = Pattern.compile("\\[([^\\]]+)]");
+				        Matcher unitMatcher = pattern.matcher(sDecUnitNm);
+				        Matcher areaMatcher = pattern.matcher(sDecDwgAreaNm);
+				        if (unitMatcher.find()) {
+				        	sDecUnitNm = unitMatcher.group(1);
+				            System.out.println(sDecUnitNm); // 출력: "31A"
+				        }
+				        
+				        if (areaMatcher.find()) {
+				        	sDecDwgAreaNm = areaMatcher.group(1);
+				            System.out.println(sDecDwgAreaNm); // 출력: "31A"
+				        }
+				        
+						if(sDecNextActionPlanDate!=null) {
+							sDecNextActionPlanDate = String.format("%s/%s/%s",
+								sDecNextActionPlanDate.substring(4, 6), sDecNextActionPlanDate.substring(6), sDecNextActionPlanDate.substring(0, 4));
+						}
+						if(sDecReviseDate!=null) {
+							sDecReviseDate = String.format("%s/%s/%s",
+								sDecReviseDate.substring(4, 6), sDecReviseDate.substring(6), sDecReviseDate.substring(0, 4));
+						}
+						if(sDecPlanDate!=null) {
+							sDecPlanDate = String.format("%s/%s/%s",
+								sDecPlanDate.substring(4, 6), sDecPlanDate.substring(6), sDecPlanDate.substring(0, 4));
+						}
+						if(sDecForecastDate!=null) {
+							sDecForecastDate = String.format("%s/%s/%s",
+								sDecForecastDate.substring(4, 6), sDecForecastDate.substring(6), sDecForecastDate.substring(0, 4));
+						}
+						if(sDecActualDate!=null) {
+							sDecActualDate = String.format("%s/%s/%s",
+								sDecActualDate.substring(4, 6), sDecActualDate.substring(6), sDecActualDate.substring(0, 4));
+						}
+						if(sDecIFCPlanDate!=null) {
+							sDecIFCPlanDate = String.format("%s/%s/%s",
+									sDecIFCPlanDate.substring(4, 6), sDecIFCPlanDate.substring(6), sDecIFCPlanDate.substring(0, 4));
+						}
+						if(sDecIFCForecastDate!=null) {
+							sDecIFCForecastDate = String.format("%s/%s/%s",
+									sDecIFCForecastDate.substring(4, 6), sDecIFCForecastDate.substring(6), sDecIFCForecastDate.substring(0, 4));
+						}
+						if(sDecIFCActualDate!=null) {
+							sDecIFCActualDate = String.format("%s/%s/%s",
+									sDecIFCActualDate.substring(4, 6), sDecIFCActualDate.substring(6), sDecIFCActualDate.substring(0, 4));
+						}
+						if(sDecTurnover_YN==null) {
+							sDecTurnover_YN = "N";
+						}
+						
+						String name_project = sSiteCd;
+						String id_project = "";
+						MapList mpProjectList =  DomainObject.findObjects(context, projectType, "*","(type == 'Project Space') && (current != 'Archive') && (current != 'Complete')",
+								busSelects);
+						for(int j = 0 ; j <mpProjectList.size() ;j++) {
+							HashMap<?, ?> project_hashmap = (HashMap<?, ?>) mpProjectList.get(j);
+							String n_Project = (String)project_hashmap.get("name");
+							if(n_Project.equals(name_project)) {
+								id_project = (String) project_hashmap.get("id");
+							}
+						}
+						
+						
+						
+						MapList orgDeliverableDocList = DomainObject.findObjects(context, "decDeliverableDoc", "*", "policy!=Version && name=='"+sName+"'",
+								busSelects);	
+						
+						String domRevision= "";
+						if(orgDeliverableDocList.size()>0) {
+							System.out.println("Already Exist Object >> Revision Check");
+							HashMap<?, ?> hashmap = (HashMap<?, ?>) orgDeliverableDocList.get(0);
+							String org_objectName =(String) hashmap.get("name");
+							String org_objectId =(String)  hashmap.get("id");
+							DomainObject dom = new DomainObject(org_objectId);
+							domRevision= dom.getRevision(context);
+						}
+						if(sRevision.equals(domRevision)) {
+							System.out.println("same TNR >> Update Start");
+							HashMap<?, ?> hashmap = (HashMap<?, ?>) orgDeliverableDocList.get(0);
+							String org_objectName =(String) hashmap.get("name");
+							String org_objectId =(String)  hashmap.get("id");
+							DomainObject dom = new DomainObject(org_objectId);
+							String org_objectUnit = dom.getAttributeValue(context, DecConstants.ATTRIBUTE_DECUNITNMDOC );
+							checkNewOrUpdate = 1;
+							dom.setDescription(context, sDescription);
+						    dom.setAttributeValue(context, "decDiscipline", sDecDiscipline);	
+						    dom.setAttributeValue(context, "decUnitNmDoc", sDecUnitNm);	
+						    dom.setAttributeValue(context, "decDwgAreaNmDoc", sDecDwgAreaNm);	
+						    dom.setAttributeValue(context, "decDocType", sDecDocType);	
+						    dom.setAttributeValue(context, "decSubDocNo", sDecSubDocNo);	
+						    dom.setAttributeValue(context, "decAddDocNo", sDecAddDocNo);	
+						    dom.setAttributeValue(context, "decTagNumber", sDecTagNumber);	
+						    dom.setAttributeValue(context, "decEWPNo", sDecEWPNo);	
+						    dom.setAttributeValue(context, "decASB_YN", sDecASB_YN);	
+						    dom.setAttributeValue(context, "decDocStage", sDecDocStage);	
+						    dom.setAttributeValue(context, "decReviseDate", sDecReviseDate);	
+						    dom.setAttributeValue(context, "decWorkFlow", sDecWorkFlow);	
+						    dom.setAttributeValue(context, "decPlanDate", sDecPlanDate);	
+						    dom.setAttributeValue(context, "decForecastDate", sDecForecastDate);	
+						    dom.setAttributeValue(context, "decActualDate", sDecActualDate);	
+						    dom.setAttributeValue(context, "decNextAction", sDecNextAction);	
+						    dom.setAttributeValue(context, "decNextActionPlanDate", sDecNextActionPlanDate);	
+						    dom.setAttributeValue(context, "decIFCPlanDate", sDecIFCPlanDate);	
+						    dom.setAttributeValue(context, "decIFCForecastDate", sDecIFCForecastDate);	
+						    dom.setAttributeValue(context, "decIFCActualDate", sDecIFCActualDate);	
+						    dom.setAttributeValue(context, "decFileRef_ID", sDecFileRef_ID);	
+						    dom.setAttributeValue(context, "decFile_ID", sDecFile_ID);	
+						    dom.setAttributeValue(context, "decFile_Name", sDecFile_Name);	
+						    dom.setAttributeValue(context, "decLatestIFDate", formatedNow);	
+						    System.out.println("*********unit:"+dom.getAttributeValue(context, DecConstants.ATTRIBUTE_DECUNITNMDOC));
+						    String getUnittt = dom.getAttributeValue(context, DecConstants.ATTRIBUTE_DECUNITNMDOC);
+						    String getAreett = dom.getAttributeValue(context, DecConstants.ATTRIBUTE_DECDWGAREANMDOC);
+						    // UNIT Connect [S]
+						    if(DecStringUtil.isNotEmpty(sDecUnitNm)) {
+						    	System.out.println("unit connect start");
+						    	String mql = MqlUtil.mqlCommand(context, "print bus $1 select $2",org_objectId,"to[Task Deliverable].from");
+							    Boolean unitCheck = DecStringUtil.contains(mql, sDecUnitNm); //입력된 unit과 이미 연결있다.
+
+							    if(!unitCheck) { // 없으면 연결하라. 
+							    	 String phaseQ = MqlUtil.mqlCommand(context,"temp query bus $1 $2 $3 where $4 select $5 dump",
+									    		DecConstants.TYPE_PHASE, sDecUnitNm ,"*","(attribute[decWBSType]=='Unit')&&(attribute[decProjectCode]=='"+sSiteCd+"')","id");
+
+									if(DecStringUtil.isNotEmpty(phaseQ)) {
+										String strSplit[] = phaseQ.split(",");
+										String phaseId = strSplit[3]; 
+										System.out.println(phaseId);
+										DomainObject pDom = new DomainObject(phaseId);
+										String wbsType = pDom.getAttributeValue(context, DecConstants.ATTRIBUTE_DECWBSTYPE);
+										if(DecStringUtil.equals(wbsType, "Unit")) {
+											DomainRelationship.connect(context, new DomainObject(phaseId), "Task Deliverable",
+													new DomainObject(org_objectId));
+										}else {
+											System.out.println("WBS TYPE IS NOT UNIT");
+										}
+									}else {
+										System.out.println("No Exist Same Name Unit");
+									}
+							    }else {
+							    	System.out.println("sDecUnitNm is already connected");
+								    System.out.println("*********unit:"+dom.getAttributeValue(context, DecConstants.ATTRIBUTE_DECUNITNMDOC));
+
+							    }
+						    }
+						    if(DecStringUtil.isEmpty(sDecUnitNm) || !DecStringUtil.equals(sDecUnitNm, org_objectUnit)){
+						    	System.out.println("sDecUnitNm is null OR not Equal");
+							    System.out.println("*********unit:"+dom.getAttributeValue(context, DecConstants.ATTRIBUTE_DECUNITNMDOC));
+
+						    	String orgUnitConnectionId = MqlUtil.mqlCommand(context, "print bus "+org_objectId+" select to[Task Deliverable|from.name=='"+org_objectUnit+"'].id dump");
+						    	if(DecStringUtil.isNotEmpty(orgUnitConnectionId)) {
+						    	DomainRelationship.disconnect(context, orgUnitConnectionId);
+						    	}
+						    }
+						    System.out.println("*********unit:"+dom.getAttributeValue(context, DecConstants.ATTRIBUTE_DECUNITNMDOC));
+
+						    // UNIT Connect [E]
+			    
+						    returnObjectIdMap.put(sDecFile_Name, org_objectId);
+
+							// cwp 변경처리
+						    String org_cwpNo = dom.getAttributeValue(context, "decCWPNo");
+						    StringList selectRelStmts = new StringList();
+							selectRelStmts.add(DomainConstants.SELECT_ID);
+							selectRelStmts.add(DomainConstants.SELECT_NAME);
+							selectRelStmts.add(DomainConstants.SELECT_FROM_ID);
+							selectRelStmts.add(DomainConstants.SELECT_TO_ID);
+							dom.setAttributeValue(context, "decCWPNo", sDecCWPNo);
+							if(DecStringUtil.isEmpty(sDecCWPNo)) {
+								dom.setAttributeValue(context, "decUnitNm", "");
+								dom.setAttributeValue(context, "decDwgAreaNm", "");
+							}
+						    MapList relCWPList = new MapList();
+						    StringList fromIdList = new StringList();
+							   
+							    
+						    relCWPList = dom.getRelatedObjects(context, "Task Deliverable", // relationship pattern
+									"decCWPTask", // object pattern
+									busSelects, // object selects
+									selectRelStmts, // relationship selects
+									true, // to direction
+									false, // from direction
+									(short) 1, // recursion level
+									"", // object where clause
+									null);
+						    String disconnection = "";
+						    HashMap map_ids = new HashMap();
+						    for(int b = 0 ; b < relCWPList.size(); b ++) {
+						    	Hashtable<?, ?> hashtable = (Hashtable<?, ?>) relCWPList.get(b);
+						    	String fromId = (String) hashtable.get("from.id");
+						    	DomainObject dom_fromId = new DomainObject(fromId);
+						    	String domName = dom_fromId.getName(context);
+						    	String toId = (String) hashtable.get("to.id");
+						    	String relId = (String) hashtable.get("id");
+						    	 if(DecStringUtil.isEmpty(sDecCWPNo)){
+						    		 DomainRelationship.disconnect(context, relId);
+						    		 disconnection="Y";
+								    }
+						    	fromIdList.add(fromId);
+						    	map_ids.put(domName, relId);
+						    }
+						    String fromIdString = fromIdList.toString();
+						    String org_cwpName = "";
+						    String org_cwpId = "";
+						    if(!disconnection.equals("Y")) {
+							    if(org_cwpNo.contains(",")) {
+							    	String[] array = org_cwpNo.split(",");
+							    	for(int j = 0; j<array.length; j++) {
+							    		org_cwpName = array[j];
+							    		if(sDecCWPNo==null || !sDecCWPNo.contains(org_cwpName)) {
+							    			String fromId = (String) map_ids.get(org_cwpName);
+							    			DomainRelationship.disconnect(context, fromId);
+							    		};
+							    	}
+							    }
+							    else if(DecStringUtil.isNotEmpty(sDecCWPNo)){
+							    	if(!sDecCWPNo.contains(org_cwpNo)) {
+						    			String fromId = (String) map_ids.get(org_cwpNo);
+						    			DomainRelationship.disconnect(context, fromId);
+						    		};
+							    }
+						    }
+						    StringList cwpIdList = new StringList();
+							  
+						    // cwpno slice
+							if(!DecStringUtil.isEmpty(sDecCWPNo)) {
+							    if(sDecCWPNo.contains(",")) {
+							    	if(!sDecCWPNo.contains(org_cwpName)) {
+						    			String fromId = (String) map_ids.get(org_cwpName);
+						    			DomainRelationship.disconnect(context, fromId);
+						    		}
+							    	String[] array = sDecCWPNo.split(",");
+							    	for(int c = 0; c<array.length; c++) {
+							    		String CWPNO_NAME = array[c]; 
+							    		MapList decCWPTaskList =  DomainObject.findObjects(context, "decCWPTask", "*", "name=='"+CWPNO_NAME+"' && attribute[decProjectCode]=='"+sSiteCd+"'",
+							    				busSelects);
+										HashMap<?, ?> decCWPTask_hashmap = (HashMap<?, ?>) decCWPTaskList.get(0);
+										org_cwpName = (String) decCWPTask_hashmap.get("name");
+										org_cwpId = (String) decCWPTask_hashmap.get("id");
+										cwpIdList.add(org_cwpId);
+										if(!fromIdString.contains(org_cwpId)) {
+								    		DomainRelationship.connect(context, new DomainObject(org_cwpId), "Task Deliverable",
+													new DomainObject(org_objectId));
+								    		
+								    		setUpdateCwpIFCDate(context, args, org_cwpId);
+										}
+										
+							    	}
+							    }else {
+							    	MapList decCWPTaskList =  DomainObject.findObjects(context, "decCWPTask", "*", "name=='"+sDecCWPNo+"' && attribute[decProjectCode]=='"+sSiteCd+"'",
+						    				busSelects);
+							    	HashMap<?, ?> decCWPTask_hashmap = (HashMap<?, ?>) decCWPTaskList.get(0);
+									org_cwpName = (String) decCWPTask_hashmap.get("name");
+									org_cwpId = (String) decCWPTask_hashmap.get("id");
+									cwpIdList.add(org_cwpId);
+									if(!fromIdString.contains(org_cwpId)) {
+							    		DomainRelationship.connect(context, new DomainObject(org_cwpId), "Task Deliverable",
+												new DomainObject(org_objectId));
+							    		setUpdateCwpIFCDate(context, args, org_cwpId);
+									}
+							    }
+							}else {
+							 System.out.println("No CWPNO");
+							}
+								
+							// Set Unit & Area [S]	
+							System.out.println("unit & area set start");
+							StringList UnitList = new StringList();
+							StringList AreaList = new StringList();
+							String getUnit ="";
+							String getArea ="";
+							for(String id : cwpIdList) {
+	
+							DomainObject dom_CWPTask  = new DomainObject(id);
+							String dom_CWPTaskName = dom_CWPTask.getName(context);
+	
+							StringList pbusSelects = new StringList();
+							pbusSelects.add(DomainConstants.SELECT_ID);
+							pbusSelects.add(DomainConstants.SELECT_NAME);
+							pbusSelects.add("to[" + DecConstants.RELATIONSHIP_SUBTASK + "|from.type==" + DecConstants.TYPE_PHASE + "]");
+	
+							StringList pSelectRelStmts = new StringList();
+							pSelectRelStmts.add(DomainRelationship.SELECT_ID);
+							pSelectRelStmts.add(DomainConstants.SELECT_NAME);
+	
+							MapList mapList_Phase = dom_CWPTask.getRelatedObjects(context,
+									DecConstants.RELATIONSHIP_SUBTASK, // relationship pattern
+									DecConstants.TYPE_PHASE, // object pattern
+									pbusSelects, // object selects
+									pSelectRelStmts, // relationship selects
+									true, // from direction
+									false,
+									(short) 0, // recursion level
+									DecConstants.EMPTY_STRING, // object where clause
+									DecConstants.EMPTY_STRING);
+							Map phaseObject = null;
+							System.out.println(mapList_Phase);
+							
+								for(Object o : mapList_Phase) {
+									phaseObject = (Map)o;
+									String oId = (String) phaseObject.get("id");
+									DomainObject dom_phase = new DomainObject(oId);
+									String dom_wbsType = dom_phase.getAttributeValue(context, DecConstants.ATTRIBUTE_DECWBSTYPE);
+									if(DecStringUtil.equals(dom_wbsType,"Unit")) {
+										getUnit = dom_phase.getName(context);
+										UnitList.add(getUnit);
+									}else if(DecStringUtil.equals(dom_wbsType,"Area")) {
+										getArea = dom_phase.getName(context);
+										AreaList.add(getArea);
+									}
+									
+								}
+							}
+							Set<String> uniqueUnit = new HashSet<>(UnitList);
+							Set<String> uniqueArea = new HashSet<>(AreaList);
+							StringBuilder unitBuilder = new StringBuilder();
+							StringBuilder areaBuilder = new StringBuilder();
+							for (String unit : uniqueUnit) {
+								unitBuilder.append(unit).append(",");
+							}
+							for (String area : uniqueArea) {
+								areaBuilder.append(area).append(",");
+							}
+							// 마지막 쉼표 제거
+							if (unitBuilder.length() > 0) {
+								unitBuilder.deleteCharAt(unitBuilder.length() - 1);
+							}
+							if (areaBuilder.length() > 0) {
+								areaBuilder.deleteCharAt(areaBuilder.length() - 1);
+							}
+							
+							getUnit =  unitBuilder.toString();
+							getArea =  areaBuilder.toString();
+							dom.setAttributeValue(context, "decUnitNm", getUnit);	
+						    dom.setAttributeValue(context, "decDwgAreaNm", getArea);
+							
+							// Set Unit & Area [E]
+						    
+							}else if(!sRevision.equals(domRevision) || orgDeliverableDocList.size()==0 ){
+								System.out.println("Delete Object & ReCreate");
+								checkNewOrUpdate = 2;
+								
+								String org_objectName ="";
+								String org_objectId ="";
+								if(orgDeliverableDocList.size()>0) {
+										HashMap<?, ?> hashmap = (HashMap<?, ?>) orgDeliverableDocList.get(0);
+										org_objectName =(String) hashmap.get("name");
+										org_objectId =(String)  hashmap.get("id");
+										DomainObject dom = new DomainObject(org_objectId);
+										dom.deleteObject(context);
+								}
+								doNew.createObject(context, sType, sName, sRevision, sPolicy, "eService Production");
+								busId = doNew.getId(context);
+								String revi = doNew.getRevision(context);
+								
+								doNew.setDescription(context, sDescription);
+							    doNew.setAttributeValue(context, "decDiscipline", sDecDiscipline);	
+							    doNew.setAttributeValue(context, "decDocType", sDecDocType);	
+							    doNew.setAttributeValue(context, "decSubDocNo", sDecSubDocNo);	
+							    doNew.setAttributeValue(context, "decAddDocNo", sDecAddDocNo);	
+							    doNew.setAttributeValue(context, "decUnitNmDoc", sDecUnitNm);	
+							    doNew.setAttributeValue(context, "decDwgAreaNmDoc", sDecDwgAreaNm);		
+							    doNew.setAttributeValue(context, "decTagNumber", sDecTagNumber);	
+							    doNew.setAttributeValue(context, "decCWPNo", sDecCWPNo);	
+							    doNew.setAttributeValue(context, "decEWPNo", sDecEWPNo);	
+							    doNew.setAttributeValue(context, "decASB_YN", sDecASB_YN);	
+							    doNew.setAttributeValue(context, "decDocStage", sDecDocStage);	
+							    doNew.setAttributeValue(context, "decReviseDate", sDecReviseDate);	
+							    doNew.setAttributeValue(context, "decWorkFlow", sDecWorkFlow);	
+							    doNew.setAttributeValue(context, "decPlanDate", sDecPlanDate);	
+							    doNew.setAttributeValue(context, "decForecastDate", sDecForecastDate);	
+							    doNew.setAttributeValue(context, "decActualDate", sDecActualDate);	
+							    doNew.setAttributeValue(context, "decNextAction", sDecNextAction);	
+							    doNew.setAttributeValue(context, "decNextActionPlanDate", sDecNextActionPlanDate);	
+							    doNew.setAttributeValue(context, "decIFCPlanDate", sDecIFCPlanDate);	
+							    doNew.setAttributeValue(context, "decIFCForecastDate", sDecIFCForecastDate);	
+							    doNew.setAttributeValue(context, "decIFCActualDate", sDecIFCActualDate);	
+							    doNew.setAttributeValue(context, "decFileRef_ID", sDecFileRef_ID);	
+							    doNew.setAttributeValue(context, "decFile_ID", sDecFile_ID);	
+							    doNew.setAttributeValue(context, "decFile_Name", sDecFile_Name);	
+							    doNew.setAttributeValue(context, "decTurnover_YN", sDecTurnover_YN);	
+							    doNew.setAttributeValue(context, "decIWPNumber", sDecIWPNumber);	
+								// doNew.setRelationshipValue(context, "Assignees", sAssignees);
+							    doNew.setAttributeValue(context, "decLatestIFDate", formatedNow);	
+							    
+							    // Unit Connect [S]
+							    if(DecStringUtil.isNotEmpty(sDecUnitNm)) {
+								    String phaseQ = MqlUtil.mqlCommand(context,"temp query bus $1 $2 $3 where $4 select $5 dump",
+								    		DecConstants.TYPE_PHASE, sDecUnitNm ,"*","(attribute[decWBSType]=='Unit')&&(attribute[decProjectCode]=='"+sSiteCd+"')","id");
+									System.out.println("phaseQ:"+phaseQ);
+								   
+									if(DecStringUtil.isNotEmpty(phaseQ)) {
+										String strSplit[] = phaseQ.split(",");
+										String phaseId = strSplit[3]; 
+										System.out.println(phaseId);
+										DomainObject pDom = new DomainObject(phaseId);
+										String wbsType = pDom.getAttributeValue(context, DecConstants.ATTRIBUTE_DECWBSTYPE);
+										if(DecStringUtil.equals(wbsType, "Unit")) {
+											DomainRelationship.connect(context, new DomainObject(phaseId), "Task Deliverable",
+													new DomainObject(busId));
+										}else {
+											System.out.println("WBS TYPE IS NOT UNIT");
+										}
+									}else {
+										System.out.println("No Exist Same Name Unit");
+									}
+							    }else {
+							    	System.out.println("sDecUnitNm is null");
+							    }
+							    // Unit Connect [E]
+							    
+							    
+							    
+							    //String org_cwpNo = dom.getAttributeValue(context, "decCWPNo");
+							    StringList selectRelStmts = new StringList();
+								selectRelStmts.add(DomainConstants.SELECT_ID);
+								selectRelStmts.add(DomainConstants.SELECT_NAME);
+								selectRelStmts.add(DomainConstants.SELECT_FROM_ID);
+								selectRelStmts.add(DomainConstants.SELECT_TO_ID);
+							    
+							    
+							    MapList relCWPList = new MapList();
+							    StringList fromIdList = new StringList();
+							    String org_cwpName = "";
+							    String org_cwpId = "";
+							    String fromIdString = fromIdList.toString();
+							    
+							    
+							    String objectName = doNew.getName(context);
+							    returnObjectIdMap.put(sDecFile_Name, busId);
+//								for(int j = 0 ; j <mpProjectList.size() ;j++) {
+//									HashMap<?, ?> project_hashmap = (HashMap<?, ?>) mpProjectList.get(j);
+//									String n_Project = (String)project_hashmap.get("name");
+//									if(n_Project.equals(name_project)) {
+//										id_project = (String) project_hashmap.get("id");
+//									}
+//								}
+								DomainRelationship.connect(context, new DomainObject(id_project), "Task Deliverable",
+										new DomainObject(busId));
+								StringList cwpIdList = new StringList();
+								if(!DecStringUtil.isEmpty(sDecCWPNo)) {
+								    if(sDecCWPNo.contains(",")) {
+								    	String[] array = sDecCWPNo.split(",");
+								    	for(int c = 0; c<array.length; c++) {
+								    		String CWPNO_NAME = array[c]; 
+								    		MapList decCWPTaskList =  DomainObject.findObjects(context, "decCWPTask", "*", "name=='"+CWPNO_NAME+"' && attribute[decProjectCode]=='"+sSiteCd+"'",
+								    				busSelects);
+											HashMap<?, ?> decCWPTask_hashmap = (HashMap<?, ?>) decCWPTaskList.get(0);
+											org_cwpName = (String) decCWPTask_hashmap.get("name");
+											org_cwpId = (String) decCWPTask_hashmap.get("id");
+											cwpIdList.add(org_cwpId);
+											if(!fromIdString.contains(org_cwpId)) {
+									    		DomainRelationship.connect(context, new DomainObject(org_cwpId), "Task Deliverable",
+														new DomainObject(busId));
+									    		setUpdateCwpIFCDate(context, args, org_cwpId);
+											}
+								    	}
+								    }else {
+								    	MapList decCWPTaskList =  DomainObject.findObjects(context, "decCWPTask", "*", "name=='"+sDecCWPNo+"' && attribute[decProjectCode]=='"+sSiteCd+"'",
+							    				busSelects);
+								    	HashMap<?, ?> decCWPTask_hashmap = (HashMap<?, ?>) decCWPTaskList.get(0);
+										org_cwpName = (String) decCWPTask_hashmap.get("name");
+										org_cwpId = (String) decCWPTask_hashmap.get("id");
+										cwpIdList.add(org_cwpId);
+										if(!fromIdString.contains(org_cwpId)) {
+								    		DomainRelationship.connect(context, new DomainObject(org_cwpId), "Task Deliverable",
+													new DomainObject(busId));
+								    		setUpdateCwpIFCDate(context, args, org_cwpId);
+										}
+								    }
+								}
+								System.out.println("UNIT,AREA Create Start");
+								// Set Unit & Area [S]
+								
+								StringList UnitList = new StringList();
+								StringList AreaList = new StringList();
+								String getUnit ="";
+								String getArea ="";
+								//if(DecStringUtil.isNotEmpty(cwpIdList)) {
+									for(String id : cwpIdList) {
+	
+										DomainObject dom_CWPTask  = new DomainObject(id);
+										String dom_CWPTaskName = dom_CWPTask.getName(context);
+		
+										StringList pbusSelects = new StringList();
+										pbusSelects.add(DomainConstants.SELECT_ID);
+										pbusSelects.add(DomainConstants.SELECT_NAME);
+										pbusSelects.add("to[" + DecConstants.RELATIONSHIP_SUBTASK + "|from.type==" + DecConstants.TYPE_PHASE + "]");
+		
+										StringList pSelectRelStmts = new StringList();
+										pSelectRelStmts.add(DomainRelationship.SELECT_ID);
+										pSelectRelStmts.add(DomainConstants.SELECT_NAME);
+		
+										MapList mapList_Phase = dom_CWPTask.getRelatedObjects(context,
+												DecConstants.RELATIONSHIP_SUBTASK, // relationship pattern
+												DecConstants.TYPE_PHASE, // object pattern
+												pbusSelects, // object selects
+												pSelectRelStmts, // relationship selects
+												true, // from direction
+												false,
+												(short) 0, // recursion level
+												DecConstants.EMPTY_STRING, // object where clause
+												DecConstants.EMPTY_STRING);
+										Map phaseObject = null;
+										System.out.println(mapList_Phase);
+										
+										for(Object o : mapList_Phase) {
+											phaseObject = (Map)o;
+											String oId = (String) phaseObject.get("id");
+											DomainObject dom_phase = new DomainObject(oId);
+											String dom_wbsType = dom_phase.getAttributeValue(context, DecConstants.ATTRIBUTE_DECWBSTYPE);
+											if(DecStringUtil.equals(dom_wbsType,"Unit")) {
+												getUnit = dom_phase.getName(context);
+												UnitList.add(getUnit);
+											}else if(DecStringUtil.equals(dom_wbsType,"Area")) {
+												getArea = dom_phase.getName(context);
+												AreaList.add(getArea);
+											}
+											
+										}
+										System.out.println("getUnit:"+getUnit);
+										System.out.println("getArea:"+getArea);
+									}
+								
+								Set<String> uniqueUnit = new HashSet<>(UnitList);
+								Set<String> uniqueArea = new HashSet<>(AreaList);
+								StringBuilder unitBuilder = new StringBuilder();
+								StringBuilder areaBuilder = new StringBuilder();
+								for (String unit : uniqueUnit) {
+									unitBuilder.append(unit).append(",");
+								}
+								for (String area : uniqueArea) {
+									areaBuilder.append(area).append(",");
+								}
+								// 마지막 쉼표 제거
+								if (unitBuilder.length() > 0) {
+									unitBuilder.deleteCharAt(unitBuilder.length() - 1);
+								}
+								if (areaBuilder.length() > 0) {
+									areaBuilder.deleteCharAt(areaBuilder.length() - 1);
+								}
+
+								getUnit =  unitBuilder.toString();
+								getArea =  areaBuilder.toString();
+								System.out.println("Set Unit & Area [E]");
+								doNew.setAttributeValue(context, "decUnitNm", getUnit);	
+							    doNew.setAttributeValue(context, "decDwgAreaNm", getArea);
+								// Set Unit & Area [E]
+							}
+						
+						
+						//print bus 22220.15368.61400.11671;
+						ContextUtil.commitTransaction(context);
+						if(checkNewOrUpdate ==2) {
+							MqlUtil.mqlCommand(context, "mod bus $1 revision $2 name $3", true, busId, sRevision, sName); 
+						}
+					} catch (Exception e) {
+						ContextUtil.abortTransaction(context);
+						String eMessage = e.getMessage();
+						System.out.println("Deliverable Business Object Create Error...."+i+"번째");
+						errorMap.put("ifmsg", eMessage);
+						errorList.add(errorMap);
+					}
+				}
+				
+				System.out.println("object create finish. Created List 목록 : " + returnObjectIdMap);
+				System.out.println("object create finish. errorList 목록 : " + errorList);
+				
+				// Deliverable File Download Start // 
+				try {
+					for(int i=0; i<documentList.size(); i++){
+						System.out.println("file download start:"+i);	
+						HashMap<?, ?> deliverableMap = (HashMap<?, ?>) documentList.get(i);
+						
+						String filePath = "";
+						String cEcmno = (String) deliverableMap.get("ECM_NO");
+						String cFileNm = String.valueOf(deliverableMap.get("FILE_NM"));
+						sSiteCd            		=   (String) deliverableMap.get("SITE_CD");
+						sSeq            		=   String.valueOf(deliverableMap.get("IF_SEQ")); 
+						sName 					= 	(String) deliverableMap.get("DOC_NO");
+						sRevision 				=   (String) deliverableMap.get("REVISION");
+											
+						//StringList busSelects = new StringList();
+						//busSelects.add(DomainConstants.SELECT_ID);
+						//busSelects.add(DomainConstants.SELECT_NAME);
+						busSelects.add(DomainConstants.SELECT_DESCRIPTION);					
+						busSelects.add(DomainConstants.SELECT_TO_ID);
+						String alreadyFileCheckin ="";
+						MapList oList = DomainObject.findObjects(context, "decDeliverableDoc", "*", "policy==Version",
+								busSelects);
+						for (int v = 0; i < oList.size(); i++) {
+							HashMap<?, ?> hashmap = (HashMap<?, ?>) oList.get(i);
+							String description = (String) hashmap.get("description");
+							if(description.equals(cFileNm)) {
+								alreadyFileCheckin ="Y";
+							}
+						}
+						if(alreadyFileCheckin.equals("Y")) {
+							System.out.println("already check-in file. for escape");
+							continue;
+						}
+						
+						Map KeyMap = new HashMap();
+						KeyMap.put("siteCd", sSiteCd);
+						KeyMap.put("docNo", sName);
+						KeyMap.put("revision", sRevision);
+						KeyMap.put("ifSeq", sSeq);
+						
+						if(cEcmno!=null) {
+							Map downloadMap = new HashMap();
+							downloadMap.put("ecmno", cEcmno);					
+							downloadMap.put("filenm", cFileNm);
+							String fileUploadError = downloadEcmno(context, downloadMap, returnObjectIdMap);
+							if(fileUploadError!="") {
+								KeyMap.put("ifmsg", fileUploadError);
+								errorList.add(KeyMap);
+							}
+						}										
+					}
+				} catch (Exception e) {
+					ContextUtil.abortTransaction(context);
+					String eMessage = e.getMessage();
+					errorMap.put("ifmsg", eMessage);
+					errorList.add(errorMap);
+				}
+			System.out.println("IF_FLAG, ERROR Message Insert");	
+			for(int i=0; i<documentList.size(); i++){
+				HashMap<?, ?> deliverableMap = (HashMap<?, ?>) documentList.get(i);
+				sSiteCd            		=   (String) deliverableMap.get("SITE_CD");
+				sSeq            		=   String.valueOf(deliverableMap.get("IF_SEQ")); 
+				sName 					= 	(String) deliverableMap.get("DOC_NO");
+				sRevision 				=   (String) deliverableMap.get("REVISION");
+				String errList = "";
+				Map selectParamMap = new HashMap();
+				selectParamMap.put("siteCd",sSiteCd);
+				selectParamMap.put("ifSeq",sSeq);
+				selectParamMap.put("docNo",sName);
+				selectParamMap.put("revision",sRevision);
+					 for (Map<String, String> map : errorList) {
+	
+					     String errorSiteCd = (String) map.get("siteCd");
+					     String errorDocNo = (String) map.get("docNo");
+					     String errorRevision = (String) map.get("revision");
+					     String errorIfSeq = (String) map.get("ifSeq");
+						 String errorMsg = (String) map.get("ifmsg");
+						 if(sSiteCd==errorSiteCd && sName==errorDocNo && sRevision==errorRevision && sSeq==errorIfSeq) {
+							 errList += errorMsg +",";
+				 
+						 }
+					 }				
+				 //selectParamMap.put("ifmsg", errList);
+				 try ( SqlSession sqlSession = decSQLSessionFactory.getBatchSession() ){
+					if(DecStringUtil.isNotEmpty(errList)) {
+						selectParamMap.put("ifmsg", errList.substring(0, errList.length() - 1));
+						sqlSession.update("Interface.updateDeliverableIfFlagE", selectParamMap);
+						System.out.println("Deliverable IF_FLAG & IF_MSG STATE E Finish");
+						sqlSession.commit();
+					}else {
+					sqlSession.update("Interface.updateDeliverableIfFlagY", selectParamMap);	
+					System.out.println("Deliverable IF_FLAG & IF_MSG STATE Y Finish");
+					sqlSession.commit();
+					}
+				 }
+			}
+		
+		
+		System.out.println("All Task Finish");
+				
+		}catch(Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+		}
+	
+		
+		
+
+
+	}
+	
+	private MapList MapList(List<Map> resultList) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void getVendorPrint(Context context, String[] args) throws Exception {
+		
+		String sType	              = "";
+	    String sName                  = "";
+		String sPolicy 	              = "";
+		String sRevision		      = "";			
+		String sSiteCd        		  = "";
+		String sCwpno       		  = "";
+		String sDescription           = "";
+		String sDecDiscipline  		  = "";	
+		String sDecUnitNm             = "";
+		String sDecDwgAreaNm          = "";
+		String sDecDocType  		  = "";
+		String sDecSubDocNo  		  = "";
+		String sDecAddDocNo  		  = "";
+		String sDecTagNumber  		  = "";
+		String sDecCustomSBMT_YN  	  = "";
+		String sDecIMPTDoc_YN  		  = "";
+		String sDecDESDoc_YN  		  = "";
+		String sDecEXCWKDoc_YN  	  = "";
+		String sDecDocStage  		  = "";
+		String sDecReviseDate  		  = "";
+		String sDecWorkFlow  		  = "";
+		String sDecPlanDate  		  = "";
+		String sDecForecastDate  	  = "";
+		String sDecActualDate  		  = "";
+		String sDecNextAction 		  = "";
+		String sDecNextActionPlanDate = "";
+		String sDecFileRef_ID  		  = "";
+		String sDecFile_ID 		      = "";
+		String sDecFile_Name  		  = "";
+		String sDecTurnover_YN 		  = "";
+		String id_decCWPTask		  = "";
+		String sSeq      			  = "";
+		String sDecPONo      		  = "";
+		String sDecCWPNo              = "";
+		String IF_INTERFACE_DATE 	  = "";
+		StringList strErrorMessage = new StringList();
+		String projectType = "Project Space";
+		
+		StringList busSelects = new StringList();
+		busSelects.add(DomainConstants.SELECT_ID);
+		busSelects.add(DomainConstants.SELECT_NAME);
+		
+		LocalDate now = LocalDate.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+		String formatedNow = now.format(formatter);
+		
+		String busId = "";
+		Map returnObjectIdMap = new HashMap();
+		List<Map> documentList = new MapList();
+		List<Map> errorList = new MapList();
+		
+		try {
+			try ( SqlSession sqlSession = decSQLSessionFactory.getBatchSession() ){
+				Map selectParamMap = new HashMap();
+				selectParamMap.put("limit","100");				
+				List<Map> resultList = sqlSession.selectList("Interface.selectVendorPrintList", selectParamMap);
+				System.out.println("resultList:"+resultList);
+				documentList =resultList;
+				
+				// VenderPirnt IF_FLAG UPDATE //
+				for(int i=0; i<resultList.size(); i++){					
+					HashMap<?, ?> deliverableMap = (HashMap<?, ?>) resultList.get(i);
+					String cSitecd = (String) deliverableMap.get("SITE_CD");
+					String cDocno = (String) deliverableMap.get("DOC_NO");
+					String cRevision = (String) deliverableMap.get("REVISION");
+					String cSeq = String.valueOf(deliverableMap.get("IF_SEQ"));
+					
+					Map KeyMap = new HashMap();
+					KeyMap.put("siteCd", cSitecd);
+					KeyMap.put("docNo", cDocno);
+					KeyMap.put("revision", cRevision);
+					KeyMap.put("ifSeq", cSeq);
+
+					sqlSession.update("Interface.updateVendorPrintIfFlag", KeyMap);
+					System.out.println("process row : " + i );				
+				}
+				System.out.println("update finish");
+				System.out.println("resultList.size() : "+resultList.size());	
+				sqlSession.commit();
+			}catch(Exception e) {
+				e.printStackTrace();
+				throw e;
+			} finally {
+			}
+			
+			int checkNewOrUpdate = 0;
+			
+			
+				// VenderPirnt Business Object Create //
+				for(int i=0; i<documentList.size(); i++){
+						
+					System.out.println("VenderPirnt Business Object Create Start");
+					HashMap<?, ?> deliverableMap = (HashMap<?, ?>) documentList.get(i);
+					DomainObject doNew = new DomainObject();
+					Map errorMap = new HashMap();	
+					try {
+						ContextUtil.startTransaction(context, true);
+	
+						sType 				    = 	"decVPDocument";
+						sPolicy 			    =	"decIFDocument";
+						sName 					= 	(String) deliverableMap.get("DOC_NO");
+						sRevision 				=   (String) deliverableMap.get("REVISION");
+						sDescription            =   (String) deliverableMap.get("DOC_TITLE"); 
+						sDecDiscipline  		=   (String) deliverableMap.get("DCPLN_NM");
+						sDecUnitNm      	    =   (String) deliverableMap.get("UNIT_NM"); 
+						sDecDwgAreaNm           =   (String) deliverableMap.get("DWG_AREA_NM"); 
+						sDecDocType  		    =   (String) deliverableMap.get("DOC_TYPE_CD");
+						sDecSubDocNo  		    =   (String) deliverableMap.get("SUB_DOCNO");
+						sDecAddDocNo  		    =   (String) deliverableMap.get("ADD_DOCNO");
+						sDecTagNumber  		    =   (String) deliverableMap.get("TITLE_GRP");
+						sDecCustomSBMT_YN  	    =   (String) deliverableMap.get("CUST_SBMT_YN");
+						sDecIMPTDoc_YN  	  	=   (String) deliverableMap.get("IMPT_DOC_YN");
+						sDecDESDoc_YN  		    =   (String) deliverableMap.get("DES_DOC_YN");
+						sDecEXCWKDoc_YN  	    =   (String) deliverableMap.get("EXCWK_DOC_YN");
+						sDecDocStage  		    =   (String) deliverableMap.get("STAGE");						
+						sDecWorkFlow  		    =   (String) deliverableMap.get("WORKFLOW");						
+						sDecNextAction 		    =   (String) deliverableMap.get("NEXT_ACTION");
+						sDecFileRef_ID  	  	=   (String) deliverableMap.get("FILE_ATCH_ID");
+						sDecFile_ID 		    =   (String) deliverableMap.get("FILE_ID");
+						sDecFile_Name  		    =   (String) deliverableMap.get("FILE_NM");
+						sDecTurnover_YN         =   (String) deliverableMap.get("TURNOVER_YN");
+						sSiteCd            		=   (String) deliverableMap.get("SITE_CD"); 
+						sCwpno            		=   (String) deliverableMap.get("CWP_NO"); 
+						sSeq            		=   String.valueOf(deliverableMap.get("IF_SEQ")); 
+						sDecPONo   				=   (String) deliverableMap.get("PO_NO"); 
+						sDecCWPNo               =   (String) deliverableMap.get("CWP_NO"); 
+						
+										
+						Map KeyMap = new HashMap();
+						KeyMap.put("siteCd", sSiteCd);
+						KeyMap.put("docNo", sName);
+						KeyMap.put("revision", sRevision);
+						KeyMap.put("ifSeq", sSeq);
+						errorMap = KeyMap;
+						
+						if(DecStringUtil.isEmpty(sDecFile_Name)) {
+							String e = "FILE_NM is Null";
+							throw new Exception(e); 
+						}
+						
+						sDecNextActionPlanDate  =   (String) deliverableMap.get("NEXT_ACTION_PLAN");
+						if(sDecNextActionPlanDate!=null) {
+							sDecNextActionPlanDate = String.format("%s/%s/%s",
+								sDecNextActionPlanDate.substring(4, 6), sDecNextActionPlanDate.substring(6), sDecNextActionPlanDate.substring(0, 4));
+						}
+						sDecReviseDate  	  	=   (String) deliverableMap.get("REVISN_REG_YMD");
+						if(sDecReviseDate!=null) {
+							sDecReviseDate = String.format("%s/%s/%s",
+								sDecReviseDate.substring(4, 6), sDecReviseDate.substring(6), sDecReviseDate.substring(0, 4));
+						}
+						sDecPlanDate  		    =   (String) deliverableMap.get("PLAN");
+						if(sDecPlanDate!=null) {
+							sDecPlanDate = String.format("%s/%s/%s",
+								sDecPlanDate.substring(4, 6), sDecPlanDate.substring(6), sDecPlanDate.substring(0, 4));
+						}
+						sDecForecastDate  	    =   (String) deliverableMap.get("FORECAST");
+						if(sDecForecastDate!=null) {
+							sDecForecastDate = String.format("%s/%s/%s",
+								sDecForecastDate.substring(4, 6), sDecForecastDate.substring(6), sDecForecastDate.substring(0, 4));
+						}
+						sDecActualDate  	  	=   (String) deliverableMap.get("ACTUAL");
+						if(sDecActualDate!=null) {
+							sDecActualDate = String.format("%s/%s/%s",
+								sDecActualDate.substring(4, 6), sDecActualDate.substring(6), sDecActualDate.substring(0, 4));
+						}
+						if(sDecTurnover_YN==null) {
+							sDecTurnover_YN = "N";
+						}
+						
+						
+						String name_project = sSiteCd;
+						String id_project = "";
+						MapList mpProjectList =  DomainObject.findObjects(context, projectType, "*","(type == 'Project Space') && (current != 'Archive') && (current != 'Complete')",
+								busSelects);
+						for(int j = 0 ; j <mpProjectList.size() ;j++) {
+							HashMap<?, ?> project_hashmap = (HashMap<?, ?>) mpProjectList.get(j);
+							String n_Project = (String)project_hashmap.get("name");
+							if(n_Project.equals(name_project)) {
+								id_project = (String) project_hashmap.get("id");
+							}
+						} 
+						
+			
+						MapList orgVPDocList = DomainObject.findObjects(context, "decVPDocument", "*", "policy!=Version && name=='"+sName+"'",
+								busSelects);	
+						
+						String domRevision= "";
+						if(orgVPDocList.size()>0) {
+							System.out.println("Already Exist Object >> Revision Check");
+							HashMap<?, ?> hashmap = (HashMap<?, ?>) orgVPDocList.get(0);
+							String org_objectId =(String)  hashmap.get("id");
+							DomainObject dom = new DomainObject(org_objectId);
+							domRevision= dom.getRevision(context);
+						}
+						if(sRevision.equals(domRevision)) {
+							System.out.println("TNR EQUAL >> Object Update");
+							HashMap<?, ?> hashmap = (HashMap<?, ?>) orgVPDocList.get(0);
+							String org_objectId =(String)  hashmap.get("id");
+							DomainObject dom = new DomainObject(org_objectId);
+							String org_objectUnit = dom.getAttributeValue(context, "decUnitNmDoc");
+							checkNewOrUpdate = 1;
+							dom.setDescription(context, sDescription);
+						    dom.setAttributeValue(context,"decDiscipline",sDecDiscipline); 
+						    dom.setAttributeValue(context,"decDocType",sDecDocType); 
+						    dom.setAttributeValue(context,"decSubDocNo",sDecSubDocNo); 
+						    dom.setAttributeValue(context,"decAddDocNo",sDecAddDocNo); 
+						    dom.setAttributeValue(context,"decUnitNmDoc",sDecUnitNm); 
+						    dom.setAttributeValue(context,"decDwgAreaNmDoc",sDecDwgAreaNm); 
+						    dom.setAttributeValue(context,"decTagNumber",sDecTagNumber); 
+						    dom.setAttributeValue(context,"decCustomSBMT_YN",sDecCustomSBMT_YN); 
+						    dom.setAttributeValue(context,"decIMPTDoc_YN",sDecIMPTDoc_YN); 
+						    dom.setAttributeValue(context,"decDESDoc_YN",sDecDESDoc_YN); 
+						    dom.setAttributeValue(context,"decEXCWKDoc_YN",sDecEXCWKDoc_YN); 
+						    dom.setAttributeValue(context,"decDocStage",sDecDocStage); 
+						    dom.setAttributeValue(context,"decReviseDate",sDecReviseDate); 
+						    dom.setAttributeValue(context,"decWorkFlow",sDecWorkFlow); 
+						    dom.setAttributeValue(context,"decPlanDate",sDecPlanDate); 
+						    dom.setAttributeValue(context,"decForecastDate",sDecForecastDate); 
+						    dom.setAttributeValue(context,"decActualDate",sDecActualDate); 
+						    dom.setAttributeValue(context,"decNextAction",sDecNextAction); 
+						    dom.setAttributeValue(context,"decNextActionPlanDate",sDecNextActionPlanDate); 
+						    dom.setAttributeValue(context,"decFileRef_ID",sDecFileRef_ID); 
+						    dom.setAttributeValue(context,"decFile_ID",sDecFile_ID); 
+						    dom.setAttributeValue(context,"decFile_Name",sDecFile_Name); 
+						    dom.setAttributeValue(context,"decTurnover_YN",sDecTurnover_YN); 
+						    dom.setAttributeValue(context,"decPO_No",sDecPONo); 
+						    dom.setAttributeValue(context, "decLatestIFDate", formatedNow);
+						    
+						    
+						    if(DecStringUtil.isNotEmpty(sDecUnitNm)) {
+						    	System.out.println("unit connect start");
+						    	String mql = MqlUtil.mqlCommand(context, "print bus $1 select $2",org_objectId,"to[Task Deliverable].from");
+							    Boolean unitCheck = DecStringUtil.contains(mql, sDecUnitNm); //입력된 unit과 이미 연결있다.
+							    
+							    if(!unitCheck) { // 없으면 연결하라. 
+							    	 String phaseQ = MqlUtil.mqlCommand(context,"temp query bus $1 $2 $3 where $4 select $5 dump",
+									    		DecConstants.TYPE_PHASE, sDecUnitNm ,"*","(attribute[decWBSType]=='Unit')&&(attribute[decProjectCode]=='"+sSiteCd+"')","id");
+								   
+									if(DecStringUtil.isNotEmpty(phaseQ)) {
+										String strSplit[] = phaseQ.split(",");
+										String phaseId = strSplit[3]; 
+										System.out.println(phaseId);
+										DomainObject pDom = new DomainObject(phaseId);
+										String wbsType = pDom.getAttributeValue(context, DecConstants.ATTRIBUTE_DECWBSTYPE);
+										if(DecStringUtil.equals(wbsType, "Unit")) {
+											DomainRelationship.connect(context, new DomainObject(phaseId), "Task Deliverable",
+													new DomainObject(org_objectId));
+										}else {
+											System.out.println("WBS TYPE IS NOT UNIT");
+										}
+									}else {
+										System.out.println("No Exist Same Name Unit");
+									}
+							    }else {
+							    	System.out.println("sDecUnitNm is already connected");
+							    }
+						    }
+						    if(DecStringUtil.isEmpty(sDecUnitNm) || !DecStringUtil.equals(sDecUnitNm, org_objectUnit)){
+						    	System.out.println("sDecUnitNm is null OR not Equal");
+						    	String orgUnitConnectionId = MqlUtil.mqlCommand(context, "print bus "+org_objectId+" select to[Task Deliverable|from.name=='"+org_objectUnit+"'].id dump");
+						    	if(DecStringUtil.isNotEmpty(orgUnitConnectionId)) {
+						    	DomainRelationship.disconnect(context, orgUnitConnectionId);
+						    	}
+						    }
+						    
+						    returnObjectIdMap.put(sDecFile_Name, org_objectId);
+						    
+						  						  
+						    StringList selectRelStmts = new StringList();
+							selectRelStmts.add(DomainConstants.SELECT_ID);
+							selectRelStmts.add(DomainConstants.SELECT_NAME);
+							selectRelStmts.add(DomainConstants.SELECT_FROM_ID);
+							selectRelStmts.add(DomainConstants.SELECT_TO_ID);
+							
+							
+							StringList fromIdList = new StringList();
+														
+							String disconnection = "";
+							HashMap map_ids = new HashMap(); 
+							
+							String fromIdString = fromIdList.toString();
+							String org_cwpName = "";
+							String org_cwpId = "";
+						
+						}
+						else if(!sRevision.equals(domRevision) || orgVPDocList.size()==0 ){
+							System.out.println("REVSION not same >> VPDocument Object Create Start");
+							checkNewOrUpdate = 2;
+							String org_objectName ="";
+							String org_objectId ="";
+							
+							if(orgVPDocList.size()>0) {
+								HashMap<?, ?> hashmap = (HashMap<?, ?>) orgVPDocList.get(0);
+								org_objectName =(String) hashmap.get("name");
+								org_objectId =(String)  hashmap.get("id");
+								DomainObject dom = new DomainObject(org_objectId);
+								dom.deleteObject(context);		
+							}
+						
+							doNew.createObject(context, sType, sName, sRevision, sPolicy, "eService Production");
+							busId = doNew.getId(context);
+							doNew.setDescription(context, sDescription);
+						    doNew.setAttributeValue(context,"decDiscipline",sDecDiscipline);
+						    doNew.setAttributeValue(context,"decUnitNmDoc",sDecUnitNm); 
+						    doNew.setAttributeValue(context,"decDwgAreaNmDoc",sDecDwgAreaNm); 
+						    doNew.setAttributeValue(context,"decDocType",sDecDocType); 
+						    doNew.setAttributeValue(context,"decSubDocNo",sDecSubDocNo); 
+						    doNew.setAttributeValue(context,"decAddDocNo",sDecAddDocNo); 
+						    doNew.setAttributeValue(context,"decTagNumber",sDecTagNumber); 
+						    doNew.setAttributeValue(context,"decCustomSBMT_YN",sDecCustomSBMT_YN); 
+						    doNew.setAttributeValue(context,"decIMPTDoc_YN",sDecIMPTDoc_YN); 
+						    doNew.setAttributeValue(context,"decDESDoc_YN",sDecDESDoc_YN); 
+						    doNew.setAttributeValue(context,"decEXCWKDoc_YN",sDecEXCWKDoc_YN); 
+						    doNew.setAttributeValue(context,"decDocStage",sDecDocStage); 
+						    doNew.setAttributeValue(context,"decReviseDate",sDecReviseDate); 
+						    doNew.setAttributeValue(context,"decWorkFlow",sDecWorkFlow); 
+						    doNew.setAttributeValue(context,"decPlanDate",sDecPlanDate); 
+						    doNew.setAttributeValue(context,"decForecastDate",sDecForecastDate); 
+						    doNew.setAttributeValue(context,"decActualDate",sDecActualDate); 
+						    doNew.setAttributeValue(context,"decNextAction",sDecNextAction); 
+						    doNew.setAttributeValue(context,"decNextActionPlanDate",sDecNextActionPlanDate); 
+						    doNew.setAttributeValue(context,"decFileRef_ID",sDecFileRef_ID); 
+						    doNew.setAttributeValue(context,"decFile_ID",sDecFile_ID); 
+						    doNew.setAttributeValue(context,"decFile_Name",sDecFile_Name); 
+						    doNew.setAttributeValue(context,"decTurnover_YN",sDecTurnover_YN); 
+						    doNew.setAttributeValue(context,"decPO_No",sDecPONo); 
+						    doNew.setAttributeValue(context, "decLatestIFDate", formatedNow);
+						    					    
+						    if(DecStringUtil.isNotEmpty(sDecUnitNm)) {
+							    String phaseQ = MqlUtil.mqlCommand(context,"temp query bus $1 $2 $3 where $4 select $5 dump",
+							    		DecConstants.TYPE_PHASE, sDecUnitNm ,"*","(attribute[decWBSType]=='Unit')&&(attribute[decProjectCode]=='"+sSiteCd+"')","id");
+								System.out.println("phaseQ:"+phaseQ);
+							   
+								if(DecStringUtil.isNotEmpty(phaseQ)) {
+									String strSplit[] = phaseQ.split(",");
+									String phaseId = strSplit[3]; 
+									System.out.println(phaseId);
+									DomainObject pDom = new DomainObject(phaseId);
+									String wbsType = pDom.getAttributeValue(context, DecConstants.ATTRIBUTE_DECWBSTYPE);
+									if(DecStringUtil.equals(wbsType, "Unit")) {
+										DomainRelationship.connect(context, new DomainObject(phaseId), "Task Deliverable",
+												new DomainObject(busId));
+									}else {
+										System.out.println("WBS TYPE IS NOT UNIT");
+									}
+								}else {
+									System.out.println("No Exist Same Name Unit");
+								}
+						    }else {
+						    	System.out.println("sDecUnitNm is null");
+						    }
+						    
+						   
+						    StringList selectRelStmts = new StringList();
+							selectRelStmts.add(DomainConstants.SELECT_ID);
+							selectRelStmts.add(DomainConstants.SELECT_NAME);
+							selectRelStmts.add(DomainConstants.SELECT_FROM_ID);
+							selectRelStmts.add(DomainConstants.SELECT_TO_ID);
+							
+							    
+						
+						    String objectName = doNew.getName(context);
+						    returnObjectIdMap.put(sDecFile_Name, busId);
+						    
+						    DomainRelationship.connect(context, new DomainObject(id_project), "Task Deliverable",
+									new DomainObject(busId));
+						    
+						    StringList cwpIdList = new StringList();
+							System.out.println("UNIT,AREA Create Start");
+
+						}
+							
+					    ContextUtil.commitTransaction(context);
+					    if(checkNewOrUpdate ==2) {
+							MqlUtil.mqlCommand(context, "mod bus $1 revision $2 name $3", true, busId, sRevision, sName); 
+						}
+					    
+					} catch (Exception e) {
+						ContextUtil.abortTransaction(context);
+						String eMessage = e.getMessage();
+						System.out.println("VenderPirnt Business Object Create Error...." + i +"번째");
+						errorMap.put("ifmsg", eMessage);
+						errorList.add(errorMap);
+					}
+				}
+				
+				System.out.println("object create finish. Created List  : " + returnObjectIdMap);
+				System.out.println("object create finish. errorList  : " + errorList);
+				
+				
+				// VenderPirnt File Download //
+				for(int i=0; i<documentList.size(); i++){
+					System.out.println("file download start:"+i);	
+					HashMap<?, ?> deliverableMap = (HashMap<?, ?>) documentList.get(i);
+					
+					String filePath = "";
+					String cEcmno = (String) deliverableMap.get("ECM_NO");
+					String cFileNm = String.valueOf(deliverableMap.get("FILE_NM"));
+					sSiteCd            		=   (String) deliverableMap.get("SITE_CD");
+					sSeq            		=   String.valueOf(deliverableMap.get("IF_SEQ")); 
+					sName 					= 	(String) deliverableMap.get("DOC_NO");
+					sRevision 				=   (String) deliverableMap.get("REVISION");
+					
+					busSelects.add(DomainConstants.SELECT_DESCRIPTION);					
+					busSelects.add(DomainConstants.SELECT_TO_ID);
+					String alreadyFileCheckin ="";
+					MapList oList = DomainObject.findObjects(context, DecConstants.TYPE_DECVPDOCUMENT, "*", "policy==Version",
+							busSelects);
+					for (int v = 0; i < oList.size(); i++) {
+						HashMap<?, ?> hashmap = (HashMap<?, ?>) oList.get(i);
+						String description = (String) hashmap.get("description");
+						if(description.equals(cFileNm)) {
+							alreadyFileCheckin ="Y";
+						}
+					}
+					if(alreadyFileCheckin.equals("Y")) {
+						System.out.println("already check-in file. for escape");
+						continue;
+					}
+					
+					Map KeyMap = new HashMap();
+					KeyMap.put("siteCd", sSiteCd);
+					KeyMap.put("docNo", sName);
+					KeyMap.put("revision", sRevision);
+					KeyMap.put("ifSeq", sSeq);
+					
+					
+					if(cEcmno!=null) {
+						Map downloadMap = new HashMap();
+						downloadMap.put("ecmno", cEcmno);					
+						downloadMap.put("filenm", cFileNm);
+						String fileUploadError = downloadEcmno(context, downloadMap, returnObjectIdMap);
+						if(fileUploadError!="") {
+							KeyMap.put("ifmsg", fileUploadError);
+							errorList.add(KeyMap);
+						}
+					}										
+				}
+				
+		System.out.println("IF_FLAG, ERROR Message Insert Start");
+		System.out.println("object create finish. errorList : " + errorList);
+		for(int i=0; i<documentList.size(); i++){
+			HashMap<?, ?> deliverableMap = (HashMap<?, ?>) documentList.get(i);
+			sSiteCd            		=   (String) deliverableMap.get("SITE_CD");
+			sSeq            		=   String.valueOf(deliverableMap.get("IF_SEQ")); 
+			sName 					= 	(String) deliverableMap.get("DOC_NO");
+			sRevision 				=   (String) deliverableMap.get("REVISION");
+			String errList = "";
+			Map selectParamMap = new HashMap();
+			selectParamMap.put("siteCd",sSiteCd);
+			selectParamMap.put("ifSeq",sSeq);
+			selectParamMap.put("docNo",sName);
+			selectParamMap.put("revision",sRevision);
+				 for (Map<String, String> map : errorList) {
+
+				     String errorSiteCd = (String) map.get("siteCd");
+				     String errorDocNo = (String) map.get("docNo");
+				     String errorRevision = (String) map.get("revision");
+				     String errorIfSeq = (String) map.get("ifSeq");
+					 String errorMsg = (String) map.get("ifmsg");
+					 if(sSiteCd==errorSiteCd && sName==errorDocNo && sRevision==errorRevision && sSeq==errorIfSeq) {
+						 errList += errorMsg +",";
+						 	/*sqlSession.update("Interface.updateVendorPrintIfFlagE", map);
+							 */					 
+					 }
+				 }
+			
+			 //selectParamMap.put("ifmsg", errList);
+			 try ( SqlSession sqlSession = decSQLSessionFactory.getBatchSession() ){
+				if(DecStringUtil.isNotEmpty(errList)) {
+					selectParamMap.put("ifmsg", errList.substring(0, errList.length() - 1));
+					sqlSession.update("Interface.updateVendorPrintIfFlagE", selectParamMap);
+					System.out.println("IF_FLAG & IF_MSG STATE E Finish");
+					sqlSession.commit();
+				}else {
+				sqlSession.update("Interface.updateVendorPrintIfFlagY", selectParamMap);	
+				System.out.println("IF_FLAG & IF_MSG STATE Y Finish");
+				sqlSession.commit();
+				}
+			 }
+		}
+		System.out.println("모든작업완료");
+				
+		}catch(Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+		}
+		
+		
+	// insert program C:/workspace_test/3dspace_FD02/jpo/decInterfaceDV_mxJPO.java;
+	// compile prog decInterfaceDV force update;	
+	//execute program decInterfaceDV -method getVendorPrint;   
+	//	mql -c "set cont user creator;execute program decDailyLoginStatus -method getVendorPrint;"
+
+	}
+		public static String downloadEcmno(Context context, Map downloadMap, Map returnObjectIdMap) {
+			
+			String fileId = (String) downloadMap.get("ecmno");					
+			String fildName = (String) downloadMap.get("filenm");
+			String newFileName = "";
+			String eMessage = "";
+			//File file = new File("D:\\example\\image.jpg");
+			// 로그인된 사용자의 세션 정보
+			String sessionUserId = "1203171";
+	    	String sessionOrgCd = "1DFUR";
+	
+			String userId = "SUPER";
+			String tdmsNo = fileId; // TDMS_NO
+			String tdmsAddr = "172.20.2.189"; // TDMS Server IP
+			
+			
+			// create connection
+			EcmClient con = new EcmClient();
+			String filePath = "";
+			try {
+				con.connect(tdmsAddr, 2104, userId, userId);
+				try {				
+					filePath = context.createWorkspace();
+				}catch(Exception e) {
+					
+				}
+						
+	//			Path tempPath = Files.createTempFile(fildName, "");
+				String checkInPath = filePath+ "/";
+				String tempPath = filePath+ "/"+ fildName;
+				
+				System.out.println("tempPath is :"+tempPath);
+				//Path tempPath = Files.createTempDirectory(filePath,fildName, "");
+				//System.out.println("ABS PATH : " + tempPath.toAbsolutePath().toString() );
+				System.out.println("ABS PATH : " + tempPath);
+				try (OutputStream os = new FileOutputStream(tempPath.toString())) {
+		        	con.download(tdmsNo, os); // 원본 그대로 다운로드
+	//	        	con.download(tdmsNo + "_N", os); // DRM 해제하여 다운로드
+				}
+	        	logger.info("downloaded file : {} => {}", tdmsNo, tempPath.toString());
+	        	
+	        	String folderSrc =tempPath.toString();
+	        	System.out.println("folderSrc : " + folderSrc );
+	        	int endIndex = folderSrc.indexOf("Temp") + 5;
+	//        	String resultSrc = folderSrc.substring(0, endIndex);
+	        	String resultSrc = checkInPath;
+	        	System.out.println("resultSrc:"+resultSrc);
+	        	newFileName = resultSrc + fildName;
+	        	File file = new File(folderSrc);
+	        	System.out.println(file.getName());
+//	        	File newFile = new File(newFileName);
+//	        	System.out.println(newFile.getName());
+//	        	boolean result = file.renameTo(newFile);
+	        	// 다운로드 파일 표시한다. (크롬 브라우저 필수)
+	//        	Runtime.getRuntime().exec(String.format("cmd /c start chrome %s", tempPath.toUri()));
+	
+	        	// 다운로드 받은 파일을 다시 업로드한다.
+	//	        String newTdmsNo = con.create(tempPath.toString(), sessionUserId, sessionOrgCd, "BASIC");
+	//	        logger.info("uploaded file : {}", newTdmsNo);
+	//	        // 업로드 정상 여부 확인 후 삭제한다.
+	//	        con.delete(sessionUserId, newTdmsNo);
+	//	        logger.info("deleted file : {}", newTdmsNo);
+	        	
+	        	String fileNm_ObjectId = (String) returnObjectIdMap.get(fildName);
+	        	try {
+	        	ContextUtil.startTransaction(context, true);
+	        	//DomainObject doObj = DomainObject.newInstance(context, fileNm_ObjectId);
+	        	CommonDocument cDoc = new CommonDocument(fileNm_ObjectId);
+//				cDoc.createVersion(context, newFile.getName(), newFile.getName(), null); 
+//	        	System.out.println("File Name : "+newFile.getName());
+	        	cDoc.createVersion(context, file.getName(), file.getName(), null); 
+	        	System.out.println("File Name : "+file.getName());
+	        	System.out.println("File Path : "+resultSrc);
+	        	
+	        	cDoc.checkinFile(context, false, true, "", "generic", file.getName(), resultSrc);
+	        	ContextUtil.commitTransaction(context);
+	        	
+	        	} catch (Exception e) {
+					ContextUtil.abortTransaction(context);
+					e.printStackTrace();
+					eMessage = e.getMessage();
+				}
+	        	
+	        	
+	        	
+			} catch (IOException e) {
+				logger.error("error occured while connecting tdms server ...", e);
+	
+	        } finally {
+	        	// EcmClient instance는 반드시 close 해줘야 한다.
+	        	con.close();
+	        }
+			return eMessage;
+		}
+		
+		
+		public void setUpdateCwpIFCDate(Context context, String[] args, String org_cwpId) throws Exception {
+			
+			
+			StringList busSelects = new StringList();
+			busSelects.add(DomainConstants.SELECT_ID);
+			busSelects.add(DomainConstants.SELECT_NAME);
+
+			StringList selectRelStmts = new StringList();
+			selectRelStmts.add(DomainRelationship.SELECT_ID);
+			selectRelStmts.add(DomainConstants.SELECT_NAME);
+			selectRelStmts.add(DomainConstants.SELECT_FROM_ID);
+			selectRelStmts.add(DomainConstants.SELECT_TO_ID);
+			
+			String getIFCForecastDate ="";
+			String getIFCActualDate = "";
+			String getIFCPlanDate = "";
+			String decIFCForecastDate = "";
+		    String decIFCActualDate= 	"";
+		    String decIFCPlanDate= 		"";
+			SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+			Date sfDate = null; 
+			Date saDate = null;  
+			Date spDate = null;  
+			Date dfDate = null; 
+			Date daDate = null; 
+			Date dpDate = null; 
+			// 연결한 후.. 해준 cwp 오브젝트의 deliverable들 찾는다..
+    		DomainObject cwpObject = new DomainObject(org_cwpId);
+			MapList cwpDelist = cwpObject.getRelatedObjects(context,
+					DecConstants.RELATIONSHIP_TASK_DELIVERABLE, // relationship pattern
+					DecConstants.TYPE_DECDELIVERABLEDOC, // object pattern
+					busSelects, // object selects
+					selectRelStmts, // relationship selects
+					false, // from direction
+					true,
+					(short) 0, // recursion level
+					DecConstants.EMPTY_STRING, // object where clause
+					DecConstants.EMPTY_STRING);
+			if(cwpDelist.size()>1) {
+				for(int k = 0 ; k < cwpDelist.size(); k ++) {
+					Hashtable<?, ?> hashtable = (Hashtable<?, ?>) cwpDelist.get(k);
+					String objectId = (String) hashtable.get("id");
+					DomainObject deliverableObject = new DomainObject(objectId);
+					if(k==0) {
+						getIFCForecastDate=deliverableObject.getAttributeValue(context, "decIFCForecastDate");
+						getIFCActualDate=deliverableObject.getAttributeValue(context, "decIFCActualDate");
+					 	getIFCPlanDate=deliverableObject.getAttributeValue(context, "decIFCPlanDate");
+					}else {
+						System.out.println(deliverableObject.getAttributeValue(context, "decIFCForecastDate"));
+						System.out.println(deliverableObject.getAttributeValue(context, "decUnitNm"));
+						
+						decIFCForecastDate=deliverableObject.getAttributeValue(context, "decIFCForecastDate");
+						decIFCActualDate=deliverableObject.getAttributeValue(context, "decIFCActualDate");
+					 	decIFCPlanDate=deliverableObject.getAttributeValue(context, "decIFCPlanDate");  
+					 	
+
+						if(DecStringUtil.isNotEmpty(getIFCForecastDate)) {
+							sfDate = format.parse(getIFCForecastDate);
+						}
+						if(DecStringUtil.isNotEmpty(getIFCActualDate)) {
+							saDate = format.parse(getIFCActualDate);
+						}
+						if(DecStringUtil.isNotEmpty(getIFCPlanDate)) {
+							spDate = format.parse(getIFCPlanDate);
+						}
+						
+						if(DecStringUtil.isNotEmpty(decIFCForecastDate)) {
+							dfDate = format.parse(decIFCForecastDate);
+						}
+						if(DecStringUtil.isNotEmpty(decIFCActualDate)) {
+							daDate = format.parse(decIFCActualDate);
+						}
+						if(DecStringUtil.isNotEmpty(decIFCPlanDate)) {
+							dpDate = format.parse(decIFCPlanDate);
+						}																								
+						Boolean sfTrue = DecStringUtil.isNotEmpty(sfDate);
+						Boolean saTrue = DecStringUtil.isNotEmpty(saDate);
+						Boolean spTrue = DecStringUtil.isNotEmpty(spDate);
+						Boolean dfTrue = DecStringUtil.isNotEmpty(dfDate);
+						Boolean daTrue = DecStringUtil.isNotEmpty(daDate);
+						Boolean dpTrue = DecStringUtil.isNotEmpty(dpDate);
+						System.out.println(spDate);
+						if(sfTrue && dfTrue) {
+							if (sfDate.compareTo(dfDate) < 0 && DecStringUtil.isNotEmpty(dfDate)) {
+								sfDate = dfDate;
+								getIFCForecastDate = format.format(sfDate);
+							}else {
+								System.out.println("Past or Equal");
+							}
+						}else if(sfTrue){
+							getIFCForecastDate = format.format(sfDate);
+						}
+						
+						if(saTrue && daTrue) {
+							if (saDate.compareTo(daDate) < 0 && DecStringUtil.isNotEmpty(daDate)) {
+								saDate = daDate;
+								getIFCActualDate = format.format(saDate);
+							}else {
+								System.out.println("Past or Equal");
+							}
+						}else if(saTrue){
+							getIFCActualDate = format.format(saDate);
+						}
+						
+						System.out.println("spdate:"+ spDate);
+						if(spTrue && dpTrue) {
+							if (spDate.compareTo(dpDate) < 0 && DecStringUtil.isNotEmpty(dpDate)) {
+								spDate = dpDate;
+								getIFCPlanDate = format.format(spDate);
+							}else {
+								System.out.println("Past or Equal");
+								System.out.println("spdate:"+ spDate);
+							}
+						}else if(spTrue){
+							getIFCPlanDate = format.format(spDate);
+							System.out.println("spdate:"+ spDate);
+						}
+					}
+				}     								
+				cwpObject.setAttributeValue(context, "decIFCLastActualDate",getIFCActualDate);
+				cwpObject.setAttributeValue(context, "decIFCLastForecastDate",getIFCForecastDate);
+				cwpObject.setAttributeValue(context, "decIFCLastPlanDate",getIFCPlanDate);
+			}else {
+				for(int k = 0 ; k < cwpDelist.size(); k ++) {
+					Hashtable<?, ?> hashtable = (Hashtable<?, ?>) cwpDelist.get(k);
+					String objectId = (String) hashtable.get("id");
+					DomainObject deliverableObject = new DomainObject(objectId);
+					decIFCForecastDate= deliverableObject.getAttributeValue(context, "decIFCForecastDate"); 
+					decIFCActualDate= deliverableObject.getAttributeValue(context, "decIFCActualDate");     
+					decIFCPlanDate= deliverableObject.getAttributeValue(context, "decIFCPlanDate");  
+					cwpObject.setAttributeValue(context, "decIFCLastActualDate",decIFCActualDate);
+					cwpObject.setAttributeValue(context, "decIFCLastForecastDate",decIFCActualDate);
+					cwpObject.setAttributeValue(context, "decIFCLastPlanDate",decIFCPlanDate);
+				}
+			}
+			
+			System.out.println("**CWP_*SET*_IFC_LAST_DATE FINISH**");
+		}
+		
+		public MapList findDeliverableObject(Context context, String[] args) throws Exception {
+			LocalDate now = LocalDate.now();
+			System.out.println("now:"+now);
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+			String formatedNow = now.format(formatter);
+			System.out.println("formatedNow:"+formatedNow);
+			HashMap dataMap = (HashMap) JPO.unpackArgs(args);
+			String projectId = (String) dataMap.get("parentOID");
+			DomainObject dom_project  = new DomainObject(projectId);
+			dom_project.open(context);
+			String pName = dom_project.getName();
+			StringList busSelects = new StringList();
+			busSelects.add(DomainConstants.SELECT_ID);
+			busSelects.add(DomainConstants.SELECT_NAME);
+			// jhlee Add 07-28 기능 간소화
+			MapList ml = dom_project.getRelatedObjects(context,
+													  DecConstants.RELATIONSHIP_TASK_DELIVERABLE, //pattern to match relationships
+													  DecConstants.TYPE_DECDELIVERABLEDOC, //pattern to match types
+													  busSelects, //the eMatrix StringList object that holds the list of select statement pertaining to Business Obejcts.
+													  null, //the eMatrix StringList object that holds the list of select statement pertaining to Relationships.
+													  false, //get To relationships
+													  true, //get From relationships
+													  (short)1, //the number of levels to expand, 0 equals expand all.
+													  DecConstants.EMPTY_STRING, //where clause to apply to objects, can be empty ""
+													  DecConstants.EMPTY_STRING,
+													  0); //where clause to apply to relationship, can be empty ""
+	
+			return ml;
+		}
+		
+		
+		public Map getTurnOverYN(Context context, String[] args) throws Exception {
+			
+			Map rangeMap = new HashMap();
+			StringList fieldRangeValue = new StringList();
+            StringList fieldDisplayRangeValue = new StringList();
+        	fieldRangeValue.add("N");
+			fieldDisplayRangeValue.add("N");
+			fieldRangeValue.add("Y");
+			fieldDisplayRangeValue.add("Y");
+			rangeMap.put("field_choices",fieldRangeValue);
+			rangeMap.put("field_display_choices",fieldDisplayRangeValue);
+			return rangeMap;
+			
+		}
+		
+		public String getProjectName(Context context, String[] args) throws Exception {
+			
+			HashMap dataMap = (HashMap) JPO.unpackArgs(args);
+			Map paramMap = (Map) dataMap.get("paramMap");
+			
+			String projectId = (String) paramMap.get("objectId");
+			DomainObject dom_project  = new DomainObject(projectId);
+			StringList busSelects = new StringList();
+			busSelects.add(DomainConstants.SELECT_ID);
+			busSelects.add(DomainConstants.SELECT_NAME);
+			StringList selectRelStmts = new StringList();
+			selectRelStmts.add(DecConstants.SELECT_NAME);
+			selectRelStmts.add(DecConstants.SELECT_FROM_ID);
+			selectRelStmts.add(DecConstants.SELECT_TO_ID);
+			
+			String pName = dom_project.getName(context);
+			String projectType = "Project Space";
+					
+			MapList mapList2 = dom_project.getRelatedObjects(context,
+					DecConstants.RELATIONSHIP_TASK_DELIVERABLE, // relationship pattern
+					DecConstants.TYPE_PROJECT_SPACE, // object pattern
+					busSelects, // object selects
+					selectRelStmts, // relationship selects
+					true, // from direction
+					false,
+					(short) 0, // recursion level
+					DecConstants.EMPTY_STRING, // object where clause
+					DecConstants.EMPTY_STRING);
+			 System.out.println("mapList2"+mapList2);
+			 for(int i = 0 ; i < mapList2.size(); i++) {
+				 Hashtable<?, ?> hashT = (Hashtable<?, ?>) mapList2.get(i);
+				 String getPid = (String) hashT.get("id");
+				 DomainObject dom_project2  = new DomainObject(getPid);
+				 pName = dom_project2.getName(context);
+			 }
+			System.out.println("프로젝트코드네임 :"+pName);
+			return pName;
+			
+		}
+		
+		public Map getIWPNumber(Context context, String[] args) throws Exception {
+			
+			HashMap dataMap = (HashMap) JPO.unpackArgs(args);
+			Map paramMap = (Map) dataMap.get("paramMap");
+			Map rangeMap = new HashMap();
+			
+			StringList fieldRangeValue = new StringList();
+            StringList fieldDisplayRangeValue = new StringList();
+            
+	    	StringList busSelects = new StringList();
+			busSelects.add(DomainConstants.SELECT_ID);
+			busSelects.add(DomainConstants.SELECT_NAME);
+			StringList selectRelStmts = new StringList();
+			selectRelStmts.add(DecConstants.SELECT_NAME);
+			selectRelStmts.add(DecConstants.SELECT_FROM_ID);
+			selectRelStmts.add(DecConstants.SELECT_TO_ID);
+			
+			fieldRangeValue.add("");
+			fieldDisplayRangeValue.add("");
+			fieldRangeValue.add("---");
+			fieldDisplayRangeValue.add("---");
+			String iwpName = "";
+			String projectId = (String) paramMap.get("objectId");
+			DomainObject dom_project  = new DomainObject(projectId);
+			String pName = dom_project.getName(context);
+			String pType = dom_project.getType(context);
+			String projectType = "Project Space";
+			if(!DecStringUtil.equals(pType, projectType)) {
+					
+				MapList mapList2 = dom_project.getRelatedObjects(context,
+						DecConstants.RELATIONSHIP_SUBTASK, // relationship pattern
+						DecConstants.TYPE_DECIWPTASK, // object pattern
+						busSelects, // object selects
+						selectRelStmts, // relationship selects
+						false, // from direction
+						true,
+						(short) 0, // recursion level
+						DecConstants.EMPTY_STRING, // object where clause
+						DecConstants.EMPTY_STRING);
+				 System.out.println("mapList2"+mapList2);
+				 for(int i = 0 ; i < mapList2.size(); i++) {
+					 Hashtable<?, ?> hashT = (Hashtable<?, ?>) mapList2.get(i);
+					 String getPid = (String) hashT.get("id");
+					 DomainObject dom_project2  = new DomainObject(getPid);
+					 iwpName = dom_project2.getName(context);
+					 fieldRangeValue.add(iwpName);
+					 fieldDisplayRangeValue.add(iwpName);
+				 }
+				 rangeMap.put("field_choices",fieldRangeValue);
+				 rangeMap.put("field_display_choices",fieldDisplayRangeValue);
+				 return rangeMap;
+			}
+			String sGetTaskType ="decCWPTesk";
+			MapList mlSubTask  = new MapList();
+	    	MapList mlDecTask = new MapList();
+	    	Map mSubTask = null;
+	    	
+	    	MapList decCWPTaskList =  DomainObject.findObjects(context, "decIWPTask", "*","attribute[decProjectCode]=='"+pName+"'",
+					busSelects);
+	    	for(int i = 0 ; i < decCWPTaskList.size(); i++) {
+				HashMap<?, ?> decCWPTask_hashmap = (HashMap<?, ?>) decCWPTaskList.get(i);
+				String org_cwpName = (String) decCWPTask_hashmap.get("name");
+				String org_cwpId = (String) decCWPTask_hashmap.get("id");
+				fieldRangeValue.add(org_cwpName);
+				fieldDisplayRangeValue.add(org_cwpName);
+	    	}
+	    	
+			
+			rangeMap.put("field_choices",fieldRangeValue);
+			rangeMap.put("field_display_choices",fieldDisplayRangeValue);
+	        System.out.println(mlDecTask);
+	        System.out.println("맵 사이즈 : "+ rangeMap.size());
+	        System.out.println("맵 사이즈 : "+ rangeMap);
+
+			return rangeMap;
+			
+		}
+		
+		public void updateIWPNumberCheck(Context context, String[] args) throws Exception{
+			
+			LocalDate now = LocalDate.now();
+			System.out.println("now:"+now);
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+			String formatedNow = now.format(formatter);
+			System.out.println("formatedNow:"+formatedNow);
+			String IWPErrorMsg =
+					EnoviaResourceBundle.getProperty(context, "emxFrameworkStringResource_ko", context.getLocale(), "emxFramework.DecDeliverableDoc.IWPUpdateFail");
+			HashMap programMap = (HashMap) JPO.unpackArgs(args);
+			HashMap paramMap = (HashMap) programMap.get("paramMap");
+			 String newValue = (String) paramMap.get("New Value");
+			//dom : 문서 Object
+			String objectId = (String) paramMap.get("objectId");
+			DomainObject dom = new DomainObject(objectId);
+			String CWPNO = dom.getAttributeValue(context, DecConstants.ATTRIBUTE_DECCWPNO);
+			//String mql = MqlUtil.mqlCommand(context, "print bus $1 select $2",org_objectId,"to[Task Deliverable].from");
+			
+			
+			StringList busSelects = new StringList();
+			busSelects.add(DomainConstants.SELECT_ID);
+			busSelects.add(DomainConstants.SELECT_NAME);
+
+			StringList selectRelStmts = new StringList();
+			selectRelStmts.add(DomainRelationship.SELECT_ID);
+			selectRelStmts.add(DomainConstants.SELECT_NAME);
+			selectRelStmts.add(DomainConstants.SELECT_FROM_ID);
+			selectRelStmts.add(DomainConstants.SELECT_TO_ID);
+			MapList cwpList = dom.getRelatedObjects(context, "Task Deliverable", // relationship pattern
+					"decCWPTask", // object pattern
+					busSelects, // object selects
+					selectRelStmts, // relationship selects
+					true, // to direction
+					false, // from direction
+					(short) 1, // recursion level
+					"", // object where clause
+					null);
+			System.out.println(cwpList);
+			StringList nameList = new StringList();
+			StringList iwpIdList = new StringList();
+			HashMap iwpIdMap = new HashMap();
+			if((cwpList.size()!=0)) {
+				  for(int i=0 ; i < cwpList.size() ; i++) {
+					  Hashtable<?, ?> hashtable = (Hashtable<?, ?>)  cwpList.get(i);
+					  String cwpObjectId = (String) hashtable.get("id");
+					  DomainObject dom_cwp = new DomainObject(cwpObjectId);
+					  MapList IWPList = dom_cwp.getRelatedObjects(context, "Subtask", // relationship pattern
+								"decIWPTask", // object pattern
+								busSelects, // object selects
+								selectRelStmts, // relationship selects
+								false, // to direction
+								true, // from direction
+								(short) 1, // recursion level
+								"", // object where clause
+								null);
+					  for(int j=0 ; j < IWPList.size() ; j++) {
+						  Hashtable<?, ?> hashtable2 = (Hashtable<?, ?>) IWPList.get(j);
+						  String IWPObjectId = (String) hashtable2.get("id");
+						  DomainObject dom_iwp = new DomainObject(IWPObjectId);
+						  String name = dom_iwp.getName(context);				
+						  
+						//  dom.setAttributeValue(context, "decIWPOid", IWPObjectId);
+						//  dom.setAttributeValue(context, "decLatestIFDate", formatedNow);
+						  nameList.add(name);
+						  iwpIdList.add(name);
+						  iwpIdMap.put(name,IWPObjectId);
+					  }
+				  }
+			}
+			if((newValue!="") && (!newValue.equals("---")) && (!nameList.toString().contains(newValue))) {
+						throw new FrameworkException(IWPErrorMsg);					
+			}else if(cwpList.size()==0 && (newValue!="") && (!newValue.equals("---"))) {
+				throw new FrameworkException(IWPErrorMsg);
+			}else if(DecStringUtil.isEmpty(newValue) || DecStringUtil.equals(newValue, "---")){
+				//select to[Task Deliverable|from.type==decIWPTask].from.relationship[Task Deliverable].id dump;
+				String org_iwpId = MqlUtil.mqlCommand(context, "print bus $1 select $2 dump",objectId,"to[Task Deliverable|from.type==decIWPTask].from.relationship[Task Deliverable].id");
+				if(DecStringUtil.isNotEmpty(org_iwpId)){
+					DomainRelationship.disconnect(context, org_iwpId);
+				}
+				dom.setAttributeValue(context, DecConstants.ATTRIBUTE_DECIWPNUMBER, newValue);
+				
+			}		
+			else {
+				String objId = (String) iwpIdMap.get(newValue);
+				System.out.println("objId:"+objId);
+				String org_iwpId = MqlUtil.mqlCommand(context, "print bus $1 select $2 dump",objectId,"to[Task Deliverable|from.type==decIWPTask].from.relationship[Task Deliverable].id");
+				if(DecStringUtil.isNotEmpty(org_iwpId)){
+					DomainRelationship.disconnect(context, org_iwpId);
+				}
+				DomainRelationship.connect(context, new DomainObject(objId), "Task Deliverable",
+						new DomainObject(objectId));
+				dom.setAttributeValue(context, DecConstants.ATTRIBUTE_DECIWPNUMBER, newValue);
+			}
+			
+	     }
+		
+		
+		public void getUnitDoc(Context context, String projectId, StringList cwpIdList, String sType) throws Exception {
+			
+			String nUnit = "Unit";
+			String nArea = "Area";
+			String objPattern = "";
+			String sDeliverableType = DecConstants.TYPE_DECDELIVERABLEDOC;
+			String sVPDocumentType = DecConstants.TYPE_DECVPDOCUMENT;
+			if(sType.equals(sDeliverableType)) {
+				objPattern = sDeliverableType;
+			}else {
+				objPattern = sVPDocumentType;
+			}
+			String sDecWBSType = "";
+			String IWPErrorMsg =
+					EnoviaResourceBundle.getProperty(context, "emxFrameworkStringResource_ko", context.getLocale(), "emxFramework.DecDeliverableDoc.IWPUpdateFail");
+			//HashMap programMap = (HashMap) JPO.unpackArgs(args);
+			//HashMap paramMap = (HashMap) programMap.get("paramMap");
+			String projectId2 = projectId;
+			System.out.println("projectId"+projectId2);
+			DomainObject dom_project = new DomainObject(projectId2);
+			HashMap params = new HashMap();
+			params.put("projectId", projectId);
+			params.put("column", nUnit);
+			
+			Map returnUnit = getRelatedObjects(context, projectId2 ,params, cwpIdList );
+			
+			String sUnit = (String) returnUnit.get("unit");
+			String sArea = (String) returnUnit.get("area");
+			StringList busSelects = new StringList();
+			busSelects.add(DomainConstants.SELECT_ID);
+			busSelects.add(DomainConstants.SELECT_NAME);
+			
+			StringList selectRelStmts = new StringList();
+			selectRelStmts.add(DomainRelationship.SELECT_ID);
+			selectRelStmts.add(DomainConstants.SELECT_NAME);
+			selectRelStmts.add(DomainConstants.SELECT_FROM_ID);
+			selectRelStmts.add(DomainConstants.SELECT_TO_ID);
+			
+			System.out.println("deliverale list find");
+			MapList deliverableList = dom_project.getRelatedObjects(context,
+					"Task Deliverable", // relationship pattern
+					objPattern, // object pattern
+					busSelects, // object selects
+					selectRelStmts, // relationship selects
+					false, // to direction
+					true, // from direction
+					(short) 1, // recursion level
+					"", // object where clause
+					null);
+			String getCwpNo = "";
+			Vector vec = new Vector(deliverableList.size());
+		    for(int i=0 ; i < deliverableList.size() ; i++) {
+				  Hashtable<?, ?> hashtable = (Hashtable<?, ?>)  deliverableList.get(i);
+				  String dObjectId = (String) hashtable.get("id"); // 딜리버러블 오브젝트
+				  String dObjectName = (String) hashtable.get("dObjectName"); // 딜리버러블 오브젝트	
+				  DomainObject dom_deliverable = new DomainObject(dObjectId);
+				  getCwpNo = dom_deliverable.getAttributeValue(context, "decCWPNo");
+				  if(DecStringUtil.isEmpty(dObjectName)) {
+					 // dom_deliverable.open(context);
+					  dom_deliverable.setAttributeValue(context, "decUnitNmDoc", sUnit);	
+					  dom_deliverable.setAttributeValue(context, "decDwgAreaNmDoc", sArea);	
+				  }				  
+		    }
+			System.out.println("deliverableList:"+deliverableList);
+		  //  return vec;
+	}		
+				  
+				  
+	  public Map getRelatedObjects(Context context, String projectId2, Map params, StringList cwpIdList) throws Exception{
+		  
+		  	String nUnit = "Unit";
+			String nArea = "Area";
+			String sDecWBSType = "";
+			String IWPErrorMsg =
+					EnoviaResourceBundle.getProperty(context, "emxFrameworkStringResource_ko", context.getLocale(), "emxFramework.DecDeliverableDoc.IWPUpdateFail");
+			//HashM//HashMap paramMap = (HashMap) programMap.get("paramMap");
+			
+			StringList busSelects = new StringList();
+			busSelects.add(DomainConstants.SELECT_ID);
+			busSelects.add(DomainConstants.SELECT_NAME);
+			
+			String projectId = projectId2;
+			String getColumn = (String) params.get("column");
+			DomainObject dom_project  = new DomainObject(projectId);
+			String projectName = dom_project.getName(context);
+
+
+			StringList abusSelects = new StringList();
+			abusSelects.add(DomainConstants.SELECT_ID);
+			abusSelects.add(DomainConstants.SELECT_NAME);
+			abusSelects.add("from[" + DecConstants.RELATIONSHIP_SUBTASK + "|to.type==" + DecConstants.TYPE_DECCWPTASK + "]");
+
+			StringList selectRelStmts = new StringList();
+			selectRelStmts.add(DomainRelationship.SELECT_ID);
+			selectRelStmts.add(DomainConstants.SELECT_NAME);
+			selectRelStmts.add(DomainConstants.SELECT_FROM_ID);
+			selectRelStmts.add(DomainConstants.SELECT_TO_ID);
+			
+			MapList mapList = dom_project.getRelatedObjects(context,
+					DecConstants.RELATIONSHIP_SUBTASK, // relationship pattern
+					DecConstants.TYPE_PHASE, // object pattern
+					abusSelects, // object selects
+					selectRelStmts, // relationship selects
+					false, // from direction
+					true,
+					(short) 0, // recursion level
+					DecConstants.EMPTY_STRING, // object where clause
+					DecConstants.EMPTY_STRING);
+			String pId = "";
+			String truecheck = "TRUE";
+			String unitValue = "";
+			String areaValue = "";
+			
+			for(int i=0 ; i < mapList.size() ; i++) {
+				  Hashtable<?, ?> hashT = (Hashtable<?, ?>)  mapList.get(i);
+				  String hashTId = (String) hashT.get("id");
+				  DomainObject dom = new DomainObject(hashTId);
+				  String getWBSType = dom.getAttributeValue(context, "decWBSType");
+				  if(getWBSType.equals(nArea)) {
+					  areaValue = dom.getName(context);
+				  }
+				  if(getWBSType.equals(nUnit)) {
+					  unitValue = dom.getName(context);
+				  }			  
+				  String lastSubTask = (String) hashT.get("from[Subtask]");
+				  if(getWBSType.equals(nArea) || getWBSType.equals(nUnit)) {
+					  pId =  (String) hashT.get("id");
+					  DomainObject dom_Phase  = new DomainObject(pId);
+					//
+					  
+					  
+					  MapList cwpList = dom_Phase.getRelatedObjects(context,
+							    DecConstants.RELATIONSHIP_SUBTASK, // relationship pattern
+								DecConstants.TYPE_PHASE, // object pattern
+								abusSelects, // object selects
+								selectRelStmts, // relationship selects
+								false, // from direction
+								true, // to direction
+								(short) 0, // recursion level
+								DecConstants.EMPTY_STRING, // object where clause
+								DecConstants.EMPTY_STRING);
+					  for(int j=0; j < cwpList.size(); j++) {
+						  Hashtable<?, ?> hashCwp = (Hashtable<?, ?>)  cwpList.get(j);
+						  String cwpId = (String) hashCwp.get("id");
+						  String cwpName = (String) hashCwp.get("name");
+						  System.out.println("cwp 같은지 검사하자..");
+					  }
+				  }
+			}
+			DomainObject dom_Phase  = new DomainObject(pId);
+			MapList cwpList = dom_Phase.getRelatedObjects(context,
+					"Subtask", // relationship pattern
+					"decCWPTask", // object pattern
+					busSelects, // object selects
+					selectRelStmts, // relationship selects
+					false, // from direction
+					true, // to direction
+					(short) 0, // recursion level
+					DecConstants.EMPTY_STRING, // object where clause
+					DecConstants.EMPTY_STRING);
+			String cwpName ="";
+			//List<Map<String, String>> unitList =  new ArrayList<Map<String, String>>();
+			//List<Map<String, String>> areaList =  new ArrayList<Map<String, String>>();
+			HashMap unitMap = new HashMap();
+			HashMap areaMap = new HashMap();
+			HashMap mapUA = new HashMap();
+			mapUA.put("unit", unitValue);
+			mapUA.put("area", areaValue);
+			
+			return mapUA;
+	  }
+	  
+	  public List<Map> getInterfaceHistoryList(Context context, String[] args) throws Exception {
+		  MapList mlReturn = new MapList();
+	      List<Map> lReturn = null;
+	      
+		  HashMap dataMap = (HashMap) JPO.unpackArgs(args);
+		 // Map paramMap = (Map) dataMap.get("paramMap");			
+		  String selectedTable = (String) dataMap.get("selectedTable");
+		  String objectId = (String) dataMap.get("objectId");
+		  DomainObject dom = new DomainObject(objectId);
+		  String deliverableOName = dom.getName(context);
+		  
+		  try ( SqlSession sqlSession = decSQLSessionFactory.getBatchSession() ){
+					Map selectParamMap = new HashMap();
+					selectParamMap.put("docNo",deliverableOName);
+					if(selectedTable.equals("decDeliverableDocHistoryTable")) {
+						lReturn = sqlSession.selectList("Interface.selectDeliverableHistory", selectParamMap);
+					}else {
+					lReturn = sqlSession.selectList("Interface.selectVendorPrintHistory", selectParamMap);
+					}
+					System.out.println("resultLisst:"+lReturn);				
+					mlReturn.addAll(lReturn);				
+		  }catch(Exception e) {
+				e.printStackTrace();
+				throw e;
+		  }		
+		  return mlReturn;
+	  }
+	  
+	  public StringList getHistoryDataList(Context context, String[] args) throws Exception {
+	    	StringList slReturn = new StringList();
+	    	try {
+	            HashMap programMap = (HashMap) JPO.unpackArgs(args);
+		    	Map columnMap = (Map)programMap.get("columnMap");
+		    	Map settings = (Map)columnMap.get("settings");
+		    	MapList mlObject = (MapList)programMap.get("objectList");
+		    	Map mObject = null;
+		    	String sColumnName = (String)settings.get("columnName");
+		    	String sExcept = (String)settings.get("except");
+		    	Object oData = null;
+		    	String sData = DecConstants.EMPTY_STRING;
+		    	Date dData = null;
+		    	SimpleDateFormat ev6DisplaySdf = new SimpleDateFormat("yyyy. M. d. HH:mm:ss");
+		    	if(DecStringUtil.equals(sExcept, "time")) {
+		    		ev6DisplaySdf = new SimpleDateFormat("yyyy. M. d");
+		    	}
+		    	Timestamp tsData = null;
+		    	DomainObject doObj = DomainObject.newInstance(context);
+		    	for(Object o : mlObject) {
+		    		sData = null; // Modified by hslee on 2023.06.23
+		    		dData = null; // Modified by jhlee on 2023.07.11
+		    		mObject = (Map)o;
+		    		oData = mObject.get(sColumnName);
+		    		if(oData instanceof String) {
+		    			sData = (String)oData;
+		    			if(DecStringUtil.equals(sExcept, "OIDName")) {
+		    				doObj.setId(sData);
+		    				doObj.open(context);
+		    				sData = doObj.getName();
+		    			}else {
+			    			dData = DecDateUtil.autoChangeDate(sData);
+		    			}
+		    		}else if(oData instanceof Timestamp) {
+	    				tsData = (Timestamp)oData;
+	    				dData = DecDateUtil.autoChangeDate(tsData.toString());
+	    			}else if(oData instanceof BigDecimal) {
+	    				sData = String.valueOf(oData);
+	    			}
+	    			if(dData!= null) {
+	    				sData = DecDateUtil.changeDateFormat(dData, ev6DisplaySdf);
+	    			}
+		    		slReturn.add(sData);
+		    	}
+	    	}catch (Exception e) {
+				e.printStackTrace();
+				throw e;
+			}
+	    	return slReturn;
+	    }
+	  
+	  
+	  public Vector findDeliverableDocFileDownload(Context context, String[] args) throws Exception{
+		  
+		  	Vector fileActionsVector = new Vector();
+		  	HashMap programMap = (HashMap) JPO.unpackArgs(args);
+		  	MapList objectList = (MapList) programMap.get("objectList");
+			Map paramMap = (Map) programMap.get("paramList");		
+			String projectId = (String) paramMap.get("objectId");
+			DomainObject dom_project  = new DomainObject(projectId);
+			String pName = dom_project.getName(context);
+			String projectType = "Project Space";
+			String downloadURL = null;
+			String masterId = null;
+	        String versionId = null;
+	        String revision = null;
+	        String fileActions = null;
+	        String fileName = null;
+	        String encodedFileName = null;
+	        String encodedFormat = null;
+	        String fileFormat = null;
+	        String strPartId = null;
+
+			Locale strLocale = context.getLocale();
+			StringBuffer fileActionsStrBuff = new StringBuffer();
+			String sTipDownload = EnoviaResourceBundle.getProperty(context, EMX_COMPONENTS_STRING_RESOURCE, strLocale,
+	                    "emxComponents.DocumentSummary.ToolTipDownload");
+			
+			StringList busSelects = new StringList();
+			busSelects.add(DomainConstants.SELECT_ID);
+			busSelects.add(DomainConstants.SELECT_NAME);
+
+			StringList selectRelStmts = new StringList();
+			selectRelStmts.add(DomainRelationship.SELECT_ID);
+			busSelects.add(DomainConstants.SELECT_NAME);
+					
+			
+			emxCommonFileUI_mxJPO uiJPO = new emxCommonFileUI_mxJPO(context,  JPO.packArgs(programMap));     	
+			MapList maplist = (MapList) uiJPO.getDeliverableFile(context, JPO.packArgs(programMap), objectList);
+		
+			for(int i = 0; i < maplist.size() ; i++) {
+				Hashtable<?, ?> activeVersionMap = (Hashtable<?, ?>) maplist.get(i);
+				masterId = (String) activeVersionMap.get("masterId");
+				fileName = (String) activeVersionMap.get("description");
+				fileFormat = "generic";
+				revision = (String) activeVersionMap.get("revision");
+				versionId = (String) activeVersionMap.get("id");
+				
+				downloadURL = "javascript:getTopWindow().callCheckout('"
+                       + XSSUtil.encodeForJavaScript(context, masterId) + "','download', '"
+                       + XSSUtil.encodeForJavaScript(context, fileName) + "', '"
+                       + XSSUtil.encodeForJavaScript(context, fileFormat) + "', null, null, null, null, '"
+                       + XSSUtil.encodeForJavaScript(context, strPartId) + "', '" + revision
+                       + "',null,null, null,null, null,null ,null,null, null, '" + versionId + "');";
+               fileActionsStrBuff.append("<a href=\"" + downloadURL + "\">");
+               fileActionsStrBuff.append("<img border='0' src='../common/images/iconActionDownload.gif' alt=\""
+               + sTipDownload + "\" title=\"" + sTipDownload + "\"></img></a>&#160;");
+               
+               fileActions = fileActionsStrBuff.toString();
+	           fileActionsVector.add(fileActions);
+	           fileActionsStrBuff.setLength(0);
+			}
+			System.out.println("문서테이블 다운로드 작업 완료");
+			 return fileActionsVector;
+	  }
+	  
+	  public Vector findDeliverableDocFilePreview(Context context, String[] args) throws Exception{
+		  
+		  	Vector fileActionsVector = new Vector();
+		  	HashMap programMap = (HashMap) JPO.unpackArgs(args);
+		  	MapList objectList = (MapList) programMap.get("objectList");
+			Map paramMap = (Map) programMap.get("paramList");		
+			String projectId = (String) paramMap.get("objectId");
+			DomainObject dom_project  = new DomainObject(projectId);
+			String pName = dom_project.getName(context);
+			String projectType = "Project Space";
+			String downloadURL = null;
+			String masterId = null;
+	        String versionId = null;
+	        String revision = null;
+	        String fileActions = null;
+	        String fileName = null;
+	        String encodedFileName = null;
+	        String encodedFormat = null;
+	        String fileFormat = null;
+	        String strPartId = null;
+
+			Locale strLocale = context.getLocale();
+			StringBuffer fileActionsStrBuff = new StringBuffer();
+			String sTipDownload = EnoviaResourceBundle.getProperty(context, EMX_COMPONENTS_STRING_RESOURCE, strLocale,
+	                    "emxComponents.DocumentSummary.ToolTipDownload");
+			
+			StringList busSelects = new StringList();
+			busSelects.add(DomainConstants.SELECT_ID);
+			busSelects.add(DomainConstants.SELECT_NAME);
+
+			StringList selectRelStmts = new StringList();
+			selectRelStmts.add(DomainRelationship.SELECT_ID);
+			busSelects.add(DomainConstants.SELECT_NAME);
+					
+			
+			emxCommonFileUI_mxJPO uiJPO = new emxCommonFileUI_mxJPO(context,  JPO.packArgs(programMap));     	
+			MapList maplist = (MapList) uiJPO.getDeliverableFile(context, JPO.packArgs(programMap), objectList);
+		
+			for(int i = 0; i < maplist.size() ; i++) {
+				Hashtable<?, ?> activeVersionMap = (Hashtable<?, ?>) maplist.get(i);
+				//HashMap<?, ?> objectListMap = (HashMap<?, ?>) objectList.get(i);
+				masterId = (String) activeVersionMap.get("masterId");
+				fileName = (String) activeVersionMap.get("description");
+				//String objName = (String) objectListMap.get("name");
+				fileFormat = "generic";
+				revision = (String) activeVersionMap.get("revision");
+				versionId = (String) activeVersionMap.get("id");
+				//fileActionsStrBuff.append("<span class=\"object\" draggable=\"false\">");
+				//fileActionsStrBuff.append(objName);
+				String viewerURL = uiJPO.getDVDocumentViewerURL(context, masterId, fileFormat, fileName, strPartId);
+                fileActionsStrBuff.append(viewerURL);
+                //fileActionsStrBuff.append("</span>");
+                fileActions = fileActionsStrBuff.toString();
+	            fileActionsVector.add(fileActions);
+	            fileActionsStrBuff.setLength(0);
+	            //System.out.println("id:"+masterId);
+			}
+			System.out.println("문서파일 미리보기작업 완료");
+			 return fileActionsVector;
+	  }
+	  
+	  public Vector popupTree(Context context, String[] args) throws Exception{
+		  System.out.println("문서 cwpno 테이블컬럼 작업 시작");
+		  	Vector fileActionsVector = new Vector();
+		  	HashMap programMap = (HashMap) JPO.unpackArgs(args);
+		  	MapList objectList = (MapList) programMap.get("objectList");
+			Map paramMap = (Map) programMap.get("paramList");
+			String projectType = "Project Space";
+			
+			
+			String projectId = (String) paramMap.get("objectId");
+			DomainObject dom_project  = new DomainObject(projectId);
+			String pName = dom_project.getName(context);
+			String pType = dom_project.getType(context);
+			if(!DecStringUtil.equals(pType, projectType)) {
+				pName = dom_project.getAttributeValue(context, DecConstants.ATTRIBUTE_DECPROJECTCODE);
+			}
+			String downloadURL = 
+					null;
+
+			Locale strLocale = context.getLocale();
+			StringBuilder sbDeliverableCWPTree = new StringBuilder();
+			String splitCWPNo="";
+			String cwpString = "";
+			for(int i = 0; i < objectList.size() ; i++) {
+				Hashtable<?, ?> objectListMap = (Hashtable<?, ?>) objectList.get(i);
+				String objId = (String) objectListMap.get("id");
+				DomainObject dom_Document  = new DomainObject(objId);
+				String getCWPNo = dom_Document.getAttributeValue(context, DecConstants.ATTRIBUTE_DECCWPNO);
+				String arrCWPNo[] = getCWPNo.split(",");
+				int arrSize = arrCWPNo.length;
+				if(DecStringUtil.isNotEmpty(getCWPNo)) {
+					for(int j = 0; j < arrSize ; j++) {
+						splitCWPNo = arrCWPNo[j];
+						String mqlSplitCwpId = MqlUtil.mqlCommand(context, "temp query bus $1 $2 $3 where $4 select $5 dump",
+								DecConstants.TYPE_DECCWPTASK,splitCWPNo,"*","attribute[decProjectCode]=='"+ pName +"'","id");
+						String arr_splitCwpId[] = mqlSplitCwpId.split(",");
+						String splitCwpId = arr_splitCwpId[3];
+						sbDeliverableCWPTree.append("<a href=\"../common/emxNavigator.jsp?isPopup=false&amp;objectId=");
+						sbDeliverableCWPTree.append(XSSUtil.encodeForHTML(context,splitCwpId));
+						sbDeliverableCWPTree.append("\" target=\"_blank\">");
+						sbDeliverableCWPTree.append(XSSUtil.encodeForHTML(context,splitCWPNo));
+						sbDeliverableCWPTree.append("</a>");
+						if(j!=(arrSize-1)) {
+							sbDeliverableCWPTree.append(",");
+						}
+					}
+				}				
+				cwpString = sbDeliverableCWPTree.toString();
+	            fileActionsVector.add(cwpString);
+	            sbDeliverableCWPTree.setLength(0);
+			}
+			System.out.println("문서 cwpno 테이블컬럼 작업 완료");
+			 return fileActionsVector;
+	  }
+	  
+	  /////////////////////////////////VPDOCUMENT.../////////////////////////////////////
+	  
+	  public MapList findVPDocumentObject(Context context, String[] args) throws Exception {
+			LocalDate now = LocalDate.now();
+			System.out.println("now:"+now);
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+			String formatedNow = now.format(formatter);
+			System.out.println("formatedNow:"+formatedNow);
+			HashMap dataMap = (HashMap) JPO.unpackArgs(args);
+			String projectId = (String) dataMap.get("parentOID");
+			DomainObject dom_project  = new DomainObject(projectId);
+			dom_project.open(context);
+			String pName = dom_project.getName();
+			StringList busSelects = new StringList();
+			busSelects.add(DomainConstants.SELECT_ID);
+			busSelects.add(DomainConstants.SELECT_NAME);
+
+			MapList ml = dom_project.getRelatedObjects(context,
+													  DecConstants.RELATIONSHIP_TASK_DELIVERABLE, //pattern to match relationships
+													  DecConstants.TYPE_DECVPDOCUMENT, //pattern to match types
+													  busSelects, //the eMatrix StringList object that holds the list of select statement pertaining to Business Obejcts.
+													  null, //the eMatrix StringList object that holds the list of select statement pertaining to Relationships.
+													  false, //get To relationships
+													  true, //get From relationships
+													  (short)1, //the number of levels to expand, 0 equals expand all.
+													  DecConstants.EMPTY_STRING, //where clause to apply to objects, can be empty ""
+													  DecConstants.EMPTY_STRING,
+													  0); //where clause to apply to relationship, can be empty ""
+			// jhlee Add 07-28 기능 간소화
+			return ml;
+	}
+	  
+	  
+	  public boolean accessColumnIwpNumber(Context context, String[] args) throws Exception {
+	    	Map programMap = JPO.unpackArgs(args);
+	    	String sOID = (String) programMap.get("objectId");
+	    	DomainObject doObj = DomainObject.newInstance(context, sOID);
+	    	String sObjType = doObj.getTypeName(context);
+	    	
+	    	if(DecStringUtil.equals(sObjType, DecConstants.TYPE_DECDELIVERABLEDOC)) {
+	    		String sAttr = MqlUtil.mqlCommand(context, "print bus $1 select $2 dump",
+	    				sOID,"to[Task Deliverable|from.type=='Project Space'].from.attribute[decIWP_YN]");
+	    		if(DecStringUtil.equals(sAttr,"Y")) {
+	    			return true;
+	    		}else {
+	    			return false;
+	    		}
+	    	}else if(DecStringUtil.equals(sObjType, DecConstants.TYPE_DECCWPTASK)) {
+	    		String sProjectCode = MqlUtil.mqlCommand(context, "print bus $1 select $2 dump",
+	    				sOID,"attribute[decProjectCode]");
+	    		String sProjectId = MqlUtil.mqlCommand(context, "temp query bus $1 $2 $3 select $4 dump",
+	    				DecConstants.TYPE_PROJECT_SPACE,sProjectCode,"*","id");
+	    		String ids[] = sProjectId.split(",");
+	    		String projectId = ids[3];    		
+	    		String sAttr = MqlUtil.mqlCommand(context, "print bus $1 select $2 dump",
+	    				projectId,"attribute[decIWP_YN]");
+	    		if(DecStringUtil.equals(sAttr,"Y")) {
+	    			return true;
+	    		}else {
+	    			return false;
+	    		}
+	    	}else if(DecStringUtil.equals(sObjType, DecConstants.TYPE_PROJECT_SPACE)){
+	    		String sAttr = MqlUtil.mqlCommand(context, "print bus $1 select $2 dump",
+	    				sOID,"attribute[decIWP_YN]");
+	    		if(DecStringUtil.equals(sAttr,"Y")) {
+	    			return true;
+	    		}else {
+	    			return false;
+	    		}
+	    	}else {
+	    		return true;
+	    	}
+	    	
+	    }  
+	  
+	  
+	  /* PROJECT CHANGE HISTORY GET METHOD */
+	  
+	  public List<Map> getChangeHistoryList(Context context, String[] args) throws Exception {
+		  MapList mlReturn = new MapList();
+	      List<Map> lReturn = null;
+		  HashMap dataMap = (HashMap) JPO.unpackArgs(args);
+		 // Map paramMap = (Map) dataMap.get("paramMap");
+	      String parentID = (String) dataMap.get("parentOID");
+		  
+		  String selectedTable = (String) dataMap.get("selectedTable");
+		  DomainObject dom = new DomainObject(parentID);
+		  String projectName = dom.getName(context);
+		  
+		  try ( SqlSession sqlSession = decSQLSessionFactory.getBatchSession() ){
+					Map selectParamMap = new HashMap();
+					selectParamMap.put("siteCd",projectName);
+					
+					lReturn = sqlSession.selectList("Project.selectProjectChangeHistory", selectParamMap);
+					
+					System.out.println("resultLisst:"+lReturn);				
+					mlReturn.addAll(lReturn);				
+		  }catch(Exception e) {
+				e.printStackTrace();
+				throw e;
+		  }		
+		  return mlReturn;
+	  }
+	  
+	  public StringList getChangeHistoryDataList(Context context, String[] args) throws Exception {
+	    	StringList slReturn = new StringList();
+	    	try {
+	            HashMap programMap = (HashMap) JPO.unpackArgs(args);
+		    	Map columnMap = (Map)programMap.get("columnMap");
+		    	Map settings = (Map)columnMap.get("settings");
+		    	MapList mlObject = (MapList)programMap.get("objectList");
+		    	Map mObject = null;
+		    	String sColumnName = (String)settings.get("columnName");
+		    	String sExcept = (String)settings.get("except");
+		    	Object oData = null;
+		    	String sData = DecConstants.EMPTY_STRING;
+		    	Date dData = null;
+		    	SimpleDateFormat ev6DisplaySdf = new SimpleDateFormat("yyyy. M. d. HH:mm:ss");
+		    	if(DecStringUtil.equals(sExcept, "time")) {
+		    		ev6DisplaySdf = new SimpleDateFormat("yyyy. M. d");
+		    	}
+		    	Timestamp tsData = null;
+		    	DomainObject doObj = DomainObject.newInstance(context);
+		    	for(Object o : mlObject) {
+		    		sData = null; // Modified by hslee on 2023.06.23
+		    		dData = null; // Modified by jhlee on 2023.07.11
+		    		mObject = (Map)o;
+		    		oData = mObject.get(sColumnName);
+		    		if(oData instanceof String) {
+		    			sData = (String)oData;
+		    			if(DecStringUtil.equals(sExcept, "OIDName")) {
+		    				doObj.setId(sData);
+		    				doObj.open(context);
+		    				sData = doObj.getName();
+		    			}else {
+			    			dData = DecDateUtil.autoChangeDate(sData);
+		    			}
+		    		}else if(oData instanceof Timestamp) {
+	    				tsData = (Timestamp)oData;
+	    				dData = DecDateUtil.autoChangeDate(tsData.toString());
+	    			}else if(oData instanceof BigDecimal) {
+	    				sData = String.valueOf(oData);
+	    			}
+	    			if(dData!= null) {
+	    				sData = DecDateUtil.changeDateFormat(dData, ev6DisplaySdf);
+	    			}
+		    		slReturn.add(sData);
+		    	}
+	    	}catch (Exception e) {
+				e.printStackTrace();
+				throw e;
+			}
+	    	return slReturn;
+	    }
+}

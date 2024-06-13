@@ -1,0 +1,15 @@
+m|MPFModels\MPFOfferModel.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.1.22330|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\MPFOfferModel\MPFOfferModel.js|1669432500|4086
+s|MPFModels\MPFOfferModel.mweb\src\MPFOfferModel.js|1669417587|0
+u|MPFModels\MPFOfferModel.mweb\src\OfferCollection.js|1669417587|1228
+u|MPFModels\MPFOfferModel.mweb\src\OfferDataProxy.js|1669417587|1474
+u|MPFModels\MPFOfferModel.mweb\src\OfferModel.js|1669417587|1063
+u|MPFModels\MPFOfferModel.mweb\src\ShippingOfferCollection.js|1669417587|769
+u|MPFModels\MPFOfferModel.mweb\src\ShippingOfferFactory.js|1669417587|3395
+u|MPFModels\MPFOfferModel.mweb\src\ShippingOfferModel.js|1669417587|4876
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

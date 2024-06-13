@@ -1,0 +1,1 @@
+define("DS/Tenant/Tenant",[],function(){"use strict";var n;return{getValue:function(){return n},setValue:function(e){return n=e}}});

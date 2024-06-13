@@ -1,0 +1,185 @@
+<OOTBParameterization>
+	<Domain id="AttributeDef" regSuite="EnterpriseChangeMgt">   
+        <Family id="ChangeOrder" regSuite="Framework" nlsKey="emxFramework.Type.Change_Order">
+			<Constant id="appType" value="CBP"/>
+			<Constant id="package" value="ChangeManagement"/>
+			<Constant id="type" value="Change Order"/>
+		</Family>
+	</Domain>
+	<Domain id="AttributeDef" regSuite="EnterpriseChangeMgt">   
+		<Family id="ChangeRequest" regSuite="Framework" nlsKey="emxFramework.Type.Change_Request">
+			<Constant id="appType" value="CBP"/>
+			<Constant id="package" value="ChangeManagement"/>
+			<Constant id="type" value="Change Request"/>
+		</Family>
+	</Domain>
+	<Domain id="AttributeDef" regSuite="EnterpriseChangeMgt">   
+		<Family id="ChangeAnalysis" regSuite="Framework" nlsKey="emxFramework.Type.Impact_Analysis">
+			<Constant id="appType" value="CBP"/>
+			<Constant id="package" value="ChangeManagement"/>
+			<Constant id="type" value="Change Analysis"/>
+		</Family>
+	</Domain>
+	<Domain id="LifecycleTopology" regSuite="EnterpriseChangeMgt">
+	  <Family id="ChangeOrder">
+		<Constant id="policyID" value="Fast track Change"/>
+		<Constant id="appType" value="CBP"/>
+		<Constant id="modifyTopology" value="false"/>
+		<Constant id="renameStates" value="true"/>
+		<Constant id="NLSStateFileName" value="emxFrameworkStringResource.properties"/>
+		<Constant id="lang" value="en,fr"/>
+		<State id="Prepare">
+			<Constant id="sysName" value="Prepare"/>
+			<Constant id="isRemovable" value="false"/>
+			<Constant id="NLSKey" value="emxFramework.State.Fast_track_Change.Prepare"/>
+		</State>
+		<State id="In Work">
+			<Constant id="sysName" value="In Work"/>
+			<Constant id="isRemovable" value="false"/>
+			<Constant id="NLSKey" value="emxFramework.State.Fast_track_Change.In_Work"/>
+		</State>
+		<State id="In Approval">
+			<Constant id="sysName" value="In Approval"/>
+			<Constant id="isRemovable" value="false"/>
+			<Constant id="NLSKey" value="emxFramework.State.Fast_track_Change.In_Approval"/>
+		</State>
+		<State id="Approved">
+			<Constant id="sysName" value="Approved"/>
+			<Constant id="isRemovable" value="false"/>
+			<Constant id="NLSKey" value="emxFramework.State.Fast_track_Change.Approved"/>
+		</State>
+		<State id="Complete">
+			<Constant id="sysName" value="Complete"/>
+			<Constant id="isRemovable" value="false"/>
+			<Constant id="NLSKey" value="emxFramework.State.Fast_track_Change.Complete"/>
+		</State>
+		<State id="Implemented">
+			<Constant id="sysName" value="Implemented"/>
+			<Constant id="isRemovable" value="false"/>
+			<Constant id="NLSKey" value="emxFramework.State.Fast_track_Change.Implemented"/>
+		</State>
+		<Transition id="PrepareToInWork">
+			<Constant id="transName" value=""/>
+			<Constant id="sourceState" value="Prepare"/>
+			<Constant id="targetState" value="In Work"/>
+			<Constant id="removal" value="false"/>
+		</Transition>
+		<Transition id="InWorkToInApproval">
+			<Constant id="transName" value=""/>
+			<Constant id="sourceState" value="In Work"/>
+			<Constant id="targetState" value="In Approval"/>
+			<Constant id="removal" value="false"/>
+		</Transition>
+		<Transition id="InApprovalToApproved">
+			<Constant id="transName" value=""/>
+			<Constant id="sourceState" value="In Approval"/>
+			<Constant id="targetState" value="Approved"/>
+			<Constant id="removal" value="false"/>
+		</Transition>
+		<Transition id="ApprovedToComplete">
+			<Constant id="transName" value=""/>
+			<Constant id="sourceState" value="Approved"/>
+			<Constant id="targetState" value="Complete"/>
+			<Constant id="removal" value="false"/>
+		</Transition>
+		<Transition id="CompleteToImplemented">
+			<Constant id="transName" value=""/>
+			<Constant id="sourceState" value="Complete"/>
+			<Constant id="targetState" value="Implemented"/>
+			<Constant id="removal" value="false"/>
+		</Transition>
+	  </Family>
+	  <Family id="ChangeRequest">
+		<Constant id="policyID" value="Request For Change"/>
+		<Constant id="appType" value="CBP"/>
+		<Constant id="modifyTopology" value="false"/>
+		<Constant id="renameStates" value="true"/>
+		<Constant id="NLSStateFileName" value="emxFrameworkStringResource.properties"/>
+		<Constant id="lang" value="en,fr"/>
+		<State id="Prepare">
+			<Constant id="sysName" value="Prepare"/>
+			<Constant id="isRemovable" value="false"/>
+			<Constant id="NLSKey" value="emxFramework.State.Request_For_Change.Prepare"/>
+		</State>
+		<State id="In Work">
+			<Constant id="sysName" value="In Work"/>
+			<Constant id="isRemovable" value="false"/>
+			<Constant id="NLSKey" value="emxFramework.State.Request_For_Change.In_Work"/>
+		</State>
+		<State id="In Approval">
+			<Constant id="sysName" value="In Approval"/>
+			<Constant id="isRemovable" value="false"/>
+			<Constant id="NLSKey" value="emxFramework.State.Request_For_Change.In_Approval"/>
+		</State>
+		<State id="Approved">
+			<Constant id="sysName" value="Approved"/>
+			<Constant id="isRemovable" value="false"/>
+			<Constant id="NLSKey" value="emxFramework.State.Request_For_Change.Approved"/>
+		</State>
+		<State id="Complete">
+			<Constant id="sysName" value="Complete"/>
+			<Constant id="isRemovable" value="false"/>
+			<Constant id="NLSKey" value="emxFramework.State.Request_For_Change.Complete"/>
+		</State>
+		<Transition id="PrepareToInWork">
+			<Constant id="transName" value=""/>
+			<Constant id="sourceState" value="Prepare"/>
+			<Constant id="targetState" value="In Work"/>
+			<Constant id="removal" value="false"/>
+		</Transition>
+		<Transition id="InWorkToInApproval">
+			<Constant id="transName" value=""/>
+			<Constant id="sourceState" value="In Work"/>
+			<Constant id="targetState" value="In Approval"/>
+			<Constant id="removal" value="false"/>
+		</Transition>
+		<Transition id="InApprovalToApproved">
+			<Constant id="transName" value=""/>
+			<Constant id="sourceState" value="In Approval"/>
+			<Constant id="targetState" value="Approved"/>
+			<Constant id="removal" value="false"/>
+		</Transition>
+		<Transition id="ApprovedToComplete">
+			<Constant id="transName" value=""/>
+			<Constant id="sourceState" value="Approved"/>
+			<Constant id="targetState" value="Complete"/>
+			<Constant id="removal" value="false"/>
+		</Transition>
+	  </Family>
+	  <Family id="ImpactAnalysis">
+		<Constant id="policyID" value="Change Analysis"/>
+		<Constant id="appType" value="CBP"/>
+		<Constant id="modifyTopology" value="false"/>
+		<Constant id="renameStates" value="true"/>
+		<Constant id="NLSStateFileName" value="emxFrameworkStringResource.properties"/>
+		<Constant id="lang" value="en,fr"/>
+		<State id="In Work">
+			<Constant id="sysName" value="In Work"/>
+			<Constant id="isRemovable" value="false"/>
+			<Constant id="NLSKey" value="emxFramework.State.Change_Analysis.In_Work"/>
+		</State>
+		<State id="In Approval">
+			<Constant id="sysName" value="In Approval"/>
+			<Constant id="isRemovable" value="false"/>
+			<Constant id="NLSKey" value="emxFramework.State.Change_Analysis.In_Approval"/>
+		</State>
+		<State id="Complete">
+			<Constant id="sysName" value="Complete"/>
+			<Constant id="isRemovable" value="false"/>
+			<Constant id="NLSKey" value="emxFramework.State.Change_Analysis.Complete"/>
+		</State>
+		<Transition id="InWorkToInApproval">
+			<Constant id="transName" value=""/>
+			<Constant id="sourceState" value="In Work"/>
+			<Constant id="targetState" value="In Approval"/>
+			<Constant id="removal" value="false"/>
+		</Transition>
+		<Transition id="InApprovalToComplete">
+			<Constant id="transName" value=""/>
+			<Constant id="sourceState" value="In Approval"/>
+			<Constant id="targetState" value="Complete"/>
+			<Constant id="removal" value="false"/>
+		</Transition>
+	  </Family>
+	</Domain>
+</OOTBParameterization>

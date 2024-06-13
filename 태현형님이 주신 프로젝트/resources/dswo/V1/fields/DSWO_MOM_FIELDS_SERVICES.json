@@ -1,0 +1,338 @@
+{
+	"dsmvwo:attribute.Step.reference.materialscrap" : {
+		"property": "attribute[DELLmiGeneralOperationReference.V_MaterialScrap,DELLmiLoadingOperationReference.V_MaterialScrap,DELLmiPickingOperationReference.V_MaterialScrap]",
+		"key": "materialScrap",
+		"index": "bo.DELLmiGeneralOperationReference.V_MaterialScrap,bo.DELLmiLoadingOperationReference.V_MaterialScrap,bo.DELLmiPickingOperationReference.V_MaterialScrap"
+	},
+	"dsmvwo:attribute.Step.reference.ganttimesolver" : {
+		"property": "attribute[DELLmiGeneralOperationReference.V_UseGanttTimeSolver]",
+		"key": "ganttimeSolver",
+		"index": "bo.DELLmiGeneralOperationReference.V_UseGanttTimeSolver"
+	},
+    "dsmvwo:attribute.Step.reference.managevariant" : {
+    	"property": "attribute[DELLmiGeneralOperationReference.V_ManageVariant]",
+		"key": "manageVariant",
+		"index": "bo.DELLmiGeneralOperationReference.V_ManageVariant"
+    },
+    "dsmvwo:attribute.Step.reference.timePerFastening" : {
+    	"property": "attribute[DELLmiPunctualOperationReference.V_TimePerFastening]",
+		"key": "timePerFastening",
+		"index": "bo.DELLmiPunctualOperationReference.V_TimePerFastening"
+    },
+    "dsmvwo:attribute.Step.reference.fasteningRate" : {
+    	"property": "attribute[DELLmiPunctualOperationReference.V_FasteningRate]",
+		"key": "fasteningRate",
+		"index": "bo.DELLmiPunctualOperationReference.V_FasteningRate"
+    },
+    "dsmvwo:attribute.Step.reference.capacity" : {
+    	"property": "attribute[DELLmiTransferOperationReference.V_Capacity]",
+		"key": "capacity",
+		"index": "bo.DELLmiTransferOperationReference.V_Capacity"
+    },
+    "dsmvwo:attribute.Alert.reference.text" : {
+        "property": "attribute[DELWkiAlertReference.V_WIAlert_Message]",
+        "key": "text",
+        "example": "Any text",
+        "description": "The Instruction message to inform the Shop Floor worker about safety warning or a change in an established (long running) process.",
+        "index": "bo.DELWkiAlertReference.V_WIAlert_Message"
+	},
+	"dsmvwo:attribute.Alert.reference.showMode" : {
+        "property": "attribute[DELWkiAlertReference.V_WIAlert_ShowMode]",
+        "key": "showMode",
+        "example": "1",
+        "description": "This is used to specify whether the Alert needs to be shown to the worker always or only once",
+        "format": "integer",
+        "index": "bo.DELWkiAlertReference.V_WIAlert_ShowMode"
+	},
+	"dsmvwo:attribute.Alert.reference.trackComfirmation" : {
+        "property": "attribute[DELWkiAlertReference.V_WIAlert_TrackConfirmation]",
+        "key": "trackComfirmation",
+        "example": "true",
+        "description": "This is used to specify whether the Workers acknowledgement of the Alert is to be tracked.",
+        "format": "boolean",
+        "index": "bo.DELWkiAlertReference.V_WIAlert_TrackConfirmation"
+	},
+	 "dsmvwo:attribute.Instruction.reference.text" : {
+	    "property": "attribute[DELWkiInstructionReference.V_WIInstruction_Text]",
+        "key": "text",
+        "example": "Any text",
+        "description": "The Instruction message to give the Shop Floor worker.",
+        "index": "bo.DELWkiInstructionReference.V_WIInstruction_Text"
+	 },
+	 "dswo:attribute.SignOff.reference.text" : {
+	    "property": "attribute[DELWkiSignOffReference.V_WISignOff_Text]",
+        "key": "text",
+        "example": "Any text",
+        "description": "The Instruction message to give the Shop Floor worker details on how to do the sign off.",
+        "index": "bo.DELWkiSignOffReference.V_WISignOff_Text"
+	 },
+	"dswo:attribute.SignOff.reference.isPartialSignoffAllowed": {
+	    "property": "attribute[DELWkiSignOffReference.V_WISignOff_AllowPartial]",
+        "key": "isPartialSignoffAllowed",
+        "example": "true",
+        "description": "This is used to specify whether a Partial Sign Off can be performed on the Shop Floor",
+        "format": "boolean",
+        "index": "bo.DELWkiSignOffReference.V_WISignOff_AllowPartial"
+	},
+	"dswo:attribute.SignOff.reference.isOptional" : {
+		 "property": "attribute[DELWkiSignOffReference.V_WISignOff_NotMandatory]",
+        "key": "isOptional",
+        "example": "true",
+        "description": "This is used to specify whether it is mandatory to perform the Sign Off",
+        "format": "boolean",
+        "index": "bo.DELWkiSignOffReference.V_WISignOff_NotMandatory"
+	},
+	"dswo:attribute.SignOff.reference.actors" : {
+	    "property": "computed",
+        "key": "actors",
+        "example": "[ABC, DEF]",
+        "fetchOnce": true,
+        "description": "The person(s) that need to sign off on the task after it has been completed by the Shop Floor worker.",
+        "index": "bo.DELWkiSignOffReference.V_WISignOff_Actors",
+        "_isMultiValuated": true
+	},
+	"dswo:attribute.DataCollect.reference.text" : {
+        "property": "attribute[DELWkiDataCollectReference.V_WIDC_Text]",
+        "key": "text",
+        "example": "Any text",
+        "description": "The Instruction message to give the Shop Floor worker details on how to do the data collect.",
+        "index": "bo.DELWkiDataCollectReference.V_WIDC_Text"
+	},
+	"dswo:attribute.DataCollect.reference.label" : {
+	    "property": "attribute[DELWkiDataCollectReference.V_WIDC_Label]",
+        "key": "label",
+        "example": "ABCD",
+        "description": "Label in the collected data.",
+        "index": "bo.DELWkiDataCollectReference.V_WIDC_Label"
+	},
+	"dswo:attribute.DataCollect.reference.sampleSize" : {
+        "property": "attribute[DELWkiDataCollectReference.V_WIDC_SampleSize]",
+        "key": "sampleSize",
+        "example": "120",
+        "description": "Indicates the sample size of the collected data",
+        "format": "integer",
+        "index": "bo.DELWkiDataCollectReference.V_WIDC_SampleSize"
+	},
+	"dswo:attribute.DataCollect.reference.dcType" : {
+        "property": "attribute[DELWkiDataCollectReference.V_WIDC_Type]",
+        "key": "dcType",
+        "example": "Integer",
+        "description": "The type of data (Integer, Real, Text, Boolean) that is to be collected.",
+        "format": "integer",
+        "index": "bo.DELWkiDataCollectReference.V_WIDC_Type"
+	},
+	"dswo:attribute.DataCollect.reference.hasMaxValuated" : {
+	    "property": "attribute[DELWkiDataCollectReference.V_WIDC_IsMaxValuated]",
+        "key": "hasMaxValuated",
+        "example": "true or false",
+        "description": "Indicates whether the collected data has max value",
+        "format": "boolean",
+        "index": "bo.DELWkiDataCollectReference.V_WIDC_IsMaxValuated"
+	},
+	"dswo:attribute.DataCollect.reference.hasMinValuated" : {
+	    "property": "attribute[DELWkiDataCollectReference.V_WIDC_IsMinValuated]",
+        "key": "hasMinValuated",
+        "example": "true or false",
+        "description": "Indicates whether the collected data has min value",
+        "format": "boolean",
+        "index": "bo.DELWkiDataCollectReference.V_WIDC_IsMinValuated"
+	},
+	"dswo:attribute.DataCollect.reference.magnitude" : {
+	    "property": "attribute[DELWkiDataCollectReference.V_WIDC_Magnitude]",
+        "key": "magnitude",
+        "example": "Any magnitude",
+        "description": "Indicates the magnitude of the collected data",
+        "index": "bo.DELWkiDataCollectReference.V_WIDC_Magnitude"
+	},
+	"dswo:attribute.DataCollect.reference.maxValue" : {
+        "property": "attribute[DELWkiDataCollectReference.V_WIDC_Max]",
+        "key": "maxValue",
+        "example": "100.00",
+        "description": "The largest possible value that the collected data can be (applicable only to Real and Integer types).",
+        "format": "double",
+        "index": "bo.DELWkiDataCollectReference.V_WIDC_Max"
+	},
+	"dswo:attribute.DataCollect.reference.minValue" : {
+	    "property": "attribute[DELWkiDataCollectReference.V_WIDC_Min]",
+        "key": "minValue",
+        "example": "100.00",
+        "description": "The lowest possible value that the collected data can be (applicable only to Real and Integer types).",
+        "format": "double",
+        "index": "bo.DELWkiDataCollectReference.V_WIDC_Min"
+	},
+	"dswo:attribute.DataCollect.reference.possibleValues" : {
+        "property": "computed",
+        "key": "possibleValues",
+        "example": "com.dassault_systemes.enovia.xapps.dsprcs.implementations.dsprcsOpenAPIImpl.getpossibleValuesResponse",
+        "fetchOnce": true,
+        "description": "The possible values that the collected data can be. This could be array of numbers or array of strings based on the data type.",
+        "_isMultiValuated": true
+	},
+	"dswo:attribute.DataCollect.reference.maxIncluded" : {
+        "property": "attribute[DELWkiDataCollectReference.V_WIDC_IsMaxIncluded]",
+        "key": "maxIncluded",
+        "example": "true or false",
+        "description": "Indicated whether the max value is included.",
+        "format": "boolean",
+        "index": "bo.DELWkiDataCollectReference.V_WIDC_IsMaxIncluded"
+	},
+	"dswo:attribute.DataCollect.reference.minIncluded" : {
+        "property": "attribute[DELWkiDataCollectReference.V_WIDC_IsMinIncluded]",
+        "key": "minIncluded",
+        "example": "true or false",
+        "description": "Indicated whether the min value is included.",
+        "format": "boolean",
+        "index": "bo.DELWkiDataCollectReference.V_WIDC_IsMinIncluded"
+	},
+	"dswo:attribute.DataCollectRow.reference.label" : {
+        "property": "attribute[PLMSpecifyHowToCollectDataCnx.V_DCLabel]",
+        "key": "label",
+        "example": "Any label",
+        "description": "The label to be set.",
+        "index": "bo.PLMSpecifyHowToCollectDataCnx.V_DCLabel"
+	},
+	"dswo:attribute.DataCollectRow.reference.text" : {
+        "property": "computed",
+        "key": "text",
+        "fetchOnce": true,
+        "example": "Any text",
+        "description": "The Instruction message to tell the Shop Floor worker what task needs to perform.",
+        "index": "bo.PLMSpecifyHowToCollectDataCnx.V_DCRichText"
+	},
+	"dswo:attribute.DataCollectRow.reference.mode" : {
+        "property": "attribute[PLMSpecifyHowToCollectDataCnx.V_DCMode]",
+        "key": "mode",
+        "example": "Collected",
+        "description": "Indicates whether data to be collected or computed.",
+        "index": "bo.PLMSpecifyHowToCollectDataCnx.V_DCMode"
+	},
+	"dswo:attribute.DataCollectRow.reference.magnitude" : {
+		"property": "computed",
+        "key": "magnitude",
+        "fetchOnce": true,
+        "example": "Any magnitude",
+        "description": "Object magnitude value."
+    },
+	"dswo:attribute.DataCollectRow.reference.dcType" : {
+		"property": "computed",
+        "key": "dcType",
+        "fetchOnce": true,
+        "example": 1,
+        "description": "Indicates Real(1), Integer(2), Text(3), Boolean(4), Timestamp(5) value."
+	},
+	"dswo:attribute.DataCollectRow.reference.numberOfMeasurements" : {
+        "property": "attribute[PLMSpecifyHowToCollectDataCnx.V_DCNbSameMeasurement]",
+        "key": "numberOfMeasurements",
+        "example": "10",
+        "description": "Specify the number of values to be collected",
+        "format": "integer",
+        "index": "bo.PLMSpecifyHowToCollectDataCnx.V_DCNbSameMeasurement"
+	},
+	"dswo:attribute.DataCollectRow.reference.maxValue" : {
+		"property": "computed",
+        "key": "maxValue",
+        "fetchOnce": true,
+		"example": "com.dassault_systemes.enovia.xapps.dsprcs.implementations.dsprcsOpenAPIImpl.getQuantityResponse",
+        "description": "Object maxValue value."
+	},
+	"dswo:attribute.DataCollectRow.reference.minValue" : {
+		"property": "computed",
+        "key": "minValue",
+        "fetchOnce": true,
+		"example": "com.dassault_systemes.enovia.xapps.dsprcs.implementations.dsprcsOpenAPIImpl.getQuantityResponse",
+        "description": "Object minValue value."
+	},
+	"dswo:attribute.DataCollectRow.reference.controlMinValue" : {
+		"property": "computed",
+        "key": "controlMinValue",
+        "fetchOnce": true,
+		"example": "com.dassault_systemes.enovia.xapps.dsprcs.implementations.dsprcsOpenAPIImpl.getQuantityResponse",
+        "description": "Object controlMinValue value."
+	},
+	"dswo:attribute.DataCollectRow.reference.controlMaxValue" : {
+		"property": "computed",
+        "key": "controlMaxValue",
+        "fetchOnce": true,
+		"example": "com.dassault_systemes.enovia.xapps.dsprcs.implementations.dsprcsOpenAPIImpl.getQuantityResponse",
+        "description": "Object controlMaxValue value."
+	},
+	"dswo:attribute.DataCollectRow.reference.nominalValue" : {
+		"property": "computed",
+        "key": "nominalValue",
+        "fetchOnce": true,
+		"example": "com.dassault_systemes.enovia.xapps.dsprcs.implementations.dsprcsOpenAPIImpl.getQuantityResponse",
+        "description": "Object nominalValue value."
+	},
+	"dswo:attribute.DataCollectRow.reference.possibleValues" : {
+        "property": "computed",
+        "key": "possibleValues",
+        "fetchOnce": true,
+        "example": "com.dassault_systemes.enovia.xapps.dsprcs.implementations.dsprcsOpenAPIImpl.getpossibleValuesResponse",
+        "description": "The possible values that can be collected. This could be array of Integers or array of strings based on the data type.",
+        "_isMultiValuated": true
+	},
+	"dswo:attribute.DataCollectRow.reference.minIncluded" : {
+		"property": "computed",
+        "key": "minIncluded",
+        "fetchOnce": true,
+        "description": "Object minIncluded value."
+	},
+	"dswo:attribute.DataCollectRow.reference.maxIncluded" : {
+		"property": "computed",
+        "key": "maxIncluded",
+        "fetchOnce": true,
+        "description": "Object maxIncluded value."
+	},
+	"dswo:attribute.DataCollectRow.reference.controlMinIncluded" : {
+		"property": "computed",
+        "key": "controlMinIncluded",
+        "fetchOnce": true,
+        "description": "Object controlMinIncluded value."
+	},
+	"dswo:attribute.DataCollectRow.reference.controlMaxIncluded" : {
+		"property": "computed",
+        "key": "controlMaxIncluded",
+        "fetchOnce": true,
+        "description": "Object controlMaxIncluded value."
+	},
+	"dswo:attribute.PrimaryResourceLinkDetail.availabilityMode": {
+		"property": "attribute[PrimaryResourceLinkDetail.V_AvailabilityMode]",
+		"key": "availabilityMode",
+        "example": "StepOnly",
+        "description": ""
+	},
+	"dswo:attribute.PrimaryResourceLinkDetail.capableResourceId": {
+		"property": "attribute[DELLmiIsPositioning.V_IsPositioning]",
+		"key": "capableResourceId",
+        "description": "ID of the primary candidate resource link"
+	},
+	"dswo:attribute.PrimaryResourceLinkDetail.document": {
+		"property": "attribute[DEL_LinkToDocument]",
+        "key": "document",
+        "example": "9FF50FB0000045606274CEAD0004D077",
+        "fetchOnce": true,
+        "description": "Linked document",
+        "_isReferencedObject": false
+	},
+	"dswo:attribute.SecondaryResourceLinkDetail.availabilityMode": {
+		"property": "attribute[SecondaryResourceLinkDetail.V_AvailabilityMode]",
+		"key": "availabilityMode",
+        "example": "StepOnly",
+        "description": "",
+        "_isReferencedObject": false
+	},
+	"dswo:attribute.SecondaryResourceLinkDetail.capableResourceId": {
+		"property": "attribute[DELLmiIsPositioning.V_IsPositioning]",
+		"key": "capableResourceId",
+        "description": "ID of the secondary candidate resource link",
+        "_isReferencedObject": false
+	},
+	"dswo:attribute.SecondaryResourceLinkDetail.document": {
+		"property": "attribute[DEL_LinkToDocument]",
+        "key": "document",
+        "example": "9FF50FB0000045606274CEAD0004D077",
+        "fetchOnce": true,
+        "description": "Linked document",
+        "_isReferencedObject": false
+	}
+}

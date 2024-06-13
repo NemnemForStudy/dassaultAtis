@@ -1,0 +1,571 @@
+<%@page import="org.apache.commons.lang3.StringUtils"%>
+<%@include file = "../programcentral/decProjectKeyQtyReportHeader.inc"%>
+
+<%
+try {
+	List<Map> trendList = null;
+	String fromYear = emxGetParameter(request, "fromYear");
+	String fromMonth = emxGetParameter(request, "fromMonth");
+	String toYear = emxGetParameter(request, "toYear");
+	String toMonth = emxGetParameter(request, "toMonth");
+	try ( SqlSession sqlSession = decSQLSessionFactory.getSession() ) {
+		
+		Map programMap = new HashMap();
+		
+		if ( StringUtils.isEmpty(fromYear) )
+		{
+			programMap.put("objectId", projectId);
+			
+			Map defaultDateMap = JPO.invoke(context, "decKeyQty", null, "getDefaultData", JPO.packArgs(programMap), Map.class);
+			
+			fromYear = String.valueOf( defaultDateMap.get("fromYear") );
+			fromMonth = String.valueOf( defaultDateMap.get("fromMonth") );
+			toYear = String.valueOf( defaultDateMap.get("toYear") );
+			toMonth = String.valueOf( defaultDateMap.get("toMonth") );
+		}
+
+		programMap.clear();
+		programMap.put("sqlSession", sqlSession);
+		programMap.put("projectId", projectId);
+		programMap.put("projectCode", projectCode);
+// 		programMap.put("unitCode", unitCode);
+		programMap.put("unitId", unitId);
+		programMap.put("isProject", isProject);
+		programMap.put("fromYear", fromYear);
+		programMap.put("fromMonth", fromMonth);
+		programMap.put("toYear", toYear);
+		programMap.put("toMonth", toMonth);
+		
+		trendList = JPO.invoke(context, "decKeyQty", null, "getKeyQtyTrendList", JPO.packArgs(programMap), List.class);
+	}
+	
+	Map trendMap = null;
+	final String BUDGET_QUANTITY = "Budget Quantity";
+	final String NET_PRESENT_QUANTITY = "Net Present Quantity";
+	final String FORECAST_QUANTITY = "Forecast Quantity";
+%>
+
+<div id="dpFilterDiv" class="sticky"></div>
+
+<div id="container" style="overflow: scroll;">
+
+</div>
+
+<script src="../webapps/SMAVenHighcharts/9.0.1/highcharts.js"></script>
+
+<link rel="stylesheet" href="../webapps/SMAVenHighcharts/9.0.1/css/highcharts.css"/>
+<style type="text/css">
+@media print {
+    .page-break { page-break-inside:avoid; page-break-after:auto }
+}
+</style>
+
+<script type="text/javascript">
+let containerElem = document.getElementById("container");
+
+function fnRenderRow(tableElem, firstCellText, restCellArr, isTh) {
+	let tdOrth = isTh ? "th" : "td";
+	let trElem = document.createElement("tr");
+	tableElem.appendChild(trElem);
+	
+	if ( firstCellText !== null )
+	{
+		let tdFirstElem = document.createElement(tdOrth);
+		tdFirstElem.innerText = firstCellText;
+		trElem.appendChild(tdFirstElem);
+	}
+	
+	let tdRestCellElem = null;
+	for (let k = 0; k < restCellArr.length; k++)
+	{
+		tdRestCellElem = document.createElement(tdOrth);
+		tdRestCellElem.style = "white-space: nowrap;"
+		
+		tdRestCellElem.innerText = restCellArr[k];
+		trElem.appendChild(tdRestCellElem);
+		
+		if ( !isTh )
+		{
+			tdRestCellElem.setAttribute("class", "number");
+		}
+	}
+	return trElem;
+}
+
+// function fnRenderTable(tableElem, category, xAxisArr, qtyDataArr) {
+function fnRenderTable(tableDivElem, category, xAxisArr, qtyDataArr) {
+	let fixDiv = document.createElement("div");
+	fixDiv.style = "float: left;";
+	tableDivElem.appendChild(fixDiv);
+	
+	let fixTable = document.createElement("table");
+	fixTable.classList.add("list");
+	fixDiv.appendChild(fixTable);
+	
+	let scrollDiv = document.createElement("div");
+	scrollDiv.style = "overflow: auto;";
+	tableDivElem.appendChild(scrollDiv);
+	
+	let scrollTable = document.createElement("table");
+	scrollTable.classList.add("list");
+	scrollDiv.appendChild(scrollTable);
+	
+	fnRenderRow(fixTable, category, [], true);
+	fnRenderRow(fixTable, "Budget Quantity", [], false);
+	let trElm = fnRenderRow(fixTable, "Net Present Quantity", [], false);
+	trElm.classList.add("odd");
+	fnRenderRow(fixTable, "Forecast Quantity", [], false);
+	
+	fnRenderRow(scrollTable, null, xAxisArr, true);
+	
+	let qtyTitleArr = ["<%=BUDGET_QUANTITY %>", "<%=NET_PRESENT_QUANTITY %>", "<%=FORECAST_QUANTITY %>"];
+	
+	let trElem = null;
+	for (let k = 0; k < qtyTitleArr.length; k++)
+	{
+		trElem = fnRenderRow(scrollTable, null, qtyDataArr[k], false);
+		trElem.setAttribute("class", k%2 == 0 ? "even" : "odd");
+	}
+	
+// 	tableElem.setAttribute("class", "list");
+	
+// 	fnRenderRow(tableElem, category, xAxisArr, true);
+	
+<%-- 	let qtyTitleArr = ["<%=BUDGET_QUANTITY %>", "<%=NET_PRESENT_QUANTITY %>", "<%=FORECAST_QUANTITY %>"]; --%>
+	
+// 	let trElem = null;
+// 	for (let k = 0; k < qtyTitleArr.length; k++)
+// 	{
+// 		trElem = fnRenderRow(tableElem, qtyTitleArr[k], qtyDataArr[k], false);
+// 		trElem.setAttribute("class", k%2 == 0 ? "even" : "odd");
+// 	}
+}
+
+let chartArr = new Array();
+
+function fnRenderHighChart(divId, titleExpr, category, uom, xAxisArr, budgetArr, netPresentArr, forecastArr) {
+	let divChartArea = document.createElement("div");
+	divChartArea.id = divId + "area";
+	containerElem.appendChild(divChartArea);
+	divChartArea.setAttribute("class", "chartDiv page-break");
+	
+	let divChartDiv = document.createElement("div");
+	divChartDiv.id = divId;
+	divChartArea.appendChild(divChartDiv);
+	
+// 	let tableElem = document.createElement("table");
+// 	divChartArea.appendChild(tableElem);
+	
+	let tableDivElem = document.createElement("div");
+	divChartArea.appendChild(tableDivElem);
+	
+	let brElem = document.createElement("br");
+	divChartArea.appendChild(brElem);
+	
+	let hrElem = document.createElement("hr");
+	divChartArea.appendChild(hrElem);
+	
+	let chartObj = Highcharts.chart(divId, {
+	    title: {
+	        text: titleExpr
+	    },
+
+	    yAxis: {
+	        title: {
+	            text: uom
+	        }
+	    },
+	    xAxis: {
+	    		categories: xAxisArr
+	    },
+
+	    plotOptions: {
+	        series: {
+	            label: {
+	                connectorAllowed: false
+	            }
+	        }
+	    },
+	    
+	    credits: {
+	    	enabled: false
+	    },
+
+	    series: [{
+	        name: '<%=BUDGET_QUANTITY %>',
+	        data: budgetArr
+	    }, {
+	        name: '<%=NET_PRESENT_QUANTITY %>',
+	        data: netPresentArr
+	    }, {
+	        name: '<%=FORECAST_QUANTITY %>',
+	        data: forecastArr
+	    }],
+
+	    responsive: {
+	        rules: [{
+	            condition: {
+	                maxWidth: 500
+	            },
+	            chartOptions: {
+	                legend: {
+	                    layout: 'horizontal',
+	                    align: 'center',
+	                    verticalAlign: 'bottom'
+	                }
+	            }
+	        }]
+	    }
+
+	});
+	
+	chartArr.push( chartObj );
+
+// 	fnRenderTable(tableElem, category, xAxisArr, [budgetArr, netPresentArr, forecastArr]);
+	fnRenderTable(tableDivElem, category, xAxisArr, [budgetArr, netPresentArr, forecastArr]);
+}
+
+<%	
+	String dpCode = null;
+	String dpKeyCode = "";
+	String keyCode = null;
+	String titleExpr = null;
+	String category = null;
+	String dpExpr = null;
+	String uom = null;
+	String cutOffYearExpr = null;
+	String cutOffYear = null;
+	String prevCutOffYear = "";
+	String cutOffDateExpr = null;
+	String budgetQtyExpr = null;
+	String netPresentQtyExpr = null;
+	String forecastQtyExpr = null;
+	StringList cutOffYearList = null;
+	StringList cutOffDateList = null;
+	StringList cutOffDateList4Chart = new StringList();
+	StringList budgetList = null;
+	StringList netPresentList = null;
+	StringList forecastList = null;
+	MapList dpList = new MapList();
+	Map dpMap = null;
+	int rowIdx = 0;
+	int dpRowCnt = 0;
+	String prevDPCode = null;
+
+	for (int i=0; i<trendList.size(); i++)
+	{
+		trendMap = trendList.get(i);
+		prevCutOffYear = "";
+		cutOffDateList4Chart.clear();
+// 		if ( rowIdx == 0 )
+// 		{
+			cutOffYearExpr = (String) trendMap.getOrDefault("CUT_OFF_YEAR", "");
+			cutOffYearList = FrameworkUtil.splitString(cutOffYearExpr, ",");
+			
+			cutOffDateExpr = (String) trendMap.getOrDefault("CUT_OFF_DATE", "");
+			cutOffDateList = FrameworkUtil.splitString(cutOffDateExpr, ",");
+			
+			for (int k = 0; k < cutOffYearList.size(); k++)
+			{
+				cutOffYear = cutOffYearList.get(k);
+				if ( prevCutOffYear.equals(cutOffYear) )
+				{
+					cutOffDateList4Chart.add(cutOffDateList.get(k));
+				}
+				else
+				{
+					cutOffDateList4Chart.add("\"" + cutOffYear + " " + cutOffDateList.get(k).replaceAll("\"", "") + "\"");
+					prevCutOffYear = cutOffYear;
+				}
+			}
+// 		}
+		
+		rowIdx++;
+		
+		// UNIT이 비어있으면 공종으로 취급한다.
+		uom = (String) trendMap.getOrDefault("UNIT", "");
+		if ( DecStringUtil.isEmpty(uom) )
+		{
+			dpExpr = (String) trendMap.getOrDefault("KEY_ITEM", "");
+			dpCode = (String) trendMap.getOrDefault("DP_CD", "");
+			
+			// DP Filter를 위해 담는다.
+			dpMap = new HashMap();
+			dpMap.put(DomainConstants.SELECT_ID, dpCode);
+			dpMap.put(DomainConstants.SELECT_NAME, dpExpr);
+
+			if ( dpRowCnt == 0 && dpList.size() > 0 )
+			{
+				// DP만 존재하고 실제 데이터는 없는 경우
+				// 해당 DP는 Filter에서 제외된다.
+				dpList.remove(dpList.size() - 1);
+			}
+			
+			// 초기화
+			prevDPCode = dpCode;
+			dpRowCnt = 0;
+			if ( i < trendList.size() - 1 ){
+				dpList.add(dpMap);
+			}
+			continue;
+		}
+		else
+		{
+			// 해당 DP에 데이터가 존재하는지 체크를 위해 count
+			dpRowCnt++;
+		}
+
+		keyCode = (String) trendMap.getOrDefault("KEY_CD", "");
+		dpCode = (String) trendMap.getOrDefault("DP_CD", "");
+		category = dpCode.equalsIgnoreCase("PP") ? (String) trendMap.getOrDefault("CATEGORY", "") : ""; // 2023.10.24. thok Key Q'ty Summary 명칭과 동일하게
+		if ( category.indexOf(dpExpr) == 0 )
+		{
+			titleExpr = category;
+		}
+		else
+		{
+			titleExpr = dpExpr + " - " + category;
+		}
+		titleExpr += " " + (String) trendMap.getOrDefault("KEY_ITEM", "");
+		titleExpr += " [" + uom + "]";
+		System.out.println(category + " " + (String) trendMap.getOrDefault("KEY_ITEM", ""));
+		budgetQtyExpr = (String) trendMap.getOrDefault("PRJ_BUDGET_QTY", "");
+		budgetList = FrameworkUtil.splitString(budgetQtyExpr, ",");
+		
+		netPresentQtyExpr = (String) trendMap.getOrDefault("ENG_NET_PRESENT_QTY", "");
+		netPresentList = FrameworkUtil.splitString(netPresentQtyExpr, ",");
+		
+		forecastQtyExpr = (String) trendMap.getOrDefault("ENG_TOTAL_FORECAST_QTY", "");
+		forecastList = FrameworkUtil.splitString(forecastQtyExpr, ",");
+%>
+		fnRenderHighChart("<%=dpCode + keyCode %>"
+				, `<%=titleExpr %>`
+				, `<%=category %>`
+				, "<%=uom %>"
+				, <%=cutOffDateList4Chart %>
+				, <%=budgetList %>
+				, <%=netPresentList %>
+				, <%=forecastList %>);
+<%		
+	}
+	
+	String dpJsonStr = decWebserviceUtil.convertListToJsonString(dpList);
+%>
+
+function fnSetDPFilter() {
+	let selectExpr = fnGenerateSelectExpr("dpFilter", <%=dpJsonStr %>, '', true, "fnOnDPChange()", "All");
+	document.getElementById("dpFilterDiv").innerHTML = "DP : " + selectExpr;
+}
+
+function fnOnDPChange() {
+	let selectedDP = document.getElementById("dpFilter").value;
+	if ( selectedDP === "" )
+	{
+		$(".chartDiv").show();
+	}
+	else
+	{
+		$(".chartDiv").hide();
+		$("div[id^='" + selectedDP + "']").show();
+	}
+	window.dispatchEvent(new Event("resize"));
+}
+
+function fnSearchValidate() {
+	let validateFieldIdArr = ["fromTdYearVal", "toTdYearVal"];
+	let validateFieldNameArr = ["From Year", "To Year"];
+	
+	let validateFieldId = null;
+	let value2Validate = null;
+	for (let k = 0; k < validateFieldIdArr.length; k++)
+	{
+		validateFieldId = validateFieldIdArr[k];
+		value2Validate = $("#" + validateFieldId).val();
+		
+		if ( "" === value2Validate )
+		{
+			alert(validateFieldNameArr[k] + " must be selected.");
+			$("#" + validateFieldId).focus();
+			return false;
+		}
+	}
+	return true;
+}
+
+function fnSearchImplement() {
+	if ( fnSearchValidate() )
+	{
+		let headerURL = parent.location.href;
+		let headerURLArr = headerURL.split("&");
+		
+		let replaceParamKeyArr = ["projectId", "objectId", "fromYear", "fromMonth", "toYear", "toMonth"];
+		let replaceParamValueArr = ["<%=projectId %>", $("#unitId").val(), $("#fromTdYearVal").val(), $("#fromTdMonthVal").val(), $("#toTdYear").val(), $("#toTdMonthVal").val()];
+		
+		for (let k = 0; k < headerURLArr.length; k++)
+		{
+			for (let m = 0; m < replaceParamKeyArr.length; m++)
+			{
+				if ( headerURLArr[k].indexOf(replaceParamKeyArr[m]) === 0 )
+				{
+					headerURLArr[k] = "";
+				}
+			}
+		}
+		
+		for (let k = 0; k < replaceParamValueArr.length; k++)
+		{
+			headerURLArr.push(replaceParamKeyArr[k] + "=" + replaceParamValueArr[k]);
+		}
+		
+		let convertedHeaderURL = headerURLArr.join("&");
+		
+// 		if ( parent.parent.location.href.indexOf("decemxNavigatorDialog4Dashboard.jsp") > -1 )
+// 		{
+// 			parent.fnSetURL(convertedHeaderURL);
+// 		}
+// 		else
+// 		{
+			parent.fnSetURL(convertedHeaderURL);
+// 		}
+	}
+}
+
+function fnGenerateTableImplement() {
+	let htmlExpr = "<table class='form list'>";
+	htmlExpr += "<tr>";
+		htmlExpr += "<th colspan='2'>Searching</th>";
+	htmlExpr += "</tr>";
+	htmlExpr += "<tr>";
+		htmlExpr += "<td class='label'>Unit</td>";
+		htmlExpr += "<td class='field'>";
+			htmlExpr += fnGenerateSelectExpr("unitId", <%=unitJsonStr %>, "<%=StringUtils.isEmpty(unitId) ? projectId : unitId %>");
+		htmlExpr += "</td>";
+	htmlExpr += "</tr>";		
+// 	htmlExpr += "<tr>";		
+// 		htmlExpr += "<td class='label'>DP</td>";
+// 		htmlExpr += "<td class='field'>";
+<%-- 			htmlExpr += fnGenerateSelectExpr("keyCode", <%=unitJsonStr %>, "<%=StringUtils.isEmpty(unitId) ? projectId : unitId %>"); --%>
+// 		htmlExpr += "</td>";
+// 	htmlExpr += "</tr>";
+	htmlExpr += "<tr>";
+		htmlExpr += "<td class='label'>From</td>";
+		htmlExpr += "<td class='field' colspan='3'>";
+			htmlExpr += "<div id='fromCalendarDiv' style='box-shadow: none;'></div>";
+			htmlExpr += "<input type='hidden' id='fromTdMonthVal'>";
+			htmlExpr += "<input type='hidden' id='fromTdYearVal'>";
+		htmlExpr += "</td>";
+	htmlExpr += "</tr>";
+	htmlExpr += "<tr>";
+		htmlExpr += "<td class='label'>To</td>";
+		htmlExpr += "<td class='field' colspan='3'>";
+			htmlExpr += "<div id='toCalendarDiv' style='box-shadow: none;'></div>";
+			htmlExpr += "<input type='hidden' id='toTdMonthVal'>";
+			htmlExpr += "<input type='hidden' id='toTdYearVal'>";
+		htmlExpr += "</td>";
+	htmlExpr += "</tr>";
+	htmlExpr += "<tr>";
+		htmlExpr += "<td colspan='2'>";
+			htmlExpr += "<a onclick='javascript:parent.fnCloseSearchDiv()'>";
+				htmlExpr += "<button class='btn-primary floatRight' type='button'>Close</button>";
+			htmlExpr += "</a>";
+			htmlExpr += "<a onclick='javascript:fnSearchImplement()'>";
+				htmlExpr += "<button class='btn-primary floatRight' type='button'>Search</button>";
+			htmlExpr += "</a>";
+		htmlExpr += "</td>";
+	htmlExpr += "</tr>";
+	htmlExpr += "</table>";
+	return htmlExpr;
+}
+
+
+
+function fnShowHideFilterImplement() {
+	let filterDivDisplay = $("#filterDiv").css("display");
+	
+	if ( filterDivDisplay === "none" )
+	{
+		$("#filterDiv").show();
+		
+		fnRenderCalendar(<%=fromYear %>, <%=fromMonth %>, <%=toYear %>, <%=toMonth %>, true);
+	}
+	else
+	{
+		$("#filterDiv").hide();
+	}
+	
+}
+
+setFilterCmd();
+
+fnSetDPFilter();
+
+fnHideFSHeader();
+
+fnAdjustStickyOption("dpFilterDiv");
+let containerTopValue = $("#container").offset().top;
+$("#container").css("top", containerTopValue).css("position", "absolute").css("height", "calc(100% - " + containerTopValue + "px)");
+
+$(function() {
+	$(window).on("resize", function() {
+		$("#container").css("Width", $(this).width() + "px");
+	});	
+});
+</script>
+
+<style type="text/css">
+.tdMonth,
+.tdYear1,
+.tdYear {
+	font-size: 14px !important;
+	border:1px solid transparent !important;
+	cursor:pointer !important;
+	font-weight:bold !important;
+	text-align:left !important;
+	padding:5px 5px 5px 12px !important;
+}
+
+.tdMonth {
+	background:#fff url(../common/images/utilCalendarArrowDown.gif) no-repeat right center;
+	text-align:left;   
+} 
+ 
+.tdMonth:hover {
+	background:#efefef url(../common/images/utilCalendarArrowDown.gif) no-repeat right center;
+	border-radius: 4px;
+}
+ 
+/* Year Table Cell */
+.tdYear1 {
+	background:#fff url(../common/images/utilCalendarArrowDown.gif) no-repeat center center !important;
+	padding:5px 15px 5px 12px !important;
+}
+
+.tdYear1:hover {
+	background-color:#efefef !important;
+	border-radius: 4px !important;
+}
+
+/* Year Table Cell */
+.tdYear {
+	background:#fff;
+	border:1px solid #CCC;
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+	border-radius: 4px;
+	margin-left: 3px;
+} 
+
+#container {
+	Width: 100%;
+}
+.chartDiv {
+	Width: 100%;
+}
+</style>
+
+
+<%
+} catch(Exception e) {
+	e.printStackTrace();
+	throw e;
+}
+%>

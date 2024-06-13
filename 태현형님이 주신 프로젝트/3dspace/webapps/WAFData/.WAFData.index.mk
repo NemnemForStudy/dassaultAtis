@@ -1,0 +1,11 @@
+m|WebAppsFoundations\WAFData.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.0.22241|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\WAFData\WAFData.js|1661806321|11074
+s|WebAppsFoundations\WAFData.mweb\src\WAFData.js|1661332875|68173
+t|win_b64\webapps\WAFData\index.html|1647692308|4125
+s|WebAppsFoundations\WAFData.mweb\src\index.html|1455294995|4125
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

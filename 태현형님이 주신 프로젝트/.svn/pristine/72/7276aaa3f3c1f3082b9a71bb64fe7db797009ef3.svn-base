@@ -1,0 +1,1 @@
+define("DS/ENOXEngineerInfra/ENOXEngineerInfra_it",{});define("DS/ENOXEngineerInfra/assets/nls/xAppCore",{"error.on.startup":"Si è verificato un problema durante l'avvio dell'app. Contattare l'amministratore"});

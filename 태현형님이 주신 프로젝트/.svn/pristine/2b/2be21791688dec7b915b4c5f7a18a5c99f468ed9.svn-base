@@ -1,0 +1,1 @@
+define("UWA/Environments/Swym",["UWA/Core","UWA/Environment","UWA/Storage/Adapter/Dom","UWA/Storage/Adapter/IE","UWA/Storage/Adapter/Cookies","UWA/Storage/Adapter/Object","UWA/Storage/Adapter/Html5","UWA/Class/Collection","UWA/Class/View","UWA/Class/Model","UWA/Class/Store"],function(e,t){"use strict";var r=t.extend({name:"swym"});return e.namespace("Environments/Swym",r,e)});

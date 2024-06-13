@@ -1,0 +1,29 @@
+################################################################################################
+# Create By choimingi 2023. 08. 16
+# Admin Type : command
+# Name : decDocumentInterfaceLogViewTypes 
+################################################################################################
+
+#delete command decDocumentInterfaceLogViewTypes;
+
+add command decDocumentInterfaceLogViewTypes
+	label "emxFramework.command.decDocumentInterfaceLogViewTypes"
+	setting "Registered Suite" "Framework"
+	setting "Image" "${COMMON_DIR}/images/iconActionRefresh.png"
+	setting "Input Type" combobox
+    setting "Range Function" "getRangeForDILogViewShow"
+    setting "Range Program" "decInterfaceDV"
+	setting "Target Location" "hiddenFrame"
+	property "installer" value "ENOVIAEngineering"
+	property "application" value "Framework"
+	property "original name" value "decDocumentInterfaceLogViewTypes" 
+;
+
+# Create By choimingi 2023. 09. 18
+mod command decDocumentInterfaceLogViewTypes add setting "Submit" "true"
+;
+
+#mod menu decDILogViewToolbar remove command decDocumentInterfaceLogViewTypes;
+#mod menu decDILogViewToolbar remove command decDocumentInterfaceLogViewSubmitButton;
+#mod menu decDILogViewToolbar add command decDocumentInterfaceLogViewTypes;
+#mod menu decDILogViewToolbar add command decDocumentInterfaceLogViewSubmitButton;

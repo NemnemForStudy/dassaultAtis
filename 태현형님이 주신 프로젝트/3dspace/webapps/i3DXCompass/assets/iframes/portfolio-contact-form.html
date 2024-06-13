@@ -1,0 +1,93 @@
+<html>
+
+<head>
+    <style>
+        /*body {
+            height: 100%;
+            overflow: hidden;
+        }*/
+    </style>
+</head>
+
+<body>
+    <script type="text/javascript">
+        var search = window.location.search.substring(1, window.location.search.length);
+        var CONFIG = JSON.parse(atob(search));
+        var origin = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port: '');
+        var viewId = 'portfolio-contact-form-' + CONFIG.uid;
+
+        var _getUserInfoAndLoadForm = function () {
+            var element = document.createElement('div');
+            element.setAttribute('id', 'DsxForm-' + CONFIG.id);
+            document.body.appendChild(element);
+
+
+            window.parent.parent.postMessage(JSON.stringify({
+                id: viewId,
+                action: 'onLoaded'
+            }), origin);
+
+           DsxForm.loadForm(CONFIG.id, {
+                prefill: CONFIG.prefill || {},
+                setListeners: {
+                    onSuccess: function (iframe, data) {
+                        setTimeout(function () {
+                            window.parent.parent.postMessage(JSON.stringify({
+                                id: viewId,
+                                action: 'onSuccess'
+                            }), origin);
+
+                            // Clean up
+                            if (DsxForm && DsxForm.removeForm) {
+                                this.container.getElement('iframe').destroy();
+                                DsxForm.removeForm(this._id);
+                            }
+                        }, 3000);
+
+                        return true;//no prevent
+                    }
+                }
+            });
+
+            /*window.addEventListener('resize', function () {
+                var iframeWin = document.getElementById(CONFIG.id);
+
+                window.parent.parent.postMessage(JSON.stringify({
+                    id: viewId,
+                    action: 'onResize',
+                    value: iframeWin.style.height
+                }), origin);
+            });
+
+            // need a on resize event from iframe to avoid this kind of trick
+            for (var index = 0; index < 5; index++) {
+                setTimeout(function () {
+                    var iframeWin = document.getElementById(CONFIG.id);
+
+                    window.parent.parent.postMessage(JSON.stringify({
+                        id: viewId,
+                        action: 'onResize',
+                        value: iframeWin.style.height
+                    }), origin);
+                }, 300 * index);
+            }*/
+        }
+
+        var _injectFormScript = function () {
+            var script = document.createElement('script');
+
+            script.type = 'text/javascript';
+            script.async = true;
+            script.onload = _getUserInfoAndLoadForm;
+            script.src = CONFIG.assetUrl;
+            document.getElementsByTagName('head')[0].appendChild(script);
+        };
+
+        _injectFormScript();
+
+
+
+    </script>
+</body>
+
+</html>

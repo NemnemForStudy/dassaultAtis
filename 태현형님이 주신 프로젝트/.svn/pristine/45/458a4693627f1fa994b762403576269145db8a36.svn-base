@@ -1,0 +1,241 @@
+<?xml version="1.0" ?>
+<!DOCTYPE OOTBParameterization SYSTEM "OOTB_Parameterization.dtd">
+<OOTBParameterization regSuite="ProgramCentral">
+	<Domain id="ProjectMgmtConfiguration" regSuite="ProgramCentral" reloadCache="true">
+	        <Family id="CheckDependency" icon="iconParameterizationDefault.gif">
+	        		<Parameter id="PreventDemoteTaskFromComplete" implementation="com.dassault_systemes.ootbConfiguration.deployment.impl.ConfiguredTriggerImpl">
+					<Argument id="Argument" type="boolean" input="checkbox" default="Disabled"/>
+					<Constant id="triggerName1" value="PolicyProjectTaskStateCompleteDemoteCheck"/>
+					<Constant id="triggerRevision1" value="PreventDemoteFromComplete"/>
+				</Parameter>
+				<Parameter id="CheckStatusOfDependencies" implementation="com.dassault_systemes.ootbConfiguration.deployment.impl.ConfiguredTriggerImpl">
+					<Argument id="Argument" type="boolean" input="checkbox" default="Disabled"/>
+					<Constant id="triggerName1" value="PolicyProjectReviewStateCreatePromoteCheck"/>
+					<Constant id="triggerRevision1" value="CheckDependency"/>
+					<Constant id="triggerName2" value="PolicyProjectReviewStateReviewPromoteCheck"/>
+					<Constant id="triggerRevision2" value="CheckDependency"/>
+					<Constant id="triggerName3" value="PolicyProjectTaskStateAssignPromoteCheck"/>
+					<Constant id="triggerRevision3" value="CheckDependency"/>
+					<Constant id="triggerName4" value="PolicyProjectTaskStateReviewPromoteCheck"/>
+					<Constant id="triggerRevision4" value="CheckDependency"/>
+					<Constant id="triggerName5" value="PolicyProjectSpaceStateAssignPromoteCheck"/>
+					<Constant id="triggerRevision5" value="CheckDependency"/>
+					<Constant id="triggerName6" value="PolicyProjectSpaceStateReviewPromoteCheck"/>
+					<Constant id="triggerRevision6" value="CheckDependency"/>					
+				</Parameter>
+				<Parameter id="CheckStateOfDeliverables" implementation="com.dassault_systemes.ootbConfiguration.deployment.impl.ConfiguredTriggerImpl">
+					<Argument id="Argument" type="boolean" input="checkbox" default="Disabled"/>
+					<Constant id="triggerName1" value="TaskStateAssignDeliverablePromoteAction"/>
+					<Constant id="triggerRevision1" value="autoPromoteTask"/>
+					<Constant id="triggerName2" value="TaskStateActiveDeliverablePromoteAction"/>
+					<Constant id="triggerRevision2" value="autoPromoteTask"/>
+					<Constant id="triggerName3" value="TaskStateReviewDeliverablePromoteAction"/>
+					<Constant id="triggerRevision3" value="autoPromoteTask"/>
+					<Constant id="triggerName4" value="TaskStateCompleteDeliverablePromoteAction"/>
+					<Constant id="triggerRevision4" value="autoPromoteTask"/>
+					<Constant id="triggerName5" value="RelationshipTaskDeliverableTransactionAction"/>
+					<Constant id="triggerRevision5" value="addTaskDeliverableToTask"/>
+					<Constant id="triggerName6" value="RelationshipTaskDeliverableDeleteAction"/>
+					<Constant id="triggerRevision6" value="removeTaskDeliverableFromTask"/>
+				</Parameter>
+		</Family>
+		<Family id="TaskMaturityNotificationTriggers" icon="iconParameterizationDefault.gif">
+		<Parameter id="EnableTaskMaturityPromotionNotifications" implementation="com.dassault_systemes.ootbConfiguration.deployment.impl.ConfiguredTriggerImpl">
+		    <Argument id="Argument" type="boolean" input="checkbox" default="Disabled"/>
+			<Constant id="triggerName1" value="PolicyProjectTaskStateAssignPromoteAction"/>
+			<Constant id="triggerRevision1" value="NotifyAssignToActiveStateChange"/>
+			<Constant id="triggerName2" value="PolicyProjectTaskStateActivePromoteAction"/>
+			<Constant id="triggerRevision2" value="NotifyActiveToReviewStateChange"/>
+		        <Constant id="triggerName3" value="PolicyProjectTaskStateReviewPromoteAction"/>
+			<Constant id="triggerRevision3" value="NotifyReviewToCompleteStateChange"/>
+			<Constant id="triggerName4" value="PolicyProjectReviewStateCreatePromoteAction"/>
+			<Constant id="triggerRevision4" value="NotifyCreateToReviewStateChange"/>
+			<Constant id="triggerName5" value="PolicyProjectReviewStateReviewPromoteAction"/>
+			<Constant id="triggerRevision5" value="NotifyReviewToCompleteStateChange"/>
+		</Parameter>
+		<Parameter id="EnableTaskMaturityDemotionNotifications" implementation="com.dassault_systemes.ootbConfiguration.deployment.impl.ConfiguredTriggerImpl">
+		    <Argument id="Argument" type="boolean" input="checkbox" default="Disabled"/>
+			<Constant id="triggerName1" value="PolicyProjectTaskStateAssignDemoteAction"/>
+			<Constant id="triggerRevision1" value="NotifyAssignToCreateStateChange"/>
+			<Constant id="triggerName2" value="PolicyProjectTaskStateActiveDemoteAction"/>
+			<Constant id="triggerRevision2" value="NotifyActiveToAssignStateChange"/>
+		        <Constant id="triggerName3" value="PolicyProjectTaskStateReviewDemoteAction"/>
+			<Constant id="triggerRevision3" value="NotifyReviewToActiveStateChange"/>
+			<Constant id="triggerName4" value="PolicyProjectTaskStateCompleteDemoteAction"/>
+			<Constant id="triggerRevision4" value="NotifyCompleteToReviewStateChange"/>
+			<Constant id="triggerName5" value="PolicyProjectReviewStateReviewDemoteAction"/>
+			<Constant id="triggerRevision5" value="NotifyReviewToCreateStateChange"/>
+			<Constant id="triggerName6" value="PolicyProjectReviewStateCompleteDemoteAction"/>
+			<Constant id="triggerRevision6" value="NotifyCompleteToReviewStateChange"/>
+		</Parameter>
+		</Family>
+		<Family id="DependencyReadyPromotion" icon="iconParameterizationDefault.gif">
+		<Parameter id="PromoteDependentAndReadyTasks" implementation="com.dassault_systemes.ootbConfiguration.deployment.impl.ConfiguredTriggerImpl">
+		    <Argument id="Argument" type="boolean" input="checkbox" default="Disabled"/>
+			<Constant id="triggerName1" value="PolicyProjectTaskStateAssignPromoteAction"/>
+			<Constant id="triggerRevision1" value="ActiveNotificationDependentTaskAction"/>
+			<Constant id="triggerName2" value="PolicyProjectTaskStateReviewPromoteAction"/>
+			<Constant id="triggerRevision2" value="CompletionNotificationDependentTaskAction"/>
+		</Parameter>
+		<Parameter id="DPM_ReadyTaskDays" implementation="com.dassault_systemes.ootbConfiguration.deployment.impl.ParameterizationExpressionImpl" regSuite="ProgramCentral">
+		    <Argument id="Argument" type="string" input="combobox" default="0">
+		        <Value id = "0"/>
+		        <Value id = "14"/>
+                        <Value id = "30"/>
+                        <Value id = "60"/>
+                    </Argument>
+                    <Constant id="expression" value="DPM_ReadyTaskDays"/>
+		</Parameter>
+		</Family>
+		<Family id="Properties" icon="iconParameterizationIdentification.gif">
+			 <Parameter id="DPM_EnforceMandatoryTasks" implementation="com.dassault_systemes.ootbConfiguration.deployment.impl.ParameterizationExpressionImpl" regSuite="ProgramCentral">
+				<Argument id="Argument" type="boolean" input="checkbox" default="Disabled"/>
+					<Constant id="expression" value="DPM_EnforceMandatoryTasks"/>
+					<Constant id="valueChecked" value="true"/>
+					<Constant id="valueUnchecked" value="false"/>
+			 </Parameter>
+			 <Parameter id="DPM_SetActualFinishDateAtReview" implementation="com.dassault_systemes.ootbConfiguration.deployment.impl.ParameterizationExpressionImpl" regSuite="ProgramCentral">
+				<Argument id="Argument" type="boolean" input="checkbox" default="Disabled"/>
+					<Constant id="expression" value="DPM_SetActualFinishDateAtReview"/>
+					<Constant id="valueChecked" value="true"/>
+					<Constant id="valueUnchecked" value="false"/>
+			 </Parameter>			 
+		</Family>		
+	</Domain>
+	<Domain id="ObjectIdentification" regSuite="ProgramCentral">
+		<Family id="ObjectIdentifier">
+			<Parameter id="TaskPrefixSuffix" implementation="com.dassault_systemes.ootbConfiguration.deployment.impl.ObjectAutonamingFormat">
+				<Argument id="PrefixArg" type="string" default="T" />
+				<Argument id="SuffixArg" type="string" default="01" />
+				<Constant id="type" value="Task" /> 
+				<Constant id="sogName" value="type_Task" />
+				<Constant id="sogRevision" value="" />
+				<Constant id="appType" value="CBP" />
+			</Parameter> 
+		</Family>
+	</Domain>
+	<Domain id="ObjectIdentification" regSuite="ProgramCentral">
+		<Family id="ObjectIdentifier">
+			<Parameter id="PhasePrefixSuffix" implementation="com.dassault_systemes.ootbConfiguration.deployment.impl.ObjectAutonamingFormat">
+				<Argument id="PrefixArg" type="string" default="T" />
+				<Argument id="SuffixArg" type="string" default="01" />
+				<Constant id="type" value="Phase" /> 
+				<Constant id="sogName" value="type_Phase" />
+				<Constant id="sogRevision" value="" />
+				<Constant id="appType" value="CBP" />
+			</Parameter> 
+		</Family>
+	</Domain>
+	<Domain id="ObjectIdentification" regSuite="ProgramCentral">
+		<Family id="ObjectIdentifier">
+			<Parameter id="GatePrefixSuffix" implementation="com.dassault_systemes.ootbConfiguration.deployment.impl.ObjectAutonamingFormat">
+				<Argument id="PrefixArg" type="string" default="T" />
+				<Argument id="SuffixArg" type="string" default="01" />
+				<Constant id="type" value="Gate" /> 
+				<Constant id="sogName" value="type_Gate" />
+				<Constant id="sogRevision" value="" />
+				<Constant id="appType" value="CBP" />
+			</Parameter> 
+		</Family>
+	</Domain>
+	<Domain id="ObjectIdentification" regSuite="ProgramCentral">
+		<Family id="ObjectIdentifier">
+			<Parameter id="MilestonePrefixSuffix" implementation="com.dassault_systemes.ootbConfiguration.deployment.impl.ObjectAutonamingFormat">
+				<Argument id="PrefixArg" type="string" default="T" />
+				<Argument id="SuffixArg" type="string" default="01" />
+				<Constant id="type" value="Milestone" /> 
+				<Constant id="sogName" value="type_Milestone" />
+				<Constant id="sogRevision" value="" />
+				<Constant id="appType" value="CBP" />
+			</Parameter> 
+		</Family>
+	</Domain>
+	<Domain id="ObjectIdentification" regSuite="ProgramCentral">
+		<Family id="ObjectIdentifier">
+			<Parameter id="ProgramPrefixSuffix" implementation="com.dassault_systemes.ootbConfiguration.deployment.impl.ObjectAutonamingFormat">
+				<Argument id="PrefixArg" type="string" default="PGM" />
+				<Argument id="SuffixArg" type="string" default="01" />
+				<Constant id="type" value="Program" /> 
+				<Constant id="sogName" value="type_Program" />
+				<Constant id="sogRevision" value="" />
+				<Constant id="appType" value="CBP" />
+			</Parameter> 
+		</Family>
+	</Domain>
+	<Domain id="ObjectIdentification" regSuite="ProgramCentral">
+		<Family id="ObjectIdentifier">
+			<Parameter id="ProjectSpacePrefixSuffix" implementation="com.dassault_systemes.ootbConfiguration.deployment.impl.ObjectAutonamingFormat">
+				<Argument id="PrefixArg" type="string" default="P" />
+				<Argument id="SuffixArg" type="string" default="01" />
+				<Constant id="type" value="Project Space" /> 
+				<Constant id="sogName" value="type_ProjectSpace" />
+				<Constant id="sogRevision" value="" />
+				<Constant id="appType" value="CBP" />
+			</Parameter> 
+		</Family>
+	</Domain>	
+	<Domain id="LifecycleTopology">
+		<Family id="ProjectRisk" collabApps="ProductPlanningAndProgram">
+			<Constant id="policyID" value="Project Risk"/>
+			<Constant id="modifyTopology" value="false"/>
+			<Constant id="renameStates" value="true"/>
+			<Constant id="appType" value="CBP"/>
+			<Constant id="NLSStateFileName" value="emxFrameworkStringResource.properties"/>
+			<Constant id="lang" value="en,fr"/>
+
+			<State id="Create">
+				<Constant id="sysName" value="Create"/>
+				<Constant id="isRemovable" value="false"/>
+				<Constant id="NLSKey" value="emxFramework.State.Project_Risk.Create"/>
+			</State>
+			<State id="Assign">
+				<Constant id="sysName" value="Assign"/>
+				<Constant id="isRemovable" value="false"/>
+				<Constant id="NLSKey" value="emxFramework.State.Project_Risk.Assign"/>
+			</State>
+			<State id="Active">
+				<Constant id="sysName" value="Active"/>
+				<Constant id="isRemovable" value="false"/>
+				<Constant id="NLSKey" value="emxFramework.State.Project_Risk.Active"/>
+			</State>			
+			<State id="Review">
+				<Constant id="sysName" value="Review"/>
+				<Constant id="isRemovable" value="false"/>
+				<Constant id="NLSKey" value="emxFramework.State.Project_Risk.Review"/>
+			</State>	
+			<State id="Complete">
+				<Constant id="sysName" value="Complete"/>
+				<Constant id="isRemovable" value="true"/>
+				<Constant id="NLSKey" value="emxFramework.State.Project_Risk.Complete"/>
+			</State>
+                        <Transition id="CreatetoAssign">
+                        	<Constant id="transName" value=""/>
+                        	<Constant id="sourceState" value="Create"/>
+                        	<Constant id="targetState" value="Assign"/>
+                        	<Constant id="addition" value="OOTB"/>
+                        	<Constant id="removal" value="false"/>
+                        	</Transition>
+                        <Transition id="AssigntoActive">
+                        	<Constant id="transName" value=""/>
+                        	<Constant id="sourceState" value="Assign"/>
+                        	<Constant id="targetState" value="Active"/>
+                        	<Constant id="addition" value="OOTB"/>
+                        	<Constant id="removal" value="false"/>
+                        </Transition>
+                        <Transition id="ActiveReview">
+                        	<Constant id="transName" value=""/>
+                        	<Constant id="sourceState" value="Active"/>
+                        	<Constant id="targetState" value="Review"/>
+                        	<Constant id="addition" value="OOTB"/>
+                        	<Constant id="removal" value="false"/>
+                        </Transition>
+                        <Transition id="ReviewComplete">
+                        	<Constant id="transName" value=""/>
+                        	<Constant id="sourceState" value="Review"/>
+                        	<Constant id="targetState" value="Complete"/>
+                        	<Constant id="addition" value="OOTB"/>
+                        	<Constant id="removal" value="false"/>
+                        </Transition>                        
+		</Family>
+	</Domain>	
+</OOTBParameterization>

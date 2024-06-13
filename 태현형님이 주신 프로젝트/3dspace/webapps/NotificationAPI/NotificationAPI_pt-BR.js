@@ -1,0 +1,1 @@
+define("DS/NotificationAPI/NotificationAPI_pt-BR",{});define("DS/NotificationAPI/assets/nls/feed",{permissionBannerTitle:"Receber notificações sobre novas mensagens",permissionBannerText:"Ativar as notificações da área de trabalho"});

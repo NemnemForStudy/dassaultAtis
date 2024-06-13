@@ -1,0 +1,157 @@
+{
+	"properties": {
+		"items": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"required": [
+					"type"
+				],
+				"properties": {
+					"type": {
+						"type": "string",
+						"example": "DELLmiWorkPlanSystemReference"
+					},
+					"attributes": {
+						"properties": {
+							"title": {
+								"type": "string",
+								"example": "My title"
+							},
+							"description": {
+								"type": "string",
+								"example": "My description"
+							},
+							"name": {
+								"description": "Reference name",
+								"type": "string",
+								"example": "My name"
+							},
+							"sequencingMode": {
+								"description": "Object sequencingMode value",
+								"type": "string",
+								"enum": [
+									"Advanced",
+									"Linear"
+								]
+							},
+							"capacity": {
+								"description": "Object capacity value",
+								"type": "integer",
+								"example": 1
+							},
+							"cycleTime": {
+								"description": "Object cycleTime value",
+								"type": "number",
+								"format": "double",
+								"example": 1
+							},
+							"flowModeIN": {
+								"description": "Indicates FirstAllowed (1), Priority (2), Proportion (3)",
+								"type": "integer",
+								"example": 1
+							},
+							"flowModeOUT": {
+								"description": "Indicates FirstAllowed (1), Priority (2), Proportion (3)",
+								"type": "integer",
+								"example": 1
+							},
+							"meanTimeBetweenFailure": {
+								"description": "Object meanTimeBetweenFailure value",
+								"type": "number",
+								"format": "double",
+								"example": 1
+							},
+							"meanTimeToRepair": {
+								"description": "Object meanTimeToRepair value",
+								"type": "number",
+								"format": "double",
+								"example": 1
+							},
+							"operationMode": {
+								"description": "Indicates PUSH (1), SCHEDULE (2), PULL (3)",
+								"type": "integer",
+								"example": 1
+							},
+							"queuingModeIN": {
+								"description": "Indicates LIFO (1), FIFO (2), PRIORITY (3)",
+								"type": "integer",
+								"example": 1
+							},
+							"queuingModeOUT": {
+								"description": "Indicates LIFO (1), FIFO (2), PRIORITY (3)",
+								"type": "integer",
+								"example": 1
+							},
+							"totalProductionTime": {
+								"description": "Object totalProductionTime value",
+								"type": "number",
+								"format": "double",
+								"example": 1
+							},
+							"estimatedDistance": {
+								"description": "Object estimatedDistance value",
+								"type": "number",
+								"format": "double",
+								"example": 1
+							},
+							"transferMode": {
+								"description": "Indicates Continuous (1), Batch (2)",
+								"type": "integer",
+								"example": 1
+							},
+							"arrivalMode": {
+								"description": "Indicates Sequential (1), Any (2), AllTogether (3)",
+								"type": "integer",
+								"example": 1
+							},
+							"initialDelay": {
+								"description": "Object initialDelay value",
+								"type": "number",
+								"format": "double",
+								"example": 1
+							},
+							"dsprcs:MfgProcessEnterpriseAttributes": {
+								"properties": {
+									"Attribute DB Name": {
+										"description": "Attribute DB Value",
+										"type": "string",
+										"example": "Attribute DB Value"
+									}
+								}
+							},
+							"customerAttributes": {
+								"type": "object",
+								"properties": {
+									"customAttr1": {
+										"description": "Attribute DB Value",
+										"type": "string",
+										"example": "Attribute DB Value"
+									},
+									"DBcustomExtension": {
+										"properties": {
+											"MyDBAttr2": {
+												"description": "Attribute DB Value",
+												"type": "string",
+												"example": "Attribute DB Value"
+											}
+										}
+									},
+									"DBcustomAttributesGroup": {
+										"properties": {
+											"MyDBAttr3": {
+												"description": "Attribute DB Value",
+												"type": "string",
+												"example": "Attribute DB Value"
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

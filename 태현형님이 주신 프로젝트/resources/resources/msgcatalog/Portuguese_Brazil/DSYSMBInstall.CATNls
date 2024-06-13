@@ -1,0 +1,216 @@
+<meta charset="UTF-8"/>
+//---------------------------------------------------------------------------
+// Check_SMBECCusto
+//---------------------------------------------------------------------------
+Check_SMBECCusto.Title="Personalização de peças EC para a engenharia de equipe";
+Check_SMBECCusto.Label1="Marque ou desmarque a caixa de seleção para instalar ou não a personalização de peças EC";
+Check_SMBECCusto.Resume="Instalar personalização de peças EC para a engenharia de equipe: /P1";
+InstallSMBECCusto="Personalizações de peças EC";
+
+//---------------------------------------------------------------------------
+//  SMB Server Products Selection => PRF Only w/o TES configuration selected
+//---------------------------------------------------------------------------
+TESnotSelected.Title="Aviso";
+TESnotSelected.Text="O(s) produto(s) selecionado(s) não pode(m) ser instalado(s) sem TES; selecione também TES";
+TESnotSelected.ok="OK";
+
+//---------------------------------------------------------------------------
+//  SMB Server Products Selection => PRF Only w/o MIS product selected
+//---------------------------------------------------------------------------
+PRFnotSelected.Title="Aviso";
+PRFnotSelected.Text="O MIS do produto selecionado não pode ser instalado sem PRF; selecione também PRF";
+PRFnotSelected.ok="OK";
+
+//---------------------------------------------------------------------------
+//  ALL IN ONE INSTALLER HIGH END
+//---------------------------------------------------------------------------
+CPFOnly.Title="Aviso";
+CPFOnly.Text="A configuração de CPF deve ser selecionada. Selecione CPF";
+CPFOnly.ok="OK";
+
+Check_InstallTomcat.Title="Instalação do servidor de aplicativos Apache Tomcat";
+Check_InstallTomcat.Label1="Marque a caixa de seleção para instalar o servidor de aplicativos Tomcat e implantar o aplicativo da Web ENOVIA";
+Check_InstallTomcat.Resume.true="Instalação do Tomcat selecionada: sim";
+Check_InstallTomcat.Resume.false="Instalação do Tomcat selecionada: não";
+Check_InstallTomcat.CheckButton="Instale o servidor de aplicativos Tomcat. Selecione a porta de conexão:";
+
+Check_BuildJ2EEArchive.Title="Compilação de arquivos J2EE e instalação do Tomcat";
+Check_BuildJ2EEArchive.Label1="Marque a caixa de seleção para criar arquivos J2EE (.war e .ear)";
+Check_BuildJ2EEArchive.Resume.true="Criar os arquivos J2EE: sim";
+Check_BuildJ2EEArchive.Resume.false="Criar os arquivos J2EE: não";
+Check_BuildJ2EEArchive.CheckButton="Crie arquivos .ear/.war. Insira o nome do aplicativo da Web:";
+
+Text_WebAppNameAllinOne.Title="Definição do nome do aplicativo J2EE";
+//Text_WebAppNameAllinOne.Label1 = "Please enter the name of the web application"; 
+Text_WebAppNameAllinOne.Resume="Nome do aplicativo da Web: /p1";
+
+TomcatSelectedButNoWarFiles.Title="Seleção não consistente";
+TomcatSelectedButNoWarFiles.Text="Selecione a opção \"build .war\" se você pretende implantar o aplicativo no TomEE!";
+
+Port_tomcaAllinOne.Title="Número da porta de conexão do Tomcat";
+//Port_tomcaAllinOne.Label1 = "Please define the Tomcat connection port number:";  
+Text_Port_tomcaAllinOne.Resume="Porta de conexão do Tomcat: /P1";
+
+Text_SuperUserNameAllInOne.Title="Definição de superusuário, criação de arquivos J2EE e instalação do Tomcat";
+Text_SuperUserNameAllInOne.Label1="Especifique o nome do usuário que tem privilégios de administração de negócios e sistemas";
+Text_SuperUserNameAllInOne.Resume="Nome de superusuário: /P1";
+
+Text_SuperUserPasswordAllInOne.Label1="Especifique a senha do usuário que tem privilégios de administração de negócios e sistemas.";
+
+Check_SMBProgramCentralCusto.Title="Configuração de personalização da central de programas com um clique";
+Check_SMBProgramCentralCusto.Label1="Instale a personalização da central de programas com um clique";
+Check_SMBProgramCentralCusto.Resume="Instalar a personalização da central de programas com um clique: /P1";
+
+X3DCSMA_previousInstallDetected.Title="Uma instalação existente foi detectada";
+X3DCSMA_previousInstallDetected.Text="Uma instalação existente foi detectada.\nEste instalador deve ser usado somente para instalações novas";
+
+X3DCSMA_cmdToUpdateDB.Title="Atualização de banco de dados";
+X3DCSMA_cmdToUpdateDB.Text="Execute o seguinte comando no prompt MQL para atualizar o banco de dados:\nMQL<1>set context user creator;\n  MQL<2>run <server_installation_path>/Apps/install3DSpaceV6R2023x.tcl;\n";
+
+X3DCSMA_failure_registration_3DPassport.Title="Registro do 3DSpace no 3DPassport";
+X3DCSMA_failure_registration_3DPassport.Text="Execute o seguinte script para concluir o registro do 3DSpace no 3DPassport:\n<server>/<os>/code/command/3DSpaceRegistrationIn3DPassport.[sh|bat]\nCertifique-se de que o 3DPassport esteja em execução antes de executar este script.";
+
+passportRegistration.ExecuteAppli="Registrando o 3DSpace no 3DPassport…";
+
+X3DCSMA_cmdToUpdateDBscript.Title="Atualização de banco de dados";
+X3DCSMA_cmdToUpdateDBscript.Text="Execute o seguinte script para atualizar o banco de dados:\n<server_installation_path>/Apps/install3DSpaceR2023x[.sh|.bat];\n";
+
+certificates_repository.Title="Local dos certificados";
+certificates_repository.Label1="Escolha o local dos certificados";
+certificates_repository.Label2="(Ele deve conter somente arquivos de certificados.";
+certificates_repository.Label3=" Se deixado vazio, será necessário importar os certificados manualmente usando o utilitário keytool)";
+certificates_repository.Resume="Local dos certificados: /P1";
+
+certificates_import_error.Title="Erro de importação de certificados";
+certificates_import_error.Text="Pelo menos um certificado não foi importado.\nConsulte o arquivo INFO_import_certs.log para obter mais informações em:/P1";
+
+X3DCSMA_SXI_postinstall.Title="Etapas de configuração da Pesquisa de texto completo";
+X3DCSMA_SXI_postinstall.Label1="Marque a caixa de seleção para configurar e iniciar a indexação após Instalação do 3DSpace";
+X3DCSMA_SXI_postinstall.Label2="Não verifique se outros aplicativos precisam ser instalados.";
+X3DCSMA_SXI_postinstall.CheckButton="Configure e inicie a indexação da pesquisa de texto completo logo após a instalação do 3DSpace.";
+X3DCSMA_SXI_postinstall.Resume.true="Etapas de configuração da pesquisa de texto completo: sim";
+X3DCSMA_SXI_postinstall.Resume.false="Etapas de configuração da pesquisa de texto completo: não";
+
+SXI_baseline_indexation.ExecuteAppli="Executando a configuração de indexação de pesquisa…";
+
+
+//---------------------------------------------------------------------------
+// VPLMCentralAdminUser
+//---------------------------------------------------------------------------
+X3DCSMA_administor_name.Title="Definição do administrador";
+X3DCSMA_administor_name.Label1="Nome do administrador:";
+X3DCSMA_administor_name.Resume="Nome do administrador: /p1";
+
+//---------------------------------------------------------------------------
+// VPLMCentralAdminPwd
+//---------------------------------------------------------------------------
+X3DCSMA_administor_password.Title="Senha do administrador:";
+X3DCSMA_administor_password.Label1="Um usuário administrador será criado: admin_platform";
+X3DCSMA_administor_password.Label2="Senha do administrador:";
+
+X3DCSMA_slashvar_notwritable="A instalação precisa criar pastas em /var/DassaultSystemes/. Verifique se esta pasta existe antes de iniciar a instalação";
+
+//---------------------------------------------------------------------------
+// Text_SuperUserName
+//---------------------------------------------------------------------------
+X3DCSMA_creator_name.Title="Superusuário//senha";
+X3DCSMA_creator_name.Label1="Especifique o nome do usuário que tem privilégios de administração de negócios e sistemas.";
+X3DCSMA_creator_name.Resume="Nome do superusuário: /p1";
+
+//---------------------------------------------------------------------------
+// Text_SuperUserPwd
+//---------------------------------------------------------------------------
+X3DCSMA_creator_password.Title="Superusuário//senha";
+X3DCSMA_creator_password.Label1="Especifique a senha do usuário com privilégios de administração de negócios e sistemas.";
+
+X3DCSMA_CheckCredentialsFailed.Title="Erro de autenticação";
+X3DCSMA_CheckCredentialsFailed.Text="O seguinte erro foi relatado ao tentar conectar:\n\n/P1";
+
+X3DCSMA_upgradefailed.Title="Erro MQL";
+X3DCSMA_upgradefailed.Label1="Ocorreu um erro ao executar o comando MQL>upgrade:/P1";
+X3DCSMA_upgradefailed.ExecuteAppli="Executando MQL>upgrade…";
+
+//---------------------------------------------------------------------------
+// Reconfiguration Change creator's password
+//---------------------------------------------------------------------------
+BOOL_ChangeCreatorPassword.Title="Alterar senha de superusuário (criador)";
+BOOL_ChangeCreatorPassword.CheckButton="Alterar a senha de superusuário (criador)";
+BOOL_ChangeCreatorPassword.Resume.true="Alterar senha de superusuário: sim";
+BOOL_ChangeCreatorPassword.Resume.false="Alterar senha de superusuário: não";
+
+
+X3DCSMA_creator_old_password.Title="Senha antiga do superusuário (criador):";
+X3DCSMA_creator_old_password.Label1="Senha antiga do superusuário (criador):";
+X3DCSMA_creator_new_password.Title="Nova senha de superusuário (criador):";
+X3DCSMA_creator_new_password.Label1="Nova senha de superusuário (criador):";
+
+//---------------------------------------------------------------------------
+// Reconfiguration Change passwords
+//--------------------------------------------------------------------------- 
+BOOL_ChangeAdministratorPassword.Title="Alterar senha do administrador da plataforma (admin_platform)";
+BOOL_ChangeAdministratorPassword.CheckButton="Alterar a senha do administrador da plataforma (admin_platform)";
+BOOL_ChangeAdministratorPassword.Resume.true="Alterar senha do administrador da plataforma: sim";
+BOOL_ChangeAdministratorPassword.Resume.false="Alterar senha do Administrador da plataforma: não";
+
+
+X3DCSMA_admin_platform_old_password.Title="Senha antiga do administrador da plataforma:";
+X3DCSMA_admin_platform_old_password.Label1="Senha antiga do administrador da plataforma:";
+X3DCSMA_admin_platform_new_password.Title="Nova senha do administrador da plataforma:";
+X3DCSMA_admin_platform_new_password.Label1="Nova senha do administrador da plataforma:";
+
+//---------------------------------------------------------------------------
+// Reconfiguration Error changing password
+//--------------------------------------------------------------------------- 
+changePasswordFailed.Title="Erro ao alterar a senha";
+changePasswordFailed.Text="O seguinte erro foi detectado ao alterar a senha:/p1";
+
+//---------------------------------------------------------------------------
+// Reconfig Store path
+//---------------------------------------------------------------------------
+BOOL_ChangeStorePath.Title="Alterar caminho de armazenamento";
+BOOL_ChangeStorePath.CheckButton="Gostaria de alterar o caminho de armazenamento?";
+BOOL_ChangeStorePath.Resume.true="Alterar caminho de armazenamento: sim";
+BOOL_ChangeStorePath.Resume.false="Alterar caminho de armazenamento: não";
+
+//---------------------------------------------------------------------------
+// Reconfiguration Update Store fcurl
+//---------------------------------------------------------------------------
+BOOL_reconfigure_FCSURL.Title="Alterar URL do FCS";
+BOOL_reconfigure_FCSURL.CheckButton="Alterar URL do FCS dos armazenamentos";
+BOOL_reconfigure_FCSURL.Resume.true="Alterar URL do FCS dos armazenamentos: Sim";
+BOOL_reconfigure_FCSURL.Resume.false="Alterar URL do FCS dos armazenamentos: Não";
+
+RECONF_X3DCSMA_FCSURL.Title="Novo URL do serviço FCS:";
+RECONF_X3DCSMA_FCSURL.Label1="URL do serviço FCS:";
+RECONF_X3DCSMA_FCSURL.Resume="URL do serviço FCS: /p1";
+
+changePasswordFailed.Title="Erro ao alterar o fcbsurl de armazenamento";
+changePasswordFailed.Text="O seguinte erro foi detectado ao alterar o fcbsurl de armazenamento: /p1";
+
+//---------------------------------------------------------------------------
+// Reconfiguration check creator password
+//--------------------------------------------------------------------------- 
+ConnectionSuperUserFailed.Title="Erro de conexão";
+ConnectionSuperUserFailed.Text="O seguinte erro foi detectado ao tentar conectar:/p1";
+
+//---------------------------------------------------------------------------
+// check execution of inspectdb
+//--------------------------------------------------------------------------- 
+inspectDBKO.Title="Erro ao executar o comando mql";
+inspectDBKO.Text="Um erro foi detectado ao executar o comando MQL>list\nVocê pode consultar esse arquivo de log para obter mais detalhes:/P1";
+inspectDBKO.ok="OK";
+inspectDBKO.quit="Sair";
+
+//---------------------------------------------------------------------------
+// /tmp in noexec mount
+//---------------------------------------------------------------------------
+test_execution_rights_script.Exceptions.actCreateProcess.Title="Não é possível executar scripts da pasta temporária padrão";
+test_execution_rights_script.Exceptions.actCreateProcess.Text="Se a pasta temporária (Ex: /tmp) estiver montada no modo ''noexec, você precisará exportar a variável 'TMPDIR' para uma pasta na qual poderá executar scripts.\nEm seguida, reinicie o instalador com este conjunto de variáveis.";
+
+
+// ----------------------------------------
+// Special char in admin_platform password
+// ----------------------------------------
+X3DCSMA_Check_special_chars.Title="Caracteres especiais detectados";
+X3DCSMA_Check_special_chars.Text="Foram detectados caracteres especiais na senha admin_platform\nNão utilize os seguintes caracteres: \ [ { } ! $";
+X3DCSMA_Check_special_chars.ok="OK";

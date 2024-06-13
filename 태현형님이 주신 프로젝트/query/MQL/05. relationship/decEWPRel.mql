@@ -1,0 +1,22 @@
+################################################################################################
+# Create By jhlee : 2023. 05. 26
+# Admin Type : relationship
+# Name : decEWPRel
+################################################################################################
+#del relationship 'decEWPRel';
+add relationship 'decEWPRel' 
+	from type 'decCWPTask' 
+		cardinality n 
+		revision none 
+		clone none 
+	to type 'decEWP'
+		meaning 'decEWP'  
+		cardinality n 
+		revision none 
+		clone replicate
+;
+
+add property 'relationship_decEWPRel' on program eServiceSchemaVariableMapping.tcl to relationship 'decEWPRel';
+mod rel decEWPRel
+	add trigger create check emxTriggerManager input 'RelationshipDecEWPRelCreateCheck'
+;

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Styles xmlns:syp="http://www.3ds.com/xsd/SYP">
+
+  <!--view commands-->
+  <Template syp:name="3DShareAfrWorkshopHeaders" Target="CATCmdHeadersList">
+    <CATCmdHeadersList>
+      <!--3DPlay commands-->
+      <CATCommandHeader ID = "Reframe"   ClassName = "DS/ViewerCommands/VisuReframeViewCmd"     ResourceFile = "3DPlay/3DPlayExperience3D" HelpResourceFile = "3DPlayCommands/3DPlayHelpForCommands3D" />
+      <CATCommandHeader ID = "Zoom"      ClassName = "DS/ViewerCommands/VisuZoomViewCmd"        ResourceFile = "3DPlay/3DPlayExperience3D" HelpResourceFile = "3DPlayCommands/3DPlayHelpForCommands3D" />
+      <CATCommandHeader ID = "Pan"       ClassName = "DS/ViewerCommands/VisuPanViewCmd"         ResourceFile = "3DPlay/3DPlayExperience3D" HelpResourceFile = "3DPlayCommands/3DPlayHelpForCommands3D" />
+      <CATCommandHeader ID = "Rotate"    ClassName = "DS/ViewerCommands/VisuRotateViewCmd"      ResourceFile = "3DPlay/3DPlayExperience3D" HelpResourceFile = "3DPlayCommands/3DPlayHelpForCommands3D" />
+      <!--SPY commands-->
+      <CATCommandHeader ID = "CATSPYAnimateCmdHdr"         ClassName = "DS/SPYUI/commands/CATSPYAnimateCmd"         ResourceFile = "SPYUI/SimulationPlayer" HelpResourceFile = "SPYUI/SimulationPlayerWeb_Help" />
+      <CATCommandHeader ID = "CATSPYMSRAccessCmdHdr"       ClassName = "DS/SPYUI/commands/CATSPYMSRAccessCmd"       ResourceFile = "SPYUI/SimulationPlayer" HelpResourceFile = "SPYUI/SimulationPlayerWeb_Help" />
+      <CATCommandHeader ID = "CATSPYHideShowLegendCmdHdr"  ClassName = "DS/SPYUI/commands/CATSPYHideShowLegendCmd"  ResourceFile = "SPYUI/SimulationPlayer" HelpResourceFile = "SPYUI/SimulationPlayerWeb_Help" />
+      <CATCommandHeader ID = "CATSPYShowHideExtremaCmdHdr" ClassName = "DS/SPYUI/commands/CATSPYShowHideExtremaCmd" ResourceFile = "SPYUI/SimulationPlayer" HelpResourceFile = "SPYUI/SimulationPlayerWeb_Help" />
+    </CATCmdHeadersList>
+  </Template>
+
+
+  <Template syp:name="UNIWorkshopSIMAccess" Target="CATCmdWorkbench">
+    <CATCmdWorkbench Name="SPYworkbench" RepresentationType="AfrActionBar">
+      <!-- Fixed Section -->
+      <CATCmdContainer Name = "SimulationFixed" RepresentationType="AfrActionBarFixedSection">
+          <!-- PLAY -->
+          <CATCmdStarter   Name = "SPYAnimate" Command = "CATSPYAnimateCmdHdr"/>
+          <!-- MSR Access / DD thumbnails (also visible in sections) -->
+          <CATCmdStarter   Name = "MSRAccess" Command = "CATSPYMSRAccessCmdHdr"/>
+      </CATCmdContainer>
+
+      <CATCmdContainer Name = "Simulation" RepresentationType="AfrActionBarSection">
+        <CATCmdStarter Name = "SPYHideShowLegend"  Command = "CATSPYHideShowLegendCmdHdr"/>
+        <CATCmdStarter Name = "SPYShowHideExtrema" Command = "CATSPYShowHideExtremaCmdHdr"/>
+        <CATCmdSeparator Name = "SPYSep1"/>
+        <!-- Rendering View -->
+        <CATCmdStarter Name = "Rotate"        Command = "Rotate" />
+        <CATCmdStarter Name = "Pan"           Command = "Pan" />
+        <CATCmdStarter Name = "Zoom"          Command = "Zoom"/>
+        <CATCmdStarter Name = "Reframe"       Command = "Reframe" />
+      </CATCmdContainer>
+
+    </CATCmdWorkbench>
+  </Template>
+
+</Styles>

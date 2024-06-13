@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:widget="http://www.netvibes.com/ns/">
+  <!-- Copyright 2015 , Dassault Systemes. All rights reserved. -->
+  <head>
+
+    <title>DELMIA Web Infrastructure</title>
+
+    <!-- Application Metas Start -->
+    <!-- link type="image/x-icon" href="../widget/images/MyApps/DELSND_AP_AppIcon24.png" rel="shortcut icon" / -->
+    <meta name="description" content="DELMIA Web Infrastructure" />
+    <meta name="keywords" content="DELMIA Web Infrastructure" />
+    <meta name="author" content="&copy; Dassault Syst&egrave;mes" />
+    <meta name="autoRefresh" content="0" /> <!-- do NOT autorefresh our widget! -->
+    <meta name="debugMode" content="false" /> <!-- prevent caching when debugMode == true -->
+    <meta name="version" content="2018x" />
+    <!-- Application Metas End -->
+
+    <!-- AMDLoader -->
+    <script type="text/javascript" src="../AmdLoader/AmdLoader.js"></script>
+    <script type="text/javascript" src="../WebappsUtils/WebappsUtils.js"></script>
+
+    <!-- Application Standalone emulation files -->
+    <link rel="stylesheet" type="text/css" href="../c/UWA/assets/css/standalone.css" />
+    <script type="text/javascript" src="../c/UWA/js/UWA_Standalone_Alone.js"></script>
+
+    <!-- Web Fundamentals -->
+    <script type="text/javascript" src="../WebVisualization/WebVisualization.js"></script>
+    <script type="text/javascript" src="../WebUX/WebUX.js"></script>
+
+    <style type="text/css">
+      #loading div.loading-indicator {
+        min-height:400px;
+        background:url(../DELWebInfrastructure/DSCommon/graphics/splash-screen.gif) no-repeat scroll center center rgba(0,0,0,0);
+      }
+      #loading div.loading-indicator span.loading-msg {
+         background: url(../DELWebInfrastructure/DSCommon/graphics/ajx_isloading.gif) no-repeat scroll 0 2px rgba(0, 0, 0, 0);
+         font-size: 13px;
+         line-height: normal;
+         padding-left: 24px;
+         position: relative;
+         top: 360px;
+         width: 223px;
+      }
+    </style>
+
+    <widget:preferences>
+      <widget:preference name="collabSpace" type="list" label="CollabSpace">
+          <option value="false" label="" />
+      </widget:preference>
+    </widget:preferences>
+  </head>
+  <body class="loading">
+    <div id="loading">
+      <table style="width:100%;height:100%"><tbody>
+        <tr><td align="center">
+          <div class="loading-indicator">
+            <!-- span class="loading-msg">Initializing...</span -->
+          </div>
+        </td></tr>
+      </tbody></table>
+    </div>
+  </body>
+</html>

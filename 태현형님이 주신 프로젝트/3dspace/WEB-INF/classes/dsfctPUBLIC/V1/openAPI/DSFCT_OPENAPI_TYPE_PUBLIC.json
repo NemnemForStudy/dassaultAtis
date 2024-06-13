@@ -1,0 +1,25 @@
+{
+    "dsfct:FctItem": {
+        "summary": "Functional Item",
+        "description": "Functional Item",
+        "PUBLICMasks": ["dsmvfct:FctItem.Mask.Reference.Details"],
+        "PUBLICFields": ["dsmveno:SupportedTypes", "dsmveno:CustomerAttributes"],
+        "PUBLICExtensions": ["dsfct:FctItemEnterpriseAttributes", "dscfg:Configured", "dslc:changeControl"],
+        "PUBLICExcludedURIs" : ["POSTSearch", "PATCHBulk", "getItems" , "GETAll", "DELETEBulk", "BULKUPDATE"]
+    },
+    "dsfct:FctInstance": {
+        "summary": "Functional Item Instance",
+        "description": "Functional Item Instance",
+        "PUBLICMasks": ["dsmvfct:FctInstance.Mask.Instance.Details"],        
+        "PUBLICFields": ["dsmveno:SupportedTypes", "dsmveno:CustomerAttributes"],
+        "PUBLICExtensions": ["dscfg:Filterable"],
+        "PUBLICExcludedURIs" : ["POSTSearch", "PATCHBulk", "getItems" , "GETSearch", "DELETEBulk", "BULKUPDATE"]
+    },
+    "dsfct:FctItemEnterpriseAttributes": {
+        "summary": "Parametric attributes",
+        "description": "dsfct:FctItemEnterpriseAttributes",
+        "PUBLICFields": ["dsmvfct:FctItemEnterpriseAttributes"],
+        "PUBLICExcludedURIs": ["GET", "PATCH"]
+    }
+}
+

@@ -1,0 +1,1 @@
+define("DS/NativeLauncherWdg/NativeLauncherWdg_cs",{});define("DS/NativeLauncherWdg/assets/nls/NativeLauncher",{Play:"Přehrát"});

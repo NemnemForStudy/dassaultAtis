@@ -1,0 +1,19 @@
+################################################################################################
+# Create By jhlee 2023. 09. 08
+# Admin Type : command
+# Name : decCWPEditCmd
+################################################################################################
+
+# del command decCWPEditCmd;
+add command decCWPEditCmd
+	label 'emxFramework.TableEdit.Enable_Edit'
+	href 'javascript:editMode()'
+	setting 'Registered Suite' 'Framework'
+    setting    'Image'                   "${COMMON_DIR}/images/iconActionEdit.png"
+;
+
+mod command decCWPEditCmd
+	add setting 'hasAccess' 'PIM,AWP'
+	add setting 'Access Program' 'emxProjectSpace'
+	add setting 'Access Function' 'isAccessPMCUpdate'
+;

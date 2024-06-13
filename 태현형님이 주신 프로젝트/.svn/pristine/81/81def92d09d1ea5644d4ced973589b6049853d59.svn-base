@@ -1,0 +1,1 @@
+define("DS/ENOX3DSpaceAttributesMgt/ENOX3DSpaceAttributesMgt_ja",{});define("DS/ENOX3DSpaceAttributesMgt/assets/nls/ENOXAttributesMgtNls",{isCellEditableColumns:{title:"ビューから編集できます"},attributeForEditingColumns:{title:"セル編集の属性"},Classification:{title:"分類"},instance:"インスタンス"});

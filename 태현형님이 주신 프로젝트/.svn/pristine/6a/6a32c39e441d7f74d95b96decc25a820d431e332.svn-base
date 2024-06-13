@@ -1,0 +1,3276 @@
+{
+    "ParsingVersion": "1.0",
+    "CORPUS": [
+        {
+            "version": "1.0",
+            "ARCHI_VERSIONS_COMPATIBILITIES": [
+                "VERSION_1",
+                "VERSION_2",
+                "VERSION_3"
+            ],
+            "CORPUS_COMPATIBILITIES": [
+                {
+                    "CORPUS": "PROCESS_CORPUS",
+                    "versions": [
+                        "1.0"
+                    ]
+                }
+            ],
+            "DECLARATIVE_TYPES": [
+                {
+                    "CONCEPTUAL_NAME": "DELLmiProductionPlanReference",
+                    "DB_MAPPING": [
+                        {
+                            "DB": "_3DSpaceDB",
+                            "Mapping": "DELLmiProductionPlanReference",
+                            "Behavior": "REFERENCE"
+                        }
+                    ]
+                },
+                {
+                    "CONCEPTUAL_NAME": "DELLmiWorkOrderReference",
+                    "DB_MAPPING": [
+                        {
+                            "DB": "_3DSpaceDB",
+                            "Mapping": "DELLmiWorkOrderReference",
+                            "Behavior": "REFERENCE"
+                        }
+                    ],
+                    "Dependencies": [
+                        {
+                            "CONCEPTUAL_NAME": "DELLmiPPRSystemReference",
+                            "Dependencies_Attributes": [
+                                "SERIALIZED_FROM"
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "DELLmiProductionPlanReference",
+                            "Dependencies_Attributes": [
+                                "Parent_Production_Plan_Of_Work_Order"
+                            ]
+                        }
+                    ],
+                    "WaitForSuccessors": false,
+                    "Attributes": [
+                        {
+                            "CONCEPTUAL_NAME": "Parent_Production_Plan_Of_Work_Order",
+                            "State": "MANDATORY",
+                            "Checkers": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeNotNullAndUniqueValueChecker"
+                                }
+                            ],
+                            "Setters": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOInstanceCreationSetter"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "magnitude",
+                            "State": "MANDATORY",
+                            "Checkers": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeNotNullAndUniqueValueChecker"
+                                }
+                            ],
+                            "Transforms": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.transforms.AttributeWOMagnitudeTransform"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "SERIALIZED_FROM",
+                            "Checkers": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeNotNullAndUniqueValueChecker"
+                                }
+                            ],
+                            "Setters": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOSerializationSetter"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "quantity",
+                            "Checkers": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.checkers.AttributeWorkOrderQuantityChecker"
+                                }
+                            ],
+                            "Setters": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOOrderQuantitySetter"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "INSTANCE_ID"
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "serializedItemId",
+                            "Setters": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOBuildLinkSetter"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "APSData",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "DELLmiAPSInternalInfo.V_APSData"
+                                }
+                            ],
+                            "Checkers": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeDefaultChecker"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "MESData",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "DELLmiMESInternalInfo.V_MESData"
+                                }
+                            ],
+                            "Checkers": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeDefaultChecker"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "X2DPos",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_X2DPos"
+                                }
+                            ],
+                            "Checkers": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.checkers.InstanceWorkOrderAttributeChecker"
+                                }
+                            ],
+                            "Setters": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWO2DXPosSetter"
+                                }
+                            ],
+                            "DEPENDENCIES": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "DependsOnAttribute": "Parent_Production_Plan_Of_Work_Order"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "Y2DPos",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_Y2DPos"
+                                }
+                            ],
+                            "Checkers": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.checkers.InstanceWorkOrderAttributeChecker"
+                                }
+                            ],
+                            "Setters": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWO2DYPosSetter"
+                                }
+                            ],
+                            "DEPENDENCIES": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "DependsOnAttribute": "Parent_Production_Plan_Of_Work_Order"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "title",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_Name"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "name",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "PLM_ExternalID"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "priority",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_Priority"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "description",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_description"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "earliestStartDate",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_EarliestStartDate"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "targetStartDate",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_TargetStartDate"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "targetEndDate",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_TargetEndDate"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "scheduledStartDate",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_ScheduledStartDate"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "scheduledEndDate",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_ScheduledEndDate"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "referenceStartDate",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_PlannedStartDate"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "referenceEndDate",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_PlannedEndDate"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "actualStartDate",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_ActualStartDate"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "actualEndDate",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_ActualEndDate"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "CONCEPTUAL_NAME": "DELLmiExecHeaderOperationReference",
+                    "DB_MAPPING": [
+                        {
+                            "DB": "_3DSpaceDB",
+                            "Mapping": "DELLmiExecHeaderOperationReference",
+                            "Behavior": "REFERENCE"
+                        }
+                    ],
+                    "Dependencies": [
+                        {
+                            "CONCEPTUAL_NAME": "DELLmiOperationInstance",
+                            "Dependencies_Attributes": [
+                                "SERIALIZED_FROM"
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "DELLmiWorkOrderReference",
+                            "Dependencies_Attributes": [
+                                "Parent_Work_Order_Of_Work_Order_Operation"
+                            ]
+                        }
+                    ],
+                    "WaitForSuccessors": false,
+                    "Attributes": [
+                        {
+                            "CONCEPTUAL_NAME": "Parent_Work_Order_Of_Work_Order_Operation",
+                            "State": "MANDATORY",
+                            "Checkers": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeNotNullAndUniqueValueChecker"
+                                }
+                            ],
+                            "Setters": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOOPInstanceCreationSetter"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "magnitude",
+                            "Checkers": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeNotNullAndUniqueValueChecker"
+                                }
+                            ],
+                            "Transforms": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.transforms.AttributeWOOPMagnitudeTransform"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "SERIALIZED_FROM",
+                            "Checkers": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeNotNullAndUniqueValueChecker"
+                                }
+                            ],
+                            "Setters": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOOPSerializationSetter"
+                                }
+                            ],
+                            "DEPENDENCIES": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "DependsOnAttribute": "Parent_Work_Order_Of_Work_Order_Operation"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "quantity",
+                            "Checkers": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.checkers.AttributeWorkOrderOperationQuantityChecker"
+                                }
+                            ],
+                            "Transforms": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.transforms.AttributeWOOPQuantityTransform"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "Driftable",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_DriftableOperation"
+                                }
+                            ],
+                            "DEPENDENCIES": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "DependsOnAttribute": "Parent_Work_Order_Of_Work_Order_Operation"
+                                }
+                            ],
+                            "COMMENT": "NEED SETTER !!!"
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "APSData",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "DELLmiAPSInternalInfo.V_APSData"
+                                }
+                            ],
+                            "Checkers": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeDefaultChecker"
+                                }
+                            ],
+                            "COMMENT": "NEED SETTER !!!"
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "MESData",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "DELLmiMESInternalInfo.V_MESData"
+                                }
+                            ],
+                            "Checkers": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeDefaultChecker"
+                                }
+                            ],
+                            "COMMENT": "NEED SETTER !!!"
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "INSTANCE_ID"
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "X2DPos",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_X2DPos"
+                                }
+                            ],
+                            "Checkers": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeDefaultChecker"
+                                }
+                            ],
+                            "Setters": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOOPInstX2DPosSetter"
+                                }
+                            ],
+                            "DEPENDENCIES": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "DependsOnAttribute": "Parent_Work_Order_Of_Work_Order_Operation"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "Y2DPos",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_Y2DPos"
+                                }
+                            ],
+                            "Checkers": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeDefaultChecker"
+                                }
+                            ],
+                            "Setters": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOOPInstY2DPosSetter"
+                                }
+                            ],
+                            "DEPENDENCIES": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "DependsOnAttribute": "Parent_Work_Order_Of_Work_Order_Operation"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "Balanceable",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_Balanceable"
+                                }
+                            ],
+                            "Checkers": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.checkers.InstanceWorkOrderOpAttributeChecker"
+                                }
+                            ],
+                            "Setters": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOOPBalanceableSetter"
+                                }
+                            ],
+                            "DEPENDENCIES": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "DependsOnAttribute": "Parent_Work_Order_Of_Work_Order_Operation"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "name",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "PLM_ExternalID"
+                                }
+                            ],
+                            "Checkers": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.checkers.InstanceWorkOrderOpAttributeChecker"
+                                }
+                            ],
+                            "Setters": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOOPNameSetter"
+                                }
+                            ],
+                            "DEPENDENCIES": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "DependsOnAttribute": "Parent_Work_Order_Of_Work_Order_Operation"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "title",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_Name"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "priority",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_Priority"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "description",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_description"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "isInterruptible",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_Interruptible"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "isTimeProportionalToQuantity",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_IsTimeProportionalToQty"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "timeOutMachineBefore",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "DELLmiAdditionalTime.V_TimeOutMachineBefore"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "timeOutMachineAfter",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "DELLmiAdditionalTime.V_TimeOutMachineAfter"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "isScheduled",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_Scheduled"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "targetStartDate",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_TargetStartDate"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "targetEndDate",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_TargetEndDate"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "scheduledStartDate",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_ScheduledStartDate"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "scheduledEndDate",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_ScheduledEndDate"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "referenceStartDate",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_PlannedStartDate"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "referenceEndDate",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_PlannedEndDate"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "actualStartDate",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_ActualStartDate"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "actualEndDate",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_ActualEndDate"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "completedQuantity",
+                            "Setters": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOOPCompletedQuantitySetter"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "remainingQuantity",
+                            "Setters": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOOPRemainingQuantitySetter"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "initialQuantity",
+                            "Setters": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOOPInitialQuantitySetter"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "trackTime",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_TrackTime"
+                                }
+                            ],
+                            "Setters": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOOPTrackTimeSetter"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "CONCEPTUAL_NAME": "DELLmiExecTimeConstraintRelation",
+                    "DB_MAPPING": [
+                        {
+                            "DB": "_3DSpaceDB",
+                            "Mapping": "DELLmiExecTimeConstraintRelation",
+                            "Behavior": "CUSTOM",
+                            "Class": "com.dassault_systemes.delmia.crud.bytype.impl.DELMIACRUDByConceptualTypeWorkOrderImpOpExecTimeConstraintRelationl"
+                        }
+                    ],
+                    "Dependencies": [
+                        {
+                            "CONCEPTUAL_NAME": "DELLmiExecHeaderOperationReference",
+                            "Dependencies_Attributes": [
+                                "From_IDs",
+                                "TO_IDs"
+                            ]
+                        }
+                    ],
+                    "Attributes": [
+                        {
+                            "CONCEPTUAL_NAME": "From_IDs",
+                            "State": "MANDATORY",
+                            "Checkers": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeNotNullAndUniqueValueChecker"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "TO_IDs",
+                            "State": "MANDATORY",
+                            "Checkers": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeNotNullAndUniqueValueChecker"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+		},
+		{
+			"version": "1.1",
+			"ARCHI_VERSIONS_COMPATIBILITIES": [
+				"VERSION_1",
+				"VERSION_2",
+				"VERSION_3"
+			],
+			"CORPUS_COMPATIBILITIES": [
+				{
+					"CORPUS": "PROCESS_CORPUS",
+					"versions": [
+						"1.0"
+					]
+				}
+			],
+			"DECLARATIVE_TYPES": [
+				{
+					"CONCEPTUAL_NAME": "DELLmiProductionPlanReference",
+					"DB_MAPPING": [
+						{
+							"DB": "_3DSpaceDB",
+							"Mapping": "DELLmiProductionPlanReference",
+							"Behavior": "REFERENCE"
+						}
+					],
+					"WaitForSuccessors": false,
+					"Attributes": [
+						{
+							"CONCEPTUAL_NAME": "timeZone",
+							"Setters": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeProductionPlanTimeZoneSetter"
+								}
+							],
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "DELTimeZone.V_TimeZone"
+                                }
+                            ]
+						},
+						{
+							"CONCEPTUAL_NAME": "description",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "V_description"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "title",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "V_Name"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "horizonStartDate",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "V_HorizonStart"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "horizonEndDate",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "V_HorizonEnd"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "dateMRP",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "V_DateMRP"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "lastSchedulingSave",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "V_LastAPSSave"
+								}
+							]
+						},
+                        {
+                            "CONCEPTUAL_NAME": "id",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "physicalid"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "modified",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "modified"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "created",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "originated"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "state",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "current"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "owner",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "owner"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "collabspace",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "project"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "cestamp",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "cestamp"
+                                }
+                            ]
+                        },
+						{
+							"CONCEPTUAL_NAME": "workOrders",
+							"Getters": [
+                            	{
+                            		"DB": "_3DSpaceDB",
+                            		"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.getters.AttributeProductionPlanWorkOrdersGetter"	
+                            	}
+                            ]
+						},
+						{
+							"CONCEPTUAL_NAME": "organizationalResource",
+							"Checkers": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.checkers.AttributeProductionPlanOrganizationalResourceChecker"
+								}
+							],
+							"Getters": [
+                            	{
+                            		"DB": "_3DSpaceDB",
+                            		"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.getters.AttributeProductionPlanOrganizationalResourceGetter"	
+                            	}
+                            ],
+                            "Setters": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeProductionPlanOrganizationalResourceSetter"
+								}
+							]
+						}
+					]
+				},
+				{
+					"CONCEPTUAL_NAME": "DELLmiWorkOrderReference",
+					"DB_MAPPING": [
+						{
+							"DB": "_3DSpaceDB",
+							"Mapping": "DELLmiWorkOrderReference",
+							"Behavior": "REFERENCE"
+						}
+					],
+					"Dependencies": [
+						{
+							"CONCEPTUAL_NAME": "DELLmiPPRSystemReference",
+							"Dependencies_Attributes": [
+								"SERIALIZED_FROM"
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "DELLmiProductionPlanReference",
+							"Dependencies_Attributes": [
+								"Parent_Production_Plan_Of_Work_Order"
+							]
+						}
+					],
+					"WaitForSuccessors": false,
+					"Attributes": [
+						{
+							"CONCEPTUAL_NAME": "Parent_Production_Plan_Of_Work_Order",
+							"State": "MANDATORY",
+							"Checkers": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeNotNullAndUniqueValueChecker"
+								}
+							],
+							"Setters": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOInstanceCreationSetter"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "magnitude",
+							"State": "MANDATORY",
+							"Checkers": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeNotNullAndUniqueValueChecker"
+								}
+							],
+							"Transforms": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.transforms.AttributeWOMagnitudeTransform"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "SERIALIZED_FROM",
+							"Checkers": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeNotNullAndUniqueValueChecker"
+								}
+							],
+							"Setters": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOSerializationSetter"
+								}
+							],
+							"Getters": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.getters.AttributeSerializedFromGetter"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "workOrderOperationIds",
+							"Getters": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.getters.AttributeWorkOrderOperationsIDGetter"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "timeConstraintIds",
+							"Getters": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.getters.AttributeTimeConstraintsIDGetter"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "quantity",
+							"Checkers": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.checkers.AttributeWorkOrderQuantityChecker"
+								}
+							],
+							"Setters": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOOrderQuantitySetter"
+								}
+							],
+							"Getters": [
+                            	{
+                            		"DB": "_3DSpaceDB",
+                            		"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.getters.AttributeWOOrderQuantityMagnitudeUnitGetter"	
+                            	}
+                            ]
+						},
+						{
+							"CONCEPTUAL_NAME": "INSTANCE_ID"
+						},
+						{
+							"CONCEPTUAL_NAME": "serializedItemId",
+							"Setters": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOBuildLinkSetter"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "APSData",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "DELLmiAPSInternalInfo.V_APSData"
+								}
+							],
+							"Checkers": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeDefaultChecker"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "MESData",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "DELLmiMESInternalInfo.V_MESData"
+								}
+							],
+							"Checkers": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeDefaultChecker"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "X2DPos",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "V_X2DPos"
+								}
+							],
+							"Checkers": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.checkers.InstanceWorkOrderAttributeChecker"
+								}
+							],
+							"Setters": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWO2DXPosSetter"
+								}
+							],
+							"DEPENDENCIES": [
+								{
+									"DB": "_3DSpaceDB",
+									"DependsOnAttribute": "Parent_Production_Plan_Of_Work_Order"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "Y2DPos",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "V_Y2DPos"
+								}
+							],
+							"Checkers": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.checkers.InstanceWorkOrderAttributeChecker"
+								}
+							],
+							"Setters": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWO2DYPosSetter"
+								}
+							],
+							"DEPENDENCIES": [
+								{
+									"DB": "_3DSpaceDB",
+									"DependsOnAttribute": "Parent_Production_Plan_Of_Work_Order"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "title",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "V_Name"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "name",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "PLM_ExternalID"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "priority",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "V_Priority"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "dueDate",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "V_DueDate"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "description",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "V_description"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "earliestStartDate",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "V_EarliestStartDate"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "targetStartDate",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "V_TargetStartDate"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "targetEndDate",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "V_TargetEndDate"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "scheduledStartDate",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "V_ScheduledStartDate"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "scheduledEndDate",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "V_ScheduledEndDate"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "referenceStartDate",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "V_PlannedStartDate"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "referenceEndDate",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "V_PlannedEndDate"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "actualStartDate",
+							"Setters": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOActualStartDateSetter"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "actualEndDate",
+							"Setters": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOActualEndDateSetter"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "calculatedDueDate",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "V_CalculatedDueDate"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "onHold",
+							"Setters": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOOPOnHoldSetter"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "onHoldComment",
+							"Setters": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOOPOnHoldCommentSetter"
+								}
+							],
+							"Checkers": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.checkers.AttributeOnHoldCommentChecker"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "ganttColor",
+							"Setters": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOGanttColorSetter"
+								}
+							]
+						}
+					]
+				},
+				{
+					"CONCEPTUAL_NAME": "DELLmiExecHeaderOperationReference",
+					"DB_MAPPING": [
+						{
+							"DB": "_3DSpaceDB",
+							"Mapping": "DELLmiExecHeaderOperationReference",
+							"Behavior": "REFERENCE"
+						}
+					],
+					"Dependencies": [
+						{
+							"CONCEPTUAL_NAME": "DELLmiOperationInstance",
+							"Dependencies_Attributes": [
+								"SERIALIZED_FROM"
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "DELLmiWorkOrderReference",
+							"Dependencies_Attributes": [
+								"Parent_Work_Order_Of_Work_Order_Operation"
+							]
+						}
+					],
+					"WaitForSuccessors": false,
+					"Attributes": [
+						{
+							"CONCEPTUAL_NAME": "Parent_Work_Order_Of_Work_Order_Operation",
+							"State": "MANDATORY",
+							"Checkers": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeNotNullAndUniqueValueChecker"
+								}
+							],
+							"Setters": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOOPInstanceCreationSetter"
+								}
+							],
+							"Getters": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.getters.AttributeWOOperationParentWOGetter"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "timeConstraintIds",
+							"Getters": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.getters.AttributeTimeConstraintsIDGetter"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "assetAssignmentIds",
+							"Getters": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.getters.AttributeAssetAssignmentsIDGetter"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "magnitude",
+							"Checkers": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeNotNullAndUniqueValueChecker"
+								}
+							],
+							"Transforms": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.transforms.AttributeWOOPMagnitudeTransform"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "SERIALIZED_FROM",
+							"Checkers": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeNotNullAndUniqueValueChecker"
+								}
+							],
+							"Setters": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOOPSerializationSetter"
+								}
+							],
+							"DEPENDENCIES": [
+								{
+									"DB": "_3DSpaceDB",
+									"DependsOnAttribute": "Parent_Work_Order_Of_Work_Order_Operation"
+								}
+							],
+							"Getters": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.getters.AttributeSerializedFromGetter"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "quantity",
+							"Checkers": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.checkers.AttributeWorkOrderOperationQuantityChecker"
+								}
+							],
+							"Transforms": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.transforms.AttributeWOOPQuantityTransform"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "quantityToBeProducedPerTime",
+							"Checkers": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.checkers.AttributeWorkOrderOperationQuantityChecker"
+								}
+							],
+							"Setters": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOOPQtyToBeProducedPerTimeSetter"
+								}
+							],
+							"Getters": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.getters.AttributeWOOperationQtyProdPerTimeMagnitudeUnitGetter"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "Driftable",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "V_DriftableOperation"
+								}
+							],
+							"DEPENDENCIES": [
+								{
+									"DB": "_3DSpaceDB",
+									"DependsOnAttribute": "Parent_Work_Order_Of_Work_Order_Operation"
+								}
+							],
+							"COMMENT": "NEED SETTER !!!"
+						},
+						{
+							"CONCEPTUAL_NAME": "APSData",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "DELLmiAPSInternalInfo.V_APSData"
+								}
+							],
+							"Checkers": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeDefaultChecker"
+								}
+							],
+							"COMMENT": "NEED SETTER !!!"
+						},
+						{
+							"CONCEPTUAL_NAME": "MESData",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "DELLmiMESInternalInfo.V_MESData"
+								}
+							],
+							"Checkers": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeDefaultChecker"
+								}
+							],
+							"COMMENT": "NEED SETTER !!!"
+						},
+						{
+							"CONCEPTUAL_NAME": "INSTANCE_ID"
+						},
+						{
+							"CONCEPTUAL_NAME": "X2DPos",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "V_X2DPos"
+								}
+							],
+							"Checkers": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeDefaultChecker"
+								}
+							],
+							"Setters": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOOPInstX2DPosSetter"
+								}
+							],
+							"DEPENDENCIES": [
+								{
+									"DB": "_3DSpaceDB",
+									"DependsOnAttribute": "Parent_Work_Order_Of_Work_Order_Operation"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "Y2DPos",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "V_Y2DPos"
+								}
+							],
+							"Checkers": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeDefaultChecker"
+								}
+							],
+							"Setters": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOOPInstY2DPosSetter"
+								}
+							],
+							"DEPENDENCIES": [
+								{
+									"DB": "_3DSpaceDB",
+									"DependsOnAttribute": "Parent_Work_Order_Of_Work_Order_Operation"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "Balanceable",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "V_Balanceable"
+								}
+							],
+							"Checkers": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.checkers.InstanceWorkOrderOpAttributeChecker"
+								}
+							],
+							"Setters": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOOPBalanceableSetter"
+								}
+							],
+							"DEPENDENCIES": [
+								{
+									"DB": "_3DSpaceDB",
+									"DependsOnAttribute": "Parent_Work_Order_Of_Work_Order_Operation"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "name",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "PLM_ExternalID"
+								}
+							],
+							"Checkers": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.checkers.InstanceWorkOrderOpAttributeChecker"
+								}
+							],
+							"Setters": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOOPNameSetter"
+								}
+							],
+							"DEPENDENCIES": [
+								{
+									"DB": "_3DSpaceDB",
+									"DependsOnAttribute": "Parent_Work_Order_Of_Work_Order_Operation"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "title",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "V_Name"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "priority",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "V_Priority"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "description",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "V_description"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "isInterruptible",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "V_Interruptible"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "isTimeProportionalToQuantity",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "V_IsTimeProportionalToQty"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "minStartDateUser",
+							"Setters": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOOPMinStartDateUserSetter"
+								}
+							],
+							"Getters": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.getters.AttributeWOOperationMinStartDateUserGetter"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "minStartDateAuto",
+							"Setters": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOOPMinStartDateAutoSetter"
+								}
+							],
+							"Getters": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.getters.AttributeWOOperationMinStartDateAutoGetter"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "minStartDateRawMaterial",
+							"Setters": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOOPMinStartDateRawMaterialSetter"
+								}
+							],
+							"Getters": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.getters.AttributeWOOperationMinStartDateRawMaterialGetter"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "minStartDateSemiFinished",
+							"Setters": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOOPMinStartDateSemiFinishedSetter"
+								}
+							],
+							"Getters": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.getters.AttributeWOOperationMinStartDateSemiFinishedGetter"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "onHold",
+							"Setters": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOOPOnHoldSetter"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "onHoldComment",
+							"Setters": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOOPOnHoldCommentSetter"
+								}
+							],
+							"Checkers": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.checkers.AttributeOnHoldCommentChecker"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "timeOutMachineBefore",
+							"Setters": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOOPTimeOutMachineBeforeSetter"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "timeOutMachineAfter",
+							"Setters": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOOPTimeOutMachineAfterSetter"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "preparationTime",
+							"Setters": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOOPPreparationTime"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "isScheduled",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "V_Scheduled"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "estimatedTimeAddedValueRatio",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "V_EstimatedTime_AddedValueRatio"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "estimatedTime",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "V_EstimatedTime"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "actualTime",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "V_ActualTime"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "remainingTime",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "V_RemainingTime"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "targetStartDate",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "V_TargetStartDate"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "targetEndDate",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "V_TargetEndDate"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "scheduledStartDate",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "V_ScheduledStartDate"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "scheduledEndDate",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "V_ScheduledEndDate"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "referenceStartDate",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "V_PlannedStartDate"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "referenceEndDate",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "V_PlannedEndDate"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "actualStartDate",
+							"Setters": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOOpActualStartDateSetter"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "actualEndDate",
+							"Setters": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOOpActualEndDateSetter"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "completedQuantity",
+							"Setters": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOOPCompletedQuantitySetter"
+								}
+							],
+							"Getters": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.getters.AttributeWOOperationCompletedQuantityMagnitudeUnitGetter"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "remainingQuantity",
+							"Setters": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOOPRemainingQuantitySetter"
+								}
+							],
+							"Getters": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.getters.AttributeWOOperationRemainingQuantityMagnitudeUnitGetter"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "initialQuantity",
+							"Setters": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOOPInitialQuantitySetter"
+								}
+							],
+							"Getters": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.getters.AttributeWOOperationInitialQuantityMagnitudeUnitGetter"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "trackTime",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "V_TrackTime"
+								}
+							],
+							"Setters": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOOPTrackTimeSetter"
+								}
+							]
+						}
+					]
+				},
+				{
+					"CONCEPTUAL_NAME": "DELLmiExecTimeConstraintRelation",
+					"DB_MAPPING": [
+						{
+							"DB": "_3DSpaceDB",
+							"Mapping": "DELLmiExecTimeConstraintRelation",
+							"Behavior": "CUSTOM",
+							"Class": "com.dassault_systemes.delmia.crud.bytype.impl.DELMIACRUDByConceptualTypeWorkOrderImpOpExecTimeConstraintRelationl"
+						}
+					],
+					"Dependencies": [
+						{
+							"CONCEPTUAL_NAME": "DELLmiExecHeaderOperationReference",
+							"Dependencies_Attributes": [
+								"From_IDs",
+								"TO_IDs"
+							]
+						}
+					],
+					"WaitForSuccessors": false,
+					"Attributes": [
+						{
+							"CONCEPTUAL_NAME": "From_IDs",
+							"State": "MANDATORY",
+							"Checkers": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeNotNullAndUniqueValueChecker"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "TO_IDs",
+							"State": "MANDATORY",
+							"Checkers": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeNotNullAndUniqueValueChecker"
+								}
+							],
+							"Getters": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.getters.AttributeTimeConstraintConstrainedObjectGetter"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "delay",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "V_Delay"
+								}
+							],
+							"Checkers": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeNotNullAndUniqueValueChecker"
+								},
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeNotNegativeChecker"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "delayMode",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "V_DelayMode"
+								}
+							],
+							"Checkers": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeNotNullAndUniqueValueChecker"
+								},
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.checkers.AttributeTimeConstraintDelayModeChecker"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "dependencyType",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "V_DependencyType"
+								}
+							],
+							"Checkers": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeNotNullAndUniqueValueChecker"
+								},
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.checkers.AttributeTimeConstraintDependencyTypeChecker"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "isOptional",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "V_OptionalTimeConstraint"
+								}
+							],
+							"Checkers": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeNotNullAndUniqueValueChecker"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "materialNeed",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "V_MaterialNeed"
+								}
+							],
+							"Checkers": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeNotNullAndUniqueValueChecker"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "resourceConstraint",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "V_ResourceConstraint"
+								}
+							],
+							"Checkers": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeNotNullAndUniqueValueChecker"
+								},
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.checkers.AttributeTimeConstraintResourceConstraintChecker"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "isActive",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "V_IsActive"
+								}
+							],
+							"Checkers": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeNotNullAndUniqueValueChecker"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "flowType",
+							"Checkers": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.checkers.AttributeTimeConstraintFlowTypeChecker"
+								}
+							],
+							"Setters": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeTimeConstraintFlowTypeSetter"
+								}
+							],
+							"Getters": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.getters.AttributeTimeConstraintFlowTypeGetter"
+								}
+							]
+						}
+					]
+				},
+				{
+					"CONCEPTUAL_NAME": "ExecAllocatedResourceLink",
+					"DB_MAPPING": [
+						{
+							"DB": "_3DSpaceDB",
+							"Mapping": "ExecAllocatedResourceLink",
+							"Behavior": "REFERENCE"
+						}
+					],
+					"Dependencies": [],
+					"WaitForSuccessors": false,
+					"Attributes": [
+						{
+							"CONCEPTUAL_NAME": "resource",
+							"Checkers": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeNotNullAndUniqueValueChecker"
+								}
+							],
+							"Getters": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.getters.AttributeAssetAssignmentResourceGetter"
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+        {
+            "version": "1.2",
+            "ARCHI_VERSIONS_COMPATIBILITIES": [
+                "VERSION_1",
+                "VERSION_2",
+                "VERSION_3"
+            ],
+            "CORPUS_COMPATIBILITIES": [
+                {
+                    "CORPUS": "PROCESS_CORPUS",
+                    "versions": [
+                        "1.0"
+                    ]
+                }
+            ],
+            "DECLARATIVE_TYPES": [
+                {
+                    "CONCEPTUAL_NAME": "DELLmiProductionPlanReference",
+                    "DB_MAPPING": [
+                        {
+                            "DB": "_3DSpaceDB",
+                            "Mapping": "DELLmiProductionPlanReference",
+                            "Behavior": "REFERENCE"
+                        }
+                    ],
+                    "Attributes": [
+                        {
+                            "CONCEPTUAL_NAME": "timeZone",
+                            "Setters": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeProductionPlanTimeZoneSetter"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "description",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_description"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "horizonStartDate",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_HorizonStart"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "horizonEndDate",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_HorizonEnd"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "dateMRP",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_DateMRP"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "lastSchedulingSave",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_LastAPSSave"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "CONCEPTUAL_NAME": "DELLmiWorkOrderReference",
+                    "DB_MAPPING": [
+                        {
+                            "DB": "_3DSpaceDB",
+                            "Mapping": "DELLmiWorkOrderReference",
+                            "Behavior": "REFERENCE"
+                        }
+                    ],
+                    "Dependencies": [
+                        {
+                            "CONCEPTUAL_NAME": "DELLmiPPRSystemReference",
+                            "Dependencies_Attributes": [
+                                "SERIALIZED_FROM"
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "DELLmiProductionPlanReference",
+                            "Dependencies_Attributes": [
+                                "Parent_Production_Plan_Of_Work_Order"
+                            ]
+                        }
+                    ],
+                    "WaitForSuccessors": false,
+                    "Attributes": [
+                        {
+                            "CONCEPTUAL_NAME": "Parent_Production_Plan_Of_Work_Order",
+                            "State": "MANDATORY",
+                            "Checkers": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeNotNullAndUniqueValueChecker"
+                                }
+                            ],
+                            "Setters": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOInstanceCreationSetter"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "magnitude",
+                            "State": "MANDATORY",
+                            "Checkers": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeNotNullAndUniqueValueChecker"
+                                }
+                            ],
+                            "Transforms": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.transforms.AttributeWOMagnitudeTransform"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "SERIALIZED_FROM",
+                            "Checkers": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeNotNullAndUniqueValueChecker"
+                                }
+                            ],
+                            "Setters": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOSerializationSetterEx"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "quantity",
+                            "Checkers": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.checkers.AttributeWorkOrderQuantityChecker"
+                                }
+                            ],
+                            "Setters": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOOrderQuantitySetter"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "INSTANCE_ID"
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "serializedItemId",
+                            "Setters": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOBuildLinkSetter"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "APSData",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "DELLmiAPSInternalInfo.V_APSData"
+                                }
+                            ],
+                            "Checkers": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeDefaultChecker"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "MESData",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "DELLmiMESInternalInfo.V_MESData"
+                                }
+                            ],
+                            "Checkers": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeDefaultChecker"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "X2DPos",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_X2DPos"
+                                }
+                            ],
+                            "Checkers": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.checkers.InstanceWorkOrderAttributeChecker"
+                                }
+                            ],
+                            "Setters": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWO2DXPosSetter"
+                                }
+                            ],
+                            "DEPENDENCIES": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "DependsOnAttribute": "Parent_Production_Plan_Of_Work_Order"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "Y2DPos",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_Y2DPos"
+                                }
+                            ],
+                            "Checkers": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.checkers.InstanceWorkOrderAttributeChecker"
+                                }
+                            ],
+                            "Setters": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWO2DYPosSetter"
+                                }
+                            ],
+                            "DEPENDENCIES": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "DependsOnAttribute": "Parent_Production_Plan_Of_Work_Order"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "title",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_Name"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "name",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "PLM_ExternalID"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "priority",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_Priority"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "dueDate",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_DueDate"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "description",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_description"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "earliestStartDate",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_EarliestStartDate"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "targetStartDate",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_TargetStartDate"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "targetEndDate",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_TargetEndDate"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "scheduledStartDate",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_ScheduledStartDate"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "scheduledEndDate",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_ScheduledEndDate"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "referenceStartDate",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_PlannedStartDate"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "referenceEndDate",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_PlannedEndDate"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "actualStartDate",
+                            "Setters": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOActualStartDateSetter"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "actualEndDate",
+                            "Setters": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOActualEndDateSetter"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "CONCEPTUAL_NAME": "DELLmiExecHeaderOperationReference",
+                    "DB_MAPPING": [
+                        {
+                            "DB": "_3DSpaceDB",
+                            "Mapping": "DELLmiExecHeaderOperationReference",
+                            "Behavior": "REFERENCE"
+                        }
+                    ],
+                    "Dependencies": [
+                        {
+                            "CONCEPTUAL_NAME": "DELLmiOperationInstance",
+                            "Dependencies_Attributes": [
+                                "SERIALIZED_FROM"
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "DELLmiWorkOrderReference",
+                            "Dependencies_Attributes": [
+                                "Parent_Work_Order_Of_Work_Order_Operation"
+                            ]
+                        }
+                    ],
+                    "WaitForSuccessors": false,
+                    "Attributes": [
+                        {
+                            "CONCEPTUAL_NAME": "Parent_Work_Order_Of_Work_Order_Operation",
+                            "State": "MANDATORY",
+                            "Checkers": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeNotNullAndUniqueValueChecker"
+                                }
+                            ],
+                            "Setters": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOOPInstanceCreationSetter"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "magnitude",
+                            "Checkers": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeNotNullAndUniqueValueChecker"
+                                }
+                            ],
+                            "Transforms": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.transforms.AttributeWOOPMagnitudeTransform"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "SERIALIZED_FROM",
+                            "Checkers": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeNotNullAndUniqueValueChecker"
+                                }
+                            ],
+                            "Setters": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOOPSerializationSetter"
+                                }
+                            ],
+                            "DEPENDENCIES": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "DependsOnAttribute": "Parent_Work_Order_Of_Work_Order_Operation"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "quantity",
+                            "Checkers": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.checkers.AttributeWorkOrderOperationQuantityChecker"
+                                }
+                            ],
+                            "Transforms": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.transforms.AttributeWOOPQuantityTransform"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "quantityToBeProducedPerTime",
+                            "Checkers": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.checkers.AttributeWorkOrderOperationQuantityChecker"
+                                }
+                            ],
+                            "Setters": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOOPQtyToBeProducedPerTimeSetter"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "Driftable",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_DriftableOperation"
+                                }
+                            ],
+                            "DEPENDENCIES": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "DependsOnAttribute": "Parent_Work_Order_Of_Work_Order_Operation"
+                                }
+                            ],
+                            "COMMENT": "NEED SETTER !!!"
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "APSData",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "DELLmiAPSInternalInfo.V_APSData"
+                                }
+                            ],
+                            "Checkers": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeDefaultChecker"
+                                }
+                            ],
+                            "COMMENT": "NEED SETTER !!!"
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "MESData",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "DELLmiMESInternalInfo.V_MESData"
+                                }
+                            ],
+                            "Checkers": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeDefaultChecker"
+                                }
+                            ],
+                            "COMMENT": "NEED SETTER !!!"
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "INSTANCE_ID"
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "X2DPos",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_X2DPos"
+                                }
+                            ],
+                            "Checkers": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeDefaultChecker"
+                                }
+                            ],
+                            "Setters": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOOPInstX2DPosSetter"
+                                }
+                            ],
+                            "DEPENDENCIES": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "DependsOnAttribute": "Parent_Work_Order_Of_Work_Order_Operation"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "Y2DPos",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_Y2DPos"
+                                }
+                            ],
+                            "Checkers": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeDefaultChecker"
+                                }
+                            ],
+                            "Setters": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOOPInstY2DPosSetter"
+                                }
+                            ],
+                            "DEPENDENCIES": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "DependsOnAttribute": "Parent_Work_Order_Of_Work_Order_Operation"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "Balanceable",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_Balanceable"
+                                }
+                            ],
+                            "Checkers": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.checkers.InstanceWorkOrderOpAttributeChecker"
+                                }
+                            ],
+                            "Setters": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOOPBalanceableSetter"
+                                }
+                            ],
+                            "DEPENDENCIES": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "DependsOnAttribute": "Parent_Work_Order_Of_Work_Order_Operation"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "name",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "PLM_ExternalID"
+                                }
+                            ],
+                            "Checkers": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.checkers.InstanceWorkOrderOpAttributeChecker"
+                                }
+                            ],
+                            "Setters": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOOPNameSetter"
+                                }
+                            ],
+                            "DEPENDENCIES": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "DependsOnAttribute": "Parent_Work_Order_Of_Work_Order_Operation"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "title",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_Name"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "priority",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_Priority"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "description",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_description"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "isInterruptible",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_Interruptible"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "isTimeProportionalToQuantity",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_IsTimeProportionalToQty"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "timeOutMachineBefore",
+                            "Setters": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOOPTimeOutMachineBeforeSetter"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "timeOutMachineAfter",
+                            "Setters": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOOPTimeOutMachineAfterSetter"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "isScheduled",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_Scheduled"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "targetStartDate",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_TargetStartDate"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "targetEndDate",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_TargetEndDate"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "scheduledStartDate",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_ScheduledStartDate"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "scheduledEndDate",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_ScheduledEndDate"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "referenceStartDate",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_PlannedStartDate"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "referenceEndDate",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_PlannedEndDate"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "actualStartDate",
+                            "Setters": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOOpActualStartDateSetter"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "actualEndDate",
+                            "Setters": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOOpActualEndDateSetter"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "completedQuantity",
+                            "Setters": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOOPCompletedQuantitySetter"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "remainingQuantity",
+                            "Setters": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOOPRemainingQuantitySetter"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "initialQuantity",
+                            "Setters": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOOPInitialQuantitySetter"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "trackTime",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_TrackTime"
+                                }
+                            ],
+                            "Setters": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeWOOPTrackTimeSetter"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "CONCEPTUAL_NAME": "DELLmiExecTimeConstraintRelation",
+                    "DB_MAPPING": [
+                        {
+                            "DB": "_3DSpaceDB",
+                            "Mapping": "DELLmiExecTimeConstraintRelation",
+                            "Behavior": "CUSTOM",
+                            "Class": "com.dassault_systemes.delmia.crud.bytype.impl.DELMIACRUDByConceptualTypeWorkOrderImpOpExecTimeConstraintRelationl"
+                        }
+                    ],
+                    "Dependencies": [
+                        {
+                            "CONCEPTUAL_NAME": "DELLmiExecHeaderOperationReference",
+                            "Dependencies_Attributes": [
+                                "From_IDs",
+                                "TO_IDs"
+                            ]
+                        }
+                    ],
+                    "Attributes": [
+                        {
+                            "CONCEPTUAL_NAME": "From_IDs",
+                            "State": "MANDATORY",
+                            "Checkers": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeNotNullAndUniqueValueChecker"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "TO_IDs",
+                            "State": "MANDATORY",
+                            "Checkers": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeNotNullAndUniqueValueChecker"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "delay",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_Delay"
+                                }
+                            ],
+                            "Checkers": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeNotNullAndUniqueValueChecker"
+                                },
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeNotNegativeChecker"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "delayMode",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_DelayMode"
+                                }
+                            ],
+                            "Checkers": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeNotNullAndUniqueValueChecker"
+                                },
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.checkers.AttributeTimeConstraintDelayModeChecker"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "dependencyType",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_DependencyType"
+                                }
+                            ],
+                            "Checkers": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeNotNullAndUniqueValueChecker"
+                                },
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.checkers.AttributeTimeConstraintDependencyTypeChecker"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "isOptional",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_OptionalTimeConstraint"
+                                }
+                            ],
+                            "Checkers": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeNotNullAndUniqueValueChecker"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "materialNeed",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_MaterialNeed"
+                                }
+                            ],
+                            "Checkers": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeNotNullAndUniqueValueChecker"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "resourceConstraint",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_ResourceConstraint"
+                                }
+                            ],
+                            "Checkers": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeNotNullAndUniqueValueChecker"
+                                },
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.checkers.AttributeTimeConstraintResourceConstraintChecker"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "isActive",
+                            "DB_MAPPING": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Mapping": "V_IsActive"
+                                }
+                            ],
+                            "Checkers": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeNotNullAndUniqueValueChecker"
+                                }
+                            ]
+                        },
+                        {
+                            "CONCEPTUAL_NAME": "flowType",
+                            "Checkers": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.checkers.AttributeTimeConstraintFlowTypeChecker"
+                                }
+                            ],
+                            "Setters": [
+                                {
+                                    "DB": "_3DSpaceDB",
+                                    "Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeTimeConstraintFlowTypeSetter"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+	]
+}

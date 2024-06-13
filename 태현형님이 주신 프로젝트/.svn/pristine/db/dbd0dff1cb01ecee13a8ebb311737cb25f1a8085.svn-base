@@ -1,0 +1,1 @@
+define("DS/CATW3DMoveManager/CATW3DMoveManager_it",{});define("DS/CATW3DMoveManager/assets/nls/CATW3DMoveReferent",{title:"Sposta",allowDirectManipulation:"Consenti manipolazione diretta",moveSection:"Quando si trascina la geometria 3D, spostare",first:"Primo livello assieme",leaf:"Parte foglia"});

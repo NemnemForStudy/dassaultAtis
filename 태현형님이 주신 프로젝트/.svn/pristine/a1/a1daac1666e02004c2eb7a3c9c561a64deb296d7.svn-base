@@ -1,0 +1,1 @@
+define("DS/CATKinPlayScenario/CATKinPlayScenario_fr",{});define("DS/CATKinPlayScenario/assets/nls/CATKinPlayRegister",{CATKinPlayRegister_Title:"Cinématique",CATKinPlayRegister_Description:"Enregistrer Lire l'animation",Animation_Title:"Lecteur d'animation",Animation_Description:"Relire une animation"});

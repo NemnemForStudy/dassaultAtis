@@ -1,0 +1,241 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "CSIFunctionVersion3JSONSchema.json",
+  "title": "CSI Function version 3",
+  "type": "object",
+  "description": "JSON Schema of a CSI Function version 3",
+  "definitions": {
+    "outputParameters": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "parameters": {
+          "$ref": "CSIParametersJSONSchema.json#/definitions/nonDefaultValueParameters"
+        },
+        "type": {
+          "type": "string",
+          "description": "Type's name"
+        },
+        "desc": {
+          "type": "string",
+          "description": "Description for the Type"
+        }
+      },
+      "oneOf": [
+        {
+          "required": [
+            "parameters"
+          ]
+        },
+        {
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "not": {
+            "anyOf": [
+              {
+                "required": [
+                  "parameters"
+                ]
+              },
+              {
+                "required": [
+                  "type"
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "required": [
+    "grammarVersion",
+    "desc",
+    "implementation",
+    "onCall"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "grammarVersion": {
+      "type": "integer",
+      "description": "Grammar version used for the Function definition",
+      "enum": [
+        3
+      ]
+    },
+    "desc": {
+      "type": "string",
+      "description": "Description of the Function",
+      "minLength": 1
+    },
+    "implementation": {
+      "type": "object",
+      "description": "Specify the implementation library for this Function",
+      "required": [
+        "name",
+        "version",
+        "settings"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Implementation's name",
+          "minLength": 1
+        },
+        "version": {
+          "type": "integer",
+          "description": "Implementation's version",
+          "minimum": 1
+        },
+        "settings": {
+          "type": "object",
+          "description": "Library's settings",
+          "additionalProperties": true,
+          "properties": {
+            "library": {
+              "type": "string",
+              "description": "C++ DLL",
+              "minLength": 1
+            },
+            "debug": {
+              "type": "string",
+              "description": "C++ DLL -Deprecated-",
+              "minLength": 1
+            },
+            "release": {
+              "type": "string",
+              "description": "C++ DLL -Deprecated-",
+              "minLength": 1
+            },
+            "javaClassPath": {
+              "type": "string",
+              "description": "Java JAR",
+              "minLength": 1
+            },
+            "implementation": {
+              "type": "object",
+              "description": "Graph implementation"
+            }
+          }
+        }
+      }
+    },
+    "onCall": {
+      "type": "object",
+      "description": "Define the Function's input and output",
+      "required": [
+        "in",
+        "out"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "in": {
+          "type": "object",
+          "description": "Input Parameters of the Function",
+          "additionalProperties": false,
+          "properties": {
+            "parameters": {
+              "$ref": "CSIParametersJSONSchema.json"
+            },
+            "type": {
+              "type": "string",
+              "description": "Type's name",
+              "minLength": 1
+            },
+            "desc": {
+              "type": "string",
+              "description": "Description for the Type"
+            }
+          },
+          "oneOf": [
+            {
+              "required": [
+                "parameters"
+              ]
+            },
+            {
+              "required": [
+                "type"
+              ]
+            },
+            {
+              "not": {
+                "anyOf": [
+                  {
+                    "required": [
+                      "parameters"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "type"
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "out": {
+          "$ref": "#/definitions/outputParameters",
+          "description": "Output Parameters of the Function"
+        }
+      }
+    },
+    "throwError": {
+      "$ref": "#/definitions/outputParameters",
+      "description": "Error Parameters of the Function"
+    },
+    "progress": {
+      "$ref": "#/definitions/outputParameters",
+      "description": "Progress Parameters of the Function"
+    },
+    "emit": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "description": "Events that can be thrown and received by the Function",
+        "required": [
+          "event",
+          "desc"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "event": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Za-z0-9]*$",
+            "description": "Name of the Event"
+          },
+          "desc": {
+            "type": "string",
+            "description": "Description of the Event",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "RESTExposition": {
+      "type": "object",
+      "description": "Used to expose your Function as a REST Web Service",
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Path used to access your Web Service on the Server"
+        },
+        "HTTPMethod": {
+          "type": "string",
+          "description": "HTTP method used to access your Web Service"
+        }
+      }
+    }
+  }
+}

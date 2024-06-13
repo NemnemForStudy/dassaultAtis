@@ -1,0 +1,1 @@
+define("DS/CATW3DConstraints/CATW3DConstraints_pl",{});define("DS/CATW3DConstraints/assets/nls/CATW3DConstraintsView",{cstCoincidence:"Zbieżność",cstContact:"Kontakt",plane:"Płaszczyzna",sidePanel:"Przyciągnij alternatywy"});

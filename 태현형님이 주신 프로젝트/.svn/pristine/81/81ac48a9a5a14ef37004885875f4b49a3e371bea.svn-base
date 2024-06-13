@@ -1,0 +1,2 @@
+/*! Copyright 2014 Dassault Syst�mes */
+"object"==typeof Leaflet?define("DS/Leaflet/Leaflet",Leaflet):function(){"use strict";var e=require.toUrl("DS/Leaflet/Leaflet");e.indexOf("?")>-1&&(e=e.substring(0,e.indexOf("?"))),require.config({paths:{"DS/Leaflet/Leaflet":e},shim:{"DS/Leaflet/Leaflet":{exports:"Leaflet"}}})}(),define("DS/Leaflet/LeafletLoader",["DS/Leaflet/Leaflet"],function(e){"use strict";return e});

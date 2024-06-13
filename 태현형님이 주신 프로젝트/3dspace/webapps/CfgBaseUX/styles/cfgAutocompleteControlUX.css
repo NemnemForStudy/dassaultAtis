@@ -1,0 +1,78 @@
+.autocomplete-cfg-autocomplete {
+  vertical-align: middle !important;
+  font-size: 14px;
+  display: flex; }
+  .autocomplete-cfg-autocomplete:hover .Cfg-search-holder {
+    border-color: #77797c; }
+  .autocomplete-cfg-autocomplete .autocomplete-searchbox {
+    margin: 0;
+    padding: 3px 4px 4px 4px;
+    width: calc( 100% - 37px) !important;
+    position: relative;
+    display: inline-block !important;
+    border-radius: 4px 0 0 4px !important;
+    border-right: 0;
+    vertical-align: middle !important; }
+  .autocomplete-cfg-autocomplete .active-searchbox {
+    border-color: #77797c !important; }
+  .autocomplete-cfg-autocomplete .Cfg-search-holder {
+    display: inline-flex;
+    cursor: pointer;
+    padding: 11px;
+    border: 1px solid #ccc;
+    border-radius: 0px 4px 4px 0px;
+    margin-left: 0px;
+    border-left: 0;
+    vertical-align: middle; }
+    .autocomplete-cfg-autocomplete .Cfg-search-holder:hover {
+      border-color: #77797c; }
+
+.autocomplete-suggests {
+  /* IR-945564-3DEXPERIENCER2023x */
+  /* In smaller screens / smaller widget size, when the user search for context, the autocomplete suggestion box is appearing on the top of the search and the user not able to select the context, with the following fix, the autocomplete suggestion box will appear always below the search box */
+  top: 40px; }
+  .autocomplete-suggests li.autocomplete-item.cfg-itemContainer {
+    font-size: 14px;
+    padding-left: 14px;
+    padding-right: 14px;
+    height: 38px;
+    padding-top: 9px;
+    display: flex; }
+  .autocomplete-suggests .autocomplete-item.cfg-itemContainer img {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+    margin-left: 5px; }
+  .autocomplete-suggests .autocomplete-item.cfg-itemContainer.disabled img {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+    margin-left: 5px;
+    opacity: 0.5; }
+  .autocomplete-suggests li.autocomplete-item.cfg-itemContainer span {
+    display: inline-block;
+    width: auto;
+    margin-left: 5px;
+    vertical-align: middle;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; }
+  .autocomplete-suggests li.autocomplete-item.cfg-itemContainer.disabled span {
+    display: inline-block;
+    width: auto;
+    margin-left: 5px;
+    color: #b4b6ba;
+    vertical-align: middle; }
+
+.autocomplete-suggests.cfgDisabledIcons .cfgAutocomplete-item-icon {
+  display: none !important; }
+
+/*focus*/
+.autocomplete-searchbox:hover ~ .Cfg-search-holder, .autocomplete-searchbox-focus ~ .Cfg-search-holder {
+  border-color: #77797c; }
+
+/*active*/
+.autocomplete-searchbox-active ~ .Cfg-search-holder, .autocomplete-searchbox-active:hover ~ .Cfg-search-holder, .autocomplete-searchbox-active ~ .Cfg-search-holder:hover {
+  border-color: #368ec4; }

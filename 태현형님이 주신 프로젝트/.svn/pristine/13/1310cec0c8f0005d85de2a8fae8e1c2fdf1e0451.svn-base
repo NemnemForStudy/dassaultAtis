@@ -1,0 +1,56 @@
+<!-- numeric.js & num_util test example. Author: qif  -->
+<html>
+<head>
+<script src="../../../../../../numeric.js-1.2.6/numeric-1.2.6.js"></script>
+<script src="../../num_util.js"></script>
+</head>
+<body> 
+<div id="out"></div>
+ 
+
+<script>
+  var s = document.getElementById("out");
+  s.innerHTML +=   
+"<samp>"+
+"<br/> T * P = Q,"+
+"<br/></samp>"+ 
+"To solve T from P^t * T^t = Q^t, P^t element should be perpendicular for each element. "; 
+  var T =[[0.866, -0.500, 0.000, 10.0], 
+          [0.500,  0.866, 0.000,  5.0],
+		  [0.000,  0.000, 1.000,  0.0]];
+    
+  s.innerHTML  += "T="+M2DtoTable(T);
+  var Pt1 = [3,7,0, 1]; Pt2=[-3,5,6,1];
+  var Pt3 = [5,3,-10,1]; // cross_product_3Dvector(Pt1, Pt2); Pt3.push(1);
+  var Pt4 = cross_product_3Dvector(Pt3, Pt1); Pt4.push(1);
+  var Ptrans = [Pt1, Pt2, Pt3, Pt4];
+  var P = numeric.transpose(Ptrans);
+  s.innerHTML  += "P="+M2DtoTable(P);
+  
+  //s.innerHTML  += "<br/>det(T)="+numeric.det(T);
+  
+  //var Tinv = numeric.inv(T);
+  //s.innerHTML  += "<br/>Tinv="+M2DtoTable(Tinv); 
+  //s.innerHTML  += "<br/>T*Tinv="+M2DtoTable(numeric.dot(T, Tinv));
+  
+  var Q = numeric.dot(T, P);
+  s.innerHTML  += "Q="+M2DtoTable(Q); 
+
+  s.innerHTML +=   
+"<br/><samp>"+
+"    P^t * T^t   =   Q^t,<br/>"+ 
+"</samp>"  
+  
+  s.innerHTML += "P^t="+M2DtoTable(Ptrans);
+  var Qtrans = numeric.transpose(Q);
+  s.innerHTML += "Q^t="+M2DtoTable(Qtrans); 
+  
+  var solT=[];
+  for(var ii=0; ii<Qtrans[0].length; ii++) {
+    var Qtrans_colum_ii = getColumn(Qtrans,ii);// which is Q[ii], ii<Q.length; 
+	solT.push(numeric.solve(Ptrans, Qtrans_colum_ii));   
+  }
+  s.innerHTML  += "<br/>solT="+M2DtoTable(solT);   
+</script>
+</body>
+</html>

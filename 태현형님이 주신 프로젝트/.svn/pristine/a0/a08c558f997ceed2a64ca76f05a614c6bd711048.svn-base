@@ -1,0 +1,1 @@
+define("DS/DMUFormatEdition/DMUFormatEdition_pt-BR",{});define("DS/DMUFormatEdition/assets/nls/DMUFormatEdition",{formatEditionModeStarted:"Editar formatos",slideEditionModeStarted:"Editar slides",currentFormatUpdatedMessage:"Ponto de vista atualizado",NoFormat:"Sem formato",FormatChooserPanelTitle:"Formato",normalFormatTitle:"Formato",generateFormat:"Gerar formato"});

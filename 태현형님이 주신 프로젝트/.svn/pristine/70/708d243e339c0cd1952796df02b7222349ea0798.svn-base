@@ -1,0 +1,1 @@
+define("DS/NotificationAPI/NotificationAPI_ja",{});define("DS/NotificationAPI/assets/nls/feed",{permissionBannerTitle:"新しいメッセージの通知を受信します",permissionBannerText:"デスクトップ通知をオンにします"});

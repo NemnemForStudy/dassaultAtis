@@ -1,0 +1,1 @@
+define("DS/ENOXEngineerCommonUtils/ENOXEngineerCommonUtils_ja",{});define("DS/ENOXEngineerCommonUtils/assets/nls/XENCommonNls",{loading:"読み込んでいます ...","eng.ui.button.ok":"OK","eng.ui.button.cancel":"キャンセル","app.failure":"予期しないエラーが発生しました。管理者に問い合わせてください。"});

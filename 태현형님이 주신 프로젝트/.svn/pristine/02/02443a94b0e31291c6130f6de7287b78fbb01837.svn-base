@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:widget="http://www.netvibes.com/ns/">
+<!-- Copyright 2018 , Dassault Systemes. All rights reserved. -->
+
+<head>
+  <title>Document Management</title>
+  <!-- Application Metas Start -->
+  <meta name="author" content="Dassault Systèmes" />
+  <meta name="brand" content="ENOVIA" />
+  <meta name="description" content="XDocuments" />
+  <meta name="keywords" content="XDocuments" />
+  <meta name="debugMode" content="false" />
+  <meta name="strictMode" content="true" />
+  <meta name="autoRefresh" content="-1" />
+  <!-- Application Metas End -->
+  <!-- AMDLoader -->
+  <script type="text/javascript" src="../AmdLoader/AmdLoader.js"></script>
+  <script type="text/javascript" src="../WebappsUtils/WebappsUtils.js"></script>
+  <!-- UWA -->
+  <link rel="stylesheet" type="text/css" href="../c/UWA/assets/css/standalone.css" />
+  <script type="text/javascript" src="../c/UWA/js/UWA_Standalone_Alone.js"></script>
+  <!-- Web Fundamentals -->
+  <script type="text/javascript" src="../WebUX/WebUX.js"></script>
+  <link rel="stylesheet" type="text/css" href="../UIKIT/UIKIT.css" />
+  <!-- Added static prefernce to enable not to load the preference edit during widget refresh-->
+  <widget:preferences>
+    <widget:preference type="list" name="x3dPlatformId" label="3DEXPERIENCE Platform" defaultValue="">
+      <widget:option label="" value=""></widget:option>
+    </widget:preference>
+    <widget:preference type="list" name="credentials" label="Credentials" defaultValue="">
+      <widget:option label="" value=""></widget:option>
+    </widget:preference>
+    <widget:preference type="list" name="welcome" label="Welcome page" defaultValue="">
+      <widget:option label="" value=""></widget:option>
+    </widget:preference>
+  </widget:preferences>
+  <!-- Application JS Start -->
+  <script type="text/javascript">
+  //<![CDATA[
+  require(['DS/ENOXDocumentControlUI/ENOXDocumentControl'],
+    function (enoxDocuments) {
+      widget.addEvents({
+        onLoad: enoxDocuments.prototype.onLoad,
+        onResize: enoxDocuments.prototype.onResize
+      });
+    });
+
+  //]]>
+  //InjectDSLiveReloaderHere
+  </script>
+  <!-- Application JS End -->
+</head>
+
+<body>
+</body>
+
+</html>

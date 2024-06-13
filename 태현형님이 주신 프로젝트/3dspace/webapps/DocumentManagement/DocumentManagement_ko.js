@@ -1,0 +1,1 @@
+define("DS/DocumentManagement/DocumentManagement_ko",{});define("DS/DocumentManagement/assets/nls/DocumentManagementNLS",{"FileManagement.UploadFail.nameNotUnique":"같은 이름의 콘텐츠가 이미 존재합니다."});

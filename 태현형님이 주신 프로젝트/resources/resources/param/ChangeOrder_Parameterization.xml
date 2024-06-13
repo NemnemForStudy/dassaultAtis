@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<OOTBParameterization>
+  <!--Domain id="ChangeParameterization" regSuite="EnterpriseChangeMgt">
+    <Family id="ChangeOrder" icon="iconParameterizationIdentification.gif">
+      <Parameter id="ResetOwnerOnChangeOrderDemotion" implementation="com.dassault_systemes.ootbConfiguration.deployment.impl.ParameterizationExpressionImpl" regSuite="EnterpriseChangeMgt">
+        <Argument id="Argument" type="boolean" input="checkbox" default="Enabled"/>
+        <Constant id="expression" value="ResetOwnerOnChangeOrderDemotion"/>
+        <Constant id="valueChecked" value="true"/>
+        <Constant id="valueUnchecked" value="false"/>
+      </Parameter>
+    </Family>
+  </Domain-->
+  <Domain id="ChangeParameterization" regSuite="EnterpriseChangeMgt">	
+	<Family id="ImpactAnalysisDefaultAttributes" icon="iconParameterizationIdentification.gif">
+		<Parameter id="ECMEnableDefaultChangeAnalysis" implementation="com.dassault_systemes.ootbConfiguration.deployment.impl.ParameterizationExpressionImpl" regSuite="EnterpriseChangeMgt">
+			<Argument id="Argument" type="boolean" input="checkbox" default="Enabled"/>
+			<Constant id="expression" value="ECMEnableDefaultChangeAnalysis" />
+			<Constant id="valueChecked" value="true"/>
+			<Constant id="valueUnchecked" value="false"/>
+		</Parameter>		
+	</Family>
+	<Family id="DefaultChangeOrderAtChangeRequestApproval" icon="iconParameterizationIdentification.gif">
+		<Parameter id="ECM_DefaultImplementingChangeOrderRequested" implementation="com.dassault_systemes.ootbConfiguration.deployment.impl.ParameterizationExpressionImpl" regSuite="EnterpriseChangeMgt">
+			<Argument id="Argument" type="boolean" input="checkbox" default="Disabled"/>
+			<Constant id="expression" value="ECM_DefaultImplementingChangeOrderRequested" />
+			<Constant id="valueChecked" value="true"/>
+			<Constant id="valueUnchecked" value="false"/>
+		</Parameter>		
+	</Family>
+	<Family id="ChangeDemoteOnRejection" icon="iconParameterizationIdentification.gif">
+		<Parameter id="ChangeOrderDemoteOnRejection" implementation="com.dassault_systemes.ootbConfiguration.deployment.impl.ParameterizationExpressionImpl" regSuite="EnterpriseChangeMgt">
+			<Argument id="Argument" type="boolean" input="checkbox" default="Disabled"/>
+			<Constant id="expression" value="EnableChangeOrderDemoteOnRejection" />
+			<Constant id="valueChecked" value="true"/>
+			<Constant id="valueUnchecked" value="false"/>
+		</Parameter>
+		<Parameter id="ChangeRequestDemoteOnRejection" implementation="com.dassault_systemes.ootbConfiguration.deployment.impl.ParameterizationExpressionImpl" regSuite="EnterpriseChangeMgt">
+			<Argument id="Argument" type="boolean" input="checkbox" default="Disabled"/>
+			<Constant id="expression" value="EnableChangeRequestDemoteOnRejection" />
+			<Constant id="valueChecked" value="true"/>
+			<Constant id="valueUnchecked" value="false"/>
+		</Parameter>		
+	</Family>
+  </Domain>
+</OOTBParameterization>

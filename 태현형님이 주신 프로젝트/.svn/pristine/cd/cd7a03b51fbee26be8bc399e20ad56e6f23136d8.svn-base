@@ -1,0 +1,45 @@
+<li
+  class="im-call-member-item"
+  v-show="mustBeVisible"
+>
+  <vu-rtuserpresence
+    class="medium bgInherit noPresence"
+    :login="user.login"
+    :tenantId="$store.getters.tenant"
+  />
+  <div
+    v-tooltip.body.left="username"
+    class="username"
+  >
+    {{ username }}
+  </div>
+  <ul
+    class="icons"
+    v-show="hasJoined"
+  >
+    <li
+      class="fonticon fonticon-monitor"
+      v-show="isScreenStreamer"
+    />
+    <li
+      class="fonticon fonticon-pause"
+      v-show="isOnHold"
+    />
+    <li
+      class="fonticon fonticon-microphone"
+      v-show="isAudioStreamer && !isAudioMuted"
+    />
+    <li
+      class="fonticon fonticon-microphone-off"
+      v-show="!isAudioStreamer || isAudioMuted"
+    />
+    <li
+      class="fonticon fonticon-videocamera"
+      v-show="isVideoStreamer && !isVideoMuted"
+    />
+    <li
+      class="fonticon fonticon-videocamera-off"
+      v-show="!isVideoStreamer || isVideoMuted"
+    />
+  </ul>
+</li>

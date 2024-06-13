@@ -1,0 +1,57 @@
+/* Define constants*/
+/* Variables for the object type */
+Let ModelingType(Type)
+Let ModelingTypeName(String)
+Let AbbreviatedBaseTypeName(String)
+Let RealType(Type)
+Let RealTypeName(String)
+
+/* Variables for naming */
+Let Separator(String)
+Let NamingTypePrefix(STRING)
+Let SiteAffix(STRING)
+Let NamingTypeSuffix(STRING)
+Let ID(STRING)
+Let IDNumber(STRING)
+Let IDVNumber(STRING)
+Let NumberAlignment(INTEGER)
+
+/* Retrieve OOTB and real type names */
+ModelingType = ThisObject.ModelerType
+if (ModelingType<>NULL){
+   ModelingTypeName=ModelingType.Name 
+}
+
+RealType = ThisObject.PrimaryType
+if (RealType<>NULL){
+   RealTypeName=RealType.Name 
+}
+
+/* Init some variables */
+AbbreviatedBaseTypeName="CA"
+NumberAlignment=8
+Separator="-"
+SiteAffix=""
+
+/* Retrieve Naming parameters */
+RetrieveNamingParametersWithSeparator(ModelingTypeName,NamingTypePrefix,SiteAffix,NamingTypeSuffix,Separator,AbbreviatedBaseTypeName)
+
+/* Retrieve associated counter */
+/* For a counter to be specific to each type including subtypes, replace AbbreviatedBaseTypeName by RealTypeName */
+STAutoNumbers(AbbreviatedBaseTypeName, NumberAlignment, IDNumber, IDVNumber)
+
+/* Management of Common Abbreviation requires the ModelingTypeName to be rerouted*/
+if (ModelingTypeName <> AbbreviatedBaseTypeName) {
+	NumberAlignment=NumberAlignment+1 
+}
+
+/* Build the final name */
+ID=NamingTypePrefix
+
+if (SiteAffix<>"") ID=ID+Separator+SiteAffix
+
+ID=ID+Separator+IDNumber
+
+if (NamingTypeSuffix<>"") ID=ID+Separator+NamingTypeSuffix
+
+ThisObject.name = ID

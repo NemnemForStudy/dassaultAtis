@@ -1,0 +1,46 @@
+################################################################################################
+# Create By thok : 2023. 05. 24
+# Admin Type : table
+# Name : decProjectBizList
+################################################################################################
+#del table decProjectBizList system;
+add table 'decProjectBizList' system
+	column
+		name 'Revision'
+		label 'emxProgramCentral.Label.ModifiedOrder'
+		alt ''
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Column Type' 'program'
+        setting 'function' 'getDBDataList'
+        setting 'program' 'emxProjectSpace'
+		setting 'columnName' 'CHG_SQNUM'
+	column
+		name 'ParticipantName'
+		label 'emxProgramCentral.Label.decSubConName'
+		alt ''
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Column Type' 'program'
+        setting 'function' 'getDBDataList'
+        setting 'program' 'emxProjectSpace'
+		setting 'columnName' 'BIZCO_KNM'
+	column
+		name 'ContractShareRatio'
+		label 'emxProgramCentral.Label.decContractRate'
+		alt ''
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Column Type' 'program'
+        setting 'function' 'getDBDataList'
+        setting 'program' 'emxProjectSpace'
+		setting 'columnName' 'CT_QUOTA_RT'
+	column
+		name 'MainContractor'
+		label 'emxProgramCentral.Label.decRepCompYN'
+		alt ''
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Column Type' 'program'
+        setting 'function' 'getDBDataList'
+        setting 'program' 'emxProjectSpace'
+		setting 'columnName' 'REP_COMP_YN'
+;
+add property 'table_decProjectBizList' on program 'eServiceSchemaVariableMapping.tcl' to table 'decProjectBizList' system
+;

@@ -1,0 +1,55 @@
+<div class="welcome-panel-element">
+	<div class="panel-content">
+        {{#if appDescription}}
+        <div class="app-informations-section">
+            <div class="app-title">{{appDescription.title}}</div>
+            <div class="app-description {{appDescription.className}}">{{appDescription.description}}</div>
+            <div class="separator"></div>
+        </div>
+        {{/if}}
+		<div class="all-activity-section">
+			{{#each activities}} {{#if this.id}}
+			<div class="activity-section" id="{{this.id}}">
+				{{#if this.title}}
+				<div class="text-element">{{this.title}}</div>
+				{{/if}} {{#each actions}} {{#if this.id}}
+				<div class="{{#if this.className}}{{this.className}}{{/if}} activity-btn {{#if this.isDefault}}selected{{/if}}" id="{{this.id}}">
+                    <section class="activity-tooltip-element">
+    					{{#if this.letterAsIcon}}
+								<span class="letter-as-icon">{{this.letterAsIcon}}</span>
+							{{else}}
+								{{#if ../../useWebUX}}
+									<span class="panel-icon wux-ui-3ds wux-ui-3ds-{{this.fonticon}}"></span>
+								{{else}}
+									<span class="panel-icon fonticon fonticon-{{this.fonticon}}"></span>
+								{{/if}}
+							{{/if}}
+    					<div class="text-element">{{this.text}}</div>
+                    </section>
+				</div>
+				{{/if}} {{/each}}
+			</div>
+			<div class="separator"></div>
+			{{/if}} {{/each}}
+		</div>
+		<div class="footer-section">
+		    {{#if footer}}
+		    {{#each footer}} {{#if this.id}}
+			<div class="separator"></div>
+			<div class="activity-section" id="{{this.id}}">
+				{{#if this.title}}
+				<div class="text-element">{{this.title}}</div>
+				{{/if}} {{#each actions}} {{#if this.id}}
+				<div
+					class="{{#if this.className}}{{this.className}}{{/if}} activity-btn {{#if this.isDefault}}selected{{/if}}"
+					id="{{this.id}}">
+					{{#if this.letterAsIcon}}<span class="letter-as-icon">{{this.letterAsIcon}}</span>{{else}}<span class="fonticon fonticon-{{this.fonticon}}"></span>{{/if}}
+					<div class="text-element">{{this.text}}</div>
+				</div>
+				{{/if}} {{/each}}
+			</div>
+			{{/if}} {{/each}}
+			{{/if}}
+		</div>
+	</div>
+</div>

@@ -1,0 +1,14 @@
+<div class="header-container" title="{{header}}">{{header}}</div>
+<div class = "container-scroll"></div>
+<div class="actionlist-container">
+	{{#each cueRows}}
+	<div class="cue-row-container" id={{this.cueId}}>
+		<div class="cue-severity {{this.cueSeverity}}"></div>
+		<img class="cue-icon" src={{this.cueImg}}>
+		<div class="cue-info-container">
+			<section class="cue-title {{this.isLink}}">{{this.cueTitle}}</section>
+			<section class="cue-subtitle">{{{this.cueSubtitle}}}</section>
+		</div>
+	</div>
+	{{/each}}
+</div>

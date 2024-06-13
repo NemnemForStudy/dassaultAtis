@@ -1,0 +1,12 @@
+m|DELWebViewerController\DELWebViewerWorkInstructionController.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.3.23053|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\DELWebViewerWorkInstructionController\DELWebViewerWorkInstructionController.js|1677099885|14010
+s|DELWebViewerController\DELWebViewerWorkInstructionController.mweb\src\DELImporter.js|1634204616|2453
+u|DELWebViewerController\DELWebViewerWorkInstructionController.mweb\src\WorkInstructionAVPDataManager.js|1633686425|14829
+u|DELWebViewerController\DELWebViewerWorkInstructionController.mweb\src\WorkInstructionController.js|1676894408|16684
+u|DELWebViewerController\DELWebViewerWorkInstructionController.mweb\src\WorkInstructionDataManager.js|1674838230|11921
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

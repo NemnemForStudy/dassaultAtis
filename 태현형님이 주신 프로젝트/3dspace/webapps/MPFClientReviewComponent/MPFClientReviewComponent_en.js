@@ -1,0 +1,1 @@
+define("DS/MPFClientReviewComponent/MPFClientReviewComponent_en",{});define("DS/MPFClientReviewComponent/assets/nls/MPFClientReviewComponent",{process:"Process",material:"Material",byAuthorOnDate:"By {0} on {1}",report:"Report"});

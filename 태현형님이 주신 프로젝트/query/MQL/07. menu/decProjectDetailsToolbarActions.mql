@@ -1,0 +1,63 @@
+################################################################################################
+# Created By thok : 2023. 05. 15
+# Admin Type : menu
+# Name : decProjectDetailsToolbarActions
+################################################################################################
+#delete menu decProjectDetailsToolbarActions;
+add menu 'decProjectDetailsToolbarActions' 
+	label 'ProgramCentral.Toolbar.Actions' 
+	command 'decProjectDetailsPropertiesEdit' 
+	setting 'Registered Suite' 'ProgramCentral' 
+	setting 'Image' '${COMMON_DIR}/images/iconActionActions.png'
+	property application value 'ProgramManagementBase' 
+	property version value 'R423.HF7' 
+	property installer value 'ENOVIAEngineering' 
+	property 'installed date' value '05-15-2023' 
+	property 'original name' value 'decProjectDetailsToolbarActions'
+;
+add property menu_decProjectDetailsToolbarActions on program eServiceSchemaVariableMapping.tcl to menu 'decProjectDetailsToolbarActions'
+;
+mod menu 'decProjectDetailsToolbarActions' add command 'decCreateOngoingProjectIn' 
+;
+# Modified by hslee on 2023.06.20
+mod menu decProjectDetailsToolbarActions
+	add command 'decProjectInterfaceCmd'
+;
+
+# Modified by thok on 2023.07.24
+mod menu decProjectDetailsToolbarActions
+	add command 'decProjectChangeProjectCode'
+;
+
+# Modified by thok on 2023.07.24
+mod menu decProjectDetailsToolbarActions
+	order command 'decProjectChangeProjectCode' 2
+;
+
+# Modified by thok on 2023.07.26
+mod menu decProjectDetailsToolbarActions
+	add command 'decProjectBiddingComplete'
+	add command 'decProjectBiddingCancel'
+	order command 'decProjectChangeProjectCode' 6
+	add command 'decProjectOngoingComplete'
+	add command 'decProjectOngoingHold'
+	add command 'decProjectOngoingRestart'
+;
+
+# Modified by thok on 2023.08.11
+mod menu decProjectDetailsToolbarActions
+	remove command 'decProjectBiddingComplete'
+	remove command 'decProjectBiddingCancel'
+	add command 'decProjectBiddingEnterOrderResult'
+;
+
+# Modified by thok on 2023.08.11
+mod menu decProjectDetailsToolbarActions
+	order command 'decProjectBiddingEnterOrderResult' 3
+;
+
+# Modified by thok on 2023.09.18
+mod menu decProjectDetailsToolbarActions
+	remove command 'decProjectOngoingHold'
+	remove command 'decProjectOngoingRestart'
+;

@@ -1,0 +1,1 @@
+define("DS/WebConnector2D/WebConnector2D_ja",{});define("DS/WebConnector2D/assets/nls/WebConnector2D",{LoadingErrorSheet:"利用可能なプレビューはありません"});

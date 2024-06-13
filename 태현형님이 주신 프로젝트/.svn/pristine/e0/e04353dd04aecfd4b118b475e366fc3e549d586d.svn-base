@@ -1,0 +1,28 @@
+################################################################################################
+# Create By jhlee 2023. 08. 21
+# Admin Type : command
+# Name : decCWPTaskNoCompareExcel
+################################################################################################
+
+#del command 'decCWPTaskNoCompareExcel';
+add command 'decCWPTaskNoCompareExcel'
+	description 'decCWPTaskNoCompareExcel'
+	label 'emxProgramCentral.Common.Import'
+	alt 'emxProgramCentral.Common.Import'
+	setting 'Registered Suite' 'ProgramCentral'
+	setting 'Target Location' 'popup'
+	setting 'Image' "${COMMON_DIR}/images/I_ImportFromFile_32.png"
+	setting 'Submit' 'true'
+;
+add property 'command_decCWPTaskNoCompareExcel' on prog eServiceSchemaVariableMapping.tcl to command 'decCWPTaskNoCompareExcel';
+mod command 'decCWPTaskNoCompareExcel'
+	href '${COMMON_DIR}/decTaskCompareExcelDialogFS.jsp?type=CWPNo'
+	add setting 'hasAccess' 'PIM,AWP'
+	add setting 'Access Program' 'emxProjectSpace'
+	add setting 'Access Function' 'isAccessPMCUpdate'
+	label ProgramCentral.Label.ImportCWPNo
+	alt ProgramCentral.Label.ImportCWPNo
+;
+mod command 'decCWPTaskNoCompareExcel'
+	add setting 'hasAccess' 'PIM'
+;

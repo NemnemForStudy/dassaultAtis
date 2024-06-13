@@ -1,0 +1,17 @@
+m|Web3DXCity\XCityEffects.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.1.22330|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\XCityEffects\XCityEffects.js|1669432543|68397
+s|Web3DXCity\XCityEffects.mweb\src\AltitudeEffect.js|1669417160|8581
+u|Web3DXCity\XCityEffects.mweb\src\AltitudeShader.js|1669417160|2753
+u|Web3DXCity\XCityEffects.mweb\src\AtmosphereEffect.js|1669417160|12102
+u|Web3DXCity\XCityEffects.mweb\src\AtmosphereShader.js|1669417160|10764
+u|Web3DXCity\XCityEffects.mweb\src\HeatMapRTree.js|1669417160|15998
+u|Web3DXCity\XCityEffects.mweb\src\HeatMapRTreeShader.js|1669417160|27693
+u|Web3DXCity\XCityEffects.mweb\src\ViewshedEffect.js|1669417160|43150
+u|Web3DXCity\XCityEffects.mweb\src\ViewshedShader.js|1669417160|16514
+u|Web3DXCity\XCityEffects.mweb\src\XCityEffects.js|1669417160|0
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

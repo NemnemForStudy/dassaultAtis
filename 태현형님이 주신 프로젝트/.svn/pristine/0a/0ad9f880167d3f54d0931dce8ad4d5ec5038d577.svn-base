@@ -1,0 +1,48 @@
+<div
+  id="im-call-user-list"
+>
+  <div
+    class="im-call-user-list-margin"
+  >
+    <div
+      class="scroll-button fonticon fonticon-chevron-up"
+      v-if="isScrollableUp"
+      @click="scrollUp"
+    />
+  </div>
+  <div
+    class="fonticon fonticon-window"
+    @click="minimize"
+    v-tooltip.body.left="$store.getters.nls('minimize')"
+  />
+  <!-- <div id="im-call-user-list-sroller" style="height: 60px"> -->
+  <div
+    id="im-call-user-list-container"
+    ref="useritems-container"
+  >
+    <!-- Selfview -->
+    <im-call-self
+      v-if="$store.getters.selfViewInUserList"
+      :showSelfView="showSelfView"
+      class="im-call-user-item"
+      :isInUserList="true"
+    />
+    <!-- Accepters -->
+    <im-call-user-item
+      v-for="(item, index) in users"
+      :key="item"
+      :user_id="item"
+      :minimized="isLightboxMinimized"
+      :isSpeakerView="hasSpeaker"
+    />
+  </div>
+  <div
+    class="im-call-user-list-margin"
+  >
+  <div
+    class="scroll-button fonticon fonticon-chevron-down"
+    v-if="isScrollableDown"
+    @click="scrollDown"
+  />
+  </div>
+</div>

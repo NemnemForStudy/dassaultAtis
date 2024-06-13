@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright DASSAULT SYSTEMES 2011 -->
+<RelationsList xmlns="DS_DELPPWConfiguration" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="DS_DELPPWConfiguration ../xsd/ModelRelations.xsd" Title="PPR Relations" Description="Sample configuration file delivered by DS.">
+
+  <!-- DROP ON A PROCESS -->
+  <PROCESS>
+    <!-- DRAGGED ITEM IS A PRODUCT -->
+    <!-- MEANING FROM: PRCS TO: PRD -->
+    <PRODUCT>
+      <Relation type="ProductImplementLink" read="true" write="true"/>
+      <Relation type="ProductImplementLinkOcc" read="true" write="true"/>
+    </PRODUCT>
+    <PART>
+      <Relation type="ProductImplementLink" read="true" write="true"/>
+      <Relation type="ProductImplementLinkOcc" read="true" write="true"/>
+    </PART>
+    <PROCESS>
+      <Relation type="HistorizationLinkRefRef" read="true" write="true"/>
+      <Relation type="MfgProcessAlternate" read="true" write="true"/>
+    </PROCESS> 
+    <RESOURCE>
+      <Relation type="DELAsmProcessCanUseCnx" read="true" write="true"/>
+    </RESOURCE>
+  </PROCESS>
+
+  <SYSTEM>
+    <PROCESS>
+      <Relation type="ProcessImplementLink" read="true" write="false"/>
+      <Relation type="DELLmiProductionSystemOutputCnxToMBOM" read="true" write="false"/>
+    </PROCESS>
+    <SYSTEM>
+      <Relation type="HistorizationLinkRefRef" read="true" write="false"/>
+      <Relation type="DELLmiMaterialPathCnxCust" read="true" write="false"/>
+    </SYSTEM>
+    <RESOURCE>
+      <Relation type="DELAsmProcessCanUseCnx" read="true" write="false"/>
+    </RESOURCE>
+  </SYSTEM>
+
+  <OPERATION>
+    <PROCESS>
+        <Relation type="DELLmiProductionSystemOutputCnxToMBOM" read="true" write="false"/>
+    </PROCESS>
+    <OPERATION>
+      <Relation type="HistorizationLinkRefRef" read="true" write="false"/>
+      <Relation type="DELLmiTimeConstraintCnx" read="true" write="false"/>
+    </OPERATION>
+    <RESOURCE>
+      <Relation type="DELAsmProcessCanUseCnx" read="true" write="false"/>
+    </RESOURCE>
+  </OPERATION>
+
+  <RESOURCE>
+    <RESOURCE>
+      <Relation type="HistorizationLinkRefRef" read="true" write="true"/>
+    </RESOURCE>    
+  </RESOURCE>
+
+
+
+</RelationsList>

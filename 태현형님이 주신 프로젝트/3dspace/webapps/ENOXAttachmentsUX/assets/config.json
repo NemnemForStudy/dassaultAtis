@@ -1,0 +1,251 @@
+{
+    "actionbar": [
+        {
+            "name": "upload",
+            "fonticon": "upload",
+            "methodName": "ActionUpload",
+            "nls": "UPLOAD_DOCUMENTS"
+        },
+        {
+            "name": "attach",
+            "fonticon": "plus",
+            "methodName": "ActionAttach",
+            "nls": "ATTACH_EXISTING"
+        },
+        {
+            "name": "detach",
+            "fonticon": "remove",
+            "methodName": "ActionDetach",
+            "nls": "DETACH",
+            "className": "disabled"
+        },
+        {
+            "name": "paste",
+            "fonticon": "paste",
+            "methodName": "ActionPaste",
+            "nls": "Paste"
+        },
+        {
+            "name": "actions",
+            "fonticon": "menu-dot",
+            "methodName": "ActionActions",
+            "nls": "ACTIONS"
+        },
+        {
+            "className": "divider"
+        },
+        {
+            "name": "viewmenu",
+            "fonticon": "view-big-tile",
+            "methodName": "ActionViewSwitch",
+            "nls": "TILEVIEW",
+            "content": {
+                "type": "icondropdown",
+                "options": {
+                    "items": [
+                        {
+                            "name": "viewswitchtile",
+                            "fonticon": "view-big-tile",
+                            "methodName": "ActionViewSwitch",
+                            "selectable": true,
+                            "text": "Tile View",
+                            "nls": "TILEVIEW"
+                        },
+                        {
+                            "name": "viewswitchgrid",
+                            "fonticon": "view-list",
+                            "methodName": "ActionViewSwitch",
+                            "selectable": true,
+                            "text": "Grid View",
+                            "nls": "GRIDVIEW"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "name": "sort",
+            "fonticon": "sorting",
+            "methodName": "ActionSort",
+            "nls": "SORT",
+            "content": {
+                "type": "dropdownmenu",
+                "options": {
+                    "items": [
+                        {
+                            "name": "sorttitle",
+                            "fonticon": "sort-alpha-asc",
+                            "text": "Title",
+                            "nls": "TITLE",
+                            "selectable": true,
+                            "dataIndex": "tree",
+                            "order": "asc"
+                        },
+                        {
+                            "name": "sortcreateddate",
+                            "fonticon": "sort-num-asc",
+                            "text": "Created Date",
+                            "nls": "CREATEDDATE",
+                            "selectable": true,
+                            "dataIndex": "originated",
+                            "order": "asc"
+                        },
+                        {
+                            "name": "sortmodifieddate",
+                            "fonticon": "sort-num-desc",
+                            "text": "Modified Date",
+                            "nls": "MODIFIEDDATE",
+                            "selectable": true,
+                            "selected": true,
+                            "dataIndex": "modified",
+                            "order": "desc"
+                        }
+                    ]
+                }
+            }
+        }
+    ],
+    "headers": [
+        {
+            "text": "Title",
+            "nls": "TITLE",
+            "dataIndex": "tree"
+        },
+        {
+            "text": "Revision",
+            "nls": "REVISION",
+            "dataIndex": "revision",
+            "width": 50
+        },
+        {
+            "text": "Name",
+            "nls": "NAME",
+            "dataIndex": "name",
+            "width": 100,
+            "visibleFlag": false
+        },
+        {
+            "text": "Type",
+            "nls": "TYPE",
+            "dataIndex": "typeNLS",
+            "width": 70
+        },
+        {
+            "text": "Created Date",
+            "nls": "CREATEDDATE",
+            "dataIndex": "originated",
+            "visibleFlag": false
+        },
+        {
+            "text": "Modified Date",
+            "nls": "MODIFIEDDATE",
+            "dataIndex": "modified",
+            "visibleFlag": false
+        },
+        {
+            "text": "Description",
+            "nls": "DESCRIPTION",
+            "dataIndex": "description",
+            "visibleFlag": false
+        },
+        {
+            "text": "Maturity",
+            "nls": "MATURITY",
+            "dataIndex": "stateNLS",
+            "typeRepresentation": "tag",
+            "visibleFlag": false
+        },
+        {
+            "text": "Organization",
+            "nls": "ORGANIZATION",
+            "dataIndex": "organizationTitle",
+            "visibleFlag": false
+        },
+        {
+            "text": "Collaborative Space",
+            "nls": "COLLABSPACE",
+            "dataIndex": "collabSpaceTitle",
+            "visibleFlag": false
+        },
+        {
+            "text": "File Extension",
+            "nls": "FILEEXTENSION",
+            "dataIndex": "fileExtension",
+            "visibleFlag": false
+        },
+        {
+            "text": "Is Latest Revision",
+            "nls": "ISLATESTREVISION",
+            "dataIndex": "isLatestRevision",
+            "typeRepresentation": "boolean",
+            "className": "coloured-boolean",
+            "visibleFlag": false
+        }
+    ],
+    "contextMenu": [
+        {
+            "type": "PushItem",
+            "title": "Open With",
+            "name": "OpenWith",
+            "nls": "OPENWITH",
+            "fonticon": "import",
+            "acceptsMultiSelection": true,
+            "hiddenInWebInWin": true
+        },
+        {
+            "type": "PushItem",
+            "title": "Maturity",
+            "name": "Maturity",
+            "nls": "MATURITY",
+            "fonticon": "collaborative-lifecycle-management",
+            "methodName": "ctxMaturity",
+            "acceptsMultiSelection": true
+        },
+        {
+            "type": "PushItem",
+            "title": "Relations",
+            "name": "Relations",
+            "nls": "RELATIONS",
+            "fonticon": "object-related",
+            "methodName": "ctxRelations",
+            "acceptsMultiSelection": true,
+            "hiddenInWebInWin": true
+        },
+        {
+            "type": "PushItem",
+            "title": "Share",
+            "name": "Share",
+            "nls": "Share",
+            "fonticon": "share",
+            "methodName": "ctxShare",
+            "acceptsMultiSelection": true,
+            "hiddenInWebInWin": false
+        },
+        {
+            "type": "PushItem",
+            "title": "Copy",
+            "name": "Copy",
+            "nls": "Copy",
+            "fonticon": "copy",
+            "methodName": "ctxCopy",
+            "acceptsMultiSelection": true,
+            "hiddenInWebInWin": false
+        },
+        {
+            "type": "PushItem",
+            "title": "Properties",
+            "name": "Properties",
+            "nls": "Information",
+            "fonticon": "info-open-in-a-new-window",
+            "methodName": "ctxProperties",
+            "acceptsMultiSelection": true,
+            "hiddenInWebInWin": true
+        },
+        {
+            "className": "divider"
+        }
+    ],
+    "limits": {
+        "maxFilesUploadsAtATime": 50
+    }
+}

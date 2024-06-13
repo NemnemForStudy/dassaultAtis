@@ -1,0 +1,1 @@
+define("DS/3DPlayWidgetViews/3DPlayWidgetViews_cs",{});define("DS/3DPlayWidgetViews/assets/nls/3DPlayWidgetView",{DROP_MSG_LP:"Přetáhněte obsah sem"});

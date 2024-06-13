@@ -1,0 +1,12 @@
+m|SNResultUX\ResultWebInWin.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.3.23080|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\ResultWebInWin\ResultWebInWin.html|1675495472|22157
+s|SNResultUX\ResultWebInWin.mweb\src\ResultWebInWin.html|1674113840|22157
+t|win_b64\webapps\ResultWebInWin\ResultWebInWin.js|1679431366|39100
+s|SNResultUX\ResultWebInWin.mweb\src\ResultWebInWin.js|1679391623|86420
+u|SNResultUX\ResultWebInWin.mweb\src\ResultWebInWinAction.js|1584615954|4087
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

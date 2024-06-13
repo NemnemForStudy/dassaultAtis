@@ -1,0 +1,13 @@
+m|Web3DXCity\XCityLayer.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.1.22330|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\XCityLayer\XCityLayer.js|1669432542|18296
+s|Web3DXCity\XCityLayer.mweb\src\Vector.js|1669417165|19198
+u|Web3DXCity\XCityLayer.mweb\src\VectorLoaderEnovia.js|1669417165|12686
+u|Web3DXCity\XCityLayer.mweb\src\VectorLoaderGML.js|1669417165|9547
+u|Web3DXCity\XCityLayer.mweb\src\VectorLoaderJSON.js|1669417165|12086
+u|Web3DXCity\XCityLayer.mweb\src\XCityLayer.js|1669417165|1
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

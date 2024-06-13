@@ -1,0 +1,38 @@
+/* Define constants */
+/* Variables for the object type */
+Let ModelingType(Type)
+Let ModelingTypeName(String)
+Let AbbreviatedBaseTypeName(String)
+Let RealType(Type)
+Let RealTypeName(String)
+
+/* Variables for naming */
+Let Separator(String)
+Let ID(STRING)
+Let IDNumber(STRING)
+Let IDVNumber(STRING)
+Let NumberAlignment(INTEGER)
+
+/* Retrieve OOTB and real type names */
+ModelingType = ThisObject.ModelerType
+if (ModelingType<>NULL){
+   ModelingTypeName=ModelingType.Name 
+}
+
+RealType = ThisObject.PrimaryType
+if (RealType<>NULL){
+   RealTypeName=RealType.Name 
+}
+
+/* Init some variables */
+AbbreviatedBaseTypeName="CO"
+NumberAlignment=8
+Separator="-"
+
+/* For a counter to be specific to each type including subtypes, replace AbbreviatedBaseTypeName by RealTypeName */
+STAutoNumbers(AbbreviatedBaseTypeName, NumberAlignment, IDNumber, IDVNumber)
+
+/* Define name */
+ID=AbbreviatedBaseTypeName+Separator+IDNumber
+ThisObject.name = ID
+

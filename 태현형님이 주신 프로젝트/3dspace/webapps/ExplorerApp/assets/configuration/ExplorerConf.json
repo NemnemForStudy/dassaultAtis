@@ -1,0 +1,173 @@
+{
+    "appId": "ENOSC2D_AP",
+    "appCntAMD": "DS/ExplorerApp/ExplorerCmp",
+    "views": [{
+        "id": "homepage",
+        "amd": "DS/ExplorerApp/views/ExplorerAppHP",
+        "initFunc": "initialize",
+        "getDOMFunc": "getDOM"
+    }, {
+        "id": "app",
+        "amd": "DS/ExplorerApp/views/AppMain",
+        "initFunc": "initialize",
+        "getDOMFunc": "getDOM"
+    }],
+    "welcomeScreen": {
+        "backgroundImage": {
+            "module": "ExplorerApp",
+            "asset": "images/ENOSC2D_AP_LandingPage.jpg"
+        },
+        "title": "Product Structure Explore",
+        "i18n": {
+            "AMD": "i18n!DS/ExplorerApp/assets/nls/ExplorerApp",
+            "key": "welcomescreen",
+            "helpResourceFile": "ExplorerApp/ExplorerAppHelp"
+        },
+        "tabs": [{
+            "tabId": "recent",
+            "icon": {
+                "iconName": "clock",
+                "fontIconFamily": 1
+            },
+            "nlsKey": "recent",
+            "activated": true,
+            "action": {
+                "event": "DS/ENX/WelcomeScreen/Recent"
+            }
+        }],
+        "buttons": [{
+            "btnId": "openContent",
+            "emphasize": "primary",
+            "icon": {
+                "iconName": "open",
+                "fontIconFamily": 1
+            },
+            "nlsKey": "openContent",
+            "action": {
+                "event": "DS/ENX/WelcomeScreen/openSearch",
+                "data": {
+                    "btnId": "openContent",
+                    "default": true
+                }
+            }
+        }, {
+            "btnId": "openProducts",
+            "icon": {
+                "iconName": "3dproduct-open",
+                "fontIconFamily": 1
+            },
+            "nlsKey": "openProducts",
+            "action": {
+                "event": "DS/ENX/WelcomeScreen/openSearch",
+                "data": {
+                    "btnId": "openProducts",
+                    "qry": "(flattenedtaxonomies:\"types/VPMReference\" OR (flattenedtaxonomies:\"types/VPMRepReference\"))"
+                }
+            }
+        }, {
+            "btnId": "openFilters",
+            "icon": {
+                "iconName": "filter-open",
+                "fontIconFamily": 1
+            },
+            "nlsKey": "openFilters",
+            "action": {
+                "event": "DS/ENX/WelcomeScreen/openSearch",
+                "data": {
+                    "btnId": "openFilters",
+                    "qry": "(flattenedtaxonomies:\"types/ENOStrRefinementSpecification\")",
+                    "noApply": true
+                }
+            }
+        }],
+        "links": [{
+            "id": "explorerLinks",
+            "links": [{
+                "id": "userAssistance",
+                "nlsKey": "linkUserAssistance",
+                "icon": {
+                    "iconName": "i-question",
+                    "fontIconFamily": 1
+                },
+                "action": {
+                    "event": "DS/ENX/WelcomeScreen/LaunchURL",
+                    "data": {
+                        "kind": "documentation",
+                        "topics": {
+                            "WebHelp": "Sc2dUserMap/sc2d-c-ov.htm"
+                        }
+                    }
+                }
+            }]
+        },{
+            "id": "rwsCommunity",
+            "links": [{
+                    "id": "userCommunity",
+                    "nlsKey": "linkUserCommunity",
+                    "icon": {
+                        "iconName": "topbar-users",
+                        "fontIconFamily": 1
+                    },
+                    "action": {
+                        "event": "DS/ENX/WelcomeScreen/LaunchURL",
+                        "data": {
+                            "kind": "directLnk",
+                            "url": "https://r1132100503382-eu1-3dswym.3dexperience.3ds.com/#community:38"
+                        }
+                    }
+                }
+            ]
+        }],
+        "settings": {}
+
+    },
+    "preferences": {
+        "showWelcomePanel": {
+            "value": true,
+            "preference": {
+                "type": "boolean",
+                "label": "showWelcomePanel_label"
+            }
+        },
+        "autoreload": {
+            "value": false,
+            "preference": {
+                "type": "boolean",
+                "label": "autoreload_label"
+            }
+        }
+    },
+    "settings": {
+        "defaultOpenQry": "(flattenedtaxonomies:\"types/VPMReference\" OR flattenedtaxonomies:\"types/VPMRepReference\" OR flattenedtaxonomies:\"types/ENOStrRefinementSpecification\")",
+        "recentMaxSize": 40,
+        "supportedTypes": {
+            "products": {
+                "amd": "DS/PADServices/views/private/homepage/RecentProductMgt",
+                "getKeyFunc": "getKey",
+                "convertFunc": "convertProduct",
+                "retrieveFunc": "retrieveProducts",
+                "updInPreferenceFunc": "updProductsInPref",
+                "getOpenNodeFunc": "getOpenNode",
+                "buildOpenParamsFunc": "buildProductOpenParams"
+            },
+            "filters": {
+                "amd": "DS/PADServices/views/private/homepage/RecentFilterMgt",
+                "getKeyFunc": "getKey",
+                "convertFunc": "convertFilter",
+                "retrieveFunc": "retrieveFilters",
+                "updInPreferenceFunc": "updFiltersInPref",
+                "getOpenNodeFunc": "getOpenNode",
+                "buildOpenParamsFunc": "buildFilterOpenParams"
+            }
+        },
+        "widgetLink": {
+            "appIds": [],
+            "open": false,
+            "uses": ["ENXOpen", "ENXContent", "ENXContentSync2D", "ENXContentSync3D", "ENXAuthoring", "ENXLandingPageSync"],
+            "implements": ["ENXOpen", "ENXContent", "ENXContentSync2D", "ENXAuthoring", "ENXLandingPageSync"]
+        }
+    },
+    "roles": {
+        "available": ["CSV","InternalDS"]
+    }
+}

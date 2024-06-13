@@ -1,0 +1,23 @@
+################################################################################################
+# Create By jhlee 2023. 05. 04
+# Admin Type : menu
+# Name : decAPPImageManagerActionsToolBar
+################################################################################################
+#del menu "decAPPImageManagerActionsToolBar";
+add menu "decAPPImageManagerActionsToolBar"
+	description ''
+  	label 'emxComponents.Toolbar.Actions'
+  	setting 'Image' '${COMMON_DIR}/images/iconActionActions.png'
+  	setting 'Registered Suite' 'Components'
+    command decAPPUploadImage
+    command APPSeparator
+    command decAPPSetAsPrimaryImage
+    command decAPPDeleteImage
+;
+
+# Modified By thok : 2023. 09. 09
+mod menu decAPPImageManagerActionsToolBar
+	add setting 'hasAccess' 'PIM'
+	add setting 'Access Program' 'decAccess' 
+	add setting 'Access Function' 'hasAccess'
+;

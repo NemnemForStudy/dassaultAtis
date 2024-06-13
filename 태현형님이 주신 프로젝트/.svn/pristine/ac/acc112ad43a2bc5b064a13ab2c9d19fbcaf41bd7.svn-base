@@ -1,0 +1,195 @@
+#####
+#type.operation = <current obj attr filter>|strategy|direction|depth|reltype|relwhere|botype|bowhere|boRelBoth|<expression to check for activation>
+#for boRelBoth, 1 == bo, 2 == relationship, 3 = both
+#
+#	IMPORTANT NOTES!!!!!
+#
+#	For any type that has spaces, please replace those spaces with "_"
+#   For any command that has spaces, please remove the spaces.
+#
+#   The command list can be found in
+#   ENOServicesWebInterfaces\ENOLifecycleWebItf.mj\src\com\dassault_systemes\lifecycle\itf\ENOLifecycleExtensionItf.java
+#
+XCADNonPSBaseRepReference.Revise =  		 	XCADNonPSBaseRepReference.V_CADObjectType=analysis|EXPAND|FROM|1|XCADBaseDependency|((attribute[XCADBaseDependency.V_CADLinkType]==analysisResults) OR (attribute[XCADBaseDependency.V_CADLinkType]==analysisComputations))|XCADNonPSBaseRepReference||1
+
+SIMObjSimulationObjectGeneric.Revise =      	|EXPAND|FROM|1|PLMInstance||PLMReference||1
+SIMObjSimulationObjectGeneric.Duplicate =   	|EXPAND|FROM|1|PLMInstance||PLMReference||1
+SIMObjSimulationObjectGeneric.Delete = 			|EXPAND|FROM|2|SIMObjSimulationCategoryInstance,SIMObjSimulationRepInstance||SIMObjSimulationCategoryReference,SIMObjSimulationRepReference||1
+SIMObjSimulationObjectGeneric.NewBranch = 		|EXPAND|FROM|2|SIMObjSimulationCategoryInstance,SIMObjSimulationRepInstance||SIMObjSimulationCategoryReference,SIMObjSimulationRepReference||1
+DesignSight.Lock =   							|EXPAND|FROM|2|PLMInstance||PLMEntity||3
+DesignSight.Lock1 =   							|EXPAND|FROM|2|||PLMEntity||1
+SIMObjSimulationObjectGeneric.ChangeStatus = 	|EXPAND|FROM|1|PLMCoreInstance||PLMCoreReference||1
+
+XCADNonPSBaseRepReference.Delete = 			 	XCADNonPSBaseRepReference.V_CADObjectType=analysis|EXPAND|FROM|1|XCADBaseDependency||XCADNonPSBaseRepReference||1
+XCADNonPSBaseRepReference.Duplicate =		 	XCADNonPSBaseRepReference.V_CADObjectType=analysis|EXPAND|FROM|1|XCADBaseDependency||XCADNonPSBaseRepReference||1
+XCADNonPSBaseRepReference.AdvanceDuplicate = 	XCADNonPSBaseRepReference.V_CADObjectType=analysis|EXPAND|FROM|1|XCADBaseDependency||XCADNonPSBaseRepReference||1
+XCADNonPSBaseRepReference.ChangeStatus = 		XCADNonPSBaseRepReference.V_CADObjectType=analysis|EXPAND|FROM|1|XCADBaseDependency||XCADNonPSBaseRepReference||1
+#New dev to optionally manage designtables
+VPMReference.ChangeStatus = 					|EXPAND|FROM|1|XCADBaseDependency|attribute[XCADBaseDependency.V_CADLinkType]==designTable|XCADNonPSBaseRepReference||1|ENO_ChangeMaturityWithDesignTables
+Drawing.ChangeStatus = 							|EXPAND|FROM|1|XCADBaseDependency|attribute[XCADBaseDependency.V_CADLinkType]==designTable|XCADNonPSBaseRepReference||1|ENO_ChangeMaturityWithDesignTables
+XCADNonPSBaseRepReference.ChangeStatus1 = 		XCADNonPSBaseRepReference.V_CADObjectType=process|EXPAND|FROM|1|XCADBaseDependency|attribute[XCADBaseDependency.V_CADLinkType]==designTable|XCADNonPSBaseRepReference||1|ENO_ChangeMaturityWithDesignTables
+
+#IR-IR-837714
+# Following line gets all Once instantiable instance and  Rep Reference
+# Transfer & Change Owner commands
+PLMCoreReference.Transfer =							|EXPAND|FROM|1|PLMCoreRepInstance||PLMCoreRepReference|((attribute[PLMEntity.V_usage]==3DPart) AND (type==3DShape))|1
+PLMCoreReference.Transfer1 =						|EXPAND|FROM|1|VPLMrel/PLMConnection/V_Owner,VPLMrel/PLMPort/V_Owner||PLMPort,PLMConnection||1
+Behavior_Continuous_BehLibRef.Transfer = 		|EXPAND|FROM|1|CATSysBehaviorLibRepInstance||Behavior_Continuous_Root||1
+RFLVPMLogicalReference.Transfer =				|EXPAND|FROM|1|PLMCoreRepInstance||PLMCoreRepReference||1
+RFLVPMLogicalCommunicationReference.Transfer =	|EXPAND|FROM|1|PLMCoreRepInstance||PLMCoreRepReference||1
+RFLVPMLogicalReference.Transfer1             =  |EXPAND|FROM|1|VPLMrel/PLMConnection/V_Owner,VPLMrel/PLMPort/V_Owner||PLMPort,PLMConnection,PLMDocConnection||1
+#
+RFLPLMFunctionalReference.Transfer =				|EXPAND|FROM|1|PLMCoreRepInstance||PLMCoreRepReference||1
+RFLPLMFunctionalReference.Transfer1 =				|EXPAND|FROM|1|VPLMrel/PLMConnection/V_Owner,VPLMrel/PLMPort/V_Owner||PLMPort,PLMConnection,PLMDocConnection||1
+# REQUIREMENT
+Requirement.Transfer						 =  |EXPAND|FROM|1|Specification_Structure||Requirement||1
+Chapter.Transfer							 =  |EXPAND|FROM|1|Specification_Structure||Requirement,Comment||1
+Requirement_Group.Transfer                   =  |EXPAND|FROM|1|Requirement_Group_Content,Sub_Requirement_Group||Requirement_Group,Requirement_Specification||1
+Requirement_Specification.Transfer           =  |EXPAND|FROM|1|Specification_Structure||Chapter,Requirement,Requirement_Specification||1
+#    CORE MATERIAL 
+CATMatReference.Transfer						 =      |EXPAND|FROM|1|PLMCoreRepInstance||PLMCoreRepReference||1
+## 2D SHEET + VIEW
+
+DIFSheet.Transfer			 =     				  |EXPAND|FROM|1|DIFBackgroundViewRepInstance,DIFViewInstance||DIFBackgroundViewRep||1
+DIFView.Transfer			 =    				  |EXPAND|FROM|1|DIFViewStreamInstance||DIFViewStream||1
+
+## MSR object Transfer -- get all objects under selected simulation object see ENOVIA_Lifecycle_MSR_Modeler_v5.pptx
+SIMObjSimulationObjectGeneric.Transfer =      |EXPAND|FROM|0|SIMObjSimulationCategoryInstance,SIMObjSimulationRepInstance||SIMObjSimulationCategoryReference,SIMObjSimulationRepReference||1
+
+# CHANGE OWNER
+#	 PLMCORE REFERENCE 
+PLMCoreReference.ChangeOwner =							|EXPAND|FROM|1|PLMCoreRepInstance||PLMCoreRepReference|((attribute[PLMEntity.V_usage]==3DPart) AND (type==3DShape))|1
+PLMCoreReference.ChangeOwner1 =						|EXPAND|FROM|1|VPLMrel/PLMConnection/V_Owner,VPLMrel/PLMPort/V_Owner||PLMPort,PLMConnection||1
+Behavior_Continuous_BehLibRef.ChangeOwner = 		|EXPAND|FROM|1|CATSysBehaviorLibRepInstance||Behavior_Continuous_Root||3
+#    LOGICAL REFERENCE 
+RFLVPMLogicalReference.ChangeOwner =				|EXPAND|FROM|1|PLMCoreRepInstance||PLMCoreRepReference||1
+RFLVPMLogicalReference.ChangeOwner1             =  |EXPAND|FROM|1|VPLMrel/PLMConnection/V_Owner,VPLMrel/PLMPort/V_Owner||PLMPort,PLMConnection,PLMDocConnection||1
+RFLVPMLogicalCommunicationReference.ChangeOwner =	|EXPAND|FROM|1|PLMCoreRepInstance||PLMCoreRepReference||1
+RFLVPMLogicalCommunicationReference.ChangeOwner1             =  |EXPAND|FROM|1|VPLMrel/PLMConnection/V_Owner,VPLMrel/PLMPort/V_Owner||PLMPort,PLMConnection,PLMDocConnection||1
+#    FUNCTIONAL REFERENCE
+RFLPLMFunctionalReference.ChangeOwner =				|EXPAND|FROM|1|PLMCoreRepInstance||PLMCoreRepReference||1
+RFLPLMFunctionalReference.ChangeOwner1 =			|EXPAND|FROM|1|VPLMrel/PLMConnection/V_Owner,VPLMrel/PLMPort/V_Owner||PLMPort,PLMConnection,PLMDocConnection||1
+#    REQUIREMENT
+Requirement.ChangeOwner						 =  |EXPAND|FROM|1|Specification_Structure||Requirement||1
+Chapter.ChangeOwner							 =  |EXPAND|FROM|1|Specification_Structure||Requirement,Comment||1
+Requirement_Group.ChangeOwner                   =  |EXPAND|FROM|1|Requirement_Group_Content,Sub_Requirement_Group||Requirement_Group,Requirement_Specification||1
+Requirement_Specification.ChangeOwner           =  |EXPAND|FROM|1|Specification_Structure||Chapter,Requirement,Requirement_Specification||1
+##   FASTENER
+BundleFastenerAbstract.Transfer              =       |EXPAND|FROM|1|PLMCoreRepInstance||PLMCoreRepReference|attribute[PLMCoreRepReference.V_isOnceInstantiable]==TRUE|1
+BundleFastenerAbstract.Transfer1              =      |EXPAND|FROM|1|VPLMrel/PLMConnection/V_Owner,VPLMrel/PLMPort/V_Owner||PLMPort,PLMConnection||1
+LocFastener.Transfer                         =       |EXPAND|FROM|1|PLMCoreRepInstance||PLMCoreRepReference|attribute[PLMCoreRepReference.V_isOnceInstantiable]==TRUE|1
+LocFastener.Transfer1                         =      |EXPAND|FROM|1|VPLMrel/PLMConnection/V_Owner,VPLMrel/PLMPort/V_Owner||PLMPort,PLMConnection||1
+Fastener.Transfer                            =       |EXPAND|FROM|1|PLMCoreRepInstance||PLMCoreRepReference|attribute[PLMCoreRepReference.V_isOnceInstantiable]==TRUE|1
+Fastener.Transfer1                            =      |EXPAND|FROM|1|VPLMrel/PLMConnection/V_Owner,VPLMrel/PLMPort/V_Owner||PLMPort,PLMConnection||1
+PLMFst_BeadFastenerBundle.Transfer			 =       |EXPAND|FROM|1|PLMCoreRepInstance||PLMCoreRepReference|attribute[PLMCoreRepReference.V_isOnceInstantiable]==TRUE|1
+PLMFst_BeadFastenerBundle.Transfer1			 =       |EXPAND|FROM|1|VPLMrel/PLMConnection/V_Owner,VPLMrel/PLMPort/V_Owner||PLMPort,PLMConnection||1
+BundleFastenerAbstract.ChangeOwner              =       |EXPAND|FROM|1|PLMCoreRepInstance||PLMCoreRepReference|attribute[PLMCoreRepReference.V_isOnceInstantiable]==TRUE|1
+BundleFastenerAbstract.ChangeOwner1              =      |EXPAND|FROM|1|VPLMrel/PLMConnection/V_Owner,VPLMrel/PLMPort/V_Owner||PLMPort,PLMConnection||1
+LocFastener.ChangeOwner                         =       |EXPAND|FROM|1|PLMCoreRepInstance||PLMCoreRepReference|attribute[PLMCoreRepReference.V_isOnceInstantiable]==TRUE|1
+LocFastener.ChangeOwner1                         =      |EXPAND|FROM|1|VPLMrel/PLMConnection/V_Owner,VPLMrel/PLMPort/V_Owner||PLMPort,PLMConnection||1
+Fastener.ChangeOwner                            =       |EXPAND|FROM|1|PLMCoreRepInstance||PLMCoreRepReference|attribute[PLMCoreRepReference.V_isOnceInstantiable]==TRUE|1
+Fastener.ChangeOwner1                            =      |EXPAND|FROM|1|VPLMrel/PLMConnection/V_Owner,VPLMrel/PLMPort/V_Owner||PLMPort,PLMConnection||1
+PLMFst_BeadFastenerBundle.ChangeOwner			 =       |EXPAND|FROM|1|PLMCoreRepInstance||PLMCoreRepReference|attribute[PLMCoreRepReference.V_isOnceInstantiable]==TRUE|1
+PLMFst_BeadFastenerBundle.ChangeOwner1			 =       |EXPAND|FROM|1|VPLMrel/PLMConnection/V_Owner,VPLMrel/PLMPort/V_Owner||PLMPort,PLMConnection||1
+## IR-964569-3DEXPERIENCER2023x
+## CATMatReference.TransferOwnershipCmd.Propagation="THIS+THIS&&ONALLREPREF";
+#     CORE MATERIAL 
+CATMatReference.ChangeOwner						 =      |EXPAND|FROM|1|PLMCoreRepInstance||PLMCoreRepReference||1
+## 2D SHEET + VIEW
+
+DIFSheet.ChangeOwner			 =     				  |EXPAND|FROM|1|DIFBackgroundViewRepInstance,DIFViewInstance||DIFBackgroundViewRep||1
+DIFView.ChangeOwner				 =    				  |EXPAND|FROM|1|DIFViewStreamInstance||DIFViewStream||1
+## MSR object Transfer -- get all objects under selected simulation object see ENOVIA_Lifecycle_MSR_Modeler_v5.pptx
+SIMObjSimulationObjectGeneric.ChangeOwner =      |EXPAND|FROM|0|SIMObjSimulationCategoryInstance,SIMObjSimulationRepInstance||SIMObjSimulationCategoryReference,SIMObjSimulationRepReference||1
+
+## Share
+VPMReference.Share =							|EXPAND|FROM|1|PLMCoreRepInstance||PLMCoreRepReference|((attribute[PLMCoreRepReference.V_isOnceInstantiable]==TRUE) OR (attribute[PLMEntity.V_usage]==3DPart) OR (attribute[PLMEntity.V_usage]==3DShape) OR (attribute[PLMEntity.V_usage]==Internal3DShape]))|1
+Behavior_Continuous_BehLibRef.Share = 		|EXPAND|FROM|1|CATSysBehaviorLibRepInstance||Behavior_Continuous_Root||1
+RFLVPMLogicalReference.Share =				|EXPAND|FROM|1|PLMCoreRepInstance||PLMCoreRepReference||1
+RFLVPMLogicalCommunicationReference.Share =	|EXPAND|FROM|1|PLMCoreRepInstance||PLMCoreRepReference||1
+Requirement.Share						 =  |EXPAND|FROM|1|Specification_Structure||Requirement||1
+Chapter.Share							 =  |EXPAND|FROM|1|Specification_Structure||Requirement,Comment||1
+Requirement_Group.Share                   =  |EXPAND|FROM|1|Requirement_Group_Content,Sub_Requirement_Group||Requirement_Group,Requirement_Specification||1
+Requirement_Specification.Share           =  |EXPAND|FROM|1|Specification_Structure||Chapter,Requirement,Requirement_Specification||1
+SIMObjSimulationObjectGeneric.Share =      |EXPAND|FROM|2|SIMObjSimulationCategoryInstance,SIMObjSimulationRepInstance||SIMObjSimulationCategoryReference,SIMObjSimulationRepReference||1
+#XCADNonPSBaseRepReference.Revise =				XCADNonPSBaseRepReference.V_CADObjectType=analysis|EXPAND|FROM|1|XCADBaseDependency||XCADNonPSBaseRepReference||1
+#For FD05 Test to duplicate xcad Drawings with products
+#VPMReference.Duplicate = 						|EXPAND|TO|1|XCADBaseDependency||Drawing||1
+
+#Transfer Fake Cmd to get Instances
+PLMCoreReference.TransferFakeCommand =							|EXPAND|FROM|1|PLMCoreInstance,PLMCoreRepInstance||PLMCoreReference,PLMCoreRepReference||2
+# FASTENER
+BundleFastenerAbstract.TransferFakeCommand   = 		    		|EXPAND|FROM|1|PLMCoreInstance,PLMCoreRepInstance||PLMCoreReference,PLMCoreRepReference||2
+LocFastener.TransferFakeCommand              =  				|EXPAND|FROM|1|PLMCoreInstance,PLMCoreRepInstance||PLMCoreReference,PLMCoreRepReference||2
+Fastener.TransferFakeCommand                 = 					|EXPAND|FROM|1|PLMCoreInstance,PLMCoreRepInstance||PLMCoreReference,PLMCoreRepReference||2
+PLMFst_BeadFastenerBundle.TransferFakeCommand =  				|EXPAND|FROM|1|PLMCoreInstance,PLMCoreRepInstance||PLMCoreReference,PLMCoreRepReference||2
+# CORE MATERIAL 
+CATMatReference.TransferFakeCommand			  =      			|EXPAND|FROM|1|PLMCoreRepInstance||PLMCoreRepReference||2
+CATMatReference.ChangeOwnerFakeCommand		 =      			|EXPAND|FROM|1|PLMCoreRepInstance||PLMCoreRepReference||2
+# LOGICAL REFERENCE
+RFLVPMLogicalReference.TransferFakeCommand =					|EXPAND|FROM|1|PLMCoreRepInstance||PLMCoreRepReference||2
+RFLVPMLogicalReference.ChangeOwnerFakeCommand =					|EXPAND|FROM|1|PLMCoreRepInstance||PLMCoreRepReference||2
+RFLVPMLogicalCommunicationReference.TransferFakeCommand =		|EXPAND|FROM|1|PLMCoreRepInstance||PLMCoreRepReference||2
+RFLVPMLogicalCommunicationReference.ChangeOwnerFakeCommand =	|EXPAND|FROM|1|PLMCoreRepInstance||PLMCoreRepReference||2
+# FUNCITONAL REFERENCE
+RFLPLMFunctionalReference.TransferFakeCommand =					|EXPAND|FROM|1|PLMCoreRepInstance||PLMCoreRepReference||2
+RFLPLMFunctionalReference.ChangeOwnerFakeCommand =				|EXPAND|FROM|1|PLMCoreRepInstance||PLMCoreRepReference||2
+## 2D SHEET + VIEW
+DIFLayout.ChangeOwnerFakeCommand             =	    |EXPAND|FROM|1|DIFSheetInstance||DIFSheet||2
+DIFLayout.TransferFakeCommand                =	    |EXPAND|FROM|1|DIFSheetInstance||DIFSheet||2
+DIFSheet.TransferFakeCommand			 	 =      |EXPAND|FROM|1|DIFBackgroundViewRepInstance,DIFViewInstance||DIFBackgroundViewRep,DIFView||2
+DIFSheet.ChangeOwnerFakeCommand				 =      |EXPAND|FROM|1|DIFBackgroundViewRepInstance,DIFViewInstance||DIFBackgroundViewRep,DIFView||2
+DIFView.TransferFakeCommand			 		 =      |EXPAND|FROM|1|DIFViewStreamInstance||DIFViewStream||2
+DIFView.ChangeOwnerFakeCommand				 =      |EXPAND|FROM|1|DIFViewStreamInstance||DIFViewStream||2
+## MSR object Transfer -- get all objects under selected simulation object see ENOVIA_Lifecycle_MSR_Modeler_v5.pptx
+SIMObjSimulationObjectGeneric.TransferFakeCommand =      |EXPAND|FROM|0|SIMObjSimulationCategoryInstance,SIMObjSimulationRepInstance||SIMObjSimulationCategoryReference,SIMObjSimulationRepReference||2
+## MSR object ChangeOwner -- get all objects under selected simulation object see ENOVIA_Lifecycle_MSR_Modeler_v5.pptx
+SIMObjSimulationObjectGeneric.ChangeOwnerFakeCommand =      |EXPAND|FROM|0|SIMObjSimulationCategoryInstance,SIMObjSimulationRepInstance||SIMObjSimulationCategoryReference,SIMObjSimulationRepReference||2
+
+
+
+
+Products.Lock =                 |BLOCK
+Hardware_Product.Lock =        |BLOCK
+Service_Product.Lock =         |BLOCK
+Software_Product.Lock =        |BLOCK
+Variant.Lock =                  |BLOCK
+Variant_Parameter.Lock =        |BLOCK
+Variability_Group.Lock =        |BLOCK
+Product_Configuration.Lock =    |BLOCK
+Task_Management.Delete =        |BLOCK
+Project_Space.Delete =          |BLOCK
+Issue.Share =                   |BLOCK
+Change_Order.Share =                   |BLOCK
+Change_Request.Share =                   |BLOCK
+Change_Action.Share =                   |BLOCK
+Impact_Analysis.Share =                   |BLOCK
+Change_Analysis.Share =                   |BLOCK
+Project_Concept.Share =                   |BLOCK
+Project_Template.Share =                   |BLOCK
+Task_Management.Share =                   |BLOCK
+Project_Space.Share =                   |BLOCK
+Configuration_Rule.Lock =    |BLOCK
+Configuration_Rule.Share =    |BLOCK
+
+
+Route.ChangeStatus =   |BLOCK
+Route.Revise =   |BLOCK
+Route.Duplicate =   |BLOCK
+Route.Share =   |BLOCK
+Route.Lock =   |BLOCK
+
+Route_Template.Revise =   |BLOCK
+Route_Template.Delete =  |BLOCK
+Route_Template.Share =    |BLOCK
+Route_Template.Lock =    |BLOCK
+
+Inbox_Task.ChangeStatus =   |BLOCK
+Inbox_Task.Revise =    |BLOCK
+Inbox_Task.Duplicate =     |BLOCK
+Inbox_Task.Delete =     |BLOCK
+Inbox_Task.Share =     |BLOCK
+Inbox_Task.Transfer =     |BLOCK
+Inbox_Task.ChangeOwner =     |BLOCK
+Inbox_Task.Lock =     |BLOCK
+

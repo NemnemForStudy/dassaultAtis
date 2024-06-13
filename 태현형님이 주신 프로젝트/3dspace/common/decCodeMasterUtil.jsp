@@ -1,0 +1,142 @@
+<%--  emxMemberListtUtil.jsp
+
+Copyright (c) 1999-2020 Dassault Systemes. 
+
+All Rights Reserved.
+This program contains proprietary and trade secret information
+of MatrixOne, Inc.  Copyright notice is precautionary only and
+does not evidence any actual or intended publication of such program
+    
+static const char RCSID[] = "$Id: emxMemberListUtil.jsp.rca 1.19 Wed Oct 22 16:18:31 2008 przemek Experimental przemek $";
+--%>
+
+<%@page import="com.dec.util.DecConstants"%>
+<%@ page import="java.util.*"%>
+<%@include file = "emxNavigatorTopErrorInclude.inc"%>
+<%@ include file = "../emxUICommonAppInclude.inc"%>
+<%@ include file = "../components/emxMemberListUtilAppInclude.inc" %>
+<%@include file = "enoviaCSRFTokenValidation.inc"%>
+
+
+
+<%
+	String actionURL="";//For refreshing the Table Page.
+	String objectId="";//MemberList Object Id
+	String returnMessage ="";
+	String resultMote= "";
+	//String memberId = emxGetParameter(request,"memberId");
+	//com.matrixone.apps.common.MemberList memberlist = (com.matrixone.apps.common.MemberList)DomainObject.newInstance(context,PropertyUtil.getSchemaProperty(context,"type_MemberList"));
+	String action = request.getParameter("action")==null? "":request.getParameter("action"); //action값 들어옴
+	action = XSSUtil.encodeForHTML(context, action);
+	boolean isRemoved = false; // 이후부터 action 값을 찾아 if 여행을 떠남
+	//For Activating and Deactivating the selected MemberLists
+	  if(action.equals("Active")||action.equals("Inactive"))
+	  {
+	    
+	    //Get Table Row Id's
+	    String[] objectIds =request.getParameterValues("emxTableRowId");
+	    try
+	    {
+	      if(objectIds != null)
+	        {
+	          if(action.equals("Active")){
+				
+	        	  returnMessage= JPO.invoke(context, "decCodeMaster", null, "stateDemote", objectIds , String.class);
+	         	
+	        	  
+	        	  if(!returnMessage.isEmpty()){
+	         		 throw (new FrameworkException(returnMessage));
+	         	  }
+	          }
+	          else if(action.equals("Inactive")){
+	        	  returnMessage= JPO.invoke(context, "decCodeMaster", null, "statePromote", objectIds , String.class);
+	        	  if(!returnMessage.isEmpty()){
+		         		 throw (new FrameworkException(returnMessage));
+		         	  }
+	          }
+	        }
+	    }catch(MatrixException e)
+	    {
+	      session.setAttribute("error.message", e.getMessage());
+	    }
+
+	  }
+	
+	
+	  if(action.equals("Update"))
+	  {	    
+	    //Get Table Row Id's
+	    String[] objectIds = ComponentsUIUtil.getSplitTableRowIds(request.getParameterValues("objectId"));
+	    try
+	    {
+	    	returnMessage=	JPO.invoke(context, "decTableMaster", null, "updateColumn", objectIds , String.class);  
+	    	 if(!returnMessage.isEmpty()){
+         		 throw (new FrameworkException(returnMessage));
+         	  }
+	    }catch(MatrixException e)
+	    {
+	      session.setAttribute("error.message", e.getMessage());
+	    }
+	  }
+	  
+	  if(action.equals("Remove")){ // decCodeDetail Connect 끊기
+		  String[] objectIds =request.getParameterValues("emxTableRowId");
+		  try
+		  {
+		  	 returnMessage = JPO.invoke(context, "decCodeMaster", null, "disconnectCodeDetail", objectIds , String.class);  
+	    	 if(!returnMessage.isEmpty()){
+      		 	throw (new FrameworkException(returnMessage));
+      	  	 }
+		  }
+		  catch(MatrixException e){
+	      	session.setAttribute("error.message", e.getMessage());
+	      }	 
+	  }
+%>
+
+<!-- HTML Section Begin -->
+
+  <script language="javascript" src="../common/scripts/emxUICore.js"></script>
+  <script language="javascript" src="../common/scripts/emxUIUtility.js"></script>
+  <script language="javascript" src="../common/scripts/emxUIConstants.js"></script>
+  <script language="javascript" type="text/javaScript">
+    var action = "<%=action%>";
+    if(action == "Active" ||action == "Inactive")
+    {
+    	
+		
+    	 //  const fr = window.parent
+    	 //  const fr0 = window.top
+		
+    	  window.parent.location.reload();
+      
+    } 
+    
+    if(action == "Update")
+    {
+    	
+
+    	 //  const fr = window.parent
+    	 //  const fr0 = window.top
+
+    	  window.parent.location.reload();
+      
+    } 
+ 
+    if(action == "Remove")
+    {
+    	
+
+    	 //  const fr = window.parent
+    	 //  const fr0 = window.top
+
+    	  window.parent.location.reload();
+      
+    } 
+    
+  </script> 
+  <%@include file = "../emxUICommonEndOfPageInclude.inc" %>
+  <%@include file = "../common/emxNavigatorBottomErrorInclude.inc"%>
+  
+
+<!-- HTML Section End -->

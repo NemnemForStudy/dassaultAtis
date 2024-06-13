@@ -1,0 +1,1 @@
+define("DS/DELWKOComponentsUI/DELWKOComponentsUI_fr",{});define("DS/DELWKOComponentsUI/assets/nls/DELWKOAutoCompleteUI",{searchPlaceHolder:"Rechercher par nom ou titre",searchTitle:"Rechercher"});

@@ -1,0 +1,158 @@
+/*
+ * BT WW Competencies Center - Fast Prototypes Team
+ * @author UM5
+ */
+
+/* Color Variables */
+
+:root {
+    --ds-blue: rgb(0, 86, 133);
+    --active-blue: #3aa7ed;
+    --inactive-grey: #c2c2c2;
+    --hover-active-blue: #18bafa;
+}
+
+/* CSS */
+
+table.table>thead>tr>th {
+    position: relative;
+}
+
+tr.selected {
+    background-color: #edf8ff;
+}
+
+.ui.striped.table tbody tr.selected:nth-child(2n) {
+    background-color: #d7eef9;
+}
+
+table.table>thead>tr>th>i.params.icon {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    color: var(--inactive-grey);
+    cursor: pointer;
+}
+
+table.table>thead>tr>th>i.params.icon:hover {
+    color: var(--hover-active-blue);
+}
+
+table.table>thead>tr>th>div.appliedOptions {
+    position: absolute;
+    height: 1em;
+    right: 1.4em;
+    top: 0px;
+    color: var(--inactive-grey);
+}
+
+table.table>thead>tr>th>div.appliedOptions>i {
+    margin: 0px;
+}
+
+table.table>thead>tr>th>div.displayOptions {
+    position: absolute;
+    z-index: 10;
+    min-width: 20px;
+    min-height: 20px;
+    border: 2px solid var(--active-blue);
+    border-radius: 4px;
+    right: 2px;
+    top: 1.25em;
+    background-color: white;
+    color: var(--inactive-grey);
+}
+
+table.table>thead>tr>th>div.displayOptions.hidden {
+    display: none;
+}
+
+div.displayOptions {
+    font-weight: normal;
+}
+
+div.displayOptions i.active {
+    color: var(--active-blue);
+}
+
+div.displayOptions i:hover {
+    color: var(--hover-active-blue);
+}
+
+.colorRules,
+.filtersRules {
+    border-top: 1px solid var(--inactive-grey);
+}
+
+.rulesHeader {
+    color: black;
+    font-weight: bold;
+}
+
+.ui.compact.table div.colorRules>table.minimal th {
+    padding: 0.25em;
+}
+
+div.colorRules>table {
+    color: black;
+}
+
+.colorRules .ui.button.basic {
+    padding: 0.25em;
+}
+
+.colorRules tr.colorRule td.action {
+    padding: 0.1em;
+    text-align: center;
+}
+
+.filtersRules table {
+    width: 100%;
+    color: black;
+}
+
+.filtersRules table td.tdCheck {
+    width: 1em;
+}
+
+.filtersRules table tr {
+    cursor: pointer;
+}
+
+.filtersRules tr td.tdCheck>i.icon.checkmark {
+    display: none;
+}
+
+.filtersRules tr.selected td.tdCheck>i.icon.checkmark {
+    display: inline-block;
+}
+
+div#tableScroll {
+    position: absolute;
+    width: 16px;
+    top: 5%;
+    bottom: 0%;
+    right: 0px;
+    background-color: lightgrey;
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+div#tableScroll>div#scrollIndicator {
+    position: absolute;
+    width: 14px;
+    margin-left: 1px;
+    background-color: grey;
+    border-radius: 7px;
+    min-height: 10px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+div#infoObjs {
+    position: absolute;
+    bottom: 0px;
+    right: 1.25rem;
+    font-size: 0.5em;
+    line-height: 1em;
+}

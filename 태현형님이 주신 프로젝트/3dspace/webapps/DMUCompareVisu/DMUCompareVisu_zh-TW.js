@@ -1,0 +1,1 @@
+define("DS/DMUCompareVisu/DMUCompareVisu_zh-TW",{});define("DS/DMUCompareVisu/assets/nls/DMUCompareVisu",{compareNotify_onemodel:"無法僅比較一個模型",compareNotify_nomodel:"沒有可比較的產品"});

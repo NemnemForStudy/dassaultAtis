@@ -1,0 +1,1 @@
+define("DS/MMPrint/MMPrint_zh-TW",{});define("DS/MMPrint/assets/nls/MMPrint",{printErrorTitle:"列印錯誤",printRealSizeError:"未支援實際尺寸列印"});

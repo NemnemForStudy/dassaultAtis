@@ -1,0 +1,1 @@
+define("DS/3DPlayWidgetModel/3DPlayWidgetModel_pl",{});define("DS/3DPlayWidgetModel/assets/nls/prefs",{Label:"Preferowana jakość geometrii 3DSpace",auto:"Automatyczny",base:"Wysoka jakość",index:"Niska jakość",displayCandidateQueue:"Wyświetl pola ładowania"});

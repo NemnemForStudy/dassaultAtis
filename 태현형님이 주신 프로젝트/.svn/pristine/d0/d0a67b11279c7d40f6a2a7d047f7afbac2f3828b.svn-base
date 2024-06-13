@@ -1,0 +1,1 @@
+define("DS/WAfrUIModelManagers/WAfrUIModelManagers_pt-BR",{});define("DS/WAfrUIModelManagers/assets/nls/ActionBarContextMenu",{"iconLabel.title":"Exibir nomes de comandos","iconLabelHide.title":"Ocultar nomes de comandos","resetActionBar.title":"Redefinir posição"});define("DS/WAfrUIModelManagers/assets/nls/WAfrCategories",{"WAfrStandard.Title":"Padrão"});

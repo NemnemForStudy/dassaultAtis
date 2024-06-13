@@ -1,0 +1,65 @@
+start trans;
+############################## DO NOT EDIT ABOVE
+
+#Modified by thok 2023.10.19
+add channel decMaterialStatusCommand1
+	label 'Pipe'
+	description 'Material Status Discipline Pipe'
+	href '${COMMON_DIR}/emxIndentedTable.jsp?table=decMaterialStatusSummary&program=emxProjectSpace:getMaterialStatusList&toolbar=decProjectMaterialStatusLinkToolBar&header=ProgramCentral.Label.Procurement_Schedule_-_Material_Status&parallelLoading=true&maxCellsToDraw=2000&scrollPageSize=50&pageSize=300&showPaginationToggle=false&decExport=true&exportMode=MaterialStatus&slideinFilter=true&Discipline=PP&filterParam=codeMaster:Sub-Con,codeMaster:Item Group,codeMaster:Group,Fab Category:true,Material Delay:true,Status_Updated:true,CWP_Plan:true'
+	setting 'Access Expression' 'type == "Project Space" && attribute[decProjectType] == "ongoing"'
+	setting 'Registered Suite' 'ProgramCentral'
+	setting 'Target Location' 'content'
+;
+add property command_decMaterialStatusCommand1 on prog eServiceSchemaVariableMapping.tcl to command decMaterialStatusCommand1
+;
+
+add channel decMaterialStatusCommand2
+	label 'Mech'
+	description 'Material Status Discipline Mech'
+	href '${COMMON_DIR}/emxIndentedTable.jsp?table=decMaterialStatusSummary&program=emxProjectSpace:getMaterialStatusList&toolbar=decProjectMaterialStatusLinkToolBar&header=ProgramCentral.Label.Procurement_Schedule_-_Material_Status&parallelLoading=true&maxCellsToDraw=2000&scrollPageSize=50&pageSize=300&showPaginationToggle=false&decExport=true&exportMode=MaterialStatus&slideinFilter=true&Discipline=ME&filterParam=codeMaster:Sub-Con,codeMaster:Item Group,codeMaster:Group,Fab Category:true,Material Delay:true,Status_Updated:true,CWP_Plan:true'
+	setting 'Access Expression' 'type == "Project Space" && attribute[decProjectType] == "ongoing"'
+	setting 'Registered Suite' 'ProgramCentral'
+	setting 'Target Location' 'content'
+;
+add property command_decMaterialStatusCommand2 on prog eServiceSchemaVariableMapping.tcl to command decMaterialStatusCommand2
+;
+
+add channel decMaterialStatusCommand3
+	label 'Elec'
+	description 'Material Status Discipline Elec'
+	href '${COMMON_DIR}/emxIndentedTable.jsp?table=decMaterialStatusSummary&program=emxProjectSpace:getMaterialStatusList&toolbar=decProjectMaterialStatusLinkToolBar&header=ProgramCentral.Label.Procurement_Schedule_-_Material_Status&parallelLoading=true&maxCellsToDraw=2000&scrollPageSize=50&pageSize=300&showPaginationToggle=false&decExport=true&exportMode=MaterialStatus&slideinFilter=true&Discipline=EL&filterParam=codeMaster:Sub-Con,codeMaster:Item Group,codeMaster:Group,Fab Category:true,Material Delay:true,Status_Updated:true,CWP_Plan:true'
+	setting 'Access Expression' 'type == "Project Space" && attribute[decProjectType] == "ongoing"'
+	setting 'Registered Suite' 'ProgramCentral'
+	setting 'Target Location' 'content'
+;
+add property command_decMaterialStatusCommand3 on prog eServiceSchemaVariableMapping.tcl to command decMaterialStatusCommand3
+;
+
+add channel decMaterialStatusCommand4
+	label 'Inst'
+	description 'Material Status Discipline Inst'
+	href '${COMMON_DIR}/emxIndentedTable.jsp?table=decMaterialStatusSummary&program=emxProjectSpace:getMaterialStatusList&toolbar=decProjectMaterialStatusLinkToolBar&header=ProgramCentral.Label.Procurement_Schedule_-_Material_Status&parallelLoading=true&maxCellsToDraw=2000&scrollPageSize=50&pageSize=300&showPaginationToggle=false&decExport=true&exportMode=MaterialStatus&slideinFilter=true&Discipline=IC&filterParam=codeMaster:Sub-Con,codeMaster:Item Group,codeMaster:Group,Fab Category:true,Material Delay:true,Status_Updated:true,CWP_Plan:true'
+	setting 'Access Expression' 'type == "Project Space" && attribute[decProjectType] == "ongoing"'
+	setting 'Registered Suite' 'ProgramCentral'
+	setting 'Target Location' 'content'
+;
+add property command_decMaterialStatusCommand4 on prog eServiceSchemaVariableMapping.tcl to command decMaterialStatusCommand4
+;
+
+add channel decMaterialStatusCommand5
+	label 'Others'
+	description 'Material Status Discipline Others'
+	href '${COMMON_DIR}/emxIndentedTable.jsp?table=decMaterialStatusSummary&program=emxProjectSpace:getMaterialStatusList&toolbar=decProjectMaterialStatusLinkToolBar&header=ProgramCentral.Label.Procurement_Schedule_-_Material_Status&parallelLoading=true&maxCellsToDraw=2000&scrollPageSize=50&pageSize=300&showPaginationToggle=false&decExport=true&exportMode=MaterialStatus&slideinFilter=true&Discipline=Others&filterParam=codeMaster:Discipline,codeMaster:Sub-Con,codeMaster:Item Group,codeMaster:Group,Fab Category:true,Material Delay:true,Status_Updated:true,CWP_Plan:true'
+	setting 'Access Expression' 'type == "Project Space" && attribute[decProjectType] == "ongoing"'
+	setting 'Registered Suite' 'ProgramCentral'
+	setting 'Target Location' 'content'
+;
+add property command_decMaterialStatusCommand5 on prog eServiceSchemaVariableMapping.tcl to command decMaterialStatusCommand5
+;
+
+mod command decProjectMaterialStatusLink
+	href '${COMMON_DIR}/emxPortal.jsp?portal=decMaterialStatusPortal&header=ProgramCentral.Label.Procurement_Schedule_-_Material_Status
+;
+
+############################## DO NOT EDIT BELOW
+commit trans;

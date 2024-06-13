@@ -1,0 +1,1 @@
+define("DS/Tree/Tree_cs",{});define("DS/Tree/assets/nls/carousel",{close:"Zavřít",next:"Další",previous:"Předchozí"});

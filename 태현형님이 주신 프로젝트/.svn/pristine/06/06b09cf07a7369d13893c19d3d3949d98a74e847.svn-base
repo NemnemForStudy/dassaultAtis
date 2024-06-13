@@ -1,0 +1,11 @@
+m|XCTWebExperienceModel\CAT3DExpAmbienceModelWeb.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.0.22078|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\CAT3DExpAmbienceModelWeb\CAT3DExpAmbienceModelWeb.js|1647691659|7067
+s|XCTWebExperienceModel\CAT3DExpAmbienceModelWeb.mweb\src\extensions\CATE3DXAmbienceAsset.js|1644485002|2139
+u|XCTWebExperienceModel\CAT3DExpAmbienceModelWeb.mweb\src\extensions\CATECXPAmbienceEnvironmentActivate.js|1643103998|9943
+u|XCTWebExperienceModel\CAT3DExpAmbienceModelWeb.mweb\src\interfaces\CATI3DXAmbienceAsset.js|1643103998|986
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

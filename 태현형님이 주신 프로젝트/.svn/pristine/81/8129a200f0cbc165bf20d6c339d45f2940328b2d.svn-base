@@ -1,0 +1,14 @@
+m|CAT3DWebAppInfraUI\CAT3DWText.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.3.23072|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\CAT3DWText\CAT3DWText.js|1678742709|15877
+s|CAT3DWebAppInfraUI\CAT3DWText.mweb\src\CAT3DWText.js|1678736097|17341
+u|CAT3DWebAppInfraUI\CAT3DWText.mweb\src\CAT3DWTextCommonConstants.js|1673043557|2118
+u|CAT3DWebAppInfraUI\CAT3DWText.mweb\src\CAT3DWTextDataService.js|1637987511|1477
+u|CAT3DWebAppInfraUI\CAT3DWText.mweb\src\CAT3DWTextRenderService.js|1678736097|5788
+u|CAT3DWebAppInfraUI\CAT3DWText.mweb\src\CAT3DWTextView.js|1678736097|15907
+u|CAT3DWebAppInfraUI\CAT3DWText.mweb\src\CAT3DWTextsManager.js|1656106980|1872
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

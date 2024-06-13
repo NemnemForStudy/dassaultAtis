@@ -1,0 +1,1 @@
+define("DS/XCTInfNotifications/XCTInfNotifications_pt-BR",{});define("DS/XCTInfNotifications/assets/nls/XCTInfNotifications",{Notifications:{Error:"Erro",Information:"Informações",Succes:"Êxito",Warning:"Aviso"}});

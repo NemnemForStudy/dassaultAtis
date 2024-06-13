@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="DS_DELPPWConfiguration"
+    xmlns:ds="DS_DELPPWConfiguration"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+    <xs:simpleType name="empty">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value=""/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="nonEmpty">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:element name="CustomerRole">
+        <xs:complexType>
+            <xs:simpleContent>
+                <xs:extension base="ds:empty">
+                    <xs:attribute type="ds:nonEmpty" name="CustomerId" use="required"/>
+                </xs:extension>
+            </xs:simpleContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:simpleType name="OOTBIdName">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Remove"/>
+            <xs:enumeration value="Produce"/>
+            <xs:enumeration value="Handle"/>
+            <xs:enumeration value="Checkout"/>
+            <xs:enumeration value="Checkin"/>
+            <xs:enumeration value="Pin"/>
+            <xs:enumeration value="Unpin"/>
+            <xs:enumeration value="Add"/>
+            <xs:enumeration value="Dressup"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:element name="OperationItemImplementLinkRoles">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="OOTBRole" minOccurs="1" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="ds:CustomerRole" minOccurs="0" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                        <xs:attribute type="ds:OOTBIdName" name="OOTBId" use="required"/>
+                        <xs:attribute type="xs:boolean" name="Enabled" use="required"/> <!-- If set to "false", the OOTBRole is not available for the user -->
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="Title" type="xs:string" use="optional"/>       <!-- Title of the XML file-->
+            <xs:attribute name="Description" type="xs:string" use="optional"/> <!-- Description of the XML file-->
+            <xs:attribute name="NLSFileName" type="xs:string" use="optional"/> <!-- Name of the CATNls file defining the NLS for the CustomerRoles-->
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

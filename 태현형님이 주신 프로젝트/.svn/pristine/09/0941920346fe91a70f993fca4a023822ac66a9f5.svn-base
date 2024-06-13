@@ -1,0 +1,17 @@
+m|MPFModels\MPFBankAccountConstraintsModel.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.1.22330|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\MPFBankAccountConstraintsModel\MPFBankAccountConstraintsModel.js|1669432464|2313
+s|MPFModels\MPFBankAccountConstraintsModel.mweb\src\BankAccountConstraintsCollection.js|1669417585|842
+t|win_b64\webapps\MPFBankAccountConstraintsModel\MPFBankAccountConstraintsModel_en.js|1669432466|381
+s|MPFModels\MPFBankAccountConstraintsModel.mweb\src\assets\nls\BankAccountConstraintsModel_en.json|1669417585|272
+t|win_b64\webapps\MPFBankAccountConstraintsModel\assets\nls\BankAccountConstraintsModel_en.json|1669432462|272
+s|MPFModels\MPFBankAccountConstraintsModel.mweb\src\assets\nls\BankAccountConstraintsModel_en.json|1669417585|272
+u|MPFModels\MPFBankAccountConstraintsModel.mweb\src\BankAccountConstraintsDataProxy.js|1669417585|966
+u|MPFModels\MPFBankAccountConstraintsModel.mweb\src\BankAccountConstraintsModel.js|1669417585|4445
+u|MPFModels\MPFBankAccountConstraintsModel.mweb\src\BankAccountFieldConstraint.js|1669417585|1008
+u|MPFModels\MPFBankAccountConstraintsModel.mweb\src\MPFBankAccountConstraintsModel.js|1669417585|0
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

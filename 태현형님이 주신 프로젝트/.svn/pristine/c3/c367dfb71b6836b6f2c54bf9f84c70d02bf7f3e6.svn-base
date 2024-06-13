@@ -1,0 +1,47 @@
+<?xml version="1.0" ?>
+<!-- CATIA DICTIONARY  -->
+<!-- COPYRIGHT DASSAULT SYSTEMES 2021, All rights reserved -->
+
+<Package xmlns="PLMDictionaryUnified"
+    ModelerType="Top"
+    BelongsToModeler="PRODUCT"
+    Name="CATVPMPosition"
+    UseNames="PRODUCTCFG"
+    Architecture="All" 
+    Uuid="47db6ce3-b565-4f16-83a4-2797abf9e773"
+    CustomerExposition="Programmer">
+    
+    <!-- 
+        Root reference with aggregated link to root of position axis tree 
+    -->
+    <Class Name="VPMReferenceExtPos"
+       Uuid="cb0ddda9-17fc-406b-b120-e58cea2c957c"
+       Abstract="No"
+       SuperName="VPMReference"
+       CustomerExposition="Programmer"
+       Abbreviation="ppa"
+       Specializable="No"
+       Configurable="Yes"
+       Discipline="Yes"
+       OwnerTypes="None"
+       InstantiationOwnerTypes="VPMReferenceExtPos">
+
+       <Property Name="Newable" Value="All"/> <!-- New and Insert, no _CAA nor _Offline -->
+       <Property Name="KweNew_ReturnedType" Value="VPMInstance"/>
+       <Property Name="3DPartAvailability" Value="ReferenceOnly"/> <!-- No 3DPart Typing -->
+       <Property Name="NewMinorRevisionAvailability" Value="No"/>
+
+       <!-- Icons : keep consistent with Icons_PRODUCT.CATRsc -->
+       <Property Name="IconName" Value="I_VPMExtPosProduct"/>
+       <Property Name="3DIconName" Value="I_VPMExtPosProduct.cgr"/>
+       
+       <!-- c++ implemention for PLMNew -->
+       <Property Name="KweNew_InstanciationMethod" Value="CATVPMReferenceExtPosDelegateInstanciation"/>
+       
+       <!-- PROCEDURES Declaration for ExportScope -->
+       <Method ImplementationType="AsFather">
+            <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+            <!-- Inherits father's methods -->
+       </Method>
+    </Class>
+</Package>

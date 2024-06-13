@@ -1,0 +1,210 @@
+/** deprecated when we migrated to new topBar
+.globalSearchCell #globalSearch #searchOption {
+  width:auto !important;
+  min-width: 44px;
+  max-width:50%;
+  font-size:smaller;
+}
+.globalSearchCell #globalSearch #searchOption .button {
+  width:auto !important;
+  min-width: 40px;
+}
+
+.ds_common_search.loading #globalSearch .runsearch .icon {
+  background-image: url("../../../../DSCommon/graphics/loading-small.gif") !important;
+}
+**/
+
+#topbar .center .ds_common_search.loading .run_ctn_search .run_btn_search {
+  background-image: url("../../../../DSCommon/graphics/loading-small.gif");
+  background-position: 0 0;
+}
+
+#AEFGlobalSearchHolder {
+  color:#333333;
+  text-rendering: optimizeLegibility;
+  z-index: 2000000002; /** above the ui-front class **/
+  font-family: '3ds','3dsregular',ds,Arial,Verdana,sans-serif;
+}
+
+#AEFGlobalSearchHolder .group ul {
+    list-style: none outside none;
+    margin: 0;
+    padding: 0;
+}
+
+#AEFGlobalSearchHolder li.separator {
+  height:1px;
+  background:none;
+  border:none;
+  width: auto;
+}
+
+#AEFGlobalSearchHolder .menu-content {
+  height:auto;
+  padding-bottom:1em;
+  text-align:left;
+}
+
+html.touch #AEFGlobalSearchHolder .menu-content a {
+  font-size: 1.1875em;
+  line-height: 1.2em;
+  padding: 0.6875 0.6875em; /*3DS guide*/
+}
+
+.search_loading_overlay.ui-front.ui-widget-overlay {
+  z-index: 2000000005;
+}
+.search_loading_overlay .search_results_container.loading {
+  width:100px;
+  height:100px;
+  margin: 100px auto;
+}
+
+.search_results_container.loading {
+  background: url("../../../../DSCommon/graphics/loading-white.gif") no-repeat center;
+  min-height:100px;
+  min-width:100px;
+}
+
+.search_results_container .search_results {
+}
+
+.search_results_container .search_results .ui-selectee {
+  cursor:pointer;
+}
+
+.search_results_container .search_results_header {
+  margin-top: 1em;
+}
+
+.search_results_container table.search_results {
+  width:100%;
+  text-align:center;
+  background-color:#D2D8DD;
+  border-collapse: collapse;
+}
+
+.search_results_container table.search_results thead {
+}
+
+.search_results_container table.search_results tbody tr td {
+  border:thin solid WHITE;
+  padding: 0.375em 0.4375em; /*3DS guide*/
+  vertical-align:middle;
+}
+html.touch .search_results_container table.search_results tbody tr td {
+  font-size: 1.1875em;
+  padding: 0.6875 0.6875em; /*3DS guide*/
+}
+
+.search_results_container table.search_results > tbody > tr > td:first-child {
+  padding-left: 1.5em;
+  text-align:left;
+}
+.search_results_container table.search_results tbody tr.loading td:first-child {
+  background-image: url("../../../../DSCommon/graphics/loading-small.gif") !important;
+  background-position: left center;
+  background-repeat: no-repeat;
+}
+
+.search_results_container table.search_results tr:nth-child(even) {
+  background-color:#E9E9E9;
+}
+
+.search_results_container table.search_results tr:nth-child(odd) {
+    background-color:inherit;
+}
+
+.search_results_container .search_results.ui-selected,
+.search_results_container table.search_results tbody tr.ui-selected {
+  outline:thick solid BLACK;
+}
+
+.search_results_container table.search_results tbody tr.ui-selected > td {
+  /* color grabbed from ds_common.css override of the jQuery UI ui-state-highlight class */
+	background: #ffeb80 url(../../../../jQueryUI/css/3dexp/images/ui-bg_inset-hard_55_ffeb80_1x100.png) 50% bottom repeat-x;
+	color: #363636;
+}
+
+/* styling for the draggable helper used when drag/drop for assignment after a search */
+.search_results_dragging .search_helper {
+  max-width: 300px;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/******************* Standalone Widget *******************/
+.ds_common_standalone_search {
+  height: 100%;
+  width:370px;
+  position: absolute;
+  right: 2em;
+  top: 0;
+  vertical-align: middle;
+}
+.ds_common_standalone_search td {
+  vertical-align: middle;
+}
+.ds_common_standalone_search td:last-child {
+  width:1%;
+  text-align:right;
+}
+
+.ds_common_standalone_search .btn_search {
+  height:20px;
+  width:20px;
+}
+
+.ds_common_standalone_search .input_search {
+  width:100%;
+}
+
+.ds_common_standalone_search .option_ctn_search {
+  cursor: pointer;
+  float: left;
+  position: relative;
+  vertical-align: middle;
+  top:0;
+  background-color:#3D6680;
+  color:WHITE;
+}
+.ds_common_standalone_search .option_ctn_search * {
+  height:100%;
+  vertical-align: middle;
+}
+.ds_common_standalone_search .option_ctn_search .option_center {
+  white-space: nowrap;
+}
+
+.ds_common_standalone_search .option_ctn_search .option_text {
+  cursor: pointer;
+  display: inline-block;
+  max-width: 130px;
+  padding-left: 5px;
+  text-overflow: ellipsis;
+}
+.ds_common_standalone_search .option_ctn_search .option_icon {
+  display: inline-block;
+  margin: 1.5px 0;
+  width: 17px;
+  height:16px;
+}
+
+.ds_common_standalone_search .input_ctn_search {
+  position:relative;
+}
+
+.ds_common_standalone_search .clear_ctn_search .clear_btn_search,
+.ds_common_standalone_search .run_ctn_search .run_btn_search {
+  position:absolute;
+  top:0;
+  right:0;
+  margin: 3px;
+  width: 16px;
+  height:16px;
+}
+.ds_common_standalone_search .clear_ctn_search .clear_btn_search {
+  right:16px;
+}

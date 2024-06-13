@@ -1,0 +1,1 @@
+define("DS/ENOXVersionExplorerSubwayListView/ENOXVersionExplorerSubwayListView_cs",{});define("DS/ENOXVersionExplorerSubwayListView/assets/nls/SubwayColumnsTitles",{colAuthor:"Autor",colCreated:"Vytvořeno",colDescription:"Popis",colGraph:"Graf",colMaturity:"Stav dokončení",colModified:"Změněno",colRevision:"Revize",colTitle:"Název",colIntent:"Záměr",colSpecification:""});

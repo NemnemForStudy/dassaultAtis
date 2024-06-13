@@ -1,0 +1,53 @@
+<div class="evo-crit-view">
+   	
+{{#if mv_criteria}}   
+   <!-- Model version component --> 
+   <div class="mv-checkbox-label"></div>
+   <div class="evo-crit-in-filler"></div>	
+   <div class="evo-crit mv-component"></div> 
+   <div class="evo-crit-graph mv-graph-component"></div>    
+{{/if}}	
+	
+{{#if mp_criteria}} 
+   {{#if mv_criteria}}   
+   <div class="evo-crit-out-filler"></div>
+   {{/if}}	
+   <!-- Manufacturing plan component --> 
+   <div class="mp-checkbox-label"></div>
+   <div class="evo-crit-in-filler"></div>
+   <div class="evo-crit mp-component"></div>  
+   <div class="evo-crit-graph mp-graph-component"></div>    
+{{/if}}	
+	
+{{#if unit_criteria}}
+   {{#if mv_criteria}}
+	<div class="evo-crit-out-filler"></div>
+   {{else}}
+    {{#if mp_criteria}}
+     <div class="evo-crit-out-filler"></div>	
+    {{/if}}
+   {{/if}}	
+   <!-- Unit component -->
+   <div class="unit-checkbox-label"></div>
+   <div class="evo-crit-in-filler"></div>
+   <div class="evo-crit unit-component"></div> 
+{{/if}}	
+	
+{{#if date_criteria}} 
+	{{#if mv_criteria}}
+	 <div class="evo-crit-out-filler"></div>
+    {{else}}
+     {{#if mp_criteria}}
+      <div class="evo-crit-out-filler"></div>
+     {{else}}
+   	  {{#if unit_criteria}}
+       <div class="evo-crit-out-filler"></div>	  
+      {{/if}}
+	 {{/if}} 
+    {{/if}}   
+   <!-- Date component -->
+   <div class="date-checkbox-label"></div>
+   <div class="evo-crit-in-filler"></div>
+   <div class="evo-crit date-component"></div>	
+{{/if}}	
+</div>

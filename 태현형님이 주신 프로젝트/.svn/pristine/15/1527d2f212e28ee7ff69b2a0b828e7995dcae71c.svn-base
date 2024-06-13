@@ -1,0 +1,11 @@
+m|OfficeDocumentEditorClient\OfficeDocumentEditorClient.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.1.22323|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\OfficeDocumentEditorClient\OfficeDocumentEditorClient.js|1668832475|14858
+s|OfficeDocumentEditorClient\OfficeDocumentEditorClient.mweb\src\Editor.js|1668812508|36205
+u|OfficeDocumentEditorClient\OfficeDocumentEditorClient.mweb\src\RemoteLoader.js|1658168800|1272
+u|OfficeDocumentEditorClient\OfficeDocumentEditorClient.mweb\src\Utils.js|1667604154|5231
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

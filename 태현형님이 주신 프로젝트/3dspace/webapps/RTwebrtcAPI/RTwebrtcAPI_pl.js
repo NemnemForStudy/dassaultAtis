@@ -1,0 +1,1 @@
+define("DS/RTwebrtcAPI/RTwebrtcAPI_pl",{});define("DS/RTwebrtcAPI/assets/nls/feed",{Call:"Zadzwoń",notCompatible:"Ta funkcja nie jest obsługiwana przez bieżącą przeglądarkę lub używane urządzenie"});

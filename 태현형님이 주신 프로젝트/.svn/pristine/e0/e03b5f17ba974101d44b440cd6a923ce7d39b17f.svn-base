@@ -1,0 +1,1 @@
+define("DS/W3DDashboardSearchActions/W3DDashboardSearchActions_pl",{});define("DS/W3DDashboardSearchActions/assets/nls/main",{goToDashboard:"Otwórz",type:"Typ",typeValue:"Pulpit",title:"Tytuł",creationDate:"Data utworzenia",modificationDate:"Data modyfikacji",responsible:"Odpowiedzialny",propertiesFacet:"Właściwości",membersFacet:"Użytkownicy platformy"});

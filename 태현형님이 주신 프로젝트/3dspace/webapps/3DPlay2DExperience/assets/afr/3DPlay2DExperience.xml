@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Styles xmlns:syp="http://www.3ds.com/xsd/SYP">
+
+  <Template syp:name="3DPlayDocumentAfrWorkshopInterface" Target="CATCmdInterface">
+    <CATCmdInterface  WkbInterface= "CATI3DPlayProAfrWorkshopConfiguration"/>
+  </Template>
+
+  <Template syp:name="3DPlayDocumentAfrWorkshopHeaders" Target="CATCmdHeadersList">
+    <CATCmdHeadersList>
+      <CATCommandHeader ID="Reframe" ClassName="DS/3DPlay2DExperience/Commands/CmdReframe" HelpResourceFile = "3DPlayCommands/3DPlayHelpForCommands2D" ResourceFile="3DPlay2DExperience/3DPlay2DExperience" />
+      <CATCommandHeader ID="FitWidth" ClassName="DS/3DPlay2DExperience/Commands/CmdFitWidth" HelpResourceFile = "3DPlayCommands/3DPlayHelpForCommands2D" ResourceFile="3DPlay2DExperience/3DPlay2DExperience" />
+      <CATCommandHeader ID="FitDocument" ClassName="DS/3DPlay2DExperience/Commands/CmdFitDocument" HelpResourceFile = "3DPlayCommands/3DPlayHelpForCommands2D" ResourceFile="3DPlay2DExperience/3DPlay2DExperience" />
+      <CATCommandHeader ID="ScaleP" ClassName="DS/3DPlay2DExperience/Commands/CmdZoom" HelpResourceFile = "3DPlayCommands/3DPlayHelpForCommands2D" ResourceFile="3DPlay2DExperience/3DPlay2DExperience">
+        <CATAfrCommandHeaderArgs>
+          <CATCommandHeaderArg ID="Scale" Value="+" Mode="In" />
+        </CATAfrCommandHeaderArgs>
+      </CATCommandHeader>
+      <CATCommandHeader ID="ScaleM" ClassName="DS/3DPlay2DExperience/Commands/CmdZoom" HelpResourceFile = "3DPlayCommands/3DPlayHelpForCommands2D" ResourceFile="3DPlay2DExperience/3DPlay2DExperience">
+        <CATAfrCommandHeaderArgs>
+          <CATCommandHeaderArg ID="Scale" Value="-" Mode="In" />
+        </CATAfrCommandHeaderArgs>
+      </CATCommandHeader>
+      <CATCommandHeader ID="Previous" ClassName="DS/3DPlay2DExperience/Commands/CmdScrollSheet" HelpResourceFile = "3DPlayCommands/3DPlayHelpForCommands2D" ResourceFile="3DPlay2DExperience/3DPlay2DExperience">
+        <CATAfrCommandHeaderArgs>
+          <CATCommandHeaderArg ID="Scroll" Value="Previous" Mode="In" />
+        </CATAfrCommandHeaderArgs>
+      </CATCommandHeader>
+      <CATCommandHeader ID="Next" ClassName="DS/3DPlay2DExperience/Commands/CmdScrollSheet" HelpResourceFile = "3DPlayCommands/3DPlayHelpForCommands2D" ResourceFile="3DPlay2DExperience/3DPlay2DExperience">
+        <CATAfrCommandHeaderArgs>
+          <CATCommandHeaderArg ID="Scroll" Value="Next" Mode="In" />
+        </CATAfrCommandHeaderArgs>
+      </CATCommandHeader>
+      <CATCommandHeader ID="ToggleView" ClassName="DS/3DPlay2DExperience/Commands/CmdToggleView" HelpResourceFile = "3DPlayCommands/3DPlayHelpForCommands2D" ResourceFile="3DPlay2DExperience/3DPlay2DExperience" Behavior="CATAfrHeaderCheck"/>
+      <CATCommandHeader ID="AnnotationCommands2D" ClassName="DS/3DPlay2DAnnotation/AnnotationCommands" HelpResourceFile = "3DPlayCommands/3DPlayHelpForCommands2D" ResourceFile="3DPlay2DExperience/3DPlay2DExperience" />
+      <CATCommandHeader ID="AnnotationCommands2DEditShape" ClassName="DS/3DPlay2DAnnotation/AnnotationCommandEditShape" HelpResourceFile = "3DPlayCommands/3DPlayHelpForCommands2D" ResourceFile="3DPlay2DExperience/3DPlay2DExperience" />
+      <CATCommandHeader ID="AnnotationCommands2DText" ClassName="DS/3DPlay2DAnnotation/AnnotationCommandText" HelpResourceFile = "3DPlayCommands/3DPlayHelpForCommands2D" ResourceFile="3DPlay2DExperience/3DPlay2DExperience" />
+      <CATCommandHeader ID = "AnnotationTour2D" ClassName = "DS/3DPlay2DAnnotation/AnnotationTour2D" HelpResourceFile = "3DPlayCommands/3DPlayHelpForCommands2D" ResourceFile="3DPlay2DExperience/3DPlay2DExperience" />
+      <CATCommandHeader ID="ClockWise" ClassName="DS/3DPlay2DExperience/Commands/CmdRotate" HelpResourceFile = "3DPlayCommands/3DPlayHelpForCommands2D" ResourceFile="3DPlay2DExperience/3DPlay2DExperience">
+        <CATAfrCommandHeaderArgs>
+          <CATCommandHeaderArg ID="Rotate" Value="Clockwise" Mode="In" />
+        </CATAfrCommandHeaderArgs>
+      </CATCommandHeader>
+      <CATCommandHeader ID="AntiClockWise" ClassName="DS/3DPlay2DExperience/Commands/CmdRotate" HelpResourceFile = "3DPlayCommands/3DPlayHelpForCommands2D" ResourceFile="3DPlay2DExperience/3DPlay2DExperience">
+        <CATAfrCommandHeaderArgs>
+          <CATCommandHeaderArg ID="Rotate" Value="AntiClockWise" Mode="In" />
+        </CATAfrCommandHeaderArgs>
+      </CATCommandHeader>
+      <CATCommandHeader ID="Search" ClassName="DS/3DPlay2DExperience/Commands/CmdSearch" HelpResourceFile = "3DPlayCommands/3DPlayHelpForCommands2D" ResourceFile="3DPlay2DExperience/3DPlay2DExperience" />
+      <CATCommandHeader ID="SinglePageView" ClassName="DS/3DPlay2DExperience/Commands/CmdSinglePageView" HelpResourceFile = "3DPlayCommands/3DPlayHelpForCommands2D" ResourceFile="3DPlay2DExperience/3DPlay2DExperience"/>
+      <CATCommandHeader ID="ScrollingView" ClassName="DS/3DPlay2DExperience/Commands/CmdScrollingView" HelpResourceFile = "3DPlayCommands/3DPlayHelpForCommands2D" ResourceFile="3DPlay2DExperience/3DPlay2DExperience"/>
+    </CATCmdHeadersList>
+  </Template>
+  <Template syp:name="3DPlayDocumentAfrWorkshopAccess" Target="CATCmdWorkbench">
+    <CATCmdWorkbench Name="3DPlayDocumentWorkbench">
+      <CATCmdContainer Name="SectionViews" Visibility="1" RepresentationType="AfrActionBarSection">
+        <CATCmdContainer Name="FitCommands" Visibility="1" RepresentationType="AfrActionBarDropDown">
+          <CATCmdStarter Name="Reframe" Command="Reframe" />
+          <CATCmdStarter Name="FitWidth" Command="FitWidth" />
+        </CATCmdContainer>
+        <CATCmdStarter Name="ScaleP" Command="ScaleP"/>
+        <CATCmdStarter Name="ScaleM" Command="ScaleM"/>
+        <CATCmdStarter Name="Previous" Command="Previous"/>
+        <CATCmdStarter Name="Next" Command="Next"/>
+        <CATCmdStarter Name="AntiClockWise" Command="AntiClockWise"/>
+        <CATCmdContainer Name="Views" Visibility="1" RepresentationType="AfrActionBarDropDown">
+          <CATCmdStarter Name="ScrollingView" Command="ScrollingView"/>
+          <CATCmdStarter Name="SinglePageView" Command="SinglePageView"/>
+        </CATCmdContainer>
+        <CATCmdStarter Name="ToggleView" Command="ToggleView"/>
+        <CATCmdSeparator Name = "BasicManip_Separator"/>
+        <CATCmdStarter Name = "Search" Command = "Search"/>
+        <CATCmdStarter Name = "AnnotationCommands2D" Command = "AnnotationCommands2D"/>
+        <CATCmdStarter Name = "AnnotationCommands2DText" Command = "AnnotationCommands2DText"/>
+        <CATCmdStarter Name = "AnnotationTour2D"  Command = "AnnotationTour2D" />
+      </CATCmdContainer>
+    </CATCmdWorkbench>
+  </Template>
+</Styles>

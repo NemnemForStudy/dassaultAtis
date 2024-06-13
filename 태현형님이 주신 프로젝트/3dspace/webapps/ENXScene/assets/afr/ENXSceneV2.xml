@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Styles xmlns:syp="http://www.3ds.com/xsd/SYP">
+
+      <Template syp:name="ENOXSceneHeaders" Target="CATCmdHeadersList">
+            <CATCmdHeadersList>
+                  <!-- VIEW SECTION -->
+                  <CATCommandHeader Behavior="CATAfrHeaderCheck" ID="RootPanel" HelpResourceFile="PADUtils/PADUtilsHelpForCommands" ClassName="DS/ENXNav/commands/view/_xNavRootInfoPanel" ResourceFile="PADUtils/PADUtils" Available="1" />
+                  <CATCommandHeader ID="Home" HelpResourceFile="PADServices/PADServicesHelpForCommands" ClassName="DS/PADServices/commands/HomeCmd" ResourceFile="PADServices/PADServices" Available="1" />
+                  <CATCommandHeader ID="treeview" HelpResourceFile="ENXNav/ENXNavHelpForCommands" ClassName="DS/ENXNav/commands/xNavActionBarCmds" ResourceFile="ENXNav/ENXNav" Available="1" />
+                  <CATCommandHeader ID="graphview" HelpResourceFile="ENXNav/ENXNavHelpForCommands" ClassName="DS/ENXNav/commands/xNavActionBarCmds" ResourceFile="ENXNav/ENXNav" Available="1" />
+                  <!-- <CATCommandHeader ID="tileview" HelpResourceFile="ENXNav/ENXNavHelpForCommands" ClassName="DS/ENXNav/commands/xNavActionBarCmds" ResourceFile="ENXNav/ENXNav" Available="1" />
+                  <CATCommandHeader ID="thumbnailview" HelpResourceFile="ENXNav/ENXNavHelpForCommands" ClassName="DS/ENXNav/commands/xNavActionBarCmds" ResourceFile="ENXNav/ENXNav" Available="1" /> -->
+
+                  <CATCommandHeader ID="ExpandAll" HelpResourceFile="ENXNav/ENXNavHelpForCommands" ClassName="DS/ENXNav/commands/xNavActionBarCmds" ResourceFile="ENXNav/ENXNav" Available="0" />
+                  <CATCommandHeader ID="CollapseAll" HelpResourceFile="ENXNav/ENXNavHelpForCommands" ClassName="DS/ENXNav/commands/xNavActionBarCmds" ResourceFile="ENXNav/ENXNav" Available="0" />
+                  <CATCommandHeader ID="ExpandN" HelpResourceFile="ENXNav/ENXNavHelpForCommands" ClassName="DS/ENXNav/commands/xNavActionBarCmds" ResourceFile="ENXNav/ENXNav" Available="0" />
+
+                  <CATCommandHeader ID="SelectChildren" HelpResourceFile="ENXNav/ENXNavHelpForCommands" ClassName="DS/ENXNav/commands/xNavActionBarCmds" ResourceFile="ENXNav/ENXNav" Available="1" />
+                  <CATCommandHeader ID="SelectAll" HelpResourceFile="ENXNav/ENXNavHelpForCommands" ClassName="DS/ENXNav/commands/xNavActionBarCmds" ResourceFile="ENXNav/ENXNav" Available="1" />
+                  <CATCommandHeader ID="SelectInversion" HelpResourceFile="ENXNav/ENXNavHelpForCommands" ClassName="DS/ENXNav/commands/xNavActionBarCmds" ResourceFile="ENXNav/ENXNav" Available="1" />
+                  <CATCommandHeader ID="SelectParent" HelpResourceFile="ENXNav/ENXNavHelpForCommands" ClassName="DS/ENXNav/commands/xNavActionBarCmds" ResourceFile="ENXNav/ENXNav" Available="1" />
+                  <CATCommandHeader ID="SelectSiblings" HelpResourceFile="ENXNav/ENXNavHelpForCommands" ClassName="DS/ENXNav/commands/xNavActionBarCmds" ResourceFile="ENXNav/ENXNav" Available="1" />
+                  <CATCommandHeader ID="SelectLeaves" HelpResourceFile="ENXNav/ENXNavHelpForCommands" ClassName="DS/ENXNav/commands/xNavActionBarCmds" ResourceFile="ENXNav/ENXNav" Available="1" />
+                  <CATCommandHeader ID="CleanAll" HelpResourceFile="PADUtils/PADUtilsHelpForCommands" ClassName="DS/ENXNav/commands/xNavActionBarCmds" ResourceFile="PADUtils/PADUtils" Available="0" />
+                  <CATCommandHeader Behavior="CATAfrHeaderCheck" ID="RightSidePanel" HelpResourceFile="PADUtils/PADUtilsHelpForCommands" ClassName="DS/ENXNav/commands/view/xNavRightSidePanel" ResourceFile="PADUtils/PADUtils" Available="1">
+                        <CATAfrCommandHeaderArgs>
+                              <CATCommandHeaderArg ID="PropertiesReadOnly" Value="true" Mode="In" />
+                        </CATAfrCommandHeaderArgs>
+                  </CATCommandHeader>
+
+                  <!-- TOOLS SECTION -->
+                  <CATCommandHeader ID="RelationIPExplorer" HelpResourceFile="ENXNav/ENXNavHelpForCommands" ClassName="DS/ENXNav/commands/xNavActionBarCmds" ResourceFile="ENXNav/ENXNav" />
+                  <CATCommandHeader ID="DefineFilter" HelpResourceFile="ENXNav/ENXNavHelpForCommands" ClassName="DS/ENXNav/commands/tools/xNavFilterCmds" ResourceFile="ENONextGenFilterCmd/ENONextGenFilterCmd" Available="1">
+                        <CATAfrCommandHeaderArgs>
+                              <CATCommandHeaderArg ID="AuthorizeConfFilter" Value="true" Mode="In" />
+                        </CATAfrCommandHeaderArgs>
+                  </CATCommandHeader>
+                  <CATCommandHeader ID="Print" HelpResourceFile="ENXNav/ENXNavHelpForCommands" ClassName="DS/ENXNav/commands/tools/ExportAs" ResourceFile="ENXNav/ENXNav" Available="1">
+                        <CATAfrCommandHeaderArgs>
+                              <CATCommandHeaderArg ID="ExportAs" Value="html" Mode="In" />
+                              <CATCommandHeaderArg ID="TargetDiv" Value="explorer-root" Mode="In" />
+                        </CATAfrCommandHeaderArgs>
+                  </CATCommandHeader>
+                  <!-- <CATCommandHeader ID="PrintOptions" HelpResourceFile="ENXNav/ENXNavHelpForCommands" ClassName="DS/ENXNav/commands/xNavActionBarCmds" ResourceFile="ENXNav/ENXNav" Available="0" /> -->
+                  <CATCommandHeader ID="ExportCSV" HelpResourceFile="ENXNav/ENXNavHelpForCommands" ClassName="DS/ENXNav/commands/tools/ExportAs" ResourceFile="ENXNav/ENXNav" Available="1">
+                        <CATAfrCommandHeaderArgs>
+                              <CATCommandHeaderArg ID="ExportAs" Value="csv" Mode="In" />
+                              <CATCommandHeaderArg ID="TargetDiv" Value="explorer-root" Mode="In" />
+                        </CATAfrCommandHeaderArgs>
+                  </CATCommandHeader>
+                  <!-- TSK8377275 New command asked by YWE accepted by CUI -->
+                  <CATCommandHeader ID="UnifiedExportCommand" HelpResourceFile="UnifiedExportCommand/UnifiedExportCommand" ClassName="DS/UnifiedExportCommand/Commands/UnifiedExportCommand" ResourceFile="UnifiedExportCommand/UnifiedExportCommand" Available="1" />
+                  <!-- END -->
+                  <!-- <CATCommandHeader ID="ExportCSVOptions" HelpResourceFile="ENXNav/ENXNavHelpForCommands" ClassName="DS/ENXNav/commands/xNavActionBarCmds" ResourceFile="ENXNav/ENXNav" Available="0" /> -->
+                  <CATCommandHeader ID="ColumnVisibility" HelpResourceFile="ENXNav/ENXNavHelpForCommands" ClassName="DS/ENXNav/commands/xNavActionBarCmds" ResourceFile="ENXNav/ENXNav" />
+                  <!-- <CATCommandHeader ID="RelationColumnsMgt" HelpResourceFile="ENORIPE_Columns/ENORIPE_ColumnsHelpForCommands" ClassName="DS/ENORIPE_Columns/RelationsColumnsCmd" ResourceFile="ENORIPE_Columns/ENORIPE_Columns" Available="1"/> -->
+                  <!-- Properties -->
+                  <CATCommandHeader ID="ActionBar_Attributes" ClassName="DS/ENOCollabSharingCmds/commands/EditPropCmd/ActionBar_EditPropCmd" HelpResourceFile="ENOCollabSharingCmds/CollaborationCmd" ResourceFile="ENOCollabSharingCmds/CollabSharing_Workbench" Available="1" />
+
+                  <!-- OpenInCAD for web in win integration -->
+                  <CATCommandHeader ID="OpenInCADHdr" ClassName="DS/PADUtils/commands/PADOpenInCAD" ResourceFile="PADUtils/PADUtils" Available="1" />
+                  <!-- Just Command not in Action Bar -->
+                  <CATCommandHeader ID="FilterDropObjects" ClassName="DS/ENXNav/commands/FilterDropObjects" ResourceFile="ENXNav/ENXNav" Available="1" />
+                  <CATCommandHeader ID="AddRoot" ClassName="DS/PADUtils/commands/PADAddRoot_cmd" ResourceFile="PADUtils/PADUtils" Available="1" />
+
+                  <!-- 
+                  <CATCommandHeader ID="TerminologyManagementCommand" HelpResourceFile="TerminologySelector/help" ClassName="DS/TerminologySelector/commands/TerminologyManagementCommand" ResourceFile="TerminologySelector/TerminologySelector" Available="1" />
+                  <CATCommandHeader ID="AssociateTerminologiesCommand" HelpResourceFile="TerminologySelector/help" ClassName="DS/TerminologySelector/commands/AssociateTerminologiesCommand" ResourceFile="TerminologySelector/TerminologySelector" Available="1" />
+                  <CATCommandHeader ID="AssociateTermsCommand" HelpResourceFile="TerminologySelector/help" ClassName="DS/TerminologySelector/commands/AssociateTermsCommand" ResourceFile="TerminologySelector/TerminologySelector" Available="1" /> 
+                  -->
+
+                  <!-- GRAPH SECTION-->
+                  <CATCommandHeader ID="ReframeAll" HelpResourceFile="ENXNav/ENXNavHelpForCommands" ClassName="DS/ENXNav/commands/xNavActionBarCmds" ResourceFile="ENXNav/ENXNav" Available="0" />
+                  <CATCommandHeader ID="ReframeOn" HelpResourceFile="ENXNav/ENXNavHelpForCommands" ClassName="DS/ENXNav/commands/xNavActionBarCmds" ResourceFile="ENXNav/ENXNav" Available="0" />
+                  <CATCommandHeader ID="ToggleOverview" HelpResourceFile="ENXNav/ENXNavHelpForCommands" ClassName="DS/ENXNav/commands/xNavActionBarCmds" ResourceFile="ENXNav/ENXNav" Available="0" />
+                  <CATCommandHeader ID="LayoutDown" HelpResourceFile="ENXNav/ENXNavHelpForCommands" ClassName="DS/ENXNav/commands/xNavActionBarCmds" ResourceFile="ENXNav/ENXNav" Available="0" />
+                  <CATCommandHeader ID="LayoutRight" HelpResourceFile="ENXNav/ENXNavHelpForCommands" ClassName="DS/ENXNav/commands/xNavActionBarCmds" ResourceFile="ENXNav/ENXNav" Available="0" />
+                  <CATCommandHeader ID="LayoutUp" HelpResourceFile="ENXNav/ENXNavHelpForCommands" ClassName="DS/ENXNav/commands/xNavActionBarCmds" ResourceFile="ENXNav/ENXNav" Available="0" />
+                  <CATCommandHeader ID="LayoutLeft" HelpResourceFile="ENXNav/ENXNavHelpForCommands" ClassName="DS/ENXNav/commands/xNavActionBarCmds" ResourceFile="ENXNav/ENXNav" Available="0" />
+                  <CATCommandHeader ID="SwapThumbState" HelpResourceFile="ENXNav/ENXNavHelpForCommands" ClassName="DS/ENXNav/commands/xNavActionBarCmds" ResourceFile="ENXNav/ENXNav" Available="0" />
+
+                  <!-- Toolbar -->
+                  <CATCommandHeader ID="CloseSelectedCmd" HelpResourceFile="ENXNav/ENXNavHelpForCommands" ClassName="DS/ENXNav/commands/CloseSelectedCmd" ResourceFile="ENXNav/ENXNav" Available="0" />
+                  <CATCommandHeader ID="HideIn3DCmd" HelpResourceFile="ENXNav/ENXNavHelpForCommands" ClassName="DS/ENXNav/commands/HideIn3DCmd" ResourceFile="ENXNav/ENXNav" Available="0" />
+                  <CATCommandHeader ID="ShowIn3DCmd" HelpResourceFile="ENXNav/ENXNavHelpForCommands" ClassName="DS/ENXNav/commands/ShowIn3DCmd" ResourceFile="ENXNav/ENXNav" Available="0" />
+                  <CATCommandHeader ID="FocusOnCmd" HelpResourceFile="ENXNav/ENXNavHelpForCommands" ClassName="DS/ENXNav/commands/FocusOnCmd" ResourceFile="ENXNav/ENXNav" Available="0" />
+                  <CATCommandHeader ID="ExpandThumbsCmd" HelpResourceFile="ENXNav/ENXNavHelpForCommands" ClassName="DS/ENXNav/commands/ExpandThumbsCmd" ResourceFile="ENXNav/ENXNav" Available="0" />
+                  <CATCommandHeader ID="CollapseThumbsCmd" HelpResourceFile="ENXNav/ENXNavHelpForCommands" ClassName="DS/ENXNav/commands/CollapseThumbsCmd" ResourceFile="ENXNav/ENXNav" Available="0" />
+                  <CATCommandHeader ID="FindInCtxCmd" HelpResourceFile="ENXNav/ENXNavHelpForCommands" ClassName="DS/ENXNav/commands/FindInCtxCmd" ResourceFile="ENXNav/ENXNav" Available="1">
+                        <CATAfrCommandHeaderArgs>
+                              <CATCommandHeaderArg ID="TargetDiv" Value="explorer-root" Mode="In" />
+                        </CATAfrCommandHeaderArgs>
+                  </CATCommandHeader>
+                  <CATCommandHeader ID="FindCmd" HelpResourceFile="ENXNav/ENXNavHelpForCommands" ClassName="DS/ENXNav/commands/FindCmd" ResourceFile="ENXNav/ENXNav" Available="1">
+                        <CATAfrCommandHeaderArgs>
+                              <CATCommandHeaderArg ID="TargetDiv" Value="explorer-root" Mode="In" />
+                        </CATAfrCommandHeaderArgs>
+                  </CATCommandHeader>
+                  <CATCommandHeader ID="FocusOnGroups" HelpResourceFile="ENXNav/ENXNavHelpForCommands" ClassName="DS/ENXNav/commands/FocusOnGroups" ResourceFile="ENXNav/ENXNav" Available="1" />
+                  <CATCommandHeader ID="ExpandAllGroups" HelpResourceFile="ENXNav/ENXNavHelpForCommands" ClassName="DS/ENXNav/commands/ExpandAllGroups" ResourceFile="ENXNav/ENXNav" Available="1" />
+                  <CATCommandHeader ID="GroupsLayoutCompact" HelpResourceFile="ENXNav/ENXNavHelpForCommands" ClassName="DS/ENXNav/commands/GroupsLayoutCompact" ResourceFile="ENXNav/ENXNav" Available="1" />
+                  <CATCommandHeader ID="GroupsLayoutPath" HelpResourceFile="ENXNav/ENXNavHelpForCommands" ClassName="DS/ENXNav/commands/GroupsLayoutPath" ResourceFile="ENXNav/ENXNav" Available="1" />
+
+            </CATCmdHeadersList>
+      </Template>
+
+      <Template syp:name="ENOXSceneWkbAccess" Target="CATCmdWorkbench">
+            <CATCmdWorkbench Name="ENOXSceneWkb">
+                  <CATCmdContainer Name="HomeFixedArea" RepresentationType="AfrActionBarFixedSection">
+                        <CATCmdStarter Name="Home" Command="Home" />
+                  </CATCmdContainer>
+                  <CATCmdContainer Name="XSCViews" RepresentationType="AfrActionBarSection">
+                        <CATCmdStarter Name="RootPanel" Command="RootPanel" />
+                        <CATCmdSeparator Name="PadViews_Separator" />
+                        <CATCmdContainer Name="XSCView" RepresentationType="AfrActionBarDropDown">
+                              <CATCmdStarter Name="TreeView" Command="treeview" />
+                              <CATCmdStarter Name="GraphView" Command="graphview" />
+                              <!-- <CATCmdStarter Name="TileView" Command="tileview" />
+                              <CATCmdStarter Name="ThumbnailView" Command="thumbnailview" /> -->
+                        </CATCmdContainer>
+                        <CATCmdContainer Name="XSCExpand" RepresentationType="AfrActionBarDropDown">
+                              <CATCmdStarter Name="Expand All" Command="ExpandAll" />
+                              <CATCmdStarter Name="Expand N" Command="ExpandN" />
+                              <CATCmdStarter Name="Collapse All" Command="CollapseAll" />
+                        </CATCmdContainer>
+
+                        <CATCmdSeparator Name="PadViews_Separator" />
+                        <CATCmdContainer Name="XSCSelect" RepresentationType="AfrActionBarDropDown">
+                              <CATCmdStarter Name="Select All" Command="SelectAll" />
+                              <CATCmdStarter Name="Select Children" Command="SelectChildren" />
+                              <CATCmdStarter Name="Select Inversion" Command="SelectInversion" />
+                              <CATCmdStarter Name="Select Parent" Command="SelectParent" />
+                              <CATCmdStarter Name="Select Siblings" Command="SelectSiblings" />
+                              <CATCmdStarter Name="Select Leaves" Command="SelectLeaves" />
+                        </CATCmdContainer>
+                        <CATCmdSeparator Name="PadViews_Separator" />
+                        <CATCmdStarter Name="Clean All" Command="CleanAll" />
+                        <CATCmdSeparator Name="PadViews_Separator" />
+                        <CATCmdStarter Name="Toggle Side Panel" Command="RightSidePanel" />
+                  </CATCmdContainer>
+                  <CATCmdContainer Name="XSCTools" RepresentationType="AfrActionBarSection">
+                        <CATCmdStarter Name="Attributes" Command="ActionBar_Attributes" />
+                        <CATCmdStarter Name="RelationIPExplorer" Command="RelationIPExplorer" />
+                        <CATCmdStarter Name="Define Filter" Command="DefineFilter" />
+                        <!-- 
+                        <CATCmdContainer Name="BSDCmds" RepresentationType="AfrActionBarDropDown">
+                              <CATCmdStarter Name="Terminology Management" Command="TerminologyManagementCommand" />
+                              <CATCmdStarter Name="Associate Terminologies" Command="AssociateTerminologiesCommand" />
+                              <CATCmdStarter Name="Associate Terms" Command="AssociateTermsCommand" />
+                        </CATCmdContainer> 
+                        -->
+                        <CATCmdStarter Name="Find" Command="FindCmd" />
+                        <CATCmdStarter Name="Print" Command="Print" />
+                        <!-- <CATCmdContainer Name="PrintDropDown" RepresentationType="AfrActionBarDropDown">
+                              <CATCmdStarter Name="Print" Command="Print" />
+                              <CATCmdStarter Name="Print Options" Command="PrintOptions" />
+                        </CATCmdContainer> -->
+                        <CATCmdContainer Name="ExportDropDown" RepresentationType="AfrActionBarDropDown">
+                              <CATCmdStarter Name="Export CSV" Command="ExportCSV" />
+                              <CATCmdStarter Name="UnifiedExportCommand" Command="UnifiedExportCommand" />
+                        </CATCmdContainer>
+                        <!-- <CATCmdContainer Name="ExportDropDown" RepresentationType="AfrActionBarDropDown">
+                              <CATCmdStarter Name="Export CSV" Command="ExportCSV" />
+                              <CATCmdStarter Name="Export CSV Options" Command="ExportCSVOptions" />
+                        </CATCmdContainer> -->
+                        <!-- IR-952894-3DEXPERIENCER2022x remove useless dropdown -->
+                        <!-- <CATCmdContainer Name="CustomizeDropDown" RepresentationType="AfrActionBarDropDown">--> -->
+                        <CATCmdStarter Name="ColumnVisibility" Command="ColumnVisibility" />
+                        <!-- <CATCmdStarter Name="RelationColumnsMgt" Command="RelationColumnsMgt" /> -->
+                        <!-- </CATCmdContainer> -->
+                  </CATCmdContainer>
+            </CATCmdWorkbench>
+      </Template>
+</Styles>

@@ -1,0 +1,116 @@
+<html>
+	<head>
+		<title>Geolocation API check</title>
+		<link rel="stylesheet" type="text/css" href="GeoLocationCheck.css" />
+		<!--script src = "jquery-ui-1.11.3/external/jquery/jquery.js"></script>
+		<script src= "jquery-ui-1.11.3/jquery-ui.min.js"> </script-->
+        <script src="../../../../JavascriptMVC-3.3/can/lib/jquery.1.9.1.js"></script>
+        <script src="../../../../jQueryUI/js/jquery-ui-1.11.2.js"></script>
+		<script src="Geolocation_JScript.js"></script>
+	<head>
+	
+<body>
+	<div id="GeoLocCheck">
+        <div id="data_handling">
+            <button type="button" id="start_buffering">Start buffering data</button> 
+            <button type="button" id="stop_buffering">Stop buffering data</button> 
+            <button type="button" id="clear_buffer">Clear buffer data</button> 
+            <button type="button" id="save_buffer">Save buffer data</button> 
+            <a download="JSONData.txt" id="downloadlink" style="display: none">Download Link</a> 
+            </br>
+            Buffer size: <span id="buffer_size">0</span>
+            <span id="start_time"></span></br>
+            <span id="end_time"></span></br>
+            <span id="elapsed_time"></span></br> 
+        </div>
+        
+	    <table id="geoTable">
+		    <tr>
+			    <td>lat deg</td>
+			    <td>lon deg</td>
+			    <td>accuracy meters</td>
+			    <td>altitude meters</td>
+			    <td>altAccuracy meters</td>
+			    <td>direction deg</td>
+			    <td>speed m/sec</td>
+		    </tr>
+	    </table> 
+        <div id="accelerationTracker">Device Acceleration
+            <div id="accSupport"></div>
+            <div id="xAcc"></div>
+            <div id="yAcc"></div>
+            <div id="zAcc"></div> 
+            <div id="AlphaRate"></div>
+            <div id="BetaRate"></div>
+            <div id="GammaRate"></div> 
+        </div>  
+        <div id="rotationTracker">Device Orientation
+            <div id="Alpha"></div>
+            <div id="Beta"></div>
+            <div id="Gamma"></div>
+            <div id="rotSupport"></div>
+        </div>
+	
+	</div>
+<script> 
+var start_time = null; // new Date();
+$("#start_buffering").click(function() {  
+    //alert("start_buffering");
+    G_BufferingOn = true;
+    start_time = new Date();
+    if(start_time ) 
+        $("#start_time").html(start_time);
+    else
+        $("#start_time").html("No Defined");
+}); 
+
+$("#stop_buffering").click(function() {  
+    //alert("stop_buffering");
+    G_BufferingOn = false;
+    if(start_time) {
+        var end_time = new Date(); 
+        $("#end_time").html(end_time); 
+        var elapsed_time = end_time.getTime() - start_time.getTime(); 
+        $("#elapsed_time").html(elapsed_time/1000 + " secs."); 
+    } 
+}); 
+
+$("#clear_buffer").click(function() {  
+    if(G_BufferingOn) {
+        alert("First stop buffering.");
+    }else {
+        G_SensorBuffer = []; // = false;
+        $("#buffer_size").html(G_SensorBuffer.length);
+    } 
+}); 
+
+function makeTextFile (text) {
+    var data = new Blob([text], {type: 'text/plain'});
+    var textFile = null;
+    //If we are replacing a previously generated file we need to
+    //manually revoke the object URL to avoid memory leaks.
+    if (textFile !== null) {
+      window.URL.revokeObjectURL(textFile);
+    } 
+    textFile = window.URL.createObjectURL(data); 
+    return textFile;
+};
+        
+$("#save_buffer").click(function() {  
+    if(G_BufferingOn) {
+        alert("First stop buffering.");
+    }else {    
+        var textContainerString = JSON.stringify(G_SensorBuffer); 
+        var link = document.getElementById('downloadlink');
+        link.href = makeTextFile(textContainerString);
+        //link.href = makeTextFile(myJsonString);
+        //link.href = makeTextFile(myJsonString + '/n' + cameraString);
+        link.style.display = 'block';  
+    }
+}); 
+ 
+
+</script>
+</body>
+
+</html>

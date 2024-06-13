@@ -1,0 +1,221 @@
+
+{
+    "dsxcad:Representation": {
+        "kindOf": "root",
+        "beType": "type_XCADNonPSBaseRepReference",
+        "extensionLinks":["dsxcad:xCADAttributes", "dsxcad:AuthoringFile","dslc:changeControl"],
+        "rootLinks":["dsxcad:Representation", "dsxcad:Part", "dsxcad:Drawing", "dsxcad:Product"],
+        "patchCSRF":true,
+        "search":true,
+        "defaultMask": "dsmvxcad:xCADRepMask.Default",
+        "attributeMappingClass": "com.dassault_systemes.enovia.xapps.dsxcad.V1.dictionaries.dsxcadRepresentationAttributeDictionary",
+        "cestamp":true,
+        "isPublic":true,
+        "optionCheck" : {
+        	"modify"      : true,
+       	    "produce"     : true,
+	        "navigate"    : false
+        }    
+    },
+    "dsxcad:Template": {
+        "kindOf": "root",
+        "beType": "type_XCADTemplate",
+        "parentType":"dsxcad:Representation",
+        "extensionLinks":["dsxcad:xCADAttributes", "dsxcad:AuthoringFile","dslc:changeControl"],
+        "rootLinks":["dsxcad:Representation", "dsxcad:Part", "dsxcad:Drawing", "dsxcad:Product"],
+        "patchCSRF":false,
+        "search":true,
+        "defaultMask": "dsmvxcad:xCADTemplateMask.Default",
+        "attributeMappingClass": "com.dassault_systemes.enovia.xapps.dsxcad.V1.dictionaries.dsxcadTemplateAttributeDictionary",
+        "cestamp":true,
+        "isPublic":true,
+        "optionCheck" : {
+        	"modify"      : true,
+       	    "produce"     : true,
+	        "navigate"    : false
+        }
+    },
+    "dsxcad:Symbol": {
+        "kindOf": "root",
+        "beType": "type_XCADSymbol",
+        "parentType":"dsxcad:Representation",
+        "extensionLinks":["dsxcad:xCADAttributes", "dsxcad:AuthoringFile","dslc:changeControl"],
+        "rootLinks":["dsxcad:Representation", "dsxcad:Part","dsxcad:Drawing"],
+        "patchCSRF":false,
+        "search":true,
+        "defaultMask": "dsmvxcad:xCADSymbolMask.Default",
+        "attributeMappingClass": "com.dassault_systemes.enovia.xapps.dsxcad.V1.dictionaries.dsxcadSymbolAttributeDictionary",
+        "cestamp":true,
+        "isPublic":false,
+        "optionCheck" : {
+        	"modify"      : true,
+       	    "produce"     : true,
+	        "navigate"    : false
+        }
+    },
+    "dsxcad:ElecProject": {
+        "kindOf": "root",
+        "beType": "type_XCADElectricalProject",
+        "parentType":"dsxcad:Representation",
+        "extensionLinks":["dsxcad:xCADAttributes", "dsxcad:AuthoringFile","dslc:changeControl"],
+        "rootLinks":["dsxcad:Representation", "dsxcad:Part","dsxcad:Drawing"],
+        "patchCSRF":false,
+        "search":true,
+        "defaultMask": "dsmvxcad:xCADElecProjectMask.Default",
+        "attributeMappingClass": "com.dassault_systemes.enovia.xapps.dsxcad.V1.dictionaries.dsxcadElecProjectAttributeDictionary",
+        "cestamp":true,
+        "isPublic":false,
+        "optionCheck" : {
+        	"modify"      : true,
+       	    "produce"     : true,
+	        "navigate"    : false
+        }
+    },
+    "dsxcad:Resource": {
+        "kindOf": "root",
+        "beType": "type_XCADResource",
+        "parentType":"dsxcad:Representation",
+        "extensionLinks":["dsxcad:xCADAttributes", "dsxcad:AuthoringFile","dslc:changeControl"],
+        "rootLinks":["dsxcad:Representation", "dsxcad:Part","dsxcad:Drawing"],
+        "patchCSRF":false,
+        "search":true,
+        "defaultMask": "dsmvxcad:xCADRepMask.Default",
+        "attributeMappingClass": "com.dassault_systemes.enovia.xapps.dsxcad.V1.dictionaries.dsxcadRepresentationAttributeDictionary",
+        "cestamp":true,
+        "isPublic":false,
+        "optionCheck" : {
+        	"modify"      : true,
+       	    "produce"     : true,
+	        "navigate"    : false
+        }
+    },
+     "dsxcad:Part": {
+        "kindOf": "root", 
+        "beType": "type_VPMReference",
+        "extensionLinks":["dsxcad:xCADAttributes", "dsxcad:AuthoringFile","dsxcad:VisualizationFile","dseng:EnterpriseReference","dseno:EnterpriseAttributes","dslc:changeControl","dsxcad:PCBPhysicalComponent","dsxcad:PCB3DPackage","dsxcad:PCBPackageWrap","dsxcad:CBDBoard","dsxcad:CBDPanel","dsxcad:CBDAssembly","dsxcad:PCBPackageFootprint"],
+        "rootLinks":["dsxcad:Representation", "dsxcad:Part", "dsxcad:Drawing", "dsxcad:Product"],
+        "patchCSRF":true,
+        "search":true,
+        "classesWhere":"attribute[PLMEntity.V_usage]==3DPart && interface[XCADExtension]==TRUE",
+        "indexClassesWhere":"[ds6w:kind]:(3DPart) AND flattenedtaxonomies:\"interfaces/XCADExtension\"",
+        "defaultMask": "dsmvxcad:xCADPartMask.Default",
+		"attributeMappingClass": "com.dassault_systemes.enovia.xapps.dsxcad.V1.dictionaries.dsxcadPartAttributeDictionary",
+        "cestamp":true,
+        "customerAttribute":true,
+        "customizationSupport":true,
+        "publicResourceURI":"/resources/v1/modeler/dsxcad/dsxcad:Part/{pid}" ,
+        "isPublic":true,
+        "optionCheck" : {
+        	"modify"      : true,
+       	    "produce"     : true,
+	        "navigate"    : false
+        }
+    },
+     "dsxcad:Drawing": {
+        "kindOf": "root", 
+        "beType": "type_Drawing",
+        "extensionLinks":["dsxcad:xCADAttributes", "dsxcad:AuthoringFile","dsxcad:VisualizationFile","dslc:changeControl","dsdrw:EnterpriseAttributes"],
+        "rootLinks":["dsxcad:Representation", "dsxcad:Part", "dsxcad:Drawing", "dsxcad:Product"],
+        "patchCSRF":true,
+        "search":true,
+        "classesWhere":"interface[XCADRepExtension]==TRUE",
+        "indexClassesWhere":"flattenedtaxonomies:\"interfaces/XCADRepExtension\"",
+        "defaultMask": "dsmvxcad:xCADDrawingMask.Default",
+		"attributeMappingClass": "com.dassault_systemes.enovia.xapps.dsxcad.V1.dictionaries.dsxcadDrawingAttributeDictionary",
+        "cestamp":true,
+        "publicResourceURI":"/resources/v1/modeler/dsxcad/dsxcad:Drawing/{pid}" ,
+        "isPublic":true,
+        "optionCheck" : {
+        	"modify"      : true,
+       	    "produce"     : true,
+	        "navigate"    : false
+        }
+    },
+     "dsxcad:FamilyRepresentation": {
+        "kindOf": "root", 
+        "beType": "type_XCADModelRepReference",
+        "extensionLinks":["dsxcad:xCADAttributes", "dsxcad:AuthoringFile"],
+        "rootLinks":["dseng:EngItem", "dsxcad:Part"],
+        "patchCSRF":true,
+        "search":true,
+        "defaultMask": "dsmvxcad:xCADFamilyRepMask.Default",
+        "publicResourceURI":"/resources/v1/modeler/dsxcad/dsxcad:FamilyRepresentation/{pid}" ,
+		"attributeMappingClass": "com.dassault_systemes.enovia.xapps.dsxcad.V1.dictionaries.dsxcadFamilyAttributeDictionary",
+        "cestamp":true,
+        "isPublic":true,
+        "optionCheck" : {
+        	"modify"      : true,
+       	    "produce"     : true,
+	        "navigate"    : false
+        }
+    },
+    "dsxcad:xCADAttributes": {
+        "kindOf": "extension",
+        "beType": "COMPUTED_XCADExtension",
+        "defaultMask": "dsmvxcad:attribute.xCADAttributes",
+        "attributeMappingClass": "com.dassault_systemes.enovia.xapps.dsxcad.V1.dictionaries.dsxcadAttributesDictionary"
+    },
+     "dsxcad:AuthoringFile": {
+        "kindOf": "extension",
+        "beType": "XCAD_Authoring_File_Extension",
+        "defaultMask": "dsmvxcad:AuthoringFile.Details",
+        "attributeMappingClass": "com.dassault_systemes.enovia.xapps.dsxcad.V1.dictionaries.dsxcadFileAttributesDictionary"
+    },
+    "dsxcad:VisualizationFile": {
+        "kindOf": "extension",
+        "beType": "XCAD_Visu_File_Extension",
+        "defaultMask": "dsmvxcad:VisualizationFile.Details",
+        "attributeMappingClass": "com.dassault_systemes.enovia.xapps.dsxcad.V1.dictionaries.dsxcadVisuFileAttributesDictionary"
+    },
+    "dsxcad:PCBPhysicalComponent": {
+        "kindOf": "extension",
+        "beType": "interface_PLMPCBPhysicalComponent"
+    },
+    "dsxcad:PCB3DPackage": {
+        "kindOf": "extension",
+        "beType": "interface_PLMPCB3DPackage"
+    },
+    "dsxcad:PCBPackageWrap": {
+        "kindOf": "extension",
+        "beType": "interface_PLMPCBPackageWrap"
+    },
+    "dsxcad:CBDBoard": {
+        "kindOf": "extension",
+        "beType": "interface_CBDBoard"
+    },
+    "dsxcad:CBDPanel": {
+        "kindOf": "extension",
+        "beType": "interface_CBDPanel"
+    },
+    "dsxcad:CBDAssembly": {
+        "kindOf": "extension",
+        "beType": "interface_CBDAssembly"
+    },
+    "dsxcad:PCBPackageFootprint": {
+        "kindOf": "extension",
+        "beType": "interface_PLMPCBPackageFootprint"
+    },
+    "dsxcad:Product": {
+        "kindOf": "root", 
+        "beType": "type_VPMReference",
+        "extensionLinks":["dsxcad:xCADAttributes", "dsxcad:AuthoringFile","dseng:EnterpriseReference","dseno:EnterpriseAttributes"],
+        "rootLinks":["dsxcad:Representation", "dsxcad:Part", "dsxcad:Drawing", "dsxcad:Product"],
+        "patchCSRF":true,
+        "search":true,
+        "classesWhere":"interface[XCADExtension]==TRUE && attribute[PLMEntity.V_usage]!=3DPart",
+        "indexClassesWhere":"flattenedtaxonomies:\"interfaces/XCADExtension\" AND NOT [ds6w:kind]:(3DPart)",
+        "defaultMask": "dsmvxcad:xCADProductMask.Default",
+		"attributeMappingClass": "com.dassault_systemes.enovia.xapps.dsxcad.V1.dictionaries.dsxcadProductAttributeDictionary",
+        "cestamp":true,
+        "customerAttribute":false,
+        "customizationSupport":false,
+        "publicResourceURI":"/resources/v1/modeler/dsxcad/dsxcad:Product/{pid}" ,
+        "isPublic":true,
+        "optionCheck" : {
+        	"modify"      : true,
+       	    "produce"     : true,
+	        "navigate"    : false
+        }
+    }
+}
+

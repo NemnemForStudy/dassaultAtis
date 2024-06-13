@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "CSIEventVersion1JSONSchema.json",
+  "title": "CSI Event version 1",
+  "description": "JSON Schema of a CSI Event version 1",
+  "type": "object",
+  "required": [
+    "grammarVersion",
+    "desc",
+    "definition"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "grammarVersion": {
+      "type": "integer",
+      "description": "Grammar version used for the Event definition",
+      "enum": [
+        1
+      ]
+    },
+    "desc": {
+      "type": "string",
+      "description": "Description of the Event"
+    },
+    "definition": {
+      "type": "array",
+      "items": {
+        "$ref": "CSIParametersJSONSchema.json#/definitions/property"
+      }
+    }
+  }
+}

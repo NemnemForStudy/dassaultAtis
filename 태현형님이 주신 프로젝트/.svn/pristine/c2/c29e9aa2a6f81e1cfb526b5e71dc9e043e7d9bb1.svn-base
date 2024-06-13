@@ -1,0 +1,1 @@
+define("DS/CAT3DAnnotationWidget/CAT3DAnnotationWidget_cs",{});define("DS/CAT3DAnnotationWidget/assets/nls/CAT3DAnnotationWidget",{customApp:"Přizpůsobte si aplikaci",prefs:"Předvolby",difAnnotSet:"Otevřít sady popisů"});

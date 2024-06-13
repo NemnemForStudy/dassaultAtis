@@ -1,0 +1,1136 @@
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.text.StringEscapeUtils;
+import org.apache.ibatis.session.SqlSession;
+
+import com.daewooenc.compare.CompareRule;
+import com.daewooenc.compare.util.CompareUtil;
+import com.daewooenc.mybatis.main.decSQLSessionFactory;
+import com.dec.util.DecConstants;
+import com.dec.util.DecDateUtil;
+import com.dec.util.DecStringUtil;
+import com.dec.util.decCollectionUtil;
+import com.dec.util.decListUtil;
+import com.matrixone.apps.domain.DomainConstants;
+import com.matrixone.apps.domain.DomainObject;
+import com.matrixone.apps.domain.util.FrameworkUtil;
+import com.matrixone.apps.domain.util.MapList;
+import com.matrixone.apps.domain.util.MqlUtil;
+
+import matrix.db.Context;
+import matrix.db.JPO;
+import matrix.util.StringList;
+
+@SuppressWarnings({"rawtypes", "unchecked"})
+public class decKeyQty_mxJPO {
+	
+	public String getSITE_CD(Context context, String[] args) throws Exception{
+		Map programMap = (Map) JPO.unpackArgs(args);
+		String objectId = (String) programMap.get("objectId");
+		return getSITE_CD(context, objectId);
+	}
+	
+	private String getSITE_CD(Context context, String objectId) throws Exception{
+		String SITE_CD = null;
+		if ( StringUtils.isEmpty(objectId) )
+		{
+			SITE_CD = "MASTER";
+		}
+		else
+		{
+			SITE_CD = MqlUtil.mqlCommand(context, "print bus $1 select $2 dump", objectId, DomainConstants.SELECT_NAME);
+		}
+		return SITE_CD;
+	}
+
+	public MapList getMasterList(Context context, String[] args) throws Exception{
+		try {
+			List<Map> resultList = null;
+			try ( SqlSession sqlSession = decSQLSessionFactory.getSession() ) {
+				
+				Map programMap = (Map) JPO.unpackArgs(args);
+				
+				String objectId = (String) programMap.get("objectId");
+				String USED_FLAG = (String) programMap.get("USED_FLAG");
+				String REPORT_FLAG = (String) programMap.get("REPORT_FLAG");
+				
+				String SITE_CD = getSITE_CD(context, objectId);
+				
+				Map selectParamMap = new HashMap();
+				selectParamMap.put("SITE_CD", SITE_CD);
+				selectParamMap.put("REPORT_FLAG", REPORT_FLAG);
+				if ( "NULL".equals(USED_FLAG) )
+				{
+					selectParamMap.put("USED_FLAG_IS_NULL", "true");
+				}
+				
+				resultList = sqlSession.selectList("Project.selectKeyQtyMaster", selectParamMap);
+				
+				for (Map resultMap : resultList)
+				{
+					resultMap.put(DomainConstants.SELECT_ID, (String) resultMap.get("KEY_CD"));
+					resultMap.put("ROW_NO", String.valueOf( resultMap.get("ROW_NO") ));
+				}
+			}
+			return new MapList(resultList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	public void setKeyQtyMaster(Context context, String[] args) throws Exception{
+		try ( SqlSession sqlSession = decSQLSessionFactory.getSession() ) {
+			Map programMap = (Map) JPO.unpackArgs(args);
+			
+			Map requestMap = (Map) programMap.get("requestMap");
+			String objectId = (String) requestMap.get("objectId");
+			String SITE_CD = getSITE_CD(context, objectId);
+			
+			Map paramMap = (Map) programMap.get("paramMap");
+			String KEY_CD = (String) paramMap.get("objectId");
+			String newValue = (String) paramMap.get("New Value");
+			
+			Map columnMap = (Map) programMap.get("columnMap");
+			Map settings = (Map) columnMap.get("settings");
+			String columnName = (String) settings.get("columnName");
+			
+			columnName = "UOM".equalsIgnoreCase(columnName) ? "Unit" : columnName;
+			
+			Map updateParamMap = new HashMap();
+			updateParamMap.put("SITE_CD", SITE_CD);
+			updateParamMap.put("KEY_CD", KEY_CD);
+			updateParamMap.put(columnName, DecStringUtil.setEmpty(newValue));
+			updateParamMap.put("CHANGE_USER", context.getUser());
+			
+			switch (columnName) {
+			case "REPORT_FLAG": case "USED_FLAG":
+				sqlSession.update("Project.updateProjectSetupFlag", updateParamMap);
+				break;
+
+			default:
+				sqlSession.update("Project.updateKeyQtyMaster", updateParamMap);
+				break;
+			}
+			
+			sqlSession.commit();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	public boolean isProject(Context context, String[] args) throws Exception{
+		try {
+			final String IS_PROJECT = "isProject";
+			boolean isProject = false; 
+					
+			Map programMap = (Map) JPO.unpackArgs(args);
+			Object oIsProject = programMap.get(IS_PROJECT);
+			
+			if ( oIsProject == null )
+			{
+//				Map requestMap = (Map) programMap.get("requestMap");
+//				String objectId = (String) requestMap.get("objectId");
+				String objectId = (String) programMap.get("objectId");
+				
+				if ( StringUtils.isEmpty(objectId) )
+				{
+					// do nothing...
+				}
+				else
+				{
+					String kindOfProjectSpace = MqlUtil.mqlCommand(context, "print bus $1 select $2 dump", objectId, "type.kindof[Project Space]");
+					isProject = Boolean.valueOf(kindOfProjectSpace);
+				}
+				programMap.put(IS_PROJECT, isProject);
+			}
+			else
+			{
+				if ( oIsProject instanceof String )
+				{
+					isProject = Boolean.valueOf((String) oIsProject);
+				}
+				else
+				{
+					isProject = (boolean) oIsProject;
+				}
+			}
+			
+			return isProject;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	public Map cloneKeyQtyMaster(Context context, String[] args) throws Exception{
+		Map programMap = (Map) JPO.unpackArgs(args);
+		String projectCode = (String) programMap.get("projectCode");
+		String mode = (String) programMap.get("mode");
+		SqlSession sqlSession = (SqlSession) programMap.get("sqlSession");
+		return cloneKeyQtyMaster(sqlSession, projectCode, mode);
+	}
+	
+	public Map cloneKeyQtyMaster(SqlSession sqlSession, String projectCode, String mode) throws Exception{
+		Map resultMap = new HashMap();
+		try {
+			if ( "reset".equalsIgnoreCase(mode) )
+			{
+				Map deleteParamMap = new HashMap();
+				deleteParamMap.put("SITE_CD", projectCode);
+				sqlSession.delete("Project.deleteProjectSetupFlag", deleteParamMap);
+			}
+			
+			Map insertParamMap = new HashMap();
+			insertParamMap.put("SOURCE_SITE_CD", "MASTER");
+			insertParamMap.put("TARGET_SITE_CD", projectCode);
+			sqlSession.insert("Project.cloneMasterSetupFlag", insertParamMap);
+			
+			resultMap.put("result", "success");
+		} catch (Exception e) {
+			resultMap.put("error", e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		return resultMap;
+	}
+	
+	public String importExcelKeyQtyMasterData(Context context, String[] args) throws Exception{
+		String sReturn = null;
+    	try {
+			Map paramMap = (Map)JPO.unpackArgs(args);
+
+			MapList objectList = (MapList)paramMap.get("objectList");
+			
+			String PROJECT_CODE = "MASTER";
+			
+			try ( SqlSession sqlSession = decSQLSessionFactory.getSession() ) {
+				
+				Map map = null;
+				
+				Map deleteParamMap = new HashMap();
+				deleteParamMap.put("SITE_CD", PROJECT_CODE);
+				
+				sqlSession.delete("Project.deleteKeyQtyMaster");
+				sqlSession.delete("Project.deleteProjectSetupFlag", deleteParamMap);
+				
+				List<Map> keyQtyMasterRowList = new ArrayList<Map>();
+				List<Map> projectSetupFlagRowList = new ArrayList<Map>();
+				
+				Map keyQtyMasterRowMap = null;
+				Map projectSetupFlagRowMap = null;
+				
+				int ROW_NO = 0;
+				String user = context.getUser();
+				String keyCode = null;
+				
+				for (Object obj : objectList)
+				{
+					if ( ROW_NO == 0 )
+					{
+						ROW_NO++;
+						continue;
+					}
+					
+					map = (Map) obj;
+					
+					keyCode = (String) map.get("Key Q'ty\nCode");
+					
+					keyQtyMasterRowMap = new HashMap();
+					keyQtyMasterRowMap.put("KEY_CD", keyCode);
+					keyQtyMasterRowMap.put("ROW_NO", ROW_NO++);
+					keyQtyMasterRowMap.put("KEY_L1", (String) map.get("Key \nL1"));
+					keyQtyMasterRowMap.put("KEY_L2", (String) map.get("Key \nL2"));
+					keyQtyMasterRowMap.put("KEY_L3", (String) map.get("Key \nL3"));
+					keyQtyMasterRowMap.put("CATEGORY", (String) map.get("Category"));
+					keyQtyMasterRowMap.put("KEY_ITEM", (String) map.get("Key Item"));
+					keyQtyMasterRowMap.put("Unit", (String) map.get("Unit"));
+					keyQtyMasterRowMap.put("DP_CD", (String) map.get("DP Code"));
+					keyQtyMasterRowMap.put("CHANGE_USER", user);
+					
+					keyQtyMasterRowList.add(keyQtyMasterRowMap);
+					
+					projectSetupFlagRowMap = new HashMap();
+					projectSetupFlagRowMap.put("SITE_CD", PROJECT_CODE);
+					projectSetupFlagRowMap.put("KEY_CD", keyCode);
+					projectSetupFlagRowMap.put("REPORT_FLAG", "");
+					projectSetupFlagRowMap.put("USED_FLAG", "");
+					
+					projectSetupFlagRowList.add(projectSetupFlagRowMap);
+				}
+				
+				Map insertParamMap = new HashMap();
+				insertParamMap.put("list", keyQtyMasterRowList);
+				
+				sqlSession.insert("Project.insertKeyQtyMaster", insertParamMap);
+				
+				insertParamMap.clear();
+				insertParamMap.put("list", projectSetupFlagRowList);
+				
+				sqlSession.insert("Project.insertProjectSetupFlag", insertParamMap);
+				
+				sqlSession.commit();
+			}
+			sReturn = "success";
+		} catch (Exception e) {
+			e.printStackTrace();
+			sReturn = e.getMessage();
+		}
+    	
+    	return sReturn;
+    }
+	
+	public StringList getUnitKeyQtyCellList(Context context, String[] args) throws Exception{
+		try {
+			Map programMap = JPO.unpackArgs(args);
+			
+			Map paramList = (Map) programMap.get("paramList");
+			String projectId = (String) paramList.get("objectId");
+			
+			MapList objectList = (MapList) programMap.get("objectList");
+			Map columnMap = (Map) programMap.get("columnMap");
+			Map settings = (Map) columnMap.get("settings");
+			boolean hasAccess = (boolean) settings.get("hasAccess");
+			String columnName = (String) columnMap.get(DomainConstants.SELECT_NAME);
+			StringList slColumnName = FrameworkUtil.splitString(columnName, "_");
+			String year = slColumnName.get(0);
+			String month = slColumnName.get(1);
+			
+			LocalDate columnDate = LocalDate.of(Integer.parseInt(year), Integer.parseInt(month), 1);
+			LocalDate now = LocalDate.now();
+			now = now.withDayOfMonth(1);
+			
+			Map objMap = null;
+			StringList slReturn = new StringList();
+			StringBuffer sbHTMLExpr = new StringBuffer();
+			StringBuffer sbUploadURLExpr = new StringBuffer();
+			StringBuffer sbReportURLExpr = new StringBuffer();
+			String objectId = null;
+			String type = null;
+			boolean hasReport = false;
+			
+			StringBuffer sbUploadHTML = new StringBuffer();
+			sbUploadHTML.append("<a href='${1}' target='listHidden'>");
+				sbUploadHTML.append("<img src='../common/images/iconActionUploadFile.gif'>");
+				sbUploadHTML.append("</img>");
+			sbUploadHTML.append("</a>");
+			
+			String uploadHTML = sbUploadHTML.toString();
+			
+			StringBuffer sbReportHTML = new StringBuffer();
+			sbReportHTML.append("<a target='listHidden' onclick='showNonModalDialog(\"${1}\", 800, 1200, \"\", \"\", \"XLarge\")'>");
+				sbReportHTML.append("<img src='../common/images/iconSmallReport.png' height='20px'>");
+				sbReportHTML.append("</img>");
+			sbReportHTML.append("</a>");
+			
+			String reportHTML = sbReportHTML.toString();
+			
+			for (Object obj : objectList)
+			{
+				if ( columnDate.compareTo(now) > 0 )
+				{
+					slReturn.add( "" );
+				}
+				else
+				{
+					objMap = (Map) obj;
+					objectId = (String) objMap.get(DomainConstants.SELECT_ID);
+					type = (String) objMap.get(DomainConstants.SELECT_TYPE);
+					hasReport = objMap.containsKey(columnName);
+					
+					sbUploadURLExpr.delete(0, sbUploadURLExpr.length());
+					sbUploadURLExpr.append("../programcentral/decProjectKeyQtyReportUploadValidate.jsp");
+					sbUploadURLExpr.append("?objectId=").append(objectId);
+					sbUploadURLExpr.append("&cutOff=").append(columnName);
+					sbUploadURLExpr.append("&hasReport=").append(hasReport);
+					sbUploadURLExpr.append("&projectId=").append(projectId);
+					
+					sbReportURLExpr.delete(0, sbReportURLExpr.length());
+//					sbReportURLExpr.append("../programcentral/decProjectKeyQtyReportFS.jsp");
+					sbReportURLExpr.append("../common/emxPortal.jsp");
+					sbReportURLExpr.append("?objectId=").append(objectId);
+					sbReportURLExpr.append("&cutOff=").append(columnName);
+					sbReportURLExpr.append("&projectId=").append(projectId);
+					sbReportURLExpr.append("&portal=decProjectKeyQtyReportPortal");
+					sbReportURLExpr.append("&header=emxProgramCentral.Label.KeyQtyReport");
+					sbReportURLExpr.append("&suiteKey=ProgramCentral");
+					
+					sbHTMLExpr.delete(0, sbHTMLExpr.length());
+					
+					if ( hasReport )
+					{
+						sbHTMLExpr.append( reportHTML.replace("${1}", StringEscapeUtils.escapeHtml4( sbReportURLExpr.toString() ) ) );
+					}
+					
+					if ( !DomainConstants.TYPE_PROJECT_SPACE.equals( type ) && hasAccess )
+					{
+						sbHTMLExpr.append(" ");
+						sbHTMLExpr.append( uploadHTML.replace("${1}", StringEscapeUtils.escapeHtml4( sbUploadURLExpr.toString() ) ) );
+					}
+					
+					slReturn.add( sbHTMLExpr.toString() );
+				}
+			}
+			return slReturn;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	public MapList getUnitColumn(Context context, String[] args) throws Exception{
+		try {
+			Map programMap = JPO.unpackArgs(args);
+			
+			Map requestMap = (Map) programMap.get("requestMap");
+
+			String fromYear = (String) requestMap.get("decProjectKeyQtyFromYearCmd");
+			String fromMonth = (String) requestMap.get("decProjectKeyQtyFromMonthCmd");
+			String toYear = (String) requestMap.get("decProjectKeyQtyToYearCmd");
+			String toMonth = (String) requestMap.get("decProjectKeyQtyToMonthCmd");
+			
+			// Added by hslee on 2023.08.03 --- [s]
+			// 해당 테이블을 새로 고침할 경우 decProjectKeyQtyReportPre.jsp에서 사전 설정한 날짜값이 비어 있으므로 다시 가져올 수 있도록 처리한다.
+			String objectId = (String) requestMap.get("objectId");
+			if ( StringUtils.isEmpty(fromYear) )
+			{
+				Map defaultDateMap = getDefaultData(context, objectId);
+				fromYear = String.valueOf((Integer) defaultDateMap.get("fromYear"));
+				fromMonth = String.valueOf((Integer) defaultDateMap.get("fromMonth"));
+				toYear = String.valueOf((Integer) defaultDateMap.get("toYear"));
+				toMonth = String.valueOf((Integer) defaultDateMap.get("toMonth"));
+			}
+			// Added by hslee on 2023.08.03 --- [e]
+			
+			LocalDate fromLocalDate = LocalDate.of(Integer.parseInt(fromYear), Integer.parseInt(fromMonth), 1);
+			LocalDate toLocalDate = LocalDate.of(Integer.parseInt(toYear), Integer.parseInt(toMonth), 1);
+			
+			Map dynamicColumnMap = null;
+			Map dynamicSettingMap = null;
+			MapList mlReturn = new MapList();
+			String year = null;
+			String month = null;
+			
+			// 권한 체크
+			decAccess_mxJPO accessJPO = new decAccess_mxJPO();
+			boolean hasAccess = accessJPO.hasAccess(context, objectId, "PIM,EM");
+			
+			for (LocalDate tempLocalDate = fromLocalDate; tempLocalDate.compareTo(toLocalDate) <= 0; tempLocalDate = tempLocalDate.plusMonths(1))
+			{
+				year = String.valueOf( tempLocalDate.getYear() );
+				month = String.valueOf( tempLocalDate.getMonthValue() );
+				
+				dynamicSettingMap = new HashMap();
+				dynamicSettingMap.put("Group Header", year);
+				dynamicSettingMap.put("Column Type", "programHTMLOutput");
+				dynamicSettingMap.put("program", "decKeyQty");
+				dynamicSettingMap.put("function", "getUnitKeyQtyCellList");
+				dynamicSettingMap.put("Style Function","getMonthStyle");
+				dynamicSettingMap.put("Style Program","decKeyQty");
+				dynamicSettingMap.put("Width","60");
+				dynamicSettingMap.put("hasAccess",hasAccess);
+
+				dynamicColumnMap = new HashMap();
+				dynamicColumnMap.put("name", year + "_" + month);
+				dynamicColumnMap.put("label", month);
+				dynamicColumnMap.put("settings", dynamicSettingMap);
+				
+				mlReturn.add(dynamicColumnMap);
+			}
+			
+			return mlReturn;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	public StringList getMonthStyle(Context context, String[] args) throws Exception {
+        StringList slStyles = new StringList();
+        try{
+            Map programMap =  JPO.unpackArgs(args);
+            MapList mlObject = (MapList) programMap.get("objectList");
+            Map columnMap = (Map) programMap.get("columnMap");
+            String columnName = (String) columnMap.get("name");
+            
+            String thisMonth = DecDateUtil.changeLocalDateFormat(LocalDate.now(), "yyyy_M");
+            String styleExpr = "";
+            if ( columnName.equals(thisMonth) )
+            {
+            	styleExpr = "thisMonth";
+            }
+            
+        	for(Object obj : mlObject) {
+        		slStyles.add(styleExpr);
+        	}
+            return slStyles;
+        }catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+    }
+	
+	public Map getDefaultData(Context context, String[] args) throws Exception{
+		Map programMap = (Map) JPO.unpackArgs(args);
+		String objectId = (String)programMap.get("objectId");
+		return getDefaultData(context, objectId);
+	}
+	
+	public Map getDefaultData(Context context, String objectId) throws Exception{
+		try {
+			StringList slSelect = new StringList();
+			slSelect.add(DomainConstants.SELECT_CURRENT);
+			slSelect.add("attribute[decContractStart]");
+			slSelect.add("attribute[decContractFinish]");
+			
+			DomainObject doObj = DomainObject.newInstance(context, objectId);
+			Map objMap = doObj.getInfo(context, slSelect);
+//			String current = (String) objMap.get(DomainConstants.SELECT_CURRENT);
+			String constractStart = (String) objMap.get("attribute[decContractStart]");
+			String constractFinish = (String) objMap.get("attribute[decContractFinish]");
+			
+//			LocalDate nowLocalDate = LocalDate.now();
+			LocalDate constractStartLocalDate = DecDateUtil.autoChangeLocalDate(constractStart);
+			LocalDate constractFinishLocalDate = DecDateUtil.autoChangeLocalDate(constractFinish);
+			
+//			LocalDate minus1YearFromNow = nowLocalDate.minusYears(1);
+			
+			LocalDate defaultFromDate = constractStartLocalDate;
+			LocalDate defaultToDate = constractFinishLocalDate;
+			LocalDate today = LocalDate.now();
+			/*
+			 * Default Date는 프로젝트의 계약시작일 ~ 계약종료일ㄴ
+			LocalDate defaultFromDate = null;
+			LocalDate defaultToDate = null;
+			
+			// 1년 전 날짜와 계약시작일 중 최근 날짜
+			if ( minus1YearFromNow.compareTo(constractStartLocalDate) > 0 )
+			{
+				defaultFromDate = minus1YearFromNow;
+			}
+			else
+			{
+				defaultFromDate = constractStartLocalDate;
+			}
+			
+			// 진행 중인 프로젝트는 오늘 날짜, 종료된 프로젝트는 계약종료일
+			if ( "Complete".equals(current) || "Archive".equals(current) )
+			{
+				defaultToDate = constractFinishLocalDate;
+			}
+			else
+			{
+				defaultToDate = nowLocalDate;
+			}
+			*/
+			
+			Map defaultDateMap = new HashMap();
+			defaultDateMap.put("fromYear", defaultFromDate.getYear());
+			defaultDateMap.put("fromMonth", defaultFromDate.getMonthValue());
+			defaultDateMap.put("toYear", defaultToDate.getYear());
+			defaultDateMap.put("toMonth", defaultToDate.getMonthValue());
+			defaultDateMap.put("thisYear", today.getYear());
+			defaultDateMap.put("thisMonth", today.getMonthValue());
+			
+			return defaultDateMap;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	public Map getRangeListAboutProjectDuration(Context context, String[] args) throws Exception{
+		try {
+			Map programMap = (Map) JPO.unpackArgs(args);
+			Map paramMap = (Map) programMap.get("paramMap");
+			Map columnMap = (Map) programMap.get("columnMap");
+			Map settingsMap = (Map) columnMap.get("settings");
+			
+			String objectId = (String)paramMap.get("objectId");
+			if ( StringUtils.isEmpty(objectId) ) 
+			{
+				Map requestMap = (Map) programMap.get("requestMap");
+				objectId = (String) requestMap.get("objectId");
+			}
+			
+			String rangeType = (String)settingsMap.get("Range Type");
+			
+			StringList codeList = null;
+			
+			if ( programMap.containsKey(rangeType) )
+			{
+				codeList = (StringList) programMap.get(rangeType);
+			}
+			else
+			{
+				StringList slSelect = new StringList();
+				slSelect.add("attribute[decContractStart]");
+				slSelect.add("attribute[decContractFinish]");
+				
+				DomainObject doObj = DomainObject.newInstance(context, objectId);
+				Map objMap = doObj.getInfo(context, slSelect);
+				String constractStart = (String) objMap.get("attribute[decContractStart]");
+				String constractFinish = (String) objMap.get("attribute[decContractFinish]");
+				
+				LocalDate constractStartLocalDate = DecDateUtil.autoChangeLocalDate(constractStart);
+				LocalDate constractFinishLocalDate = DecDateUtil.autoChangeLocalDate(constractFinish);
+				
+				if ( rangeType.equals("Month") )
+				{
+					codeList = new StringList( new String[] {"1","2","3","4","5","6","7","8","9","10","11","12"} );
+				}
+				else
+				{
+					codeList = new StringList();
+					
+					int startYear = constractStartLocalDate.getYear();
+					int finishYear = constractFinishLocalDate.getYear();
+					
+					for (int k = startYear; k <= finishYear; k++)
+					{
+						codeList.add(String.valueOf(k));
+					}
+				}
+			}
+			
+			Map rangeMap = new HashMap();
+			rangeMap.put("field_choices", codeList);
+			rangeMap.put("field_display_choices", codeList);
+			
+			return rangeMap;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	public MapList getProjectKeyQtyList(Context context, String[] args) throws Exception{
+		try ( SqlSession sqlSession = decSQLSessionFactory.getSession() ) {
+			Map programMap = JPO.unpackArgs(args);
+			String objectId = (String) programMap.get("objectId");
+			
+			String projectCode = MqlUtil.mqlCommand(context, "print bus $1 select $2 dump", objectId, DomainConstants.SELECT_NAME);
+			
+			emxProjectSpace_mxJPO projectJPO = new emxProjectSpace_mxJPO(objectId);
+			
+			StringList slSelect = new StringList(DomainConstants.SELECT_ID);
+			slSelect.add(DomainConstants.SELECT_NAME);
+			slSelect.add(DomainConstants.SELECT_TYPE);
+			
+			Map projectParamMap = new HashMap();
+			projectParamMap.put("objectId", objectId);
+			projectParamMap.put("wbsType", "Unit");
+			projectParamMap.put("slSelect", slSelect);
+			
+			MapList unitList = projectJPO.getActivityListWithWBSType(context, JPO.packArgs(projectParamMap));
+			
+			Map projectMap = projectJPO.getInfo(context, slSelect);  
+			
+			unitList.add(projectMap);
+			
+			if ( unitList != null && unitList.size() >= 1 )
+			{
+				Map<String, StringList> extractStringList = decCollectionUtil.extractStringList(unitList, DomainConstants.SELECT_ID);
+//				StringList unitCodeList = extractStringList.get(DomainConstants.SELECT_NAME);
+				StringList unitIdList = extractStringList.get(DomainConstants.SELECT_ID);
+				
+				Map selectParamMap = new HashMap();
+				selectParamMap.put("SITE_CD", projectCode);
+				selectParamMap.put("unitIdList", unitIdList);
+				
+				List<Map> monthlyDataList = sqlSession.selectList("Project.selectKeyQtyMonthlyData", selectParamMap);
+				
+				Map unitMap = null;
+				String unitId = null;
+				String UNIT_ID = null;
+				String CUT_OFF = null; 
+				StringList CUT_OFFList = null;
+				
+				for ( Object obj : unitList )
+				{
+					unitMap = (Map) obj;
+//					unitCode = (String) unitMap.get(DomainConstants.SELECT_NAME);
+					unitId = (String) unitMap.get(DomainConstants.SELECT_ID);
+					
+					for ( Map monthlyDataMap : monthlyDataList )
+					{
+						UNIT_ID = (String) monthlyDataMap.get("UNIT_ID");
+						
+						if ( unitId.equals(UNIT_ID) )
+						{
+							CUT_OFF = (String) monthlyDataMap.get("CUT_OFF");
+							
+							CUT_OFFList = FrameworkUtil.splitString(CUT_OFF, ",");
+							
+							for ( String cutOff : CUT_OFFList )
+							{
+								unitMap.put(cutOff, "exists");
+								projectMap.put(cutOff, "exists");
+							}
+						}
+					}
+				}
+			}
+			
+			return unitList;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	public String importExcelKeyQtyData(Context context, String[] args) throws Exception{
+		String sReturn = null;
+    	try ( SqlSession sqlSession = decSQLSessionFactory.getSession() ) {
+			Map programMap = (Map)JPO.unpackArgs(args);
+			
+			String projectId = (String) programMap.get("projectId");
+			String objectId = (String) programMap.get("objectId");
+			String cutOff = (String) programMap.get("cutOff");
+			
+			String projectCode = MqlUtil.mqlCommand(context, "print bus $1 select $2 dump", projectId, DomainConstants.SELECT_NAME);
+//			String unitCode = MqlUtil.mqlCommand(context, "print bus $1 select $2 dump", objectId, DomainConstants.SELECT_NAME);
+			
+			StringList slCutOff = FrameworkUtil.splitString(cutOff, "_");
+			String year = slCutOff.get(0);
+			String month = slCutOff.get(1);
+
+			MapList objectList = (MapList)programMap.get("objectList");
+			
+			Map map = null;
+			
+			Map deleteParamMap = new HashMap();
+			deleteParamMap.put("SITE_CD", projectCode);
+			deleteParamMap.put("UNIT_ID", objectId);
+			deleteParamMap.put("CUT_OFF_YEAR", year);
+			deleteParamMap.put("CUT_OFF_MONTH", month);
+			
+			sqlSession.delete("Project.deleteKeyQtyMonthlyData", deleteParamMap);
+			
+			List<Map> keyQtyReportRowList = new ArrayList<Map>();
+			
+			Map keyQtyReportRowMap = null;
+			
+			String user = context.getUser();
+			String keyCode = null;
+			
+			int rowIdx = 0;
+			String cutOffDateStr = null;
+			Date cutOffDate = null;
+			
+			for (Object obj : objectList)
+			{
+				map = (Map) obj;
+				
+				if ( rowIdx == 0)
+				{
+					rowIdx++;
+					cutOffDateStr = (String) map.get("Key Item");
+					
+					cutOffDate = DecDateUtil.autoChangeDate(cutOffDateStr);
+					continue;
+				}
+				
+				keyCode = (String) map.get("Key Q'ty\nCode");
+				
+				keyQtyReportRowMap = new HashMap();
+				keyQtyReportRowMap.put("KEY_CD", keyCode);
+				keyQtyReportRowMap.put("PRJ_BID_QTY", (String) map.get("Bidding Q'ty"));
+				keyQtyReportRowMap.put("PRJ_APPROVED_VO_QTY", (String) map.get("Approved VO Q'ty"));
+				keyQtyReportRowMap.put("PRJ_REVISED_CONT_QTY", (String) map.get("Revised Contract Q'ty"));
+				keyQtyReportRowMap.put("PRJ_APPROVED_VO_QTY_BEFORE_BUDGET", (String) map.get("Approved VO Q'ty\nbefore Budget"));
+				keyQtyReportRowMap.put("PRJ_VERIFIED_OVERBUDGET_QTY_BEFORE_BUDGET", (String) map.get("Verified Overbudget Q'ty\nbefore Budget"));
+				keyQtyReportRowMap.put("PRJ_BUDGET_QTY", (String) map.get("Budget Q'ty"));
+				keyQtyReportRowMap.put("PRJ_APPROVED_VO_QTY_AFTER_BUDGET", (String) map.get("Approved VO Q'ty\nafter Budget"));
+				keyQtyReportRowMap.put("PRJ_VERIFIED_OVERBUDGET_QTY_AFTER_BUDGET", (String) map.get("Verified Overbudget Q'ty\nafter Budget"));
+				keyQtyReportRowMap.put("PRJ_REVISED_BUDGET_QTY", (String) map.get("Revised\nBudget\nQ'ty"));
+				keyQtyReportRowMap.put("ENG_NET_PRESENT_QTY", (String) map.get("Net Present\nQ'ty"));
+				keyQtyReportRowMap.put("ENG_TO_GO_QTY", (String) map.get("To Go\nQ'ty"));
+				keyQtyReportRowMap.put("ENG_TOTAL_FORECAST_QTY", (String) map.get("Total Forecast Q'ty"));
+				keyQtyReportRowMap.put("ENG_PREV_TOTAL_FORECAST_QTY", (String) map.get("Previous\nTotal Forecast\nQ'ty"));
+				keyQtyReportRowMap.put("ENG_PERIOD_DELTA", (String) map.get("Period Delta"));
+				keyQtyReportRowMap.put("VARIANCE", (String) map.get("Variance"));
+				
+				keyQtyReportRowList.add(keyQtyReportRowMap);
+			}
+			
+			Map insertParamMap = new HashMap();
+			insertParamMap.put("SITE_CD", projectCode);
+			insertParamMap.put("UNIT_ID", objectId);
+			insertParamMap.put("CUT_OFF_YEAR", year);
+			insertParamMap.put("CUT_OFF_MONTH", month);
+			insertParamMap.put("CHANGE_USER", user);
+			insertParamMap.put("CUT_OFF_DATE", cutOffDate);
+			insertParamMap.put("list", keyQtyReportRowList);
+			
+			sqlSession.insert("Project.insertKeyQtyMonthlyData", insertParamMap);
+			
+			sqlSession.commit();
+			
+			sReturn = "Import job has been completed";
+		} catch (Exception e) {
+			e.printStackTrace();
+			sReturn = e.getMessage();
+		}
+    	
+    	return sReturn;
+    
+	}
+	
+	public List<Map> getKeyQtyReportList(Context context, String[] args) throws Exception{
+		try {
+			Map programMap = JPO.unpackArgs(args);
+			SqlSession sqlSession = (SqlSession) programMap.get("sqlSession");
+			String projectId = (String) programMap.get("projectId");
+			String unitId = (String) programMap.get("unitId");
+			String cutOff = (String) programMap.get("cutOff");
+			String REPORT_FLAG = (String) programMap.get("REPORT_FLAG");
+			
+			return getKeyQtyReportList(context, sqlSession, projectId, unitId, cutOff, REPORT_FLAG, null);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	public List<Map> getKeyQtyReportList(Context context, SqlSession sqlSession, String projectId, String unitId, String cutOff, String REPORT_FLAG, String mode) throws Exception{
+		try {
+			String projectCode = MqlUtil.mqlCommand(context, "print bus $1 select $2 dump", projectId, DomainConstants.SELECT_NAME);
+			
+			StringList slCutOff = FrameworkUtil.splitString(cutOff, "_");
+			String year = slCutOff.get(0);
+			String month = slCutOff.get(1);
+			
+			Map selectParamMap = new HashMap();
+			selectParamMap.put("SITE_CD", projectCode);
+			if ( !projectId.equals(unitId) )
+			{
+				selectParamMap.put("UNIT_ID", unitId);
+			}
+			selectParamMap.put("CUT_OFF_YEAR", year);
+			selectParamMap.put("CUT_OFF_MONTH", month);
+			
+			List<Map> keyQtyReportDataList = null;
+			
+			if ( "import".equalsIgnoreCase(mode) )
+			{
+				// import일 경우 해당 월의 데이터와 비교하는 것이 아니라 가장 최근 데이터와 비교한다.
+				String maxKeyQtyCutOffDate = sqlSession.selectOne("Project.selectMaxKeyQtyCutOffDate", selectParamMap);
+				
+				if ( maxKeyQtyCutOffDate == null )
+				{
+					// 가장 최근 데이터가 없을 경우 이번 달 데이터와 비교한다.
+					keyQtyReportDataList = new ArrayList();
+				}
+				else
+				{
+					// 가장 최근 데이터가 있을 경우 최근 데이터와 비교한다.
+					year = maxKeyQtyCutOffDate.substring(0, 4);
+					month = maxKeyQtyCutOffDate.substring(4);
+					
+					selectParamMap.put("CUT_OFF_YEAR", year);
+					selectParamMap.put("CUT_OFF_MONTH", month);
+					
+					keyQtyReportDataList = sqlSession.selectList("Project.selectKeyQtyReportData", selectParamMap);
+				}
+			}
+			else
+			{
+				// import가 아닐 경우 parameter의 데이터를 조회한다.
+				selectParamMap.put("REPORT_FLAG", REPORT_FLAG);
+				
+				keyQtyReportDataList = sqlSession.selectList("Project.selectKeyQtyReportData", selectParamMap);
+			}
+			
+			return keyQtyReportDataList;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	public MapList compareExcelData(Context context, MapList mapList, Map paramMap) throws Exception{
+		try ( SqlSession sqlSession = decSQLSessionFactory.getSession() ) {
+			
+			String projectId = (String) paramMap.get("projectId");
+			String objectId = (String) paramMap.get("objectId");
+			String cutOff = (String) paramMap.get("cutOff");
+			
+			Map programMap = new HashMap();
+			programMap.put("objectId", projectId);
+			programMap.put("USED_FLAG", "NULL");
+			
+			List<Map> keyQtyMasterList = getMasterList(context, JPO.packArgs(programMap));
+			List<Map> keyQtyReportList = getKeyQtyReportList(context, sqlSession, projectId, objectId, cutOff, null, "import");
+			
+			Map<String, Map> keyQtyMasterSummary = decListUtil.getSelectKeyDataMapForMapList(keyQtyMasterList, "KEY_CD");
+			Map<String, Map> keyQtyReportSummary = decListUtil.getSelectKeyDataMapForMapList(keyQtyReportList, "KEY_CD");
+			
+			Map excelDataMap = null;
+			
+			String excelKeyCode = null;
+			
+			List<CompareRule> validateRuleList = new ArrayList<CompareRule>();
+			validateRuleList.add(new CompareRule("Key \nL1", "KEY_L1"));
+			validateRuleList.add(new CompareRule("Key \nL2", "KEY_L2"));
+			validateRuleList.add(new CompareRule("Key \nL3", "KEY_L3"));
+			validateRuleList.add(new CompareRule("Category", "CATEGORY"));
+			validateRuleList.add(new CompareRule("Key Item", "KEY_ITEM"));
+			validateRuleList.add(new CompareRule("Unit", "UOM"));
+			validateRuleList.add(new CompareRule("DP Code", "DP_CD"));
+			
+			validateRuleList.add(new CompareRule("Bidding Q'ty", CompareRule.DATA_TYPE.REAL));
+			validateRuleList.add(new CompareRule("Approved VO Q'ty", CompareRule.DATA_TYPE.REAL));
+			validateRuleList.add(new CompareRule("Revised Contract Q'ty", CompareRule.DATA_TYPE.REAL));
+			validateRuleList.add(new CompareRule("Approved VO Q'ty\nbefore Budget", CompareRule.DATA_TYPE.REAL));
+			validateRuleList.add(new CompareRule("Verified Overbudget Q'ty\nbefore Budget", CompareRule.DATA_TYPE.REAL));
+			validateRuleList.add(new CompareRule("Budget Q'ty", CompareRule.DATA_TYPE.REAL));
+			validateRuleList.add(new CompareRule("Approved VO Q'ty\nafter Budget", CompareRule.DATA_TYPE.REAL));
+			validateRuleList.add(new CompareRule("Verified Overbudget Q'ty\nafter Budget", CompareRule.DATA_TYPE.REAL));
+			validateRuleList.add(new CompareRule("Revised\nBudget\nQ'ty", CompareRule.DATA_TYPE.REAL));
+			validateRuleList.add(new CompareRule("Net Present\nQ'ty", CompareRule.DATA_TYPE.REAL));
+			validateRuleList.add(new CompareRule("To Go\nQ'ty", CompareRule.DATA_TYPE.REAL));
+			validateRuleList.add(new CompareRule("Total Forecast Q'ty", CompareRule.DATA_TYPE.REAL));
+			validateRuleList.add(new CompareRule("Previous\nTotal Forecast\nQ'ty", CompareRule.DATA_TYPE.REAL));
+			validateRuleList.add(new CompareRule("Period Delta", CompareRule.DATA_TYPE.REAL));
+			validateRuleList.add(new CompareRule("Variance", CompareRule.DATA_TYPE.REAL));
+			
+			List<CompareRule> compareRuleList = new ArrayList<CompareRule>();
+			compareRuleList.add(new CompareRule("Bidding Q'ty", "PRJ_BID_QTY"));
+			compareRuleList.add(new CompareRule("Approved VO Q'ty", "PRJ_APPROVED_VO_QTY"));
+			compareRuleList.add(new CompareRule("Revised Contract Q'ty", "PRJ_REVISED_CONT_QTY"));
+			compareRuleList.add(new CompareRule("Approved VO Q'ty\nbefore Budget", "PRJ_APPROVED_VO_QTY_BEFORE_BUDGET"));
+			compareRuleList.add(new CompareRule("Verified Overbudget Q'ty\nbefore Budget", "PRJ_VERIFIED_OVERBUDGET_QTY_BEFORE_BUDGET"));
+			compareRuleList.add(new CompareRule("Budget Q'ty", "PRJ_BUDGET_QTY"));
+			compareRuleList.add(new CompareRule("Approved VO Q'ty\nafter Budget", "PRJ_APPROVED_VO_QTY_AFTER_BUDGET"));
+			compareRuleList.add(new CompareRule("Verified Overbudget Q'ty\nafter Budget", "PRJ_VERIFIED_OVERBUDGET_QTY_AFTER_BUDGET"));
+			compareRuleList.add(new CompareRule("Revised\nBudget\nQ'ty", "PRJ_REVISED_BUDGET_QTY"));
+			compareRuleList.add(new CompareRule("Net Present\nQ'ty", "ENG_NET_PRESENT_QTY"));
+			compareRuleList.add(new CompareRule("To Go\nQ'ty", "ENG_TO_GO_QTY"));
+			compareRuleList.add(new CompareRule("Total Forecast Q'ty", "ENG_TOTAL_FORECAST_QTY"));
+			compareRuleList.add(new CompareRule("Previous\nTotal Forecast\nQ'ty", "ENG_PREV_TOTAL_FORECAST_QTY"));
+			compareRuleList.add(new CompareRule("Period Delta", "ENG_PERIOD_DELTA"));
+			compareRuleList.add(new CompareRule("Variance", "VARIANCE"));
+			
+			Map<String,String> compareResultMap = null;
+			Map keyQtyMasterMap = null;
+			Map keyQtyReportMap = null;
+			String action = null;
+			
+			int rowIdx = 0;
+			String cutOffDateStr = null;
+			
+			for ( Object obj : mapList )
+			{
+				excelDataMap = (Map) obj;
+				
+				if ( rowIdx == 0 )
+				{
+					rowIdx++;
+					cutOffDateStr = (String) excelDataMap.get("Key Item");
+					
+					if ( StringUtils.isEmpty(cutOffDateStr) )
+					{
+						excelDataMap.put("Action", "Error");
+						excelDataMap.put("Message", "CUT-OFF-DATE is mandatory.");
+						excelDataMap.put("Error Column Name", "Key Item");
+					}
+					else
+					{
+						try {
+							Date dCutOffDate = DecDateUtil.autoChangeDate(cutOffDateStr);
+							String excelCutOffDate = DecDateUtil.changeDateFormat(dCutOffDate, "yyyy_M");
+							// excel에 입력된 Cut Off Date와 화면에서 선택한 연월 정보가 다를 경우 error
+							if ( !cutOff.equals(excelCutOffDate) )
+							{
+								excelDataMap.put("Action", "Error");
+								excelDataMap.put("Message", "Excel's CUT-OFF-DATE is different from date selected on screen.");
+								excelDataMap.put("Error Column Name", "Key Item");
+							}
+						} catch (Exception e) {
+							excelDataMap.put("Action", "Error");
+							excelDataMap.put("Message", "CUT-OFF-DATE must be DATE format.");
+							excelDataMap.put("Error Column Name", "Key Item");
+						}
+					}
+					continue;
+				}
+				
+				excelKeyCode = (String) excelDataMap.get("Key Q'ty\nCode");
+				
+				// excel과 master 데이터와 비교
+				if ( keyQtyMasterSummary.containsKey(excelKeyCode) )
+				{
+					keyQtyMasterMap = keyQtyMasterSummary.get(excelKeyCode);
+					// excel의 meta 정보가 master의 meta 정보와 비교
+					compareResultMap = CompareUtil.compareElement(excelDataMap, keyQtyMasterMap, validateRuleList, CompareRule.COMPARE_TYPE.VALIDATE);
+					action = compareResultMap.get("Action");
+					
+					if ( "Error".equalsIgnoreCase(action) )
+					{
+						// 같지 않다면 error
+						excelDataMap.put("Action", action);
+						excelDataMap.put("Message", compareResultMap.get("Message"));
+						excelDataMap.put("Error Column Name", compareResultMap.get("Error Column Name"));
+					}
+					else
+					{
+						// excel과 이전 입력 데이터와 비교
+						if ( keyQtyReportSummary.containsKey(excelKeyCode) )
+						{
+							keyQtyReportMap = keyQtyReportSummary.get(excelKeyCode);
+							compareResultMap = CompareUtil.compareElement(excelDataMap, keyQtyReportMap, compareRuleList, CompareRule.COMPARE_TYPE.COMPARE);
+							
+							excelDataMap.put("Action", compareResultMap.get("Action"));
+							excelDataMap.put("Message", compareResultMap.get("Message"));
+						}
+						else
+						{
+							// 이전 데이터에 없을 경우 신규 처리
+							excelDataMap.put("Action", "Create");
+							excelDataMap.put("Message", DecConstants.SYMB_NA);
+						}
+					}
+				}
+				else
+				{
+					// master에 없는 데이터는 import하지 않고 skip
+					excelDataMap.put("Action", "Skip");
+					excelDataMap.put("Message", "Key Code does not exists in Key Q`ty Master");
+				}
+				
+			}
+			
+			return mapList;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	public Map setKeyQtySummaryData(Context context, String[] args) throws Exception{
+		Map resultMap = new HashMap();
+		String KEY_CD = null;
+		try {
+			
+			Map programMap = JPO.unpackArgs(args);
+			SqlSession sqlSession = (SqlSession) programMap.get("sqlSession");
+			MapList objectList = (MapList) programMap.get("objectList");
+			
+			Map updateParamMap = new HashMap();
+			updateParamMap.put("SITE_CD", programMap.get("SITE_CD"));
+//			updateParamMap.put("UNIT_CD", programMap.get("UNIT_CD"));
+			updateParamMap.put("UNIT_ID", programMap.get("UNIT_ID"));
+			updateParamMap.put("CUT_OFF_YEAR", programMap.get("CUT_OFF_YEAR"));
+			updateParamMap.put("CUT_OFF_MONTH", programMap.get("CUT_OFF_MONTH"));
+			updateParamMap.put("CHANGE_USER", context.getUser());
+			
+			Map map = null;
+			for ( Object obj : objectList )
+			{
+				map = (Map) obj;
+				KEY_CD = (String) map.get("KEY_CD");
+				
+				updateParamMap.put("KEY_CD", KEY_CD);
+				updateParamMap.put("TYPE2_REMARK", map.get("TYPE2_REMARK"));
+				
+				sqlSession.update("Project.updateKeyQtyMonthlyData", updateParamMap);
+			}
+			
+			resultMap.put("result", "Success");
+		} catch (Exception e) {
+			resultMap.put("result", "Error");
+			resultMap.put("msg", KEY_CD + " : " + e.getMessage());
+			e.printStackTrace();
+		}
+		return resultMap;
+	}
+	
+	public List<Map> getKeyQtyTrendList(Context context, String[] args) throws Exception{
+		try {
+			Map programMap = JPO.unpackArgs(args);
+			SqlSession sqlSession = (SqlSession) programMap.get("sqlSession");
+			String projectId = (String) programMap.get("projectId");
+			String projectCode = (String) programMap.get("projectCode");
+			boolean isProject = (boolean) programMap.get("isProject");
+			
+			String fromYear = (String) programMap.get("fromYear");
+			String fromMonth = (String) programMap.get("fromMonth");
+			String toYear = (String) programMap.get("toYear");
+			String toMonth =(String) programMap.get("toMonth");
+			
+			if ( StringUtils.isEmpty(fromYear) )
+			{
+				Map defaultDateMap = getDefaultData(context, projectId);
+				fromYear = String.valueOf( defaultDateMap.get("fromYear") );
+				fromMonth = String.valueOf( defaultDateMap.get("fromMonth") );
+				toYear = String.valueOf( defaultDateMap.get("toYear") );
+				toMonth = String.valueOf( defaultDateMap.get("toMonth") );
+			}
+			
+			Map selectParamMap = new HashMap();
+			selectParamMap.put("SITE_CD", projectCode);
+			if ( !isProject )
+			{
+//				String unitCode = (String) programMap.get("unitCode");
+//				selectParamMap.put("UNIT_CD", unitCode);
+				String unitId = (String) programMap.get("unitId");
+				selectParamMap.put("UNIT_ID", unitId);
+			}
+			selectParamMap.put("FROM_YEAR", fromYear);
+			selectParamMap.put("FROM_MONTH", fromMonth);
+			selectParamMap.put("TO_YEAR", toYear);
+			selectParamMap.put("TO_MONTH", toMonth);
+			
+			List<Map> keyQtyTrendList = sqlSession.selectList("Project.selectKeyQtyTrendData", selectParamMap);
+			
+			return keyQtyTrendList;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	/**
+	 * 프로젝트 삭제 시 Key Qty 정보를 RDB에서 삭제한다.
+	 * @param context
+	 * @param args
+	 * @return
+	 * @throws Exception
+	 */
+	public Map deleteProjectKeyQty(Context context, String[] args) throws Exception{
+		try {
+			Map programMap = JPO.unpackArgs(args);
+			SqlSession sqlSession = (SqlSession) programMap.get("sqlSession");
+			String projectId = (String) programMap.get("projectId");
+			
+			String projectCode = MqlUtil.mqlCommand(context, "print bus $1 select $2 dump", projectId, DecConstants.SELECT_NAME);
+			
+			Map deleteParamMap = new HashMap();
+			deleteParamMap.put("SITE_CD", projectCode);
+			
+			sqlSession.delete("Project.deleteProjectSetupFlag", deleteParamMap);
+			sqlSession.delete("Project.deleteKeyQtyMonthlyData", deleteParamMap);
+			
+			Map resultMap = new HashMap();
+			resultMap.put("result", "Success");
+			
+			return resultMap;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+}

@@ -1,0 +1,256 @@
+{
+	"dsrsc:Resource": {
+		"kindOf": "root",
+		"beType": "type_VPMReference",
+		"patchCSRF": false,
+		"search": true,
+		"extensionLinks": [
+			"dseno:EnterpriseAttributes"
+		],
+		"contentLinks": [
+			"dsrsc:ResourceInstance"
+		],
+		"indexClassesWhere":"flattenedtaxonomies:\"interfaces/Resource\"",
+		"cestamp": true,
+		"optionCheck": {
+			"modify": false,
+			"produce": false,
+			"navigate": true
+		},
+		"defaultMask": "dsmvrsc:ResourceMask.Common",
+		"isPublic": true
+	},
+	"dsrsc:ResourceInstance": {
+		"kindOf": "content",
+		"beType": "relationship_VPMInstance",
+		"rootLinks": [
+		],
+		"optionCheck": {
+			"modify": false,
+			"produce": false,
+			"navigate": true
+		},
+		"defaultMask": "dsmvrsc:ResourceInstanceMask.Common",
+		"isPublic": true
+	},
+	 "dsrsc:ResourceItem": {
+        "kindOf":"root",
+        "beType":"type_VPMReference",
+        "defaultMask":"dsmvrsc:ResourceMask.Common",
+        "contentLinks": [
+			"dsrsc:ResourceItemInstance"
+		],
+        "extensionLinks": [
+			"dseno:EnterpriseAttributes"
+		],
+		"classesWhere": "interface[DELSerialNumber] == false AND (interface.kindof[Robot] == true OR interface.kindof[IndustrialMachine] == true OR interface.kindof[NCMachine] == true OR interface.kindof[ToolDevice] == true OR interface.kindof[Transport] == true OR interface.kindof[Conveyor] == true OR interface.kindof[Inspect] == true OR interface.kindof[Sensor] == true OR interface.kindof[ControlDevice] == true OR interface.kindof[LogicController] == true OR interface.kindof[UserDefined] == true OR interface.kindof[Storage] == true OR interface.kindof[ResourceManufacturingSetup] == true)",
+        "cestamp": true,
+        "isPublic": true,
+        "optionCheck" : {
+        	"modify"      : true,
+        	"produce"     : true,
+        	"navigate"    : true
+         },
+        "publicResourceURI": "/resources/v1/modeler/dsrsc/dsrsc:ResourceItem/{pid}"
+    },
+    "dsrsc:ResourceAsset": {
+        "kindOf":"root",
+        "beType":"type_VPMReference",
+        "defaultMask":"dsmvrsc:ResourceAssetMask.Common",
+        "contentLinks": [
+			"dsrsc:ResourceAssetInstance"
+		],
+        "extensionLinks": [
+	        "dseno:EnterpriseAttributes",
+        	"dsrsc:OriginItem"
+		],
+        "isPublic": true,
+        "classesWhere": "interface[DELSerialNumber] == true AND (interface.kindof[Robot] == true OR interface.kindof[IndustrialMachine] == true OR interface.kindof[NCMachine] == true OR interface.kindof[ToolDevice] == true OR interface.kindof[Transport] == true OR interface.kindof[Conveyor] == true OR interface.kindof[Inspect] == true OR interface.kindof[Sensor] == true OR interface.kindof[ControlDevice] == true OR interface.kindof[LogicController] == true OR interface.kindof[UserDefined] == true OR interface.kindof[Storage] == true OR interface.kindof[ResourceManufacturingSetup] == true)",
+        "cestamp": true,
+        "optionCheck" : {
+        	"modify"      : true,
+        	"produce"     : true,
+        	"navigate"    : true
+        },
+        "publicResourceURI": "/resources/v1/modeler/dsrsc/dsrsc:ResourceAsset/{pid}"
+    },
+    "dsrsc:OriginItem": {
+        "kindOf":"extension",
+        "beType":"type_VPMReference",
+        "defaultMask":"dsmvrsc:OriginItemMask.Common",
+        "isPublic": true,
+        "optionCheck" : {
+        	"modify"      : true,
+        	"produce"     : true,
+        	"navigate"    : true
+        }
+    },
+     "dsrsc:ResourceItemInstance": {
+		"kindOf": "content",
+		"beType": "virtual_VPMInstance",
+		"implementationClass": "com.dassault_systemes.enovia.xapps.dsrsc.V1.implementations.dsrscVirtualResourceInstanceImpl",
+		"customerAttribute": true,
+		"rootLinks": [
+		],
+		"cestamp": true,
+		"optionCheck": {
+			"modify": true,
+			"produce": true,
+			"navigate": true
+		},
+		"defaultMask": "dsmvrsc:ResourceItemInstanceMask.Common",
+		"isPublic": true
+	},
+    "dsrsc:ResourceAssetInstance": {
+		"kindOf": "content",
+		"beType": "virtual_VPMInstance",
+		"implementationClass": "com.dassault_systemes.enovia.xapps.dsrsc.V1.implementations.dsrscVirtualResourceInstanceImpl",
+		"customerAttribute": true,
+		"rootLinks": [
+		],
+		"cestamp": true,
+		"optionCheck": {
+			"modify": true,
+			"produce": true,
+			"navigate": true
+		},
+		"defaultMask": "dsmvrsc:ResourceAssetInstanceMask.Common",
+		"isPublic": true
+	},
+    "dsrsc:OrganizationalResource": {
+        "kindOf":"root",
+        "beType":"type_VPMReference",
+        "defaultMask":"dsmvrsc:OrganizationalResourceMask.Common",
+        "contentLinks": [
+			"dsrsc:ResourceItemInstance",
+			"dsrsc:ResourceAssetInstance",
+			"dsrsc:OrganizationalResourceInstance",
+			"dsrsc:WorkerInstance",
+			"dsrsc:PoolInstance",
+			 "dsrsc:ImplementLink"
+		],
+        "extensionLinks": [
+        	"dseno:EnterpriseAttributes",
+        	"dsrsc:ScopeLink"
+		],
+        "isPublic": true,
+        "classesWhere": "interface.kindof[Organizational] == true OR interface.kindof[WorkCenter] == true OR interface.kindof[ResourceArea] == true",
+        "cestamp": true,
+        "optionCheck" : {
+        	"modify"      : true,
+        	"produce"     : true,
+        	"navigate"    : true
+        },
+        "publicResourceURI": "/resources/v1/modeler/dsrsc/dsrsc:OrganizationalResource/{pid}"
+    },
+    "dsrsc:ScopeLink": {
+        "kindOf":"extension",
+        "beType":"type_DELSysSpecificationLinksDiscipline",
+        "defaultMask":"dsmvrsc:ScopeLinkMask.Common",
+        "isPublic": true,
+        "optionCheck" : {
+        	"modify"      : false,
+        	"produce"     : false,
+        	"navigate"    : true
+        }
+    },
+     "dsrsc:ImplementLink": {
+        "kindOf":"content",
+        "beType":"type_DELSysImplementLinksDiscipline",
+        "defaultMask":"dsmvrsc:ImplementLinkMask.Common",
+        "isPublic": true,
+        "optionCheck" : {
+        	"modify"      : false,
+        	"produce"     : false,
+        	"navigate"    : true
+        }
+    },
+    "dsrsc:OrganizationalResourceInstance": {
+        "kindOf": "content",
+		"beType": "virtual_VPMInstance",
+		"implementationClass": "com.dassault_systemes.enovia.xapps.dsrsc.V1.implementations.dsrscVirtualResourceInstanceImpl",
+		"customerAttribute": true,
+		"rootLinks": [
+		],
+		"cestamp": true,
+		"optionCheck": {
+			"modify": true,
+			"produce": true,
+			"navigate": true
+		},
+		"defaultMask": "dsmvrsc:OrganizationalResourceInstanceMask.Common",
+		"isPublic": true
+    },
+    "dsrsc:Pool": {
+        "kindOf":"root",
+        "beType":"type_VPMReference",
+        "defaultMask":"dsmvrsc:PoolResourceMask.Common",
+        "extensionLinks": [
+        	"dseno:EnterpriseAttributes"
+		],
+		"contentLinks": [
+			"dsrsc:PoolInstance"
+		],
+        "isPublic": true,
+        "classesWhere": "interface.kindof[Pool] == true",
+        "cestamp": true,
+        "optionCheck" : {
+        	"modify"      : true,
+        	"produce"     : true,
+        	"navigate"    : true
+        },
+        "publicResourceURI": "/resources/v1/modeler/dsrsc/dsrsc:Pool/{pid}"
+    },
+     "dsrsc:PoolInstance": {
+        "kindOf": "content",
+		"beType": "virtual_VPMInstance",
+		"implementationClass": "com.dassault_systemes.enovia.xapps.dsrsc.V1.implementations.dsrscVirtualResourceInstanceImpl",
+		"customerAttribute": true,
+		"rootLinks": [
+		],
+		"cestamp": true,
+		"optionCheck": {
+			"modify": true,
+			"produce": true,
+			"navigate": true
+		},
+		"defaultMask": "dsmvrsc:PoolInstanceMask.Common",
+		"isPublic": true
+    },
+    "dsrsc:Worker": {
+        "kindOf":"root",
+        "beType":"type_ErgoHuman",
+        "defaultMask":"dsmvrsc:WorkerResourceMask.Common",
+        "contentLinks": [
+			"dsrsc:WorkerInstance"
+		],
+        "extensionLinks": [
+        	"dseno:EnterpriseAttributes"
+		],
+        "isPublic": true,
+        "classesWhere": "interface.kindof[Worker] == true AND type == ErgoHuman",
+        "cestamp": true,
+        "optionCheck" : {
+        	"modify"      : true,
+        	"produce"     : true,
+        	"navigate"    : true
+        },
+        "publicResourceURI": "/resources/v1/modeler/dsrsc/dsrsc:Worker/{pid}"
+    },
+    "dsrsc:WorkerInstance": {
+        "kindOf": "content",
+		"beType": "virtual_VPMInstance",
+		"implementationClass": "com.dassault_systemes.enovia.xapps.dsrsc.V1.implementations.dsrscVirtualResourceInstanceImpl",
+		"customerAttribute": true,
+		"rootLinks": [
+		],
+		"cestamp": true,
+		"optionCheck": {
+			"modify": true,
+			"produce": true,
+			"navigate": true
+		},
+		"defaultMask": "dsmvrsc:WorkerInstanceMask.Common",
+		"isPublic": true
+    }
+}

@@ -1,0 +1,142 @@
+################################################################################################
+# Create By thok : 2023. 06. 07
+# Admin Type : table
+# Name : decProjectSafetyStaticsList
+################################################################################################
+#del table decProjectSafetyStaticsList system;
+add table 'decProjectSafetyStaticsList' system
+	column
+		name 'Empty' 
+		setting 'Column Type' 'checkbox'
+		setting 'Width' 20
+	column
+		name 'CutOffWeek'
+		label 'emxProgramCentral.Label.cutOffWeek'
+		alt ''
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Column Type' 'program'
+        setting 'function' 'getDBDataList'
+        setting 'program' 'emxProjectSpace'
+		setting 'columnName' 'CUT_OFF_WEEK'
+		setting 'Style Column' 'right-align'
+		setting 'Width' 150
+	column
+		name 'Date'
+		label 'emxProgramCentral.Label.cutOffDate'
+		alt ''
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Column Type' 'program'
+        setting 'function' 'getDBDataList'
+        setting 'program' 'emxProjectSpace'
+		setting 'columnName' 'CUT_OFF_DATE'
+		setting 'Style Column' 'left-align'
+#		setting 'except' 'time'
+		setting 'Width' 150
+		setting 'format' 'date'
+		setting 'Sort Type' 'date'
+	column
+		name 'NoAccidentHour'
+		label 'emxProgramCentral.Label.noAccidentHour'
+		alt ''
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Column Type' 'program'
+        setting 'function' 'getDBDataList'
+        setting 'program' 'emxProjectSpace'
+		setting 'columnName' 'NO_ACCIDENT_HOUR'
+		setting 'Style Column' 'right-align'
+		setting 'Editable' 'true'
+		setting 'Update Function' 'setDBColumnUpdate'
+        setting 'Update Program' 'emxProjectSpace'
+		setting 'On Change Handler' 'isNumCheck'
+		setting 'Width' 150
+		setting 'format' 'numeric'
+		setting 'Sort Type' 'integer'
+	column
+		name 'Death'
+		label 'emxProgramCentral.Label.death'
+		alt ''
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Column Type' 'program'
+        setting 'function' 'getDBDataList'
+        setting 'program' 'emxProjectSpace'
+		setting 'columnName' 'DEATH'
+		setting 'Style Column' 'right-align'
+		setting 'Editable' 'true'
+		setting 'Update Function' 'setDBColumnUpdate'
+        setting 'Update Program' 'emxProjectSpace'
+		setting 'On Change Handler' 'isNumCheck'
+		setting 'Width' 150
+		setting 'format' 'numeric'
+		setting 'Sort Type' 'integer'
+	column
+		name 'Injury'
+		label 'emxProgramCentral.Label.injury'
+		alt ''
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Column Type' 'program'
+        setting 'function' 'getDBDataList'
+        setting 'program' 'emxProjectSpace'
+		setting 'columnName' 'INJURY'
+		setting 'Style Column' 'right-align'
+		setting 'Editable' 'true'
+		setting 'Update Function' 'setDBColumnUpdate'
+        setting 'Update Program' 'emxProjectSpace'
+		setting 'On Change Handler' 'isNumCheck'
+		setting 'Width' 150
+		setting 'format' 'numeric'
+		setting 'Sort Type' 'integer'
+	column
+		name 'NearMiss'
+		label 'emxProgramCentral.Label.nearMiss'
+		alt ''
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Column Type' 'program'
+        setting 'function' 'getDBDataList'
+        setting 'program' 'emxProjectSpace'
+		setting 'columnName' 'NEAR_MISS'
+		setting 'Style Column' 'right-align'
+		setting 'Editable' 'true'
+		setting 'Update Function' 'setDBColumnUpdate'
+        setting 'Update Program' 'emxProjectSpace'
+		setting 'On Change Handler' 'isNumCheck'
+		setting 'Width' 150
+		setting 'format' 'numeric'
+		setting 'Sort Type' 'integer'
+	column
+		name 'Uauc'
+		label 'emxProgramCentral.Label.uaUc'
+		alt ''
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Column Type' 'program'
+        setting 'function' 'getDBDataList'
+        setting 'program' 'emxProjectSpace'
+		setting 'columnName' 'UA_UC'
+		setting 'Style Column' 'right-align'
+		setting 'Editable' 'true'
+		setting 'Update Function' 'setDBColumnUpdate'
+        setting 'Update Program' 'emxProjectSpace'
+		setting 'On Change Handler' 'isNumCheck'
+		setting 'Width' 150
+		setting 'format' 'numeric'
+		setting 'Sort Type' 'integer'
+	column
+		name 'PeopleInput'
+		label 'emxProgramCentral.Label.peopleInput'
+		alt ''
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Column Type' 'program'
+        setting 'function' 'getDBDataList'
+        setting 'program' 'emxProjectSpace'
+		setting 'columnName' 'PEOPLE_INPUT'
+		setting 'Style Column' 'right-align'
+		setting 'Editable' 'true'
+		setting 'Update Function' 'setDBColumnUpdate'
+        setting 'Update Program' 'emxProjectSpace'
+		setting 'On Change Handler' 'isNumCheck'
+		setting 'Width' 150
+		setting 'format' 'numeric'
+		setting 'Sort Type' 'integer'
+;
+			   
+add property 'table_decProjectSafetyStaticsList' on program 'eServiceSchemaVariableMapping.tcl' to table 'decProjectSafetyStaticsList' system
+;

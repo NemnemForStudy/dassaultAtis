@@ -1,0 +1,12 @@
+m|DELModularWebAppCore\DELModularWebAppCore.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.1.23003|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\DELModularWebAppCore\DELModularWebAppCore.js|1672780559|12897
+s|DELModularWebAppCore\DELModularWebAppCore.mweb\src\Core.js|1671639436|39265
+u|DELModularWebAppCore\DELModularWebAppCore.mweb\src\FacadeBase.js|1657520701|5531
+u|DELModularWebAppCore\DELModularWebAppCore.mweb\src\Logger.js|1635242206|2859
+u|DELModularWebAppCore\DELModularWebAppCore.mweb\src\Mediator.js|1644504507|9785
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

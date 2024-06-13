@@ -1,0 +1,1 @@
+define("DS/WebConnector2D/WebConnector2D_cs",{});define("DS/WebConnector2D/assets/nls/WebConnector2D",{LoadingErrorSheet:"Není k dispozici žádný náhled"});

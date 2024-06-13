@@ -1,0 +1,127 @@
+<%--
+   Copyright (c) 1992-2020 Dassault Systemes.
+   All Rights Reserved.
+   This program contains proprietary and trade secret information of MatrixOne,
+   Inc.  Copyright notice is precautionary only
+   and does not evidence any actual or intended publication of such program
+   
+--%>
+<%@page import="com.dec.util.DecStringUtil"%>
+<%@page import="matrix.util.MatrixException, matrix.util.StringList,java.util.ListIterator" %>
+<%@page import="com.matrixone.apps.domain.DomainConstants,com.matrixone.apps.domain.DomainObject" %>
+<%@page import="com.matrixone.apps.program.ProjectSpace" %>
+<%@page import="com.matrixone.apps.program.mycalendar.MyCalendarUtil"%>
+<%@page import="java.util.*" %>
+<%@page import="com.dec.util.DecStringUtil"%>
+<%@ include file="../emxUICommonAppInclude.inc"%>
+<%
+    FrameworkServlet framework = new FrameworkServlet();
+    String strMode = emxGetParameter(request,"portalCmdName");
+    String strTable1 = emxGetParameter(request,"table");
+    String strTable2 = emxGetParameter(request,"table");
+    strMode = XSSUtil.encodeURLForServer(context, strMode);
+    String strheader = emxGetParameter(request,"header");
+    String strNavigate = emxGetParameter(request,"navigate");
+    strNavigate = XSSUtil.encodeURLForServer(context, strNavigate);
+    //String strDate = emxGetParameter(request,"PMCMyCalendarDateBox_msvalue");
+    //strDate = XSSUtil.encodeURLForServer(context, strDate);
+    String strTaskToShow = emxGetParameter(request,"decDocumentInterfaceLogViewTypes");
+    strTaskToShow = XSSUtil.encodeURLForServer(context, strTaskToShow);
+   
+    //Start :: Modified for Client TimeZone
+    String clientOffset = (String)session.getAttribute("timeZone");
+    framework.setGlobalCustomData(session,context,"timeZone",clientOffset);
+    //End :: Modified for Client TimeZone
+    
+    if(strTaskToShow == null || strTaskToShow.equals("")){
+    	strTaskToShow = MyCalendarUtil.getValueFromContext(context,"PMCMyCalendarTaskTypes");
+    	if(null == strTaskToShow){
+    		strTaskToShow = "strError";
+    	}
+    }
+    
+    String strObjId = emxGetParameter(request,"objectId");
+    Enumeration requestParams = emxGetParameterNames(request);
+    StringBuffer url = new StringBuffer();
+    if(requestParams != null){
+        while(requestParams.hasMoreElements()){
+            String param = (String)requestParams.nextElement();  
+            String value = (String) emxGetParameter(request,param);
+            value = XSSUtil.encodeURLForServer(context, value);
+            url.append("&" + XSSUtil.encodeForURL(context, param) + "=" + value);
+        }
+    } 
+    String strUrl = url.toString();
+    if( DecStringUtil.isEmpty(strMode)){
+    	String searchString = "strMode=";
+    	 int startIndex = strUrl.indexOf(searchString);
+    	 if (startIndex != -1) {
+             startIndex += searchString.length(); // 시작 위치를 "string=" 다음으로 조정
+
+             int endIndex = strUrl.indexOf('&', startIndex);
+             if (endIndex == -1) {
+                 endIndex = strUrl.length(); // 문자열 끝까지 사용
+             }
+
+             String result = strUrl.substring(startIndex, endIndex);
+             System.out.println(result);
+             strMode = result;
+         } else {
+             System.out.println("문자열을 찾을 수 없습니다.");
+         }
+    	
+    }
+    boolean isValueInContext = false;
+    String strKeyValue = "";
+    String contentURL = "";
+
+    framework.setGlobalCustomData(session,context,"decDocumentInterfaceLogViewTypes",strTaskToShow);
+    if(DecStringUtil.equals(strTaskToShow, "strAll")) {
+    	if(DecStringUtil.equals(strMode, "decDILogViewDeliverable")){
+       	 	contentURL = "../common/emxIndentedTable.jsp?program=decInterfaceDV:getDILogViewList&objectId="+strObjId+"&strMode="+strMode+"&table=decDILogViewTable&decDocumentInterfaceLogViewTypes="+strTaskToShow+"&toolbar=decDILogViewToolbar&hideHeader=true&header=emxFramework.Command.decDeliverableStatusCommand&selection=multiple&sortColumnName=SITE_CD&submitAction=refreshCaller&HelpMarker=emxhelpprogramlist&sortDirection=ascending&slideinFilter=true&freezePane=IF_FLAG,IF_MSG,IF_INTERFACE_DATE&pageSize=300";
+    	}else{
+       	 	contentURL = "../common/emxIndentedTable.jsp?program=decInterfaceDV:getDILogViewList&objectId="+strObjId+"&strMode="+strMode+"&table=decDILogViewTable&decDocumentInterfaceLogViewTypes="+strTaskToShow+"&toolbar=decDILogViewToolbar&hideHeader=true&header=emxFramework.Command.decVendorPrintStatusCommand&selection=multiple&sortColumnName=SITE_CD&submitAction=refreshCaller&HelpMarker=emxhelpprogramlist&sortDirection=ascending&slideinFilter=true&freezePane=IF_FLAG,IF_MSG,IF_INTERFACE_DATE&pageSize=300";
+    	}
+	}else if(DecStringUtil.equals(strTaskToShow, "strError")){
+		if(DecStringUtil.equals(strMode, "decDILogViewDeliverable")){
+    		contentURL = "../common/emxIndentedTable.jsp?program=decInterfaceDV:getFlagEDILogViewList&objectId="+strObjId+"&strMode="+strMode+"&table=decDILogViewTable&decDocumentInterfaceLogViewTypes="+strTaskToShow+"&toolbar=decDILogViewToolbar&hideHeader=true&header=emxFramework.Command.decDeliverableStatusCommand&selection=multiple&sortColumnName=SITE_CD&submitAction=refreshCaller&HelpMarker=emxhelpprogramlist&sortDirection=ascending&slideinFilter=true&freezePane=IF_FLAG,IF_MSG,IF_INTERFACE_DATE&pageSize=300";
+		}else{
+           	contentURL = "../common/emxIndentedTable.jsp?program=decInterfaceDV:getFlagEDILogViewList&objectId="+strObjId+"&strMode="+strMode+"&table=decDILogViewTable&decDocumentInterfaceLogViewTypes="+strTaskToShow+"&toolbar=decDILogViewToolbar&hideHeader=true&header=emxFramework.Command.decVendorPrintStatusCommand&selection=multiple&sortColumnName=SITE_CD&submitAction=refreshCaller&HelpMarker=emxhelpprogramlist&sortDirection=ascending&slideinFilter=true&freezePane=IF_FLAG,IF_MSG,IF_INTERFACE_DATE&pageSize=300";
+        }
+    			
+	}
+   
+%>
+
+
+<%@page import="com.matrixone.apps.domain.util.XSSUtil"%><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <script language="javascript">
+    var url = "<%= contentURL %>"; <%-- XSSOK --%>
+    <%
+    
+    if("next".equalsIgnoreCase(strNavigate)){
+		%>
+		parent.window.location.href = url;
+		<%
+    }else if("prev".equalsIgnoreCase(strNavigate)){
+		%>
+		parent.window.location.href = url;
+		<%
+    }else if("goto".equalsIgnoreCase(strNavigate)){
+        %>
+        parent.window.location.href = url;
+        <%
+    }else{
+		%>
+		this.location.href = url;
+		<%
+    }
+    %>
+    </script>
+</head>
+<body>
+
+</body>
+</html>

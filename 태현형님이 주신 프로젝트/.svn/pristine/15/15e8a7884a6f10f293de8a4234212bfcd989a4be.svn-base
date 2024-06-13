@@ -1,0 +1,2 @@
+/*!  Copyright 2015 Dassault Systemes. All rights reserved. */
+define("DS/SPAContentOptimizer/COptMiscMaterialPropertyDimensionlessUnit",["DS/CSICommandBinder/CSICommandBinder"],function(e){"use strict";var n=function(){};return e.declareType({type:"COptMiscMaterialPropertyDimensionlessUnit",serialize:function(e,n){return!0},unserialize:function(e){return new n}}),n});

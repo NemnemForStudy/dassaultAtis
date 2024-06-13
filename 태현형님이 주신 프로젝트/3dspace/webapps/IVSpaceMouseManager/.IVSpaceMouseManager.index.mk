@@ -1,0 +1,13 @@
+m|WebIVDevices\IVSpaceMouseManager.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.0.22078|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\IVSpaceMouseManager\IVSpaceMouseManager.js|1647691998|9305
+s|WebIVDevices\IVSpaceMouseManager.mweb\src\IVSpaceMouseManager.js|1591902656|0
+t|win_b64\webapps\IVSpaceMouseManager\assets\icons\3dx_pivot.png|1647691997|1365
+s|WebIVDevices\IVSpaceMouseManager.mweb\src\assets\icons\3dx_pivot.png|1580715506|1365
+u|WebIVDevices\IVSpaceMouseManager.mweb\src\SpaceMouseEventHandler.js|1594308134|36438
+u|WebIVDevices\IVSpaceMouseManager.mweb\src\SpaceMouseManager.js|1591969075|981
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

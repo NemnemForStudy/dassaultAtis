@@ -1,0 +1,13 @@
+m|MPFModels\MPFCartQuoteModel.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.1.22330|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\MPFCartQuoteModel\MPFCartQuoteModel.js|1669432475|2305
+s|MPFModels\MPFCartQuoteModel.mweb\src\CartQuoteDataProxy.js|1669417585|1083
+u|MPFModels\MPFCartQuoteModel.mweb\src\CartQuoteFactory.js|1669417585|1859
+u|MPFModels\MPFCartQuoteModel.mweb\src\CartQuoteModel.js|1669417585|1605
+u|MPFModels\MPFCartQuoteModel.mweb\src\MPFCartQuoteModel.js|1669417585|0
+u|MPFModels\MPFCartQuoteModel.mweb\src\QuoteDataProxy.js|1669417586|1016
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

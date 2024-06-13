@@ -1,0 +1,17 @@
+m|KnowledgeWebCore\KnowledgeWebCore.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.1.23012|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\KnowledgeWebCore\KnowledgeWebCore.js|1673561203|4926
+s|KnowledgeWebCore\KnowledgeWebCore.mweb\src\context.js|1639662626|3523
+t|win_b64\webapps\KnowledgeWebCore\KnowledgeWebCore.xhtml|1647692000|1040
+s|KnowledgeWebCore\KnowledgeWebCore.mweb\src\KnowledgeWebCore.xhtml|1612972583|1040
+t|win_b64\webapps\KnowledgeWebCore\assets\catrsc\KnowledgeMagnitudes.json|1647691998|505677
+s|KnowledgeWebCore\KnowledgeWebCore.mweb\src\assets\catrsc\KnowledgeMagnitudes.json|1556540199|505677
+t|win_b64\webapps\KnowledgeWebCore\assets\catrsc\MagnitudeRelations.json|1647691998|671
+s|KnowledgeWebCore\KnowledgeWebCore.mweb\src\assets\catrsc\MagnitudeRelations.json|1615395854|671
+u|KnowledgeWebCore\KnowledgeWebCore.mweb\src\KnowledgeMagnitudeServices.js|1673367005|14732
+u|KnowledgeWebCore\KnowledgeWebCore.mweb\src\KnowledgeWebCore.js|1630314581|0
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

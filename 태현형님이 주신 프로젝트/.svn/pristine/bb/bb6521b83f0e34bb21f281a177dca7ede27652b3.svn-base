@@ -1,0 +1,272 @@
+<%--
+   Copyright (c) 1992-2020 Dassault Systemes.
+   All Rights Reserved.
+   This program contains proprietary and trade secret information of MatrixOne,
+   Inc.  Copyright notice is precautionary only
+   and does not evidence any actual or intended publication of such program
+
+   Created by thok decRequestStatus.jsp 2023-07-05
+--%>
+<%@page import="com.dec.util.DecMatrixUtil"%>
+<%@page import="com.matrixone.apps.program.ProgramCentralConstants"%>
+<%@page import="java.util.Map"%>
+<%@page import="java.util.Iterator"%>
+<%@page import="com.dec.util.DecConstants"%> 
+<%@page import="matrix.util.StringList"%>
+<%@page import="com.matrixone.apps.domain.util.MapList"%>
+<%@page import="com.matrixone.apps.domain.DomainConstants"%> 
+<%@page import="com.matrixone.apps.domain.DomainObject"%> 
+<%@page import="com.matrixone.apps.program.ProgramCentralUtil"%>
+<%@include file = "../emxUICommonHeaderBeginInclude.inc"%>
+<%@include file = "emxNavigatorInclude.inc"%>
+<emxUtil:localize id="i18nId" bundle="emxProgramCentralStringResource" locale='<xss:encodeForHTMLAttribute><%= request.getHeader("Accept-Language") %></xss:encodeForHTMLAttribute>' />
+<%
+	String languageStr 		= request.getHeader("Accept-Language");
+	String[] emxTableRowId 	= emxGetParameterValues(request, "emxTableRowId");
+	String mode				= emxGetParameter(request, "mode");
+	emxTableRowId 			= ProgramCentralUtil.parseTableRowId(context, emxTableRowId);
+	String popObjectId 		= emxGetParameter(request, "objectId");
+	
+	if(emxTableRowId==null && ProgramCentralUtil.isNotNullString(popObjectId)){
+		emxTableRowId = new String[]{popObjectId};
+	}
+	
+	StringList selectable = new StringList();
+	selectable.add(DecConstants.SYMB_ID);
+	selectable.add(DecConstants.SELECT_NAME);
+	selectable.add(DecConstants.SELECT_CURRENT);
+	selectable.add(DecConstants.SELECT_ATTRIBUTE_ORIGINATOR);
+	
+	MapList selectedObjectInfoList = DomainObject.getInfo(context, emxTableRowId, selectable);
+	Iterator selectedObjectInfoListIterator = selectedObjectInfoList.iterator();
+	
+	if(emxTableRowId==null){
+    	String strMsg = DecConstants.EMPTY_STRING;
+    	strMsg = EnoviaResourceBundle.getProperty(context, ProgramCentralConstants.PROGRAMCENTRAL,"emxProgramCentral.Common.PleaseMakeASelection", context.getSession().getLanguage());
+    	
+    	%>
+		<script type="text/javascript" language="javascript">
+			alert('<%=XSSUtil.encodeForJavaScript(context,strMsg)%>');	
+		</script>
+		<%
+        return;
+    }
+	
+	try{
+		ContextUtil.startTransaction(context, true);
+		
+		Map objectInfo = null;
+		String objectId = DecConstants.EMPTY_STRING;
+		String current = DecConstants.EMPTY_STRING; 
+		String originator = DecConstants.EMPTY_STRING;
+		String name = DecConstants.EMPTY_STRING; 
+		String projectAdmin = DecConstants.EMPTY_STRING; 
+		
+		if(mode.equalsIgnoreCase("delete")){
+			while(selectedObjectInfoListIterator.hasNext()){
+				
+				objectInfo = (Map)selectedObjectInfoListIterator.next();
+				objectId = (String)objectInfo.get(DecConstants.SYMB_ID);
+				current = (String)objectInfo.get(DecConstants.SELECT_CURRENT);
+				originator = (String)objectInfo.get(DecConstants.SELECT_ATTRIBUTE_ORIGINATOR);
+				
+				if(!context.isAssigned("decSystemAdmin") // systemAdmin이 아닌
+						&& context.getUser().equalsIgnoreCase(originator) // 작성자가
+						&& !current.equalsIgnoreCase(DecConstants.STATE_DECREQUEST_CREATE)){ // Create 가 아닌 항목을 삭제 할 경우
+					String strMsg = EnoviaResourceBundle.getProperty(context, ProgramCentralConstants.PROGRAMCENTRAL,"emxProgramCentral.Alarm.RequestDeleteDisable", context.getSession().getLanguage());
+					%>
+					<script type="text/javascript" language="javascript">
+						alert('<%=XSSUtil.encodeForJavaScript(context,strMsg)%>');	
+					</script>
+					<%
+		            return;
+				} else if(!context.isAssigned("decSystemAdmin") // systemAdmin이 아닌
+						&& !context.getUser().equalsIgnoreCase(originator)){ // 유저가 다른 작성자 항목을 삭제 할 경우
+					String strMsg = EnoviaResourceBundle.getProperty(context, ProgramCentralConstants.PROGRAMCENTRAL,"emxProgramCentral.Alarm.RequestOriginatorDeleteAvailable", context.getSession().getLanguage());
+					%>
+					<script type="text/javascript" language="javascript">
+						alert('<%=XSSUtil.encodeForJavaScript(context,strMsg)%>');	
+					</script>
+					<%
+		            return;
+				}
+
+				DomainObject object = new DomainObject(objectId);
+				String responseObjectId = object.getInfo(context, "from["+DecConstants.RELATIONSHIP_DECRESPONSEREL+"].to."+DecConstants.SELECT_ID);
+				responseObjectId = ProgramCentralUtil.isNullString(responseObjectId) ? DecConstants.EMPTY_STRING : responseObjectId;
+				
+				if(responseObjectId.length() > 0){// 답변이 있는 경우 삭제
+					DomainObject responseObject = new DomainObject(responseObjectId);
+					responseObject.delete(context);
+				}
+				
+				object.delete(context);
+			}
+		} else if(mode.equalsIgnoreCase("request")){
+			objectInfo = (Map)selectedObjectInfoListIterator.next();
+			objectId = (String)objectInfo.get(DecConstants.SYMB_ID);
+			current = (String)objectInfo.get(DecConstants.SELECT_CURRENT);
+			originator = (String)objectInfo.get(DecConstants.SELECT_ATTRIBUTE_ORIGINATOR);
+			
+			if(!context.getUser().equalsIgnoreCase(originator)) {
+				String strMsg = EnoviaResourceBundle.getProperty(context, ProgramCentralConstants.PROGRAMCENTRAL,"emxProgramCentral.Alarm.RequestOriginatorRequestAvailable", context.getSession().getLanguage());
+				%>
+				<script type="text/javascript" language="javascript">
+					alert('<%=XSSUtil.encodeForJavaScript(context,strMsg)%>');	
+				</script>
+				<%
+	            return;
+			} else if(!current.equalsIgnoreCase(DecConstants.STATE_DECREQUEST_CREATE)){
+				String strMsg = EnoviaResourceBundle.getProperty(context, ProgramCentralConstants.PROGRAMCENTRAL,"emxProgramCentral.Alarm.RequestNotCreate", context.getSession().getLanguage());
+				%>
+				<script type="text/javascript" language="javascript">
+					alert('<%=XSSUtil.encodeForJavaScript(context,strMsg)%>');	
+				</script>
+				<%
+	            return;
+			}
+			
+			DomainObject object = new DomainObject(objectId);
+			object.promote(context);
+		} else if(mode.equalsIgnoreCase("accept")){
+			objectInfo = (Map)selectedObjectInfoListIterator.next();
+			objectId = (String)objectInfo.get(DecConstants.SYMB_ID);
+			current = (String)objectInfo.get(DecConstants.SELECT_CURRENT);
+			originator = (String)objectInfo.get(DecConstants.SELECT_ATTRIBUTE_ORIGINATOR);
+			
+			DomainObject object = new DomainObject(objectId);
+			projectAdmin = (String) object.getInfo(context, "to["+DecConstants.RELATIONSHIP_DECPROJECTREQUESTREL+"].from.owner");
+			
+			if(!(context.getUser().equalsIgnoreCase(projectAdmin) || context.isAssigned("decSystemAdmin"))){
+				String strMsg = EnoviaResourceBundle.getProperty(context, ProgramCentralConstants.PROGRAMCENTRAL,"emxProgramCentral.Alarm.RequestNotAdmin", context.getSession().getLanguage());
+				%>
+				<script type="text/javascript" language="javascript">
+					alert('<%=XSSUtil.encodeForJavaScript(context,strMsg)%>');	
+				</script>
+				<%
+	            return;
+			} else if(!current.equalsIgnoreCase(DecConstants.STATE_DECREQUEST_REQUEST)){
+				String strMsg = EnoviaResourceBundle.getProperty(context, ProgramCentralConstants.PROGRAMCENTRAL,"emxProgramCentral.Alarm.RequestNotRequest", context.getSession().getLanguage());
+				%>
+				<script type="text/javascript" language="javascript">
+					alert('<%=XSSUtil.encodeForJavaScript(context,strMsg)%>');	
+				</script>
+				<%
+	            return;
+			}
+			
+			object.promote(context);
+		} else if(mode.equalsIgnoreCase("reply")){
+			objectInfo = (Map)selectedObjectInfoListIterator.next();
+			objectId = (String)objectInfo.get(DecConstants.SYMB_ID);
+			current = (String)objectInfo.get(DecConstants.SELECT_CURRENT);
+			originator = (String)objectInfo.get(DecConstants.SELECT_ATTRIBUTE_ORIGINATOR);
+			name = (String)objectInfo.get(DecConstants.SELECT_NAME);
+			
+			if(!(context.getUser().equalsIgnoreCase(projectAdmin) || context.isAssigned("decSystemAdmin"))){
+				String strMsg = EnoviaResourceBundle.getProperty(context, ProgramCentralConstants.PROGRAMCENTRAL,"emxProgramCentral.Alarm.RequestNotAdmin", context.getSession().getLanguage());
+				%>
+				<script type="text/javascript" language="javascript">
+					alert('<%=XSSUtil.encodeForJavaScript(context,strMsg)%>');	
+				</script>
+				<%
+	            return;
+			} else if(!current.equalsIgnoreCase(DecConstants.STATE_DECREQUEST_ACCEPT)){
+				String strMsg = EnoviaResourceBundle.getProperty(context, ProgramCentralConstants.PROGRAMCENTRAL,"emxProgramCentral.Alarm.RequestNotAccept", context.getSession().getLanguage());
+				%>
+				<script type="text/javascript" language="javascript">
+					alert('<%=XSSUtil.encodeForJavaScript(context,strMsg)%>');	
+				</script>
+				<%
+	            return;
+			}
+			
+			// 메세지 보내기[S]
+			// Modified by hslee on 2023.10.05 
+// 			StringBuffer sURL = new StringBuffer(EnoviaResourceBundle.getProperty(context,"emxFramework.ServerUrl.Used"));
+			StringBuffer sURL = new StringBuffer(DecMatrixUtil.getSystemINIVariable("ENOVIA_URL"));
+			sURL.append("/3dspace/common/emxTree.jsp?");
+			sURL.append("objectId=");
+			sURL.append(XSSUtil.encodeForHTML(context, objectId));
+			System.out.println(sURL.toString());
+					
+			String sMailSubject = EnoviaResourceBundle.getProperty(context, ProgramCentralConstants.PROGRAMCENTRAL,"emxProgramCentral.RequestReply.Title", context.getSession().getLanguage());		
+			String sMailMessage = EnoviaResourceBundle.getProperty(context, ProgramCentralConstants.PROGRAMCENTRAL,"emxProgramCentral.RequestReply.Message", context.getSession().getLanguage());
+			String mKey[] = {"requestName", "responseLink"};
+            String mValue[] = {name, sURL.toString()};
+            sMailMessage = StringResource.format(sMailMessage, mKey, mValue);
+
+			Map note = new HashMap();
+            note.put("toList", new StringList(originator));//받는사람
+            note.put("ccList", null);//참조
+            note.put("bccList", null);
+            note.put("subject", sMailSubject);//제목
+            note.put("message", sMailMessage);//내용
+            note.put("objectIdList", null);
+
+            // Pack arguments into string array.
+            String[] arg = JPO.packArgs(note);
+
+            // Call the jpo to send the message.
+            JPO.invoke(context, "emxMailUtil", null, "sendMessage", arg);
+			// 메세지 보내기[E]
+					
+            DomainObject object = new DomainObject(objectId);
+			object.promote(context);
+			
+		} else if(mode.equalsIgnoreCase("complete")){
+			objectInfo = (Map)selectedObjectInfoListIterator.next();
+			objectId = (String)objectInfo.get(DecConstants.SYMB_ID);
+			current = (String)objectInfo.get(DecConstants.SELECT_CURRENT);
+			originator = (String)objectInfo.get(DecConstants.SELECT_ATTRIBUTE_ORIGINATOR);
+			
+			if(!context.getUser().equalsIgnoreCase(originator)) {
+				String strMsg = EnoviaResourceBundle.getProperty(context, ProgramCentralConstants.PROGRAMCENTRAL,"emxProgramCentral.Alarm.RequestOriginatorCompleteAvailable", context.getSession().getLanguage());
+				%>
+				<script type="text/javascript" language="javascript">
+					alert('<%=XSSUtil.encodeForJavaScript(context,strMsg)%>');	
+				</script>
+				<%
+	            return;
+			} else if(!current.equalsIgnoreCase(DecConstants.STATE_DECREQUEST_REPLY)){
+				String strMsg = EnoviaResourceBundle.getProperty(context, ProgramCentralConstants.PROGRAMCENTRAL,"emxProgramCentral.Alarm.RequestNotReply", context.getSession().getLanguage());
+				%>
+				<script type="text/javascript" language="javascript">
+					alert('<%=XSSUtil.encodeForJavaScript(context,strMsg)%>');	
+				</script>
+				<%
+	            return;
+			}
+			
+			DomainObject object = new DomainObject(objectId);
+			object.promote(context);
+		}
+		ContextUtil.commitTransaction(context);
+		
+		if(ProgramCentralUtil.isNotNullString(popObjectId)){
+			if(mode.equalsIgnoreCase("complete")){
+				String strMsg = EnoviaResourceBundle.getProperty(context, ProgramCentralConstants.PROGRAMCENTRAL,"emxProgramCentral.Alert.RequestComplete", context.getSession().getLanguage());
+			%>
+			<script type="text/javascript" language="javascript">
+			alert('<%=XSSUtil.encodeForJavaScript(context,strMsg)%>');	
+			</script>
+			<%
+			}
+		%>
+		<script type="text/javascript" language="javascript">
+		getTopWindow().closeWindow();
+		</script>
+		<%
+		}
+		
+		
+		
+	}catch(Exception e){
+ 	   throw new MatrixException(e);
+	}
+%>
+	 <script language="javascript" type="text/javaScript">
+     top.findFrame(top,"content").location.reload();
+     </script>
+
+<%@page import="com.matrixone.apps.domain.util.EnoviaResourceBundle"%>

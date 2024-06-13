@@ -1,0 +1,2500 @@
+
+<%@page import="java.util.stream.Collectors"%>
+<%@page import="java.time.temporal.ChronoUnit"%>
+<%@page import="java.time.Period"%>
+<%@page import="java.time.temporal.WeekFields"%>
+<%@page import="java.time.temporal.IsoFields"%>
+<%@page import="java.time.LocalDate"%>
+<%@page import="java.util.Set"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.List"%>
+<%@page import="com.dec.util.DecStringUtil"%>
+<%@page import="com.dec.util.DecDateUtil"%>
+<%@page import="com.matrixone.apps.domain.DomainObject"%>
+<%@page import="com.dec.util.DecConstants"%>
+<%@include file = "../emxUICommonHeaderBeginInclude.inc" %>
+<%@include file = "../emxUICommonAppInclude.inc"%>
+
+<script type="text/javascript" src="../common/scripts/jquery-latest.js"></script>
+<script src="https://code.highcharts.com/stock/highstock.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+<script src="../webapps/ENOAEFStructureBrowser/webroot/common/scripts/decemxUIFreezePane.js"></script>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%!
+	public StringList classChangeStringList(Object o) throws Exception{
+		if(o instanceof StringList){
+			return (StringList)o;
+		}else{
+			StringList slReturn = new StringList();	
+			slReturn.add((String)o);
+			return slReturn;
+		}
+	}
+	public StringList setStringListCodeDetailDesc(StringList slData, Map<String, String> mCodeDetail) throws Exception{
+		StringList slReturn = new StringList();
+		for(String sData : slData){
+			slReturn.add(mCodeDetail.getOrDefault(sData, DecConstants.EMPTY_STRING));
+		}
+		return slReturn;
+	}
+	
+	public StringList validateStringList(StringList slData, List<Integer> validateIndexList) throws Exception{
+        StringList slReturn = new StringList();
+        if(validateIndexList.isEmpty()){
+        	slReturn.addAll(slData);
+        }else{
+    		for(int i : validateIndexList){
+    			slReturn.add(slData.get(i));
+    		}
+        }
+		return slReturn;
+	}
+	
+	public StringList currentChangeDisplayValue(Context context, StringList slCurrent, StringList slForecastStartDate, StringList slPlanStartDate, String today, Locale locale) throws Exception{
+		StringList slReturn = new StringList();
+    	String sCurrent = null;
+		for(int i = 0; i<slCurrent.size(); i++){
+    		sCurrent = slCurrent.get(i);
+	    	String targetDate = slForecastStartDate.get(i);
+			if(DecStringUtil.isEmpty(targetDate)) {
+				targetDate = slPlanStartDate.get(i);
+			}
+			if(DecStringUtil.equals(DecConstants.STATE_PROJECT_TASK_CREATE, sCurrent) && DecDateUtil.getDifference(targetDate, today) > 0) {
+				sCurrent = "Delay";
+			}
+			sCurrent = EnoviaResourceBundle.getProperty(context, "emxProgramCentralStringResource", locale, "ProgramCentral.State.Project_Task." + sCurrent);
+			slReturn.add(sCurrent);
+    	}
+    	return slReturn;
+	}
+%>
+
+<%
+	String sLang = request.getHeader("Accept-Language");
+	String sObjectId = DecConstants.EMPTY_STRING;
+	String sWBSType = DecConstants.EMPTY_STRING;
+	String sProjectCode = emxGetParameter(request,"projectCode");
+	String sDiscipline = emxGetParameter(request,"Discipline");
+	String sSubCon = emxGetParameter(request,"Sub-Con");
+	String sFrom = emxGetParameter(request,"Select_Date_Start");
+	String sTo = emxGetParameter(request,"Select_Date_End");
+	String emxTableRowIdExpr = emxGetParameter(request,"emxTableRowIdExpr");
+	StringList rowIdList = FrameworkUtil.splitString(emxTableRowIdExpr, ",");
+	String sCheckOID = null;
+	String sCheckType = null;
+	String sCWPCheckNo = null;
+	if(!rowIdList.isEmpty()) {
+		sCheckOID = rowIdList.get(0);
+		DomainObject doCheck = DomainObject.newInstance(context, sCheckOID);
+		sCheckType = doCheck.getTypeName(context);
+		if(DecStringUtil.equals(sCheckType, DecConstants.TYPE_DECCWPTASK)){
+			sCWPCheckNo = doCheck.getName();
+		}
+	}
+	String sRelPatterns = DecConstants.RELATIONSHIP_SUBTASK + "," + DecConstants.RELATIONSHIP_DECEWPREL;
+	String sTypePatterns = DecConstants.TYPE_DECCWPTASK + "," + DecConstants.TYPE_DECEWP;
+	String sWhere = DecConstants.EMPTY_STRING;
+	String sReleasePlan = DecConstants.EMPTY_STRING;
+	String sReleaseForecast = DecConstants.EMPTY_STRING;
+	String sReleaseActual = DecConstants.EMPTY_STRING;
+	String sTaskDiscipline = DecConstants.EMPTY_STRING;
+	String sTaskSubConNo = DecConstants.EMPTY_STRING;
+	String sTaskPriorityGroup = DecConstants.EMPTY_STRING;
+	String sTaskPriorityNumber = DecConstants.EMPTY_STRING;
+	String sPlanStartDate = DecConstants.EMPTY_STRING;
+	String sForecastStartDate = DecConstants.EMPTY_STRING;
+    String sType = DecConstants.EMPTY_STRING;
+    String sName = DecConstants.EMPTY_STRING;
+    String sCWPNo = DecConstants.EMPTY_STRING;
+    String sStage = DecConstants.EMPTY_STRING;
+    String sCurrent = DecConstants.EMPTY_STRING;
+
+    StringList slCWPNo				 = new StringList(); 
+    StringList slTaskSubConNo		 = new StringList(); 
+    StringList slPlanStartDate		 = new StringList(); 
+    StringList slForecastStartDate	 = new StringList(); 
+    StringList slTaskPriorityGroup	 = new StringList(); 
+    StringList slTaskPriorityNumber	 = new StringList(); 
+    StringList slTaskDiscipline		 = new StringList(); 
+    StringList slCurrent			 = new StringList(); 
+    StringList slStage				 = new StringList(); 
+	
+	StringList slProjectParam = new StringList();
+	slProjectParam.add(DecConstants.SELECT_ID);
+	slProjectParam.add(DecConstants.SELECT_NAME);
+	
+	StringList slCodeDetailParam = new StringList();
+	slCodeDetailParam.add(DecConstants.SELECT_ID);
+	slCodeDetailParam.add(DecConstants.SELECT_NAME);
+	slCodeDetailParam.add(DecConstants.SELECT_DESCRIPTION);
+	slCodeDetailParam.add(DecConstants.SELECT_ATTRIBUTE_DECCODE);
+	slCodeDetailParam.add(DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILATT1);
+	slCodeDetailParam.add("from[" + DecConstants.RELATIONSHIP_DECCODEDETAILREL + "].to." + DecConstants.SELECT_ATTRIBUTE_DECCODE);
+	slCodeDetailParam.add("from[" + DecConstants.RELATIONSHIP_DECCODEDETAILREL + "].to." + DecConstants.SELECT_DESCRIPTION);
+	
+	StringList slSubTaskParam = new StringList();
+	slSubTaskParam.add(DecConstants.SELECT_NAME);
+	slSubTaskParam.add(DecConstants.SELECT_TYPE);
+	slSubTaskParam.add(DecConstants.SELECT_ID);
+	slSubTaskParam.add(DecConstants.SELECT_LEVEL);
+	slSubTaskParam.add("to[" + DecConstants.RELATIONSHIP_DECEWPREL + "].from." + DecConstants.SELECT_NAME);
+	slSubTaskParam.add("to[" + DecConstants.RELATIONSHIP_DECEWPREL + "].from." + DecConstants.SELECT_CURRENT);
+	slSubTaskParam.add("to[" + DecConstants.RELATIONSHIP_DECEWPREL + "].from." + DecConstants.SELECT_ATTRIBUTE_DECSTAGE);
+	slSubTaskParam.add("to[" + DecConstants.RELATIONSHIP_DECEWPREL + "].from." + DecConstants.SELECT_ATTRIBUTE_DECDISCIPLINE);
+	slSubTaskParam.add("to[" + DecConstants.RELATIONSHIP_DECEWPREL + "].from." + DecConstants.SELECT_ATTRIBUTE_DECSUBCONNO);
+	slSubTaskParam.add(DecConstants.SELECT_ATTRIBUTE_DECEWPRELEASEPLAN);
+	slSubTaskParam.add(DecConstants.SELECT_ATTRIBUTE_DECEWPRELEASEFORECAST);
+	slSubTaskParam.add(DecConstants.SELECT_ATTRIBUTE_DECEWPRELEASEACTUAL);
+	slSubTaskParam.add("to[" + DecConstants.RELATIONSHIP_DECEWPREL + "].from." + DecConstants.SELECT_ATTRIBUTE_DECPRIORITYGROUP);
+	slSubTaskParam.add("to[" + DecConstants.RELATIONSHIP_DECEWPREL + "].from." + DecConstants.SELECT_ATTRIBUTE_DECPRIORITYNO);
+	slSubTaskParam.add("to[" + DecConstants.RELATIONSHIP_DECEWPREL + "].from." + DecConstants.SELECT_ATTRIBUTE_DECTASKFORECASTSTARTDATE);
+	slSubTaskParam.add("to[" + DecConstants.RELATIONSHIP_DECEWPREL + "].from." + DecConstants.SELECT_ATTRIBUTE_TASK_ESTIMATED_START_DATE);
+	slSubTaskParam.add("to[" + DecConstants.RELATIONSHIP_DECEWPREL + "].from." + DecConstants.SELECT_ATTRIBUTE_DECTASKFORECASTSTARTDATE);
+	
+	StringList slPhaseParam = new StringList();
+	slPhaseParam.add(DecConstants.SELECT_ID);
+	slPhaseParam.add(DecConstants.SELECT_LEVEL);
+	slPhaseParam.add("from[" + DecConstants.RELATIONSHIP_SUBTASK + "|to.type==" + DecConstants.TYPE_DECCWPTASK + "].to.from[" + DecConstants.RELATIONSHIP_DECEWPREL + "].to");
+	if(DecStringUtil.equals(sCheckType, DecConstants.TYPE_DECCWPTASK)){
+		slPhaseParam.add("from[" + DecConstants.RELATIONSHIP_SUBTASK + "|to.id==" + sCheckOID + "].to.id");
+	}
+
+	StringList slPlanTableColumn = new StringList();
+	slPlanTableColumn.add("Discipline Desc");
+	slPlanTableColumn.add("EWP No");
+	slPlanTableColumn.add("CWP No");
+	slPlanTableColumn.add("Priority Group");
+	slPlanTableColumn.add("Priority No");
+	slPlanTableColumn.add("Stage");
+	slPlanTableColumn.add("Status");
+	slPlanTableColumn.add("Sub-Con");
+	slPlanTableColumn.add("PhaseEstimatedStartDate");
+	
+	if(DecStringUtil.isNotEmpty(sProjectCode)){
+		sWhere = DecConstants.SELECT_NAME + "=='" + sProjectCode + "'";
+	}
+	
+	MapList mlProject = DomainObject.findObjects(context, DecConstants.TYPE_PROJECT_SPACE, "*", sWhere, slProjectParam);
+	MapList mlPhase = null;
+	MapList mlSubTask = null;
+	MapList mlWeekData = null;
+	MapList mlMonthData = null;
+	Map mProject = null;
+	Map mSubTask = null;
+	Map<String, String> mPlanTableDetail	 = new HashMap();
+	Map<String, String> mDP					 = new HashMap();
+	Map<String, String> mPriorityGroup		 = new HashMap();
+	Map<String, String> mPriorityNumber		 = new HashMap();
+	Map<String, String> mSubcon				 = new HashMap();
+	Map<String, String> mBOQKeyItem			 = new HashMap();
+	Map<String, String> mUOM				 = new HashMap();
+	Map<String, String> mWBSType 			 = new HashMap();
+	
+	Map<String, Integer> mPlanDayCnt		 = new HashMap();
+	Map<String, Integer> mForecastDayCnt	 = new HashMap();
+	Map<String, Integer> mActualDayCnt		 = new HashMap();
+	Map<String, Integer> mPlanWeekCnt  		 = new HashMap();
+	Map<String, Integer> mForecastWeekCnt	 = new HashMap();
+	Map<String, Integer> mActualWeekCnt		 = new HashMap();
+	Map<String, Integer> mPlanMonthCnt  	 = new HashMap();
+	Map<String, Integer> mForecastMonthCnt	 = new HashMap();
+	Map<String, Integer> mActualMonthCnt	 = new HashMap();
+	
+	Map<String, MapList> mPlanWeekData   	 = new HashMap();
+	Map<String, MapList> mForecastWeekData	 = new HashMap();
+	Map<String, MapList> mActualWeekData	 = new HashMap();
+	Map<String, MapList> mPlanMonthData   	 = new HashMap();
+	Map<String, MapList> mForecastMonthData	 = new HashMap();
+	Map<String, MapList> mActualMonthData	 = new HashMap();
+	
+	int iYear		 = 0;
+	int iMonth		 = 0;
+	int iWeek		 = 0;
+	int iDay		 = 0;
+	int iCnt = 0;
+	int iPlanCumulative     = 0;
+	int iForecastCumulative = 0;
+	int iActualCumulative   = 0;
+	int iSumPlan	 = 0;
+	int iSumForecast = 0;
+	int iSumActual	 = 0;
+	int iAllSumPlan		 = 0;
+	int iAllSumForecast	 = 0;
+	int iAllSumActual	 = 0;
+	int iDayMonth = 0;
+	int iDayYear = 0;
+	
+	// 이부분 지워야함
+	sFrom = DecDateUtil.changeDateFormat(sFrom, DecDateUtil.IF_FORMAT);
+	sTo = DecDateUtil.changeDateFormat(sTo, DecDateUtil.IF_FORMAT);
+	Locale locale = context.getLocale();
+	WeekFields wfs = WeekFields.of(locale);
+	
+	int iBeforeWeekOfYear = 0;
+	int iBeforeMonth = 0;
+	int iAfterMonth = 0;
+	long lBetweenWeek = 0;
+	long lBetweenMonth = 0;
+	long lBetweenDay = 0;
+	long lTotalWeek = 0;
+
+	LocalDate ldActualStartDate = null;
+	LocalDate ldExpectedDate = null;
+	LocalDate ldRelease = null;
+	Date dActualStartDate = null;
+	Date dExpectedDate = null;
+	Date dFrom = null;
+	Date dTo = null;
+	
+	List<String> listDay = new ArrayList();
+	List<String> listDayMonth = new ArrayList();
+
+	Map<String, Integer> mDayNum = new HashMap();
+	mDayNum.put("monday"   , 1);
+	mDayNum.put("tuesday"  , 2);
+	mDayNum.put("wednesday", 3);
+	mDayNum.put("thursday" , 4);
+	mDayNum.put("friday"   , 5);
+	mDayNum.put("saturday" , 6);
+	mDayNum.put("sunday"   , 7);
+	if(mlProject != null && !mlProject.isEmpty()){
+		mProject = (Map)mlProject.get(0);
+		sObjectId = (String)mProject.get(DecConstants.SELECT_ID);
+		DomainObject doPS = DomainObject.newInstance(context, sObjectId);
+		String sKPIDay = doPS.getAttributeValue(context, DecConstants.ATTRIBUTE_DECKPIDAY);
+		if(DecStringUtil.isEmpty(sKPIDay)){
+			sKPIDay = "sunday";
+		}
+		// 프로젝트에 연결된 Phase
+		mlPhase = doPS.getRelatedObjects(context,
+				DecConstants.RELATIONSHIP_SUBTASK, //pattern to match relationships
+				DecConstants.TYPE_PHASE, //pattern to match types
+				slPhaseParam, //the eMatrix StringList object that holds the list of select statement pertaining to Business Obejcts.
+				null, //the eMatrix StringList object that holds the list of select statement pertaining to Relationships.
+				false, //get To relationships
+				true, //get From relationships
+				(short)0, //the number of levels to expand, 0 equals expand all.
+				DecConstants.EMPTY_STRING, //where clause to apply to objects, can be empty ""
+				DecConstants.EMPTY_STRING,
+				0); //where clause to apply to relationship, can be empty ""
+		// 프로젝트에 연결된 코드마스터
+		String sMasterWhere = "evaluate[name matchlist \"Discipline,Priority Group,Priority Number,Sub-Con,BOQ Key Item,decCwpPlanTable,WBS Type\" \",\"]";
+		MapList mlCodeMaster = doPS.getRelatedObjects(context,
+				DecConstants.RELATIONSHIP_DECCODEMASTERREL, //pattern to match relationships
+				DecConstants.TYPE_DECCODEMASTER, //pattern to match types
+				slProjectParam, //the eMatrix StringList object that holds the list of select statement pertaining to Business Obejcts.
+				null, //the eMatrix StringList object that holds the list of select statement pertaining to Relationships.
+				false, //get To relationships
+				true, //get From relationships
+				(short)0, //the number of levels to expand, 0 equals expand all.
+				sMasterWhere, //where clause to apply to objects, can be empty ""
+				DecConstants.EMPTY_STRING,
+				0); //where clause to apply to relationship, can be empty ""
+		MapList mlCodeDetail = null;
+		Map mCodeDetail = null;
+		Map mCodeDetailDesc = null;
+		Map mCodeDetailDescChild = null;
+		String sDetailWhere = DecConstants.EMPTY_STRING;
+		DomainObject doCodeMaster = DomainObject.newInstance(context);
+		if(!mlCodeMaster.isEmpty()){
+			for(Object oMaster : mlCodeMaster){
+				Map mCodeMaster = (Map)oMaster;
+				sName = (String)mCodeMaster.get(DecConstants.SELECT_NAME);
+				String sCodeMasterOID = (String)mCodeMaster.get(DecConstants.SELECT_ID);
+				doCodeMaster.setId(sCodeMasterOID);
+				if(DecStringUtil.equalsIgnoreCase("decCwpPlanTable", sName)){
+					sDetailWhere = DecConstants.EMPTY_STRING;
+				}else{
+					sDetailWhere = "current == 'Active' && " + DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILTYPE + " == '" + sName + "'";
+				}
+				mlCodeDetail = doCodeMaster.getRelatedObjects(context,
+						DecConstants.RELATIONSHIP_DECCODEDETAILREL, //pattern to match relationships
+						DecConstants.TYPE_DECCODEDETAIL, //pattern to match types
+						slCodeDetailParam, //the eMatrix StringList object that holds the list of select statement pertaining to Business Obejcts.
+						null, //the eMatrix StringList object that holds the list of select statement pertaining to Relationships.
+						false, //get To relationships
+						true, //get From relationships
+						(short)0, //the number of levels to expand, 0 equals expand all.
+						sDetailWhere, //where clause to apply to objects, can be empty ""
+						DecConstants.EMPTY_STRING,
+						0);
+				sDetailWhere = DecConstants.EMPTY_STRING;
+				mCodeDetailDesc = new HashMap();
+				mCodeDetailDescChild = new HashMap();
+				for(Object oCodeDetail : mlCodeDetail){
+					mCodeDetail = (Map)oCodeDetail;
+					if(DecStringUtil.equalsIgnoreCase("WBS Type", sName)){
+						mCodeDetailDesc.put(mCodeDetail.get(DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILATT1), mCodeDetail.get(DecConstants.SELECT_DESCRIPTION));
+					}else{
+						mCodeDetailDesc.put(mCodeDetail.get(DecConstants.SELECT_ATTRIBUTE_DECCODE), mCodeDetail.get(DecConstants.SELECT_DESCRIPTION));
+						mCodeDetailDescChild.put(mCodeDetail.get("from[" + DecConstants.RELATIONSHIP_DECCODEDETAILREL + "].to." + DecConstants.SELECT_ATTRIBUTE_DECCODE)
+								,mCodeDetail.get("from[" + DecConstants.RELATIONSHIP_DECCODEDETAILREL + "].to." + DecConstants.SELECT_DESCRIPTION));
+					}
+
+				}
+// 				if(DecStringUtil.equalsIgnoreCase("DP Hierarchy", sName)){
+				if(DecStringUtil.equalsIgnoreCase("Discipline", sName)){ // Modified by hslee on 2023.07.25
+					mDP = mCodeDetailDesc;
+				}else if(DecStringUtil.equalsIgnoreCase("Priority Group", sName)){
+					mPriorityGroup = mCodeDetailDesc;
+				}else if(DecStringUtil.equalsIgnoreCase("Priority Number", sName)){
+					mPriorityNumber = mCodeDetailDesc;
+				}else if(DecStringUtil.equalsIgnoreCase("Sub-Con", sName)){
+					mSubcon = mCodeDetailDesc;
+				}else if(DecStringUtil.equalsIgnoreCase("BOQ Key Item", sName)){
+					mBOQKeyItem = mCodeDetailDesc;
+					mUOM = mCodeDetailDescChild;
+				}else if(DecStringUtil.equalsIgnoreCase("decCwpPlanTable", sName)){
+					mPlanTableDetail = mCodeDetailDesc;
+				}else if(DecStringUtil.equalsIgnoreCase("WBS Type", sName)){
+					mWBSType = mCodeDetailDesc;
+				}
+			}
+		}
+		
+		DomainObject doPhase = DomainObject.newInstance(context);
+		Map<String[], MapList> mData = new HashMap();
+		Map mPhase = null;
+		Map mParentPhase = null;
+		MapList mlParentPhase = null;
+		StringList slIsChildEWP = null;
+    	String sIsCheckCWPOID = null;
+		String sLevel = null;
+		String sOID = null;
+		String sParentLevel = null;
+		String[] sArrParentName = null;
+    	StringList slPhaseOID = new StringList();
+		for(Object o : mlPhase) {
+    		mPhase = (Map)o;
+    		slIsChildEWP = DecStringUtil.getStringListChangeObject(mPhase.get("from[" + DecConstants.RELATIONSHIP_SUBTASK + "].to.from[" + DecConstants.RELATIONSHIP_DECEWPREL + "].to"));
+    		if(!slIsChildEWP.isEmpty()) {
+    			sIsCheckCWPOID = (String)mPhase.get("from[" + DecConstants.RELATIONSHIP_SUBTASK + "].to.id");
+        		if(DecStringUtil.equals(DecConstants.TYPE_DECCWPTASK, sCheckType) && DecStringUtil.isEmpty(sIsCheckCWPOID)){
+        			continue;
+        		}
+    			sOID = (String)mPhase.get(DecConstants.SELECT_ID);
+        		sLevel = (String)mPhase.get(DecConstants.SELECT_LEVEL);
+        		slPhaseOID.add(sOID);
+        		doPhase.setId(sOID);
+        		doPhase.open(context);
+        		mlParentPhase = doPhase.getRelatedObjects(context,
+                    	DecConstants.RELATIONSHIP_SUBTASK, //pattern to match relationships
+                    	DecConstants.TYPE_PHASE, //pattern to match types
+                    	slSubTaskParam, //the eMatrix StringList object that holds the list of select statement pertaining to Business Obejcts.
+                    	null, //the eMatrix StringList object that holds the list of select statement pertaining to Relationships.
+                    	true, //get To relationships
+                    	false, //get From relationships
+                    	(short)0, //the number of levels to expand, 0 equals expand all.
+                    	DecConstants.EMPTY_STRING, //where clause to apply to objects, can be empty ""
+                    	DecConstants.EMPTY_STRING, //where clause to apply to relationship, can be empty ""
+                    	0);
+        		sArrParentName = new String[2];
+        		if(mlParentPhase.isEmpty()){
+        			sArrParentName[0] = doPhase.getName();
+        		}else{
+            		for(Object oParent : mlParentPhase){
+            			mParentPhase = (Map)oParent;
+            	    	sParentLevel = (String)mParentPhase.get(DecConstants.SELECT_LEVEL);
+            	    	sName = (String)mParentPhase.get(DecConstants.SELECT_NAME);
+            	    	slPhaseOID.add((String)mParentPhase.get(DecConstants.SELECT_ID));
+            	    	int iLevel = Integer.valueOf(sLevel) - Integer.valueOf(sParentLevel);
+            	    	if(iLevel == 1){
+            	    		sArrParentName[0] = sName;
+            	    	}else if(iLevel == 2){
+            	    		sArrParentName[1] = sName;
+            	    	}
+            	    	if(Integer.valueOf(sLevel) == 2){
+            	    		sArrParentName[1] = doPhase.getName();
+            	    	}
+            		}
+        		}
+        		if(!DecStringUtil.equals(DecConstants.TYPE_PHASE, sCheckType) || (DecStringUtil.equals(DecConstants.TYPE_PHASE, sCheckType) && slPhaseOID.contains(sCheckOID))){
+	        		mData.put(sArrParentName, doPhase.getRelatedObjects(context,
+	        				sRelPatterns, //pattern to match relationships
+	        				sTypePatterns, //pattern to match types
+	        				slSubTaskParam, //the eMatrix StringList object that holds the list of select statement pertaining to Business Obejcts.
+	        				null, //the eMatrix StringList object that holds the list of select statement pertaining to Relationships.
+	        				false, //get To relationships
+	        				true, //get From relationships
+	        				(short)0, //the number of levels to expand, 0 equals expand all.
+	        				DecConstants.EMPTY_STRING, //where clause to apply to objects, can be empty ""
+	        				DecConstants.EMPTY_STRING, //where clause to apply to relationship, can be empty ""
+	        				0));
+        		}
+        		slPhaseOID.clear();
+    		}
+		}
+		String today = DecDateUtil.changeDateFormat(new Date(), DecDateUtil.IF_FORMAT);
+		Set<String[]> setDataKey = mData.keySet();
+		for(String[] sArrLVName : setDataKey){
+	    	mlSubTask = mData.get(sArrLVName);
+	    	for(Object o : mlSubTask) {
+		    	mSubTask = (Map)o;
+		    	mSubTask.put("LV1", DecStringUtil.nullToEmpty(sArrLVName[0]));
+		    	mSubTask.put("LV2", DecStringUtil.nullToEmpty(sArrLVName[1]));
+	        	sType = (String)mSubTask.get(DecConstants.SELECT_TYPE);
+
+	        	Object oTaskDiscipline		 = mSubTask.get("to[" + DecConstants.RELATIONSHIP_DECEWPREL + "].from." + DecConstants.SELECT_ATTRIBUTE_DECDISCIPLINE);
+	        	Object oTaskSubConNo		 = mSubTask.get("to[" + DecConstants.RELATIONSHIP_DECEWPREL + "].from." + DecConstants.SELECT_ATTRIBUTE_DECSUBCONNO);
+	        	
+	        	slTaskSubConNo = classChangeStringList(oTaskSubConNo);
+	        	slTaskDiscipline = classChangeStringList(oTaskDiscipline);
+		    	
+		    	sReleasePlan = (String)mSubTask.get(DecConstants.SELECT_ATTRIBUTE_DECEWPRELEASEPLAN);
+		    	sReleaseForecast = (String)mSubTask.get(DecConstants.SELECT_ATTRIBUTE_DECEWPRELEASEFORECAST);
+		    	sReleaseActual = (String)mSubTask.get(DecConstants.SELECT_ATTRIBUTE_DECEWPRELEASEACTUAL);
+		    	
+	        	if(!DecStringUtil.equals(sType, DecConstants.TYPE_DECEWP)) {
+		    		continue;
+	        	}
+		    	// 검색 조건에 전부 맞는지 체크
+		    	if(DecStringUtil.isNotEmpty(sDiscipline) && !slTaskDiscipline.contains(sDiscipline)){
+		    		continue;
+		    	}
+		    	
+	        	List<Integer> indexList = new ArrayList<Integer> ();
+	        	List<Integer> validateIndexList = new ArrayList<Integer>();
+	        	int index = -1;
+	        	
+	        	// EWP와 연결된 CWP 목록중 검색조건 Discipline를 가지고있는 CWP만 가져옴
+		    	if(DecStringUtil.isNotEmpty(sDiscipline) && slTaskDiscipline.contains(sDiscipline)){
+		    		for(int i = 0; i<slTaskDiscipline.size(); i++){
+		    			sTaskDiscipline = slTaskDiscipline.get(i);
+		    			if(DecStringUtil.equals(sTaskDiscipline, sDiscipline)){
+				    		index = i;
+			    			indexList.add(index);
+		    			}
+		    		}
+		    	}
+	        	
+	        	
+		    	if(DecStringUtil.isNotEmpty(sSubCon) && !slTaskSubConNo.contains(sSubCon)){
+		    		continue;
+		    	}
+		    	
+	        	// EWP와 연결된 CWP 목록중 검색조건 Discipline와 Sub-Con을 돟시에 가진 CWP만 모음
+		    	if(DecStringUtil.isNotEmpty(sSubCon) && slTaskSubConNo.contains(sSubCon)){
+		    		for(int i : indexList){
+		    			if(DecStringUtil.equals(slTaskSubConNo.get(i), sSubCon)){
+		    				validateIndexList.add(i);
+		    			}
+		    		}
+		    	}
+	        	if(DecStringUtil.isNoneBlank(sDiscipline, sSubCon) && validateIndexList.isEmpty()){
+	        		continue;
+	        	}
+		    	
+		    	Object oCWPNo 				 = mSubTask.get("to[" + DecConstants.RELATIONSHIP_DECEWPREL + "].from." + DecConstants.SELECT_NAME);
+	        	Object oTaskPriorityGroup	 = mSubTask.get("to[" + DecConstants.RELATIONSHIP_DECEWPREL + "].from." + DecConstants.SELECT_ATTRIBUTE_DECPRIORITYGROUP);
+	        	Object oTaskPriorityNumber	 = mSubTask.get("to[" + DecConstants.RELATIONSHIP_DECEWPREL + "].from." + DecConstants.SELECT_ATTRIBUTE_DECPRIORITYNO);
+	        	Object oPlanStartDate		 = mSubTask.get("to[" + DecConstants.RELATIONSHIP_DECEWPREL + "].from." + DecConstants.SELECT_ATTRIBUTE_TASK_ESTIMATED_START_DATE);
+	        	Object oSTAGE				 = mSubTask.get("to[" + DecConstants.RELATIONSHIP_DECEWPREL + "].from." + DecConstants.SELECT_ATTRIBUTE_DECSTAGE);
+	        	Object oCurrent				 = mSubTask.get("to[" + DecConstants.RELATIONSHIP_DECEWPREL + "].from." + DecConstants.SELECT_CURRENT);
+	        	Object oForecastStartDate	 = mSubTask.get("to[" + DecConstants.RELATIONSHIP_DECEWPREL + "].from." + DecConstants.SELECT_ATTRIBUTE_DECTASKFORECASTSTARTDATE);
+				
+	        	// Object StringList로 형변환후 조건에맞는 데이터만 뽑아옴
+	        	slTaskSubConNo			 = validateStringList(classChangeStringList(oTaskSubConNo), validateIndexList);
+	        	slTaskDiscipline		 = validateStringList(classChangeStringList(oTaskDiscipline), validateIndexList);
+	        	slCWPNo					 = validateStringList(classChangeStringList(oCWPNo), validateIndexList);
+	        	if(DecStringUtil.isNotEmpty(sCWPCheckNo) && !slCWPNo.contains(sCWPCheckNo)){
+	        		continue;
+	        	}
+	        	slTaskPriorityGroup		 = validateStringList(classChangeStringList(oTaskPriorityGroup), validateIndexList);
+	        	slTaskPriorityNumber	 = validateStringList(classChangeStringList(oTaskPriorityNumber), validateIndexList);
+	        	slPlanStartDate			 = validateStringList(classChangeStringList(oPlanStartDate), validateIndexList);
+	        	slStage					 = validateStringList(classChangeStringList(oSTAGE), validateIndexList);
+	        	slCurrent				 = validateStringList(classChangeStringList(oCurrent), validateIndexList);
+	        	slForecastStartDate		 = validateStringList(classChangeStringList(oForecastStartDate), validateIndexList);
+	        	
+	        	// CodeDetail Description값만 가져옴
+		    	slTaskDiscipline	 = setStringListCodeDetailDesc(slTaskDiscipline, mDP);
+		    	slTaskPriorityGroup	 = setStringListCodeDetailDesc(slTaskPriorityGroup, mPriorityGroup);
+		    	slTaskPriorityNumber = setStringListCodeDetailDesc(slTaskPriorityNumber, mPriorityNumber);
+		    	slTaskSubConNo		 = setStringListCodeDetailDesc(slTaskSubConNo, mSubcon);
+		    	
+		    	// current List를 화면에 보여줄 값으로 바꿔옴
+		    	slCurrent			 = currentChangeDisplayValue(context, slCurrent, slForecastStartDate, slPlanStartDate, today, locale);
+	        	
+		    	mSubTask.put(DecConstants.SELECT_ATTRIBUTE_DECDISCIPLINE, slTaskDiscipline);
+		    	mSubTask.put(DecConstants.SELECT_ATTRIBUTE_DECPRIORITYGROUP, slTaskPriorityGroup);
+		    	mSubTask.put(DecConstants.SELECT_ATTRIBUTE_DECPRIORITYNO, slTaskPriorityNumber);
+		    	mSubTask.put(DecConstants.SELECT_ATTRIBUTE_DECSUBCONNO, slTaskSubConNo);
+		    	mSubTask.put(DecConstants.SELECT_ATTRIBUTE_TASK_ESTIMATED_START_DATE, slPlanStartDate);
+		    	mSubTask.put(DecConstants.SELECT_ATTRIBUTE_DECSTAGE, slStage);
+		    	mSubTask.put(DecConstants.SELECT_CURRENT, slCurrent);
+		    	mSubTask.put("CWP No", slCWPNo);
+			    // 각 달마다 몇개씩있는지 체크
+			    if(DecStringUtil.isNotEmpty(sReleasePlan)){
+			    	ldRelease = DecDateUtil.autoChangeLocalDate(sReleasePlan);
+			    	ldRelease = ldRelease.plusDays(mDayNum.get(sKPIDay.toLowerCase()) - ldRelease.getDayOfWeek().getValue());
+			    	if(ldActualStartDate == null || ldRelease.isBefore(ldActualStartDate)){
+			    		ldActualStartDate = ldRelease;
+			    	}
+			    	if(ldExpectedDate == null || ldRelease.isAfter(ldExpectedDate)){
+			    		ldExpectedDate = ldRelease;
+			    	}
+			    	iYear = ldRelease.getYear();
+			    	iMonth = ldRelease.getMonthValue();
+			    	iWeek = ldRelease.get(wfs.weekOfYear());
+			    	iDay = ldRelease.getDayOfMonth();
+			    	iCnt = mPlanDayCnt.get(iYear + "_" + iMonth + "_" + iDay) == null ? 0 : mPlanDayCnt.get(iYear + "_" + iMonth + "_" + iDay);
+				   	mPlanDayCnt.put(iYear + "_" + iMonth + "_" + iDay, iCnt + 1);
+			    	iCnt = mPlanWeekCnt.get(iYear + "_" + iWeek) == null ? 0 : mPlanWeekCnt.get(iYear + "_" + iWeek);
+				   	mPlanWeekCnt.put(iYear + "_" + iWeek, iCnt + 1);
+				   	iCnt = mPlanMonthCnt.get(iYear + "_" + iMonth) == null ? 0 : mPlanMonthCnt.get(iYear + "_" + iMonth);
+				   	mPlanMonthCnt.put(iYear + "_" + iMonth, iCnt + 1);
+				   	mlWeekData = mPlanWeekData.get(iYear + "_" + iMonth + "_" + iDay) == null ? new MapList() : mPlanWeekData.get(iYear + "_" + iMonth + "_" + iDay);
+				   	mlWeekData.add(mSubTask);
+				   	mPlanWeekData.put(iYear + "_" + iMonth + "_" + iDay, mlWeekData);
+				   	mlMonthData = mPlanMonthData.get(iYear + "_" + iMonth) == null ? new MapList() : mPlanMonthData.get(iYear + "_" + iMonth);
+				   	mlMonthData.add(mSubTask);
+				   	mPlanMonthData.put(iYear + "_" + iMonth, mlMonthData);
+				   	iAllSumPlan++;
+			    }
+			    if(DecStringUtil.isNotEmpty(sReleaseForecast)){
+			    	ldRelease = DecDateUtil.autoChangeLocalDate(sReleaseForecast);
+			    	ldRelease = ldRelease.plusDays(mDayNum.get(sKPIDay.toLowerCase()) - ldRelease.getDayOfWeek().getValue());
+			    	if(ldActualStartDate == null || ldRelease.isBefore(ldActualStartDate)){
+			    		ldActualStartDate = ldRelease;
+			    	}
+			    	if(ldExpectedDate == null || ldRelease.isAfter(ldExpectedDate)){
+			    		ldExpectedDate = ldRelease;
+			    	}
+			    	iYear = ldRelease.getYear();
+			    	iMonth = ldRelease.getMonthValue();
+			    	iWeek = ldRelease.get(wfs.weekOfYear());
+			    	iDay = ldRelease.getDayOfMonth();
+			    	iCnt = mForecastDayCnt.get(iYear + "_" + iMonth + "_" + iDay) == null ? 0 : mForecastDayCnt.get(iYear + "_" + iMonth + "_" + iDay);
+				   	mForecastDayCnt.put(iYear + "_" + iMonth + "_" + iDay, iCnt + 1);
+			    	iCnt = mForecastWeekCnt.get(iYear + "_" + iWeek) == null ? 0 : mForecastWeekCnt.get(iYear + "_" + iWeek);
+				   	mForecastWeekCnt.put(iYear + "_" + iWeek, iCnt + 1);
+				   	iCnt = mForecastMonthCnt.get(iYear + "_" + iMonth) == null ? 0 : mForecastMonthCnt.get(iYear + "_" + iMonth);
+				   	mForecastMonthCnt.put(iYear + "_" + iMonth, iCnt + 1);
+				   	mlWeekData = mForecastWeekData.get(iYear + "_" + iMonth + "_" + iDay) == null ? new MapList() : mForecastWeekData.get(iYear + "_" + iMonth + "_" + iDay);
+				   	mlWeekData.add(mSubTask);
+				   	mForecastWeekData.put(iYear + "_" + iMonth + "_" + iDay, mlWeekData);
+				   	mlMonthData = mForecastMonthData.get(iYear + "_" + iMonth) == null ? new MapList() : mForecastMonthData.get(iYear + "_" + iMonth);
+				   	mlMonthData.add(mSubTask);
+				   	mForecastMonthData.put(iYear + "_" + iMonth, mlMonthData);
+				   	iAllSumForecast++;
+			    }
+			    if(DecStringUtil.isNotEmpty(sReleaseActual)){
+			    	ldRelease = DecDateUtil.autoChangeLocalDate(sReleaseActual);
+			    	ldRelease = ldRelease.plusDays(mDayNum.get(sKPIDay.toLowerCase()) - ldRelease.getDayOfWeek().getValue());
+			    	if(ldActualStartDate == null || ldRelease.isBefore(ldActualStartDate)){
+			    		ldActualStartDate = ldRelease;
+			    	}
+			    	if(ldExpectedDate == null || ldRelease.isAfter(ldExpectedDate)){
+			    		ldExpectedDate = ldRelease;
+			    	}
+			    	iYear = ldRelease.getYear();
+			    	iMonth = ldRelease.getMonthValue();
+			    	iWeek = ldRelease.get(wfs.weekOfYear());
+			    	iDay = ldRelease.getDayOfMonth();
+			    	iCnt = mActualDayCnt.get(iYear + "_" + iMonth + "_" + iDay) == null ? 0 : mActualDayCnt.get(iYear + "_" + iMonth + "_" + iDay);
+				   	mActualDayCnt.put(iYear + "_" + iMonth + "_" + iDay, iCnt + 1);
+			    	iCnt = mActualWeekCnt.get(iYear + "_" + iWeek) == null ? 0 : mActualWeekCnt.get(iYear + "_" + iWeek);
+				   	mActualWeekCnt.put(iYear + "_" + iWeek, iCnt + 1);
+				   	iCnt = mActualMonthCnt.get(iYear + "_" + iMonth) == null ? 0 : mActualMonthCnt.get(iYear + "_" + iMonth);
+				   	mActualMonthCnt.put(iYear + "_" + iMonth, iCnt + 1);
+				   	mlWeekData = mActualWeekData.get(iYear + "_" + iMonth + "_" + iDay) == null ? new MapList() : mActualWeekData.get(iYear + "_" + iMonth + "_" + iDay);
+				   	mlWeekData.add(mSubTask);
+				   	mActualWeekData.put(iYear + "_" + iMonth + "_" + iDay, mlWeekData);
+				   	mlMonthData = mActualMonthData.get(iYear + "_" + iMonth) == null ? new MapList() : mActualMonthData.get(iYear + "_" + iMonth);
+				   	mlMonthData.add(mSubTask);
+				   	mActualMonthData.put(iYear + "_" + iMonth, mlMonthData);
+				   	iAllSumActual++;
+			    }
+	    	}
+		}
+
+    	if(ldActualStartDate == null){
+    		ldActualStartDate = LocalDate.now();
+    	}
+    	if(ldExpectedDate == null){
+    		ldExpectedDate = LocalDate.now();
+    	}
+		ldActualStartDate = ldActualStartDate.plusDays(mDayNum.get(sKPIDay.toLowerCase()) - ldActualStartDate.getDayOfWeek().getValue());
+		ldExpectedDate = ldExpectedDate.plusDays(mDayNum.get(sKPIDay.toLowerCase()) - ldExpectedDate.getDayOfWeek().getValue());
+		
+		dActualStartDate = java.sql.Date.valueOf(ldActualStartDate);
+		dExpectedDate = java.sql.Date.valueOf(ldExpectedDate);
+		
+		lBetweenWeek = DecDateUtil.getLocalDateBetweenWeek(ldActualStartDate, ldExpectedDate);
+		lBetweenMonth = DecDateUtil.getLocalDateBetweenMonth(ldActualStartDate, ldExpectedDate);
+		lBetweenDay = ChronoUnit.DAYS.between(ldActualStartDate, ldExpectedDate);
+		
+		iBeforeWeekOfYear = ldActualStartDate.get(wfs.weekOfYear());
+		
+		lTotalWeek = iBeforeWeekOfYear+lBetweenWeek+1;
+		
+		LocalDate ldFrom = ldActualStartDate;
+		LocalDate ldTo = ldExpectedDate;
+		
+		dFrom = dActualStartDate;
+		dTo = dExpectedDate;
+		
+		if(DecStringUtil.isNotEmpty(sFrom)){
+			ldFrom = DecDateUtil.autoChangeLocalDate(sFrom);
+			dFrom = DecDateUtil.autoChangeDate(sFrom);
+		}
+		if(DecStringUtil.isNotEmpty(sTo)){
+			ldTo = DecDateUtil.autoChangeLocalDate(sTo);
+			dTo = DecDateUtil.autoChangeDate(sTo);
+		}
+		ldFrom = ldFrom.plusDays(mDayNum.get(sKPIDay.toLowerCase()) - ldFrom.getDayOfWeek().getValue());
+		ldTo = ldTo.plusDays(mDayNum.get(sKPIDay.toLowerCase()) - ldTo.getDayOfWeek().getValue());
+		
+		Long BetweenWeek = DecDateUtil.getLocalDateBetweenWeek(ldFrom, ldTo);
+		Long BetweenMonth = DecDateUtil.getLocalDateBetweenMonth(ldFrom, ldTo);
+		LocalDate localDate = ldFrom;
+		for(int i=0; i<=BetweenWeek; i++){
+			iDayMonth = localDate.getMonthValue();
+			iDayYear = localDate.getYear();
+			iDay = localDate.getDayOfMonth();
+			listDay.add(iDayYear + "_" + iDayMonth + "_" + iDay);
+			localDate = localDate.plusWeeks(1); // 1주씩 넘어감
+		}
+		localDate = ldFrom.withDayOfMonth(1);
+		for(int i=0; i<=BetweenMonth; i++){ 
+			if(localDate.isAfter(ldTo)){
+				break;
+			}
+			iDayYear = localDate.getYear();
+			iDayMonth = localDate.getMonthValue();
+			listDayMonth.add(iDayYear + "_" + iDayMonth);
+			localDate = localDate.plusMonths(1);
+		}
+	}
+	Map<String, Integer> mMonthWeekCnt = new HashMap(); // 각 달마다 몇주가 들어가는지 확인하는 맵
+	Map<Integer, Integer> mYearWeekCnt = new HashMap(); // 각 년마다 몇주가 들어가는지 확인하는 맵
+	Map<Integer, Integer> mYearMonthCnt = new HashMap(); // 각 년마다 몇달이 들어가는지 확인하는 맵
+	Set<Integer> setYear = new HashSet();
+	LocalDate localDate = ldActualStartDate;
+	List<String> lYearWeek = new ArrayList();
+	for(int i=0; i<=lBetweenWeek; i++){
+		iDayMonth = localDate.getMonthValue();
+		iDayYear = localDate.getYear();
+		iDay = localDate.getDayOfMonth();
+		setYear.add(iDayYear); // 화면에 나와야하는 년도를 Set에 저장
+		lYearWeek.add(iDayYear+"_"+localDate.get(wfs.weekOfYear()));
+		iCnt = mMonthWeekCnt.getOrDefault(iDayYear+"_"+iDayMonth, 0);
+		mMonthWeekCnt.put(iDayYear+"_"+iDayMonth, iCnt + 1); // 각 달마다 몇주씩 가지고있는지 저장
+		iCnt = mYearWeekCnt.getOrDefault(iDayYear, 0);
+		mYearWeekCnt.put(iDayYear, iCnt + 1); // 각 년마다 몇주씩 가지고있는지 저장
+		localDate = localDate.plusWeeks(1); // 1주씩 넘어감
+	}
+	lYearWeek = lYearWeek.stream().distinct().collect(Collectors.toList());
+	List<Integer> listMonth = new ArrayList();
+	List<String> listMonthSummary = new ArrayList();
+	
+	String sYear = null;
+	String[] sArrMonthSummary = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+
+	localDate = ldActualStartDate.withDayOfMonth(1);
+	for(int i=0; i<=lBetweenMonth; i++){ 
+		if(localDate.isAfter(ldExpectedDate)){
+			break;
+		}
+		iDayYear = localDate.getYear();
+		iDayMonth = localDate.getMonthValue();
+		listMonth.add(iDayMonth);
+		listMonthSummary.add(iDayYear + "_" + iDayMonth);
+		iCnt = mYearMonthCnt.getOrDefault(iDayYear, 0);
+		mYearMonthCnt.put(iDayYear, iCnt + 1); // 각 년마다 몇주씩 가지고있는지 저장
+		localDate = localDate.plusMonths(1);
+	}
+	String sMS = null;
+	String sMonth = null;
+	String sDay = null;
+	String[] sArrMS = null;
+	int iMS = 0;
+	localDate = LocalDate.now();
+	String sTodayWeekKey = localDate.getYear() + "_" + localDate.get(wfs.weekOfYear());
+	String sTodayMonthKey = localDate.getYear() + "_" + localDate.getMonthValue();
+%>
+<style>
+	table tr td {
+		border : 2px solid #ffffff;
+	}
+	table .header{
+		min-width: 155px;
+	}
+	.columns{
+		min-width: 46px;
+		max-width: 46px;
+		width: 46px;
+	}
+	table td{
+		height : 30px;
+	}
+	.todayColumn{
+		background-color: skyblue !important; 
+	}
+    body {
+        height: 100%;
+    }
+	.currentDis{
+		overflow: visible;
+		color: #5b5d5e;
+		background-color: rgb(230, 233, 255);
+		border: 0px;
+		overflow: visible;
+		border-radius: 1px;
+		transition: background-color 2s font-weight 2s;
+		margin: 0px 0px;
+		font-weight: bold; 
+	}
+	.Dis{
+		overflow: visible;
+		color: #5b5d5e;
+		background-color: #F7F7F7;
+		border: 0px;
+		overflow: visible;
+		border-radius: 1px;
+		transition: background-color 2s font-weight 2s;
+	}
+	summary {
+		cursor: pointer;
+	}
+</style>
+<%if(mlProject != null && !mlProject.isEmpty()){
+	Object oData = null;
+	StringList slData = null;
+	String sData = null;
+%>
+<%	Set<String> setDataKey = mPlanWeekData.keySet(); %>
+<script>
+var mPlanWeekData = new Map([
+	<%
+		for(String sKey : setDataKey){
+			mlWeekData = mPlanWeekData.get(sKey);
+	%>
+	['<%=sKey%>',[
+		<%for(Object oWeekData : mlWeekData){
+			Map mWeekData = (Map)oWeekData;
+			slCWPNo = (StringList)mWeekData.get("CWP No");
+			for(int i=0; i<slCWPNo.size(); i++){
+				Set<String> setKey = mWeekData.keySet();
+			%>
+				{
+			<%
+				for(String key : setKey){
+					oData = mWeekData.get(key);
+					if(oData instanceof StringList) {
+						slData = (StringList)oData;
+						if(i >= slData.size()){
+							sData = DecConstants.EMPTY_STRING;
+						}else{
+							sData = slData.get(i);
+						}
+					}else{
+						sData = DecStringUtil.nullToEmpty(oData);
+					}
+			%>
+				'<%=key.replace("attribute[", "").replace("]", "")%>' : '<%=sData%>', 
+				<%}%>
+				},
+			<%}%>
+		<%}%>
+		]
+	],
+	<%}%>
+]);
+<%	setDataKey = mForecastWeekData.keySet(); %>
+var mForecastWeekData = new Map([
+	<%
+		for(String sKey : setDataKey){
+			mlWeekData = mForecastWeekData.get(sKey);
+	%>
+	['<%=sKey%>',[
+		<%for(Object oWeekData : mlWeekData){
+			Map mWeekData = (Map)oWeekData;
+			slCWPNo = (StringList)mWeekData.get("CWP No");
+			for(int i=0; i<slCWPNo.size(); i++){
+				Set<String> setKey = mWeekData.keySet();
+			%>
+				{
+			<%
+				for(String key : setKey){
+					oData = mWeekData.get(key);
+					if(oData instanceof StringList) {
+						slData = (StringList)oData;
+						if(i >= slData.size()){
+							sData = DecConstants.EMPTY_STRING;
+						}else{
+							sData = slData.get(i);
+						}
+					}else{
+						sData = DecStringUtil.nullToEmpty(oData);
+					}
+			%>
+				'<%=key.replace("attribute[", "").replace("]", "")%>' : '<%=sData%>', 
+				<%}%>
+				},
+			<%}%>
+		<%}%>
+		]
+	],
+	<%}%>
+]);
+<%	setDataKey = mActualWeekData.keySet(); %>
+var mActualWeekData = new Map([
+	<%
+		for(String sKey : setDataKey){
+			mlWeekData = mActualWeekData.get(sKey);
+	%>
+	['<%=sKey%>',[
+		<%for(Object oWeekData : mlWeekData){
+			Map mWeekData = (Map)oWeekData;
+			slCWPNo = (StringList)mWeekData.get("CWP No");
+			for(int i=0; i<slCWPNo.size(); i++){
+				Set<String> setKey = mWeekData.keySet();
+			%>
+				{
+			<%
+				for(String key : setKey){
+					oData = mWeekData.get(key);
+					if(oData instanceof StringList) {
+						slData = (StringList)oData;
+						if(i >= slData.size()){
+							sData = DecConstants.EMPTY_STRING;
+						}else{
+							sData = slData.get(i);
+						}
+					}else{
+						sData = DecStringUtil.nullToEmpty(oData);
+					}
+			%>
+				'<%=key.replace("attribute[", "").replace("]", "")%>' : '<%=sData%>', 
+				<%}%>
+				},
+			<%}%>
+		<%}%>
+		]
+	],
+	<%}%>
+]);
+
+
+
+
+
+
+var mPlanMonthData = new Map([
+	<%
+	setDataKey = mPlanMonthData.keySet(); 
+		for(String sKey : setDataKey){
+			mlMonthData = mPlanMonthData.get(sKey);
+	%>
+	['<%=sKey%>',[
+		<%for(Object oMonthData : mlMonthData){
+			Map mMonthData = (Map)oMonthData;
+			slCWPNo = (StringList)mMonthData.get("CWP No");
+			for(int i=0; i<slCWPNo.size(); i++){
+				Set<String> setKey = mMonthData.keySet();
+			%>
+				{
+			<%
+				for(String key : setKey){
+					oData = mMonthData.get(key);
+					if(oData instanceof StringList) {
+						slData = (StringList)oData;
+						if(i >= slData.size()){
+							sData = DecConstants.EMPTY_STRING;
+						}else{
+							sData = slData.get(i);
+						}
+					}else{
+						sData = DecStringUtil.nullToEmpty(oData);
+					}
+			%>
+				'<%=key.replace("attribute[", "").replace("]", "")%>' : '<%=sData%>', 
+				<%}%>
+				},
+			<%}%>
+		<%}%>
+		]
+	],
+	<%}%>
+]);
+<%	setDataKey = mForecastMonthData.keySet(); %>
+var mForecastMonthData = new Map([
+	<%
+		for(String sKey : setDataKey){
+			mlMonthData = mForecastMonthData.get(sKey);
+	%>
+	['<%=sKey%>',[
+		<%for(Object oMonthData : mlMonthData){
+			Map mMonthData = (Map)oMonthData;
+			slCWPNo = (StringList)mMonthData.get("CWP No");
+			for(int i=0; i<slCWPNo.size(); i++){
+				Set<String> setKey = mMonthData.keySet();
+			%>
+				{
+			<%
+				for(String key : setKey){
+					oData = mMonthData.get(key);
+					if(oData instanceof StringList) {
+						slData = (StringList)oData;
+						if(i >= slData.size()){
+							sData = DecConstants.EMPTY_STRING;
+						}else{
+							sData = slData.get(i);
+						}
+					}else{
+						sData = DecStringUtil.nullToEmpty(oData);
+					}
+			%>
+				'<%=key.replace("attribute[", "").replace("]", "")%>' : '<%=sData%>', 
+				<%}%>
+				},
+			<%}%>
+		<%}%>
+		]
+	],
+	<%}%>
+]);
+<%	setDataKey = mActualMonthData.keySet(); %>
+var mActualMonthData = new Map([
+	<%
+		for(String sKey : setDataKey){
+			mlMonthData = mActualMonthData.get(sKey);
+	%>
+	['<%=sKey%>',[
+		<%for(Object oMonthData : mlMonthData){
+			Map mMonthData = (Map)oMonthData;
+			slCWPNo = (StringList)mMonthData.get("CWP No");
+			for(int i=0; i<slCWPNo.size(); i++){
+				Set<String> setKey = mMonthData.keySet();
+			%>
+				{
+			<%
+				for(String key : setKey){
+					oData = mMonthData.get(key);
+					if(oData instanceof StringList) {
+						slData = (StringList)oData;
+						if(i >= slData.size()){
+							sData = DecConstants.EMPTY_STRING;
+						}else{
+							sData = slData.get(i);
+						}
+					}else{
+						sData = DecStringUtil.nullToEmpty(oData);
+					}
+			%>
+				'<%=key.replace("attribute[", "").replace("]", "")%>' : '<%=sData%>', 
+				<%}%>
+				},
+			<%}%>
+		<%}%>
+		]
+	],
+	<%}%>
+]);
+
+
+
+$(function() {
+	var currentChart = 1;
+	var container = document.getElementById('container');
+	var scheduleTable = document.getElementById('scheduleTable');
+	var taskDataTable = document.getElementById('taskDataTable');
+	var detailTableTBody = document.getElementById('detailTableTBody');
+	var popup = document.getElementById('popup');
+	var tableDivleft = document.getElementById('tableDivleft');
+	var tableDivright = document.getElementById('tableDivright');
+	var summaryTable = document.getElementById('summaryTable');
+	var summaryTable2 = document.getElementById('summaryTable2');
+	var tableDivBorder = document.getElementById('tableDivBorder');
+	var columnWeek = document.getElementById('columnWeek');
+	var columnMonth = document.getElementById('columnMonth');
+	var detail = document.getElementById('detail');
+	var columnWeekWidth = columnWeek.clientWidth;
+	var columnMonthWidth = columnMonth.clientWidth;
+	var summaryTableClientWidth = summaryTable.clientWidth;
+	var summaryTable2ClientWidth = summaryTable2.clientWidth;
+	var tableDivBorderWidth = tableDivBorder.clientWidth;
+	var tableBaseWidth = tableDivleft.clientWidth;
+	var actual = new Date(<%=dActualStartDate != null ? dActualStartDate.getTime() : ""%>);
+	var expect = new Date(<%=dExpectedDate != null ? dExpectedDate.getTime() : ""%>);
+	var from = new Date(<%=dFrom != null ? dFrom.getTime() : ""%>);
+	var to = new Date(<%=dTo != null ? dTo.getTime() : ""%>);
+	var actualTime = actual.getTime();
+	var expectTime = expect.getTime();
+	var tableDivleftWidth = 0;
+	var tableDivRightWidth = 0;
+	tableDivleft.style.overflow = "hidden";
+	var todayDate = new Date();
+	var yearColumn = document.getElementsByClassName('yearColumn');
+	var yearColumn2 = document.getElementsByClassName('yearColumn2');
+	var headerYear = document.getElementById('headerYear');
+	var dayArr = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+	var monthArr = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+	tableDivBorder.addEventListener('scroll', () =>{
+		setYearColumnPosition();
+	});
+	function setYearColumnPosition(){
+		var bCheck = false;
+		var bCheck2 = false;
+		for(var i=yearColumn.length-1; i>=0; i--) {
+			var base = tableBaseWidth - tableDivleft.clientWidth - tableBaseWidth + tableDivright.clientWidth;
+			if((yearColumn[i].cellIndex)*46<tableDivBorder.scrollLeft+base && !bCheck){
+				yearColumn[i].style.position = "absolute";
+				yearColumn[i].style.left = headerYear.clientWidth + "px";
+				yearColumn[i].style.width = columnWeekWidth + "px";
+				bCheck = true;
+			}else{
+				yearColumn[i].style.position = "relative";
+				yearColumn[i].style.left = "";
+			}
+		}
+		for(var i=yearColumn2.length-1; i>=0; i--) {
+			var base = tableBaseWidth - tableDivleft.clientWidth - tableBaseWidth + tableDivright.clientWidth;
+			if((yearColumn2[i].cellIndex)*46<tableDivBorder.scrollLeft+base && !bCheck2){
+				yearColumn2[i].style.position = "absolute";
+				yearColumn2[i].style.left = headerYear.clientWidth + "px";
+				yearColumn2[i].style.width = columnWeekWidth + "px";
+				bCheck2 = true;
+			}else{
+				yearColumn2[i].style.position = "relative";
+				yearColumn2[i].style.left = "";
+			}
+		}
+	}
+	
+	function setContainerHeight(){
+		container.style.height = (document.body.clientHeight - popup.clientHeight - 40 - scheduleTable.clientHeight) + "px";
+		changeWeekTableWidth(from, to);
+		changeMonthTableWidth(from, to);
+		setYearColumnPosition();
+	}
+	const observer1 = new ResizeObserver(entries => {
+		summaryTableClientWidth = summaryTable.clientWidth;
+		summaryTable2ClientWidth = summaryTable2.clientWidth;
+		tableDivleft.style.width = (summaryTableClientWidth + summaryTable2ClientWidth) + "px";
+		tableDivright.style.width = (summaryTableClientWidth + summaryTable2ClientWidth) + "px";
+		setContainerHeight();
+	});
+	setContainerHeight();
+	observer1.observe(scheduleTable);
+	const getWeek = (date) => {
+		const currentDate = date.getDate();
+		const firstDay = new Date(date.setDate(1)).getDay();
+
+		return Math.ceil((currentDate + firstDay) / 7);
+	};
+    /* chart type은 chart, series안에서도 각각 줄수가 있다. */
+    function createChart1(){
+        var chart1 = new Highcharts.stockChart({
+            rangeSelector: {
+            	buttonPosition: {
+                	align: 'left',
+                	x:-26
+            	},
+                buttons: [
+              // week 기준으로 1m는 항상 비활성화
+              //{
+              //    type: 'month',
+              //    count: 1,
+              //    text: '1m',
+              //    events: {
+              //        click: function () {
+              //       	 var minDate = new Date().setDate(todayDate.getDate()-15);
+              //       	 var maxDate = new Date().setDate(todayDate.getDate()+15);
+              //       	 if(actualTime > minDate){
+              //       		 minDate = actualTime;
+              //       		 maxDate += (actualTime-minDate);
+              //       	 }
+              //       	 if(expectTime < maxDate){
+              //       		 maxDate = expectTime; 
+              //       		 minDate -= (maxDate-expectTime);
+              //       	 }
+              //       	 chart1.xAxis[0].setExtremes(minDate, maxDate);
+              //       	 return false;
+              //        }
+              //    }
+              //}, 
+                {
+                    type: 'month',
+                    count: 3,
+                    text: '3m',
+                    events: {
+                        click: function () {
+                       	 var minDate = new Date().setDate(todayDate.getDate()-45);
+                       	 var maxDate = new Date().setDate(todayDate.getDate()+45);
+                       	 if(actualTime > maxDate && expectTime > maxDate){
+                       		 return true;
+                       	 }else if(actualTime < minDate && expectTime < minDate){
+                       		 return true;
+                       	 }
+                       	 if(actualTime > minDate){
+                       		 maxDate += (actualTime-minDate);
+                       		 minDate = actualTime;
+                       	 }
+                       	 if(expectTime < maxDate){
+                       		minDate -= (maxDate-expectTime);
+                       		 maxDate = expectTime;
+                       	 }
+                       	 chart1.xAxis[0].setExtremes(minDate, maxDate);
+                       	 return false;
+                        }
+                    }
+                }, {
+                    type: 'month',
+                    count: 6,
+                    text: '6m',
+                    events: {
+                        click: function () {
+                       	 var minDate = new Date(todayDate).setMonth(todayDate.getMonth()-3);
+                       	 var maxDate = new Date(todayDate).setMonth(todayDate.getMonth()+3);
+                       	 if(actualTime > maxDate && expectTime > maxDate){
+                       		 return true;
+                       	 }else if(actualTime < minDate && expectTime < minDate){
+                       		 return true;
+                       	 }
+                       	 if(actualTime > minDate){
+                       		 maxDate += (actualTime-minDate);
+                       		 minDate = actualTime;
+                       	 }
+                       	 if(expectTime < maxDate){
+                       		minDate -= (maxDate-expectTime);
+                       		 maxDate = expectTime;
+                       	 }
+                       	 chart1.xAxis[0].setExtremes(minDate, maxDate);
+                       	 return false;
+                        }
+                    }
+                }, {
+                    type: 'year',
+                    count: 1,
+                    text: '1y',
+                    events: {
+                        click: function () {
+                       	 var minDate = new Date(todayDate).setMonth(todayDate.getMonth()-6);
+                       	 var maxDate = new Date(todayDate).setMonth(todayDate.getMonth()+6);
+                       	 if(actualTime > maxDate && expectTime > maxDate){
+                       		 return true;
+                       	 }else if(actualTime < minDate && expectTime < minDate){
+                       		 return true;
+                       	 }
+                       	 if(actualTime > minDate){
+                       		 maxDate += (actualTime-minDate);
+                       		 minDate = actualTime;
+                       	 }
+                       	 if(expectTime < maxDate){
+                       		minDate -= (maxDate-expectTime);
+                       		 maxDate = expectTime;
+                       	 }
+                       	 chart1.xAxis[0].setExtremes(minDate, maxDate);
+                       	 return false;
+                        }
+                    }
+                }, {
+                    type: 'all',
+                    text: 'All'
+                }]
+            },
+       	 title:{
+            	text : ''
+            },
+            credits: {
+                enabled: false
+            },
+            chart: {
+                renderTo: 'container',
+                type: 'line'
+            },
+            legend: {
+        	    enabled: true,
+        	    labelFormatter: function() {
+        	        return this.name;
+        	    }
+            },
+            tooltip: {
+		        split: true,
+		        distance: 30,
+		        padding : 5,
+	            formatter: function () {
+	            	let tipDate = new Date(this.x);
+	                return [dayArr[tipDate.getDay()] + ', ' + tipDate.getDate() + " " + monthArr[tipDate.getMonth()]].concat(
+	                    this.points ?
+	                        this.points.map(function (point) {
+	                        	return '<tspan style="color: ' + point.color + '; fill: ' + point.color + ';">&#9679; </tspan>' + point.series.name + ': <b>' + point.y + "</b>";
+	                        }) : []
+	                );
+	            }
+            },
+            xAxis: {
+           	 <%
+   	 	    	Integer iDayNum = mDayNum.get(localDate.getDayOfWeek().name().toLowerCase());
+   	 	    	localDate = localDate.minusDays(iDayNum);
+           	 %>
+           	 plotBands: [{
+           		    color: 'skyblue', // Color value
+           		    from: new Date("<%=localDate.getYear()%>/<%=localDate.getMonthValue()%>/<%=localDate.getDayOfMonth()%> 09:00:00").getTime(), // Start of the plot band
+           		    <%localDate = localDate.plusDays(7);%>
+           		    to: new Date("<%=localDate.getYear()%>/<%=localDate.getMonthValue()%>/<%=localDate.getDayOfMonth()%> 24:00:00").getTime() // End of the plot band
+           	 }],
+           	 events: {
+                    setExtremes: function(e) {
+                    	changeWeekTableWidth(e.min, e.max);
+		                setYearColumnPosition();
+                    }
+                }
+            },
+            yAxis : [{// Primary yAxis
+           	 min: 0,
+                gridLineWidth: 0,
+                labels: {
+                  format: '{value:1f}',
+                  style: {
+                    color: Highcharts.getOptions().colors[1]
+                  }
+                },
+                title: {
+                  text: 'Quantity',
+                  style: {
+                    color: Highcharts.getOptions().colors[1]
+                  }
+                },
+                opposite: false
+            },{ // Secondary yAxis
+           	 min: 0,
+                gridLineWidth: 0,
+                title: {
+                  text: 'Cumulative',
+                  style: {
+                    color: Highcharts.getOptions().colors[0]
+                  }
+                },
+                labels: {
+                  format: '{value:1f}',
+                  style: {
+                    color: Highcharts.getOptions().colors[0]
+                  }
+                }
+            }],
+            series: [
+            {
+                name: 'Plan',
+                yAxis: 0,
+                type: 'column',
+                showInNavigator: false,
+                cursor: 'pointer',
+                point: {
+                    events: {
+						click: function (event) {
+							clickColumnDate = new Date(this.x);
+							var dataList = mPlanWeekData.get(clickColumnDate.getFullYear()+"_"+(clickColumnDate.getMonth()+1)+"_"+clickColumnDate.getDate());
+							if(!dataList){
+								clickColumnDate.setDate(clickColumnDate.getDate()+4);
+								dataList = mPlanWeekData.get(clickColumnDate.getFullYear()+"_"+(clickColumnDate.getMonth()+1)+"_"+clickColumnDate.getDate());
+							}
+							detail.innerText = "Detail (" + clickColumnDate.getFullYear() + "년 " + (clickColumnDate.getMonth()+1) + "월 " + getWeek(clickColumnDate) + "주차 Plan " + dataList.length + "건)";
+							detailTableTBody.replaceChildren();
+							for(var data of dataList){
+								var tr = document.createElement('tr');
+								var tdLV01	 = document.createElement('td');
+								var tdLV02	 = document.createElement('td');
+								var tdDP	 = document.createElement('td');
+								var tdEWPNo	 = document.createElement('td');
+								var tdCWPNo	 = document.createElement('td');
+								var tdPG	 = document.createElement('td');
+								var tdPN	 = document.createElement('td');
+								var tdStage	 = document.createElement('td');
+								var tdStatus = document.createElement('td');
+								var tdSUBCON = document.createElement('td');
+								var tdPlanStart = document.createElement('td');
+								tdLV01.textContent = data["LV1"];
+								tdLV02.textContent = data["LV2"];
+								tdDP.textContent = data["decDiscipline"];
+								tdEWPNo.textContent = data["name"];
+								tdCWPNo.textContent = data["CWP No"];
+								tdPG.textContent = data["decPriorityGroup"];
+								tdPN.textContent = data["decPriorityNo"];
+								tdStage.textContent = data["decStage"];
+								tdStatus.textContent = data["current"];
+								tdSUBCON.textContent = data["decSubConNo"];
+								tdPlanStart.textContent = data["Task Estimated Start Date"];
+								tr.appendChild(tdLV01);
+								tr.appendChild(tdLV02);
+								tr.appendChild(tdDP);
+								tr.appendChild(tdEWPNo);
+								tr.appendChild(tdCWPNo);
+								tr.appendChild(tdPG);
+								tr.appendChild(tdPN);
+								tr.appendChild(tdStage);
+								tr.appendChild(tdStatus);
+								tr.appendChild(tdSUBCON);
+								tr.appendChild(tdPlanStart);
+								detailTableTBody.appendChild(tr);
+							}
+						}
+                    }
+                },
+                data: [
+               	 <%for(int i=0; i<listDay.size(); i++){
+               	 	sMS = listDay.get(i);
+               	 	sArrMS = sMS.split("_");
+               	 	sYear = sArrMS[0];
+               	 	sMonth = sArrMS[1];
+               	 	sDay = sArrMS[2];
+               	 %>
+               	 [new Date("<%=sYear%>/<%=sMonth%>/<%=sDay%> 00:00:00").getTime(),<%=mPlanDayCnt.getOrDefault(sYear+"_"+sMonth+"_"+sDay, 0)%>], 
+               	 <%}%>
+               	 ]
+            }
+            ,
+            {
+                name: 'Forecast',
+                yAxis: 0,
+                type: 'column',
+                showInNavigator: false,
+                cursor: 'pointer',
+                point: {
+                    events: {
+                        click: function (event) {
+							clickColumnDate = new Date(this.x);
+							var dataList = mForecastWeekData.get(clickColumnDate.getFullYear()+"_"+(clickColumnDate.getMonth()+1)+"_"+clickColumnDate.getDate());
+							if(!dataList){
+								clickColumnDate.setDate(clickColumnDate.getDate()+4);
+								dataList = mForecastWeekData.get(clickColumnDate.getFullYear()+"_"+(clickColumnDate.getMonth()+1)+"_"+clickColumnDate.getDate());
+							}
+							detail.innerText = "Detail (" + clickColumnDate.getFullYear() + "년 " + (clickColumnDate.getMonth()+1) + "월 " + getWeek(clickColumnDate) + "주차 Forecast " + dataList.length + "건)";
+							detailTableTBody.replaceChildren();
+							for(var data of dataList){
+								var tr = document.createElement('tr');
+								var tdLV01	 = document.createElement('td');
+								var tdLV02	 = document.createElement('td');
+								var tdDP	 = document.createElement('td');
+								var tdEWPNo	 = document.createElement('td');
+								var tdCWPNo	 = document.createElement('td');
+								var tdPG	 = document.createElement('td');
+								var tdPN	 = document.createElement('td');
+								var tdStage	 = document.createElement('td');
+								var tdStatus = document.createElement('td');
+								var tdSUBCON = document.createElement('td');
+								var tdPlanStart = document.createElement('td');
+								tdLV01.textContent = data["LV1"];
+								tdLV02.textContent = data["LV2"];
+								tdDP.textContent = data["decDiscipline"];
+								tdEWPNo.textContent = data["name"];
+								tdCWPNo.textContent = data["CWP No"];
+								tdPG.textContent = data["decPriorityGroup"];
+								tdPN.textContent = data["decPriorityNo"];
+								tdStage.textContent = data["decStage"];
+								tdStatus.textContent = data["current"];
+								tdSUBCON.textContent = data["decSubConNo"];
+								tdPlanStart.textContent = data["Task Estimated Start Date"];
+								tr.appendChild(tdLV01);
+								tr.appendChild(tdLV02);
+								tr.appendChild(tdDP);
+								tr.appendChild(tdEWPNo);
+								tr.appendChild(tdCWPNo);
+								tr.appendChild(tdPG);
+								tr.appendChild(tdPN);
+								tr.appendChild(tdStage);
+								tr.appendChild(tdStatus);
+								tr.appendChild(tdSUBCON);
+								tr.appendChild(tdPlanStart);
+								detailTableTBody.appendChild(tr);
+							}
+                        }
+                    }
+                },
+                data: [
+               	 <%for(int i=0; i<listDay.size(); i++){
+               	 	sMS = listDay.get(i);
+               	 	sArrMS = sMS.split("_");
+               	 	sYear = sArrMS[0];
+               	 	sMonth = sArrMS[1];
+               	 	sDay = sArrMS[2];
+               	 %>
+               	 [new Date("<%=sYear%>/<%=sMonth%>/<%=sDay%> 00:00:00").getTime(),<%=mForecastDayCnt.getOrDefault(sYear+"_"+sMonth+"_"+sDay, 0)%>], 
+               	 <%}%>
+               	 ]
+            }
+            ,
+            {
+                name: 'Actual',
+                yAxis: 0,
+                type: 'column',
+                showInNavigator: false,
+                cursor: 'pointer',
+                point: {
+                    events: {
+                        click: function (event) {
+							clickColumnDate = new Date(this.x);
+							var dataList = mActualWeekData.get(clickColumnDate.getFullYear()+"_"+(clickColumnDate.getMonth()+1)+"_"+clickColumnDate.getDate());
+							if(!dataList){
+								clickColumnDate.setDate(clickColumnDate.getDate()+4);
+								dataList = mActualWeekData.get(clickColumnDate.getFullYear()+"_"+(clickColumnDate.getMonth()+1)+"_"+clickColumnDate.getDate());
+							}
+							detail.innerText = "Detail (" + clickColumnDate.getFullYear() + "년 " + (clickColumnDate.getMonth()+1) + "월 " + getWeek(clickColumnDate) + "주차 Actual " + dataList.length + "건)";
+							detailTableTBody.replaceChildren();
+							for(var data of dataList){
+								var tr = document.createElement('tr');
+								var tdLV01	 = document.createElement('td');
+								var tdLV02	 = document.createElement('td');
+								var tdDP	 = document.createElement('td');
+								var tdEWPNo	 = document.createElement('td');
+								var tdCWPNo	 = document.createElement('td');
+								var tdPG	 = document.createElement('td');
+								var tdPN	 = document.createElement('td');
+								var tdStage	 = document.createElement('td');
+								var tdStatus = document.createElement('td');
+								var tdSUBCON = document.createElement('td');
+								var tdPlanStart = document.createElement('td');
+								tdLV01.textContent = data["LV1"];
+								tdLV02.textContent = data["LV2"];
+								tdDP.textContent = data["decDiscipline"];
+								tdEWPNo.textContent = data["name"];
+								tdCWPNo.textContent = data["CWP No"];
+								tdPG.textContent = data["decPriorityGroup"];
+								tdPN.textContent = data["decPriorityNo"];
+								tdStage.textContent = data["decStage"];
+								tdStatus.textContent = data["current"];
+								tdSUBCON.textContent = data["decSubConNo"];
+								tdPlanStart.textContent = data["Task Estimated Start Date"];
+								tr.appendChild(tdLV01);
+								tr.appendChild(tdLV02);
+								tr.appendChild(tdDP);
+								tr.appendChild(tdEWPNo);
+								tr.appendChild(tdCWPNo);
+								tr.appendChild(tdPG);
+								tr.appendChild(tdPN);
+								tr.appendChild(tdStage);
+								tr.appendChild(tdStatus);
+								tr.appendChild(tdSUBCON);
+								tr.appendChild(tdPlanStart);
+								detailTableTBody.appendChild(tr);
+							}
+                        }
+                    }
+                },
+                data: [
+               	 <%for(int i=0; i<listDay.size(); i++){
+               	 	sMS = listDay.get(i);
+               	 	sArrMS = sMS.split("_");
+               	 	sYear = sArrMS[0];
+               	 	sMonth = sArrMS[1];
+               	 	sDay = sArrMS[2];
+               	 %>
+               	 [new Date("<%=sYear%>/<%=sMonth%>/<%=sDay%> 00:00:00").getTime(),<%=mActualDayCnt.getOrDefault(sYear+"_"+sMonth+"_"+sDay, 0)%>], 
+               	 <%}%>
+               	 ]
+            }
+            ,
+            {
+                name: 'Plan Cumulative',
+                yAxis: 1,
+                showInNavigator: true,
+                data: [
+               	 <%for(int i=0; i<listDay.size(); i++){
+                	 	sMS = listDay.get(i);
+                	 	sArrMS = sMS.split("_");
+                	 	sYear = sArrMS[0];
+                	 	sMonth = sArrMS[1];
+               	 	sDay = sArrMS[2];
+               		iPlanCumulative = iPlanCumulative + mPlanDayCnt.getOrDefault(sYear+"_"+sMonth+"_"+sDay, 0);
+               	 %>
+               	 [new Date("<%=sYear%>/<%=sMonth%>/<%=sDay%> 00:00:00").getTime(),<%=iPlanCumulative%>], 
+               	 <%}%>
+               	 ]
+            }
+            ,
+            {
+                name: 'Forecast Cumulative',
+                yAxis: 1,
+                showInNavigator: false,
+                data: [
+               	 <%for(int i=0; i<listDay.size(); i++){
+                	 	sMS = listDay.get(i);
+                	 	sArrMS = sMS.split("_");
+                	 	sYear = sArrMS[0];
+                	 	sMonth = sArrMS[1];
+               	 	sDay = sArrMS[2];
+               		iForecastCumulative = iForecastCumulative + mForecastDayCnt.getOrDefault(sYear+"_"+sMonth+"_"+sDay, 0);
+               	 %>
+               	 [new Date("<%=sYear%>/<%=sMonth%>/<%=sDay%> 00:00:00").getTime(),<%=iForecastCumulative%>], 
+               	 <%}%>
+               	 ]
+            }
+            ,
+            {
+                name: 'Actual Cumulative',
+                yAxis: 1,
+                showInNavigator: false,
+                data: [
+               	 <%for(int i=0; i<listDay.size(); i++){
+                	 	sMS = listDay.get(i);
+                	 	sArrMS = sMS.split("_");
+                	 	sYear = sArrMS[0];
+                	 	sMonth = sArrMS[1];
+               	 	sDay = sArrMS[2];
+               		iActualCumulative = iActualCumulative + mActualDayCnt.getOrDefault(sYear+"_"+sMonth+"_"+sDay, 0);
+               	 %>
+               	 [new Date("<%=sYear%>/<%=sMonth%>/<%=sDay%> 00:00:00").getTime(),<%=iActualCumulative%>], 
+               	 <%}%>
+               	 ]
+            }
+            ]
+        });
+        setChangeHeader();
+    }
+    
+    // 두번째 차트
+    
+    <%
+    	localDate = LocalDate.now().withDayOfMonth(1);
+    	iPlanCumulative = 0;
+    	iForecastCumulative = 0;
+    	iActualCumulative = 0;
+    %>
+	var todayDate2 = new Date(<%=localDate.getYear()%>, <%=localDate.getMonthValue()-1%>, <%=localDate.getDayOfMonth()%>);
+	<%localDate = localDate.minusDays(15);%>
+    function createChart2(){
+        var chart2 = new Highcharts.stockChart({
+            rangeSelector: {
+            	buttonPosition: {
+                	align: 'left',
+                	x:-26
+            	},
+                buttons: [
+              // Month 기준으로 1m3m는 항상 비활성화
+              //{
+              //    type: 'month',
+              //    count: 1,
+              //    text: '1m',
+              //    events: {
+              //        click: function () {
+              //       	 var minDate = new Date().setDate(todayDate.getDate()-15);
+              //       	 var maxDate = new Date().setDate(todayDate.getDate()+15);
+              //       	 if(actualTime > minDate){
+              //       		 minDate = actualTime;
+              //       		 maxDate += (actualTime-minDate);
+              //       	 }
+              //       	 if(expectTime < maxDate){
+              //       		 maxDate = expectTime; 
+              //       		 minDate -= (maxDate-expectTime);
+              //       	 }
+              //       	 chart2.xAxis[0].setExtremes(minDate, maxDate);
+              //       	 return false;
+              //        }
+              //    }
+              //}, 
+              //{
+              //    type: 'month',
+              //    count: 3,
+              //    text: '3m',
+              //    events: {
+              //        click: function () {
+              //       	 var minDate = new Date().setDate(todayDate.getDate()-45);
+              //       	 var maxDate = new Date().setDate(todayDate.getDate()+45);
+              //       	 if(actualTime > maxDate && expectTime > maxDate){
+              //       		 return true;
+              //       	 }else if(actualTime < minDate && expectTime < minDate){
+              //       		 return true;
+              //       	 }
+              //       	 if(actualTime > minDate){
+              //       		 maxDate += (actualTime-minDate);
+              //       		 minDate = actualTime;
+              //       	 }
+              //       	 if(expectTime < maxDate){
+              //       		 minDate -= (maxDate-expectTime);
+              //       		 maxDate = expectTime;
+              //       	 }
+              //       	 chart2.xAxis[0].setExtremes(minDate, maxDate);
+              //       	 return false;
+              //        }
+              //    }
+              //}, 
+              	{
+                    type: 'month',
+                    count: 6,
+                    text: '6m',
+                    events: {
+                        click: function () {
+                       	 var minDate = new Date(todayDate2).setMonth(todayDate2.getMonth()-3);
+                       	 var maxDate = new Date(todayDate2).setMonth(todayDate2.getMonth()+3);
+                       	 if(actualTime > maxDate && expectTime > maxDate){
+                       		 return true;
+                       	 }else if(actualTime < minDate && expectTime < minDate){
+                       		 return true;
+                       	 }
+                       	 if(actualTime > minDate){
+                       		 maxDate += (actualTime-minDate);
+                       		 minDate = actualTime;
+                       	 }
+                       	 if(expectTime < maxDate){
+                       		minDate -= (maxDate-expectTime);
+                       		 maxDate = expectTime;
+                       	 }
+                       	 chart2.xAxis[0].setExtremes(minDate, maxDate);
+                       	 return false;
+                        }
+                    }
+                }, {
+                    type: 'year',
+                    count: 1,
+                    text: '1y',
+                    events: {
+                        click: function () {
+                       	 var minDate = new Date(todayDate2).setMonth(todayDate2.getMonth()-6);
+                       	 var maxDate = new Date(todayDate2).setMonth(todayDate2.getMonth()+6);
+                       	 if(actualTime > maxDate && expectTime > maxDate){
+                       		 return true;
+                       	 }else if(actualTime < minDate && expectTime < minDate){
+                       		 return true;
+                       	 }
+                       	 if(actualTime > minDate){
+                       		 maxDate += (actualTime-minDate);
+                       		 minDate = actualTime;
+                       	 }
+                       	 if(expectTime < maxDate){
+                       		minDate -= (maxDate-expectTime);
+                       		 maxDate = expectTime;
+                       	 }
+                       	 chart2.xAxis[0].setExtremes(minDate, maxDate);
+                       	 return false;
+                        }
+                    }
+                }, {
+                    type: 'all',
+                    text: 'All'
+                }]
+            },
+       	 title:{
+            	text : ''
+            },
+            credits: {
+                enabled: false
+            },
+            chart: {
+                renderTo: 'container',
+                type: 'line'
+            },
+            legend: {
+        	    enabled: true,
+        	    labelFormatter: function() {
+        	        return this.name;
+        	    }
+            },
+            tooltip: {
+	            split: true,
+	            distance: 30,
+	            padding : 5,
+	            formatter: function () {
+	            	let tipDate = new Date(this.x);
+	                return [dayArr[tipDate.getDay()] + ', ' + tipDate.getDate() + " " + monthArr[tipDate.getMonth()]].concat(
+	                    this.points ?
+	                        this.points.map(function (point) {
+	                        	return '<tspan style="color: ' + point.color + '; fill: ' + point.color + ';">&#9679; </tspan>' + point.series.name + ': <b>' + point.y + "</b>";
+	                        }) : []
+	                );
+	            }
+            },
+            xAxis: {
+           	 plotBands: [{
+           		    color: 'skyblue', // Color value
+           		    from: new Date("<%=localDate.getYear()%>/<%=localDate.getMonthValue()%>/<%=localDate.getDayOfMonth()%> 00:00:00").getTime(), // Start of the plot band
+           		    <%localDate = localDate.plusMonths(1);%>
+           		    to: new Date("<%=localDate.getYear()%>/<%=localDate.getMonthValue()%>/<%=localDate.getDayOfMonth()%> 00:00:00").getTime() // End of the plot band
+           	 }],
+           	 events: {
+                    setExtremes: function(e) {
+                    	changeMonthTableWidth(e.min, e.max);
+	                   	setYearColumnPosition();
+                    }
+                }
+            },
+            yAxis : [{// Primary yAxis
+           	 min: 0,
+                gridLineWidth: 0,
+                labels: {
+                  format: '{value:1f}',
+                  style: {
+                    color: Highcharts.getOptions().colors[1]
+                  }
+                },
+                title: {
+                  text: 'Quantity',
+                  style: {
+                    color: Highcharts.getOptions().colors[1]
+                  }
+                },
+                opposite: false
+            },{ // Secondary yAxis
+           	 min: 0,
+                gridLineWidth: 0,
+                title: {
+                  text: 'Cumulative',
+                  style: {
+                    color: Highcharts.getOptions().colors[0]
+                  }
+                },
+                labels: {
+                  format: '{value:1f}',
+                  style: {
+                    color: Highcharts.getOptions().colors[0]
+                  }
+                }
+            }],
+            series: [
+            {
+                name: 'Plan',
+                yAxis: 0,
+                type: 'column',
+                showInNavigator: false,
+                cursor: 'pointer',
+                point: {
+                    events: {
+                        click: function (event) {
+							clickColumnDate = new Date(this.x);
+							var dataList = mPlanMonthData.get(clickColumnDate.getFullYear()+"_"+(clickColumnDate.getMonth()+1));
+							detail.innerText = "Detail (" + clickColumnDate.getFullYear() + "년 " + (clickColumnDate.getMonth()+1) + "월 Plan " + dataList.length + "건)";
+							detailTableTBody.replaceChildren();
+							for(var data of dataList){
+								var tr = document.createElement('tr');
+								var tdLV01	 = document.createElement('td');
+								var tdLV02	 = document.createElement('td');
+								var tdDP	 = document.createElement('td');
+								var tdEWPNo	 = document.createElement('td');
+								var tdCWPNo	 = document.createElement('td');
+								var tdPG	 = document.createElement('td');
+								var tdPN	 = document.createElement('td');
+								var tdStage	 = document.createElement('td');
+								var tdStatus = document.createElement('td');
+								var tdSUBCON = document.createElement('td');
+								var tdPlanStart = document.createElement('td');
+								tdLV01.textContent = data["LV1"];
+								tdLV02.textContent = data["LV2"];
+								tdDP.textContent = data["decDiscipline"];
+								tdEWPNo.textContent = data["name"];
+								tdCWPNo.textContent = data["CWP No"];
+								tdPG.textContent = data["decPriorityGroup"];
+								tdPN.textContent = data["decPriorityNo"];
+								tdStage.textContent = data["decStage"];
+								tdStatus.textContent = data["current"];
+								tdSUBCON.textContent = data["decSubConNo"];
+								tdPlanStart.textContent = data["Task Estimated Start Date"];
+								tr.appendChild(tdLV01);
+								tr.appendChild(tdLV02);
+								tr.appendChild(tdDP);
+								tr.appendChild(tdEWPNo);
+								tr.appendChild(tdCWPNo);
+								tr.appendChild(tdPG);
+								tr.appendChild(tdPN);
+								tr.appendChild(tdStage);
+								tr.appendChild(tdStatus);
+								tr.appendChild(tdSUBCON);
+								tr.appendChild(tdPlanStart);
+								detailTableTBody.appendChild(tr);
+							}
+                        }
+                    }
+                },
+                data: [
+               	 <%for(int i=0; i<listDayMonth.size(); i++){
+               	 	sMS = listDayMonth.get(i);
+               	 	sArrMS = sMS.split("_");
+               	 	sYear = sArrMS[0];
+               	 	sMonth = sArrMS[1];
+               	 %>
+               	 [new Date("<%=sYear%>/<%=sMonth%>/1 00:00:00").getTime(),<%=mPlanMonthCnt.getOrDefault(sYear+"_"+sMonth, 0)%>], 
+               	 <%}%>
+               	 ]
+            }
+            ,
+            {
+                name: 'Forecast',
+                yAxis: 0,
+                type: 'column',
+                showInNavigator: false,
+                cursor: 'pointer',
+                point: {
+                    events: {
+                        click: function (event) {
+							clickColumnDate = new Date(this.x);
+							var dataList = mForecastMonthData.get(clickColumnDate.getFullYear()+"_"+(clickColumnDate.getMonth()+1));
+							detail.innerText = "Detail (" + clickColumnDate.getFullYear() + "년 " + (clickColumnDate.getMonth()+1) + "월 Forecast " + dataList.length + "건)";
+							detailTableTBody.replaceChildren();
+							for(var data of dataList){
+								var tr = document.createElement('tr');
+								var tdLV01	 = document.createElement('td');
+								var tdLV02	 = document.createElement('td');
+								var tdDP	 = document.createElement('td');
+								var tdEWPNo	 = document.createElement('td');
+								var tdCWPNo	 = document.createElement('td');
+								var tdPG	 = document.createElement('td');
+								var tdPN	 = document.createElement('td');
+								var tdStage	 = document.createElement('td');
+								var tdStatus = document.createElement('td');
+								var tdSUBCON = document.createElement('td');
+								var tdPlanStart = document.createElement('td');
+								tdLV01.textContent = data["LV1"];
+								tdLV02.textContent = data["LV2"];
+								tdDP.textContent = data["decDiscipline"];
+								tdEWPNo.textContent = data["name"];
+								tdCWPNo.textContent = data["CWP No"];
+								tdPG.textContent = data["decPriorityGroup"];
+								tdPN.textContent = data["decPriorityNo"];
+								tdStage.textContent = data["decStage"];
+								tdStatus.textContent = data["current"];
+								tdSUBCON.textContent = data["decSubConNo"];
+								tdPlanStart.textContent = data["Task Estimated Start Date"];
+								tr.appendChild(tdLV01);
+								tr.appendChild(tdLV02);
+								tr.appendChild(tdDP);
+								tr.appendChild(tdEWPNo);
+								tr.appendChild(tdCWPNo);
+								tr.appendChild(tdPG);
+								tr.appendChild(tdPN);
+								tr.appendChild(tdStage);
+								tr.appendChild(tdStatus);
+								tr.appendChild(tdSUBCON);
+								tr.appendChild(tdPlanStart);
+								detailTableTBody.appendChild(tr);
+							}
+                        }
+                    }
+                },
+                data: [
+               	 <%for(int i=0; i<listDayMonth.size(); i++){
+               	 	sMS = listDayMonth.get(i);
+               	 	sArrMS = sMS.split("_");
+               	 	sYear = sArrMS[0];
+               	 	sMonth = sArrMS[1];
+               	 %>
+               	 [new Date("<%=sYear%>/<%=sMonth%>/1 00:00:00").getTime(),<%=mForecastMonthCnt.getOrDefault(sYear+"_"+sMonth, 0)%>], 
+               	 <%}%>
+               	 ]
+            }
+            ,
+            {
+                name: 'Actual',
+                yAxis: 0,
+                type: 'column',
+                showInNavigator: false,
+                cursor: 'pointer',
+                point: {
+                    events: {
+                        click: function (event) {
+							clickColumnDate = new Date(this.x);
+							var dataList = mActualMonthData.get(clickColumnDate.getFullYear()+"_"+(clickColumnDate.getMonth()+1));
+							detail.innerText = "Detail (" + clickColumnDate.getFullYear() + "년 " + (clickColumnDate.getMonth()+1) + "월 Actual " + dataList.length + "건)";
+							detailTableTBody.replaceChildren();
+							for(var data of dataList){
+								var tr = document.createElement('tr');
+								var tdLV01	 = document.createElement('td');
+								var tdLV02	 = document.createElement('td');
+								var tdDP	 = document.createElement('td');
+								var tdEWPNo	 = document.createElement('td');
+								var tdCWPNo	 = document.createElement('td');
+								var tdPG	 = document.createElement('td');
+								var tdPN	 = document.createElement('td');
+								var tdStage	 = document.createElement('td');
+								var tdStatus = document.createElement('td');
+								var tdSUBCON = document.createElement('td');
+								var tdPlanStart = document.createElement('td');
+								tdLV01.textContent = data["LV1"];
+								tdLV02.textContent = data["LV2"];
+								tdDP.textContent = data["decDiscipline"];
+								tdEWPNo.textContent = data["name"];
+								tdCWPNo.textContent = data["CWP No"];
+								tdPG.textContent = data["decPriorityGroup"];
+								tdPN.textContent = data["decPriorityNo"];
+								tdStage.textContent = data["decStage"];
+								tdStatus.textContent = data["current"];
+								tdSUBCON.textContent = data["decSubConNo"];
+								tdPlanStart.textContent = data["Task Estimated Start Date"];
+								tr.appendChild(tdLV01);
+								tr.appendChild(tdLV02);
+								tr.appendChild(tdDP);
+								tr.appendChild(tdEWPNo);
+								tr.appendChild(tdCWPNo);
+								tr.appendChild(tdPG);
+								tr.appendChild(tdPN);
+								tr.appendChild(tdStage);
+								tr.appendChild(tdStatus);
+								tr.appendChild(tdSUBCON);
+								tr.appendChild(tdPlanStart);
+								detailTableTBody.appendChild(tr);
+							}
+                        }
+                    }
+                },
+                data: [
+               	 <%for(int i=0; i<listDayMonth.size(); i++){
+               	 	sMS = listDayMonth.get(i);
+               	 	sArrMS = sMS.split("_");
+               	 	sYear = sArrMS[0];
+               	 	sMonth = sArrMS[1];
+               	 %>
+               	 [new Date("<%=sYear%>/<%=sMonth%>/1 00:00:00").getTime(),<%=mActualMonthCnt.getOrDefault(sYear+"_"+sMonth, 0)%>], 
+               	 <%}%>
+               	 ]
+            }
+            ,
+            {
+                name: 'Plan Cumulative',
+                yAxis: 1,
+                showInNavigator: true,
+                data: [
+               	 <%for(int i=0; i<listDayMonth.size(); i++){
+                	 	sMS = listDayMonth.get(i);
+                	 	sArrMS = sMS.split("_");
+                	 	sYear = sArrMS[0];
+                	 	sMonth = sArrMS[1];
+               		iPlanCumulative = iPlanCumulative + mPlanMonthCnt.getOrDefault(sYear+"_"+sMonth, 0);
+               	 %>
+               	 [new Date("<%=sYear%>/<%=sMonth%>/1 00:00:00").getTime(),<%=iPlanCumulative%>], 
+               	 <%}%>
+               	 ]
+            }
+            ,
+            {
+                name: 'Forecast Cumulative',
+                yAxis: 1,
+                showInNavigator: false,
+                data: [
+               	 <%for(int i=0; i<listDayMonth.size(); i++){
+                	 	sMS = listDayMonth.get(i);
+                	 	sArrMS = sMS.split("_");
+                	 	sYear = sArrMS[0];
+                	 	sMonth = sArrMS[1];
+               		iForecastCumulative = iForecastCumulative + mForecastMonthCnt.getOrDefault(sYear+"_"+sMonth, 0);
+               	 %>
+               	 [new Date("<%=sYear%>/<%=sMonth%>/1 00:00:00").getTime(),<%=iForecastCumulative%>], 
+               	 <%}%>
+               	 ]
+            }
+            ,
+            {
+                name: 'Actual Cumulative',
+                yAxis: 1,
+                showInNavigator: false,
+                data: [
+               	 <%for(int i=0; i<listDayMonth.size(); i++){
+                	 	sMS = listDayMonth.get(i);
+                	 	sArrMS = sMS.split("_");
+                	 	sYear = sArrMS[0];
+                	 	sMonth = sArrMS[1];
+               		iActualCumulative = iActualCumulative + mActualMonthCnt.getOrDefault(sYear+"_"+sMonth, 0);
+               	 %>
+               	 [new Date("<%=sYear%>/<%=sMonth%>/1 00:00:00").getTime(),<%=iActualCumulative%>], 
+               	 <%}%>
+               	 ]
+            }
+            ]
+        });
+        setChangeHeader();
+    }
+    createChart1();
+    window.onresize = function() {
+		setContainerHeight();
+		columnWeekWidth = columnWeek.clientWidth;
+		columnMonthWidth = columnMonth.clientWidth;
+		summaryTableClientWidth = summaryTable.clientWidth;
+		summaryTable2ClientWidth = summaryTable2.clientWidth;
+		tableDivBorderWidth = tableDivBorder.clientWidth;
+		// Monthly냐 Weekly냐 에 따라 달라질것
+		    if(currentChart == 1){
+		   	tableDivleft.style.width = summaryTableClientWidth + "px";
+		   	tableDivright.style.width = summaryTableClientWidth + "px";
+		}else if(currentChart == 2){
+		   	tableDivleft.style.width = summaryTable2ClientWidth + "px";
+		   	tableDivright.style.width = summaryTable2ClientWidth + "px";
+		}
+		setChangeHeader();
+    }
+	$("#WeeklyChange").click(function () {
+		detail.innerText = "Detail";
+		detailTableTBody.replaceChildren();
+		createChart1();
+		currentChart = 1;
+		summaryTable.style.display = '';
+		summaryTable2.style.display = 'none';
+		summaryTableClientWidth = summaryTable.clientWidth;
+		columnWeekWidth = columnWeek.clientWidth;
+		tableDivleft.style.width = summaryTableClientWidth + "px";
+		tableDivright.style.width = summaryTableClientWidth + "px";
+		this.className="currentDis";
+		document.getElementById('MonthlyChange').className = "Dis";
+		changeWeekTableWidth(from, to);
+	});
+	$("#MonthlyChange").click(function () {
+		detail.innerText = "Detail";
+		detailTableTBody.replaceChildren();
+	    createChart2();
+	    currentChart = 2;
+	    summaryTable.style.display = 'none';
+	    summaryTable2.style.display = '';
+	    summaryTable2ClientWidth = summaryTable2.clientWidth;
+	    columnMonthWidth = columnMonth.clientWidth;
+	    tableDivleft.style.width = summaryTable2ClientWidth + "px";
+	    tableDivright.style.width = summaryTable2ClientWidth + "px";
+	    this.className="currentDis";
+	    document.getElementById('WeeklyChange').className = "Dis";
+		changeMonthTableWidth(from, to);
+	});
+    function setChangeHeader(){
+	  	toolBtn = document.getElementsByClassName('highcharts-label');
+	   	var x = toolBtn[0].getBoundingClientRect().x;
+	   	document.getElementById('changeHeader').style.marginLeft = x + 'px';
+    }
+    setChangeHeader();
+    function changeMonthTableWidth(min, max){
+      	 if(tableDivBorderWidth < summaryTable2ClientWidth){
+          	 var minDate = new Date(min); 
+          	 var maxDate = new Date(max);
+          	 if(minDate > maxDate){
+          		 minDate = new Date(max);
+              	 maxDate = new Date(min);
+          	 }
+          	 var changeLeftWidth = 0;
+          	 var changeRightWidth = 0;
+          	 if(minDate > actual){
+          		 changeLeftWidth = Math.floor((minDate - actual) / 2595600000) * columnMonthWidth;
+          	 }else{
+          		 changeLeftWidth = 0;
+          	 }
+          	 if(maxDate < expect){
+          		 changeRightWidth = Math.floor((expect - maxDate) / 2595600000) * columnMonthWidth;
+          	 }else{
+          		 changeRightWidth = 0;
+          	 }
+      		 tableDivleftWidth = (summaryTable2ClientWidth - changeLeftWidth - changeRightWidth);
+      		 tableDivRightWidth = (summaryTable2ClientWidth - changeRightWidth);
+          	 if(tableDivleftWidth < tableDivBorderWidth){
+          		 tableDivleftWidth = tableDivBorderWidth + columnMonthWidth - (tableDivBorderWidth % columnMonthWidth);
+          	 }
+          	 if(tableDivRightWidth < tableDivBorderWidth){
+          		 tableDivRightWidth = tableDivBorderWidth + columnMonthWidth - (tableDivBorderWidth % columnMonthWidth);
+          	 }
+          	 if(tableDivBorderWidth > (tableDivRightWidth - changeLeftWidth)){
+          		 tableDivRightWidth = (tableDivBorderWidth + changeLeftWidth) - (tableDivBorderWidth % columnMonthWidth);
+          		 if(tableDivRightWidth > summaryTable2ClientWidth){
+          			 tableDivRightWidth = summaryTable2ClientWidth;
+          		 }
+          	 }
+            tableDivleft.style.width = tableDivleftWidth + "px";
+            tableDivright.style.width = tableDivRightWidth + "px";
+      	 }
+    }
+    function changeWeekTableWidth(min, max){
+      	 if(tableDivBorderWidth < summaryTableClientWidth){
+          	 var minDate = new Date(min); 
+          	 var maxDate = new Date(max);
+          	 if(minDate > maxDate){
+          		 minDate = new Date(max);
+              	 maxDate = new Date(min);
+          	 }
+          	 var changeLeftWidth = 0;
+          	 var changeRightWidth = 0;
+          	 if(minDate > actual){
+          		 changeLeftWidth = Math.floor((minDate - actual) / 604800000) * columnWeekWidth;
+          	 }else{
+          		 changeLeftWidth = 0;
+          	 }
+          	 if(maxDate < expect){
+          		 changeRightWidth = Math.floor((expect - maxDate) / 604800000) * columnWeekWidth;
+          	 }else{
+          		 changeRightWidth = 0;
+          	 }
+      		 tableDivleftWidth = (summaryTableClientWidth - changeLeftWidth - changeRightWidth);
+      		 tableDivRightWidth = (summaryTableClientWidth - changeRightWidth);
+          	 if(tableDivleftWidth < tableDivBorderWidth){
+          		 tableDivleftWidth = tableDivBorderWidth + columnWeekWidth - (tableDivBorderWidth % columnWeekWidth);
+          	 }
+          	 if(tableDivRightWidth < tableDivBorderWidth){
+          		 tableDivRightWidth = tableDivBorderWidth + columnWeekWidth - (tableDivBorderWidth % columnWeekWidth);
+          	 }
+          	 if(tableDivBorderWidth > (tableDivRightWidth - changeLeftWidth)){
+          		 tableDivRightWidth = (tableDivBorderWidth + changeLeftWidth) - (tableDivBorderWidth % columnWeekWidth);
+          		 if(tableDivRightWidth > summaryTableClientWidth){
+          			 tableDivRightWidth = summaryTableClientWidth;
+          		 }
+          	 }
+            tableDivleft.style.width = tableDivleftWidth + "px";
+            tableDivright.style.width = tableDivRightWidth + "px";
+      	 }
+    }
+ });
+ </script>
+<link rel="stylesheet" href="../webapps/UIKIT/UIKIT.css" type="text/css" />
+<body>
+	<div style="display:flow-root;">
+		<header id="changeHeader" style="float: left;  margin:10px;">
+			<button id="WeeklyChange" class="currentDis">Weekly</button>
+			<button id="MonthlyChange" class="Dis">Monthly</button>
+		</header>
+		<header id="popup" style="float: right; margin: 10px;">
+			<h4 style="margin-top:0px; margin-bottom:0px;">
+			CWP Plan&emsp;
+			<a href=JavaScript:window.open("emxTree.jsp?DefaultCategory=decCwpPlanList&objectId=<%=sObjectId%>");><img src="images/iconActionNewWindow.png" border="0"></a>
+			&emsp;<img src="../common/images/iconActionSearchSpyGlass.png" onclick='showFilterSlideinDialog("objectId=<%=sObjectId%>&filterParam=codeMaster:Discipline,codeMaster:Sub-Con,Select_Date:true")' style="cursor: pointer;">
+			</h4>
+		</header>
+	</div>
+	<div id="container"></div>
+   <details id="scheduleTable">
+   	<summary>Summary</summary>
+   		<div style="float: left;">
+		   	<table class="grid">
+		   		<tbody>
+		   			<tr>
+		   				<th id="headerYear" class="header">Year</th>
+		   			</tr>
+		   			<tr>
+		   				<th>Month</th>
+		   			</tr>
+		   			<tr>
+		   			<th style="height: 29px;"></th>
+		   			</tr>
+		   			<tr>
+		   				<td>Plan Quantity</td>
+		   			</tr>
+		   			<tr>
+		   				<td>Plan Cumulative</td>
+		   			</tr>
+		   			<tr>
+		   				<td>Forecast Quantity</td>
+		   			</tr>
+		   			<tr>
+		   				<td>Forecast Cumulative</td>
+		   			</tr>
+		   			<tr>
+		   				<td>Actual Quantity</td>
+		   			</tr>
+		   			<tr>
+		   				<td>Actual Cumulative</td>
+		   			</tr>
+		   		</tbody>
+		   	</table>
+		</div>
+   		<div style="float: right;">
+		   	<table class="grid">
+		   		<tbody>
+		   			<tr>
+		   				<th style="height: 87px;">Total</th>
+		   			</tr>
+		   			<tr>
+		   				<td><%=iAllSumPlan%></td>
+		   			</tr>
+		   			<tr>
+		   				<td><%=iAllSumPlan%></td>
+		   			</tr>
+		   			<tr>
+		   				<td><%=iAllSumForecast %></td>
+		   			</tr>
+		   			<tr>
+		   				<td><%=iAllSumForecast%></td>
+		   			</tr>
+		   			<tr>
+		   				<td><%=iAllSumActual %></td>
+		   			</tr>
+		   			<tr>
+		   				<td><%=iAllSumActual%></td>
+		   			</tr>
+		   		</tbody>
+		   	</table>
+	   	</div>
+   	<div id="tableDivBorder" style="overflow: auto;">
+	   	<div id="tableDivleft" style="float:left;">
+	   	<div id="tableDivright" style="float:right;">
+		   	<table id="summaryTable" class="grid" style="max-width:none; width:auto;">
+		   		<tbody>
+		   			<tr>
+		   				<%for(int i : setYear){ 
+		   					int iYearCnt = mYearWeekCnt.get(i)-1;%>
+		   					<th class="yearColumn" style="border-right:none; border-left:1px solid #959595; z-index: <%=i%>;"><%=i%></th>
+		   					<%for(int iYC=0; iYC<iYearCnt; iYC++){ %>
+		   					<th style="border-right:none; "></th>
+		   				<%} }%>
+		   			</tr>
+		   			<tr>
+		   				<%for(int i=0; i<listMonthSummary.size(); i++){
+		   					sMS = (String)listMonthSummary.get(i);
+		   					iMS = Integer.valueOf(sMS.substring(sMS.indexOf("_")+1, sMS.length()));
+		   				%>
+		   				<th colspan="<%=mMonthWeekCnt.get(listMonthSummary.get(i))%>"><%=sArrMonthSummary[iMS-1]%></th> <!-- 여기 반복문 -->
+		   				<%
+		   				  }%>
+		   			</tr>
+		   			<tr><!-- 여기 주간 -->
+		   				<%for(int i=iBeforeWeekOfYear; i<lTotalWeek; i++){ 
+		   					if(i == iBeforeWeekOfYear){
+		   				%>
+		   				<th id="columnWeek" class="columns"><%=i%></th>
+		   				<%
+		   					}else{
+		   				%>
+		   				<th class="columns"><%=i%></th>
+		   				<%}}%>
+		   			</tr>
+		   			<tr>
+		   				<%for(String sKey : lYearWeek){
+		   					if(DecStringUtil.equals(sTodayWeekKey, sKey)){
+		   						%>
+		   						<td id="todayWeekColumn" class=todayColumn>
+		   						<%
+		   					}else{
+		   						%>
+		   						<td>
+		   						<%
+		   					}
+		   				%>
+		   				<%=mPlanWeekCnt.get(sKey) == null ? DecConstants.EMPTY_STRING : mPlanWeekCnt.get(sKey)%></td>
+		   				<%}%>
+		   			</tr>
+		   			<tr>
+		   				<%for(String sKey : lYearWeek){ 
+		   					if(DecStringUtil.equals(sTodayWeekKey, sKey)){
+		   						%>
+		   						<td class=todayColumn>
+		   						<%
+		   					}else{
+		   						%>
+		   						<td>
+		   						<%
+		   					}
+		   					if(mPlanWeekCnt.get(sKey) != null){
+		   						iSumPlan += mPlanWeekCnt.get(sKey);
+		   					}
+		   				%>
+		   				<%=iSumPlan%></td>
+		   				<%}%>
+		   			</tr>
+		   			<tr>
+		   				<%for(String sKey : lYearWeek){
+		   					if(DecStringUtil.equals(sTodayWeekKey, sKey)){
+		   						%>
+		   						<td class=todayColumn>
+		   						<%
+		   					}else{
+		   						%>
+		   						<td>
+		   						<%
+		   					}
+		   				%>
+		   				<%=mForecastWeekCnt.get(sKey) == null ? DecConstants.EMPTY_STRING : mForecastWeekCnt.get(sKey)%></td>
+		   				<%}%>
+		   			</tr>
+		   			<tr>
+		   				<%for(String sKey : lYearWeek){ 
+		   					if(DecStringUtil.equals(sTodayWeekKey, sKey)){
+		   						%>
+		   						<td class=todayColumn>
+		   						<%
+		   					}else{
+		   						%>
+		   						<td>
+		   						<%
+		   					}
+		   					if(mForecastWeekCnt.get(sKey) != null){
+		   						iSumForecast += mForecastWeekCnt.get(sKey);
+		   					}
+		   				%>
+		   				<%=iSumForecast%></td>
+		   				<%}%>
+		   			</tr>
+		   			<tr>
+		   				<%for(String sKey : lYearWeek){
+		   					if(DecStringUtil.equals(sTodayWeekKey, sKey)){
+		   						%>
+		   						<td class=todayColumn>
+		   						<%
+		   					}else{
+		   						%>
+		   						<td>
+		   						<%
+		   					}
+		   				%>
+		   				<%=mActualWeekCnt.get(sKey) == null ? DecConstants.EMPTY_STRING : mActualWeekCnt.get(sKey)%></td>
+		   				<%}%>
+		   			</tr>
+		   			<tr>
+		   				<%for(String sKey : lYearWeek){ 
+		   					if(DecStringUtil.equals(sTodayWeekKey, sKey)){
+		   						%>
+		   						<td class=todayColumn>
+		   						<%
+		   					}else{
+		   						%>
+		   						<td>
+		   						<%
+		   					}
+		   					if(mActualWeekCnt.get(sKey) != null){
+		   						iSumActual += mActualWeekCnt.get(sKey);
+		   					}
+		   				%>
+		   				<%=iSumActual%></td>
+		   				<%}%>
+		   			</tr>
+		   		</tbody>
+		   	</table>
+		   	<%iSumPlan = 0; %>
+		   	<%iSumForecast = 0; %>
+		   	<%iSumActual = 0; %>
+		   	<table id="summaryTable2" class="grid" style="display: none; width:auto; max-width:none;">
+		   		<tbody>
+		   			<tr>
+		   				<%for(int i : setYear){ 
+		   					int iYearCnt = mYearMonthCnt.get(i)-1;%>
+		   					<th class="yearColumn2" style="border-right:none; border-left:1px solid #959595; z-index: <%=i%>;"><%=i%></th>
+		   					<%for(int iYC=0; iYC<iYearCnt; iYC++){ %>
+		   					<th style="border-right:none; "></th>
+		   				<%} }%>
+		   			</tr>
+		   			<tr>
+		   				<%for(int i=0; i<listMonthSummary.size(); i++){
+		   					sMS = (String)listMonthSummary.get(i);
+		   					iMS = Integer.valueOf(sMS.substring(sMS.indexOf("_")+1, sMS.length()));
+		   				%>
+		   				<th><%=sArrMonthSummary[iMS-1]%></th> <!-- 여기 반복문 -->
+		   				<%
+		   				  }%>
+		   			</tr>
+		   			<tr><!-- 여기 주간 -->
+		   				<%for(int i=0; i<listMonth.size(); i++){ 
+		   					if(i == 0){
+		   				%>
+		   				<th id="columnMonth" class="columns"><%=listMonth.get(i)%></th>
+		   				<%
+		   					}else{
+		   				%>
+		   				<th class="columns"><%=listMonth.get(i)%></th>
+		   				<%}}%>
+		   			</tr>
+		   			<tr>
+		   				<%for(String sKey : listMonthSummary){
+		   					if(DecStringUtil.equals(sTodayMonthKey, sKey)){
+		   						%>
+		   						<td id="todayMonthColumn" class=todayColumn>
+		   						<%
+		   					}else{
+		   						%>
+		   						<td>
+		   						<%
+		   					}
+		   				%>
+		   				<%=mPlanMonthCnt.get(sKey) == null ? DecConstants.EMPTY_STRING : mPlanMonthCnt.get(sKey)%></td>
+		   				<%}%>
+		   			</tr>
+		   			<tr>
+		   				<%for(String sKey : listMonthSummary){ 
+		   					if(DecStringUtil.equals(sTodayMonthKey, sKey)){
+		   						%>
+		   						<td class=todayColumn>
+		   						<%
+		   					}else{
+		   						%>
+		   						<td>
+		   						<%
+		   					}
+		   					if(mPlanMonthCnt.get(sKey) != null){
+		   						iSumPlan += mPlanMonthCnt.get(sKey);
+		   					}
+		   				%>
+		   				<%=iSumPlan%></td>
+		   				<%}%>
+		   			</tr>
+		   			<tr>
+		   				<%for(String sKey : listMonthSummary){
+		   					if(DecStringUtil.equals(sTodayMonthKey, sKey)){
+		   						%>
+		   						<td class=todayColumn>
+		   						<%
+		   					}else{
+		   						%>
+		   						<td>
+		   						<%
+		   					}
+		   				%>
+		   				<%=mForecastMonthCnt.get(sKey) == null ? DecConstants.EMPTY_STRING : mForecastMonthCnt.get(sKey)%></td>
+		   				<%}%>
+		   			</tr>
+		   			<tr>
+		   				<%for(String sKey : listMonthSummary){ 
+		   					if(DecStringUtil.equals(sTodayMonthKey, sKey)){
+		   						%>
+		   						<td class=todayColumn>
+		   						<%
+		   					}else{
+		   						%>
+		   						<td>
+		   						<%
+		   					}
+		   					if(mForecastMonthCnt.get(sKey) != null){
+		   						iSumForecast += mForecastMonthCnt.get(sKey);
+		   					}
+		   				%>
+		   				<%=iSumForecast%></td>
+		   				<%}%>
+		   			</tr>
+		   			<tr>
+		   				<%for(String sKey : listMonthSummary){
+		   					if(DecStringUtil.equals(sTodayMonthKey, sKey)){
+		   						%>
+		   						<td class=todayColumn>
+		   						<%
+		   					}else{
+		   						%>
+		   						<td>
+		   						<%
+		   					}
+		   				%>
+		   				<%=mActualMonthCnt.get(sKey) == null ? DecConstants.EMPTY_STRING : mActualMonthCnt.get(sKey)%></td>
+		   				<%}%>
+		   			</tr>
+		   			<tr>
+		   				<%for(String sKey : listMonthSummary){ 
+		   					if(DecStringUtil.equals(sTodayMonthKey, sKey)){
+		   						%>
+		   						<td class=todayColumn>
+		   						<%
+		   					}else{
+		   						%>
+		   						<td>
+		   						<%
+		   					}
+		   					if(mActualMonthCnt.get(sKey) != null){
+		   						iSumActual += mActualMonthCnt.get(sKey);
+		   					}
+		   				%>
+		   				<%=iSumActual%></td>
+		   				<%}%>
+		   			</tr>
+		   		</tbody>
+		   	</table>
+	   	</div>
+	   	</div>
+   	</div>
+   </details>
+   <details id="taskDataTable">
+   	<summary id="detail">Detail</summary>
+   	<div style="overflow: auto;">
+		<table class="grid">
+		  <thead>
+			<tr>
+				<th><%=mWBSType.getOrDefault("1", "LV1 Code")%></th>
+				<th><%=mWBSType.getOrDefault("2", "LV2 Code")%></th>
+				<%for(String sColumnName : slPlanTableColumn){ 
+					String sColumnDisplay = (String)mPlanTableDetail.get(sColumnName);
+					if(DecStringUtil.isNotEmpty(sColumnDisplay)){
+				%>
+				<th><%=sColumnDisplay%></th>
+					<%}else{ %>
+				<th><%=sColumnName%></th>
+				<%}  }%>
+			</tr>
+		  </thead>
+		  <tbody id="detailTableTBody">
+		  </tbody>
+		</table>
+   	</div>
+   </details>
+</body>
+ <%}%>

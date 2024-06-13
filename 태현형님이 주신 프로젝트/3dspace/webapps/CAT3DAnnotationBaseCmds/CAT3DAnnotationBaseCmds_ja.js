@@ -1,0 +1,1 @@
+define("DS/CAT3DAnnotationBaseCmds/CAT3DAnnotationBaseCmds_ja",{});define("DS/CAT3DAnnotationBaseCmds/assets/nls/CAT3DAnnotationBaseCmds",{DisplayHistorySuccessfulLbl:"ビューとキャプチャの表示履歴が削除されました",InfosPanelTitle:"セマンティック標準",CloseButton:"閉じる",relatedAttrPanelTitle:"フィーチャー関連情報"});

@@ -1,0 +1,1 @@
+define("DS/ENOXEngineerCommonUtils/ENOXEngineerCommonUtils_de",{});define("DS/ENOXEngineerCommonUtils/assets/nls/XENCommonNls",{loading:"Wird geladen...","eng.ui.button.ok":"OK","eng.ui.button.cancel":"Abbrechen","app.failure":"In der App ist ein unerwarteter Fehler aufgetreten. Wenden Sie sich an Ihren Administrator."});

@@ -1,0 +1,182 @@
+[
+    {
+        "ParsingVersion": "2.0",
+        "DeclarativeTypes": [
+            {
+                "ConceptualName": "dsmfg:MfgItemInstance",
+                "ParentType": "PLMInstance",
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "DELFmiFunctionInstance",
+                        "Behavior": "INSTANCE"
+                    },
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "DELFmiFunctionInstance",
+                        "Behavior": "INSTANCE"
+                    }
+                ],
+                "Dependencies": [
+                    [
+                        {
+                            "ConceptualName": "CA",
+                            "DependentAttributes": [
+                                "From_IDs"
+                            ]
+                        },
+                        {
+                            "ConceptualName": "Provide",
+                            "DependentAttributes": [
+                                "TO_IDs"
+                            ]
+                        }
+                    ],
+                    [
+                        {
+                            "ConceptualName": "CA",
+                            "DependentAttributes": [
+                                "From_IDs",
+                                "TO_IDs"
+                            ]
+                        }
+                    ]
+                ],
+                "Attributes": [
+                    {
+                        "ConceptualName": "From_IDs",
+                        "State": "MANDATORY",
+                        "Checkers": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.tools.checkers.AttributeNotNullAndUniqueValueChecker"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "TO_IDs",
+                        "State": "MANDATORY",
+                        "Checkers": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.tools.checkers.AttributeNotNullAndUniqueValueChecker"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "quantity",
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.DELFmiContQuantityExtnAttributeQuantityTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.transforms.DELFmiContQuantityExtnAttributeQuantityIndexTransform"
+                            }
+                        ],
+                        "Checkers": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.checkers.DELFmiContQuantityExtnAttributeQuantityChecker"
+                            }
+                        ],
+                        "Setters": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.setters.DELFmiContQuantityExtnAttributeQuantitySetter"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "moveLocked",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELAsmMoveStructureRestrictionExt.V_AutoDownMoveLocked"
+                            }
+                        ],
+                        "Checkers": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.checkers.MfgItemInstanceAttributeMoveLockedChecker"
+                            }
+                        ],
+                        "Setters": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.setters.MfgItemInstanceAttributeMoveLockedSetter"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "fastenerClassification",
+                        "ModelerMapping": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Mapping": "DELFastenerClassification.V_FstClassification"
+                            }
+                        ],
+                        "Checkers": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.checkers.MfgItemInstanceAttributeFastenerClassificationChecker"
+                            }
+                        ],
+                        "Setters": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.mbom.attributes.setters.MfgItemInstanceAttributeFastenerClassificationSetter"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "customerAttributes",
+                        "Transforms": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.threed_space.tools.transform.DELCRUDCustomerAttrs3DSpaceTransform"
+                            },
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.index.tools.transform.DELCRUDCustomerAttributesIndexTransform"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "DELFmiFunctionIdentifiedInstance",
+                "ParentType": "dsmfg:MfgItemInstance",
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "DELFmiFunctionIdentifiedInstance",
+                        "Behavior": "INSTANCE"
+                    },
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "DELFmiFunctionIdentifiedInstance",
+                        "Behavior": "INSTANCE"
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "ProcessInstanceContinuous",
+                "ParentType": "dsmfg:MfgItemInstance",
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "ProcessInstanceContinuous",
+                        "Behavior": "INSTANCE"
+                    },
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "ProcessInstanceContinuous",
+                        "Behavior": "INSTANCE"
+                    }
+                ]
+            }
+        ]
+    }
+]

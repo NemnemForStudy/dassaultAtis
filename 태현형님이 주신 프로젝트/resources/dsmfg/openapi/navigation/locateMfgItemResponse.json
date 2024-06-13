@@ -1,0 +1,245 @@
+{
+  "example": "Response will be returned with oneOf  in the Schema Tab.",
+  "oneOf": [
+    {
+      "properties": {
+        "totalItems": {
+          "type": "integer",
+          "example": 1
+        },
+        "member": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "source": {
+                "description": "source",
+                "type": "string",
+                "example": "https://server_name.dsone.3ds.com:443/3DSpace"
+              },
+              "type": {
+                "description": "type",
+                "type": "string",
+                "example": "CreateAssembly"
+              },
+              "identifier": {
+                "description": "Entity physical id of dsmfg:MfgItem",
+                "type": "string",
+                "example": "MfgItemRefID1"
+              },
+              "relativePath": {
+                "description": "relativePath",
+                "type": "string",
+                "example": "/resources/v1/modeler/dsmfg/dsmfg:MfgItem/MfgItemRefID1"
+              },
+              "dsmfg:MfgItemInstance": {
+                "properties": {
+                  "totalItems": {
+                    "type": "integer",
+                    "example": 1,
+                    "description": "returns List of dsmfg:MfgItemInstance where used for specified dsmfg:MfgItem"
+                  },
+                  "member": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "identifier": {
+                          "description": "Entity physical id of the dsmfg:MfgItemInstance'",
+                          "type": "string",
+                          "example": "MfgItemInstanceID1"
+                        },
+                        "source": {
+                          "description": "source",
+                          "type": "string",
+                          "example": "https://server_name.dsone.3ds.com:443/3DSpace"
+                        },
+                        "relativePath": {
+                          "description": "relativePath",
+                          "type": "string",
+                          "example": "/resources/v1/modeler/dsmfg/dsmfg:MfgItem/MfgItemParentID/dsmfg:MfgItemInstance/MfgItemInstanceID1"
+                        },
+                        "type": {
+                          "description": "Basic type value",
+                          "type": "string",
+                          "example": "DELFmiFunctionIdentifiedInstance"
+                        },
+                        "title": {
+                          "description": "Reference object title value",
+                          "type": "string",
+                          "example": "My title"
+                        },
+                        "name": {
+                          "description": "Instance name",
+                          "type": "string",
+                          "example": "My name"
+                        },
+                        "description": {
+                          "description": "Instance description vlaue",
+                          "type": "string",
+                          "example": "My description"
+                        },
+                        "owner": {
+                          "description": "Object owner value",
+                          "type": "string",
+                          "example": "John Doe"
+                        },
+                        "organization": {
+                          "description": "Object organization value",
+                          "type": "string",
+                          "example": "MyCompany"
+                        },
+                        "collabspace": {
+                          "description": "Object collabspace value",
+                          "type": "string",
+                          "example": "Default"
+                        },
+                        "parentObject": {
+                          "properties": {
+                            "source": {
+                              "description": "source",
+                              "type": "string",
+                              "example": "https://server_name.dsone.3ds.com:443/3DSpace"
+                            },
+                            "type": {
+                              "description": "type",
+                              "type": "string",
+                              "example": "CreateAssembly"
+                            },
+                            "identifier": {
+                              "description": "Entity physical id of parent (dsmfg:MfgItem)",
+                              "type": "string",
+                              "example": "MfgItemParentID"
+                            },
+                            "relativePath": {
+                              "description": "relativePath",
+                              "type": "string",
+                              "example": "/resources/v1/modeler/dsmfg/dsmfg:MfgItem/MfgItemParentID"
+                            }
+                          }
+                        },
+                        "totalItems": {
+                          "type": "integer",
+                          "description": "Number of instances",
+                          "example": 1
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "properties": {
+        "totalItems": {
+          "type": "integer",
+          "example": 1
+        },
+        "member": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "description": "Entity physical id of the dsmfg:MfgItem",
+                "type": "string",
+                "example": "MfgItemRefID1"
+              },
+              "instances": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "identifier": {
+                      "description": "Entity physical id of the dsmfg:MfgItemInstance'",
+                      "type": "string",
+                      "example": "MfgItemInstanceID1"
+                    },
+                    "source": {
+                      "description": "source",
+                      "type": "string",
+                      "example": "https://server_name.dsone.3ds.com:443/3DSpace"
+                    },
+                    "relativePath": {
+                      "description": "relativePath",
+                      "type": "string",
+                      "example": "/resources/v1/modeler/dsmfg/dsmfg:MfgItem/MfgItemParentID/dsmfg:MfgItemInstance/MfgItemInstanceID1"
+                    },
+                    "type": {
+                      "description": "Basic type value",
+                      "type": "string",
+                      "example": "DELFmiFunctionIdentifiedInstance"
+                    },
+                    "title": {
+                      "description": "Reference object title value",
+                      "type": "string",
+                      "example": "My title"
+                    },
+                    "name": {
+                      "description": "Instance name",
+                      "type": "string",
+                      "example": "My name"
+                    },
+                    "description": {
+                      "description": "Instance description vlaue",
+                      "type": "string",
+                      "example": "My description"
+                    },
+                    "owner": {
+                      "description": "Object owner value",
+                      "type": "string",
+                      "example": "John Doe"
+                    },
+                    "organization": {
+                      "description": "Object organization value",
+                      "type": "string",
+                      "example": "MyCompany"
+                    },
+                    "collabspace": {
+                      "description": "Object collabspace value",
+                      "type": "string",
+                      "example": "Default"
+                    },
+                    "parentObject": {
+                      "properties": {
+                        "source": {
+                          "description": "source",
+                          "type": "string",
+                          "example": "https://server_name.dsone.3ds.com:443/3DSpace"
+                        },
+                        "type": {
+                          "description": "type",
+                          "type": "string",
+                          "example": "CreateAssembly"
+                        },
+                        "identifier": {
+                          "description": "Entity physical id of parent (dsmfg:MfgItem)",
+                          "type": "string",
+                          "example": "MfgItemParentID"
+                        },
+                        "relativePath": {
+                          "description": "relativePath",
+                          "type": "string",
+                          "example": "/resources/v1/modeler/dsmfg/dsmfg:MfgItem/MfgItemParentID"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "totalItems": {
+                "type": "integer",
+                "description": "Number of instances",
+                "example": 1
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,216 @@
+{
+  "basic": {
+    "attributes": [
+  		"physicalid",
+  		"logicalid",
+  		"majorid",
+  		"ds6w:type",
+  		"ds6w:description",
+  		"ds6w:identifier",
+  		"ds6w:label",
+  		"ds6wg:revision",
+  		"current",
+  		"ds6w:status",
+  		"owner",
+  		"taxonomies",
+  		"ds6w:responsible",
+  		"ds6w:created",
+  		"ds6w:modified",
+  		"ds6w:lastmodifiedBy",
+  		"ds6wg:PLMReference.V_isLastVersion",
+  		"ds6w:project",
+  		"ds6w:organizationresponsible",
+  		"ds6w:reserved",
+  		"ds6w:reservedBy",
+  		"ds6wg:architectureextension.v_architecturenumber",
+		"ds6w:islastrevision"
+  	],
+  	"fileAttributes": [
+  		"icon", "thumbnail_2d"
+  	],
+  	"flags": ["returnMatches"],
+  	"version": 3.0
+  },
+  "RFLVPMLogicalReference": {
+    "IMPLEMENTEDBY_LINK": {
+      "primitives": {
+            "navigate_from_sr": {
+                "id": 1,
+                "mode": "ends",
+                "filter": {
+                    "role": [
+                        "51"
+                    ],
+                    "category": [
+                        "5"
+                    ]
+                }
+            },
+            "navigate_to_sr": {
+                "id": 2,
+                "filter": {
+                    "role": [
+                        "52"
+                    ],
+                    "category": [
+                        "7"
+                    ]
+                },
+                "mode": "path"
+            }
+        },
+      "patterns": [
+        {
+          "id": 1
+        },
+        {
+          "id": 2
+        }
+       ],
+      "patternTypeFilters": {
+        "typesToNotReturn": [
+          "PLMCoreInstance"
+        ]
+  		}
+    },
+    "IMPLEMENTING_LINK": {
+      "primitives": {
+            "navigate_from_sr": {
+                "id": 3,
+                "mode": "ends",
+                "filter": {
+                    "role": [
+                        "52"
+                    ],
+                    "category": [
+                        "7"
+                    ]
+                }
+            },
+            "navigate_to_sr": {
+                "id": 4,
+                "filter": {
+                    "role": [
+                        "51"
+                    ],
+                    "category": [
+                        "5"
+                    ]
+                },
+                "mode": "path"
+            }
+        },
+      "patterns": [
+        {
+          "id": 3
+        },
+        {
+          "id": 4
+        }
+       ],
+      "patternTypeFilters": {
+        "typesToNotReturn": [
+          "PLMCoreInstance"
+        ]
+  		}
+    },
+    "REFERENCE_DOCUMENT": {
+      "primitives": {
+        "navigate_to_rel": {
+  				"id": 5,
+  				"rel_type": [
+  					"VPLMrel_47_PLMConnection_47_V_Owner"
+  				]
+  			},
+  			"navigate_to_sr": {
+  				"id": 6,
+  				"mode": "last",
+  				"filter": {
+  					"role": ["87"],
+  					"semantics": ["1"]
+  				}
+  			}
+      },
+      "patterns": [
+        {
+  				"id": 5
+  			},
+  			{
+  				"id": 6
+  			}
+      ]
+    },
+    "ZONE": {
+      "primitives": {
+        "navigate_from_sr": {
+            "id": 7,
+            "mode": "ends",
+            "filter": {
+                "role": [
+                    "471"
+                ],
+                "category": [
+                    "4"
+                ]
+            }
+        },
+        "navigate_to_sr": {
+            "id": 8,
+            "filter": {
+                "role": [
+                    "472"
+                ],
+                "category": [
+                    "4"
+                ]
+            },
+            "mode": "path"
+        }
+      },
+      "patterns": [
+        {
+  				"id": 7
+  			},
+  			{
+  				"id": 8
+  			}
+      ]
+    },
+    "SPECIFICATION_DOCUMENT": {
+      "primitives": {
+        "navigate_to_rel": {
+  				"id": 9,
+  				"filter": {
+  					"rel_type": [
+  						"SpecificationDocument"
+  					]
+  				},
+  				"mode": "stop_at_bo"
+  			}
+      },
+      "patterns": [
+        {
+    			"id": 9
+    		}
+      ]
+    },
+    "PROPOSED_SOLUTION": {
+      "primitives": {
+        "navigate_to_rel": {
+  				"id": 10,
+  				"filter": {
+  					"rel_type": [
+  						"ProposedSolution"
+  					]
+  				},
+  				"mode": "stop_at_bo"
+  			}
+      },
+      "patterns": [
+        {
+    			"id": 10
+    		}
+      ]
+    }
+  }
+}

@@ -1,0 +1,1 @@
+define("DS/DMUBaseUI/DMUBaseUI_de",{});define("DS/DMUBaseUI/assets/nls/DMUBaseUI",{defaultValidatedStampLabel:"Validiert",defaultRejectedStampLabel:"Verweigert"});

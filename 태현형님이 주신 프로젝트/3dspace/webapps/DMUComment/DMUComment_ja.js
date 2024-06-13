@@ -1,0 +1,1 @@
+define("DS/DMUComment/DMUComment_ja",{});define("DS/DMUComment/assets/nls/DMUComment",{highlightCommentPrefix:"CommentHighlight",positionedCommentPrefix:"CommentPositioned",commentPrefix:"コメント",commentCreationLabel:"点、マーカー、またはテキストを選択して、新しいコメントをリンクします"});

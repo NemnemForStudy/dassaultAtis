@@ -1,0 +1,50 @@
+#Prog Rmt_Requirement_ExportRemove( iPLMIDSet : #In PLMIDSet, oPLMIDSet : #Out PLMIDSet ) : VoidType
+{
+let RsSubReqs              (PLMRouteSet)
+let RsTestCases            (PLMRouteSet)
+let RsDocs                 (PLMRouteSet)
+let IdsReqs                 (PLMIDSet)
+let IdsAllReqsAndRels       (PLMIDSet)
+let IdsOnlyReqs             (PLMIDSet)
+let IdsTestCases            (PLMIDSet)
+let IdsOnlyTestCases        (PLMIDSet)
+let IdsTestCasesAndScope    (PLMIDSet)
+let IdsDocs                 (PLMIDSet)
+let IdsOnlyDocs             (PLMIDSet)
+let IdsDocsAndScope         (PLMIDSet)
+let IdsParams				(PLMIDSet)
+
+
+/* Get the reqs, with their subreqs */
+IdsReqs = Restrict( iPLMIDSet , "Class/Requirement" )
+RsSubReqs = ExecutePLMFunction( "Requirement", "rmt_nav_req_subs", IdsReqs )
+
+
+/* Get the parameters of the all reqs (subreqs included) */
+IdsAllReqsAndRels = Ids(RsSubReqs)
+IdsOnlyReqs = Restrict( IdsAllReqsAndRels , "Class/Requirement" )
+IdsParams = ExecuteJavaProcedure("com.dassault_systemes.parameter_modeler.procedures.PlmParameterProcedure_AllParams", IdsOnlyReqs )
+
+
+/* Get the test cases of the all reqs */
+RsTestCases = ExecutePLMFunction( "Requirement", "rmt_nav_req_testcase", IdsOnlyReqs )
+IdsTestCases = Ids(RsTestCases)
+IdsOnlyTestCases = Restrict( IdsTestCases , "Class/Test Case" )
+IdsTestCasesAndScope = ExecutePLMProcedure( "Plc_TestCase_ExportCompletion", IdsOnlyTestCases )
+
+/* Get the reference documents of the all reqs (subreqs included) */
+RsDocs = ExecutePLMFunction( "Requirement", "rmt_nav_req_docs", IdsOnlyReqs )
+IdsDocs = Ids(RsDocs)
+IdsOnlyDocs = Restrict( IdsDocs, "Class/DOCUMENTS" )
+IdsDocsAndScope = ExecutePLMProcedure( "DocumentCompletion", IdsOnlyDocs )
+
+
+/* Provide back all that stuff */
+oPLMIDSet = iPLMIDSet
++ IdsAllReqsAndRels
++ IdsParams
++ IdsTestCases
++ IdsTestCasesAndScope
++ IdsDocs
++ IdsDocsAndScope
+}

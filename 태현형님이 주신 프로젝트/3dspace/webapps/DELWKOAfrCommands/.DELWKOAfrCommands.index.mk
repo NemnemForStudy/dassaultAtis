@@ -1,0 +1,11 @@
+m|DELWKOApp\DELWKOAfrCommands.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.3.23049|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\DELWKOAfrCommands\DELWKOAfrCommands.js|1676691167|2844
+s|DELWKOApp\DELWKOAfrCommands.mweb\src\DELWKOCreateWorkOrderFromProcessCmd.js|1664560477|2206
+u|DELWKOApp\DELWKOAfrCommands.mweb\src\DELWKOFAMCmd.js|1670290274|3134
+u|DELWKOApp\DELWKOAfrCommands.mweb\src\DELWKOWorkBookCmd.js|1675293378|5466
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

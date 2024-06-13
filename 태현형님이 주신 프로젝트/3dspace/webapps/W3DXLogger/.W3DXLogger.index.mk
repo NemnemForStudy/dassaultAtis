@@ -1,0 +1,9 @@
+m|W3DXComponents\W3DXLogger.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.0.22078|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\W3DXLogger\W3DXLogger.js|1647692312|664
+s|W3DXComponents\W3DXLogger.mweb\src\W3DXLogger.js|1473782216|1153
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

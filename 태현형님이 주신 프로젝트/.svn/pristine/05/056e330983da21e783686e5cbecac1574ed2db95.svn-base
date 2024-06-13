@@ -1,0 +1,1 @@
+define("DS/CAT3DAnnotationFavoriteCtx/CAT3DAnnotationFavoriteCtx_zh-TW",{});define("DS/CAT3DAnnotationFavoriteCtx/assets/nls/CAT3DAnnotationFavoriteCtx",{rootInSession:"偏好關聯的根已在此 Widget 中開啟為根",noFavoriteContext:"未針對此表示擷取偏好關聯",checkTitle:"偏好關聯",checkConfirm:"是否要在其偏好關聯中開啟此表示？",checkButton:"一律在偏好關聯中開啟",checkYes:"是",checkNo:"否"});

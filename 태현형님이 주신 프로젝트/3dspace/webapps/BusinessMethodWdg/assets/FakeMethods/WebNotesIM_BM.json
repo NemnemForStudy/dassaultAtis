@@ -1,0 +1,39 @@
+{
+  "schema": {
+    "type": "object",
+    "properties": {
+      "notes": {
+        "type": "array",
+        "title": "Add a new note:",
+        "x-itemTitle": "name",
+        "items": {
+          "type": "object",
+          "required": [
+            "name",
+            "content"
+          ],
+          "properties": {
+            "name": {
+              "type": "string",
+              "title": "Note name:"
+            },
+            "content": {
+              "type": "string",
+              "title": "Note content:",
+              "x-display": "textarea"
+            },
+            "color": {
+              "type": "string",
+              "title": "Color",
+              "format": "hexcolor",
+              "description": "Note color."
+            }
+          }
+        }
+      }
+    }
+  },
+  "options": {
+    "editMode": "inline"
+  }
+}

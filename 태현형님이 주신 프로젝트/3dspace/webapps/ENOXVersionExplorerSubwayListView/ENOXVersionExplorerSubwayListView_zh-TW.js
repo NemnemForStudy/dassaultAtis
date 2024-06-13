@@ -1,0 +1,1 @@
+define("DS/ENOXVersionExplorerSubwayListView/ENOXVersionExplorerSubwayListView_zh-TW",{});define("DS/ENOXVersionExplorerSubwayListView/assets/nls/SubwayColumnsTitles",{colAuthor:"作者",colCreated:"已產生",colDescription:"說明",colGraph:"圖形",colMaturity:"成熟度",colModified:"已修改",colRevision:"修訂版",colTitle:"標題",colIntent:"意圖",colSpecification:""});

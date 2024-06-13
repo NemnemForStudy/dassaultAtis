@@ -1,0 +1,12 @@
+m|WebComponentModeler\WebComponentModeler.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.1.22312|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\WebComponentModeler\WebComponentModeler.js|1667944193|5778
+s|WebComponentModeler\WebComponentModeler.mweb\src\CATWebInterface.js|1643626503|3330
+u|WebComponentModeler\WebComponentModeler.mweb\src\WebComponentBase.js|1596536702|9161
+u|WebComponentModeler\WebComponentModeler.mweb\src\WebComponentModelerBase.js|1642584830|3435
+u|WebComponentModeler\WebComponentModeler.mweb\src\WebFactory.js|1666254055|12389
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

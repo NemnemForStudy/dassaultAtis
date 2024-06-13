@@ -1,0 +1,134 @@
+{
+	"dswo:WorkOrder": {
+		"kindOf": "root",
+		"beType": "type_DELLmiWorkOrderReference",
+		"patchCSRF": true,
+		"search": true,
+		"cestamp": true,
+		"isPublic": true,
+		"optionCheck": {
+			"modify": true,
+			"produce": true,
+			"navigate": true
+		},
+		"defaultMask": "dsmvwo:WorkOrderMask.Default",
+		"contentLinks": [
+			"dswo:WorkOrderOperation",
+			"dswo:TimeConstraint"
+		],
+		"extensionLinks": [
+			"dswo:AssetContext"
+		]
+	},
+	"dswo:WorkOrderOperation": {
+		"kindOf": "content",
+		"beType": "type_DELLmiExecHeaderOperationReference",
+		"patchCSRF": true,
+		"search": true,
+		"cestamp": true,
+		"isPublic": true,
+		"optionCheck": {
+			"modify": true,
+			"produce": true,
+			"navigate": true
+		},
+		"defaultMask": "dsmvwo:WorkOrderOperationMask.Default",
+		"contentLinks": [
+			"dswo:TimeConstraint",
+			"dswo:AssetAssignment",
+			"dswo:PrimaryCapableResource",
+			"dswo:SecondaryCapableResource"
+		],
+		"extensionLinks": [
+			"dswo:AssignedWorkCenter"
+		]
+	},
+	"dswo:ProductionPlan": {
+    	"kindOf":"root",
+        "beType": "type_DELLmiProductionPlanReference",
+        "patchCSRF": true,
+        "search": true,
+		"cestamp": true,
+		"isPublic": true, 
+		"publicResourceURI": "/resources/v1/modeler/dswo/dswo:ProductionPlan/{pid}",
+        "optionCheck" : {
+        	"modify"      : true,
+        	"produce"     : true,
+        	"navigate"    : true
+        },
+		"defaultMask": "dsmvwo:ProductionPlanMask.Default"
+    },
+    "dswo:TimeConstraint": {
+        "kindOf":"content",    
+        "beType": "virtual_DELLmiExecTimeConstraintRelation",
+        "cestamp": true,
+		"isPublic": true, 
+        "optionCheck" : {
+        	"modify"      : true,
+        	"produce"     : true,
+        	"navigate"    : true
+        },
+        "defaultMask": "dsmvwo:TimeConstraintMask.Default",
+    	"implementationClass": "com.dassault_systemes.enovia.xapps.dswo.V1.implementations.dswoVirtualContent"
+	},
+    "dswo:AssetAssignment": {
+        "kindOf":"content",    
+        "beType": "type_ExecAllocatedResourceLink",
+        "cestamp": true,
+		"isPublic": true, 
+        "optionCheck" : {
+        	"modify"      : true,
+        	"produce"     : true,
+        	"navigate"    : true
+        },
+        "defaultMask": "dsmvwo:AssetAssignmentMask.Default"
+	},
+	"dswo:AssetContext": {
+        "kindOf":"extension",    
+        "beType": "virtual_DELLmiWorkOrderReference",
+		"isPublic": true, 
+        "optionCheck" : {
+        	"modify"      : true,
+        	"produce"     : true,
+        	"navigate"    : true
+        },
+        "defaultMask": "dsmvwo:AssetContextMask.Default"
+	},
+	"dswo:AssignedWorkCenter": {
+        "kindOf":"extension",    
+        "beType": "virtual_DELLmiExecHeaderOperationReference",
+		"isPublic": true, 
+        "optionCheck" : {
+        	"modify"      : true,
+        	"produce"     : true,
+        	"navigate"    : true
+        },
+        "defaultMask": "dsmvwo:AssignedWorkCenterMask.Default"
+	},
+	"dswo:PrimaryCapableResource": {
+    	"kindOf": "content",
+    	"beType": "virtual_DELAsmProcessCanUseCnx",
+    	"cestamp": true,
+    	"isPublic": true,
+    	"optionCheck" : {
+        	"modify"      : false,
+        	"produce"     : false,
+        	"navigate"    : true
+        },
+        "defaultMask": "dsmvwo:PrimaryCapableResourceMask.Default",
+        "implementationClass": "com.dassault_systemes.enovia.xapps.dswo.V1.implementations.dswoVirtualContent"
+    },
+    "dswo:SecondaryCapableResource": {
+    	"kindOf": "content",
+    	"beType": "virtual_SecondaryCandidateResourceLink",
+    	"cestamp": true,
+    	"isPublic": true,
+    	"optionCheck" : {
+        	"modify"      : false,
+        	"produce"     : false,
+        	"navigate"    : true
+        },
+        "defaultMask": "dsmvwo:SecondaryCapableResourceMask.Default",
+    	"implementationClass": "com.dassault_systemes.enovia.xapps.dswo.V1.implementations.dswoVirtualContent"	
+	}
+}

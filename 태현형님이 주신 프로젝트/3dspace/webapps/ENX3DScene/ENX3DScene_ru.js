@@ -1,0 +1,1 @@
+define("DS/ENX3DScene/ENX3DScene_ru",{});define("DS/ENX3DScene/assets/nls/ENX3DScene",{appDescription:"Простая и эффективная навигация по 3D-моделям"});

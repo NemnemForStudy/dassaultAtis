@@ -1,0 +1,14 @@
+<ul class="country-selector"
+  v-if="showOptions">
+  <li class="country-item"
+    v-for="(option, index) in options"
+    v-bind:key="index"
+    v-bind:id="option.value"
+    v-on:click="set(option)"
+  >
+    {{option.flag}} {{option.country}}
+    <span class="calling-code">
+      {{option.callingCode}}
+    </span>
+  </li>
+</ul>

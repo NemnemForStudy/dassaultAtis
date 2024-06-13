@@ -1,0 +1,27 @@
+################################################################################################
+# Create By jhlee 2023. 08. 01
+# Admin Type : command
+# Name : decWBSReferenceDocumentsReport
+################################################################################################
+
+#del command 'decWBSReferenceDocumentsReport';
+add command 'decWBSReferenceDocumentsReport'
+	description 'StandardList'
+	label 'ProgramCentral.Command.decWBSReferenceDocumentsReport'
+	href ''
+	alt 'ProgramCentral.Command.decWBSReferenceDocumentsReport'
+	setting 'Registered Suite' 'ProgramCentral'
+	setting 'Target Location' 'popup'
+;
+add property 'command_decWBSReferenceDocumentsReport' on prog eServiceSchemaVariableMapping.tcl to command 'decWBSReferenceDocumentsReport';
+
+mod command 'decWBSReferenceDocumentsReport'
+	href '${SUITE_DIR}/emxProgramCentralWBSHiddenProcess.jsp?calledMethod=submitReferenceDocumentReport'
+    add setting 'Row Select' 'multi'
+    add setting 'Submit' 'true'
+    add setting 'Target Location' 'listHidden'
+    add setting 'Access Function'  'hasAccessForAssigneeOwnerCmd'
+    add setting 'Access Program'  'emxTask'
+    add setting 'Image'  '${COMMON_DIR}/images/iconActionFileDetails.png'
+    add setting 'Licensed Product'  'ENO_PRF_TP'
+;

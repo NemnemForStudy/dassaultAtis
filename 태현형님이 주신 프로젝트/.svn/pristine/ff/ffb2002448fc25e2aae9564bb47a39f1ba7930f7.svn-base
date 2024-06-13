@@ -1,0 +1,136 @@
+<?xml version="1.0"?>
+<!-- ENOVIA DICTIONARY FOR Logical Link                    -->
+<!-- COPYRIGHT DASSAULT SYSTEMES 2017, All rights reserved -->
+<Package xmlns="PLMDictionaryUnified" 
+         ModelerType="Top" 
+         Name="RFLVPMLogicalLink" 
+         Uuid="F8C19334-179B-4B5A-8568-F5C4A3F26E16" 
+         UseNames="RFLVPMLogical"
+         CustomerExposition="Programmer">
+	<Property Name="FormerTypingLegacy" Value="No"/>
+
+  <!-- ******************************************* -->
+  <!-- *  RFLVPMLogicalLinkReference (PLMCoreReference)     * -->
+  <!-- ******************************************* -->
+  <Class Name="RFLVPMLogicalLinkReference" 
+         Uuid="6A67CD70-8EED-4343-A78C-DC218CEE8BF5" 
+         Abstract="No" 
+         SuperName="RFLVPMLogicalReference"
+		 Abbreviation="llnk"
+         CreateInstName="RFLVPMLogicalLinkInstance"
+		 Discipline="Yes"
+		 Specializable="Yes"
+		 CustomerExtensible="Yes"
+         CustomerExposition="Programmer">  
+ 
+    <Simple Name="LinkDiscipline"
+		Uuid="8EC74D00-FF08-4AEE-B00A-03354D72207C"
+		Type="String"
+		MaxLength="100"
+		MultiValuated="No"
+		Protection="Free"
+		CAAExposition="L0">
+    </Simple>
+
+    <Simple Name="LinkIdentifier"
+		Uuid="4A53CCBC-AAFA-4212-ACD4-6466571A49B8"
+		Type="String"
+		MaxLength="100"
+		MultiValuated="No"
+		Protection="Free"
+		CAAExposition="L0">
+    </Simple>
+	
+    <CAAComment>
+      <ShortRole>Logical link Reference Object</ShortRole>
+      <Role>Logical link Reference Object</Role>
+    </CAAComment>
+
+    <!-- PLM New UI/KWE Scripts New -->
+    <Property Name="KweNew_InstanciationMethod" Value="CATELogDelegateInstanciation"/>
+
+	 <!-- Support old typing system -->
+    <!--Property Name="DMCDerivable" Value="Yes"/-->
+	
+    <Property Name="IconName" Value="I_FLE_LOG_LINK"/>	
+	<Property Name="Searchable" Value="Yes"/>
+	<Property Name="Configurable" Value="Yes"/>
+	<Property Name="KweNew_ReturnedType" Value="RFLVPMLogicalLinkInstance"/>
+
+    <!-- Export -->
+    <Method ImplementationType="AsFather">
+      <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+    </Method>
+
+  </Class>
+
+  <!-- *************************************************** -->
+  <!-- * RFLVPMLogicalLinkInstance (PLMCoreInstance)       * -->
+  <!-- *************************************************** -->
+  <RelationClass Name="RFLVPMLogicalLinkInstance" 
+         Uuid="152706F0-5DCE-45E2-8F1C-73A13291B4AC" 
+         Abstract="No" 
+         SuperName="RFLVPMLogicalInstance"
+ 		 Discipline="Yes"
+		 Specializable="Yes"
+		 CustomerExtensible="Yes"
+         CustomerExposition="Programmer">
+
+    <CAAComment>
+      <ShortRole>Logical link Instance Object</ShortRole>
+      <Role>Logical link Instance Object</Role>
+    </CAAComment>
+
+    <!-- Configuration -->
+    <Property Name="Filtrable" Value="Yes"/>
+	<Property Name="Searchable" Value="Yes"/>
+	<Property Name="Newable" Value="Insert"/>
+    <Property Name="IconName" Value="I_FLE_LOG_LINK"/>
+    <Property Name="KweNew_InstanciationMethod" Value="CATELogDelegateInstanciation"/>
+	<Property Name="KweNew_ReturnedType" Value="RFLVPMLogicalLinkInstance"/>
+
+  </RelationClass>
+  
+  <!-- ******************************************** -->
+  <!-- * RFLVPMLogicalLinkConnection (PLMConnection) * -->
+  <!-- ******************************************** -->
+	
+  <Class Name="RFLVPMLogicalLinkConnection" 
+         Uuid="5DE605D1-BA4F-43ED-BE0A-7FAB822DF76F" 
+         CustomerExposition="Programmer"
+		 Discipline="Yes"
+         CustomerExtensible="Yes"
+         Specializable="Yes"
+         Abstract="No"
+		 SuperName="RFLVPMLogicalConnection" 
+         OwnerTypes="RFLVPMLogicalLinkReference">
+		 
+    <CAAComment>
+			<ShortRole>Logical Link Connection Object</ShortRole>
+			<Role>Logical Link Connection Object</Role>
+	</CAAComment>
+
+    <Property Name="DMCDerivable" Value="Yes"/>
+    <Property Name="KweNew_InstanciationMethod" Value="CATELogDelegateInstanciation"/>
+    <Property Name="KweNew_ReturnedType" Value="RFLVPMLogicalLinkConnection"/>
+    <Property Name="Newable" Value="Insert" />
+    <Property Name="IconName" Value="I_RFLPLMLogicalConnection"/>
+    <Property Name="Searchable" Value="No"/>
+    
+
+    <Method ImplementationType="None">
+         	<RealizeMethodType href="ExportScope.meth#ExportScope"/>
+    </Method>
+
+    <Simple Name="FromToIdentifier"
+		Uuid="AB611267-E5C6-43DA-B1EB-AF4599E8F580"
+		Type="String"
+		MaxLength="100"
+		MultiValuated="No"
+		Protection="Free"
+		CAAExposition="L0">
+    </Simple>
+	
+  </Class>
+  
+</Package>

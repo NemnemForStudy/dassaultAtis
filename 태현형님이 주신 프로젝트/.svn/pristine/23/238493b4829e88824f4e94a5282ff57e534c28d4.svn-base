@@ -1,0 +1,1 @@
+define("DS/PIMwebI3Dapp/PIMwebI3Dapp_de",{});define("DS/PIMwebI3Dapp/assets/nls/PIMwebI3Dapp",{isr:"Interferenzsimulationen öffnen",itf:"Interferenzmetriken öffnen",customApp:"App anpassen",prefs:"Voreinstellungen",backToIssue:"Zurück zum Problem"});

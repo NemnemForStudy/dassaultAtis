@@ -1,0 +1,1 @@
+define("DS/SMAMpwControls/SMAMpwControls_pl",{});define("DS/SMAMpwControls/assets/nls/SMAMpwLegend",{frameSelectorPlaceHolder:"Wybierz ramkę...",scaleFactor:"Skala deformacji",playOnlyTooltip:"Zablokuj animację do bieżącego wyboru",min:"Min.:",max:"Maks.:"});

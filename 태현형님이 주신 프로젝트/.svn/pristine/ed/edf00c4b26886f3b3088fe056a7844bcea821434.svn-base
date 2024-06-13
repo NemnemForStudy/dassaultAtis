@@ -1,0 +1,1 @@
+define("DS/DomFactory/DomFactory_ja",{});define("DS/DomFactory/assets/nls/translation",{close:"閉じる",maximize:"最大化",restore:"リストアダウン"});

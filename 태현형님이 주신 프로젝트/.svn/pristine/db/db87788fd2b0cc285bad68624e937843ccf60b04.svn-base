@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright DASSAULT SYSTEMES 2013 -->
+<Config name="Routings" xmlns="DS_DELPPWConfiguration" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="DS_DELPPWConfiguration ../xsd/ColumnConfig.xsd" Title="UI Config" Description="Sample configuration file delivered by DS.">
+  <Label dataIndex="V_Name.reference" dicoType="PLMEntity"/>
+   <Columns>
+     <Column dataIndex="PLM_ExternalID.reference" minWidth="50" display="false"/>
+     <Column dataIndex="V_description.reference"  dicoType="PLMEntity" minWidth="50" display="false"/>
+     <Column dataIndex="type.reference" minWidth="50" display="false"/>
+     <Column dataIndex="modified.reference" dicoType="BusinessType" display="false"/>
+     <!-- <Column dataIndex="created.reference" dicoType="BusinessType" display="false"/> -->
+     <Column dataIndex="current.reference" displayType="URL" dicoType="BusinessType"  minWidth="50"/>
+     <Column dataIndex="owner.reference" dicoType="BusinessType"  minWidth="50" display="false"/>
+     <Column dataIndex="organization.reference" dicoType="BusinessType"/>
+
+     <Column dataIndex="V_Priority.reference" displayType="MultiType" minWidth="50" display="true">
+             <dicoType dicoType="DELLmiOperationUPRReference" />
+             <dicoType dicoType="DELLmiUPRSystemReference" />
+     </Column>
+
+     <Column dataIndex="description.reference" dicoType="PLMEntity"  minWidth="150" display="false"/>
+     <!-- <Column dataIndex="description.relation" dicoType="Relation"  minWidth="150" display="false"/> -->
+     <Column dataIndex="V_Scheduled.reference" dicoType="DELLmiOperationUPRReference" display="false"/>
+     <Column dataIndex="V_Interruptible.reference" dicoType="DELLmiExecHeaderOperationReference" display="false"/>
+     <Column dataIndex="V_IsTimeProportionalToQty.reference" dicoType="DELLmiOperationReference" display="false"/>
+
+     <Column dataIndex="V_EstimatedTime.reference" dicoType="DELLmiOperationReference"  minWidth="50" display="false"/>
+
+     <Column dataIndex="V_TimeOutMachineBefore.reference" dicoType="DELLmiAdditionalTime"  minWidth="50" display="false"/>
+     <Column dataIndex="V_TimeOutMachineAfter.reference" dicoType="DELLmiAdditionalTime"  minWidth="50" display="false"/>
+
+     <Column dataIndex="V_PreparationTime.reference" dicoType="DELLmiAdditionalTime"  minWidth="50" display="false"/>
+     <Column dataIndex="V_RemainingTime.reference" dicoType="DELLmiOperationUPRReference"  minWidth="50" display="false"/>
+     <Column dataIndex="V_ActualTime.reference" dicoType="DELLmiOperationUPRReference"  minWidth="50" display="false"/>
+     <Column dataIndex="V_OnHoldComment.reference" dicoType="DELOnHold"  minWidth="50" display="false"/>
+
+     <Column dataIndex="V_DueDate.reference" dicoType="DELLmiUPRSystemReference"  minWidth="50"/>
+     <Column dataIndex="V_CalculatedDueDate.reference" dicoType="DELLmiUPRSystemReference"  minWidth="50" display="false"/>
+     <Column dataIndex="V_EarliestStartDate.reference" dicoType="DELLmiUPRSystemReference"  minWidth="50" display="false"/>
+     <Column dataIndex="V_TargetStartDate.reference" dicoType="DELLmiUPRSystemReference"  minWidth="50" display="false"/>
+     <Column dataIndex="V_TargetEndDate.reference" dicoType="DELLmiUPRSystemReference"  minWidth="50" display="false"/>
+     <Column dataIndex="V_PlannedStartDate.reference" dicoType="DELLmiUPRSystemReference"  minWidth="50" display="false"/>
+     <Column dataIndex="V_PlannedEndDate.reference" dicoType="DELLmiUPRSystemReference"  minWidth="50" display="false"/>
+     <Column dataIndex="V_ScheduledStartDate.reference" dicoType="DELLmiUPRSystemReference"  minWidth="50"/>
+     <Column dataIndex="V_ScheduledEndDate.reference" dicoType="DELLmiUPRSystemReference"  minWidth="50"/>
+     <Column dataIndex="V_ActualStartDate.reference" dicoType="DELLmiUPRSystemReference"  minWidth="50"/>
+     <Column dataIndex="V_ActualEndDate.reference" dicoType="DELLmiUPRSystemReference"  minWidth="50"/>
+
+     <!-- <Column dataIndex="V_QuantityToBeProducedPerTime.reference" displayType="NonEditable" minWidth="50" display="true"> -->
+     <Column dataIndex="V_QuantityToBeProducedPerTime.reference" displayType="NonEditableMultiType" minWidth="50" display="true">
+             <dicoType dicoType="DELLmiQtyToBeProducedPerTime_Each" />
+             <dicoType dicoType="DELLmiQtyToBeProducedPerTime_Area" />
+             <dicoType dicoType="DELLmiQtyToBeProducedPerTime_Length" />
+             <dicoType dicoType="DELLmiQtyToBeProducedPerTime_Weight" />
+             <dicoType dicoType="DELLmiQtyToBeProducedPerTime_Volume" />
+     </Column>
+
+     <!-- <Column dataIndex="V_OrderQuantity.reference" displayType="NonEditable" minWidth="50" display="true"> -->
+     <Column dataIndex="V_OrderQuantity.reference" displayType="NonEditableMultiType" minWidth="50" display="true">
+          	<dicoType dicoType="DELLmiWOQuantity_Each" />
+          	<dicoType dicoType="DELLmiWOQuantity_Area" />
+          	<dicoType dicoType="DELLmiWOQuantity_Length" />
+          	<dicoType dicoType="DELLmiWOQuantity_Weight" />
+            <dicoType dicoType="DELLmiWOQuantity_Volume" />
+     </Column>
+
+     <!-- <Column dataIndex="V_InitialQuantity.reference" dicoType="DELLmiOperationUPRReference"  minWidth="50"/> -->
+     <!-- <Column dataIndex="V_InitialQuantity.reference" displayType="NonEditable" minWidth="50" display="true">  -->
+     <Column dataIndex="V_InitialQuantity.reference" displayType="NonEditableMultiType" minWidth="50" display="true">
+          	<dicoType dicoType="DELLmiEOQuantity_Each" />
+          	<dicoType dicoType="DELLmiEOQuantity_Area" />
+          	<dicoType dicoType="DELLmiEOQuantity_Length" />
+          	<dicoType dicoType="DELLmiEOQuantity_Weight" />
+            <dicoType dicoType="DELLmiEOQuantity_Volume" />
+     </Column>
+
+     <!-- <Column dataIndex="V_RemainingQuantity.reference" dicoType="DELLmiOperationUPRReference"  minWidth="50"/> -->
+     <!-- <Column dataIndex="V_RemainingQuantity.reference" displayType="NonEditable" minWidth="50" display="true"> -->
+     <Column dataIndex="V_RemainingQuantity.reference" displayType="NonEditableMultiType" minWidth="50" display="true">
+          	<dicoType dicoType="DELLmiEOQuantity_Each" />
+          	<dicoType dicoType="DELLmiEOQuantity_Area" />
+          	<dicoType dicoType="DELLmiEOQuantity_Length" />
+          	<dicoType dicoType="DELLmiEOQuantity_Weight" />
+            <dicoType dicoType="DELLmiEOQuantity_Volume" />
+     </Column>
+
+     <!-- <Column dataIndex="V_CompletedQuantity.reference" dicoType="DELLmiOperationUPRReference"  minWidth="50"/> -->
+     <!-- <Column dataIndex="V_CompletedQuantity.reference" displayType="MultiType" minWidth="50" display="true"> -->
+      <Column dataIndex="V_CompletedQuantity.reference" displayType="NonEditableMultiType" minWidth="50" display="true">
+          	<dicoType dicoType="DELLmiEOQuantity_Each" />
+          	<dicoType dicoType="DELLmiEOQuantity_Area" />
+          	<dicoType dicoType="DELLmiEOQuantity_Length" />
+          	<dicoType dicoType="DELLmiEOQuantity_Weight" />
+            <dicoType dicoType="DELLmiEOQuantity_Volume" />
+     </Column>
+
+     <Column dataIndex="V_MinStartDateUser.reference" dicoType="DELLmiMinStartDateUser"  minWidth="50" display="false"/>
+     <Column dataIndex="V_DescriptionUser.reference" dicoType="DELLmiMinStartDateUser"  minWidth="50" display="false"/>
+
+     <Column dataIndex="V_MinStartDateAuto.reference" dicoType="DELLmiMinStartDateAuto"  minWidth="50" display="false"/>
+     <Column dataIndex="V_DescriptionAuto.reference" dicoType="DELLmiMinStartDateAuto"  minWidth="50" display="false"/>
+
+     <Column dataIndex="V_MinStartDateRawMaterial.reference" dicoType="DELLmiMinStartDateRawMaterial"  minWidth="50" display="false"/>
+     <Column dataIndex="V_DescriptionRawMaterial.reference" dicoType="DELLmiMinStartDateRawMaterial"  minWidth="50" display="false"/>
+
+     <Column dataIndex="V_MinStartDateSemiFinished.reference" dicoType="DELLmiMinStartDateSemiFinished"  minWidth="50" display="false"/>
+     <Column dataIndex="V_DescriptionSemiFinished.reference" dicoType="DELLmiMinStartDateSemiFinished"  minWidth="50" display="false"/>
+
+     <Column dataIndex="SerializedFrom.relation" displayType="Relation"/>
+     <Column dataIndex="MfgProductionPlanning.relation" displayType="Relation"/>
+     <Column dataIndex="ProductionPlanReference.relation" displayType="Relation"/>
+     <Column dataIndex="AssetContext.relation" displayType="Relation"/>
+     <Column dataIndex="AssignedWorkCenter.relation" displayType="Relation"/>
+   </Columns>
+</Config>

@@ -1,0 +1,40 @@
+<template>
+  <div>
+    <vu-lightbox
+      z-index="1000"
+      widget="true"
+      :title="title"
+      :objectType="objectType"
+      :customActions="true"
+      :primaryActions="actions"
+      :menuActions="moreMenuActions"
+      :sideActions="[{name: 'previous', hidden: true}, {name: 'next', hidden: true}]"
+      @close="onClickClose"
+      @click-upload="onClickUpload"
+      @click-comment="onClickComment"
+      @click-share="onClickShare"
+      @click-download="onClickDownload"
+      @click-information="onClickInformation"
+    >
+      <!-- <template v-slot:lightbox-bar__object-type>
+            <vu-dropdownmenu :items="shareItems"
+               style="margin-left: 50px"
+               :attach="`.vu-lightbox`">
+               <span class="lightbox-bar-menu-item fonticon fonticon-menu" />
+            </vu-dropdownmenu>
+         </template> -->
+
+      <template v-slot:lightbox-content :hidden="true">
+        <div
+          class="W3DPlayLightboxContent"
+          ref="W3DPlayLightboxContentRef"
+        ></div>
+      </template>
+
+      <!-- <template v-slot:lightbox-panel-information> -->
+        <!-- <span>Information placeholder</span> -->
+        <!-- <info-panel :title="title"></info-panel> -->
+      <!-- </template> -->
+    </vu-lightbox>
+  </div>
+</template>

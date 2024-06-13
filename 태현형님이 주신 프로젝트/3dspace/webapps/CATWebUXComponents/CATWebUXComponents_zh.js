@@ -1,0 +1,1 @@
+define("DS/CATWebUXComponents/CATWebUXComponents_zh",{});define("DS/CATWebUXComponents/assets/nls/CATWebUXComponents",{validationPanelOk:"确定",validationPanelCancel:"取消",replyButtonLabel:"回复",addButtonLabel:"新备注",pointedPageRemoved:"已移除指向的页面"});

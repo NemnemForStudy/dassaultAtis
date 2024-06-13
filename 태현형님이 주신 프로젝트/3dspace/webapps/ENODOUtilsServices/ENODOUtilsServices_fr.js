@@ -1,0 +1,1 @@
+define("DS/ENODOUtilsServices/ENODOUtilsServices_fr",{});define("DS/ENODOUtilsServices/assets/nls/enodo_notifications",{error:{title:"Erreur",security_context_fail:"La demande du serveur ne peut pas être envoyée : échec de la récupération du contexte de sécurité."}});

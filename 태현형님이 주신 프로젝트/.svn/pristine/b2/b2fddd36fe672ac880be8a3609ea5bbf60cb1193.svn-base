@@ -1,0 +1,111 @@
+#
+#   ExpressionStringResource.properties -- Properties file.
+#
+#   Copyright (c) 1992-2015 Dassault Systemes.
+#   All Rights Reserved.
+#   This program contains proprietary and trade secret information of MatrixOne,
+#   Inc.  Copyright notice is precautionary only
+#   and does  not evidence any actual or intended publication of such program
+
+#   static const char RCSID[]="$Id: ExpressionStringResource.properties.rca  $"
+#
+
+# --- General
+
+General.Model=型号
+General.ModelVersion=模型版本
+
+# Criteria
+Criteria.Date=日期
+Criteria.Products=产品
+Criteria.ManufacturingPlans=制造计划
+Criteria.Unit=单位
+Criteria.Milestone=里程碑
+Criteria.FeatureOption=变型和选项
+
+
+# --- Success
+
+# Effectivity
+Effectivity.Success.SetEvolutionOperationSuccess=设置演变有效性操作成功。
+
+
+# --- Errors
+
+Error.InternalServerError=内部错误
+
+# General
+General.Error.InvalidCategoryTypeSetting=无效类别类型。请检查有效类别类型设置。
+General.Range.Error.SequenceValues=作为范围插入需要一个或两个序列值。 找到的序列值的编号为： 
+General.Range.Error.DatesValues=作为范围插入需要一个或两个日期。找到的日期值的编号为： 
+General.Error.UnsupportedDateWithRelational=相关生效日期不支持此日期。请从此关系或类型的管理属性中移除某一有效类型。
+General.Error.UnsupportedGlobalWithMultipleContexts=在相同的表达式中，全局配置上下文无法与其他配置上下文结合。请移除全局配置上下文或其他所有配置上下文。
+
+
+# Criteria
+Criteria.Error.UnsupportedCriteriaType=不受支持的条件类型。请指定受支持的条件类型。
+Criteria.Error.TypeNotAModel=不是模型类型
+Criteria.Error.TypeNotAModelVersion=不是模型版本类型
+
+# Effectivity
+Effectivity.Error.MismatchEffectivityTypesAndExpression_bus=有效性表达式包含一些尚未在该对象上应用的有效性类型。
+Effectivity.Error.NoEffectivityTypeFound=未找到有效性类型。请使用方案中定义的有效有效性类型。
+Effectivity.Error.EffectivityUsageCannotDelete=该对象正用于有效性表达式，无法删除。请从所有有效性表达式中移除该对象，以便允许删除。
+Effectivity.FalseExpression.Display=无效
+Effectivity.TrueExpression.Display=有效
+Effectivity.Error.OnlyEvolutionEffectivity=此实例仅具有演变域有效性。
+Effectivity.Error.EffectivityUsageCannotRemoveObject=<object_type> <object_name> 正用于配置表达式（筛选、有效性...），无法移除。请从所有配置表达式中移除该条件，以便允许移除。
+Effectivity.Error.EffectivityUsageCannotModifyObject=<object_type> <object_name> 正用于配置表达式（筛选、有效性...），无法修改。请从所有配置表达式中移除该条件，以便允许修改。
+Effectivity.Error.ChangeApplicabilityAndEffectivitieDoNotIntersect=无法编辑有效性，因为表达式与适用性不相交。使用演变的实例修改变体有效性。
+Effectivity.Error.ChangeApplicabilityAndEffectivitieAreEqual=有效性表达式等于适应性：我们无法应用此操作。
+Effectivity.Error.Unset.NoEffectivity=该实例没有有效性，取消设置无效
+
+# Expression
+Expression.Error.MissingAttachedModels=并非所有必要的模型都已附加到父参考上。  
+Effectivity.Error.ParentNotAttachedAllModelsFromAC=父级参考没有从创作上下文附加所有模型。
+Effectivity.Error.ParentNotEnabledAllCriteriaFromAC=父级参考没有从创作上下文启用所有条件。
+Expression.Error.InvalidExpression=实际表达式无效
+Expression.Error.ParentPartIsNotConfigured=给定关系的父级零件没有配置上下文。
+
+# Reference
+Expression.Error.AttachContextDeniedSinceReferenceIsRevised=不支持在修订的对象上附加配置上下文。附加 <modelType> 失败
+Expression.Error.CriteriaNotEnabled=输入 XML 包含 <critType>，但此条件未在参考 <name> 上启用
+Expression.Error.CriteriaNotDisabled=禁用对象上的条件失败，因为一个/多个实例定义了 <critType> 有效性
+Expression.Error.LastCriteriaCannotBeDisabled=无法禁用对象的条件，因为只要至少已附加一个模型，就不会再启用其他条件
+Expression.Error.EvolCriteriaCannotBeDisabled.FrozenInstance=不能禁用衍生条件，因为有一个带有效性的实例被冻结
+Expression.Error.EvolCriteriaCannotBeDisabled.FrozenConfiguredInstance=不能禁用衍生条件，因为有一个不带衍生的实例被冻结
+Expression.Error.EvolCriteriaCannotBeEnabled.FrozenInstance=不能启用衍生条件，因为有一个不带有效性的实例被冻结
+Expression.Error.EvolCriteriaCannotBeEnabled.FrozenConfiguredInstance=不能启用衍生条件，因为有一个不带衍生的实例被冻结
+Expression.Error.DetachNotPossible.ConfigurationUsage=模型无法拆离，因为它正在被某个配置使用
+Expression.Error.DetachNotPossible.EffectivityUsage=模型无法拆离，因为它正在被某个有效性表达式使用
+Expression.Error.DetachNotPossible.ConfigurationRevision=无法拆离模型，因为参考具有 ConfigurationRevisions
+Expression.Error.DetachNotPossible.FrozenInstancesDefinedWithModel=无法分离模型 <name>，因为其中包含冻结的衍生条件，且结构中至少有一个实例因为这些条件而冻结
+Expression.Error.AttachNotPossible.InstanceBecomesValidForFrozenCriteria=无法附加模型 <name>，因为其中包含冻结的衍生条件，如果我们附加该模型，则结构中至少有一个实例将对这些冻结条件有效
+
+# Immutability
+Expression.Error.FrozenCriteriaInEffs=您不能对实例进行物理更改，因为它们的有效性至少包含一个已冻结条件。请使用“工作条件”。
+Expression.Error.FrozenCfgRevImpacted=无法执行操作：它至少影响一个已冻结的配置修订版
+Expression.Error.FrozenRangeOfEffImpactedBySetExpression=无法设置表达式，因为它会为有效性添加或移除至少一个冻结衍生条件
+Expression.Error.ExpressionContainsFrozen=无法使用此表达式，因为它包含至少一个已冻结的衍生条件
+Expression.Error.FailedToRetrieveFrozenFilterOfModels=无法执行此操作。一些用于检查操作有效性的模型似乎并不存在
+Expression.Error.FailedToDetermineWhetherToDoImmutabilityChecks=无法确定是否遵守不变性规则，因为部分对象不在同一个合作区中 
+Expression.Error.DeniedModelFilters=无法执行该操作。至少有一个附加的模型不可访问，因为它属于受限的合作区
+
+# Granular reject
+Expression.Error.CANotRejectableForEffectivities=对于这些实例中的至少一个，不能拒绝更改操作 <name>
+
+# Configured Operations
+Expression.Error.SplitUnderCACannotBeDoneOnVarOnlyStructure=无法在仅变体结构上执行更改操作下的分割操作；
+CfgOperation.Error.EffectivityCannotBeExtended=扩展操作仅适用于具有演变表达式的有效性。
+CfgOperation.Error.Extend.InstanceWithoutEffectivity=无法对没有有效性的实例执行扩展操作
+CfgOperation.Error.Extend.ExpressionTrue=无法对始终有效的实例执行扩展操作
+CfgOperation.Error.Extend.VariantOnlyEffectivity=无法对有效性中只有变体零件的实例执行扩展操作，因为它们始终有效
+CfgOperation.Error.Extend.UselessExtension=实例不能按完全包含在其现有有效性范围中的有效性范围扩展
+CfgOperation.Error.Reparent.CriterionNotEnabledOnParentRefOfDuplicate=条件 <critType> 在新的父级参考 <name> 上未启用，但该条件用于有效性
+
+# Work Under
+Change.Error.ParentPartIsNotCompliantWithChange=用作“工作条件”的更改将使用父级零件的配置上下文所无法提供的模型。
+Change.Error.ChangeApplicabilityIsEmptyAtFinalize=适用性表达式为空，但有可更新的受影响项目。
+Change.Error.ApplicabilityRead=读取适用性时出错
+Change.Error.Applicability.Finalization.Models=更改操作无法定稿，因为并非所有模型都附加在参考上
+AuthContext.Error.ModelVersionIsAttached="无法在附加了模型版本的结构上使用创作上下文"

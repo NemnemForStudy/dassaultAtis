@@ -1,0 +1,1 @@
+define("DS/MutatorWdg/MutatorWdg_ja",{});define("DS/MutatorWdg/assets/nls/mutator",{errorUrl:"ウィジェットをロードできませんでした",errorApi:"ウィジェット API ID が提供されていません"});

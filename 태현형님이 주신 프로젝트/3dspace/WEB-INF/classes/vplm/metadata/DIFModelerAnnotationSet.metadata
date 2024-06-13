@@ -1,0 +1,856 @@
+<?xml version="1.0"?>
+<!-- ENOVIA DICTIONARY FOR DIFModelerAnnotationSet         -->
+<!-- COPYRIGHT DASSAULT SYSTEMES 2020, All rights reserved -->
+
+<Package xmlns="PLMDictionaryUnified"
+         ModelerType="Top"
+         Name="DIFModelerAnnotationSet"
+         Uuid="231EEEB4-C2FF-48E9-A81E-61B0BF1A05E2"
+         BelongsToModeler="DIFModelerAnnotationSet"
+         UseNames="PLMCORE;DIFModelerAbstractView"
+         UseProcedures="DIFpe_Procedures"
+         CustomerExposition="Programmer">
+  <Property Name="FormerTypingLegacy" Value="No"/>
+
+  <!-- Our types are not exportable per-se, but must be exportable if
+       the master application is exportable.  
+
+        In order for the master application to export our types, our
+        KProcs must be available on the server so that it can use
+        them 
+
+        Consequently:
+           * We declare our procedures at the package level via UseProcedures. 
+           * Our export is set to None -->
+
+  <CAAComment>
+    <ShortRole>DIF model Package</ShortRole>
+    <Role>This package describes the DIF model built on top of PLM Core2</Role>
+  </CAAComment>
+
+  <!-- For DIFModelerAnnotationSet provides :        -->
+  <!-- DIFAnnotationSet                         PLMCoreReference  -->
+  <!-- DIFAnnotatedProduct                      PLMConnection     -->
+  <!-- DIFCapture                               PLMCoreReference  -->
+  <!-- DIFCaptureInstance                       PLMCoreInstance   -->
+  <!-- DIFSupplementalGeometry                  PLMCoreReference  -->
+  <!-- DIFSupplementalGeometryInstance          PLMCoreInstance   -->
+  <!-- DIF3DShapeLink                           PLMConnection  -->
+  <!-- DIF3DShape                               3DShape   -->
+
+  <!-- ******************************************* -->
+  <!-- *  DIFAnnotationSet (PLMCoreReference)    * -->
+  <!-- ******************************************* -->
+  <Class Name="DIFAnnotationSet"
+         Uuid="BDFDF8A0-26A3-4803-B4F0-0ECB5D2E85FD"
+         Abstract="No"
+         Abbreviation="fta"
+         SuperName="PLMCoreReference"
+         CustomerExposition="Programmer"
+         Specializable="Yes"
+         DeleteAvailability="Yes">
+
+    <CAAComment>
+      <ShortRole>DIF Annotation Reference Object</ShortRole>
+      <Role>DIF Annotation Reference Object</Role>
+    </CAAComment>
+
+    <!-- Configuration -->
+    <Property Name="Configurable" Value="Yes"/>
+
+    <!-- Minor Version -->
+    <Property Name="NewMinorRevisionAvailability" Value="Yes"/>
+
+    <!-- Collaborative Space Applicability -->
+    <Property Name="ShareBetweenProjectsAvailability" Value="Yes"/>
+
+    <!-- Change Management support -->
+    <Property Name="ChangeManagementSupport" Value="Yes"/>
+
+    <!-- New Branching system support Not activated yes-->
+    <!--<Property Name="NonLinearVersioningAvailability" Value="ALL"/> -->
+
+
+    <!-- PLM New UI/KWE Scripts New -->
+    <!-- <Property Name="Newable" Value="New"/>-->
+    <Property Name="KweNew_InstanciationMethod" Value="CATDIFFTAKBEDelegateInstanciation"/>
+
+    <!-- Icon and 3D Icon -->
+    <Property Name="IconName" Value="I_VPMNavDIFAnnotationSet"/>
+
+
+
+    <Simple Name="V_SemanticVersion"
+        Uuid="7378452C-069A-4487-8E17-BC6889E9D860"
+        Type="Integer"
+        DefaultValue="0"
+        Protection="Internal"/>
+
+    <Simple Name="V_Version"
+        Uuid="B32A03D8-12CF-4661-9EDD-D0E0CAEB2C8D"
+        Type="Integer"
+        DefaultValue="1"
+        Protection="Internal"/>
+
+    <Simple Name="V_Scale"
+        Uuid="14A7720F-3BDF-4DB4-9F90-51816186D79C"
+        Type="String"
+        MaxLength="255"
+        Protection="Free"
+        CAAExposition="L0"
+        DefaultValue="NormalScale">
+      <Range>
+        <Equal>NormalScale</Equal>
+        <Equal>LargeScale</Equal>
+        <Equal>ExtraLargeScale</Equal>
+        <Equal>SmallScale</Equal>
+        <Equal>ExtraSmallScale</Equal>
+        <Equal>NanometricScale</Equal>
+      </Range>
+    </Simple>
+
+    <Simple Name="SemanticGDTstandards"
+      Uuid="8A612981-EDA0-4DD8-AECC-914BC8582396"
+      Type="String"
+      MaxLength="255"
+      Protection="Free"
+      DefaultValue="ISO">
+      <Range>
+        <Equal>ISO</Equal>
+        <Equal>ANSI-ASME</Equal>
+      </Range>
+    </Simple>
+
+    <Simple Name="LSDO_ISO14405"
+            Uuid="1AE0B732-864E-49D2-AD1A-97EAF71A13D9"
+            Type="String"
+            MaxLength="255"
+            Protection="Free"
+            DefaultValue="CATTPSLSDO_LP">
+      <Range>
+        <Equal>CATTPSLSDONotApplicable</Equal>
+        <Equal>CATTPSLSDO_LP</Equal>
+        <Equal>CATTPSLSDO_LP_SA</Equal>
+        <Equal>CATTPSLSDO_LP_SM</Equal>
+        <Equal>CATTPSLSDO_LP_SD</Equal>
+        <Equal>CATTPSLSDO_LP_SX</Equal>
+        <Equal>CATTPSLSDO_LP_SN</Equal>
+        <Equal>CATTPSLSDO_LS</Equal>
+        <Equal>CATTPSLSDO_LS_SA</Equal>
+        <Equal>CATTPSLSDO_LS_SM</Equal>
+        <Equal>CATTPSLSDO_LS_SD</Equal>
+        <Equal>CATTPSLSDO_LS_SX</Equal>
+        <Equal>CATTPSLSDO_LS_SN</Equal>
+        <Equal>CATTPSLSDO_GG</Equal>
+        <Equal>CATTPSLSDO_GX</Equal>
+        <Equal>CATTPSLSDO_GN</Equal>
+        <Equal>CATTPSLSDO_GC</Equal>
+        <Equal>CATTPSLSDO_E</Equal>
+      </Range>
+    </Simple>
+
+    <Simple Name="ASDO_ISO14405"
+            Uuid="A6E7437E-C54B-49AF-B1E9-E3021BFC48E6"
+            Type="String"
+            MaxLength="255"
+            Protection="Free"
+            DefaultValue="CATTPSASDO_LC">
+      <Range>
+        <Equal>CATTPSASDONotApplicable</Equal>
+        <Equal>CATTPSASDO_GG</Equal>
+        <Equal>CATTPSASDO_GC</Equal>
+        <Equal>CATTPSASDO_LC</Equal>
+        <Equal>CATTPSASDO_LC_SA</Equal>
+        <Equal>CATTPSASDO_LC_SM</Equal>
+        <Equal>CATTPSASDO_LC_SD</Equal>
+        <Equal>CATTPSASDO_LC_SX</Equal>
+        <Equal>CATTPSASDO_LC_SN</Equal>
+        <Equal>CATTPSASDO_LG</Equal>
+        <Equal>CATTPSASDO_LG_SA</Equal>
+        <Equal>CATTPSASDO_LG_SM</Equal>
+        <Equal>CATTPSASDO_LG_SD</Equal>
+        <Equal>CATTPSASDO_LG_SX</Equal>
+        <Equal>CATTPSASDO_LG_SN</Equal>
+      </Range>
+    </Simple>
+
+    <Simple Name="TF_ISO1101"
+  Uuid="3F212E85-FF67-44BF-B50D-EA66DD5C388C"
+  Type="String"
+  MaxLength="255"
+  Protection="Free"
+  DefaultValue="CATTPS1101FC_C">
+      <Range>
+        <Equal>CATTPS1101FCNotApplicable</Equal>
+        <Equal>CATTPS1101FC_C</Equal>
+        <Equal>CATTPS1101FC_C_V</Equal>
+        <Equal>CATTPS1101FC_C_P</Equal>
+        <Equal>CATTPS1101FC_C_Q</Equal>
+        <Equal>CATTPS1101FC_CE</Equal>
+        <Equal>CATTPS1101FC_CE_Q</Equal>
+        <Equal>CATTPS1101FC_CI</Equal>
+        <Equal>CATTPS1101FC_CI_Q</Equal>
+        <Equal>CATTPS1101FC_G</Equal>
+        <Equal>CATTPS1101FC_G_V</Equal>
+        <Equal>CATTPS1101FC_G_P</Equal>
+        <Equal>CATTPS1101FC_G_Q</Equal>
+        <Equal>CATTPS1101FC_GE</Equal>
+        <Equal>CATTPS1101FC_GE_Q</Equal>
+        <Equal>CATTPS1101FC_GI</Equal>
+        <Equal>CATTPS1101FC_GI_Q</Equal>
+      </Range>
+    </Simple>
+
+    <Simple Name="TFF_ISO1101"
+  Uuid="980BFBB9-1B30-4A53-9C74-76A1FA8CFD2E"
+  Type="String"
+  MaxLength="255"
+  Protection="Free"
+  DefaultValue="">
+    </Simple>
+
+    <Simple Name="TFO_ISO1101"
+  Uuid="9C947489-40B4-41FC-9AB7-59CA60C40D35"
+  Type="String"
+  MaxLength="255"
+  Protection="Free"
+  DefaultValue="">
+    </Simple>
+
+    <Simple Name="TFL_ISO1101"
+  Uuid="AEC1FD6C-2AD6-4BD2-9104-8FDA283692F2"
+  Type="String"
+  MaxLength="255"
+  Protection="Free"
+  DefaultValue="">
+    </Simple>
+
+    <Simple Name="AS_DFLT_SCALE_R"
+            Uuid="0A701BEA-6B08-48C3-A148-CA62D26B6018"
+            Type="Double"
+            DefaultValue="1.0"
+            Protection="External">
+    </Simple>
+      
+
+    <Simple Name="Specifications"
+  Uuid="70920A8E-BBA7-4D10-9838-A52559F737FD"
+  Type="String"
+  MaxLength="255"
+  Protection="Free"
+  DefaultValue="Engineering specifications">
+      <Range>
+        <Equal>Engineering specifications</Equal>
+        <Equal>Manufacturing specifications</Equal>
+      </Range>
+    </Simple>
+
+    <!-- Export -->
+    <Method ImplementationType="Self">
+      <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+
+      <ProcedureForUsage>
+        <Usage href="ExportScope.meth#Design"/>
+        <UsedProcedure href="DIFpe_Procedures.proc#DIFAnnotationSet_ExportCompletion"/>
+      </ProcedureForUsage>
+
+      <ProcedureForUsage>
+        <Usage href="ExportScope.meth#Remove"/>
+        <UsedProcedure href="DIFpe_Procedures.proc#DIFModeler_ExportCompletion_Myself"/>
+      </ProcedureForUsage>
+
+      <ProcedureForUsage>
+        <Usage href="ExportScope.meth#TransferSiteOwnership"/>
+        <UsedProcedure href="DIFpe_Procedures.proc#DIFModeler_ExportCompletion_Myself"/>
+      </ProcedureForUsage>
+
+    </Method>
+
+  </Class>
+
+  <!-- ******************************************* -->
+  <!-- *  DIFCapture (PLMCoreReference)          * -->
+  <!-- ******************************************* -->
+  <Class Name="DIFCapture"
+       Uuid="691A2A13-80AA-402D-916B-98345948E4B4"
+       Abstract="No"
+       SuperName="DIFAbstractView3D"
+       Abbreviation="cap"
+       CreateInstName="DIFCaptureInstance"
+       CustomerExposition="Programmer"
+       Specializable="Yes"
+       DeleteAvailability="Yes">
+
+    <CAAComment>
+      <ShortRole>Capture Object</ShortRole>
+      <Role>Capture Object</Role>
+    </CAAComment>
+
+    <!-- PLM New UI/KWE Scripts New -->
+    <Property Name="KweNew_InstanciationMethod" Value="CATDIFFTAKBEDelegateInstanciation"/>
+
+    <!-- Icon and 3D Icon -->
+    <Property Name="IconName" Value="I_VPMNavDIFCapture"/>
+
+    <!-- Collaborative Space Applicability -->
+    <Property Name="ShareBetweenProjectsAvailability" Value="Yes"/>
+
+    <Simple Name="V_ViewType"
+          Uuid="66FD6A0D-C303-41E1-A461-C2B7851F3921"
+          Type="String"
+          MaxLength="255"
+          Protection="External"
+          CAAExposition="L0"
+          DefaultValue="UntypedView">
+      <Range>
+        <Equal>UntypedView</Equal>
+        <Equal>FrontView</Equal>
+        <Equal>RightView</Equal>
+        <Equal>LeftView</Equal>
+        <Equal>TopView</Equal>
+        <Equal>BottomView</Equal>
+        <Equal>RearView</Equal>
+        <Equal>Auxiliary</Equal>
+        <Equal>CutView</Equal>
+        <Equal>SectionView</Equal>
+        <Equal>DetailView</Equal>
+        <Equal>IsometricView</Equal>
+        <Equal>AxonometricView</Equal>
+        <Equal>TrimetricView</Equal>
+        <Equal>DimetricView</Equal>
+        <Equal>NoteView</Equal>
+      </Range>
+    </Simple>
+    <Simple Name="V_Layoutable"
+        Uuid="B5586950-1666-499E-B2C1-E82FB0595863"
+        Type="String"
+        MaxLength="255"
+        Protection="Free"
+        CAAExposition="L0"
+        DefaultValue="Yes">
+      <Range>
+        <Equal>Yes</Equal>
+        <Equal>No</Equal>
+      </Range>
+    </Simple>
+
+    <!-- Export -->
+    <Method ImplementationType="Self">
+      <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+      <ProcedureForUsage>
+        <Usage href="ExportScope.meth#Remove"/>
+        <UsedProcedure href="DIFpe_Procedures.proc#DIFModeler_ExportCompletion_DifAbstractView"/>
+      </ProcedureForUsage>
+
+      <ProcedureForUsage>
+        <Usage href="ExportScope.meth#TransferSiteOwnership"/>
+        <UsedProcedure href="DIFpe_Procedures.proc#DIFModeler_ExportCompletion_DifAbstractView"/>
+      </ProcedureForUsage>
+    </Method>
+
+  </Class>
+
+  <!-- ******************************************* -->
+  <!-- *  DIFCaptureInstance (PLMCoreReference)  * -->
+  <!-- ******************************************* -->
+  <RelationClass Name="DIFCaptureInstance"
+       Uuid="2AF5AE3E-ADAA-464A-A39F-96C105792F8F"
+       Abstract="No"
+       SuperName="DIFAbstractView3DInstance"
+       CustomerExposition="Programmer"
+       Specializable="Yes">
+
+    <CAAComment>
+      <ShortRole>Capture Instance Object</ShortRole>
+      <Role>Capture Instance Object</Role>
+    </CAAComment>
+
+    <!-- Configuration -->
+    <Property Name="Filtrable" Value="Yes"/>
+
+    <!-- PLM New UI/KWE Scripts New -->
+    <Property Name="KweNew_InstanciationMethod" Value="CATDIFFTAKBEDelegateInstanciation"/>
+
+    <!-- Icon and 3D Icon -->
+    <Property Name="IconName" Value="I_D3M_CaptureAnnotations"/>
+
+    <!-- Export -->
+    <Method ImplementationType="None">
+      <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+    </Method>
+
+    <SubClause Name="from"   TargetName="DIFAnnotationSet"/>
+    <SubClause Name="from"   TargetName="DIFSheet"/>
+    <SubClause Name="from"   TargetName="DIF2DCapture"/>
+    <SubClause Name="to"   TargetName="DIFCapture"/>
+
+  </RelationClass>
+
+
+  <!-- ********************************************* -->
+  <!-- *  DIFAnnotatedProduct (PLMConnection)      * -->
+  <!-- ********************************************* -->
+  <Class Name="DIFAnnotatedProduct"
+         Uuid="A61C70D3-4358-4446-8A69-6D9DBB4E7C12"
+         Abstract="No"
+         SuperName="PLMConnection"
+         CustomerExposition="Programmer">
+
+    <Path Name="V_DIFAnnotatedProduct"
+      Uuid="A261C049-79DD-44BC-AEA7-CE52B0935DFE"
+      MultiValuated="No"
+      RoleName="DIFAnnotatedProduct"
+      Type="SemanticRelation" AdaptativeToMinor="No"
+		  SynchroSensitivity="None"
+		  RerouteOnEffectivityChange="No"
+      Semantics="Reference3"/>
+
+    <CAAComment>
+      <ShortRole>DIF Connection Annotated Product Object</ShortRole>
+      <Role>DIF Connection Annotated Product Object</Role>
+    </CAAComment>
+
+    <!-- PLM New UI/KWE Scripts New -->
+    <Property Name="KweNew_InstanciationMethod" Value="CATDIFFTAKBEDelegateInstanciation"/>
+
+    <!-- Export -->
+    <Method ImplementationType="None">
+      <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+    </Method>
+  </Class>
+
+  <!-- ******************************************* -->
+  <!-- *  DIFSupplementalGeometry (PLMCoreReference)          * -->
+  <!-- ******************************************* -->
+  <Class Name="DIFSupplementalGeometry"
+		 Uuid="C617FFAE-18FE-46D1-B1FC-1465E3D625D4"
+		 Abstract="No"
+		 SuperName="PLMCoreReference"
+		 Abbreviation="spg"
+		 CreateInstName="DIFSupplementalGeometryInstance"
+		 CustomerExposition="Programmer"
+		 Specializable="Yes"
+		 DeleteAvailability="Yes">
+
+    <CAAComment>
+      <ShortRole>Supplemental Geometry Object</ShortRole>
+      <Role>Supplemental Geometry</Role>
+    </CAAComment>
+
+    <!-- PLM New UI/KWE Scripts New -->
+    <Property Name="KweNew_InstanciationMethod" Value="CATDIFFTAKBEDelegateInstanciation"/>
+
+    <!-- Advanced search -->
+    <Property Name="Searchable" Value="No"/>
+
+    <!-- Icon and 3D Icon -->
+    <Property Name="IconName" Value="I_VPMNavDIFSupplementalGeometry"/>
+
+    <!-- Collaborative Space Applicability -->
+    <Property Name="ShareBetweenProjectsAvailability" Value="Yes"/>
+
+    <!-- Change Management support -->
+    <Property Name="ChangeManagementSupport" Value="Yes"/>
+
+    <!-- New Branching system support Not activated yes-->
+    <!--<Property Name="NonLinearVersioningAvailability" Value="ALL"/> -->
+
+    <Simple Name="V_Scale"
+        Uuid="2BF9F864-0C0A-493C-8EF7-FE65F52F167C"
+        Type="String"
+        MaxLength="255"
+        Protection="Free"
+        CAAExposition="L0"
+        DefaultValue="NormalScale">
+      <Range>
+        <Equal>NormalScale</Equal>
+        <Equal>LargeScale</Equal>
+        <Equal>ExtraLargeScale</Equal>
+        <Equal>SmallScale</Equal>
+        <Equal>ExtraSmallScale</Equal>
+        <Equal>NanometricScale</Equal>
+      </Range>
+    </Simple>
+
+    <!-- Export -->
+    <Method ImplementationType="Self">
+      <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+      <ProcedureForUsage>
+        <Usage href="ExportScope.meth#Remove"/>
+        <UsedProcedure href="DIFpe_Procedures.proc#DIFModeler_ExportCompletion_Myself"/>
+      </ProcedureForUsage>
+
+      <ProcedureForUsage>
+        <Usage href="ExportScope.meth#TransferSiteOwnership"/>
+        <UsedProcedure href="DIFpe_Procedures.proc#DIFModeler_ExportCompletion_Myself"/>
+      </ProcedureForUsage>
+    </Method>
+
+  </Class>
+
+  <!-- ******************************************* -->
+  <!-- *  DIFSupplementalGeometryInstance (PLMCoreInstance)  * -->
+  <!-- ******************************************* -->
+  <RelationClass Name="DIFSupplementalGeometryInstance"
+		 Uuid="910A35DF-106B-40DE-A7E6-F7310B397F6F"
+		 Abstract="No"
+		 SuperName="PLMCoreInstance"
+		 CustomerExposition="Programmer"
+		 Specializable="Yes">
+
+    <CAAComment>
+      <ShortRole>Supplemental Geometry Object</ShortRole>
+      <Role>Supplemental Geometry Object</Role>
+    </CAAComment>
+
+    <!-- Configuration -->
+    <Property Name="Filtrable" Value="Yes"/>
+
+    <!-- PLM New UI/KWE Scripts New -->
+    <Property Name="KweNew_InstanciationMethod" Value="CATDIFFTAKBEDelegateInstanciation"/>
+
+    <!-- Icon and 3D Icon -->
+    <Property Name="IconName" Value="I_Part"/>
+
+    <!-- Export -->
+    <Method ImplementationType="None">
+      <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+    </Method>
+
+    <SubClause Name="from"   TargetName="DIFAnnotationSet"/>
+    <SubClause Name="from"   TargetName="MBDView"/>
+    <SubClause Name="from"   TargetName="DIFCapture"/>
+    <SubClause Name="to"   TargetName="DIFSupplementalGeometry"/>
+
+  </RelationClass>
+
+  <!-- ********************************************* -->
+  <!-- *  DIF3DShapeLink (PLMConnection)      * -->
+  <!-- ********************************************* -->
+  <Class Name="DIF3DShapeLink"
+		   Uuid="0E1B20E1-B5F0-4B6F-9AAD-EA35BB4967F8"
+		   Abstract="No"
+		   SuperName="PLMConnection"
+		   CustomerExposition="Programmer">
+
+    <Path Name="V_DIF3DShapeLink"
+		  Uuid="3FAD1544-0A83-45C1-865B-06E1387DF640"
+		  MultiValuated="No"
+		  RoleName="DIF3DShapeLink"
+		  Type="SemanticRelation" AdaptativeToMinor="No"
+			  SynchroSensitivity="None"
+			  RerouteOnEffectivityChange="No"
+		  Semantics="Reference3"/>
+
+    <CAAComment>
+      <ShortRole>DIF 3DShape link Object</ShortRole>
+      <Role>DIF 3DShape link Object Object</Role>
+    </CAAComment>
+
+    <!-- PLM New UI/KWE Scripts New -->
+    <Property Name="KweNew_InstanciationMethod" Value="CATDIFFTAKBEDelegateInstanciation"/>
+
+    <!-- Export -->
+    <Method ImplementationType="None">
+      <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+    </Method>
+  </Class>
+
+
+  <!-- ******************************************* -->
+  <!-- *  DIFSupplementalGeometry (PLMCoreReference)          * -->
+  <!-- ******************************************* -->
+  <Class Name="DIF3DShape"
+		 Uuid="D0EBD1E0-58E6-4901-A2A9-35F34632D094"
+		 Abstract="No"
+		 SuperName="PLMCoreRepReference"
+		 Abbreviation="dsh"
+		 CustomerExposition="Programmer"
+     CreateInstName="DIF3DShapeInstance"
+		 Specializable="Yes"
+	   Discipline="No"
+		 DeleteAvailability="Yes">
+
+    <CAAComment>
+      <ShortRole>DIF 3D Shape Object</ShortRole>
+      <Role>DIF 3D Shape Object</Role>
+    </CAAComment>
+
+    <!-- PLM New UI/KWE Scripts New -->
+    <Property Name="KweNew_InstanciationMethod" Value="CATDIFFTAKBEDelegateInstanciation"/>
+
+    <!-- Advanced search -->
+    <Property Name="Searchable" Value="No"/>
+
+    <!-- Collaborative Space Applicability -->
+    <Property Name="ShareBetweenProjectsAvailability" Value="Yes"/>
+
+    <!-- Change Management support -->
+    <Property Name="ChangeManagementSupport" Value="Yes"/>
+
+    <!-- New Branching system support Not activated yes-->
+    <!--<Property Name="NonLinearVersioningAvailability" Value="ALL"/> -->
+
+    <!-- V_Scale attribute -->
+    <Simple Name="V_Scale"
+            Uuid="6F63F212-1283-4B5E-B13A-D2943A49B889"
+			Type="String"
+			MaxLength="255"
+			Protection="External"
+			CAAExposition="L0"
+			DefaultValue="NormalScale">
+      <Range>
+        <Equal>NormalScale</Equal>
+        <Equal>LargeScale</Equal>
+        <Equal>ExtraLargeScale</Equal>
+        <Equal>SmallScale</Equal>
+        <Equal>ExtraSmallScale</Equal>
+        <Equal>NanometricScale</Equal>
+      </Range>
+    </Simple>
+
+    <!-- Export -->
+    <Method ImplementationType="Self">
+      <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+      <ProcedureForUsage>
+        <Usage href="ExportScope.meth#Remove"/>
+        <UsedProcedure href="DIFpe_Procedures.proc#DIFModeler_ExportCompletion_Myself"/>
+      </ProcedureForUsage>
+
+      <ProcedureForUsage>
+        <Usage href="ExportScope.meth#TransferSiteOwnership"/>
+        <UsedProcedure href="DIFpe_Procedures.proc#DIFModeler_ExportCompletion_Myself"/>
+      </ProcedureForUsage>
+    </Method>
+  </Class>
+
+  <!-- ******************************************* -->
+  <!-- *  DIF3DShapeInstance (PLMCoreReference)  * -->
+  <!-- ******************************************* -->
+  <RelationClass Name="DIF3DShapeInstance"
+       Uuid="C8BABB78-8E14-4F62-B91F-9BCEF719A289"
+       Abstract="No"
+       SuperName="PLMCoreRepInstance"
+       CustomerExposition="Programmer">
+
+    <CAAComment>
+      <ShortRole>Capture Instance Object</ShortRole>
+      <Role>Capture Instance Object</Role>
+    </CAAComment>
+
+    <!-- PLM New UI/KWE Scripts New -->
+    <Property Name="KweNew_InstanciationMethod" Value="CATDIFFTAKBEDelegateInstanciation"/>
+
+    <!-- Advanced search -->
+    <Property Name="Searchable" Value="No"/>
+
+    <!-- Export -->
+    <Method ImplementationType="None">
+      <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+    </Method>
+
+    <SubClause Name="from"   TargetName="DIFSupplementalGeometry"/>
+    <SubClause Name="to"   TargetName="DIF3DShape"/>
+
+  </RelationClass>
+  
+  <!-- ******************************************* -->
+  <!-- *  DIF2DCapture (PLMCoreReference)          * -->
+  <!-- ******************************************* -->
+  <Class Name="DIF2DCapture"
+       Uuid="AC440AA7-1FC9-45E9-9054-9AFC47508132"
+       Abstract="No"
+       SuperName="DIFAbstractView3D"
+       Abbreviation="2Dcap"
+       CreateInstName="DIF2DCaptureInstance"
+       CustomerExposition="Programmer"
+       Specializable="Yes"
+       DeleteAvailability="Yes">
+
+    <CAAComment>
+      <ShortRole>2D Capture Object</ShortRole>
+      <Role>2D Capture Object</Role>
+    </CAAComment>
+
+    <!-- PLM New UI/KWE Scripts New -->
+    <Property Name="KweNew_InstanciationMethod" Value="CATDIFFTAKBEDelegateInstanciation"/>
+
+    <!-- Icon and 3D Icon -->
+    <Property Name="IconName" Value="I_VPMNavDIF2DCapture"/>
+
+    <!-- Collaborative Space Applicability -->
+    <Property Name="ShareBetweenProjectsAvailability" Value="Yes"/>
+
+    <!-- Export -->
+    <Method ImplementationType="Self">
+      <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+      <ProcedureForUsage>
+        <Usage href="ExportScope.meth#Remove"/>
+        <UsedProcedure href="DIFpe_Procedures.proc#DIFModeler_ExportCompletion_DifAbstractView"/>
+      </ProcedureForUsage>
+
+      <ProcedureForUsage>
+        <Usage href="ExportScope.meth#TransferSiteOwnership"/>
+        <UsedProcedure href="DIFpe_Procedures.proc#DIFModeler_ExportCompletion_DifAbstractView"/>
+      </ProcedureForUsage>
+    </Method>
+
+  </Class>
+
+  <!-- ******************************************* -->
+  <!-- *  DIF2DCaptureInstance (PLMCoreReference)  * -->
+  <!-- ******************************************* -->
+  <RelationClass Name="DIF2DCaptureInstance"
+       Uuid="23DA9DED-6C59-43DC-8519-805026265E4A"
+       Abstract="No"
+       SuperName="DIFAbstractView3DInstance"
+       CustomerExposition="Programmer"
+       Specializable="Yes">
+
+    <CAAComment>
+      <ShortRole>2D Capture Instance Object</ShortRole>
+      <Role>2D Capture Instance Object</Role>
+    </CAAComment>
+
+    <!-- Configuration -->
+    <Property Name="Filtrable" Value="Yes"/>
+
+    <!-- PLM New UI/KWE Scripts New -->
+    <Property Name="KweNew_InstanciationMethod" Value="CATDIFFTAKBEDelegateInstanciation"/>
+
+    <!-- Icon and 3D Icon -->
+    <Property Name="IconName" Value="I_D3M_CaptureAnnotations"/>
+
+    <!-- Export -->
+    <Method ImplementationType="None">
+      <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+    </Method>
+
+    <SubClause Name="from"   TargetName="DIFAnnotationSet"/>
+    <SubClause Name="from"   TargetName="DIFSheet"/>
+    <SubClause Name="to"   TargetName="DIF2DCapture"/>
+
+  </RelationClass>
+  
+  <!-- ******************************************* -->
+  <!-- *  DFTView (PLMCoreReference)          * -->
+  <!-- ******************************************* -->
+  <Class Name="DFTView"
+       Uuid="D874C094-9BBF-48D8-A2C1-AD0B551DDB54"
+       Abstract="No"
+       SuperName="DIFAbstractView3D"
+       Abbreviation="2Dcap"
+       CreateInstName="DFTViewInstance"
+       CustomerExposition="Programmer"
+       Specializable="Yes"
+       DeleteAvailability="Yes">
+
+    <CAAComment>
+      <ShortRole>2D Capture Object</ShortRole>
+      <Role>2D Capture Object</Role>
+    </CAAComment>
+
+    <!-- PLM New UI/KWE Scripts New -->
+    <Property Name="KweNew_InstanciationMethod" Value="CATDIFFTAKBEDelegateInstanciation"/>
+
+    <!-- Icon and 3D Icon -->
+    <Property Name="IconName" Value="I_VPMNavDFTView"/>
+
+    <!-- Collaborative Space Applicability -->
+    <Property Name="ShareBetweenProjectsAvailability" Value="Yes"/>
+
+    <!-- Export -->
+    <Method ImplementationType="Self">
+      <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+      <ProcedureForUsage>
+        <Usage href="ExportScope.meth#Remove"/>
+        <UsedProcedure href="DIFpe_Procedures.proc#DIFModeler_ExportCompletion_DifAbstractView"/>
+      </ProcedureForUsage>
+
+      <ProcedureForUsage>
+        <Usage href="ExportScope.meth#TransferSiteOwnership"/>
+        <UsedProcedure href="DIFpe_Procedures.proc#DIFModeler_ExportCompletion_DifAbstractView"/>
+      </ProcedureForUsage>
+    </Method>
+
+  </Class>
+
+  <!-- ******************************************* -->
+  <!-- *  DFTViewInstance (PLMCoreReference)  * -->
+  <!-- ******************************************* -->
+  <RelationClass Name="DFTViewInstance"
+       Uuid="B05E2402-B6D1-4ADA-AFBA-36196566F25A"    
+       Abstract="No"
+       SuperName="DIFAbstractView3DInstance"
+       CustomerExposition="Programmer"
+       Specializable="Yes">
+
+    <CAAComment>
+      <ShortRole>2D Capture Instance Object</ShortRole>
+      <Role>2D Capture Instance Object</Role>
+    </CAAComment>
+
+    <!-- Configuration -->
+    <Property Name="Filtrable" Value="Yes"/>
+
+    <!-- PLM New UI/KWE Scripts New -->
+    <Property Name="KweNew_InstanciationMethod" Value="CATDIFFTAKBEDelegateInstanciation"/>
+
+    <!-- Icon and 3D Icon -->
+    <Property Name="IconName" Value="I_D3M_CaptureAnnotations"/>
+
+    <!-- Export -->
+    <Method ImplementationType="None">
+      <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+    </Method>
+
+    <SubClause Name="from"   TargetName="DIFSheet"/>
+    <SubClause Name="to"   TargetName="DFTView"/>
+
+  </RelationClass>
+
+
+  <!-- ********************************************************** -->
+  <!-- FUNCTIONS Declarations : here are declared PLMQL Functions -->
+  <!-- ********************************************************** -->
+  <Function Name="DifModeler_AddAnnotatedProductCnx">
+    <Implementation Name="DifModeler_AddAnnotatedProductCnx" FileLocation="DifModeler_AddAnnotatedProductCnx.plmql" Language="PLMQL"/>
+    <Signature href="DIFMBDExportSignature"/>
+  </Function>
+
+  <Function Name="DifModeler_AddMBDObjects">
+    <Implementation Name="DifModeler_AddMBDObjects" FileLocation="DifModeler_AddMBDObjects.plmql" Language="PLMQL"/>
+    <Signature href="DIFMBDExportSignature"/>
+  </Function>
+
+  <Function Name="DifModeler_AddAnnotatedProduct">
+    <Implementation Name="DifModeler_AddAnnotatedProduct" FileLocation="DifModeler_AddAnnotatedProduct.plmql" Language="PLMQL"/>
+    <Signature href="DIFMBDExportSignature"/>
+  </Function>
+
+  <Function Name="DifModeler_AddProductFromCapture">
+    <Implementation Name="DifModeler_AddProductFromCapture" FileLocation="DifModeler_AddProductFromCapture.plmql" Language="PLMQL"/>
+    <Signature href="DIFMBDExportSignature"/>
+  </Function>
+
+
+  <Signature id="DIFMBDExportSignature">
+    <Parameter Name="InputIds" Lower="0" Upper="-1" Direction="in" MultiValuated="Yes" DataType="PLMId"/>
+    <Parameter Name="OutputIds" Lower="0" Upper="-1" Direction="out" MultiValuated="No" DataType="PLMRouteSet"/>
+  </Signature>
+
+</Package>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,38 @@
+NAVIGATE     
+
+T0.PLMID, T1.PLMID , T2.PLMID
+ 
+
+FROM      
+
+DELFmiFunctionalModel/DELFmiFunctionInstance T0,
+
+DELFmiMfgSubstitute/DELFmiMfgSubstituteCnx T1,
+
+DELFmiFunctionalModel/DELFmiFunctionReference T2
+
+FROM_ROOTS[?1?]
+
+ON ( RELATION(     
+
+FROM=DELFmiFunctionalModel/DELFmiFunctionInstance     
+
+TO=DELFmiMfgSubstitute/DELFmiMfgSubstituteCnx 
+
+THROUGH=POINTEDBY ) WITH QUALITY_FILTER(ROLE=DELMfgSubstitute_Source))
+
+
+
+THEN (RELATION(
+
+FROM=DELFmiMfgSubstitute/DELFmiMfgSubstituteCnx
+
+TO=DELFmiFunctionalModel/DELFmiFunctionReference
+
+THROUGH=POINTSTO)WITH QUALITY_FILTER(ROLE=DELMfgSubstitute_Target))
+
+
+
+;
+
+

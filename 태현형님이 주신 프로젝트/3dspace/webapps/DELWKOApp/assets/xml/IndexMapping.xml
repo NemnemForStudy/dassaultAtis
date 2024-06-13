@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright DASSAULT SYSTEMES 2013 -->
+<!--	Mapping between index names and database names -->
+<IndexMapping xmlns="DS_DELPPWConfiguration" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="DS_DELPPWConfiguration ../xsd/IndexMapping.xsd" Title="Mapping between index names and database names" Description="Sample configuration file delivered by DS.">
+  <Relation>
+    <Key index="physicalid"                                  database="PID"/>
+    <Key index="type"                                        database="type"/>
+    <Key index="ro.plminstance.plm_externalid"               database="PLM_ExternalID"/>
+    <Key index="ro.plminstance.v_treeorder"                  database="V_TreeOrder"/>
+    <Key index="ro.DELLmiOperationPPRInstance.V_Balanceable" database="V_Balanceable"/>
+    <Key index="from.physicalid"                             database="isAggregatedBy"/>
+    <Key index="to.physicalid"                               database="isInstanceOf"/>
+    <Key index="ds6w:what/ds6w:type"                         database="type"/>
+    <Key index="ro.delfmicontquantity_length.v_contquantity" database="DELFmiContQuantity_Length.V_ContQuantity"/>
+    <Key index="ro.delfmicontquantity_area.v_contquantity"   database="DELFmiContQuantity_Area.V_ContQuantity"/>
+    <Key index="ro.delfmicontquantity_volume.v_contquantity" database="DELFmiContQuantity_Volume.V_ContQuantity"/>
+    <Key index="ro.delfmicontquantity_mass.v_contquantity"   database="DELFmiContQuantity_Mass.V_ContQuantity"/>
+
+    <!-- <Key index="ro.DELLmiExecTimeConstraintRelation"         database="DELLmiExecTimeConstraintRelation"/> -->
+    <Key index="ro.DELLmiOperationInstance.V_X2DPos"         database="V_X2DPos"/>
+    <Key index="ro.DELLmiOperationInstance.V_Y2DPos"         database="V_Y2DPos"/>
+  </Relation>
+  <Entity>
+    <Key index="physicalid"                                  database="PID"/>
+    <Key index="type"                                        database="type"/>
+    <Key index="name"                                        database="PLM_ExternalID"/>
+    <Key index="ds6w:label"                                  database="V_Name"/>
+    <Key index="bo.PLMEntity.V_description"                  database="V_description"/>
+    <Key index="bo.PLMEntity.V_discipline"                   database="V_discipline"/>
+    <Key index="bo.Resource.V_MTBF"                          database="V_MTBF"/>
+    <Key index="bo.Robot.V_DELRmi_MountingMethod"            database="V_DELRmi_MountingMethod"/>
+    <Key index="bo.Robot.V_DELRmi_NbDOFs"                    database="V_DELRmi_NbDOFs"/>
+    <Key index="current"                                     database="current"/>
+    <Key index="revision"                                    database="revision"/>
+    <Key index="owner"                                       database="owner"/>
+    <Key index="interface"                                   database="interface"/>
+    <Key index="originated"                                  database="originated"/>
+    <Key index="organization"                                database="organization"/>
+    <Key index="bo.PLMReference.V_isLastVersion"             database="V_isLastVersion"/>
+    <Key index="bo.PLMReference.V_ApplicabilityDate"         database="V_ApplicabilityDate"/>
+
+    <Key index="bo.DELAsmProcessCanUseCnx.V_ResourcesQuantity" database="V_ResourcesQuantity"/>
+    <Key index="bo.DELAsmProcessCanUseCnx.V_IsPreferred" database="V_IsPreferred"/>
+
+    <Key index="bo.DELLmiProductionSystemReference.V_TargetReleaseDate" database="V_TargetReleaseDate"/>
+    <Key index="bo.DELLmiProductionSystemReference.V_QueuingModeIN" database="V_QueuingModeIN"/>
+
+    <Key index="resourceid"                                  database="resourceid"/>
+    <Key index="ds6w:what/ds6w:type"                         database="type"/>
+
+    <Key index="DELSysSpecificationLinksDiscipline"          database="SystemImplementLink"/>
+    <Key index="MfgProductionPlanning"                       database="ProcessImplementLink"/>
+    <Key index="DELFmiProcessImplementCnx"                   database="ProductImplementLink"/>
+    <Key index="ds6w:kind"                                   database="V_usage"/>
+
+    <Key index="bo.DELLmiProductionSystemReference.V_CycleTime" database="V_CycleTime"/>
+
+    <Key index="bo.DELLmiGeneralOperationReference.V_SequencingMode" database="V_SequencingMode"/>
+    <Key index="bo.DELLmiHeaderOperationReference.V_SequencingMode" database="V_SequencingMode"/>
+    <Key index="bo.DELLmiPPRSystemReference.V_SequencingMode" database="V_SequencingMode"/>
+
+    <Key index="modified"                                     database="modified"/>
+    <Key index="bo.DELLmiOperationReference.V_EstimatedTime"  database="V_EstimatedTime"/>
+    <Key index="bo.DELLmiOperationReference.V_TimeMode"       database="V_TimeMode"/>
+    <Key index="bo.DELLmiOperationReference.V_MeasuredTime"   database="V_MeasuredTime"/>
+    <Key index="bo.DELLmiOperationReference.V_EstimatedTime_AddedValueRatio"  database="V_EstimatedTime_AddedValueRatio"/>
+    <Key index="bo.resource.v_mttr" database="V_MTTR"/>
+    <Key index="bo.createassembly.v_outsourced" database="V_Outsourced"/>
+    <Key index="bo.createassembly.v_needdedicatedsystem" database="V_NeedDedicatedSystem"/>
+    <Key index="bo.resource.v_repaircost" database="V_RepairCost"/>
+    <Key index="bo.resource.v_consumablecost" database="V_ConsumableCost"/>
+    <Key index="bo.resource.v_calculatedcycletime" database="V_CalculatedCycleTime"/>
+    <Key index="bo.resource.v_targetedcycletime" database="V_TargetedCycleTime"/>
+    <Key index="bo.resource.v_setuptime" database="V_SetUpTime"/>
+    <Key index="bo.resource.v_targetcost" database="V_TargetCost"/>
+
+    <Key index="bo.DELLmiTimeConstraintCnx.V_MaterialNeed"   database="V_MaterialNeed"/>
+    <Key index="bo.DELLmiTimeConstraintCnx.V_DependencyType"   database="V_DependencyType"/>
+
+
+
+    <!-- WORKORDER -->
+    <Key index="description"                                        database="description"/>
+    <Key index="bo.DELLmiUPRSystemReference.V_Priority"  database="V_Priority"/>
+    <Key index="bo.DELLmiOperationUPRReference.V_Priority"  database="V_Priority"/>
+
+    <Key index="bo.DELLmiOperationUPRReference.V_Scheduled"  database="V_Scheduled"/>
+    <Key index="bo.DELLmiExecHeaderOperationReference.V_Interruptible"  database="V_Interruptible"/>
+    <Key index="bo.DELLmiOperationReference.V_IsTimeProportionalToQty"  database="V_IsTimeProportionalToQty"/>
+
+    <!-- <Key index="bo.DELLmiOperationUPRReference.V_InitialQuantity"  database="V_InitialQuantity"/>
+    <Key index="bo.DELLmiOperationUPRReference.V_RemainingQuantity"  database="V_RemainingQuantity"/>
+    <Key index="bo.DELLmiOperationUPRReference.V_CompletedQuantity"  database="V_CompletedQuantity"/> -->
+
+    <Key index="bo.DELLmiUPRSystemReference.V_DueDate"  database="V_DueDate"/>
+    <Key index="bo.DELLmiUPRSystemReference.V_CalculatedDueDate"  database="V_CalculatedDueDate"/>
+    <Key index="bo.DELLmiUPRSystemReference.V_EarliestStartDate"  database="V_EarliestStartDate"/>
+    <Key index="bo.DELLmiUPRSystemReference.V_TargetStartDate"  database="V_TargetStartDate"/>
+    <Key index="bo.DELLmiUPRSystemReference.V_TargetEndDate"  database="V_TargetEndDate"/>
+    <Key index="bo.DELLmiUPRSystemReference.V_PlannedStartDate"  database="V_PlannedStartDate"/>
+    <Key index="bo.DELLmiUPRSystemReference.V_PlannedEndDate"  database="V_PlannedEndDate"/>
+    <Key index="bo.DELLmiUPRSystemReference.V_ScheduledStartDate"  database="V_ScheduledStartDate"/>
+    <Key index="bo.DELLmiUPRSystemReference.V_ScheduledEndDate"  database="V_ScheduledEndDate"/>
+    <Key index="bo.DELLmiUPRSystemReference.V_ActualStartDate"  database="V_ActualStartDate"/>
+    <Key index="bo.DELLmiUPRSystemReference.V_ActualEndDate"  database="V_ActualEndDate"/>
+
+    <Key index="bo.DELLmiEstimatedTime.V_EstimatedTime"  database="V_EstimatedTime"/>
+    <Key index="bo.DELLmiAdditionalTime.V_TimeOutMachineBefore"  database="V_TimeOutMachineBefore"/>
+    <Key index="bo.DELLmiAdditionalTime.V_TimeOutMachineAfter"  database="V_TimeOutMachineAfter"/>
+    <Key index="bo.DELLmiAdditionalTime.V_PreparationTime"  database="V_PreparationTime"/>
+
+    <Key index="bo.DELLmiOperationUPRReference.V_RemainingTime"  database="V_RemainingTime"/>
+    <Key index="bo.DELLmiOperationUPRReference.V_ActualTime"  database="V_ActualTime"/>
+    <Key index="bo.DELOnHold.V_OnHoldComment"  database="V_OnHoldComment"/>
+
+    <Key index="bo.DELLmiWOQuantity_Each.V_OrderQuantity"   database="DELLmiWOQuantity_Each.V_OrderQuantity"/>
+    <Key index="bo.DELLmiWOQuantity_Area.V_OrderQuantity"   database="DELLmiWOQuantity_Area.V_OrderQuantity"/>
+    <Key index="bo.DELLmiWOQuantity_Weight.V_OrderQuantity"   database="DELLmiWOQuantity_Weight.V_OrderQuantity"/>
+    <Key index="bo.DELLmiWOQuantity_Length.V_OrderQuantity"   database="DELLmiWOQuantity_Length.V_OrderQuantity"/>
+    <Key index="bo.DELLmiWOQuantity_Volume.V_OrderQuantity"   database="DELLmiWOQuantity_Volume.V_OrderQuantity"/>
+
+    <Key index="bo.DELLmiQtyToBeProducedPerTime_Each.V_QuantityToBeProducedPerTime"   database="DELLmiQtyToBeProducedPerTime_Each.V_QuantityToBeProducedPerTime"/>
+    <Key index="bo.DELLmiQtyToBeProducedPerTime_Area.V_QuantityToBeProducedPerTime"   database="DELLmiQtyToBeProducedPerTime_Area.V_QuantityToBeProducedPerTime"/>
+    <Key index="bo.DELLmiQtyToBeProducedPerTime_Weight.V_QuantityToBeProducedPerTime"   database="DELLmiQtyToBeProducedPerTime_Weight.V_QuantityToBeProducedPerTime"/>
+    <Key index="bo.DELLmiQtyToBeProducedPerTime_Length.V_QuantityToBeProducedPerTime"   database="DELLmiQtyToBeProducedPerTime_Length.V_QuantityToBeProducedPerTime"/>
+    <Key index="bo.DELLmiQtyToBeProducedPerTime_Volume.V_QuantityToBeProducedPerTime"   database="DELLmiQtyToBeProducedPerTime_Volume.V_QuantityToBeProducedPerTime"/>
+
+    <Key index="bo.DELLmiEOQuantity_Each.V_InitialQuantity"   database="DELLmiEOQuantity_Each.V_InitialQuantity"/>
+    <Key index="bo.DELLmiEOQuantity_Area.V_InitialQuantity"   database="DELLmiEOQuantity_Area.V_InitialQuantity"/>
+    <Key index="bo.DELLmiEOQuantity_Weight.V_InitialQuantity"   database="DELLmiEOQuantity_Weight.V_InitialQuantity"/>
+    <Key index="bo.DELLmiEOQuantity_Length.V_InitialQuantity"   database="DELLmiEOQuantity_Length.V_InitialQuantity"/>
+    <Key index="bo.DELLmiEOQuantity_Volume.V_InitialQuantity"   database="DELLmiEOQuantity_Volume.V_InitialQuantity"/>
+
+    <Key index="bo.DELLmiEOQuantity_Each.V_RemainingQuantity"   database="DELLmiEOQuantity_Each.V_RemainingQuantity"/>
+    <Key index="bo.DELLmiEOQuantity_Area.V_RemainingQuantity"   database="DELLmiEOQuantity_Area.V_RemainingQuantity"/>
+    <Key index="bo.DELLmiEOQuantity_Weight.V_RemainingQuantity"   database="DELLmiEOQuantity_Weight.V_RemainingQuantity"/>
+    <Key index="bo.DELLmiEOQuantity_Length.V_RemainingQuantity"   database="DELLmiEOQuantity_Length.V_RemainingQuantity"/>
+    <Key index="bo.DELLmiEOQuantity_Volume.V_RemainingQuantity"   database="DELLmiEOQuantity_Volume.V_RemainingQuantity"/>
+
+    <Key index="bo.DELLmiEOQuantity_Each.V_CompletedQuantity"   database="DELLmiEOQuantity_Each.V_CompletedQuantity"/>
+    <Key index="bo.DELLmiEOQuantity_Area.V_CompletedQuantity"   database="DELLmiEOQuantity_Area.V_CompletedQuantity"/>
+    <Key index="bo.DELLmiEOQuantity_Weight.V_CompletedQuantity"   database="DELLmiEOQuantity_Weight.V_CompletedQuantity"/>
+    <Key index="bo.DELLmiEOQuantity_Length.V_CompletedQuantity"   database="DELLmiEOQuantity_Length.V_CompletedQuantity"/>
+    <Key index="bo.DELLmiEOQuantity_Volume.V_CompletedQuantity"   database="DELLmiEOQuantity_Volume.V_CompletedQuantity"/>
+
+    <!-- <Key index="DELIsSerializedFrom"   database="DELIsSerializedFrom"/> -->
+  </Entity>
+</IndexMapping>

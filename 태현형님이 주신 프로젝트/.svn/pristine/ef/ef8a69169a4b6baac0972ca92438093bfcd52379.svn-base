@@ -1,0 +1,1 @@
+define("DS/ENODOUtilsServices/ENODOUtilsServices_pl",{});define("DS/ENODOUtilsServices/assets/nls/enodo_notifications",{error:{title:"Błąd",security_context_fail:"Nie można wysłać żądania serwera: nie udało się pobrać kontekstu zabezpieczeń."}});

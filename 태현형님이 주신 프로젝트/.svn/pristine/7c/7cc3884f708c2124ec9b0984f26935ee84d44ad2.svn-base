@@ -1,0 +1,1 @@
+define("DS/ENONextGenFilterCmd/ENONextGenFilterCmd_pt-BR",{});define("DS/ENONextGenFilterCmd/assets/nls/ENONextGenFilterCmd",{RootsToFilter:"Selecione a raiz para filtrar"});

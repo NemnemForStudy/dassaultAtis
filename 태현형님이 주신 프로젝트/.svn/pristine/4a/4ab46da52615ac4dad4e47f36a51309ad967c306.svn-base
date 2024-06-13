@@ -1,0 +1,1 @@
+define("DS/3DPlayAnnotationUtils/3DPlayAnnotationUtils_en",{});define("DS/3DPlayAnnotationUtils/assets/nls/3DPlayAnnotation",{PlaceHolder:"New text",ClickToLaunchText:"Click in the view to create a new text box",cancelText:"Cancel",validateText:"Validate",nextText:"Next"});

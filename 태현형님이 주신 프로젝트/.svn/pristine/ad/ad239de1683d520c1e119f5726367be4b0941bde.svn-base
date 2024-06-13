@@ -1,0 +1,754 @@
+
+<%@page import="com.dec.util.DecMatrixUtil"%>
+<%@page import="java.time.temporal.ChronoUnit"%>
+<%@page import="java.time.Period"%>
+<%@page import="java.time.temporal.WeekFields"%>
+<%@page import="java.time.temporal.IsoFields"%>
+<%@page import="java.time.LocalDate"%>
+<%@page import="java.util.Set"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.List"%>
+<%@page import="com.dec.util.DecStringUtil"%>
+<%@page import="com.dec.util.DecDateUtil"%>
+<%@page import="com.matrixone.apps.domain.DomainObject"%>
+<%@page import="com.dec.util.DecConstants"%>
+<%@include file = "../emxUICommonHeaderBeginInclude.inc" %>
+<%@include file = "../emxUICommonAppInclude.inc"%>
+
+<script type="text/javascript" src="../common/scripts/jquery-latest.js"></script>
+<script src="https://code.highcharts.com/stock/highstock.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+<script src="../webapps/ENOAEFStructureBrowser/webroot/common/scripts/decemxUIFreezePane.js"></script>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%
+	Locale locale = context.getLocale();
+	Date date = new Date();
+	String sToday = DecDateUtil.changeDateFormat(date, DecDateUtil.IF_FORMAT);
+	String sLang = request.getHeader("Accept-Language");
+	String sObjectId = DecConstants.EMPTY_STRING;
+	String sProjectCode = emxGetParameter(request,"projectCode");
+	String sDiscipline = emxGetParameter(request,"Discipline");
+	String sSubCon = emxGetParameter(request,"Sub-Con");
+	String sTypePatterns = DecConstants.TYPE_PHASE + "," + DecConstants.TYPE_DECCWPTASK;
+	String sWhere = DecConstants.EMPTY_STRING;
+	String sTaskDiscipline = DecConstants.EMPTY_STRING;
+	String sTaskSubConNo = DecConstants.EMPTY_STRING;
+    String sType = DecConstants.EMPTY_STRING;
+    String sName = DecConstants.EMPTY_STRING;
+    String sTaskId = DecConstants.EMPTY_STRING;
+    String sEstDate = DecConstants.EMPTY_STRING;
+    String sCurrent = DecConstants.EMPTY_STRING;
+	String sPlanStartDate = DecConstants.EMPTY_STRING;
+	String sForecastStartDate = DecConstants.EMPTY_STRING;
+	String sActualStartDate = DecConstants.EMPTY_STRING;
+	String sTaskPriorityGroup = DecConstants.EMPTY_STRING;
+	String sTaskPriorityNumber = DecConstants.EMPTY_STRING;
+
+	StringList slProjectParam = new StringList();
+	slProjectParam.add(DecConstants.SELECT_ID);
+	slProjectParam.add(DecConstants.SELECT_NAME);
+
+	StringList slCodeDetailParam = new StringList();
+	slCodeDetailParam.add(DecConstants.SELECT_ID);
+	slCodeDetailParam.add(DecConstants.SELECT_NAME);
+	slCodeDetailParam.add(DecConstants.SELECT_DESCRIPTION);
+	slCodeDetailParam.add(DecConstants.SELECT_ATTRIBUTE_DECCODE);
+	slCodeDetailParam.add(DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILATT1);
+	slCodeDetailParam.add("from[" + DecConstants.RELATIONSHIP_DECCODEDETAILREL + "].to." + DecConstants.SELECT_ATTRIBUTE_DECCODE);
+	slCodeDetailParam.add("from[" + DecConstants.RELATIONSHIP_DECCODEDETAILREL + "].to." + DecConstants.SELECT_DESCRIPTION);
+	
+	StringList slSubTaskParam = new StringList();
+	slSubTaskParam.add(DecConstants.SELECT_NAME);
+	slSubTaskParam.add(DecConstants.SELECT_TYPE);
+	slSubTaskParam.add(DecConstants.SELECT_ID);
+	slSubTaskParam.add(DecConstants.SELECT_LEVEL);
+	slSubTaskParam.add(DecConstants.SELECT_CURRENT);
+	slSubTaskParam.add(DecConstants.SELECT_ATTRIBUTE_DECDISCIPLINE);
+	slSubTaskParam.add(DecConstants.SELECT_ATTRIBUTE_DECSUBCONNO);
+	slSubTaskParam.add(DecConstants.SELECT_ATTRIBUTE_DECTASKFORECASTSTARTDATE);
+	slSubTaskParam.add(DecConstants.SELECT_ATTRIBUTE_TASK_ESTIMATED_START_DATE);
+	slSubTaskParam.add(DecConstants.SELECT_ATTRIBUTE_TASK_ACTUAL_START_DATE);
+	slSubTaskParam.add(DecConstants.SELECT_ATTRIBUTE_DECPRIORITYGROUP);
+	slSubTaskParam.add(DecConstants.SELECT_ATTRIBUTE_DECPRIORITYNO);
+	slSubTaskParam.add(DecConstants.SELECT_ATTRIBUTE_DECSTAGE);
+
+	StringList slPlanTableColumn = new StringList();
+	slPlanTableColumn.add("Discipline Desc");
+	slPlanTableColumn.add("CWP No");
+	slPlanTableColumn.add("Priority Group");
+	slPlanTableColumn.add("Priority No");
+	slPlanTableColumn.add("Stage");
+	slPlanTableColumn.add("Status");
+	slPlanTableColumn.add("Sub-Con");
+	slPlanTableColumn.add("PhaseEstimatedStartDate");
+	slPlanTableColumn.add("PhaseForecastStartDate");
+	slPlanTableColumn.add("PhaseActualStartDate");
+	
+	StringList slPhaseParam = new StringList();
+	slPhaseParam.add(DecConstants.SELECT_ID);
+	slPhaseParam.add(DecConstants.SELECT_LEVEL);
+	slPhaseParam.add("from[" + DecConstants.RELATIONSHIP_SUBTASK + "|to.type==" + DecConstants.TYPE_DECCWPTASK + "]");
+	
+	
+	if(DecStringUtil.isNotEmpty(sProjectCode)){
+		sWhere = DecConstants.SELECT_NAME + "=='" + sProjectCode + "'";
+	}
+	
+	MapList mlProject = DomainObject.findObjects(context, DecConstants.TYPE_PROJECT_SPACE, "*", sWhere, slProjectParam);
+	MapList mlPhase = null;
+	MapList mlSubTask = null;
+	MapList mlCWPTask = new MapList();
+	MapList mlParent = null;
+	MapList mlCodeDetail = new MapList();
+	Map<String, MapList> mPieData = new HashMap();
+	Map<String, MapList> mBarData = new HashMap();
+	Map mProject = null;
+	Map mSubTask = null;
+	Map mCodeDetail = null;
+	
+	Map<String, String> mPlanTableDetail	 = new HashMap();
+	Map<String, String> mDP					 = new HashMap();
+	Map<String, String> mPriorityGroup		 = new HashMap();
+	Map<String, String> mPriorityNumber		 = new HashMap();
+	Map<String, String> mSubcon				 = new HashMap();
+	Map<String, String> mBOQKeyItem			 = new HashMap();
+	Map<String, String> mUOM				 = new HashMap();
+	Map<String, String> mWBSType 			 = new HashMap();
+	
+	Map<String, String> mDPHierarchy = new HashMap();
+	Map<String, Integer> mDPHierarchyCnt = new HashMap();
+	Map<String, Integer> mDPHierarchyStateCnt = new HashMap();
+	
+	StringList slState = new StringList();
+	slState.add(EnoviaResourceBundle.getProperty(context, "emxProgramCentralStringResource", locale, "ProgramCentral.State.Project_Task.Create"));
+	slState.add(EnoviaResourceBundle.getProperty(context, "emxProgramCentralStringResource", locale, "ProgramCentral.State.Project_Task.Delay"));
+	slState.add(EnoviaResourceBundle.getProperty(context, "emxProgramCentralStringResource", locale, "ProgramCentral.State.Project_Task.Active"));
+	slState.add(EnoviaResourceBundle.getProperty(context, "emxProgramCentralStringResource", locale, "ProgramCentral.State.Project_Task.Review"));
+	slState.add(EnoviaResourceBundle.getProperty(context, "emxProgramCentralStringResource", locale, "ProgramCentral.State.Project_Task.Complete"));
+	StringList slSelect = new StringList();
+	slSelect.add(DecConstants.SELECT_DESCRIPTION);
+	slSelect.add(DecConstants.SELECT_NAME);
+	StringList slDPHierarchy = new StringList();
+	StringList slCurrent = new StringList();
+	DomainObject doCodeMaster = DomainObject.newInstance(context);
+	
+	int Cnt = 0;
+	
+	if(mlProject != null && !mlProject.isEmpty()){
+		mProject = (Map)mlProject.get(0);
+		sObjectId = (String)mProject.get(DecConstants.SELECT_ID);
+		DomainObject doPS = DomainObject.newInstance(context, sObjectId);
+		doPS.open(context);
+// 		doCodeMaster.setId(DecMatrixUtil.getObjectId(context, DecConstants.TYPE_DECCODEMASTER, "DP Hierarchy", doPS.getName()));
+		doCodeMaster.setId(DecMatrixUtil.getObjectId(context, DecConstants.TYPE_DECCODEMASTER, "Discipline", doPS.getName())); // Modified by hslee on 2023.07.25
+		mlCodeDetail = doCodeMaster.getRelatedObjects(context
+				, DecConstants.RELATIONSHIP_DECCODEDETAILREL
+				, DecConstants.TYPE_DECCODEDETAIL
+				, slSelect
+				, null
+				, false
+				, true
+				, (short) 1
+				, "current == Active"
+				, DecConstants.EMPTY_STRING
+				, 0);
+		for(Object o : mlCodeDetail){
+			mCodeDetail = (Map)o;
+			mDPHierarchy.put((String)mCodeDetail.get(DecConstants.SELECT_NAME), (String)mCodeDetail.get(DecConstants.SELECT_DESCRIPTION));
+		}
+		
+		// 프로젝트에 연결된 Phase
+		mlPhase = doPS.getRelatedObjects(context,
+				DecConstants.RELATIONSHIP_SUBTASK, //pattern to match relationships
+				DecConstants.TYPE_PHASE, //pattern to match types
+				slPhaseParam, //the eMatrix StringList object that holds the list of select statement pertaining to Business Obejcts.
+				null, //the eMatrix StringList object that holds the list of select statement pertaining to Relationships.
+				false, //get To relationships
+				true, //get From relationships
+				(short)0, //the number of levels to expand, 0 equals expand all.
+				DecConstants.EMPTY_STRING, //where clause to apply to objects, can be empty ""
+				DecConstants.EMPTY_STRING,
+				0); //where clause to apply to relationship, can be empty ""
+		// 프로젝트에 연결된 코드마스터
+		String sMasterWhere = "evaluate[name matchlist \"Discipline,Priority Group,Priority Number,Sub-Con,BOQ Key Item,decCwpPlanTable,WBS Type\" \",\"]";
+		MapList mlCodeMaster = doPS.getRelatedObjects(context,
+				DecConstants.RELATIONSHIP_DECCODEMASTERREL, //pattern to match relationships
+				DecConstants.TYPE_DECCODEMASTER, //pattern to match types
+				slProjectParam, //the eMatrix StringList object that holds the list of select statement pertaining to Business Obejcts.
+				null, //the eMatrix StringList object that holds the list of select statement pertaining to Relationships.
+				false, //get To relationships
+				true, //get From relationships
+				(short)0, //the number of levels to expand, 0 equals expand all.
+				sMasterWhere, //where clause to apply to objects, can be empty ""
+				DecConstants.EMPTY_STRING,
+				0); //where clause to apply to relationship, can be empty ""
+		Map mCodeDetailDesc = null;
+		Map mCodeDetailDescChild = null;
+		String sDetailWhere = DecConstants.EMPTY_STRING;
+		if(!mlCodeMaster.isEmpty()){
+			for(Object oMaster : mlCodeMaster){
+				Map mCodeMaster = (Map)oMaster;
+				sName = (String)mCodeMaster.get(DecConstants.SELECT_NAME);
+				String sCodeMasterOID = (String)mCodeMaster.get(DecConstants.SELECT_ID);
+				doCodeMaster.setId(sCodeMasterOID);
+				if(DecStringUtil.equalsIgnoreCase("decCwpPlanTable", sName)){
+					sDetailWhere = DecConstants.EMPTY_STRING;
+				}else{
+					sDetailWhere = "current == 'Active' && " + DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILTYPE + " == '" + sName + "'";
+				}
+				mlCodeDetail = doCodeMaster.getRelatedObjects(context,
+						DecConstants.RELATIONSHIP_DECCODEDETAILREL, //pattern to match relationships
+						DecConstants.TYPE_DECCODEDETAIL, //pattern to match types
+						slCodeDetailParam, //the eMatrix StringList object that holds the list of select statement pertaining to Business Obejcts.
+						null, //the eMatrix StringList object that holds the list of select statement pertaining to Relationships.
+						false, //get To relationships
+						true, //get From relationships
+						(short)0, //the number of levels to expand, 0 equals expand all.
+						sDetailWhere, //where clause to apply to objects, can be empty ""
+						DecConstants.EMPTY_STRING,
+						0);
+				sDetailWhere = DecConstants.EMPTY_STRING;
+				mCodeDetailDesc = new HashMap();
+				mCodeDetailDescChild = new HashMap();
+				for(Object oCodeDetail : mlCodeDetail){
+					mCodeDetail = (Map)oCodeDetail;
+					if(DecStringUtil.equalsIgnoreCase("WBS Type", sName)){
+						mCodeDetailDesc.put(mCodeDetail.get(DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILATT1), mCodeDetail.get(DecConstants.SELECT_DESCRIPTION));
+					}else{
+						mCodeDetailDesc.put(mCodeDetail.get(DecConstants.SELECT_ATTRIBUTE_DECCODE), mCodeDetail.get(DecConstants.SELECT_DESCRIPTION));
+						mCodeDetailDescChild.put(mCodeDetail.get("from[" + DecConstants.RELATIONSHIP_DECCODEDETAILREL + "].to." + DecConstants.SELECT_ATTRIBUTE_DECCODE)
+								,mCodeDetail.get("from[" + DecConstants.RELATIONSHIP_DECCODEDETAILREL + "].to." + DecConstants.SELECT_DESCRIPTION));
+					}
+
+				}
+// 				if(DecStringUtil.equalsIgnoreCase("DP Hierarchy", sName)){
+				if(DecStringUtil.equalsIgnoreCase("Discipline", sName)){ // Modified by hslee on 2023.07.25
+					mDP = mCodeDetailDesc;
+				}else if(DecStringUtil.equalsIgnoreCase("Priority Group", sName)){
+					mPriorityGroup = mCodeDetailDesc;
+				}else if(DecStringUtil.equalsIgnoreCase("Priority Number", sName)){
+					mPriorityNumber = mCodeDetailDesc;
+				}else if(DecStringUtil.equalsIgnoreCase("Sub-Con", sName)){
+					mSubcon = mCodeDetailDesc;
+				}else if(DecStringUtil.equalsIgnoreCase("BOQ Key Item", sName)){
+					mBOQKeyItem = mCodeDetailDesc;
+					mUOM = mCodeDetailDescChild;
+				}else if(DecStringUtil.equalsIgnoreCase("decCwpPlanTable", sName)){
+					mPlanTableDetail = mCodeDetailDesc;
+				}else if(DecStringUtil.equalsIgnoreCase("WBS Type", sName)){
+					mWBSType = mCodeDetailDesc;
+				}
+			}
+		}
+		
+		DomainObject doPhase = DomainObject.newInstance(context);
+		Map<String[], MapList> mData = new HashMap();
+		Map mPhase = null;
+		Map mParentPhase = null;
+		MapList mlParentPhase = null;
+		String sIsChildCWP = null;
+		String sLevel = null;
+		String sOID = null;
+		String sParentLevel = null;
+		String[] sArrParentName = null;
+		for(Object o : mlPhase) {
+    		mPhase = (Map)o;
+    		sIsChildCWP = (String)mPhase.get("from[" + DecConstants.RELATIONSHIP_SUBTASK + "]");
+    		if(DecStringUtil.equalsIgnoreCase(sIsChildCWP, "true")) {
+        		sOID = (String)mPhase.get(DecConstants.SELECT_ID);
+        		sLevel = (String)mPhase.get(DecConstants.SELECT_LEVEL);
+        		doPhase.setId(sOID);
+        		doPhase.open(context);
+        		mlParentPhase = doPhase.getRelatedObjects(context,
+                    	DecConstants.RELATIONSHIP_SUBTASK, //pattern to match relationships
+                    	DecConstants.TYPE_PHASE, //pattern to match types
+                    	slSubTaskParam, //the eMatrix StringList object that holds the list of select statement pertaining to Business Obejcts.
+                    	null, //the eMatrix StringList object that holds the list of select statement pertaining to Relationships.
+                    	true, //get To relationships
+                    	false, //get From relationships
+                    	(short)0, //the number of levels to expand, 0 equals expand all.
+                    	DecConstants.EMPTY_STRING, //where clause to apply to objects, can be empty ""
+                    	DecConstants.EMPTY_STRING, //where clause to apply to relationship, can be empty ""
+                    	0);
+        		sArrParentName = new String[2];
+        		if(mlParentPhase.isEmpty()){
+        			sArrParentName[0] = doPhase.getName();
+        		}else{
+            		for(Object oParent : mlParentPhase){
+            			mParentPhase = (Map)oParent;
+            	    	sParentLevel = (String)mParentPhase.get(DecConstants.SELECT_LEVEL);
+            	    	sName = (String)mParentPhase.get(DecConstants.SELECT_NAME);
+            	    	int iLevel = Integer.valueOf(sLevel) - Integer.valueOf(sParentLevel);
+            	    	if(iLevel == 1){
+            	    		sArrParentName[0] = sName;
+            	    	}else if(iLevel == 2){
+            	    		sArrParentName[1] = sName;
+            	    	}
+            	    	if(Integer.valueOf(sLevel) == 2){
+            	    		sArrParentName[1] = doPhase.getName();
+            	    	}
+            		}
+        		}
+        		mData.put(sArrParentName, doPhase.getRelatedObjects(context,
+        				DecConstants.RELATIONSHIP_SUBTASK, //pattern to match relationships
+        				DecConstants.TYPE_DECCWPTASK, //pattern to match types
+        				slSubTaskParam, //the eMatrix StringList object that holds the list of select statement pertaining to Business Obejcts.
+        				null, //the eMatrix StringList object that holds the list of select statement pertaining to Relationships.
+        				false, //get To relationships
+        				true, //get From relationships
+        				(short)0, //the number of levels to expand, 0 equals expand all.
+        				DecConstants.EMPTY_STRING, //where clause to apply to objects, can be empty ""
+        				DecConstants.EMPTY_STRING, //where clause to apply to relationship, can be empty ""
+        				0));
+    		}
+		}
+		String today = DecDateUtil.changeDateFormat(new Date(), DecDateUtil.IF_FORMAT);
+		Set<String[]> setDataKey = mData.keySet();
+		for(String[] sArrLVName : setDataKey){
+	    	mlSubTask = mData.get(sArrLVName);
+	        for(Object o : mlSubTask) {
+		    	mSubTask = (Map)o;
+		    	mSubTask.put("LV1", DecStringUtil.nullToEmpty(sArrLVName[0]));
+		    	mSubTask.put("LV2", DecStringUtil.nullToEmpty(sArrLVName[1]));
+	        	sType = (String)mSubTask.get(DecConstants.SELECT_TYPE);
+	        	sCurrent = (String)mSubTask.get(DecConstants.SELECT_CURRENT);
+		    	sTaskDiscipline = (String)mSubTask.get(DecConstants.SELECT_ATTRIBUTE_DECDISCIPLINE);
+		    	sTaskSubConNo = (String)mSubTask.get(DecConstants.SELECT_ATTRIBUTE_DECSUBCONNO);
+		    	sTaskPriorityGroup = (String)mSubTask.get(DecConstants.SELECT_ATTRIBUTE_DECPRIORITYGROUP);
+		    	sTaskPriorityNumber = (String)mSubTask.get(DecConstants.SELECT_ATTRIBUTE_DECPRIORITYNO);
+		    	sPlanStartDate = (String)mSubTask.get(DecConstants.SELECT_ATTRIBUTE_TASK_ESTIMATED_START_DATE);
+		    	sForecastStartDate = (String)mSubTask.get(DecConstants.SELECT_ATTRIBUTE_DECTASKFORECASTSTARTDATE);
+		    	sActualStartDate = (String)mSubTask.get(DecConstants.SELECT_ATTRIBUTE_TASK_ACTUAL_START_DATE);
+	        	if(DecStringUtil.equals(sType, DecConstants.TYPE_DECCWPTASK)) {
+	    	    	// 검색 조건에 전부 맞는지 체크
+	    	    	if(DecStringUtil.isNotEmpty(sDiscipline) && !DecStringUtil.equals(sTaskDiscipline, sDiscipline)){
+	    	    		continue;
+	    	    	}
+	    	    	if(DecStringUtil.isNotEmpty(sSubCon) && !DecStringUtil.equals(sTaskSubConNo, sSubCon)){
+	    	    		continue;
+	    	    	}
+			    	mSubTask.put(DecConstants.SELECT_ATTRIBUTE_DECDISCIPLINE, mDP.getOrDefault(sTaskDiscipline, DecConstants.EMPTY_STRING));
+			    	mSubTask.put(DecConstants.SELECT_ATTRIBUTE_DECPRIORITYGROUP, mPriorityGroup.getOrDefault(sTaskPriorityGroup, DecConstants.EMPTY_STRING));
+			    	mSubTask.put(DecConstants.SELECT_ATTRIBUTE_DECPRIORITYNO, mPriorityNumber.getOrDefault(sTaskPriorityNumber, DecConstants.EMPTY_STRING));
+			    	mSubTask.put(DecConstants.SELECT_ATTRIBUTE_DECSUBCONNO, mSubcon.getOrDefault(sTaskSubConNo, DecConstants.EMPTY_STRING));
+			    	mSubTask.put(DecConstants.SELECT_ATTRIBUTE_TASK_ESTIMATED_START_DATE, DecDateUtil.changeDateFormat(sPlanStartDate, "yyyy. M. d."));
+			    	mSubTask.put(DecConstants.SELECT_ATTRIBUTE_DECTASKFORECASTSTARTDATE, DecDateUtil.changeDateFormat(sForecastStartDate, "yyyy. M. d."));
+			    	mSubTask.put(DecConstants.SELECT_ATTRIBUTE_TASK_ACTUAL_START_DATE, DecDateUtil.changeDateFormat(sActualStartDate, "yyyy. M. d."));
+		            sEstDate = (String)mSubTask.get(DecConstants.SELECT_ATTRIBUTE_DECTASKFORECASTSTARTDATE);
+		            if(DecStringUtil.isEmpty(sEstDate)) {
+		             	sEstDate = sPlanStartDate;
+		            }
+		            if(DecStringUtil.equals(DecConstants.STATE_PROJECT_TASK_CREATE, sCurrent) && DecDateUtil.getDifference(sEstDate, sToday) > 0) {
+		            	sCurrent = "Delay";
+		            }
+		            sCurrent = EnoviaResourceBundle.getProperty(context, "emxProgramCentralStringResource", locale, "ProgramCentral.State.Project_Task." + sCurrent);
+			    	mSubTask.put(DecConstants.SELECT_CURRENT, sCurrent);
+			    	mlCWPTask = mPieData.get(sCurrent) == null ? new MapList() : mPieData.get(sCurrent);
+			    	mlCWPTask.add(mSubTask);
+			    	mPieData.put(sCurrent, mlCWPTask);
+			    	mlCWPTask = mBarData.get(sTaskDiscipline + "_" + sCurrent) == null ? new MapList() : mBarData.get(sTaskDiscipline + "_" + sCurrent);
+			    	mlCWPTask.add(mSubTask);
+			    	mBarData.put(sTaskDiscipline + "_" + sCurrent, mlCWPTask);
+				   	
+		            slCurrent.add(sCurrent);
+		            Cnt = mDPHierarchyCnt.getOrDefault(sTaskDiscipline, 0);
+		            mDPHierarchyCnt.put(sTaskDiscipline, Cnt+1);
+		            Cnt = mDPHierarchyStateCnt.getOrDefault(sTaskDiscipline + "_" + sCurrent, 0);
+		            mDPHierarchyStateCnt.put(sTaskDiscipline + "_" + sCurrent, Cnt+1);
+		            slDPHierarchy.add(sTaskDiscipline);
+	        	}
+	        }
+		}
+		slDPHierarchy.uniq();
+		slDPHierarchy.remove(DecConstants.EMPTY_STRING);
+		slDPHierarchy.remove(null);
+		slDPHierarchy.sort();
+	}
+%>
+<style>
+	table tr td {
+		border : 2px solid #ffffff;
+	}
+	table .header{
+		min-width: 155px;
+	}
+	table .week{
+		min-width: 25px;
+	}
+	.highcharts-data-label {
+		font-size: 1.4em;
+		font-weight:bold;
+	}
+    body {
+        height: 90%;
+    }
+	summary {
+		cursor: pointer;
+	}
+</style>
+<%if(mlProject != null && !mlProject.isEmpty()){%>
+<%	Set<String> setDataKey = mPieData.keySet(); %>
+<script>
+var mPieData = new Map([
+	<%
+		for(String sKey : setDataKey){
+			mlCWPTask = mPieData.get(sKey);
+	%>
+	['<%=sKey%>',[
+		<%for(Object oCWPData : mlCWPTask){
+			Map mCWPData = (Map)oCWPData;
+			Set<String> setKey = mCWPData.keySet();
+		%>
+			{
+		<%
+			for(String key : setKey){
+		%>
+			'<%=key.replace("attribute[", "").replace("]", "")%>' : '<%=mCWPData.get(key)%>', 
+			<%}%>
+			},
+		<%}%>
+		]
+	],
+	<%}%>
+]);
+<%	setDataKey = mBarData.keySet(); %>
+var mBarData = new Map([
+	<%
+		for(String sKey : setDataKey){
+			mlCWPTask = mBarData.get(sKey);
+	%>
+	['<%=sKey%>',[
+		<%for(Object oCWPData : mlCWPTask){
+			Map mCWPData = (Map)oCWPData;
+			Set<String> setKey = mCWPData.keySet();
+		%>
+			{
+		<%
+			for(String key : setKey){
+		%>
+			'<%=key.replace("attribute[", "").replace("]", "")%>' : '<%=mCWPData.get(key)%>', 
+			<%}%>
+			},
+		<%}%>
+		]
+	],
+	<%}%>
+]);
+$(function() {
+	var detail = document.getElementById('detail');
+    /* chart type은 chart, series안에서도 각각 줄수가 있다. */
+     var chart1 = new Highcharts.Chart({
+    	 title:{
+         	text : ''
+         },
+         credits: {
+             enabled: false
+         },
+         colors: ['silver', 'Yellow', 'DeepSkyBlue', 'red', 'Lime']
+         ,
+         chart: {
+             renderTo: 'container',
+             type: 'pie',
+             zooming: {
+                 mouseWheel: false
+             }
+         },
+         plotOptions: {
+             pie: {
+                 size: '70%',
+                 cursor: 'pointer',
+                 data: [
+                	 <%for(String sState : slState){%>
+                     ['<%=sState%>',<%=Collections.frequency(slCurrent, sState)%>,{id:'<%=sState%>'}  ],
+                     <%}%>
+                 ],
+                 point: {
+                     events: {
+                         legendItemClick: function (event) {
+                        	 const sync = chart2.get(this.name);
+                        	 if(sync){
+                        		 sync.update({visible:!this.visible});
+                        	 }
+                             return true;
+                         },
+                         click: function (event) {
+	                    	var dataList = mPieData.get(this.name);
+	                    	var dataType = this.options.name;
+	                    	var dataCnt = this.options.y;
+							detail.innerText = "Detail (" + dataType + " " + dataCnt + "건)";
+							detailTableTBody.replaceChildren();
+							for(var data of dataList){
+								var tr = document.createElement('tr');
+								var tdLV01	 = document.createElement('td');
+								var tdLV02	 = document.createElement('td');
+								var tdDP	 = document.createElement('td');
+								var tdCWPNo	 = document.createElement('td');
+								var tdPG	 = document.createElement('td');
+								var tdPN	 = document.createElement('td');
+								var tdStage	 = document.createElement('td');
+								var tdStatus = document.createElement('td');
+								var tdSUBCON = document.createElement('td');
+								var tdPlanStart = document.createElement('td');
+								var tdForecastStart = document.createElement('td');
+								var tdActualStart = document.createElement('td');
+								tdLV01.textContent = data["LV1"];
+								tdLV02.textContent = data["LV2"];
+								tdDP.textContent = data["decDiscipline"];
+								tdCWPNo.textContent = data["name"];
+								tdPG.textContent = data["decPriorityGroup"];
+								tdPN.textContent = data["decPriorityNo"];
+								tdStage.textContent = data["decStage"];
+								tdStatus.textContent = data["current"];
+								tdSUBCON.textContent = data["decSubConNo"];
+								tdPlanStart.textContent = data["Task Estimated Start Date"];
+								tdForecastStart.textContent = data["decTaskForecastStartDate"];
+								tdActualStart.textContent = data["Task Actual Start Date"];
+								tr.appendChild(tdLV01);
+								tr.appendChild(tdLV02);
+								tr.appendChild(tdDP);
+								tr.appendChild(tdCWPNo);
+								tr.appendChild(tdPG);
+								tr.appendChild(tdPN);
+								tr.appendChild(tdStage);
+								tr.appendChild(tdStatus);
+								tr.appendChild(tdSUBCON);
+								tr.appendChild(tdPlanStart);
+								tr.appendChild(tdForecastStart);
+								tr.appendChild(tdActualStart);
+								detailTableTBody.appendChild(tr);
+							}
+                         }
+                     }
+                 },
+                 showInLegend: true
+             }
+         },
+         series: [{
+             type: 'pie',
+             name: 'Total Count',
+             dataLabels: {
+                 verticalAlign: 'top',
+                 enabled: true,
+                 color: '#000000',
+                 connectorWidth: 1,
+                 connectorColor: '#000000',
+                 crop: false,
+                 allowOverlap: false,
+                 formatter: function() {
+                	 if(this.y <= 0){
+                         return;
+                	 }else{
+                         return this.y + " (" + Math.round(this.percentage) + "%)";
+                	 }
+                 },
+                 style: {
+                	 fontSize:'1.0em'
+                 }
+             }
+         }],
+         tooltip: {
+             style: {
+                 fontSize: '1.0em',
+                 fontWeight: 'bold'
+             }
+         },
+         legend: {
+	         align: 'center',
+	         layout: 'horizontal',
+	         verticalAlign: 'bottom'
+         },
+         exporting: {
+             enabled: false
+         },
+         credits: {
+             enabled: false
+         }
+     });
+     var chart2 = new Highcharts.Chart({
+    	 title:{
+          	text : ''
+         },
+         credits: {
+             enabled: false
+         },
+         colors: ['silver', 'Yellow', 'DeepSkyBlue', 'red', 'Lime']
+         ,
+         chart: {
+             renderTo: 'container2',
+             type: 'bar',
+             zooming: {
+                 mouseWheel: false
+             }
+         },
+         xAxis: {
+             categories: [
+            	 <%for(String sDPHierarchy : slDPHierarchy){%>
+            	 	<%if(mDPHierarchyCnt.get(sDPHierarchy) != null){%>
+            	 	'<%=mDPHierarchy.get(sDPHierarchy)%>',
+            	 	<%}%>
+            	 <%}%>
+           	 ]
+         },
+         yAxis: {
+             title: {
+                 text: ''
+             }
+         },
+         plotOptions: {
+             bar: {
+                 stacking: 'percent',
+                 borderWidth: 0,
+                 dataLabels: {
+                     enabled: true,
+                     color: '#000000',
+                     formatter: function () {
+                         return this.y + " (" + Highcharts.numberFormat(this.percentage, 0) + "%)";
+                     }
+                 },
+                 events: {
+                     legendItemClick: function (event) {
+                    	 const data = chart1.series[0].data;
+                    	 if(data){
+                    		 for(var i = 0; i<data.length; i++){
+                        		 const sync = data[i];
+                        		 if(sync.name == this.name){
+                                	 sync.update({visible:!this.visible});
+                                	 break;
+                        		 }
+                    		 }
+                    	 }
+                         return true;
+                     }
+                 },
+                 showInLegend: false,
+                 cursor: 'pointer',
+                 point: {
+                     events: {
+	                     click: function (event) {
+	                    	var dataList = mBarData.get(this.name);
+	                    	var dataType = this.name.split("_")[1];
+	                    	var dataCnt = this.options.y;
+	                    	var dataDPDesc = this.category;
+	                    	detail.innerText = "Detail (" + dataType + " " + dataDPDesc + " " + dataCnt + "건)";
+							detailTableTBody.replaceChildren();
+							for(var data of dataList){
+								var tr = document.createElement('tr');
+								var tdLV01	 = document.createElement('td');
+								var tdLV02	 = document.createElement('td');
+								var tdDP	 = document.createElement('td');
+								var tdCWPNo	 = document.createElement('td');
+								var tdPG	 = document.createElement('td');
+								var tdPN	 = document.createElement('td');
+								var tdStage	 = document.createElement('td');
+								var tdStatus = document.createElement('td');
+								var tdSUBCON = document.createElement('td');
+								var tdPlanStart = document.createElement('td');
+								var tdForecastStart = document.createElement('td');
+								var tdActualStart = document.createElement('td');
+								tdLV01.textContent = data["LV1"];
+								tdLV02.textContent = data["LV2"];
+								tdDP.textContent = data["decDiscipline"];
+								tdCWPNo.textContent = data["name"];
+								tdPG.textContent = data["decPriorityGroup"];
+								tdPN.textContent = data["decPriorityNo"];
+								tdStage.textContent = data["decStage"];
+								tdStatus.textContent = data["current"];
+								tdSUBCON.textContent = data["decSubConNo"];
+								tdPlanStart.textContent = data["Task Estimated Start Date"];
+								tdForecastStart.textContent = data["decTaskForecastStartDate"];
+								tdActualStart.textContent = data["Task Actual Start Date"];
+								tr.appendChild(tdLV01);
+								tr.appendChild(tdLV02);
+								tr.appendChild(tdDP);
+								tr.appendChild(tdCWPNo);
+								tr.appendChild(tdPG);
+								tr.appendChild(tdPN);
+								tr.appendChild(tdStage);
+								tr.appendChild(tdStatus);
+								tr.appendChild(tdSUBCON);
+								tr.appendChild(tdPlanStart);
+								tr.appendChild(tdForecastStart);
+								tr.appendChild(tdActualStart);
+								detailTableTBody.appendChild(tr);
+							}
+	                     }
+                     }
+                 }
+             }
+         },
+         series: [
+        	 <%for(String sState : slState){%>
+        	 {
+        		id: '<%=sState%>',
+        		name: 'Total Count',
+        		data: [
+        			<%for(String sDPHierarchy : slDPHierarchy){%>
+    					<%if(mDPHierarchyStateCnt.get(sDPHierarchy + "_" + sState) != null){%>
+            	 	 ['<%=sDPHierarchy%>_<%=sState%>',<%=mDPHierarchyStateCnt.getOrDefault(sDPHierarchy + "_" + sState, 0)%>],
+            	 		<%}%>
+        			<%}%>
+        		]
+        	 },
+        	 <%}%>
+         ],
+         tooltip: {
+             style: {
+                 fontSize: '1.0em',
+                 fontWeight: 'bold'
+             }
+         },
+         exporting: {
+             enabled: false
+         },
+         credits: {
+             enabled: false
+         }
+     });
+ });
+$(window).on('resize', function(){
+	$('#container').css('height', (document.documentElement.clientHeight - 100) + 'px');
+	$('#container2').css('height', (document.documentElement.clientHeight - 100) + 'px');
+	
+});
+</script>
+<link rel="stylesheet" href="../webapps/UIKIT/UIKIT.css" type="text/css" />
+<body>
+       	<div style="text-align: right; margin: 10px;">
+		<h4 style="margin-top:0px; margin-bottom:0px;">
+       	CWP Plan&emsp;<a href=JavaScript:window.open("emxTree.jsp?DefaultCategory=decCWPPlanListPortal&objectId=<%=sObjectId%>");><img src="images/iconActionNewWindow.png" border="0"></a>
+       	&emsp;&emsp;
+       	CWP Summary&emsp;<a href=JavaScript:window.open("emxTree.jsp?DefaultCategory=decCwpSummaryList&objectId=<%=sObjectId%>");><img src="images/iconActionNewWindow.png" border="0"></a>
+       	&emsp;&emsp;
+       	CWP Allocation&emsp;<a href=JavaScript:window.open("emxTree.jsp?DefaultCategory=decCWPMaterialSummaryLink&objectId=<%=sObjectId%>");><img src="images/iconActionNewWindow.png" border="0"></a>
+       	&emsp;<img src="../common/images/iconActionSearchSpyGlass.png" onclick='showFilterSlideinDialog("objectId=<%=sObjectId%>&filterParam=codeMaster:Discipline,codeMaster:Sub-Con&showHierarchyFrame=false")' style="cursor: pointer;">
+       	</h4>
+       	</div>
+       	<div id="container" style="float: left; width: 50%; height: 90%;"></div>
+       	<div id="container2" style="float: left; width: 50%; height: 90%;"></div>
+   <details id="taskDataTable">
+   	<summary id="detail">Detail</summary>
+   	<div style="overflow: auto;">
+		<table class="grid">
+		  <thead>
+			<tr>
+			<tr>
+				<th><%=mWBSType.getOrDefault("1", "LV1 Code")%></th>
+				<th><%=mWBSType.getOrDefault("2", "LV2 Code")%></th>
+				<%for(String sColumnName : slPlanTableColumn){ 
+					String sColumnDisplay = (String)mPlanTableDetail.get(sColumnName);
+					if(DecStringUtil.isNotEmpty(sColumnDisplay)){
+				%>
+				<th><%=sColumnDisplay%></th>
+					<%}else{ %>
+				<th><%=sColumnName%></th>
+				<%}  }%>
+			</tr>
+			</tr>
+		  </thead>
+		  <tbody id="detailTableTBody">
+		  </tbody>
+		</table>
+   	</div>
+   </details>
+</body>
+ <%}%>

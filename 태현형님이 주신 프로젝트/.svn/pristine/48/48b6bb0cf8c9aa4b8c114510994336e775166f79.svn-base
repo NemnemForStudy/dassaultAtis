@@ -1,0 +1,12 @@
+m|VCXWebGUIInfra\VCXWebGUIInfra.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.1.22347|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\VCXWebGUIInfra\VCXWebGUIInfra.css|1670966972|1361
+s|VCXWebGUIInfra\VCXWebGUIInfra.mweb\src\VCXArcBar.css|1670325069|1778
+t|win_b64\webapps\VCXWebGUIInfra\VCXWebGUIInfra.js|1658540275|11696
+s|VCXWebGUIInfra\VCXWebGUIInfra.mweb\src\VCXArcBar.js|1654551213|29213
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240
+u|win_b64\code\toolcmds\yuicompressor-2.4.9.bat|1647654585|205

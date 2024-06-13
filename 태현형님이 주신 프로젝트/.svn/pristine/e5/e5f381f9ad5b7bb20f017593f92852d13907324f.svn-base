@@ -1,0 +1,10 @@
+# Added by hslee on 2023.08.04
+# del command decCWPMaterialSummaryLink;
+add command decCWPMaterialSummaryLink
+	label 'emxProgramCentral.Label.CWPAllocation'
+	#href '${COMMON_DIR}/emxIndentedTable.jsp?table=decCWPMaterialSummary&program=emxProjectSpace:getCWPMaterialList&header=emxProgramCentral.Label.CWPAllocation&parallelLoading=true&maxCellsToDraw=2000&scrollPageSize=50&pageSize=300&decExport=true&exportMode=MaterialStatus&slideinFilter=true'
+	href '${COMMON_DIR}/emxPortal.jsp?portal=decCWPMaterialPortal&label=emxProgramCentral.Label.CWPMaterialSummary'
+	setting 'Target Location' 'content'
+	setting 'Registered Suite' 'ProgramCentral'
+	setting 'Access Expression' '(type == "Project Space" && attribute[decProjectType] == ongoing) || (type == "decCWPTask" && to[Project Access Key].from.from[Project Access List].to.attribute[decProjectType] == ongoing)'
+;

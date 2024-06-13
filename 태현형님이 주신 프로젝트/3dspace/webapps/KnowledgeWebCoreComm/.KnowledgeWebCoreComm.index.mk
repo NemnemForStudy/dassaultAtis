@@ -1,0 +1,16 @@
+m|KnowledgeWebCore\KnowledgeWebCoreComm.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.3.23053|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\KnowledgeWebCoreComm\KnowledgeWebCoreComm.js|1677099905|15933
+s|KnowledgeWebCore\KnowledgeWebCoreComm.mweb\src\AppRequests.js|1676902971|14660
+t|win_b64\webapps\KnowledgeWebCoreComm\KnowledgeWebCoreComm.xhtml|1647692001|1040
+s|KnowledgeWebCore\KnowledgeWebCoreComm.mweb\src\KnowledgeWebCoreComm.xhtml|1612459109|1040
+t|win_b64\webapps\KnowledgeWebCoreComm\assets\Style\comm.css|1647691998|3661
+s|KnowledgeWebCore\KnowledgeWebCoreComm.mweb\src\assets\Style\comm.css|1406305531|3661
+u|KnowledgeWebCore\KnowledgeWebCoreComm.mweb\src\KnowledgeWebCoreComm.js|1630314048|0
+u|KnowledgeWebCore\KnowledgeWebCoreComm.mweb\src\ToValueInterface.js|1613482765|326
+u|KnowledgeWebCore\KnowledgeWebCoreComm.mweb\src\comm.js|1664976309|32074
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

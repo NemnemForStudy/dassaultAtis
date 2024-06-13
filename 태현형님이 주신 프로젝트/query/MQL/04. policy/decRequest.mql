@@ -1,0 +1,35 @@
+################################################################################################
+# Create By thok : 2023. 08. 03
+# Admin Type : policy
+# Name : decRequest
+################################################################################################
+# delete policy decRequest;
+add policy decRequest
+	description 'decRequest Policy'
+	type 'decRequest'
+	store STORE
+	format generic
+	state Create
+		public all
+		owner all
+	state Request
+		public all
+		owner all
+	state Accept
+		public all
+		owner all
+	state Reply
+		public all
+		owner all
+	state Complete
+		public all
+		owner all
+	property 'state_Create' value 'Create'
+	property 'state_Request' value 'Request'
+	property 'state_Accept' value 'Accept'
+	property 'state_Reply' value 'Reply'
+	property 'state_Complete' value 'Complete'
+;
+		
+add property policy_decRequest on program eServiceSchemaVariableMapping.tcl to policy decRequest
+;

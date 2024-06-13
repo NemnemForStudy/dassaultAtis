@@ -1,0 +1,11 @@
+{
+  "version": "1.0.0",
+  "summary": "Tento blok vám pomůže synchronizovat řízení a tok dat. Aktivuje výstupní řídicí port, jakmile budou aktivovány všechny vstupní řídicí porty. Pro komplexnější scénář (například několikanásobné provedení tohoto bloku) si prosím přečtěte níže uvedený podrobný popis.",
+  "description": "Každý vstupní řídicí port má interní čítač, který se zvyšuje, když byl port aktivován a dekrementován, když blok opouští přes výstupní řídicí port <doc-ocp-NAME TRANSLATE=no>OUT</doc-ocp-NAME>. Při každé aktivaci vstupního řídicího portu se blok provede a ukončí se přes výstupní řídicí port <doc-ocp-NAME TRANSLATE=no>OUT</doc-ocp-NAME> pouze tehdy, pokud jsou všechny interní čítače vstupního řídicího portu striktivně větší než 0.",
+  "controlPorts": {
+    "In1": "spustí spuštění bloku a zvýší interní čítač přidružený k tomuto portu.",
+    "In2": "spustí spuštění bloku a zvýší interní čítač přidružený k tomuto portu.",
+    "Out": "je aktivován pouze tehdy, když jsou vnitřní čítače všech vstupních řídicích portů striktně větší než 0. Sníží se tím všechna interní počítadla vstupních řídicích portů."
+  },
+  "example": null
+}

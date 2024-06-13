@@ -1,0 +1,16 @@
+m|Web3DXCity\XCityCore.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.3.23059|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\XCityCore\XCityCore.js|1677621423|96287
+s|Web3DXCity\XCityCore.mweb\src\PlanarQuadtree.js|1673043605|23122
+u|Web3DXCity\XCityCore.mweb\src\Profile.js|1669417160|11383
+u|Web3DXCity\XCityCore.mweb\src\ProfileManager.js|1669417160|16008
+u|Web3DXCity\XCityCore.mweb\src\Store.js|1677613017|70880
+u|Web3DXCity\XCityCore.mweb\src\Terrain.js|1673043605|156194
+u|Web3DXCity\XCityCore.mweb\src\VisuQuadTree.js|1673043605|37343
+u|Web3DXCity\XCityCore.mweb\src\VisuQuadTreeSirocco.js|1673043605|60638
+u|Web3DXCity\XCityCore.mweb\src\XCityCore.js|1669417160|0
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

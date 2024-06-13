@@ -1,0 +1,1 @@
+define("DS/WAfrUIModelManagers/WAfrUIModelManagers_cs",{});define("DS/WAfrUIModelManagers/assets/nls/ActionBarContextMenu",{"iconLabel.title":"Zobrazit název příkazu","iconLabelHide.title":"Skrýt název příkazu","resetActionBar.title":"Obnovit pozici"});define("DS/WAfrUIModelManagers/assets/nls/WAfrCategories",{"WAfrStandard.Title":"Norma"});

@@ -1,0 +1,24 @@
+<div
+  id="im-call-user-circle-list"
+  v-show="!showSelfView || users.length > 0"
+>
+  <!-- Self circle if needed -->
+  <im-call-video-minimize
+    :logins="[myLogin]"
+    v-if="!showSelfView"
+    @click.native="displaySelfView"
+  />
+
+  <!-- Users circles -->
+  <vu-rtuserpresence
+    v-for="(item, index) in users"
+    :key="`user-circle-list-${index}`"
+    class="medium bgInherit noPresence"
+    :login="item.login"
+    :tenantId="$store.getters.tenant"
+    v-tooltip.body.left="item.username"
+  />
+
+  <!-- More icon -->
+  
+</div>

@@ -1,0 +1,1 @@
+define("DS/CATWebUXComponents/CATWebUXComponents_ru",{});define("DS/CATWebUXComponents/assets/nls/CATWebUXComponents",{validationPanelOk:"ОК",validationPanelCancel:"Отмена",replyButtonLabel:"Ответить",addButtonLabel:"Новый комментарий",pointedPageRemoved:"Указанная страница удалена"});

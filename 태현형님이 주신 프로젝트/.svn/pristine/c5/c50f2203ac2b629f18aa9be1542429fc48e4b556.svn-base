@@ -1,0 +1,13 @@
+m|XCTInfrastructureWeb\XCTInfManagers.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.0.22092|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\XCTInfManagers\XCTInfManagers.js|1648868050|7340
+s|XCTInfrastructureWeb\XCTInfManagers.mweb\src\XCTInfCEFManager.js|1572264630|1281
+u|XCTInfrastructureWeb\XCTInfManagers.mweb\src\XCTInfCommandManager.js|1572264683|3475
+u|XCTInfrastructureWeb\XCTInfManagers.mweb\src\XCTInfDragAndDropManager.js|1648220970|14312
+u|XCTInfrastructureWeb\XCTInfManagers.mweb\src\XCTInfLoaderManager.js|1572264993|2467
+u|XCTInfrastructureWeb\XCTInfManagers.mweb\src\XCTInfManagers.js|1498655171|102
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

@@ -1,0 +1,23 @@
+# del command decCodeDetailAddExistingCmd;
+add command decCodeDetailAddExistingCmd
+	label 'emxFramework.Label.AddExisting'
+	#href '${COMMON_DIR}/decAddExistingUtil.jsp?mode=decCodeDetail'
+	href '${COMMON_DIR}/emxIndentedTable.jsp?cancelButton=true&cancelLabel=emxFramework.Common.Close&table=decCodeMasterSearchResultTable&selection=multiple&header=emxFramework.Label.SearchResults&program=decCodeMaster:findCodeMaster&expandProgram=decCodeMaster:getCodeDetailExpand&selection=multi&submitURL=../common/decCodeDetailSearchProcessUtil.jsp'
+	setting 'Registered Suite' 'Framework'
+	setting 'Submit' 'true'
+	setting 'Row Select' 'single'
+	setting 'Image' '${COMMON_DIR}/images/iconActionAdd.png'
+	#setting 'Target Location' 'popup'
+	#setting 'Popup Modal' 'true'
+	setting 'Target Location' 'slidein'
+	setting 'Slidein Width' '500'
+;
+# Modified by hslee on 2023.07.26
+mod command decCodeDetailAddExistingCmd 
+	href '${COMMON_DIR}/emxIndentedTable.jsp?cancelButton=true&cancelLabel=emxFramework.Common.Close&table=decCodeMasterSearchResultTable&selection=multiple&header=emxFramework.IconMail.ServicePage.SearchResults&program=decCodeMaster:findCodeMaster&expandProgram=decCodeMaster:getCodeDetailExpand&selection=multi&submitURL=../common/decCodeDetailSearchProcessUtil.jsp'
+;
+
+# Modified by hslee on 2023.11.06
+mod command decCodeDetailAddExistingCmd 
+	href '${COMMON_DIR}/emxIndentedTable.jsp?cancelButton=true&cancelLabel=emxFramework.Common.Close&table=decCodeMasterSearchResultTable&selection=multiple&header=emxFramework.IconMail.ServicePage.SearchResults&program=decCodeMaster:findCodeMaster&expandProgram=decCodeMaster:getCodeDetailExpand&selection=multi&submitURL=../common/decCodeDetailSearchProcessUtil.jsp&disableToolbar=true'
+;

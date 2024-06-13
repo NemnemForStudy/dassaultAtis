@@ -1,0 +1,316 @@
+#Prog ProductionSystem_ExchangeXPDM_XPDM2 (iPLMIDSet :  #In PLMIDSet,oPLMIDSet :  #Out PLMIDSet) : VoidType
+  {
+let PLMRouteSetCandidateResource (PLMRouteSet)
+let PLMRouteSetCapableResource (PLMRouteSet)
+let PLMRouteSetResourceStructure (PLMRouteSet)
+/*let PLMRouteSetImplemented1 (PLMRouteSet)*/
+let PLMRouteSetImplementingScopeRes (PLMRouteSet)
+let PLMRouteSetImplResCnx (PLMRouteSet)
+let PLMRouteSetImplementedRef (PLMRouteSet)
+let PLMRouteSetPortsAndCnx (PLMRouteSet)
+let PLMRouteSetReq (PLMRouteSet)
+let PLMRouteSetSystemScope (PLMRouteSet)
+let PLMRouteSetImplementingObj (PLMRouteSet)
+let PLMRouteSetResponsibility (PLMRouteSet)
+let PLMRouteSetHistoRef (PLMRouteSet)
+let PLMRouteSet3DWKIRep (PLMRouteSet)
+/*let PLMRouteSetImplemented2 (PLMRouteSet)*/
+let PLMRouteSetSubstitutes (PLMRouteSet)
+let PLMRouteSetAlternate (PLMRouteSet)
+let PLMRouteSetImplReq (PLMRouteSet)
+let PLMRouteSetImplementedCnx2 (PLMRouteSet)
+let PLMRouteSetRFLPCnx (PLMRouteSet)
+
+let PLMIDSetWorkplanRef  (PLMIDSet)
+let PLMIDSetServiceWorkplanRef  (PLMIDSet)
+let PLMIDSetAllRef2  (PLMIDSet)
+let PLMPreAssignContextIdSet (PLMIDSet)
+let PLMIDSetSystemRef (PLMIDSet)
+let PLMIDSetOpWkiInst (PLMIDSet)
+let PLMIDSetOpInst (PLMIDSet)
+let PLMIDSetResourceRef (PLMIDSet)
+let PLMIDSetProcessRef (PLMIDSet)
+let PLMIDSetSysIOPorts (PLMIDSet)
+let PLMIDSetTimeCstCnx (PLMIDSet)
+let PLMIDSetMaterialFlowCnx (PLMIDSet)
+let PLMIDSetCandidateResource (PLMIDSet)
+let PLMIDSetCapableResource (PLMIDSet)
+let PLMIDSetImplemented1 (PLMIDSet)
+let PLMIDSetImplementingScopeRes (PLMIDSet)
+let PLMIDSetValidMaterialFlowCnx (PLMIDSet)
+let PLMIDSetScopeMaterialFlowCnx (PLMIDSet)
+let PLMIDSetSystemInst (PLMIDSet)
+let PLMIDSetAllInst (PLMIDSet)
+let PLMIDSetValidTimeCstCnx (PLMIDSet)
+let PLMIDSetResourceStructure (PLMIDSet)
+let PLMIDSetProcessPorts (PLMIDSet)
+let PLMIDSetDRPorts (PLMIDSet)
+let PLMIDSetDRCnx (PLMIDSet)
+let PLMIDSetProcessInst (PLMIDSet)
+let PLMIDSetScopeDRCnx (PLMIDSet)
+let PLMIDSetValidDRCnx (PLMIDSet)
+let PLMIDSetImplResCnx (PLMIDSet)
+let PLMIDSetSystemRefInstOpInst (PLMIDSet)
+let PLMIDSetValidImplResCnx (PLMIDSet)
+let PLMIDSetImplementingRes (PLMIDSet)
+let PLMIDSetImplementedInst (PLMIDSet)
+let PLMIDSetOpWkiRef (PLMIDSet)
+let PLMIDSetAllRef (PLMIDSet)
+let PLMIDSetPortsAndCnx (PLMIDSet)
+let PLMIDSetCandidateCnx (PLMIDSet)
+let PLMIDSetCapableCnx (PLMIDSet)
+let PLMIDSetReqCnx (PLMIDSet)
+let PLMIDSetReqs (PLMIDSet)
+let PLMIDSetReqSpec (PLMIDSet)
+let PLMIDSetReqSpecCompletude (PLMIDSet)
+let PLMIDSetReq (PLMIDSet)
+let PLMIDSetReqCompletude (PLMIDSet)
+let PLMIDSetReqChapter (PLMIDSet)
+let PLMIDSetReqChapterCompletude (PLMIDSet)
+let PLMIDSetSystemScope (PLMIDSet)
+let PLMIDSetAll (PLMIDSet)
+let PLMIDSetImplementingObj (PLMIDSet)
+let PLMIDSetResponsibilityCnx  (PLMIDSet)
+let PLMIDSetResponsibility  (PLMIDSet)
+let PLMIDSetHeaderRef (PLMIDSet)
+let PLMIDAllDoc (PLMIDSet)
+let PLMIDDocsAndScope (PLMIDSet)
+let PLMIDSetHistoRefCnx (PLMIDSet)
+let PLMIDSetHistoRef (PLMIDSet)
+let PLMIDSetDataCollectPlanRows (PLMIDSet)
+let PLMIDSet3DWKIRef (PLMIDSet)
+let PLMIDSet3DWKIRep (PLMIDSet)
+let PLMIDSetSystemRefInstOpInst2 (PLMIDSet)
+let PLMIDSetImplemented2 (PLMIDSet)
+let PLMIDSetSubstitutes (PLMIDSet)
+let PLMIDSetAlternateProcess (PLMIDSet)
+let PLMIDSetAllRefForReq (PLMIDSet)
+let PLMIDSetImplReqs (PLMIDSet)
+let PLMIDSetRefForContextForRscPositioning (PLMIDSet)
+let PLMIDSetContextForRscPositioning (PLMIDSet)
+let PLMIDSetImplementedCnx1 (PLMIDSet)
+let PLMIDSetImplementedCnx2 (PLMIDSet)
+let PLMIDSetValidImplementedCnx (PLMIDSet)
+let PLMIDSetRFLPCnx (PLMIDSet)
+let PLMIDSetValidRFLPCnx (PLMIDSet)
+let PLMIDSetQtyControlRef (PLMIDSet)
+let PLMIDSetWPandQCRef (PLMIDSet)
+let PLMIDSetRefForPartialScope (PLMIDSet)
+let PLMIDSetPartialScope (PLMIDSet)
+let PLMIDSetValidImplementedCnx2 (PLMIDSet)
+let PLMRouteSetImplementedStructure (PLMRouteSet)
+let PLMIDSetAllInstForReq  (PLMIDSet)
+let PLMIDSetImplementedStructure  (PLMIDSet) 
+
+let oPLMIDSet1 (PLMIDSet)
+let oPLMIDSet2 (PLMIDSet)
+let oPLMIDSet3 (PLMIDSet)
+let oPLMIDSet4 (PLMIDSet)
+let oPLMIDSet5 (PLMIDSet)
+
+PLMIDSetSystemRef = Restrict(iPLMIDSet, "DELLmiProductionSystemPPR/DELLmiPPRSystemReference")
+PLMIDSetHeaderRef = Restrict(iPLMIDSet, "DELLmiProductionHeaderProcessAbstract/DELLmiPPRHeaderProcessReferenceAbstract")
+PLMIDSetSystemInst = Restrict(iPLMIDSet, "DELLmiProductionSystemPPR/DELLmiPPRSystemInstance")
+PLMIDSetOpWkiRef = Restrict(iPLMIDSet, "DELLmiProductionAbstractOperationPPR/DELLmiPPROperationReference")
+PLMIDSetOpWkiInst = Restrict(iPLMIDSet, "DELLmiProductionAbstractOperationPPR/DELLmiPPROperationInstance")
+PLMIDSetOpInst = Restrict(iPLMIDSet, "DELLmiProductionOperationPPR/DELLmiOperationPPRInstance")
+PLMIDSetAllRef = PLMIDSetSystemRef + PLMIDSetHeaderRef + PLMIDSetOpWkiRef 
+PLMIDSetAllInst = PLMIDSetSystemInst + PLMIDSetOpWkiInst
+PLMIDSetAll = PLMIDSetAllRef + PLMIDSetAllInst
+PLMIDSetRefForContextForRscPositioning = Restrict(iPLMIDSet, "DELLmiProductionGeneralSystem/DELLmiGeneralSystemReference") + Restrict(iPLMIDSet, "DELLmiProductionWorkplanSystem/DELLmiWorkPlanSystemReference") + Restrict(iPLMIDSet, "DELLmiProductionServiceWorkplanSystem/DELLmiServiceWorkPlanSystemReference") + Restrict(iPLMIDSet, "DELLmiQtyControlProcess/DELLmiQtyControlProcessReference")
+
+/* The expand structure is made by XPDM (instance/reference/rep instance/rep reference)*/
+
+/* Retrieve all Ports and Cnx except implement Cnx from Reference*/
+PLMRouteSetPortsAndCnx  = ExecutePLMFunction("DELLmiProductionSystemAbstract", "ENOPsm_ProductionSystem_addAllPortsAndCnxExceptImplCnx", PLMIDSetAllRef)
+PLMIDSetPortsAndCnx = Ids(PLMRouteSetPortsAndCnx,"all")
+PLMIDSetSysIOPorts = Restrict(PLMIDSetPortsAndCnx, "DELLmiProductionSystemIOPort/DELLmiProdSystemIOPort")
+PLMIDSetCandidateCnx = Restrict(PLMIDSetPortsAndCnx, "DELLmiProductionCandidateResCnx/DELLmiCandidateResourcesCnx")
+PLMIDSetTimeCstCnx = Restrict(PLMIDSetPortsAndCnx, "DELLmiProductionTimeConstraintCnx/DELLmiTimeConstraintCnx") 
+PLMIDSetMaterialFlowCnx = Restrict(PLMIDSetPortsAndCnx, "DELLmiProductionMaterialPathCnx1/DELLmiMaterialPathCnxCust") 
+PLMIDSetCapableCnx = Restrict(PLMIDSetPortsAndCnx, "DELAsmAssemblyModelCnx/DELAsmProcessCanUseCnx")
+PLMIDSetReqCnx = Restrict(PLMIDSetPortsAndCnx,"PLMRequirementSpecifyHowToCnxAbstract/PLMReqSpecifyHowToCnxAbstract")
+PLMIDSetResponsibilityCnx = Restrict(PLMIDSetPortsAndCnx, "DELMfgResponsibility/DELMfgResponsibilityCnx")
+PLMIDSetHistoRefCnx = Restrict(PLMIDSetPortsAndCnx, "PLMHistorizationCnx/PLMHistoLinkCnx")
+/* Export DataCollectPlan Rows */
+PLMIDSetDataCollectPlanRows = Restrict(PLMIDSetPortsAndCnx, "PLMRequirementSpecifyHowToCnxAbstract/PLMReqSpecifyHowToCnxAbstract")
+/* Export implement link connections */
+PLMIDSetImplementedCnx1 = Restrict(PLMIDSetPortsAndCnx, "RFLPLMImplementConnection/RFLPLMImplementConnection")
+
+/* Get Original Workplan or system References from Historiztion connections */
+PLMRouteSetHistoRef = ExecutePLMFunction("PLMHistorizationCnx", "PLMHistorizationCnx_addHistoEntitiesFromCnx", PLMIDSetHistoRefCnx)
+PLMIDSetHistoRef = Ids(PLMRouteSetHistoRef,"all")
+
+/* Extract only valid TimeConstraint Cnx */
+PLMIDSetValidTimeCstCnx = ValidateSRs (PLMIDSetTimeCstCnx,"DEL_LinkToConstrainingObject,DEL_LinkToConstrainedObject",PLMIDSetAllInst)
+
+/* Extract only valid Material Flow Cnx */
+PLMIDSetScopeMaterialFlowCnx = PLMIDSetAllInst + PLMIDSetSysIOPorts
+PLMIDSetValidMaterialFlowCnx = ValidateSRs (PLMIDSetMaterialFlowCnx,"DEL_MaterialPathIN,DEL_MaterialPathOUT",PLMIDSetScopeMaterialFlowCnx)
+
+/* Retrieve CandidateResource from system and operation references */
+PLMRouteSetCandidateResource = ExecutePLMFunction("DELLmiProductionSystemAbstract", "ENOPsm_ProductionSystem_addCandidateResourcesFromCnx", PLMIDSetCandidateCnx)
+PLMIDSetCandidateResource = Ids(PLMRouteSetCandidateResource,"all")
+
+/* No need to get the reference and aggregating reference of the resource instances previously retrieved */
+/* It will be done by the XPDM Complete graph */
+/* For performances reasons we don't do it twice there */
+
+/* Retrieve capable Resources from capable connections */
+PLMRouteSetCapableResource = ExecutePLMFunction("DELPPRContextModel", "ENOPcs_Process_addCapableResourcesWithoutQueryFromCnx", PLMIDSetCapableCnx)
+PLMIDSetCapableResource = Ids(PLMRouteSetCapableResource,"all")
+
+/* Expand Resource structure (instance/reference only) */
+PLMIDSetResourceRef = Restrict(PLMIDSetCandidateResource, "PRODUCTCFG/VPMReference") + Restrict(PLMIDSetCapableResource, "PRODUCTCFG/VPMReference")
+PLMRouteSetResourceStructure = ExecutePLMFunction("DELPPRContextModel", "ENOPpr_PPRData_ExpandStructure", PLMIDSetResourceRef)
+PLMIDSetResourceStructure = Ids(PLMRouteSetResourceStructure,"all")
+
+/* complete documents with their versions */
+PLMIDAllDoc = Restrict(PLMIDSetCandidateResource, "Class/DOCUMENTS") + Restrict(PLMIDSetCapableResource, "Class/DOCUMENTS")
+PLMIDDocsAndScope = ExecutePLMProcedure( "DocumentCompletion", PLMIDAllDoc )
+
+/* Retrieve implemented MBOM (or workplan) from System references/instances*/
+PLMIDSetSystemRefInstOpInst = PLMIDSetSystemRef + PLMIDSetSystemInst + PLMIDSetOpInst + PLMIDSetHeaderRef 
+
+/* Valid implement connections */ 
+PLMIDSetValidImplementedCnx = ValidateSRs (PLMIDSetImplementedCnx1,"PLM_ImplementLink_Source",PLMIDSetSystemRefInstOpInst)
+
+/* Retrieve implemented processes */
+/* We do not expand the connexion from the input data because we can not use the VadidateSR to keep only the ones we want */
+/* because we have to support for APRISO to get the implement link on an operation which is under a subsystem with no scope */
+/* in this case we have not in input all system/operation instances of the implementing path in input */
+/* so if we use ValidateSR, this connexion we be refused */
+/* so we prefer to get a little more connexion that the ones needed, instead of missing ones */
+/*PLMRouteSetImplemented1 = ExecutePLMFunction("DELLmiProductionSystemAbstract", "ENOPsm_ProductionSystem_addImplementedProcessesFromCnx", PLMIDSetValidImplementedCnx)*/
+/*PLMIDSetImplemented1 = Ids(PLMRouteSetImplemented1,"all")*/
+PLMIDSetImplemented1 = ExecuteJavaProcedure("com.dassault_systemes.platform.model.process.procedures.ProcedureCalls_GetImplementedFromImplementCnx", PLMIDSetValidImplementedCnx)
+
+/* In case this system implement a workplan, we do it a second time to retrieve the corresponding processes*/
+PLMIDSetSystemRefInstOpInst2 = Restrict(PLMIDSetImplemented1, "DELLmiProductionSystem/DELLmiProductionSystemReference") + Restrict(PLMIDSetImplemented1, "DELLmiProductionOperation/DELLmiOperationInstance") + Restrict(PLMIDSetImplemented1, "DELLmiProductionSystem/DELLmiProductionSystemInstance") + Restrict(PLMIDSetImplemented1, "DELLmiProductionHeaderProcessAbstract/DELLmiPPRHeaderProcessReferenceAbstract")
+PLMRouteSetImplementedCnx2 = ExecutePLMFunction("RFLPLMImplementConnection", "RFLPLMImplementConnection_AddAllImplementCnxByNav", PLMIDSetSystemRefInstOpInst2)
+PLMIDSetImplementedCnx2 = Ids(PLMRouteSetImplementedCnx2,"all")
+/*PLMRouteSetImplemented2 = ExecutePLMFunction("DELLmiProductionSystemAbstract", "ENOPsm_ProductionSystem_addImplementedProcessesFromCnx", Restrict(PLMIDSetImplementedCnx2,"RFLPLMImplementConnection/RFLPLMImplementConnection"))/*
+/*PLMIDSetImplemented2 = Ids(PLMRouteSetImplemented2,"all")*/
+
+/* Valid implement connections */ 
+PLMIDSetValidImplementedCnx2 = ValidateSRs (Restrict(PLMIDSetImplementedCnx2,"RFLPLMImplementConnection/RFLPLMImplementConnection"),"PLM_ImplementLink_Source",PLMIDSetSystemRefInstOpInst2)
+PLMIDSetImplemented2 = ExecuteJavaProcedure("com.dassault_systemes.platform.model.process.procedures.ProcedureCalls_GetImplementedFromImplementCnx", PLMIDSetValidImplementedCnx2)
+
+/* Retrieve all MBOM references from MBOM/workplan/operation instances implemented*/
+PLMIDSetImplementedInst = Restrict(PLMIDSetImplemented1,"DELFmiFunctionalModel/DELFmiFunctionInstance") + Restrict(PLMIDSetImplemented2,"DELFmiFunctionalModel/DELFmiFunctionInstance")
+PLMRouteSetImplementedRef = ExecutePLMFunction("DELLmiProductionSystemAbstract", "ENOPpr_PPRData_addRefAndAggregatingRef", PLMIDSetImplementedInst) 
+
+/* Retrieves all Data Requierement and Precedence Ports from MBOM references*/
+PLMIDSetProcessRef = Restrict(Ids(PLMRouteSetImplementedRef,"all"), "DELFmiFunctionalModel/DELFmiFunctionReference") + Restrict(PLMIDSetImplemented1, "DELFmiFunctionalModel/DELFmiFunctionReference") + Restrict(PLMIDSetImplemented2, "DELFmiFunctionalModel/DELFmiFunctionReference")
+PLMIDSetProcessPorts = ExecuteJavaProcedure("com.dassault_systemes.platform.model.mbom.procedures.ProcedureCalls_ExpandDRPorts", PLMIDSetProcessRef)
+PLMIDSetDRPorts = Restrict(PLMIDSetProcessPorts, "DELFmiFunctionalModelPrerequisitePort/DELFmiProcessPrerequisitePort") 
+
+/* Retrieves the Data Requirement connections from MBOM references */
+PLMIDSetDRCnx = ExecuteJavaProcedure("com.dassault_systemes.platform.model.mbom.procedures.ProcedureCalls_ExpandDRCnxs", PLMIDSetProcessRef)
+/* PLMIDSetDRCnx = Restrict(Ids(PLMRouteSetDRCnx,"all"),"DELFmiFunctionalModelPrerequisiteCnx/DELFmiProcessPrerequisiteCnx") + Restrict(Ids(PLMRouteSetDRCnx,"all"),"DELFmiFunctionalModelPrerequisiteCnx1/DELFmiProcessPrerequisiteCnxCust") */
+
+/* Extract only valid Prequisite Cnx */
+PLMIDSetProcessInst = Restrict(PLMIDSetImplemented1, "DELFmiFunctionalModel/DELFmiFunctionInstance") +  Restrict(PLMIDSetImplemented2, "DELFmiFunctionalModel/DELFmiFunctionInstance")
+PLMIDSetScopeDRCnx = PLMIDSetProcessInst + PLMIDSetDRPorts
+PLMIDSetValidDRCnx = ValidateSRs (PLMIDSetDRCnx,"DELFmi_PrerequisiteCst_Target,DELFmi_PrerequisiteCst_Source",PLMIDSetScopeDRCnx)
+
+/* Retrieve substitutes from MBOM instances*/
+PLMRouteSetSubstitutes = ExecutePLMFunction("DELPPRContextModel", "ENOPcs_Process_addSubstitute", PLMIDSetProcessInst)
+PLMIDSetSubstitutes = Ids(PLMRouteSetSubstitutes,"all")
+
+/* Export Alternate Processes */
+PLMRouteSetAlternate = ExecutePLMFunction("DELPPRContextModel", "ENOPcs_Process_addAlternateProcesses", PLMIDSetProcessRef)
+PLMIDSetAlternateProcess = Ids(PLMRouteSetAlternate,"all")
+
+/* Retrieve implementing resources scope from System Reference*/
+PLMRouteSetImplementingScopeRes = ExecutePLMFunction("DELPPRContextModel", "ENORsc_Resource_AddImplementingScope", PLMIDSetSystemRef)
+PLMIDSetImplementingScopeRes = Restrict(Ids(PLMRouteSetImplementingScopeRes,"all"),"PRODUCTCFG/VPMReference")
+
+
+/* Get Requirements associated to input structure*/
+PLMIDSetReqs = ExecuteJavaProcedure("com.dassault_systemes.platform.model.commonprocedures.procedures.ProcedureCalls_MBOMAndProcessHowToLinkTargetFromCnx", PLMIDSetReqCnx)
+
+
+/* Get Requirements associated to implemented structures*/
+/* PLMIDSetAllRefForReq = Restrict(PLMIDSetImplemented1, "PLMCORE/PLMCoreReference")  + Restrict(PLMIDSetImplemented2, "PLMCORE/PLMCoreReference")*/
+PLMIDSetAllInstForReq = Restrict(PLMIDSetImplemented1, "PLMCORE/PLMCoreInstance")  + Restrict(PLMIDSetImplemented2, "PLMCORE/PLMCoreInstance") 
+PLMRouteSetImplementedStructure = ExecutePLMFunction("DELPPRContextModel", "ENOPpr_PPRData_addRefAndAggregatingRef", PLMIDSetAllInstForReq)
+PLMIDSetImplementedStructure = Ids(PLMRouteSetImplementedStructure,"all") 
+PLMIDSetAllRefForReq = Restrict(PLMIDSetImplemented1, "PLMCORE/PLMCoreReference")  + Restrict(PLMIDSetImplemented2, "PLMCORE/PLMCoreReference") + Restrict(PLMIDSetImplementedStructure, "PLMCORE/PLMCoreReference")
+
+PLMIDSetImplReqs = ExecuteJavaProcedure("com.dassault_systemes.platform.model.commonprocedures.procedures.ProcedureCalls_MBOMAndProcessHowToLinkTargetAndCnxs", PLMIDSetAllRefForReq)
+
+
+/* Complete Requirement Specification*/
+PLMIDSetReqSpec = Restrict(PLMIDSetReqs, "Class/Requirement Specification") + Restrict(PLMIDSetImplReqs, "Class/Requirement Specification") 
+PLMIDSetReqSpecCompletude = ExecutePLMProcedure( "Rmt_ReqSpec_ExportCompletion", PLMIDSetReqSpec )
+
+/* Complete Requirement */
+PLMIDSetReq = Restrict(PLMIDSetReqs, "Class/Requirement") + Restrict(PLMIDSetImplReqs, "Class/Requirement")
+PLMIDSetReqCompletude = ExecutePLMProcedure( "Rmt_Requirement_ExportCompletion", PLMIDSetReq )
+
+/* Complete Requirement Chapter*/
+PLMIDSetReqChapter = Restrict(PLMIDSetReqs, "Class/Chapter") + Restrict(PLMIDSetImplReqs, "Class/Chapter")
+PLMIDSetReqChapterCompletude = ExecutePLMProcedure( "Rmt_Chapter_ExportCompletion", PLMIDSetReqChapter )
+
+/* Get all implement resource connections */
+PLMRouteSetImplResCnx = ExecutePLMFunction("DELPPRContextModel", "ENORsc_Resource_addAllImplementConnections", PLMIDSetImplementingScopeRes)
+PLMIDSetImplResCnx = Ids(PLMRouteSetImplResCnx,"all")
+
+/* Validate implement resource connections */
+PLMIDSetSystemRefInstOpInst = PLMIDSetSystemRef + PLMIDSetSystemInst + PLMIDSetOpInst + PLMIDSetHeaderRef 
+PLMIDSetValidImplResCnx = ValidateSRs (PLMIDSetImplResCnx,"PLM_ImplementLink_Target",PLMIDSetSystemRefInstOpInst)
+
+/* Get implementing Resources from Connections */
+PLMIDSetImplementingRes = ExecuteJavaProcedure("com.dassault_systemes.platform.model.procedures.ProcedureCalls_GetResourceObjects", PLMIDSetValidImplResCnx) 
+
+/* Get Resource Context For Resource Positioning*/
+PLMIDSetContextForRscPositioning = ExecuteJavaProcedure("com.dassault_systemes.platform.model.process.procedures.ProcedureCalls_ContextForResourcePositioning", PLMIDSetRefForContextForRscPositioning)
+
+/* Get Partial Scoped Objects*/
+PLMIDSetRefForPartialScope = Restrict(iPLMIDSet, "DELLmiProductionHeaderOperation/DELLmiHeaderOperationReference") + Restrict(PLMIDSetImplemented1, "DELLmiProductionHeaderOperation/DELLmiHeaderOperationReference")
+PLMIDSetPartialScope = ExecuteJavaProcedure("com.dassault_systemes.platform.model.process.procedures.ProcedureCalls_GetPartialScopedObjects", PLMIDSetRefForPartialScope)
+
+/* Get implementing Systems in case of Workplan export */
+/* =================================================== */
+
+/* Retrieves preassignement */
+PLMIDSetWorkplanRef = Restrict(PLMIDSetSystemRef,"DELLmiProductionWorkplanSystem/DELLmiWorkPlanSystemReference")
+PLMIDSetServiceWorkplanRef = Restrict(PLMIDSetSystemRef,"DELLmiProductionWorkplanSystem/DELLmiServiceWorkPlanSystemReference")
+PLMIDSetQtyControlRef = Restrict(PLMIDSetSystemRef,"DELLmiQtyControlProcess/DELLmiQtyControlProcessReference")
+PLMIDSetAllRef2 = PLMIDSetHeaderRef + PLMIDSetWorkplanRef + PLMIDSetServiceWorkplanRef + PLMIDSetQtyControlRef
+PLMPreAssignContextIdSet = ExecuteJavaProcedure("com.dassault_systemes.platform.model.process.procedures.ProcedureCalls_PreAssignedRscContextLink", PLMIDSetAllRef2)
+PLMIDSetWPandQCRef = PLMIDSetWorkplanRef + PLMIDSetQtyControlRef
+PLMRouteSetSystemScope = ExecutePLMFunction("DELLmiProductionSystemAbstract", "ENOPsm_ProductionSystem_addSystemScopesFromWorkplan", PLMIDSetWPandQCRef)
+PLMIDSetSystemScope = Restrict(Ids(PLMRouteSetSystemScope,"all"),"DELLmiProductionSystem/DELLmiProductionSystemReference")
+
+/* Get All implement connections under system  scope */
+PLMRouteSetRFLPCnx = ExecutePLMFunction("RFLPLMImplementConnection", "RFLPLMImplementConnection_AddAllImplementCnx", PLMIDSetSystemScope)
+PLMIDSetRFLPCnx = Restrict(Ids(PLMRouteSetRFLPCnx,"all"),"RFLPLMImplementConnection/RFLPLMImplementConnection")
+
+/* Extract only valid Implementing connections (scope or implement = pointing operation/system instance path or system Ref) */
+PLMIDSetValidRFLPCnx = ValidateSRs (PLMIDSetRFLPCnx,"PLM_ImplementLink_Target",PLMIDSetAll)
+
+/* Get impementing operations-system path */
+PLMRouteSetImplementingObj = ExecutePLMFunction("DELLmiProductionSystemAbstract", "ENOPsm_ProductionSystem_addImplementingObjFromRFLPCnx", PLMIDSetValidRFLPCnx)
+PLMIDSetImplementingObj = Ids(PLMRouteSetImplementingObj,"all")
+
+/* Get Plant and Company from responsibility connections  */	
+PLMRouteSetResponsibility = ExecutePLMFunction("DELPPRContextModel", "ENOPpr_PPRData_addResponsibilityFromCnx", PLMIDSetResponsibilityCnx)
+PLMIDSetResponsibility = Ids(PLMRouteSetResponsibility,"all")
+
+/* Retrieve Compiled 3D WKI representations*/
+PLMIDSet3DWKIRef = Restrict(iPLMIDSet, "DELPPRCompiled3DWki/DELPPRCompiled3DWkiReference")
+PLMRouteSet3DWKIRep = ExecutePLMFunction("DELLmiProductionSystemAbstract", "ENOPsm_ProductionSystem_expandCompiledWKIRep", PLMIDSet3DWKIRef)
+PLMIDSet3DWKIRep = Ids(PLMRouteSet3DWKIRep,"all")
+
+oPLMIDSet1 = iPLMIDSet + PLMIDSetSysIOPorts + PLMIDSetCandidateCnx + PLMIDSetCapableCnx + PLMIDSetValidTimeCstCnx + PLMIDSetValidMaterialFlowCnx + PLMIDSetCandidateResource + PLMIDSetContextForRscPositioning + PLMIDSetPartialScope
+oPLMIDSet2 = PLMIDSetCapableResource + PLMIDSetResourceStructure + PLMIDSetValidImplementedCnx + PLMIDSetImplemented1 + PLMIDSetProcessRef + PLMIDSetDRPorts + PLMIDSetValidDRCnx + PLMIDSetValidRFLPCnx
+oPLMIDSet3 = PLMIDSetImplementingScopeRes + PLMIDSetValidImplResCnx + PLMIDSetImplementingRes + PLMIDSetReqCnx + PLMIDSetReqs + PLMIDSetReqSpecCompletude + PLMIDSetReqCompletude + PLMIDSetValidImplementedCnx2
+oPLMIDSet4 = PLMIDSetReqChapterCompletude + PLMIDSetSystemScope + PLMIDSetImplementingObj + PLMIDSetResponsibilityCnx + PLMIDSetResponsibility + PLMPreAssignContextIdSet
+oPLMIDSet5 = PLMIDDocsAndScope + PLMIDSetHistoRefCnx + PLMIDSetHistoRef + PLMIDSetDataCollectPlanRows + PLMIDSet3DWKIRep + PLMIDSetImplemented2 + PLMIDSetSubstitutes + PLMIDSetAlternateProcess + PLMIDSetImplReqs
+
+oPLMIDSet = oPLMIDSet1 + oPLMIDSet2 + oPLMIDSet3 + oPLMIDSet4 + oPLMIDSet5
+}
+
+

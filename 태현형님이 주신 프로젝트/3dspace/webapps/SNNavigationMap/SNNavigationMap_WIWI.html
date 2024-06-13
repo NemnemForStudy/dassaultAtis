@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:widget="http://www.netvibes.com/ns/">
+
+<head>
+      <title>Navigation Component</title>
+
+      <!-- RequireJS & config to work with wepapp build-->
+      <script type="text/javascript" src="../AmdLoader/AmdLoader.js"></script>
+      <script type="text/javascript" src="../WebappsUtils/WebappsUtils.js"></script>
+      <!--<script src="https://use.fontawesome.com/d7a92e2023.js"></script>-->
+      <!-- UWA and UIKit stylesheets -->
+      <link rel="stylesheet" type="text/css" href="../UWA2/assets/css/inline.css" />
+      <link rel="stylesheet" type="text/css" href="../UIKIT/UIKIT.css" />
+
+      <script>
+            window.onload = function() {
+                  if (window.location.search.indexOf('no_jsnotif=true') === -1) {
+                        sendNotificationWebInWin('PageLoaded', 'done');
+                  }
+                  window.parent.postMessage('Map_WebInWin_ready', '*');
+            };
+
+            window.onresize = function() {
+                  if (map !== undefined)
+                        map.resizeMap();
+            };
+
+
+            //-- Relations
+            var map = {
+                  initMap: function(url3DSpace, urlFederated, roles, newIDs, tenantID, tenantNls, noautomode, userId) {
+                        var that = this;
+
+                        var options = {
+                              renderTo: document.body
+                        };
+                      	  console.log('initMap1');
+                        // console.log(options.root_reference);
+                        options.root_reference = newIDs || null;
+                        if (options.root_reference) {
+                              options.initWithNodes = options.root_reference;
+                        }
+
+                        options.onReady = function() {
+                              console.log('NavigationApp ready');
+                        };
+
+                        //options.mapSettings = {
+                        //  "platform_services": [{
+                        //    "3DSpace": url3DSpace,
+                        //    "Federated": urlFederated
+                        //  }],
+                        //  "user_granted_roles": [{
+                        //    "id": "UNF"
+                        //  }]
+                        //};
+
+                        options.mapSettings = {
+                              "platform_services": [{
+                                    "3DSpace": url3DSpace,
+                                    "Federated": urlFederated,
+                                    "platformId": tenantID,
+                                    "displayName": tenantNls,
+                                    "userID": ""
+                              }],
+                              "user_granted_roles": roles
+                        };
+
+                        if (noautomode && noautomode !== 'false') {
+                              options.mapSettings.noautomode = true;
+                        }
+                        if (userId && userId !== '') {
+                              options.mapSettings.userId = userId;
+                              options.mapSettings.platform_services[0].userID = userId;
+                        }
+
+                        require(['UWA/Core',
+                              'UWA/Drivers/Alone',
+                              'UWA/Widget',
+                              'DS/SNNavigationMap/ENORIPE'
+                        ], function(UWACore, UWAAlone, Widget, ENORIPE) {
+                              console.log('initMap2');
+                              widget = new Widget();
+
+                              var random = Math.floor(Math.random() * 1000);
+                              options.widgetId = (widget.id) ? widget.id : ('RelationalExplorerWIW' + random);
+                              options.lang = (widget.lang) ? widget.lang : 'en';
+                              // console.log('\n\n\n ===> new Widget() / widget.id = ' + widget.id + ' .... options.widgetId = ' + options.widgetId + '\n\n\n');
+
+                              // console.log(options);
+                              that.enoripe = new ENORIPE(options);
+                              //that.navigationApp.inject(document.body);
+                        });
+                  },
+
+                  refreshMap: function(newIDs) {
+                        if (this.enoripe) {
+                              /*
+                              this.enoripe._onRefresh({
+                                initWithNodes: newIDs,
+                                needClear: true
+                              });*/
+
+                              this.enoripe._onRefreshWebInWin({
+                                    initWithNodes: newIDs,
+                                    needClear: true
+                              }); //IR-713215
+                        }
+                  },
+
+                  clearMap: function() {
+                        if (this.enoripe) {
+                              this.enoripe.clearMap();
+                        }
+                  },
+
+                  refreshOnDrop: function(DropMode, DroppedObjects) {
+                        if (this.enoripe._navigationMap) {
+                              this.enoripe._navigationMap.onDropFromWebInWin({
+                                    action: DropMode,
+                                    objects: DroppedObjects
+                              });
+                        }
+                  },
+
+                  resizeMap: function() {
+                        if (this.enoripe) {
+                              this.enoripe.onResize();
+                        }
+                  },
+
+                  setCtxMenu: function(ctxMenu) {
+                        if (this.enoripe._navigationMap) {
+                              this.enoripe._navigationMap.SetContextualMenu({
+                                    actions: ctxMenu
+                              });
+                        }
+                  },
+
+                  closeMap: function() {
+                        if (this.enoripe) {
+                              this.enoripe.clearMap();
+                        }
+
+                        // release Tagger when close (initMap => createProxy, so closeMap has to die it) toRework RCI/JJY1
+                        // if (this.enoripe._navigationMap && this.enoripe._navigationMap.taggerServices && this.enoripe._navigationMap.taggerServices._filterProxy) {
+                        //       this.enoripe._navigationMap.taggerServices._filterProxy.die();
+                        //  }
+                  },
+
+                  taggerWebInWinEvent: function(evt){ //toRework RCI/JJY1
+                           if (this.enoripe._navigationMap && this.enoripe._navigationMap.taggerServices && this.enoripe._navigationMap.taggerServices._filterProxy) {
+                              this.enoripe._navigationMap.taggerServices._filterProxy.taggerWebInWinEvent(evt);
+                        }
+                  },
+
+            };
+
+
+            function onTaggerWebInWinEvent(evt) {
+                  map.taggerWebInWinEvent(evt);
+            }
+
+
+            function sendNotificationWebInWin(name, message) {
+                  require(['DS/SNNavigationMap/utils/SNNavigationServices',
+                  ], function(SNNavigationServices) {
+                        SNNavigationServices.sendStringRelationsToWebInWin(name, message);
+                  });
+            }
+
+            
+            function InitMap(url3DSpace, urlFederated, roles, selectedObjects, tenantID, tenantNls, noautomode, userId) {
+                  map.initMap(url3DSpace, urlFederated, roles, selectedObjects, tenantID, tenantNls, noautomode, userId);
+            }
+
+            function RefreshMap(selectedObjects) {
+                  map.refreshMap(selectedObjects);
+            }
+
+            function ClearMap() {
+                  map.clearMap();
+            }
+
+            function RefreshOnDrop(DropMode, DroppedObjects) {
+                  map.refreshOnDrop(DropMode, DroppedObjects);
+            }
+
+            function SetCtxMenu(ctxMenu) {
+                  map.setCtxMenu(ctxMenu);
+            }
+
+            function CloseMap() {
+                  map.closeMap();
+            }
+
+      </script>
+</head>
+
+<body class="body-WIWI">
+</body>
+
+</html>

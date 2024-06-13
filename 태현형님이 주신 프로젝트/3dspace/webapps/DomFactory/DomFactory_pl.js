@@ -1,0 +1,1 @@
+define("DS/DomFactory/DomFactory_pl",{});define("DS/DomFactory/assets/nls/translation",{close:"Zamknij",maximize:"Maksymalizuj",restore:"Przywróć"});

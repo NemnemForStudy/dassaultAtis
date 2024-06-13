@@ -1,0 +1,1 @@
+define("DS/DMUBaseUI/DMUBaseUI_ja",{});define("DS/DMUBaseUI/assets/nls/DMUBaseUI",{defaultValidatedStampLabel:"検証済み",defaultRejectedStampLabel:"却下済み"});

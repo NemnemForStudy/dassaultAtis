@@ -1,0 +1,31 @@
+################################################################################################
+# Create By jhlee 2023. 05. 22
+# Admin Type : command
+# Name : decCwpChangeHistoryList
+################################################################################################
+
+#del command 'decCwpChangeHistoryList';
+add command 'decCwpChangeHistoryList'
+	description 'StandardList'
+	label 'ProgramCentral.Command.decCwpChangeHistoryList'
+	alt 'ProgramCentral.Command.decCwpChangeHistoryList'
+	setting 'Registered Suite' 'ProgramCentral'
+	setting 'Target Location' 'content'
+;
+add property 'command_decCwpChangeHistoryList' on prog eServiceSchemaVariableMapping.tcl to command 'decCwpChangeHistoryList';
+
+mod command 'decCwpChangeHistoryList'
+	href '${COMMON_DIR}/emxIndentedTable.jsp?program=emxProjectSpace:getCWPTaskHistoryList&table=decCwpTaskHistoryTable&header=ProgramCentral.Command.decCwpChangeHistoryList&HelpMarker=emxhelpprogramlist&Export=true&StringResourceFileId=emxProgramCentralStringResource&selection=multiple&parallelLoading=true&massPromoteDemote=true&slideinFilter=true&pageSize=300'
+;
+
+mod command 'decCwpChangeHistoryList'
+	add setting 'Access Function' 'isAccessCWPChangeHistoryList' 
+	add setting 'Access Program' 'emxProjectSpace'	
+;
+mod command 'decCwpChangeHistoryList'
+ label 'emxProgramCentral.Command.decChangeHistoryList';
+
+mod command decCwpChangeHistoryList
+	add setting 'hasAccess' 'PIM,AWP'
+;
+ 

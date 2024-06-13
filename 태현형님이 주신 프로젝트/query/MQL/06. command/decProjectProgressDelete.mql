@@ -1,0 +1,18 @@
+################################################################################################
+# Modified By thok : 2023. 06. 15
+# Admin Type : command
+# Name : decProjectProgressDelete
+################################################################################################
+#delete command decProjectProgressDelete;
+add command decProjectProgressDelete 
+	href '${COMMON_DIR}/decProjectProgressDelete.jsp'
+	alt 'emxProgramCentral.Label.ProgressDelete'
+	label 'emxProgramCentral.Label.ProgressDelete'
+	setting 'Image' '${COMMON_DIR}/images/iconActionDelete.png'
+	setting 'Confirm Message' 'emxProgramCentral.ProjectDelete.notice'
+	setting 'Registered Suite' 'ProgramCentral'
+	setting 'Target Location'  'listHidden'
+	setting 'Submit' 'true'
+;
+add property command_decProjectProgressDelete on program eServiceSchemaVariableMapping.tcl to command 'decProjectProgressDelete'
+;

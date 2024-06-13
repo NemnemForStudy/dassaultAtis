@@ -1,0 +1,142 @@
+<!-- numeric.js & num_util test example. Author: qif  -->
+<html>
+<head>
+<script src="../../../../../../numeric.js-1.2.6/numeric-1.2.6.js"></script>
+<script src="../../num_util.js"></script>
+</head>
+<body> 
+<div id="out"></div>
+ 
+
+<script>
+  var s = document.getElementById("out");
+  s.innerHTML +=   
+"<samp>"+
+"<br/> Solving Ax=0 by using Singular Value Decomposition(SVD)"+
+"<br/></samp>";
+/*
+  var A=[[ 1, 2,-2],  // trivial solution x=0
+         [ 3, 2, 4],
+         [ 4, 3, 3]]; 
+  var A=[[ 1, 2,-2], // trivial solution x=0
+         [ 3, 2, 4],
+         [ 4, 3, 2]]; 
+  var A=[[ 4, 3, 2], // non-trivial solution
+         [ 4, 3, 2],
+         [ 4, 3, 2]]; 
+  var A=[[ 1, 2, 3, 4, 3], // non-trivial solution
+         [ 2, 4, 6, 2, 6],
+         [ 3, 6,18, 9, 9],
+		 [ 4, 8,12,10,12],
+		 [ 5,10,24,11,15]];	 
+  var A=[[ 3, 0, -1, 0], // non-trivial solution
+         [ 8, 0, 0, -2], // insert the same row 'cause numeric.snv requires m>=n matrix A. 
+		 [ 8, 0, 0, -2], 
+         [ 0, 2, -2,-1]]; 	
+  var A=[[ 1, 2, 0,-1], // non-trivial solution  
+         [-2,-3, 4, 5], // insert the same row 'cause numeric.snv requires m>=n matrix A. 
+		 [-2,-3, 4, 5], 
+         [ 2, 4, 0,-2]]; 
+  var A=[[ 22, 10,  2,  3,  7],
+       [ 14,  7, 10,  0,  8],
+       [ -1, 13, -1,-11,  3],
+       [ -3, -2, 13, -2,  4],
+       [  9,  8,  1, -2,  4],
+       [  9,  1, -7,  5, -1],
+       [  2, -6,  6,  5,  1],
+       [  4,  5,  0, -2,  2]];		 
+  */
+  var T=[
+        [[ 1, 2,-2],  // trivial solution x=0
+         [ 3, 2, 4],
+         [ 4, 3, 3]],
+        [[ 1, 2,-2], // trivial solution x=0
+         [ 3, 2, 4],
+         [ 4, 3, 2]],
+        [[ 4, 3, 2], // non-trivial solution
+         [ 4, 3, 2],
+         [ 4, 3, 2]], 
+        [[ 1, 2, 3, 4, 3], // non-trivial solution
+         [ 2, 4, 6, 2, 6],
+         [ 3, 6,18, 9, 9],
+		 [ 4, 8,12,10,12],
+		 [ 5,10,24,11,15]],
+		[[ 3, 0, -1, 0], // non-trivial solution
+         [ 8, 0, 0, -2], // insert the same row 'cause numeric.snv requires m>=n matrix A. 
+		 [ 8, 0, 0, -2], 
+         [ 0, 2, -2,-1]], 	
+        [[ 1, 2, 0,-1], // non-trivial solution  
+         [-2,-3, 4, 5], // insert the same row 'cause numeric.snv requires m>=n matrix A. 
+		 [-2,-3, 4, 5], 
+         [ 2, 4, 0,-2]],
+        [[ 22, 10,  2,  3,  7],
+         [ 14,  7, 10,  0,  8],
+         [ -1, 13, -1,-11,  3],
+         [ -3, -2, 13, -2,  4],
+         [  9,  8,  1, -2,  4],
+         [  9,  1, -7,  5, -1],
+         [  2, -6,  6,  5,  1],
+         [  4,  5,  0, -2,  2]]
+		 ];		 
+  for(kk=0; kk<T.length; kk++) {
+       s.innerHTML  += "<br><b>Problem "+kk+1 + "</b></br>";
+	  var A = T[kk];   
+	  s.innerHTML  += "A="+M2DtoTable(A);
+	   
+	  var svd = numeric.svd(A);
+	  s.innerHTML  += "U="+M2DtoTable(svd["U"]); 
+	  s.innerHTML  += "S="+VectortoStr(svd["S"])+"<br/>"; 
+	  s.innerHTML  += "V="+M2DtoTable(svd["V"]);
+	  
+	  var Sigma = svd["S"];
+	  var V = svd["V"];
+	  
+	  s.innerHTML  += "<br/>";
+	  var solx = []
+	  for(ii=0; ii<V[0].length; ii++) {
+		var sigma = Sigma[ii];
+		if(Math.abs(sigma)<0.001) {
+			var column = getColumn(V, ii);
+			solx.push(column);
+			var A_column = numeric.dot(A, column);
+			s.innerHTML  += "<br/>x"+ii+" = " + column;
+			s.innerHTML  += "<br/>A x"+ii+" = " + A_column;
+			var norm = numeric.norm2(A_column);
+			if(norm < 0.001) 
+				s.innerHTML  += "<br/>|A*column| = 0.";
+			else
+				s.innerHTML  += "<br/>|A*column| > 0.001";
+		}
+	  }
+	  if(solx.length==0) { 
+		s.innerHTML  += "<br/> The only one solution is the trivial solution =[0,...,0].";
+	  }
+	  
+	  s.innerHTML  += "<br/><br/><b>check if interpolation of them also meet the solution.</b>";
+	  if(solx.length>1) { // check if interpolation of them also meet the solution 
+		var weight = [0.25, 0.5, 0.75, 1.5];
+		var x1_x0 = numeric.sub(solx[0], solx[1]); 
+		for(jj=0; jj<weight.length; jj++) {
+			var lambda = weight[jj];
+			s.innerHTML  += "<br/>sol = x0 + "+lambda + "*(x1-x0)";
+			var interpolation=[];
+			for(ii=0; ii<x1_x0.length;ii++)
+				interpolation[ii] = solx[0][ii] + lambda * x1_x0[ii];
+			
+			var A_interpolation = numeric.dot(A, interpolation); 
+			
+			s.innerHTML  += "<br/>interpolation = " + interpolation;
+			s.innerHTML  += "<br/>A interpolation = " + A_interpolation;
+			var norm = numeric.norm2(A_interpolation);
+			if(norm < 0.001) 
+				s.innerHTML  += "<br/>|A*interpolation| = 0.";
+			else
+				s.innerHTML  += "<br/>|A*interpolation| > 0.001";
+		}
+	  }
+  }
+  
+  console.log("Done!");
+</script>
+</body>
+</html>

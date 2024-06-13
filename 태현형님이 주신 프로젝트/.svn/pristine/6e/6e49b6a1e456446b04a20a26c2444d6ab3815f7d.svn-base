@@ -1,0 +1,12 @@
+m|DELWebUIComponents\DELWebCommonControls.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.1.22309|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\DELWebCommonControls\DELWebCommonControls.js|1667619911|3533
+s|DELWebUIComponents\DELWebCommonControls.mweb\src\DELWebPanel.js|1665048490|2247
+t|win_b64\webapps\DELWebCommonControls\assets\css\DELWebPanel.css|1667619909|349
+s|DELWebUIComponents\DELWebCommonControls.mweb\src\assets\css\DELWebPanel.css|1665048313|349
+u|DELWebUIComponents\DELWebCommonControls.mweb\src\Form.js|1666249837|4949
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

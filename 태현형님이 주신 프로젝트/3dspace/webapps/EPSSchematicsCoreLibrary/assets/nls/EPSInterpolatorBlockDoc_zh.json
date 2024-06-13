@@ -1,0 +1,16 @@
+{
+  "version": "1.0.0",
+  "summary": "根据 <doc-idp-name translate=no>Alpha</doc-idp-name> 值在两个输入数据之间执行线性外插延伸。",
+  "description": "数据端口值可以是 <doc-valuetype translate=no>Double</doc-valuetype> 或 <doc-valuetype translate=no>Integer</doc-valuetype>，并且可以使用块配置对话框进行更改。<br>提供两个已知的项目作为输入数据（分配关联到 <doc-value translate=no>0</doc-value> 和 <doc-value translate=no>1</doc-value>）。<br>线性插值在这些项目之间对应于“直线”。<br>对于给定值 <doc-idp-name translate=no>Alpha</doc-idp-name>，沿此直线返回的值从以下方程衍生：<br><br><center><doc-odp-name translate=no>Result</doc-odp-name> = <doc-idp-name translate=no>Alpha</doc-idp-name>*(<doc-idp-name translate=no>Value2</doc-idp-name> - <doc-idp-name translate=no>Value1</doc-idp-name>)</center>",
+  "dataPorts": {
+    "Value1": "第一个操作数。",
+    "Value2": "第二个操作数。",
+    "Alpha": "权重参数。",
+    "Result": "外插延伸值。"
+  },
+  "controlPorts": {
+    "In": "触发块执行。",
+    "Out": "在完成流程时激活。"
+  },
+  "example": null
+}

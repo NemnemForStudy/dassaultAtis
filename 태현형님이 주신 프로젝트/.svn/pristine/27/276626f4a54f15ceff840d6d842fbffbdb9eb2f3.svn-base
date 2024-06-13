@@ -1,0 +1,1 @@
+define("DS/GraphListView/GraphListView_pl",{});define("DS/GraphListView/assets/nls/ColumnsTitles",{colGraph:"Wykres",colTitle:"Tytuł ",colMenu:"Menu",colIntent:"Intencja",colSpecification:"",colFilter:"Filtr"});

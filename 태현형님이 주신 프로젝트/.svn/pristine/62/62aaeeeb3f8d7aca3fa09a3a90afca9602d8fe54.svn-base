@@ -1,0 +1,1 @@
+define("DS/NativeLauncherWdg/NativeLauncherWdg_ja",{});define("DS/NativeLauncherWdg/assets/nls/NativeLauncher",{Play:"再生"});

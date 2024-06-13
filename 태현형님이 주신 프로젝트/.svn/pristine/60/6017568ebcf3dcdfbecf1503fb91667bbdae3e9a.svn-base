@@ -1,0 +1,1 @@
+define("DS/EditPropPopup/EditPropPopup_zh",{});define("DS/EditPropPopup/assets/nls/editPropPopup",{Properties:"特性",PinWidget:"固定小组件",Loading:"正在加载...",CloseOverlay:"关闭弹窗"});

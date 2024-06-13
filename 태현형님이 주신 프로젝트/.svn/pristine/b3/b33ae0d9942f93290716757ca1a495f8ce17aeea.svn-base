@@ -1,0 +1,575 @@
+<%@page import="java.text.DecimalFormat"%>
+<%@page import="matrix.db.JPO"%>
+<%@page import="com.matrixone.apps.domain.util.MqlUtil"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.matrixone.apps.domain.util.MapList"%>
+<%@page import="java.util.Map"%>
+<%@page import="com.matrixone.apps.domain.util.FrameworkUtil"%>
+<%@page import="matrix.util.StringList"%>
+<%@page import="matrix.db.Context"%>
+<%@page import="com.matrixone.servlet.Framework"%>
+<%@page import="org.apache.ibatis.session.SqlSession"%>
+<%@page import="com.daewooenc.mybatis.main.decSQLSessionFactory"%>
+<%@page import="java.util.List"%>
+<%@page import="com.dec.util.DecDateUtil"%>
+<%@page import="java.time.LocalDate"%>
+<%@page import="com.dec.util.decCollectionUtil"%>
+<%@page import="org.codehaus.jackson.map.ObjectMapper"%>
+<%@page import="com.dec.webservice.call.decWebserviceUtil"%>
+<%@page import="com.dec.util.decListUtil"%>
+<%@page import="com.dec.util.DecMatrixUtil"%>
+<%@page import="com.dec.util.DecConstants"%>
+<%@page import="org.apache.commons.lang3.StringUtils"%>
+
+<emxUtil:localize id="i18nId" bundle="emxProgramCentralStringResource" locale='<xss:encodeForHTMLAttribute><%= request.getHeader("Accept-Language") %></xss:encodeForHTMLAttribute>' />
+
+<%
+try {
+	Context context = Framework.getContext(request);
+	
+	String projectId = request.getParameter("objectId");
+	String projectCode = request.getParameter("projectCode");
+	String uom = request.getParameter("uom");
+	String fromYear = request.getParameter("fromYear");
+	String fromMonth = request.getParameter("fromMonth");
+	String toYear = request.getParameter("toYear");
+	String toMonth = request.getParameter("toMonth");
+	String emxTableRowIdExpr = request.getParameter("emxTableRowIdExpr");
+	String fmcsDiscipline = request.getParameter("FMCS Discipline");
+	
+	StringList fmcsDisciplineList = FrameworkUtil.splitString(fmcsDiscipline, ",");
+	
+	String[] uomArr = null;
+	boolean isEL_IN = false;
+	if ( fmcsDiscipline.contains("P") )
+	{
+		uomArr = new String[] {"Dia-Inch", "Weight(KG)"};
+	}
+	else if ( fmcsDiscipline.contains("E") || fmcsDiscipline.contains("I") )
+	{
+		uomArr = new String[] {"M"};
+		isEL_IN = true;
+	}
+	
+	if ( StringUtils.isEmpty(uom) )
+	{
+		uom = uomArr[0];
+	}
+	
+	boolean isDiaInch = "Dia-Inch".equals(uom);
+	boolean dataExists = true;
+	
+	if ( StringUtils.isAnyEmpty(fromYear, fromMonth, toYear, toMonth) )
+	{
+		try ( SqlSession sqlSession = decSQLSessionFactory.getSession() ) {
+			Map selectParamMap = new HashMap();
+			selectParamMap.put("SITE_CD", projectCode);
+			
+			List<Map> maxMinYearMonthList = sqlSession.selectList("IF_Material.selectMaxMinYearMonthForWorkFront", selectParamMap);
+			
+			if ( maxMinYearMonthList != null && maxMinYearMonthList.size() > 0 )
+			{
+				Map maxMinYearMonthMap = maxMinYearMonthList.get(0);
+				if ( maxMinYearMonthMap != null )
+				{
+					String fromYearMonth = String.valueOf( maxMinYearMonthMap.get("FROM_YEAR_MONTH") );
+					String toYearMonth = String.valueOf( maxMinYearMonthMap.get("TO_YEAR_MONTH") );
+					
+					fromYear = fromYearMonth.substring(0, 4);
+					fromMonth = fromYearMonth.substring(4);
+					toYear = toYearMonth.substring(0, 4);
+					toMonth = toYearMonth.substring(4);
+	%>
+					<script>
+						location.href = location.href + "&fromYear=<%=fromYear %>&fromMonth=<%=fromMonth %>&toYear=<%=toYear %>&toMonth=<%=toMonth %>&fromYearRange=" + <%=fromYear %> + "-" + <%=toYear %> + "&toYearRange=" + <%=fromYear %> + "-" + <%=toYear %>; 
+					</script>
+	<%
+					return;
+				}
+				else
+				{
+					dataExists = false;
+				}
+			}
+			else
+			{
+				// do nothing...				
+			}
+		}
+	}
+	
+	String objectId = null;
+	String rowLevel = null;
+	String rowName = null;
+	
+	if ( StringUtils.isEmpty(emxTableRowIdExpr) )
+	{
+		objectId = projectId;
+	}
+	else
+	{
+		StringList rowIdList = FrameworkUtil.splitString(emxTableRowIdExpr, ",");
+		objectId = rowIdList.get(0);
+		rowLevel = rowIdList.get(1);
+		rowName = MqlUtil.mqlCommand(context, "print bus $1 select $2 dump", objectId, DecConstants.SELECT_NAME);
+	}
+	
+	// Work Front Analysis 조회
+	MapList workFrontAnalysisList = null;
+	if ( dataExists )
+	{
+		Map programMap = new HashMap();
+		programMap.put("projectId", projectId);
+		programMap.put("projectCode", projectCode);
+		programMap.put("uom", uom);
+		programMap.put("fmcsDisciplineList", fmcsDisciplineList);
+		programMap.put("Sub-Con", request.getParameter("Sub-Con"));
+		programMap.put("fromYear", fromYear);
+		programMap.put("fromMonth", fromMonth);
+		programMap.put("toYear", toYear);
+		programMap.put("toMonth", toMonth);
+		programMap.put("rowLevel", rowLevel);
+		programMap.put("rowName", rowName);
+		
+		workFrontAnalysisList = JPO.invoke(context, "emxProjectSpace", null, "getWorkFrontAnalysisPipingList", JPO.packArgs(programMap), MapList.class);
+	}
+	else
+	{
+		workFrontAnalysisList = new MapList();
+	}
+	
+	Map<String,StringList> workFrontAnalysisSummary = decCollectionUtil.extractStringList(workFrontAnalysisList
+			, "YEAR_MONTH"
+			, "YEAR_MONTH_EXPR"
+			, "RAS"
+			, "RAS_CUM"
+			, "AVAIL"
+			, "AVAIL_CUM"
+			, "ISSUE"
+			, "ISSUE_CUM"
+			, "TOTAL");
+	
+	StringList yearMonthList = workFrontAnalysisSummary.get("YEAR_MONTH");
+	StringList yearMonthExprList = workFrontAnalysisSummary.get("YEAR_MONTH_EXPR");
+	StringList rasList = workFrontAnalysisSummary.get("RAS");
+	StringList rasCumList = workFrontAnalysisSummary.get("RAS_CUM");
+	StringList availList = workFrontAnalysisSummary.get("AVAIL");
+	StringList availCumList = workFrontAnalysisSummary.get("AVAIL_CUM");
+	StringList issueList = workFrontAnalysisSummary.get("ISSUE");
+	StringList issueCumList = workFrontAnalysisSummary.get("ISSUE_CUM");
+	StringList totalList = workFrontAnalysisSummary.get("TOTAL");
+	
+	List<StringList> valueList = new ArrayList<StringList>(); 
+	valueList.add(rasList);
+	valueList.add(rasCumList);
+	valueList.add(availList);
+	valueList.add(availCumList);
+	valueList.add(issueList);
+	valueList.add(issueCumList);
+	if ( isDiaInch || isEL_IN )
+	{
+		valueList.add(totalList);
+	}
+	
+	// javascript용으로 변환
+	ObjectMapper objectMapper = new ObjectMapper();
+	String yearMonthExpr4JS = objectMapper.writeValueAsString(yearMonthExprList);
+	
+	// highchart의 이번달 하이라이트
+	LocalDate today = LocalDate.now();
+	String todayYearMonthExpr = DecDateUtil.changeLocalDateFormat(today, "yyyyMM");
+	int todayCategoryIdx = yearMonthList.indexOf(todayYearMonthExpr);
+	
+	if ( todayCategoryIdx != -1 )
+	{
+		issueCumList = new StringList( issueCumList.subList(0, todayCategoryIdx) );
+	}
+%>
+
+<div id="toolbarDiv" style="float: right; display: flex; align-items: center;">
+	<header style=" margin:10px;">
+	<%
+		String buttonType = null;
+		String buttonSelected = null; 
+		String[] buttonArr = null; 
+		String[] buttonIdArr = null; 
+		if ( isEL_IN )
+		{
+			buttonType = "FMCS Discipline";
+			buttonArr = new String[] {"ALL", "EL", "IN"};
+			buttonIdArr = new String[] {"E,I", "E", "I"};
+			if ( fmcsDisciplineList.size() > 1 )
+			{
+				buttonSelected = "E,I";
+			}
+			else
+			{
+				buttonSelected = fmcsDiscipline;
+			}
+			
+		}
+		else
+		{
+			buttonType = "uom";
+			buttonArr = uomArr;
+			buttonIdArr = uomArr;
+			buttonSelected = uom;
+		}
+		
+		String buttonTemp = null;
+		for (int k = 0; k < buttonArr.length; k++)
+		{
+			buttonTemp = buttonArr[k];
+%>			<button id="<%=buttonIdArr[k] %>" class="<%=buttonSelected.equalsIgnoreCase(buttonIdArr[k]) ? "currentDis" : "Dis" %>" onclick="fnClickBtn('<%=buttonType %>', this)"><%=buttonTemp %></button>
+<%		}
+%>		
+		
+	</header>
+	<img src="../common/images/iconActionSearchSpyGlass.png" onclick='showFilterSlideinDialog("<%=request.getQueryString() %>")' style="cursor: pointer;">
+</div>
+
+<div id="container">
+No data found.
+</div>
+
+
+<details>
+	<summary>Summary</summary>
+	
+	<div id="tableDivVorder" style="float: left;">
+		<table id="summaryTable1" class="grid">
+			<tr><th class="yearHeader" style="border-bottom: none;"><div style="height: 23px;"></div></th></tr>
+			<tr><th class="monthHeader" >&nbsp;</th></tr>
+			<tr><th style="border-top: 2px solid #959595;">RAS Monthly</th></tr>
+			<tr><th style="border-top: 2px solid #959595;">RAS Cum</th></tr>
+			<tr><th style="border-top: 2px solid #959595;">Availability Monthly</th></tr>
+			<tr><th style="border-top: 2px solid #959595;">Availability Cum</th></tr>
+			<tr><th style="border-top: 2px solid #959595;">Issued Monthly</th></tr>
+			<tr><th style="border-top: 2px solid #959595;">Issued Cum</th></tr>
+	<%	if ( isDiaInch || isEL_IN )
+		{
+	%>		<tr><th>Total</th></tr>
+	<%	}
+	%>
+		</table>
+	</div>
+	<div style="overflow: auto;">
+		<table id="summaryTable2" class="grid">
+			<tr>
+		<%
+			DecimalFormat df = new DecimalFormat("#.##");
+			String yearMonthExpr = null;
+			String yearDisplay = null;
+			StringList yearMonthExprSplit = null;
+			String yearExpr = null;
+			String prevYearExpr = null;
+			String monthExpr = null;
+			StringBuffer sbSecondRow = new StringBuffer("<tr>");
+			String headerClass = null;
+			
+			for (int k = 0; k < yearMonthExprList.size(); k++)
+			{
+				yearMonthExpr = yearMonthExprList.get(k);
+				yearMonthExprSplit = FrameworkUtil.splitString(yearMonthExpr, " ");
+				
+				yearExpr = yearMonthExprSplit.get(0);
+				monthExpr = yearMonthExprSplit.get(1);
+				
+				if ( k == 0 || !yearExpr.equals(prevYearExpr) )
+				{
+					yearDisplay = yearExpr;
+					prevYearExpr = yearExpr;
+					headerClass = "class='yearHeader'";
+				}
+				else
+				{
+					yearDisplay = "&nbsp;";
+					headerClass = "";
+				}
+				sbSecondRow.append("<th class='monthHeader'>").append(monthExpr).append("</th>");
+		%>
+				<th <%=headerClass %> style="border-bottom: none;"><%=yearDisplay %></th>
+		<%
+			}
+			sbSecondRow.append("</tr>");
+		%>
+			</tr>
+			<%=sbSecondRow.toString() %>
+		<%	
+			StringList qtyList = null;
+			for (int k = 0; k < valueList.size(); k++)
+			{
+				qtyList = valueList.get(k);
+		%>
+			<tr>
+		<%		for (int m = 0; m < qtyList.size(); m++)
+				{
+		%>			<td><%=df.format(Double.parseDouble(qtyList.get(m))) %></td>
+		<%		}
+		%>	</tr>
+		<%	}
+		%>
+		</table>
+	</div>
+</details>
+
+<link rel="stylesheet" href="../common/styles/emxUIDefault.css" type="text/css" />
+<link rel="stylesheet" href="../common/styles/emxUIForm.css" type="text/css" />
+<link rel="stylesheet" href="../webapps/UIKIT/UIKIT.css" type="text/css" />
+<style type="text/css">
+html, body {
+	height: calc(100% - 5px);
+	width: 100%;
+}
+#container {
+	height: calc(100% - 85px);
+	width: 100%;
+}
+summary {
+	cursor: pointer;
+}
+table tr td,th {
+	font-size: min(1vw, 12px);
+	width: min(20px, 5%);
+}
+table tr td {
+	border: 2px solid #ffffff;
+	word-wrap: break-word;
+}
+.currentDis{
+		overflow: visible;
+		color: #5b5d5e;
+		background-color: rgb(230, 233, 255);
+		border: 0px;
+		overflow: visible;
+		border-radius: 1px;
+		transition: background-color 2s font-weight 2s;
+		margin: 0px 0px;
+		font-weight: bold; 
+}
+.Dis{
+	overflow: visible;
+	color: #5b5d5e;
+	background-color: #F7F7F7;
+	border: 0px;
+	overflow: visible;
+	border-radius: 1px;
+	transition: background-color 2s font-weight 2s;
+}
+table tr th.yearHeader {
+	position: sticky;
+	left: 0;
+	padding-bottom: 0;
+	line-height: unset;
+}
+table tr th.monthHeader {
+	padding-top: 0;
+	line-height: unset;
+}
+</style>
+
+<script src="../common/scripts/emxUIConstants.js"></script>
+<script src="../common/scripts/emxUICore.js"></script>
+<script src="../webapps/ENOAEFStructureBrowser/webroot/common/scripts/decemxUIFreezePane.js"></script>
+<script src="../common/scripts/hichart/highcharts.js"></script>
+<script src="../common/scripts/jquery-latest.js"></script>
+<script src="../programcentral/script/decProjectKeyQtyReport.js"></script>
+<script type="text/javascript">
+let yearExpr = null;
+let prevYearExpr = null;
+let chartElem = Highcharts.chart('container', {
+    chart: {
+        zoomType: 'xy'
+    },
+    title: {
+        text: '',
+    },
+    credits: {
+    	enabled: false
+    },
+    xAxis: {
+        //categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        categories: <%=yearMonthExpr4JS %>,
+        labels: {
+        	formatter: function() {
+        		let labelExpr = null;
+        		let valueArr = this.value.split(" ");
+        		yearExpr = valueArr[0];
+        		if ( this.pos === 0 || prevExpr !== yearExpr )
+        		{
+        			// 첫달 또는 매해 1월만 연도와 함께 표시 ex) ’15 Jan
+        			labelExpr = "'" + this.value;
+        			prevExpr = yearExpr;
+        		}
+        		else
+        		{
+        			// 그 외의 경우 연도 없이 월만 표시 ex) Feb
+        			labelExpr = this.value.split(" ")[1];
+        		}
+        		return labelExpr;
+        	}
+        },
+        plotBands: [{
+		    color: 'skyblue', // Color value
+		    from: <%=todayCategoryIdx - 0.5 %>,
+		    to: <%=todayCategoryIdx + 0.5 %>
+		}],
+    },
+    yAxis: [{ // Primary yAxis
+    	title: {
+    		text: "Cumulative",
+    		style: {
+                color: Highcharts.getOptions().colors[1]
+			}
+    	},
+        labels: {
+            style: {
+                color: Highcharts.getOptions().colors[1]
+            }
+        },
+    }, { // Secondary yAxis
+    	title: {
+    		text: "Monthly",
+    		style: {
+                color: Highcharts.getOptions().colors[0]
+			}
+    	},
+        labels: {
+            style: {
+                color: Highcharts.getOptions().colors[0]
+            }
+        },
+        opposite: true
+    }],
+    tooltip: {
+        shared: true
+    },
+    legend: {
+    },
+    series: [{
+        name: 'RAS Monthly',
+        type: 'column',
+        yAxis: 1,
+        data: <%=rasList %>,
+        tooltip: {
+            
+        }
+    }, {
+        name: 'Availability Monthly',
+        type: 'column',
+        yAxis: 1,
+        data: <%=availList %>,
+        tooltip: {
+            
+        }
+
+    }, {
+        name: 'Issued Monthly',
+        type: 'column',
+        yAxis: 1,
+        data: <%=issueList %>,
+        tooltip: {
+            
+        }
+
+    }, {
+        name: 'RAS Cum',
+        type: 'spline',
+        data: <%=rasCumList %>,
+        tooltip: {
+            
+        },
+        zoneAxis: 'x',
+        zones: [
+        	{value:<%=todayCategoryIdx %> + 0.5,dashStyle: 'Solid'}
+        ],
+        dashStyle: 'LongDash'
+    }, {
+        name: 'Availability Cum',
+        type: 'spline',
+        data: <%=availCumList %>,
+        tooltip: {
+            
+        },
+        zoneAxis: 'x',
+        zones: [
+        	{value:<%=todayCategoryIdx %> + 0.5,dashStyle: 'Solid'}
+        ],
+        dashStyle: 'LongDash'
+    }, {
+        name: 'Issued Cum',
+        type: 'spline',
+        data: <%=issueCumList %>,
+        tooltip: {
+            
+        }
+    }
+<%
+	// Dia-Inch의 경우 Total 라인 그래프를 그린다.
+	if ( isDiaInch || isEL_IN )
+	{
+%>
+		, {
+		    name: 'Total',
+		    type: 'spline',
+		    data: <%=totalList %>,
+		    tooltip: {
+		        
+		    }
+		}	
+<%
+	}
+%>
+    ]
+});
+
+
+let expanded = false;
+$(function() {
+	$("summary").on("click", function() {
+		let css = null;
+		let tableHeight = Number($("#tableDivVorder").css("height").replace("px", ""));
+		if ( expanded )
+		{
+			css = "calc(100% - 85px)";
+		}
+		else
+		{
+			css = "calc(100% - " + (tableHeight + 85) + "px)";
+		}
+		$("#container").css("height", css);
+		expanded = !expanded;
+	});
+});
+
+function fnClickBtn(btnType, dom) {
+	let value = dom.id;
+	let url = location.href;
+	let urlArr = url.split("&");
+	let flag = false;
+	for (let k = 0; k < urlArr.length; k++)
+	{
+		if ( urlArr[k].indexOf(encodeURIComponent(btnType)  + "=") > -1 )
+		{
+			urlArr[k] = btnType + "=" + value;
+			flag = true;
+			break;
+		}
+	}
+	
+	if ( !flag )
+	{
+		urlArr.push("&" + btnType + "=" + value);
+	}
+	
+	location.href = urlArr.join("&");
+}
+</script>
+
+<%	
+} catch(Exception e) {
+	e.printStackTrace();
+	throw e;
+}
+%>

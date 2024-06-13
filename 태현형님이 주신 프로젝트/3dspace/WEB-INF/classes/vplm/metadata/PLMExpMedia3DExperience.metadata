@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- COPYRIGHT DASSAULT SYSTEMES 2015, All rights reserved -->
+<Package xmlns="PLMDictionaryUnified" ModelerType="Top" BelongsToModeler="PLMExpMedia3DExperience" Name="PLMExpMedia3DExperience" 
+  Uuid="0AC583CE-FEB3-4930-8244-59CEC279910A" 
+  UseNames="PLMExpAbstract3DExperience" 
+  CustomerExposition="Programmer">
+  <Property Name="FormerTypingLegacy" Value="Yes"/>
+
+  <Class Name="Media3DExperience"
+         Uuid="310D70A2-B96E-4DAB-8F3C-8DEE42B03E9E"
+         Abstract="No" 
+         SuperName="Abstract3DExperienceObject"
+         CustomerExposition="Programmer"
+         Abbreviation="media3dx">
+    <Property Name="Searchable" Value="Yes"/>
+    <Simple Name="OperationID" Uuid="E8FBC8F1-C9D0-48AE-A340-7D7C164FA964" Type="String" MaxLength="256" Protection="ExternalIN"/>
+	<Simple Name="OperationInfo" Uuid="FF3846B7-9607-40D7-A8BA-3EDC0EE75CD2" Type="String"  Protection="ExternalIN"/>
+    <Method ImplementationType="AsFather">
+      <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+    </Method>
+
+  </Class>
+
+</Package>

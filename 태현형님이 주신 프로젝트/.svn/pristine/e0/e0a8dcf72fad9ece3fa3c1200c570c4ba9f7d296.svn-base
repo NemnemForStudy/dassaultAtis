@@ -1,0 +1,1 @@
+define("DS/3DPlayAnnotationUtils/3DPlayAnnotationUtils_cs",{});define("DS/3DPlayAnnotationUtils/assets/nls/3DPlayAnnotation",{PlaceHolder:"Nový text",ClickToLaunchText:"Kliknutím v zobrazení vytvořte nové textové pole",cancelText:"Zrušit",validateText:"Ověřit",nextText:"Další"});

@@ -1,0 +1,10 @@
+m|WAfrFoundation\WAfrDebug.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.0.22127|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\WAfrDebug\WAfrDebug.js|1651890946|3996
+s|WAfrFoundation\WAfrDebug.mweb\src\mod_Performances.js|1651044314|11930
+u|WAfrFoundation\WAfrDebug.mweb\src\WAfrDebug.js|1554819757|1
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

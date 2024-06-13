@@ -1,0 +1,111 @@
+#
+#   ExpressionStringResource.properties -- Properties file.
+#
+#   Copyright (c) 1992-2015 Dassault Systemes.
+#   All Rights Reserved.
+#   This program contains proprietary and trade secret information of MatrixOne,
+#   Inc.  Copyright notice is precautionary only
+#   and does  not evidence any actual or intended publication of such program
+
+#   static const char RCSID[]="$Id: ExpressionStringResource.properties.rca  $"
+#
+
+# --- General
+
+General.Model=Mod\u00e8le
+General.ModelVersion=Version du mod\u00e8le
+
+# Criteria
+Criteria.Date=Date
+Criteria.Products=Produits
+Criteria.ManufacturingPlans=Plans de fabrication
+Criteria.Unit=Unit\u00e9
+Criteria.Milestone=Jalon
+Criteria.FeatureOption=Variantes et options
+
+
+# --- Success
+
+# Effectivity
+Effectivity.Success.SetEvolutionOperationSuccess=D\u00e9finition de l'effectivit\u00e9 d'\u00e9volution termin\u00e9e avec succ\u00e8s.
+
+
+# --- Errors
+
+Error.InternalServerError=erreur interne
+
+# General
+General.Error.InvalidCategoryTypeSetting=Type de cat\u00e9gorie invalide. V\u00e9rifiez les r\u00e9glages de type de cat\u00e9gorie.
+General.Range.Error.SequenceValues=L'insertion comme plage requiert une ou deux valeurs de s\u00e9quence. Le nombre de valeurs de s\u00e9quence d\u00e9tect\u00e9 \u00e9tait : 
+General.Range.Error.DatesValues=L'insertion comme plage requiert une ou deux dates. Le nombre de valeurs de date d\u00e9tect\u00e9 \u00e9tait : 
+General.Error.UnsupportedDateWithRelational=La date n'est pas prise en charge avec le type d'effectivit\u00e9 relationnelle. Enlevez un des types d'effectivit\u00e9 de la propri\u00e9t\u00e9 admin pour cette relation ou ce type.
+General.Error.UnsupportedGlobalWithMultipleContexts=Impossible de combiner le contexte de configuration global avec un autre contexte de configuration dans la m\u00eame expression. Enlevez le contexte de configuration global ou tous les autres contextes de configuration.
+
+
+# Criteria
+Criteria.Error.UnsupportedCriteriaType=Type de crit\u00e8re non pris en charge. Sp\u00e9cifiez un type de crit\u00e8re pris en charge.
+Criteria.Error.TypeNotAModel=n'est pas un type de mod\u00e8le
+Criteria.Error.TypeNotAModelVersion=n'est pas un type de version de mod\u00e8le
+
+# Effectivity
+Effectivity.Error.MismatchEffectivityTypesAndExpression_bus=L\u2019expression d'effectivit\u00e9 contient des types d\u2019effectivit\u00e9 pas encore appliqu\u00e9s \u00e0 cet objet.
+Effectivity.Error.NoEffectivityTypeFound=Aucun type d\u2019effectivit\u00e9 d\u00e9tect\u00e9. Utilisez un type d\u2019effectivit\u00e9 valide comme d\u00e9fini dans le sch\u00e9ma.
+Effectivity.Error.EffectivityUsageCannotDelete=L\u2019objet est utilis\u00e9 dans une expression d\u2019effectivit\u00e9 et ne peut pas \u00eatre supprim\u00e9. Enlevez l\u2019objet de toutes les expressions d\u2019effectivit\u00e9 pour permettre sa suppression.
+Effectivity.FalseExpression.Display=Non valide
+Effectivity.TrueExpression.Display=Valide
+Effectivity.Error.OnlyEvolutionEffectivity=Cette instance comporte uniquement une effectivit\u00e9 de domaine d'\u00e9volution.
+Effectivity.Error.EffectivityUsageCannotRemoveObject=L'objet <object_type> <object_name> est utilis\u00e9 dans une expression configur\u00e9e (filtre, effectivit\u00e9, etc.) et ne peut \u00eatre enlev\u00e9. Enlevez le crit\u00e8re de toutes les expressions configur\u00e9es pour pouvoir l'enlever.
+Effectivity.Error.EffectivityUsageCannotModifyObject=L'objet <object_type> <object_name> est utilis\u00e9 dans une expression configur\u00e9e (filtre, effectivit\u00e9, etc.) et ne peut \u00eatre modifi\u00e9. Enlevez le crit\u00e8re de toutes les expressions configur\u00e9es pour pouvoir le modifier.
+Effectivity.Error.ChangeApplicabilityAndEffectivitieDoNotIntersect=Impossible de modifier l'effectivit\u00e9 car l'expression n\u2019entrecoupe pas l'applicabilit\u00e9. Utilisez une instance \u00e9volu\u00e9e pour modifier l'effectivit\u00e9 de variante.
+Effectivity.Error.ChangeApplicabilityAndEffectivitieAreEqual=L\u2019expression d\u2019effectivit\u00e9 est \u00e9gale \u00e0 l'applicabilit\u00e9 : impossible d\u2019effectuer cette op\u00e9ration.
+Effectivity.Error.Unset.NoEffectivity=Cette instance n'a pas d'effectivit\u00e9, l'annulation est inutile
+
+# Expression
+Expression.Error.MissingAttachedModels=Tous les mod\u00e8les n\u00e9cessaires ne sont pas attach\u00e9s \u00e0 la r\u00e9f\u00e9rence parent.  
+Effectivity.Error.ParentNotAttachedAllModelsFromAC=La r\u00e9f\u00e9rence parent ne contient pas tous les mod\u00e8les du contexte de cr\u00e9ation.
+Effectivity.Error.ParentNotEnabledAllCriteriaFromAC=Tous les crit\u00e8res du contexte de cr\u00e9ation ne sont pas activ\u00e9s dans la r\u00e9f\u00e9rence parent.
+Expression.Error.InvalidExpression=Expression r\u00e9elle invalide
+Expression.Error.ParentPartIsNotConfigured=La pi\u00e8ce parent de la relation donn\u00e9e ne comporte pas de contexte de configuration.
+
+# Reference
+Expression.Error.AttachContextDeniedSinceReferenceIsRevised=L'attachement d'un contexte de configuration n'est pas pris en charge sur l'objet r\u00e9vis\u00e9. L'attachement de <modelType> a \u00e9chou\u00e9
+Expression.Error.CriteriaNotEnabled=L'entr\u00e9e XML contient <critType>, mais ce crit\u00e8re n'est pas activ\u00e9 sur la r\u00e9f\u00e9rence <name>
+Expression.Error.CriteriaNotDisabled=Echec de la d\u00e9sactivation des crit\u00e8res sur les objets, car une ou plusieurs instances ont une effectivit\u00e9 <critType>  d\u00e9finie
+Expression.Error.LastCriteriaCannotBeDisabled=\u00c9chec de la d\u00e9sactivation des crit\u00e8res sur les objets car plus aucun crit\u00e8re ne serait activ\u00e9 alors qu'il y a toujours au moins un mod\u00e8le attach\u00e9.
+Expression.Error.EvolCriteriaCannotBeDisabled.FrozenInstance=Le crit\u00e8re d'\u00e9volution ne peut pas \u00eatre d\u00e9sactiv\u00e9 car il y a une instance ayant une effectivit\u00e9 gel\u00e9e.
+Expression.Error.EvolCriteriaCannotBeDisabled.FrozenConfiguredInstance=Le crit\u00e8re d'\u00e9volution ne peut pas \u00eatre d\u00e9sactiv\u00e9 parce qu'il y a une instance sans \u00e9volution gel\u00e9e.
+Expression.Error.EvolCriteriaCannotBeEnabled.FrozenInstance=Le crit\u00e8re d'\u00e9volution ne peut pas \u00eatre activ\u00e9 car il y a une instance sans effectivit\u00e9 gel\u00e9e.
+Expression.Error.EvolCriteriaCannotBeEnabled.FrozenConfiguredInstance=Le crit\u00e8re d'\u00e9volution ne peut pas \u00eatre activ\u00e9 parce qu'il y a une instance sans \u00e9volution gel\u00e9e.
+Expression.Error.DetachNotPossible.ConfigurationUsage=Impossible de d\u00e9tacher le mod\u00e8le, car il est utilis\u00e9 par une configuration
+Expression.Error.DetachNotPossible.EffectivityUsage=Impossible de d\u00e9tacher le mod\u00e8le, car il est utilis\u00e9 par une expression d'effectivit\u00e9
+Expression.Error.DetachNotPossible.ConfigurationRevision=Le mod\u00e8le ne peut pas \u00eatre d\u00e9tach\u00e9 car la r\u00e9f\u00e9rence poss\u00e8de des r\u00e9visions de configuration
+Expression.Error.DetachNotPossible.FrozenInstancesDefinedWithModel=Le mod\u00e8le <name> ne peut pas \u00eatre d\u00e9tach\u00e9 car il contient des crit\u00e8res d'\u00e9volution gel\u00e9s et au moins une instance de la structure est gel\u00e9e gr\u00e2ce \u00e0 eux.
+Expression.Error.AttachNotPossible.InstanceBecomesValidForFrozenCriteria=Le mod\u00e8le <name> ne peut pas \u00eatre rattach\u00e9 car il contient des crit\u00e8res d'\u00e9volution gel\u00e9s et au moins une instance de la structure deviendrait valide pour ces crit\u00e8res gel\u00e9s si nous le rattachons.
+
+# Immutability
+Expression.Error.FrozenCriteriaInEffs=Vous ne pouvez pas modifier physiquement les instances, car leurs effectivit\u00e9s contiennent au moins un crit\u00e8re fig\u00e9. Utilisez un 'Travail sous'.
+Expression.Error.FrozenCfgRevImpacted=Impossible d'effectuer l'op\u00e9ration : cela impacte au moins une r\u00e9vision de configuration fig\u00e9e
+Expression.Error.FrozenRangeOfEffImpactedBySetExpression=Impossible de d\u00e9finir les expressions car cela ajouterait ou enl\u00e8verait au moins un crit\u00e8re d'\u00e9volution fig\u00e9 pour les effectivit\u00e9s
+Expression.Error.ExpressionContainsFrozen=Impossible d'utiliser cette expression, car elle contient au moins un crit\u00e8re d'\u00e9volution fig\u00e9
+Expression.Error.FailedToRetrieveFrozenFilterOfModels=Impossible de r\u00e9aliser cette op\u00e9ration. Certains mod\u00e8les utilis\u00e9s pour v\u00e9rifier la validit\u00e9 de l'op\u00e9ration semblent ne pas exister
+Expression.Error.FailedToDetermineWhetherToDoImmutabilityChecks=Impossible de d\u00e9terminer si les r\u00e8gles d'immunit\u00e9 doivent \u00eatre respect\u00e9es, car certains objets ne se situent pas dans les m\u00eames espaces de collaboration 
+Expression.Error.DeniedModelFilters=Impossible d'effectuer cette op\u00e9ration. Au moins un mod\u00e8le joint est inaccessible, car il appartient \u00e0 un espace de collaboration restreint
+
+# Granular reject
+Expression.Error.CANotRejectableForEffectivities=L'action de modification <name> ne peut pas \u00eatre rejet\u00e9e pour au moins l'une de ces instances
+
+# Configured Operations
+Expression.Error.SplitUnderCACannotBeDoneOnVarOnlyStructure=L'op\u00e9ration de s\u00e9paration sous l'action de modification ne peut pas \u00eatre ex\u00e9cut\u00e9e sur une structure uniquement compos\u00e9e de variantes ;
+CfgOperation.Error.EffectivityCannotBeExtended=L'op\u00e9ration Etendre n'est applicable que sur l'effectivit\u00e9 avec une expression d'\u00e9volution.
+CfgOperation.Error.Extend.InstanceWithoutEffectivity=L'op\u00e9ration Etendre ne peut pas \u00eatre effectu\u00e9e sur des instances sans effectivit\u00e9s
+CfgOperation.Error.Extend.ExpressionTrue=L'op\u00e9ration Etendre ne peut pas \u00eatre effectu\u00e9e sur des instances toujours valides
+CfgOperation.Error.Extend.VariantOnlyEffectivity=L'op\u00e9ration Etendre ne peut pas \u00eatre effectu\u00e9e sur des instances qui n'ont qu'une pi\u00e8ce de variante dans leurs effectivit\u00e9s, car elles sont toujours valides
+CfgOperation.Error.Extend.UselessExtension=Les instances ne peuvent pas \u00eatre \u00e9tendues par une plage de validit\u00e9 qui est totalement contenue dans leur plage de validit\u00e9 existante
+CfgOperation.Error.Reparent.CriterionNotEnabledOnParentRefOfDuplicate=Le crit\u00e8re <critType> n'est pas activ\u00e9 sur la nouvelle r\u00e9f\u00e9rence parentale <name>, mais ce crit\u00e8re est utilis\u00e9 dans les effectivit\u00e9s.
+
+# Work Under
+Change.Error.ParentPartIsNotCompliantWithChange=La modification utilis\u00e9e comme 'Travail sous' utilise des mod\u00e8les indisponibles dans le contexte de configuration de la pi\u00e8ce parent.
+Change.Error.ChangeApplicabilityIsEmptyAtFinalize=L'expression d'applicabilit\u00e9 est vide mais il existe des \u00e9l\u00e9ments concern\u00e9s \u00e0 mettre \u00e0 jour.
+Change.Error.ApplicabilityRead=Erreur lors de la lecture de l'applicabilit\u00e9
+Change.Error.Applicability.Finalization.Models=L'action de modification ne peut pas \u00eatre finalis\u00e9e parce que tous ses mod\u00e8les ne sont pas attach\u00e9s \u00e0 la r\u00e9f\u00e9rence
+AuthContext.Error.ModelVersionIsAttached='Il est impossible d'utiliser un contexte de cr\u00e9ation sur une structure avec une version de mod\u00e8le attach\u00e9e'

@@ -1,0 +1,1 @@
+define("DS/OSLCConsumer/OSLCConsumer_zh-TW",{});define("DS/OSLCConsumer/assets/nls/OSLCConsumerNls",{selectRepository:"儲存庫：",selectProvider:"供應商：",selectSingleObject:"提交對話方塊前，請僅選擇一個加工物。",processing:"正在處理..."});

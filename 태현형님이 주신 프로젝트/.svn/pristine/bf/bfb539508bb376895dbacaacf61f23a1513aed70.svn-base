@@ -1,0 +1,1 @@
+define("DS/DMUReplyAndComments/DMUReplyAndComments_es",{});define("DS/DMUReplyAndComments/assets/nls/DMUReplyAndComments",{replyTo:"Responder ",commentPrefix:"Comentario"});

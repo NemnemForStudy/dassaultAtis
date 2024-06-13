@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="DS_DELPPWConfiguration"
+    xmlns:ds="DS_DELPPWConfiguration"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+    <xs:element name="Type">
+        <xs:complexType>
+            <xs:simpleContent>
+                <xs:extension base="xs:string">
+                    <xs:attribute type="xs:string" name="name" use="required"/>
+                    <xs:attribute type="xs:string" name="visibility" use="required"/>
+                </xs:extension>
+            </xs:simpleContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:simpleType name="OOTBTypeName">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="BufferSystem"/>
+            <xs:enumeration value="ControlDevice"/>
+            <xs:enumeration value="Conveyor"/>
+            <xs:enumeration value="CreateAssembly"/>
+            <xs:enumeration value="CreateKit"/>
+            <xs:enumeration value="CreateMaterial"/>
+            <xs:enumeration value="DELLmiCurveOperationReference"/>
+            <xs:enumeration value="DELLmiGeneralOperationReference"/>
+            <xs:enumeration value="DELLmiGeneralSystemReference"/>
+            <xs:enumeration value="DELLmiHeaderOperationReference"/>
+            <xs:enumeration value="DELLmiLoadingOperationReference"/>
+            <xs:enumeration value="DELLmiPunctualOperationReference"/>
+            <xs:enumeration value="DELLmiRemoveMaterialOperationReference"/>
+            <xs:enumeration value="DELLmiTransferOperationReference"/>
+            <xs:enumeration value="DELLmiTransferSystemReference"/>
+            <xs:enumeration value="DELLmiTransformationSystemReference"/>
+            <xs:enumeration value="DELLmiUnloadingOperationReference"/>
+            <xs:enumeration value="DELLmiWorkPlanSystemReference"/>
+            <xs:enumeration value="DELServiceAssemblyReference"/>
+            <xs:enumeration value="DELServiceKitReference"/>
+            <xs:enumeration value="DELWkiAlertReference"/>
+            <xs:enumeration value="DELWkiDataCollectReference"/>
+            <xs:enumeration value="DELWkiInstructionReference"/>
+            <xs:enumeration value="DELWkiSignOffReference"/>
+            <xs:enumeration value="ElementaryEndItem"/>
+            <xs:enumeration value="Fasten"/>
+            <xs:enumeration value="IndustrialMachine"/>
+            <xs:enumeration value="Inspect"/>
+            <xs:enumeration value="LogicController"/>
+            <xs:enumeration value="Organizational"/>
+            <xs:enumeration value="ProcessContinuousCreateMaterial"/>
+            <xs:enumeration value="ProcessContinuousProvide"/>
+            <xs:enumeration value="Provide"/>
+            <xs:enumeration value="ResourceArea"/>
+            <xs:enumeration value="ResourceManufacturingSetup"/>
+            <xs:enumeration value="Robot"/>
+            <xs:enumeration value="Sensor"/>
+            <xs:enumeration value="SinkSystem"/>
+            <xs:enumeration value="SourceSystem"/>
+            <xs:enumeration value="Storage"/>
+            <xs:enumeration value="Transform"/>
+            <xs:enumeration value="Transport"/>
+            <xs:enumeration value="UserDefined"/>
+            <xs:enumeration value="Worker"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:element name="OOTBType">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="ds:Type" maxOccurs="unbounded" minOccurs="1"
+                    xmlns:ds="DS_DELPPWConfiguration"/>
+            </xs:sequence>
+            <xs:attribute type="ds:OOTBTypeName" name="name" use="required"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="PLMNew">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="ds:OOTBType" maxOccurs="unbounded" minOccurs="1"
+                    xmlns:ds="DS_DELPPWConfiguration"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="AlternateCreation">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="ds:OOTBType" maxOccurs="unbounded" minOccurs="1"
+                    xmlns:ds="DS_DELPPWConfiguration"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="Preferences">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="ds:PLMNew"
+                    xmlns:ds="DS_DELPPWConfiguration" maxOccurs="1" minOccurs="0"/>
+                <xs:element ref="ds:AlternateCreation"
+                    xmlns:ds="DS_DELPPWConfiguration" maxOccurs="1" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="Config">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="ds:Preferences"
+                    xmlns:ds="DS_DELPPWConfiguration" maxOccurs="1" minOccurs="1"/>
+            </xs:sequence>
+            <xs:attribute type="xs:string" name="Title" use="required"/>
+            <xs:attribute type="xs:string" name="Description"/>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<head>
+<title>Login</title>
+<style type="text/css">
+  div.logoDS   {
+  background-image: url(3DEXLoginCompass.png);
+  background-repeat: no-repeat;
+  }
+
+  .textbottom {vertical-align:text-bottom;} 
+
+  body  {
+  background: -moz-linear-gradient(-45deg,  #18252e 0%, #18252e 25%, #1b2831 27%, #26343d 32%, #394852 38%, #687984 50%, #8c9fa9 60%, #97aab7 64%, #a2b6c2 68%, #a2b6c2 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,#18252e), color-stop(25%,#18252e), color-stop(27%,#1b2831), color-stop(32%,#26343d), color-stop(38%,#394852), color-stop(50%,#687984), color-stop(60%,#8c9fa9), color-stop(64%,#97aab7), color-stop(68%,#a2b6c2), color-stop(100%,#a2b6c2)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(-45deg,  #18252e 0%,#18252e 25%,#1b2831 27%,#26343d 32%,#394852 38%,#687984 50%,#8c9fa9 60%,#97aab7 64%,#a2b6c2 68%,#a2b6c2 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(-45deg,  #18252e 0%,#18252e 25%,#1b2831 27%,#26343d 32%,#394852 38%,#687984 50%,#8c9fa9 60%,#97aab7 64%,#a2b6c2 68%,#a2b6c2 100%); /* Opera 11.10+ */
+  background: linear-gradient(135deg,  #18252e 0%,#18252e 25%,#1b2831 27%,#26343d 32%,#394852 38%,#687984 50%,#8c9fa9 60%,#97aab7 64%,#a2b6c2 68%,#a2b6c2 100%); /* W3C */
+  background: -ms-linear-gradient(-45deg,  #18252e 0%,#18252e 25%,#1b2831 27%,#26343d 32%,#394852 38%,#687984 50%,#8c9fa9 60%,#97aab7 64%,#a2b6c2 68%,#a2b6c2 100%); /* IE10+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#18252e', endColorstr='#a2b6c2',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+ 
+  height: 100%;
+  width: 100%;
+  color:white;
+  }
+
+ul, li, ul li a {
+ display: block;
+ list-style: none;
+ text-decoration: none;
+ width: 100%;
+ padding: 0px;
+ margin: 4px;
+ padding-left: 0px;
+ border: 0px none #000000;
+ }
+
+</style>
+
+<script language='javascript'>
+  function getUrlVars() {
+    var vars = [], hash;
+    var hashes;
+    hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    for (var i = 0; i < hashes.length; i++) {
+      hash = hashes[i].split('=');
+      vars.push(decodeURIComponent(hash[0]));
+      vars[decodeURIComponent(hash[0])] = decodeURIComponent(hash[1]);
+    }
+    return vars;
+  }
+//  http: //ve4al485dsy:8090/ematrix/emxLogin.jsp?disableAutoLogin=true&Platform=VE4AL416DSY
+</script>
+
+</head>
+
+<body ID=htmlDialog BGCOLOR=LIGHTGREY>
+
+<table width=500 border=0 cellpadding=0>
+    <tr>
+    <script language='javascript'>
+        var NoImg = getUrlVars()['NoImg'];
+        if ((typeof (NoImg) == 'undefined') && (NoImg == "")) {
+            document.write("<td><img src=\"3DEXLoginCompass.png\"/></td>");
+        };
+   </script>
+   
+   
+      
+   
+   <td>
+    <form name=login method="post" id="div_login" accept-charset="UTF-8">
+    <ul>
+     <script language='javascript'>
+       var platform = getUrlVars()['Platform'];
+       if ((typeof (platform) != 'undefined') && (platform != "")) {
+         document.write("<li><label>Platform:</label></li>");
+         document.write("<li><span class=\"chooser\">");
+         document.write("<input type=\"text\" name=\"Platform\" id=\"platform\" value=\"" + platform + "\" disabled=\"disabled\"/>&nbsp;<input type=button value=\"Edit\" id=\"DisplayPlatformList\" href=\"\"/></span></li>");
+       };
+       var realm = getUrlVars()['Realm'];
+       if ((typeof (realm) != 'undefined') && (realm != "")) {
+           document.write("<li><label>Realm: " + realm + "</li>");
+       };
+    </script>
+     <li>Username:</li>
+     <li><input autofocus="autofocus" autocomplete="on" type=text name=login_name id=login_name></li>
+     <li>Password:</li>
+     <li><input autocomplete="off" type=password name=login_password id=login_password></li>
+     <li><input type="submit" name="Login" value="Login" id="ButtonForDefaultLogin"/></li>
+    </ul>
+    </form>
+   </td>
+  </tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,10 @@
+m|WebRecordEnabler\WebRecordEnabler.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.0.22078|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\WebRecordEnabler\WebRecordEnabler.js|1647692317|3494
+s|WebRecordEnabler\WebRecordEnabler.mweb\src\Adapter.js|1553781116|25922
+u|WebRecordEnabler\WebRecordEnabler.mweb\src\WebRecordEnabler.js|1499699765|124
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

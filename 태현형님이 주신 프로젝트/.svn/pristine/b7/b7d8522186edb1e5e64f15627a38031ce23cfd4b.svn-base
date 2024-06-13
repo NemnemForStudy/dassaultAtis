@@ -1,0 +1,27 @@
+################################################################################################
+# Create By choimingi 2023. 07. 25
+# Admin Type : command
+# Name : decDeleteChangeLogList
+################################################################################################
+
+#del command 'decDeleteChangeLogList';
+add command 'decDeleteChangeLogList'
+	description 'delete >> type_project Change HistoryList'
+	label 'emxFramework.GenericDelete.label'
+	href '${COMMON_DIR}/decDeleteChangeLogListProcess.jsp'
+	alt 'emxFramework.GenericDelete.label'
+	setting 'Confirm Message' 'emxFramework.GenericDelete.confirmMessage'
+	setting 'Image' '${COMMON_DIR}/images/iconActionDelete.png'
+    setting 'Registered Suite' 'Framework'
+    setting 'Row Select' 'multi'
+    setting 'Submit' 'true'
+    setting 'Target Location' 'listHidden'
+;
+add property 'command_decDeleteChangeLogList' on prog eServiceSchemaVariableMapping.tcl to command 'decDeleteChangeLogList';
+
+mod command decDeleteChangeLogList
+	add setting 'hasAccess' 'PIM,AWP,WFP'  
+	add setting 'Access Program' 'decAccess'
+	add setting 'Access Function' 'hasAccess'
+;
+

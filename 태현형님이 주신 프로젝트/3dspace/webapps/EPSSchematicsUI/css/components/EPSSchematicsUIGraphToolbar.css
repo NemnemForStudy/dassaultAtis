@@ -1,0 +1,73 @@
+@keyframes rotateAnimation {
+  from {
+    transform: rotate(0deg); }
+
+  to {
+    transform: rotate(360deg); } }
+
+.sch-graph-toolbar {
+  box-sizing: border-box;
+  transform-origin: left top 0px;
+  transform: matrix(1, 0, 0, 1, 0, 0);
+  position: absolute;
+  border: 0px solid red;
+  top: 0px;
+  left: 0px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center; }
+  .sch-graph-toolbar > .sch-command-button:first-of-type {
+    border-radius: 5px 0px 0px 5px; }
+  .sch-graph-toolbar > .sch-command-button:last-of-type {
+    border-radius: 0px 5px 5px 0px; }
+  .sch-graph-toolbar .sch-command-button {
+    width: 40px;
+    height: 40px;
+    background: #f1f1f1;
+    color: #b4b6ba;
+    border: 1px solid #d1d4d4;
+    border-radius: 0px; }
+    .sch-graph-toolbar .sch-command-button:not(.disabled):hover {
+      background: #368ec4;
+      border-color: #005686;
+      color: #f1f1f1; }
+    .sch-graph-toolbar .sch-command-button > span {
+      font-size: 30px;
+      line-height: 30px; }
+    .sch-graph-toolbar .sch-command-button.sch-graph-toolbar-button-expander {
+      width: 20px; }
+      .sch-graph-toolbar .sch-command-button.sch-graph-toolbar-button-expander > div {
+        display: none; }
+      .sch-graph-toolbar .sch-command-button.sch-graph-toolbar-button-expander.checked > span {
+        transform: rotate(180deg); }
+  .sch-graph-toolbar > .sch-graph-toolbar-button-configuration:hover > span {
+    animation: rotateAnimation 5s linear infinite; }
+  .sch-graph-toolbar > .sch-graph-toolbar-expander-container {
+    box-sizing: border-box;
+    flex: 1 1 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center; }
+    .sch-graph-toolbar > .sch-graph-toolbar-expander-container > .sch-command-button {
+      width: 0px;
+      padding: 0px;
+      overflow: hidden;
+      border-left-width: 0px;
+      border-right-width: 0px;
+      transition: width 0.3s ease; }
+      .sch-graph-toolbar > .sch-graph-toolbar-expander-container > .sch-command-button.sch-graph-toolbar-button-editor-settings > span {
+        font-size: 28px;
+        line-height: 28px; }
+      .sch-graph-toolbar > .sch-graph-toolbar-expander-container > .sch-command-button.sch-graph-toolbar-button-comment > span::before {
+        position: relative;
+        top: -2px; }
+    .sch-graph-toolbar > .sch-graph-toolbar-expander-container.expanded > .sch-command-button {
+      width: 40px;
+      padding: 5px;
+      border-left-width: 1px;
+      border-right-width: 1px; }
+      .sch-graph-toolbar > .sch-graph-toolbar-expander-container.expanded > .sch-command-button.sch-toggle-command-button {
+        padding: 2px; }

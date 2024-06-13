@@ -1,0 +1,14 @@
+m|XCADParserWeb\XCADDAEDocument.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.0.22078|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\XCADDAEDocument\XCADDAEDocument.js|1647692351|36506
+s|XCADParserWeb\XCADDAEDocument.mweb\src\DAEInputDocument.js|1494404800|62735
+u|XCADParserWeb\XCADDAEDocument.mweb\src\DAEProduct.js|1494407307|5915
+u|XCADParserWeb\XCADDAEDocument.mweb\src\DAEProductInstance.js|1494321774|3568
+u|XCADParserWeb\XCADDAEDocument.mweb\src\DAEProductRepresentation.js|1493297098|945
+u|XCADParserWeb\XCADDAEDocument.mweb\src\DAETessellatedRepresentation.js|1493986688|13897
+u|XCADParserWeb\XCADDAEDocument.mweb\src\XCADDAEDocument.js|1491486303|12
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

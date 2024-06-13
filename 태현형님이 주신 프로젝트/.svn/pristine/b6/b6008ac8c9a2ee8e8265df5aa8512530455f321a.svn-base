@@ -1,0 +1,1 @@
+define("DS/RTwebrtcAPI/RTwebrtcAPI_cs",{});define("DS/RTwebrtcAPI/assets/nls/feed",{Call:"Volat",notCompatible:"Tato funkce není vaším aktuálním prohlížečem nebo zařízením podporována"});

@@ -1,0 +1,1 @@
+define("DS/NotificationManager/NotificationManager_zh",{});define("DS/NotificationManager/assets/nls/feed",{openInNewTab:"在新选项卡中打开",close:"关闭"});

@@ -1,0 +1,141 @@
+<?xml version="1.0"?>
+
+<!-- ENOVIA DICTIONARY FOR DELMIA Production System Application -->
+<!-- COPYRIGHT DASSAULT SYSTEMES 2019, All rights reserved -->
+<Package xmlns="PLMDictionaryUnified"
+         ModelerType="Top"
+         Name="DELLmiProductionServiceWorkplanSystem"
+	     Uuid="CAD0105F-EF8D-4F94-9C61-247C7C049626"
+         BelongsToModeler="DELLmiProductionSystem"
+         UseNames="DELLmiProductionSystemPPR"
+         UseProcedures="ENOPsm_Procedures"
+         CustomerExposition="Programmer">
+
+  <CAAComment>
+    <ShortRole>PLM DELMIA Service Workplan System </ShortRole>
+    <Role>This package describes the PLM DELMIA Service Workplan System model on top of DELLmiProductionSystemPPR</Role>
+  </CAAComment>
+
+  <Comment>creation 2019-06-18</Comment>
+
+  <Class Name="DELLmiServiceWorkPlanSystemReference"
+         Uuid="FFA15E84-96B9-441D-BED3-C3B5D2F6B73E"
+         Abstract="No"
+         SuperName="DELLmiPPRSystemReference"
+         CustomerExposition="Programmer"
+         Specializable="Yes"
+         CustomerExtensible="Yes"
+         CreateInstName="DELLmiServiceWorkPlanSystemInstance"
+         Abbreviation="swpl"
+         InstantiationOwnerTypes="DELLmiServiceWorkPlanSystemReference;DELLmiServiceHeaderWorkPlanReference;DELLmiQtyControlProcessReference">
+
+    <Property Name="KweNew_InstanciationMethod" Value="DELMPProdSystemAdvDelegateInstanciation"/>
+    <Property Name="KweNew_ReturnedType" Value="DELLmiServiceWorkPlanSystemInstance"/>
+    <Property Name="IconName" Value="I_PPRServiceWorkplanSystem"/>
+    <Property Name="3DIconName" Value="I_PPRServiceWorkplanSystem.cgr"/>
+    <Property Name="Newable" Value="All_CAA"/>
+    <Property Name="Searchable" Value="Yes"/>
+		
+
+    <CAAComment>
+      <ShortRole>PLM DELMIA Service Workplan System Reference</ShortRole>
+      <Role>PLM DELMIA Service Workplan System Reference</Role>
+    </CAAComment>
+	
+    <!-- Path declaration for Workplan System Reference -->
+    <Path Name="DELContextForPreassignment"
+		Uuid="89CA237E-AEE5-4479-8E5C-818047D9673D"
+		MultiValuated="No"
+		RoleName="DEL_ContextForPreassignment"
+		Type="SemanticRelation" 
+		AdaptativeToMinor="No"
+		SynchroSensitivity="None"
+		RerouteOnEffectivityChange="No"
+		Semantics="Reference"/>
+	
+    <Method ImplementationType="AsFather">
+      <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+    </Method>
+    <Method ImplementationType="Self">
+      <RealizeMethodType href="ExchangeScope.meth#ExchangeScope"/>
+      <ProcedureForUsage>
+        <Usage href="ExchangeScope.meth#XPDM"/>
+        <UsedProcedure href="ENOPsm_Procedures.proc#ProductionSystem_ExchangeXPDM_GetAllEntities"/>
+      </ProcedureForUsage>
+      <ProcedureForUsage>
+        <Usage href="ExchangeScope.meth#StandAlone"/>
+        <UsedProcedure href="ENOPsm_Procedures.proc#ProductionSystem_ExchangeXPDM_StandAlone"/>
+      </ProcedureForUsage>
+      <ProcedureForUsage>
+        <Usage href="ExchangeScope.meth#AllLevelNoRsc"/>
+        <UsedProcedure href="ENOPsm_Procedures.proc#ProductionSystem_ExchangeXPDM_AllLevelNoRsc"/>
+      </ProcedureForUsage>
+      <ProcedureForUsage>
+        <Usage href="ExchangeScope.meth#SupplyChainSourcing"/>
+        <UsedProcedure href="ENOPsm_Procedures.proc#ProductionSystem_ExchangeXPDM_SupplyChainSourcing"/>
+      </ProcedureForUsage>
+      <ProcedureForUsage>
+        <Usage href="ExchangeScope.meth#GetAllEntitiesWithRootRscScope"/>
+        <UsedProcedure href="ENOPsm_Procedures.proc#ProductionSystem_ExchangeXPDM_GetAllEntitiesWithRootRscScope"/>
+      </ProcedureForUsage>
+      <ProcedureForUsage>
+        <Usage href="ExchangeScope.meth#XPDM2"/>
+        <UsedProcedure href="ENOPsm_Procedures.proc#ProductionSystem_ExchangeXPDM_XPDM2"/>
+      </ProcedureForUsage>
+      <ProcedureForUsage>
+        <Usage href="ExchangeScope.meth#Execution"/>
+        <UsedProcedure href="ENOPsm_Procedures.proc#ProductionSystem_ExchangeXPDM_Execution"/>
+      </ProcedureForUsage>
+    </Method>
+
+    <Path Name="DELReferentialForResourcePositioning"
+          Uuid="1234316E-7E6D-4AD1-A2AD-2E22210957F4"
+          RoleName="DEL_ContextForResourcePositioning"
+          MultiValuated="No"
+          Type="SemanticRelation" AdaptativeToMinor="No"
+          SynchroSensitivity="None"
+          RerouteOnEffectivityChange="No"
+          Orientation="In"
+          Protection="External"
+          Semantics="Reference"/>
+
+    
+  </Class>
+
+  <RelationClass Name="DELLmiServiceWorkPlanSystemInstance"
+         Uuid="BF0C2B26-52A3-4D62-B851-1AD16A9AAB9E"
+         Abstract="No"
+         SuperName="DELLmiPPRSystemInstance"
+         CustomerExposition="Programmer"
+         Specializable="Yes"
+         CustomerExtensible="Yes"
+         >
+
+    <Property Name="KweNew_InstanciationMethod" Value="DELMPProdSystemAdvDelegateInstanciation"/>
+    <Property Name="KweNew_ReturnedType" Value="DELLmiServiceWorkPlanSystemInstance"/>
+
+    <CAAComment>
+      <ShortRole>PLM DELMIA Service Workplan System Instance. Specialization is not supported yet.</ShortRole>
+      <Role>PLM DELMIA Service Workplan System Instance</Role>
+    </CAAComment>
+
+    <Volatile Name="Reference"
+              Uuid="0B1969AC-A74C-45EB-94D8-EC00923F71A1"
+              Accessor="PLMModelerReferenceKweAttribute"
+              TypeName="DELLmiServiceWorkPlanSystemReference"
+              AccessMode="ReadOnly" />
+
+	<!--<SubClause Name="from" TargetName="DELLmiProductionSystemReference"/>
+	<SubClause Name="from" TargetName="DELLmiPPRHeaderProcessReferenceAbstract"/>-->
+    <SubClause Name="to"   TargetName="DELLmiServiceWorkPlanSystemReference"/>
+
+    <Method ImplementationType="AsFather">
+      <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+    </Method>
+    <Method ImplementationType="AsFather">
+      <RealizeMethodType href="ExchangeScope.meth#ExchangeScope"/>
+    </Method>
+
+  </RelationClass>
+
+</Package>

@@ -1,0 +1,638 @@
+{
+	"ParsingVersion": "1.0",
+	"CORPUS": [
+		{
+			"version": "1.0",
+			"ARCHI_VERSIONS_COMPATIBILITIES": [
+				"VERSION_1",
+				"VERSION_2",
+				"VERSION_3"
+			],
+			"DECLARATIVE_TYPES": [
+				{
+					"CONCEPTUAL_NAME": "Resource",
+					"IS_ABSTRACT": "TRUE",
+					"Attributes": [
+						{
+							"CONCEPTUAL_NAME": "name",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "PLM_ExternalID"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "title",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "V_Name"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "description",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "V_description"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "cestamp",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "cestamp"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "state",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "current"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "modified",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "modified"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "organization",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "organization"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "originated",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "originated"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "owner",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "owner"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "collabspace",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "project"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "revision",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "revision"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "type",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "type"
+								}
+							]
+						}
+					]
+				},
+				{
+					"CONCEPTUAL_NAME": "ResourceItem",
+					"PARENT_TYPE": "Resource",
+					"DB_MAPPING": [
+						{
+							"DB": "_3DSpaceDB",
+							"Mapping": "VPMReference",
+							"Behavior": "CUSTOM",
+							"Class": "com.dassault_systemes.delmia.crud.bytype.impl.DELMIACRUDResourceReference"
+						}
+					],
+					"Attributes": [
+						{
+							"CONCEPTUAL_NAME": "resourceType",
+							"State": "MANDATORY",
+							"Checkers": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeNotNullAndUniqueValueChecker"
+								}
+							],
+							"Transforms": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.transforms.AttributeResourceTypeTransform"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "serialNumber",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "DELSerialNumber.V_SerialNumber"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "category",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "Resource.V_Category"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "manufacturer",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "Resource.V_Manufacturer"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "subType",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "Resource.V_SubType"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "calculatedCycleTime",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "Resource.V_CalculatedCycleTime"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "consumableCost",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "Resource.V_ConsumableCost"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "cycleTime",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "Resource.V_CycleTime"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "energyCost",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "Resource.V_EnergyCost"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "meanTimeToRepair",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "Resource.V_MTTR"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "meanTimeBeforeFailure",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "Resource.V_MTBF"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "maintenanceCost",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "Resource.V_MaintenanceCost"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "purchaseCost",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "Resource.V_PurchaseCost"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "repairCost",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "Resource.V_RepairCost"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "repairCost",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "Resource.V_RepairCost"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "setUpTime",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "Resource.V_SetUpTime"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "setUpTimeReduced",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "Resource.V_SetUpTimeReduced"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "targetCost",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "Resource.V_TargetCost"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "targetedCycleTime",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "Resource.V_TargetedCycleTime"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "approachReach",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "Robot.V_DELRmi_ApproachReach"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "controllerVersion",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "Robot.V_DELRmi_ControllerVersion"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "industrialApplications",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "Robot.V_DELRmi_IndustrialApplications"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "kinematicClass",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "Robot.V_DELRmi_KinematicClass"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "maxPayload",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "Robot.V_DELRmi_MaxPayload"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "mountingMethod",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "Robot.V_DELRmi_MountingMethod"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "nbDOFs",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "Robot.V_DELRmi_NbDOFs"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "repeatability",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "Robot.V_DELRmi_Repeatability"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "robotmodelIDAliases",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "Robot.V_DELRmi_RobotModelIDAliases"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "followupType",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "WorkCenter.V_FollowupType"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "sequenceBackward",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "WorkCenter.V_SequenceBackward"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "isFiniteCapacity",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "WorkCenter.V_IsFiniteCapacity"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "gender",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "ErgoHuman.V_Gender"
+								}
+							],
+							"Checkers": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeNotNullAndUniqueValueChecker"
+								}
+							],
+							"Transforms": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.transforms.AttributeErgoHumanTransform"
+								}
+							],
+							"Setters": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.bytype.attributes.setters.AttributeErgoHumanGenderSetter"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "population",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "ErgoHuman.V_Population"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "stature",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "ErgoHuman.V_Stature"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "weight",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "ErgoHuman.V_Weight"
+								}
+							]
+						}
+					]
+				},
+				{
+					"CONCEPTUAL_NAME": "ResourceItemInstance",
+					"PARENT_TYPE": "VPMInstance",
+					"DB_MAPPING": [
+						{
+							"DB": "_3DSpaceDB",
+							"Mapping": "VPMInstance",
+							"Behavior": "CUSTOM",
+							"Class": "com.dassault_systemes.delmia.crud.bytype.impl.DELMIACRUDResourceInstance"
+						}
+					],
+					"Attributes": [
+						{
+							"CONCEPTUAL_NAME": "name",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "PLM_ExternalID"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "title",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "V_Name"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "description",
+							"DB_MAPPING": [
+								{
+									"DB": "_3DSpaceDB",
+									"Mapping": "V_description"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "From_IDs",
+							"State": "MANDATORY",
+							"Checkers": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeNotNullAndUniqueValueChecker"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "TO_IDs",
+							"State": "MANDATORY",
+							"Checkers": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeNotNullAndUniqueValueChecker"
+								}
+							]
+						}
+					]
+				},
+				{
+					"CONCEPTUAL_NAME": "PLMHistoLinkCnx",
+					"DB_MAPPING": [
+						{
+							"DB": "_3DSpaceDB",
+							"Mapping": "PLMHistoLinkCnx",
+							"Behavior": "CUSTOM",
+							"Class": "com.dassault_systemes.delmia.crud.bytype.impl.DELMIACRUDHistoLinkCnx"
+						}
+					],
+					"Dependencies": [
+						{
+							"CONCEPTUAL_NAME": "ResourceItem",
+							"Dependencies_Attributes": [
+								"From_IDs"
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "ResourceItem",
+							"Dependencies_Attributes": [
+								"TO_IDs"
+							]
+						}
+					],
+					"Attributes": [
+						{
+							"CONCEPTUAL_NAME": "From_IDs",
+							"State": "MANDATORY",
+							"Checkers": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeNotNullAndUniqueValueChecker"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "TO_IDs",
+							"State": "MANDATORY",
+							"Checkers": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeNotNullAndUniqueValueChecker"
+								}
+							]
+						}
+					]
+				},
+				{
+					"CONCEPTUAL_NAME": "DELRmiFlowCnx",
+					"DB_MAPPING": [
+						{
+							"DB": "_3DSpaceDB",
+							"Mapping": "DELRmiFlowCnx",
+							"Behavior": "CUSTOM",
+							"Class": "com.dassault_systemes.delmia.crud.bytype.impl.DELMIACRUDFlowCnx"
+						}
+					],
+					"Dependencies": [
+						{
+							"CONCEPTUAL_NAME": "ResourceItemInstance",
+							"Dependencies_Attributes": [
+								"From_IDs"
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "ResourceItemInstance",
+							"Dependencies_Attributes": [
+								"TO_IDs"
+							]
+						}
+					],
+					"Attributes": [
+						{
+							"CONCEPTUAL_NAME": "From_IDs",
+							"State": "MANDATORY",
+							"Checkers": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeNotNullAndUniqueValueChecker"
+								}
+							]
+						},
+						{
+							"CONCEPTUAL_NAME": "TO_IDs",
+							"State": "MANDATORY",
+							"Checkers": [
+								{
+									"DB": "_3DSpaceDB",
+									"Class": "com.dassault_systemes.delmia.crud.services.attributes.checkers.AttributeNotNullAndUniqueValueChecker"
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}

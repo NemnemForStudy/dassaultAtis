@@ -1,0 +1,11 @@
+{
+  "version": "1.0.0",
+  "summary": "Este bloco ajuda você a sincronizar seu controle e fluxo de dados. Ele ativará a porta de controle de saída assim que todas as portas de controle de entrada forem ativadas. Para um cenário mais complexo (por exemplo, executar este bloco várias vezes), leia a descrição detalhada abaixo.",
+  "description": "Cada porta de controle de entrada possui um contador interno que é incrementado quando a porta é ativada e diminuído quando o bloco está saindo pela porta de controle de saída <doc-ocp-name translate=no>Saída</doc-ocp-name>. Cada vez que uma porta de controle de entrada é ativada, o bloco é executado e sairá pela porta de controle de saída <doc-ocp-name translate=no>Saída</doc-ocp-name> somente se todos os contadores internos da porta de controle de entrada forem estritamente maiores que 0.",
+  "controlPorts": {
+    "In1": "aciona a execução do bloco e incrementa o contador interno associado a essa porta.",
+    "In2": "aciona a execução do bloco e incrementa o contador interno associado a essa porta.",
+    "Out": "é ativado somente quando todos os contadores internos da porta de controle de entrada são estritamente maiores que 0. Ele diminui todos os contadores internos da porta de controle de entrada."
+  },
+  "example": null
+}

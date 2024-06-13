@@ -1,0 +1,19 @@
+################################################################################################
+# Create By thok 2023. 08. 11
+# Admin Type : command
+# Name : decRequestListComplete
+################################################################################################
+#del command 'decRequestListComplete';
+add command decRequestListComplete
+	description 'RequestList Complete'
+	label 'emxProgramCentral.Label.RequestComplete'
+	href '${COMMON_DIR}/decRequestStatus.jsp?mode=complete'
+	alt 'emxProgramCentral.Label.RequestComplete'
+	setting 'Image' '${COMMON_DIR}/images/iconActionCompleteTask.png'
+	setting 'Confirm Message' 'emxProgramCentral.Alarm.RequestComplete' 
+	setting 'Registered Suite' 'ProgramCentral'
+	setting 'Target Location' 'content'
+	setting 'Submit' 'true'
+;
+add property 'command_decRequestListComplete' on prog eServiceSchemaVariableMapping.tcl to command 'decRequestListComplete'
+;

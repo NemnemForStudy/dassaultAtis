@@ -1,0 +1,82 @@
+{
+    "version": "0.1",
+    "ctxMenu": [
+        "OpenWith",
+        "ExpandThumbsCmd",
+        "CollapseThumbsCmd",
+        "ShowIn3DCmd",
+        "HideIn3DCmd",
+        "FocusOnCmd",
+        "FindInCtxCmd",
+        "DefineFilter",
+        {
+            "id": "expandMenu",
+            "withDefaultCmd": "ExpandN",
+            "cmds": ["ExpandAll", "ExpandN", "CollapseAll"]
+        },
+        "SeparatorItem",
+        "Copy",
+        "Cut",
+        "Paste",
+        "SeparatorItem",
+        {
+            "id": "insertNewMenu",
+            "withDefaultCmd": "ActionBar_InsertNewProductCmd",
+            "cmds": ["ActionBar_InsertNewProductCmd", "ActionBar_InsertNewPartCmd", "ActionBar_InsertNewDrawingCmd"],
+            "deactivated": true
+        },
+        "UPSAuthInsertExistingProductOrPart",
+        {
+            "id": "replaceMenu",
+            "HelpResourceFile": "ENOPS_app/help",
+            "withDefaultCmd": "UPSAuthReplaceByExisting",
+            "cmds": ["UPSAuthReplaceByExisting", "UPSReplaceByLatestRevision", "UPSAuthReplaceByRevision", "UPSAuthReorderProduct", "UPSAuthRevisionUpdate"]
+        },
+        "EditInTableCmd",
+        "SetThePartNumber",
+        "UPSAuthUnparent",
+        "SeparatorItem",
+        {
+            "id": "lifecycleMenu",
+            "HelpResourceFile": "ENOPS_app/help",
+            "icon": {
+                "iconName": "collaborative-lifecycle-management",
+                "fontIconFamily": 1
+            },
+            "cmds": ["MaturityHdr", "RevisionHdr", "NewBranchHdr", "ReviseFromHdr", "HistoryHdr", "DuplicateHdr", "CompareHdr", "DeleteHdr"]
+        },
+        "SeparatorItem",
+        {
+            "id": "collaborationMenu",
+            "HelpResourceFile": "ENOPS_app/help",
+            "icon": {
+                "iconName": "app-collaboration-and-approval",
+                "fontIconFamily": 1
+            },
+            "cmds": ["ActionBar_AccessRightCmd", "ActionBar_ChangeOwner", "ActionBar_TransferOwnership", "ActionBar_ReserveCmd", "ActionBar_UnreserveCmd"]
+        },
+        "SeparatorItem",
+        "EditConfigurationContext",
+        {
+            "id": "VariantOptionMenu",
+            "HelpResourceFile": "ENOPS_app/help",
+            "cmds": ["EditVariant", "CopyVariantEffectivity", "PasteVariantEffectivity"]
+        },
+        {
+            "id": "EvolutionMenu",
+            "HelpResourceFile": "ENOPS_app/help",
+            "cmds": ["EditEvolution", "CopyEvolutionEffectivity", "PasteEvolutionEffectivity"]
+        },
+        "SeparatorItem",
+        "GenerateDFCmd",
+        {
+            "id": "SubscriptionMenu",
+            "withDefaultCmd": "SubscribeHdr",
+            "cmds": ["SubscribeHdr", "UnSubscribeHdr", "EditSubscribeHdr"],
+            "deactivated": true
+        },
+        "SeparatorItem",
+        "ActionBar_Attributes",
+        "CloseSelectedCmd"
+    ]
+}

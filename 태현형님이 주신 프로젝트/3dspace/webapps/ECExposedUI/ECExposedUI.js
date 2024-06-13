@@ -1,0 +1,2 @@
+/*!  Copyright 2014 Dassault Systemes. All rights reserved. */
+define("DS/ECExposedUI/commands/ECHideShowLegendCmd",["DS/SPYUI/commands/CATSPYHideShowLegendCmd"],function(e){"use strict";return e.extend({})}),define("DS/ECExposedUI/commands/ECChooseContentCmd",["DS/SPYUI/commands/CATSPYMSRAccessCmd"],function(e){"use strict";return e.extend({})}),define("DS/ECExposedUI/commands/ECAnimateCmd",["DS/SPYUI/commands/CATSPYAnimateCmd"],function(e){"use strict";return e.extend({})});

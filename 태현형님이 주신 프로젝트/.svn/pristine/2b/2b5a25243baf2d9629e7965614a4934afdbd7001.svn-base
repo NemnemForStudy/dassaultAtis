@@ -1,0 +1,17 @@
+{
+  "version": "1.0.0",
+  "summary": "Określa, czy ciąg zawiera w sobie inny ciąg.",
+  "description": "Znaki w ciągu są indeksowane od lewej do prawej strony.<br>Indeks pierwszego znaku to <doc-value translate=no>0</doc-value>, a indeks ostatniego znaku ciągu o nazwie <doc-value translate=no>strintName</doc-value> to <doc-value translate=no>strintName.length - 1</doc-value>.<br>W wyszukiwaniu ciągów uwzględniana jest wielkość liter.",
+  "dataPorts": {
+    "Input String": "odniesienie wartości ciągu.",
+    "Searched String": "wartość ciągu do wyszukania.",
+    "From Index": "liczba całkowita przedstawiająca indeks, od którego ma się rozpocząć wyszukiwanie. Wartością domyślną jest <doc-value translate=no>0</doc-value>.<br>Dla wartości <doc-idp-name translate=no>From Index</doc-idp-name> mniejszych niż <doc-value translate=no>0</doc-value> lub większych niż długość <doc-idp-name translate=no>Input String</doc-idp-name>, wyszukiwanie zaczyna się odpowiednio od indeksu <doc-value translate=no>0</doc-value> i długości <doc-idp-name translate=no>Input String</doc-idp-name>.",
+    "Found Index": "indeks pierwszego wystąpienia <doc-idp-name translate=no>Searched String</doc-idp-name> lub <doc-value translate=no>-1</doc-value>, jeśli nie zostanie znaleziony.<br>Pusty ciąg <doc-idp-name translate=no>Searched String</doc-idp-name> będzie pasować do dowolnego indeksu w zakresie długości od <doc-value translate=no>0</doc-value> do <doc-idp-name translate=no>Input String</doc-idp-name>."
+  },
+  "controlPorts": {
+    "In": "wyzwala wykonanie bloku.",
+    "True": "jest aktywowane, gdy wartość ciągu <doc-idp-name translate=no>Input String</doc-idp-name> zawiera wartość wyszukiwanego ciągu <doc-idp-name translate=no>Searched String</doc-idp-name>.",
+    "False": "jest aktywowane, gdy wartość ciągu <doc-idp-name translate=no>Input String</doc-idp-name> nie zawiera wartości wyszukiwanego ciągu <doc-idp-name translate=no>Searched String</doc-idp-name>."
+  },
+  "example": null
+}

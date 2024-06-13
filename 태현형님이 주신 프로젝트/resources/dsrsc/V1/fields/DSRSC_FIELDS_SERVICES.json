@@ -1,0 +1,321 @@
+{
+    "dsmvrsc:program.getResourceType": {
+        "property": "computed",
+        "key": "resourceType",
+        "fetchOnce": true,
+        "description": "Type of the resource",
+        "example": "NCMachine"
+    },
+    "dsmvrsc:program.getIsAsset": {
+    	"property": "computed",
+        "key": "isAsset",
+        "fetchOnce": true,
+        "description": "Boolean of whether the resource is an asset or not"
+	},
+	"dsmvrsc:program.serialNumber": {
+	    "property": "computed",
+	    "key": "serialNumber",
+	    "fetchOnce": true,
+	    "index": "bo.DELSerialNumber.V_SerialNumber"
+    },
+    "dsmvrsc:program.getReferencedObject": {
+    	"property": "computed",
+        "key": "referencedObject",
+        "fetchOnce": false,
+        "example": "com.dassault_systemes.enovia.xapps.dsrsc.implementations.dsrscOpenAPIImpl.getReferencedObject",
+        "description": "Object referenced by the instance"
+	},
+	"dsmvrsc:program.genericObjectReference": {
+        "property": "computed",
+        "key": "genericObjectRef",
+        "example": "com.dassault_systemes.enovia.xapps.dsrsc.implementations.dsrscOpenAPIImpl.getGenericReferenceObject"
+	},
+	"dsmvrsc:program.discipline": {
+		"property": "attribute[PLMEntity.V_discipline]",
+		"key": "discipline",
+		"description": "Resource discipline",
+		"example": "String",
+		"index": "bo.PLMEntity.V_discipline"
+    },
+	"dsmvrsc:program.resourceFlows": {
+        "property": "computed",
+        "key": "resourceFlows",
+        "example": "com.dassault_systemes.enovia.xapps.dsrsc.implementations.dsrscOpenAPIImpl.getResourceFlows"
+	},
+	"dsmvrsc:program.scopeLink" : {
+	    "property": "computed",
+        "key": "scopeProcessRef",
+        "example": "com.dassault_systemes.enovia.xapps.dsrsc.implementations.dsrscOpenAPIImpl.getScopeLink"
+	},
+	"dsmvrsc:program.getWithResourceFromImplementLink" : {
+		"property": "computed",
+        "key": "withResource",
+        "example": "com.dassault_systemes.enovia.xapps.dsrsc.implementations.dsrscOpenAPIImpl.whithResource"
+	},
+	"dsmvrsc:program.getWhoResourceFromImplementLink" : {
+		"property": "computed",
+        "key": "whoResource",
+        "example": "com.dassault_systemes.enovia.xapps.dsrsc.implementations.dsrscOpenAPIImpl.whoResource"
+	},
+	"dsmvrsc:program.getWhereResourceFromImplementLink" : {
+		"property": "computed",
+        "key": "whereResource",
+        "example": "com.dassault_systemes.enovia.xapps.dsrsc.implementations.dsrscOpenAPIImpl.whereResource"
+	},
+	"dsmvrsc:program.getOperationOccFromImplementLink" : {
+		"property": "computed",
+        "key": "toOperationOcc",
+        "example": "com.dassault_systemes.enovia.xapps.dsrsc.implementations.dsrscOpenAPIImpl.toOperationOcc"
+	},
+	"dsmvrsc:program.CP.EnterpriseAttributes": {
+    	"property": "computed",
+        "key": "dseno:EnterpriseAttributes",
+        "description": "To get parametric attributes of an object",
+        "example": "com.dassault_systemes.enovia.xapps.dseno.implementations.dsenoOpenAPIImpl.getParametricAttributes",
+        "metaTypes" : ["dseno:EnterpriseAttributes"]
+	},
+	"dsmvrsc:attribute.extension.resourceCategory": {
+		"property": "attribute[Resource.V_Category]",
+		"key": "category",
+		"description": "Category of the resource",
+		"example": "String",
+		"index": "bo.Resource.V_Category"
+	},
+	"dsmvrsc:attribute.extension.resourceManufacturer": {
+		"property": "attribute[Resource.V_Manufacturer]",
+		"key": "manufacturer",
+		"description": "Manufacturer of the resource",
+		"example": "String",
+		"index": "bo.Resource.V_Manufacturer"
+	},
+	"dsmvrsc:attribute.extension.resourceSubType": {
+		"property": "attribute[Resource.V_SubType]",
+		"key": "subType",
+		"description": "Sub type of the resource",
+		"example": "String",
+		"index": "bo.Resource.V_SubType"
+	},
+	"dsmvrsc:attribute.extension.resourceCalculatedCycleTime": {
+		"property": "attribute[Resource.V_CalculatedCycleTime]",
+		"key": "calculatedCycleTime",
+		"description": "Calculated cycle time of the resource",
+		"example": "0",
+		"index": "bo.Resource.V_CalculatedCycleTime",
+		"format": "s_double"
+	},
+	"dsmvrsc:attribute.extension.resourceConsumableCost": {
+		"property": "attribute[Resource.V_ConsumableCost]",
+		"key": "consumableCost",
+		"description": "Consumable cost of the resource",
+		"example": "0",
+		"index": "bo.Resource.V_ConsumableCost",
+		"format": "s_double"
+	},
+	"dsmvrsc:attribute.extension.resourceCycleTime": {
+		"property": "attribute[Resource.V_CycleTime]",
+		"key": "cycleTime",
+		"description": "Cycle time of the resource",
+		"example": "0",
+		"index": "bo.Resource.V_CycleTime",
+		"format": "s_double"
+	},
+	"dsmvrsc:attribute.extension.resourceEnergyCost": {
+		"property": "attribute[Resource.V_EnergyCost]",
+		"key": "energyCost",
+		"description": "Energy cost of the resource",
+		"example": "0",
+		"index": "bo.Resource.V_EnergyCost",
+		"format": "s_double"
+	},
+	"dsmvrsc:attribute.extension.resourceMeanTimeBeforeFailure": {
+		"property": "attribute[Resource.V_MTBF]",
+		"key": "meanTimeBeforeFailure",
+		"description": "Mean time before failure of the resource",
+		"example": "0",
+		"index": "bo.Resource.V_MTBF",
+		"format": "s_double"
+	},
+	"dsmvrsc:attribute.extension.resourceMeanTimeToRepair": {
+		"property": "attribute[Resource.V_MTTR]",
+		"key": "meanTimeToRepair",
+		"description": "Mean time to repair of the resource",
+		"example": "0",
+		"index": "bo.Resource.V_MTTR",
+		"format": "s_double"
+	},
+	"dsmvrsc:attribute.extension.resourceMaintenanceCost": {
+		"property": "attribute[Resource.V_MaintenanceCost]",
+		"key": "maintenanceCost",
+		"description": "Maintenance cost of the resource",
+		"example": "0",
+		"index": "bo.Resource.V_MaintenanceCost",
+		"format": "s_double"
+	},
+	"dsmvrsc:attribute.extension.resourcePurchaseCost": {
+		"property": "attribute[Resource.V_PurchaseCost]",
+		"key": "purchaseCost",
+		"description": "Purchase cost of the resource",
+		"example": "0",
+		"index": "bo.Resource.V_PurchaseCost",
+		"format": "s_double"
+	},
+	"dsmvrsc:attribute.extension.resourceRepairCost": {
+		"property": "attribute[Resource.V_RepairCost]",
+		"key": "repairCost",
+		"description": "Repair cost of the resource",
+		"example": "0",
+		"index": "bo.Resource.V_RepairCost",
+		"format": "s_double"
+	},
+	"dsmvrsc:attribute.extension.resourceSetUpTime": {
+		"property": "attribute[Resource.V_SetUpTime]",
+		"key": "setUpTime",
+		"description": "Set up time of the resource",
+		"example": "0",
+		"index": "bo.Resource.V_SetUpTime",
+		"format": "s_double"
+	},
+	"dsmvrsc:attribute.extension.resourceSetUpTimeReduced": {
+		"property": "attribute[Resource.V_SetUpTimeReduced]",
+		"key": "setUpTimeReduced",
+		"description": "Set up time reduced of the resource",
+		"example": "0",
+		"index": "bo.Resource.V_SetUpTimeReduced",
+		"format": "s_double"
+	},
+	"dsmvrsc:attribute.extension.resourceTargetCost": {
+		"property": "attribute[Resource.V_TargetCost]",
+		"key": "targetCost",
+		"description": "target cost of the resource",
+		"example": "0",
+		"index": "bo.Resource.V_TargetCost",
+		"format": "s_double"
+	},
+	"dsmvrsc:attribute.extension.resourceTargetedCycleTime": {
+		"property": "attribute[Resource.V_TargetedCycleTime]",
+		"key": "targetedCycleTime",
+		"description": "Targeted cycle time of the resource",
+		"example": "0",
+		"index": "bo.Resource.V_TargetedCycleTime",
+		"format": "s_double"
+	},
+	"dsmvrsc:attribute.extension.robotApproachReach": {
+		"property": "attribute[Robot.V_DELRmi_ApproachReach]",
+		"key": "approachReach",
+		"description": "Length",
+		"example": "0",
+		"index": "bo.Robot.V_DELRmi_ApproachReach",
+		"format": "s_double"
+	},
+	"dsmvrsc:attribute.extension.robotControllerVersion": {
+		"property": "attribute[Robot.V_DELRmi_ControllerVersion]",
+		"key": "controllerVersion",
+		"description": "",
+		"example": "String",
+		"index": "bo.Robot.V_DELRmi_ControllerVersion"
+	},
+	"dsmvrsc:attribute.extension.robotIndustrialApplications": {
+		"property": "attribute[Robot.V_DELRmi_IndustrialApplications]",
+		"key": "industrialApplications",
+		"description": "",
+		"example": "String",
+		"index": "bo.Robot.V_DELRmi_IndustrialApplications"
+	},
+	"dsmvrsc:attribute.extension.robotKinematicClass": {
+		"property": "attribute[Robot.V_DELRmi_KinematicClass]",
+		"key": "kinematicClass",
+		"description": "",
+		"example": "String",
+		"index": "bo.Robot.V_DELRmi_KinematicClass"
+	},
+	"dsmvrsc:attribute.extension.robotMaxPayload": {
+		"property": "attribute[Robot.V_DELRmi_MaxPayload]",
+		"key": "maxPayload",
+		"description": "Mass",
+		"example": "Double",
+		"index": "bo.Robot.V_DELRmi_MaxPayload",
+		"format": "double"
+	},
+	"dsmvrsc:attribute.extension.robotMountingMethod": {
+		"property": "attribute[Robot.V_DELRmi_MountingMethod]",
+		"key": "mountingMethod",
+		"description": "",
+		"example": "String",
+		"index": "bo.Robot.V_DELRmi_MountingMethod"
+	},
+	"dsmvrsc:attribute.extension.robotNbDOFs": {
+		"property": "attribute[Robot.V_DELRmi_NbDOFs]",
+		"key": "nbDOFs",
+		"description": "",
+		"example": "Integer",
+		"index": "bo.Robot.V_DELRmi_NbDOFs",
+		"format": "integer"
+	},
+	"dsmvrsc:attribute.extension.robotRepeatability": {
+		"property": "attribute[Robot.V_DELRmi_Repeatability]",
+		"key": "repeatability",
+		"description": "Length",
+		"example": "Double",
+		"index": "bo.Robot.V_DELRmi_Repeatability",
+		"format": "s_double"
+	},
+	"dsmvrsc:attribute.extension.robotmodelIDAliases": {
+		"property": "attribute[Robot.V_DELRmi_RobotModelIDAliases]",
+		"key": "robotmodelIDAliases",
+		"description": "",
+		"example": "Integer",
+		"index": "bo.Robot.V_DELRmi_RobotModelIDAliases"
+	},
+	"dsmvrsc:attribute.extension.workCenterFollowupType": {
+		"property": "attribute[WorkCenter.V_FollowupType]",
+		"key": "followupType",
+		"description": "Manual, Automatic",
+		"example": "Enum",
+		"index": "bo.WorkCenter.V_FollowupType"
+	},
+	"dsmvrsc:attribute.extension.workCenterSequenceBackward": {
+		"property": "attribute[WorkCenter.V_SequenceBackward]",
+		"key": "sequenceBackward",
+		"description": "",
+		"example": "bool",
+		"index": "bo.WorkCenter.V_SequenceBackward",
+		"format": "boolean"
+	},
+	"dsmvrsc:attribute.extension.workCenterIsFiniteCapacity": {
+		"property": "attribute[WorkCenter.V_IsFiniteCapacity]",
+		"key": "isFiniteCapacity",
+		"description": "",
+		"example": "bool",
+		"index": "bo.WorkCenter.V_IsFiniteCapacity",
+		"format": "boolean"
+	},
+	"dsmvrsc:program.workerGender": {
+		"property": "computed",
+	    "key": "gender",
+	    "fetchOnce": true,
+	    "index": "bo.ErgoHuman.V_Gender"
+	},
+	"dsmvrsc:attribute.extension.workerPopulation": {
+		"property": "attribute[ErgoHuman.V_Population]",
+		"key": "population",
+		"description": "",
+		"example": "String",
+		"index": "bo.ErgoHuman.V_Population"
+	},
+	"dsmvrsc:attribute.extension.workerStature": {
+		"property": "attribute[ErgoHuman.V_Stature]",
+		"key": "stature",
+		"description": "Length",
+		"example": "Double",
+		"index": "bo.ErgoHuman.V_Stature",
+		"format": "s_double"
+	},
+	"dsmvrsc:attribute.extension.workerWeight": {
+		"property": "attribute[ErgoHuman.V_Weight]",
+		"key": "weight",
+		"description": "Mass",
+		"example": "Double",
+		"index": "bo.ErgoHuman.V_Weight",
+		"format": "s_double"
+	}
+}

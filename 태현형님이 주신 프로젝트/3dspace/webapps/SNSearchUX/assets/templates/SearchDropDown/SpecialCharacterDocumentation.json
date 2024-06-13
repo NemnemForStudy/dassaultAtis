@@ -1,0 +1,31 @@
+{
+  "documentation": [
+    {
+      "title": "Special Characters",
+      "content": "Description",
+      "options": {
+        "isHeader": true
+      }
+    },
+    {
+      "title": "Search by exact word <b>(+)</b>",
+      "content": "<p>Use the <b>+</b> (plus) operator to search for exact words only. It is typically useful to search for:</p><ul><li>Link words (<b>the</b>, <b>a</b>, <b>of</b>, <b>or</b>, <b>and</b>) that are ignored by default.</li><li>The plural of a word. For example, searching for <b>window</b> returns results for both singular and plural forms, whereas searching for <b>+window</b> returns results for the singular form only.</li><li>Very specific queries, like part reference names.</li></ul>"
+    },
+    {
+      "title": "Search with wildcard <b>(*)</b>",
+      "content": "<p>Use <b>*</b> as a wildcard. For example, <b>drill*</b> returns: drill, drilled, drilling, drill-rivet, etc.</p><p><b>Note:</b>  Even if the query does not contain any wildcard character, the search mechanism uses \"implicit wildcarding\" automatically. While 3DSearch searches the indexed content with the strict user input, it also runs this implicit wildcarding in parallel to broaden the search criteria for predefined properties, like <b>Title</b>, <b>Name</b>, and a few others.</p><p class=\"important\"><b>Important:</b> You cannot use wildcards with double-byte characters.</p>"
+    },
+    {
+      "title": "Question mark <b>?</b>",
+      "content": "<p>Like the wildcard <b>*</b>, the question mark <b>?</b> is a pattern matching feature to broaden the search criteria.</p>"
+    },
+    {
+      "title": "Double quote <b>\"</b>",
+      "content": "<p>Use double quotes <b>\"\"</b> to search for exact phrases.</p><p>For example, if you enter <b>\"prerequisite checklist\"</b>, the search results display the pages containing exactly the words <b>prerequisite checklist</b> in that order.</p><p class=\"important\"><b>Important:</b> 3DSearch supports exact search with double quotes for 3D Space data only.</p><p>The current search behavior relies on a tokenization (process of splitting up a segment of text into smaller pieces, or tokens) definition, which facilitates partial searches, as they are very useful for full-text search use cases. This tokenization definition also impacts exact search. For example, if we index the string <b>XYZ_Test22</b>, the tokenization is such that we index: <b>xyz</b>, <b>test22</b>, and <b>XYZ_Test22</b>. As we have 3 different tokens, searching for \"<b>XYZ_Test22</b>\" therefore gives more results than expected.</p>"
+    },
+    {
+      "title": "UQL operator and operands",
+      "content": "<p>If the query syntax is correct, you can use logical expression operators and operands, lire <b>OR</b>, <b>AND</b>, <b>NOT</b>, <b>TO</b>, etc.</p><p>For example, use <b>OR</b> to specify a list of similar terms that may occur in the document you are looking for: <b>(NLS setting) OR (language)</b> searches for documents containing either <b>NLS setting</b> or <b>language</b></p>"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+m|DELPPWModels\DELPPWLoggerModel.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.0.22078|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\DELPPWLoggerModel\DELPPWLoggerModel.js|1647691800|2248
+s|DELPPWModels\DELPPWLoggerModel.mweb\src\LoggerCollection.js|1532440436|346
+u|DELPPWModels\DELPPWLoggerModel.mweb\src\LoggerModel.js|1532440436|403
+u|DELPPWModels\DELPPWLoggerModel.mweb\src\LoggerUtils.js|1573121817|4814
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

@@ -1,0 +1,167 @@
+{
+    "settings": {
+        "readOnlyApp": {
+            "value": false
+        },
+        "WSAccessV2": {
+            "value": false
+        },
+        "intent": {
+            "value": "bookmark_intent"
+        },
+        "dgvOptions": {
+            "value": {
+                "viewMode": "comfortable",
+                "dgv": {
+                    "defaultColumnDef": {
+                        "width": "auto",
+                        "typeRepresentation": "string"
+                    },
+                    "showRowBorderFlag": true,
+                    "cellDragEnabledFlag": true,
+                    "rowDragEnabledFlag": true,
+                    "alternateBackgroundFlag": false,
+                    "showRowIndexFlag": false,
+                    "showModelChangesFlag": false,
+                    "showColumnBorderFlag": false,
+                    "rowSelection": "multiple",
+                    "cellSelection": "none",
+                    "selectionBehavior": {
+                        "canInteractiveMultiselectWithCheckboxClick": true,
+                        "canMultiSelect": true,
+                        "enableFeedbackForActiveCell": true,
+                        "enableShiftSelection": true,
+                        "toggle": false,
+                        "unselectAllOnEmptyArea": true
+                    },
+                    "placeholder": "",
+                    "columns": []
+                },
+                "dgvLayout": {
+                    "cellHeight": 38,
+                    "columnHeaderHeight": 38,
+                    "rowsHeader": false
+                }
+            }
+        }
+    },
+    "columnsCusto": {
+        "LIBRARIES": {
+    	"default": true,
+            "order": [
+                "tree",
+                "ds6w:type",
+                "ds6w:status",
+                "ds6w:description",
+                "ds6w:responsible",
+                "ds6w:modified",
+                "ds6w:created",
+                "ds6w:identifier",
+                "ds6w:reservedBy"
+            ],
+        "attributes": [	
+                {
+                    "ds6w": "ds6w:type"
+                },
+                {
+                    "ds6w": "ds6w:status"
+                },
+                {
+                    "ds6w": "ds6w:description"
+                },
+                {
+                    "ds6w": "ds6w:responsible"
+                },
+                {
+                    "ds6w": "ds6w:modified",
+                    "kind": "timestamp",
+                    "isHidden": false,
+                    "customisation": {
+                        "layout": {
+                            "removable": false,
+                            "removableFromView": false
+                        }
+                    },
+                    "defaultSortOrder": "desc"
+                },
+                {
+                    "ds6w": "ds6w:created",
+                    "kind": "timestamp"
+                },
+                {
+                    "ds6w": "ds6w:identifier"
+                },
+                {
+                    "ds6w": "ds6w:reservedBy"
+                }
+            ],
+            "commandColumns": [],
+            "typeRepresentations": {}
+        },
+        "ATTRIBUTES": {
+            "default": true,
+            "order": [
+                "basics",
+                "values",
+                "titles",
+                "Name",
+                "Type",
+                "Predicates",
+                "attrIsParametric",
+                "Dimensions",
+                "prefUnit",
+                "AuthorizedValues",
+                "DefaultValue",
+                "IsMultivalue",
+                "IsMultiline",
+                "hasDefault",
+                "nls_EN",
+                "nls_FR",
+                "nls_DE",
+                "nls_JA",
+                "nls_KO",
+                "nls_RU",
+                "nls_ZH"
+            ],
+        "attributes": [	
+                {   "dataIndex": "basics", 
+                    "nls_key": "group_basics",
+                    "alignment": "center",
+                    "children": [
+                        { "dataIndex": "tree", "ds6w":"Name", "nls_key": "column_Name", "defaultSortOrder": "asc" },
+                        { "dataIndex": "Type", "nls_key": "column_Type" },
+                        { "dataIndex": "Predicates", "nls_key": "column_Predicates" },
+                        { "dataIndex": "attrIsParametric", "nls_key": "column_Is_Parametric" },
+                        { "dataIndex": "Dimension", "nls_key": "column_Dimension" }, 
+                        { "dataIndex": "prefUnit", "nls_key": "column_prefUnit" },
+                        { "dataIndex": "isInDico", "nls_key": "existInDictionary" }
+                    ]
+                },
+                {   "dataIndex": "values",
+                    "nls_key": "group_values",
+                    "children": [
+                        { "dataIndex": "AuthorizedValues", "nls_key": "column_Authorized_Values" },
+                        { "dataIndex": "DefaultValue", "editionPolicy": "EditionOnClick", "toggleToEdit": true, "nls_key": "column_DefaultValue" },
+                        { "dataIndex": "IsMultivalue", "nls_key": "column_Is_Multivalue" },
+                        { "dataIndex": "IsMultiline", "nls_key": "column_Is_Multiline" },
+                        { "dataIndex": "hasDefault", "nls_key": "hasDefault" }
+                    ]
+                },
+                {   "dataIndex": "titles", 
+                    "nls_key": "group_titles",
+                    "children": [
+                        { "dataIndex": "nls_EN", "editionPolicy": "EditionOnClick", "toggleToEdit": true,"nls_key": "column_nls_EN" },
+                        { "dataIndex": "nls_FR", "editionPolicy": "EditionOnClick", "toggleToEdit": true, "nls_key": "column_nls_FR" },
+                        { "dataIndex": "nls_DE", "editionPolicy": "EditionOnClick", "toggleToEdit": true, "nls_key": "column_nls_DE" },
+                        { "dataIndex": "nls_JA", "editionPolicy": "EditionOnClick", "toggleToEdit": true, "nls_key": "column_nls_JA" },
+                        { "dataIndex": "nls_KO", "editionPolicy": "EditionOnClick", "toggleToEdit": true, "nls_key": "column_nls_KO" },
+                        { "dataIndex": "nls_RU", "editionPolicy": "EditionOnClick", "toggleToEdit": true, "nls_key": "column_nls_RU" },
+                        { "dataIndex": "nls_ZH", "editionPolicy": "EditionOnClick", "toggleToEdit": true, "nls_key": "column_nls_ZH" }       
+                    ]
+                }
+        ],
+        "commandColumns": [],
+        "typeRepresentations": {}
+    }
+}
+}

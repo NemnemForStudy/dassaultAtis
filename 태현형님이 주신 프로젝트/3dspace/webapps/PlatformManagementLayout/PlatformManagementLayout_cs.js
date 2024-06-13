@@ -1,0 +1,1 @@
+define("DS/PlatformManagementLayout/PlatformManagementLayout_cs",{});define("DS/PlatformManagementLayout/assets/nls/PlatformManagementLayout",{welcome:"Vítejte ve ",platformManagement:"Správa platformy",more:"Více",less:"Méně"});

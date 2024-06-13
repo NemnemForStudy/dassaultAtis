@@ -1,0 +1,1 @@
+define("DS/DELWebModelEvents/DELWebModelEvents",["UWA/Class/Promise","DS/CoreEvents/ModelEvents"],function(e,n){"use strict";return function(){var s=new n;return{initialize:function(){return e.resolve()},clean:function(){return e.resolve()},subscribe:s.subscribe.bind(s),publish:s.publish.bind(s),unsubscribe:s.unsubscribe.bind(s),destroy:function(){s&&s.destroy(),s=null}}}});

@@ -1,0 +1,10 @@
+m|VCXWebPropertyModel\VCXWebVisibility.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.0.22078|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\VCXWebVisibility\VCXWebVisibility.js|1647692281|896
+s|VCXWebPropertyModel\VCXWebVisibility.mweb\src\VCXIVisibility.js|1497623874|3001
+u|VCXWebPropertyModel\VCXWebVisibility.mweb\src\VCXVisibility.js|1499239286|2899
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

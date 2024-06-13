@@ -1,0 +1,1 @@
+define("DS/CAT3DAnnotationScenario/CAT3DAnnotationScenario_pt-BR",{});define("DS/CAT3DAnnotationScenario/assets/nls/CAT3DAnnotationScenario",{A3EScenario_Title:"Tolerância e anotações 3D",A3EScenario_Description:"Exibir e procurar anotações"});

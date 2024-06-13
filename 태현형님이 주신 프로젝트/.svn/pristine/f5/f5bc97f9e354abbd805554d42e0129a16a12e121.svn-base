@@ -1,0 +1,1 @@
+define("DS/EditPropPopup/EditPropPopup_pl",{});define("DS/EditPropPopup/assets/nls/editPropPopup",{Properties:"Informacje",PinWidget:"Przypnij widżet",Loading:"Ładowanie...",CloseOverlay:"Zamknij okno podręczne"});

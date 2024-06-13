@@ -1,0 +1,1 @@
+define("DS/SMAMpwControls/SMAMpwControls_cs",{});define("DS/SMAMpwControls/assets/nls/SMAMpwLegend",{frameSelectorPlaceHolder:"Vyberte snímek...",scaleFactor:"Měřítko deformace",playOnlyTooltip:"Zamknout animaci na aktuální výběr",min:"Min.:",max:"Max.:"});

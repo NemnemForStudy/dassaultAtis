@@ -1,0 +1,1 @@
+define("DS/XCTInfResources/XCTInfResources_fr",{});define("DS/XCTInfResources/assets/nls/XCTInfResources",{Common:{Link:"Lien",Parameter:"Paramètre"}});

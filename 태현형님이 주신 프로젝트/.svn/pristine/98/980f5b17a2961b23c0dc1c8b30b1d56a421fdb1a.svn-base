@@ -1,0 +1,25 @@
+### 230509 created by cmg
+### 초기화면 jsp와 연결된 커맨드
+
+
+#delete command decProjectUICommand;
+
+add command decProjectUICommand
+ description 'prject UI Page'
+ label 'emxFramework.Label.decProjectUICommand'
+ href '${SUITE_DIR}/decProjectUI.jsp'
+ setting "Target Location" "content"
+ setting "Registered Suite" "Framework"
+ property "installer" value "ENOVIAEngineering"
+ property "application" value "Framework"
+ property "original name" value "decProjectUICommand";
+ 
+#mod menu PMCMyDesk add command decProjectUICommand;
+
+# Modified by hslee on 2023.09.12
+mod command decProjectUICommand
+	href '${COMMON_DIR}/decProjectUI.jsp'
+	label 'emxProgramCentral.Label.GlobalProjectMap'
+	add setting 'Registered Suite' 'ProgramCentral'
+	add setting 'Licensed Product' 'ENO_PGE_TP'
+;

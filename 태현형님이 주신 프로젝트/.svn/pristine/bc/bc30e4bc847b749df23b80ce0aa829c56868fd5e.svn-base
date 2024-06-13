@@ -1,0 +1,44 @@
+{
+	"dslib:Library":{
+		"kindOf":"root",
+		"beType": "type_GeneralLibrary",
+		"contentLinks":["dslib:Class"],
+		"defaultMask" : "dslib:SimpleMask",
+		"patchCSRF" : true,
+		"search" : true,
+		"OptionCheck":{
+			"modify" : false,
+			"produce": false,
+			"navigate": true
+		}
+	},		
+	
+	"dslib:Class":{
+		"kindOf":"root",
+		"beType": "type_GeneralClass",
+		"contentLinks":["dslib:Class","dslib:ClassifiedItem"],
+		"defaultMask" : "dslib:ClassMask",
+		"patchCSRF" : true,
+		"OptionCheck":{
+			"modify" : false,
+			"produce": false,
+			"navigate": true
+		}
+	},		
+	
+	"dslib:ClassifiedItem":{
+		"kindOf":"root",
+		"beType": "virtual_ClassifiedItem",
+		"contentLinks":["dslib:Class"],
+		"defaultMask" : "dslib:ClassifiedItemBaseMask",
+		"implementationClass": "com.dassault_systemes.enovia.xapps.dslib.V%1.implementations.util.dslibRootClassifiedItem",
+		"patchCSRF" : true,
+		"cestamp" : true,
+		"customerAttribute": true,
+		"OptionCheck":{
+			"modify" : false,
+			"produce": false,
+			"navigate": false
+		}
+	}
+}

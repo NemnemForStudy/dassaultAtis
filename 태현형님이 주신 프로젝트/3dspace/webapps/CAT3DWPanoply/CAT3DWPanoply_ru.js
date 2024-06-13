@@ -1,0 +1,1 @@
+define("DS/CAT3DWPanoply/CAT3DWPanoply_ru",{});define("DS/CAT3DWPanoply/assets/nls/CAT3DWActionHelp",{tipLabel:"Совет",defaultTitle:"Справка","modal.labelButton":"Понятно!",moreLabel:"Дополнительная справка"});

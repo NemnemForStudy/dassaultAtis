@@ -1,0 +1,339 @@
+{
+    "dsmfg:MfgItem": {
+        "kindOf": "root",
+        "beType": "type_DELFmiFunctionReference",
+        "classesTypes": "type_CreateAssembly,type_Provide,type_CreateKit,type_Installation,type_CreateMaterial,type_ElementaryEndItem,type_ProcessContinuousProvide,type_ProcessContinuousCreateMaterial,type_Marking,type_Annotation,type_Transform,type_Machine,type_Beveling,type_Cutting,type_Grinding,type_NoDrill,type_Drill,type_PreDrill,type_Fasten,type_Unfasten",
+        "patchCSRF":true,
+        "search":true,
+        "contentLinks": ["dsmfg:MfgItemInstance",
+        				 "dsmfg:ResultingEngItem",
+						 "dsmfg:AssignedOrganization",
+        				 "dsmfg:AssignedRequirement",
+        				 "dsmfg:ScopeRequirementSpec"],
+        "extensionLinks": ["dslc:changeControl",
+                           "dscfg:Configured",
+                           "dsmfg:ScopeEngItem",
+                           "dsmfg:PartialScopeEngItem",
+        				   "dsmfg:AssignmentFilter",
+                           "dsmfg:ProvideEnterpriseAttributes",
+                           "dsmfg:CreateKitEnterpriseAttributes",
+                           "dsmfg:InstallationEnterpriseAttributes",
+                           "dsmfg:CreateAssemblyEnterpriseAttributes",
+                           "dsmfg:CreateMaterialEnterpriseAttributes",
+                           "dsmfg:ElementaryEndItemEnterpriseAttributes",
+                           "dsmfg:ProcessContinuousProvideEnterpriseAttributes",
+                           "dsmfg:ProcessContinuousCreateMaterialEnterpriseAttributes",
+                           "dsmfg:MarkingEnterpriseAttributes",
+						   "dsmfg:AnnotationEnterpriseAttributes",
+						   "dsmfg:TransformEnterpriseAttributes",
+						   "dsmfg:MachineEnterpriseAttributes",
+						   "dsmfg:BevelingEnterpriseAttributes",
+						   "dsmfg:CuttingEnterpriseAttributes",
+						   "dsmfg:GrindingEnterpriseAttributes",
+						   "dsmfg:NoDrillEnterpriseAttributes",
+						   "dsmfg:DrillEnterpriseAttributes",
+						   "dsmfg:PreDrillEnterpriseAttributes",
+						   "dsmfg:FastenEnterpriseAttributes",
+						   "dsmfg:UnfastenEnterpriseAttributes"],
+        "cestamp":true,
+        "defaultMask":"dsmfg:MfgItemMask.Default",
+        "implementationClass": "com.dassault_systemes.enovia.xapps.dsmfg.V1.implementations.dsmfgRootMfgItem",
+        "attributeMappingClass": "com.dassault_systemes.enovia.xapps.dsmfg.V1.dictionaries.dsmfgMfgItemAttributeDictionary",
+        "customerAttribute": true,
+    	"customizationSupport": true, 
+    	"isPublic": true, 
+    	"changeSupport": true,
+        "optionCheck" : {
+        	"modify"      : true,
+        	"produce"     : true,
+        	"navigate"    : true
+        },
+        "publicResourceURI": "/resources/v1/modeler/dsmfg/dsmfg:MfgItem/{pid}"
+    },
+    
+    "dsmfg:MfgItemInstance": {
+        "kindOf": "content",
+        "beType": "relationship_DELFmiFunctionInstance",
+        "extensionLinks": ["dscfg:Filterable",
+        				   "dsmfg:ImplementedEngOccurrence",
+        				   "dsmfg:Dependency"],
+        "cestamp":true,
+        "defaultMask":"dsmfg:MfgItemInstanceMask.Default",
+        "customerAttribute": true,
+    	"customizationSupport": true, 
+        "isPublic": true,
+        "changeSupport": true,
+        "optionCheck" : {
+        	"modify"      : true,
+        	"produce"     : true,
+        	"navigate"    : true
+        }
+    },
+    
+    "dsmfg:ScopeEngItem": {
+        "kindOf":"extension",
+        "beType":"virtual_DELFmiFunctionReference",
+        "defaultMask":"dsmfg:ScopeEngItemMask.Default",
+        "isPublic": true,
+        "optionCheck" : {
+        	"modify"      : true,
+        	"produce"     : true,
+        	"navigate"    : true
+        }
+    },
+    
+    "dsmfg:PartialScopeEngItem": {
+        "kindOf":"extension",
+        "beType":"virtual_DELFmiFunctionReference",
+        "defaultMask":"dsmfg:PartialScopeEngItemMask.Default",
+        "isPublic": true,
+        "optionCheck" : {
+        	"modify"      : true,
+        	"produce"     : true,
+        	"navigate"    : true
+        }
+    },
+    
+    "dsmfg:ResultingEngItem": {
+        "kindOf": "content",
+        "beType": "type_DELFmiProcessPrereqMaterializationCnx",
+        "defaultMask":"dsmfg:ResultingEngItemMask.Default",
+        "isPublic": true,
+        "cestamp":true,
+        "optionCheck" : {
+        	"modify"      : true,
+        	"produce"     : true,
+        	"navigate"    : true
+        }
+    },
+    
+    "dsmfg:AssignmentFilter": {
+        "kindOf": "extension",
+        "beType": "virtual_PLMAssignmentFilterCnx",
+        "defaultMask":"dsmfg:AssignmentFilterMask.Default",
+        "isPublic": true,
+        "optionCheck" : {
+        	"modify"      : true,
+        	"produce"     : true,
+        	"navigate"    : true
+        }
+    },    
+	
+	"dsmfg:ImplementedEngOccurrence": {
+        "kindOf":"extension",
+        "beType":"virtual_DELFmiFunctionInstance",
+        "defaultMask":"dsmfg:ImplementedEngOccurrenceMask.Default",
+        "isPublic": true,
+        "optionCheck" : {
+        	"modify"      : true,
+        	"produce"     : true,
+        	"navigate"    : true
+        }
+    },    
+    
+    "dsmfg:MfgItemEnterpriseAttributes": {
+     	"kindOf":"extension",    
+        "beType": "XP_DELFmiFunctionPPRReference_Ext",
+        "defaultMask":"dsmfg:Mask.MfgItemEnterpriseAttributes.Default",
+        "isPublic": false
+    },
+    
+    "dsmfg:CreateAssemblyEnterpriseAttributes": {
+     	"kindOf":"extension",    
+        "beType": "XP_CreateAssembly_Ext",
+        "defaultMask":"dsmfg:Mask.CreateAssemblyEnterpriseAttributes.Default",
+        "isPublic": false
+    },
+    
+    "dsmfg:CreateKitEnterpriseAttributes": {
+     	"kindOf":"extension",    
+        "beType": "XP_CreateKit_Ext",
+        "defaultMask":"dsmfg:Mask.CreateKitEnterpriseAttributes.Default",
+        "isPublic": false
+    },
+    
+    "dsmfg:CreateMaterialEnterpriseAttributes": {
+     	"kindOf":"extension",    
+        "beType": "XP_CreateMaterial_Ext",
+        "defaultMask":"dsmfg:Mask.CreateMaterialEnterpriseAttributes.Default",
+        "isPublic": false
+    },
+    
+    "dsmfg:ProvideEnterpriseAttributes": {
+     	"kindOf":"extension",    
+        "beType": "XP_Provide_Ext",
+        "defaultMask":"dsmfg:Mask.ProvideEnterpriseAttributes.Default",
+        "isPublic": false
+    },
+    
+    "dsmfg:ElementaryEndItemEnterpriseAttributes": {
+     	"kindOf":"extension",    
+        "beType": "XP_ElementaryEndItem_Ext",
+        "defaultMask":"dsmfg:Mask.ElementaryEndItemEnterpriseAttributes.Default",
+        "isPublic": false
+    },
+    
+    "dsmfg:InstallationEnterpriseAttributes": {
+     	"kindOf":"extension",    
+        "beType": "XP_Installation_Ext",
+        "defaultMask":"dsmfg:Mask.InstallationEnterpriseAttributes.Default",
+        "isPublic": false
+    },
+    
+    "dsmfg:ProcessContinuousCreateMaterialEnterpriseAttributes": {
+     	"kindOf":"extension",    
+        "beType": "XP_ProcessContinuousCreateMaterial_Ext",
+        "defaultMask":"dsmfg:Mask.ProcessContinuousCreateMaterialEnterpriseAttributes.Default",
+        "isPublic": false
+    },
+    
+    "dsmfg:ProcessContinuousProvideEnterpriseAttributes": {
+     	"kindOf":"extension",    
+        "beType": "XP_ProcessContinuousProvide_Ext",
+        "defaultMask":"dsmfg:Mask.ProcessContinuousProvideEnterpriseAttributes.Default",
+        "isPublic": false
+    },
+       
+    "dsmfg:MarkingEnterpriseAttributes": {
+		"kindOf":"extension",    
+		"beType": "XP_Marking_Ext",
+		"defaultMask":"dsmfg:Mask.MarkingEnterpriseAttributes.Default",
+		"isPublic": false
+	},
+	
+	"dsmfg:AnnotationEnterpriseAttributes": {
+		"kindOf":"extension",    
+		"beType": "XP_Annotation_Ext",
+		"defaultMask":"dsmfg:Mask.AnnotationEnterpriseAttributes.Default",
+		"isPublic": false
+	},
+	
+	"dsmfg:TransformEnterpriseAttributes": {
+		"kindOf":"extension",    
+		"beType": "XP_Transform_Ext",
+		"defaultMask":"dsmfg:Mask.TransformEnterpriseAttributes.Default",
+		"isPublic": false
+	},
+	
+	"dsmfg:MachineEnterpriseAttributes": {
+		"kindOf":"extension",    
+		"beType": "XP_Machine_Ext",
+		"defaultMask":"dsmfg:Mask.MachineEnterpriseAttributes.Default",
+		"isPublic": false
+	},
+	
+	"dsmfg:BevelingEnterpriseAttributes": {
+		"kindOf":"extension",    
+		"beType": "XP_Beveling_Ext",
+		"defaultMask":"dsmfg:Mask.BevelingEnterpriseAttributes.Default",
+		"isPublic": false
+	},
+	
+	"dsmfg:CuttingEnterpriseAttributes": {
+		"kindOf":"extension",    
+		"beType": "XP_Cutting_Ext",
+		"defaultMask":"dsmfg:Mask.CuttingEnterpriseAttributes.Default",
+		"isPublic": false
+	},
+	
+	"dsmfg:GrindingEnterpriseAttributes": {
+		"kindOf":"extension",    
+		"beType": "XP_Grinding_Ext",
+		"defaultMask":"dsmfg:Mask.GrindingEnterpriseAttributes.Default",
+		"isPublic": false
+	},
+	
+	"dsmfg:NoDrillEnterpriseAttributes": {
+		"kindOf":"extension",    
+		"beType": "XP_NoDrill_Ext",
+		"defaultMask":"dsmfg:Mask.NoDrillEnterpriseAttributes.Default",
+		"isPublic": false
+	},
+	
+	"dsmfg:DrillEnterpriseAttributes": {
+		"kindOf":"extension",    
+		"beType": "XP_Drill_Ext",
+		"defaultMask":"dsmfg:Mask.DrillEnterpriseAttributes.Default",
+		"isPublic": false
+	},
+	
+	"dsmfg:PreDrillEnterpriseAttributes": {
+		"kindOf":"extension",    
+		"beType": "XP_PreDrill_Ext",
+		"defaultMask":"dsmfg:Mask.PreDrillEnterpriseAttributes.Default",
+		"isPublic": false
+	},
+	
+	"dsmfg:FastenEnterpriseAttributes": {
+		"kindOf":"extension",    
+		"beType": "XP_Fasten_Ext",
+		"defaultMask":"dsmfg:Mask.FastenEnterpriseAttributes.Default",
+		"isPublic": false
+	},
+	
+	"dsmfg:UnfastenEnterpriseAttributes": {
+		"kindOf":"extension",    
+		"beType": "XP_Unfasten_Ext",
+		"defaultMask":"dsmfg:Mask.UnfastenEnterpriseAttributes.Default",
+		"isPublic": false
+	},
+	
+	"dsmfg:SplitProcessEnterpriseAttributes": {
+		"kindOf":"extension",    
+		"beType": "XP_SplitProcess_Ext",
+		"defaultMask":"dsmfg:Mask.SplitProcessEnterpriseAttributes.Default",
+		"isPublic": false
+	},
+    "dsmfg:AssignedOrganization": {
+    	"kindOf": "content",
+        "beType": "virtual_DELMfgResponsibilityCnx",
+        "patchCSRF":true,
+        "search":true,
+        "cestamp":true,
+        "defaultMask":"dsmfg:AssignedOrganizationMask.Default",
+    	"implementationClass": "com.dassault_systemes.delmia.ppr.nav.crs_utils.GenericVirtualNavContent",
+    	"isPublic": false,
+        "optionCheck" : {
+        	"modify"      : true,
+        	"produce"     : true,
+        	"navigate"    : true
+        }
+    },
+    "dsmfg:AssignedRequirement": {
+        "kindOf":"content",
+        "beType":"virtual_PLMReqSpecifyHowToCnx",
+        "defaultMask":"dsmfg:AssignedRequirementMask.Default",
+        "implementationClass": "com.dassault_systemes.delmia.ppr.nav.crs_utils.GenericVirtualNavContent",
+        "isPublic": true,
+        "cestamp":true,
+        "optionCheck" : {
+        	"modify"      : false,
+        	"produce"     : false,
+        	"navigate"    : true
+        }
+    },
+    "dsmfg:ScopeRequirementSpec": {
+        "kindOf":"content",
+        "beType":"virtual_PLMReqGlobalSpecifyHowToCnx",
+        "defaultMask":"dsmfg:ScopeRequirementSpecMask.Default",
+        "implementationClass": "com.dassault_systemes.delmia.ppr.nav.crs_utils.GenericVirtualNavContent",
+        "isPublic": true,
+        "cestamp":true,
+        "optionCheck" : {
+        	"modify"      : false,
+        	"produce"     : false,
+        	"navigate"    : true
+        }
+    },
+    "dsmfg:Dependency": {
+    	"kindOf":"extension",
+        "beType":"virtual_DELFmiProcessPrerequisiteCnxCust",
+        "defaultMask":"dsmfg:DependencyMask.Default",
+        "isPublic": true,
+        "optionCheck" : {
+        	"modify"      : true,
+        	"produce"     : true,
+        	"navigate"    : true
+        }
+    }	
+}

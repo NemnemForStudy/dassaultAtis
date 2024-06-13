@@ -1,0 +1,1 @@
+define("DS/MIBQueryWidget/MIBQueryWidget_ru",{});define("DS/MIBQueryWidget/assets/nls/MIBQueryWidgetNls",{CommandDialogTitle:"Поиск содержимого MIB",BtnOK:"Поиск",BtnCancel:"Отмена",BtnOk2:"Открыть",Query:"Поиск"});

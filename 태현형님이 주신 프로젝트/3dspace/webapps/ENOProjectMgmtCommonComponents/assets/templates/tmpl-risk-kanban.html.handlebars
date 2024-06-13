@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+</head>
+
+<style>
+  /* An explicit height must be set on the container so that it's children know how tall to grow */
+  #kanbanContainer {height: 500px;}
+</style>
+
+<body>
+  <div id="kanbanContainer"><!-- The height of this item must be set in pixels so that its children can take 100% of its height [set via JS] -->
+      <div id="kanbanContent">
+        <div id="kanbanColumnsCarrier" class="kanban-columns-carrier"><!-- This item should always be the same as the combined width of all triptych columns, whether visible or not [set via JS] -->
+        	{{#each columns}}
+				<div id="{{this.id}}" class="{{this.className}}">	 {{this.displayValue}} </div>
+        	{{/each}}
+        </div>
+
+        <div class="wux-controls-button wux-controls-abstract wux-ui-state-secondary wux-ui-style-normal kscroll-left" tabindex="0">
+          <div class="wux-button-icon-placeholder"><span class="wux-button-icon-fi wux-ui-genereatedicon-fi wux-ui-fa wux-ui-fa-chevron-left wux-ui-fa-2x" style="pointer-events: none; margin: 0px;"></span></div>
+        </div>
+        <div class="wux-controls-button wux-controls-abstract wux-ui-state-secondary wux-ui-style-normal kscroll-right" tabindex="0">
+          <div class="wux-button-icon-placeholder"><span class="wux-button-icon-fi wux-ui-genereatedicon-fi wux-ui-fa wux-ui-fa-chevron-right wux-ui-fa-2x" style="pointer-events: none; margin: 0px;"></span></div>
+        </div>
+      </div>
+
+      <div id="kanbanPagination">
+          <div class="pagination">
+            <ul>
+              <li class="in-view"></li>
+              <li class="in-view"></li>
+              <li class="in-view"></li>
+              <li class=""></li>
+              <li class=""></li>
+            </ul>
+          </div>
+  	 </div>
+  </div>
+  
+</body>
+</html>

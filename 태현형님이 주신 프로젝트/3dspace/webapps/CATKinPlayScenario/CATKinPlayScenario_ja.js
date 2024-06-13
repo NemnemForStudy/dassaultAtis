@@ -1,0 +1,1 @@
+define("DS/CATKinPlayScenario/CATKinPlayScenario_ja",{});define("DS/CATKinPlayScenario/assets/nls/CATKinPlayRegister",{CATKinPlayRegister_Title:"キネマティクス",CATKinPlayRegister_Description:"アニメーションの再生を登録します",Animation_Title:"アニメーション プレーヤー",Animation_Description:"アニメーションを再生します"});

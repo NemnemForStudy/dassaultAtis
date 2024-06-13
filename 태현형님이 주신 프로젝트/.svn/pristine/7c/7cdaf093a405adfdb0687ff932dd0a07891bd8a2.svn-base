@@ -1,0 +1,519 @@
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
+import org.apache.ibatis.session.SqlSession;
+
+import com.daewooenc.mybatis.main.decSQLSessionFactory;
+import com.dec.util.DecConstants;
+import com.dec.util.DecDateUtil;
+import com.dec.util.decListUtil;
+import com.dec.webservice.call.decWebserviceUtil;
+import com.matrixone.apps.domain.DomainConstants;
+import com.matrixone.apps.domain.DomainObject;
+import com.matrixone.apps.domain.util.MapList;
+import com.matrixone.apps.domain.util.eMatrixDateFormat;
+
+import matrix.db.Context;
+import matrix.db.JPO;
+import matrix.util.StringList;
+
+@SuppressWarnings({ "rawtypes", "unchecked" })
+public class decInterfaceWorkPackage_mxJPO {
+
+	public Map interfaceWorkPackage(Context context, String[] args) throws Exception{
+		Map resultMap = new HashMap();
+//		try ( SqlSession sqlSession = decSQLSessionFactory.getSession() ) {
+		try ( SqlSession sqlSession = decSQLSessionFactory.getBatchSession() ) {
+
+			String objectId = null;
+			StringList projectIdList = null;
+			
+			if ( args.length >= 1 )
+			{
+				objectId = args[0];
+				projectIdList = new StringList(objectId);
+			}
+			else
+			{
+				MapList projectList = DomainObject.findObjects(context
+						, DecConstants.TYPE_PROJECT_SPACE
+						, DecConstants.SYMB_WILD
+						, DecConstants.SYMB_WILD
+						, DecConstants.SYMB_WILD
+						, DecConstants.VAULT_ESERVICE_PRODUCTION
+						, "attribute[decProjectType] == 'ongoing' && current != 'Complete' && current != 'Archive'"
+						, false
+						, new StringList(DecConstants.SELECT_ID));
+				
+				projectIdList = decListUtil.getSelectValueListForMapList(projectList, DecConstants.SELECT_ID);
+			}
+			
+			decCodeMaster_mxJPO codeJPO = new decCodeMaster_mxJPO();
+			MapList cwpActivityTypeList = null;
+			Map<String, Map> cwpActivityTypeMap = null;
+			MapList iwpTypeList = null;
+			Map<String, Map> iwpTypeMap = null;
+			MapList cwpIwpStageList = null;
+			Map<String, Map> cwpIwpStageMap = null;
+			MapList cwpIwpStatusList = null;
+			Map<String, Map> cwpIwpStatusMap = null;
+			
+			Map selectCodeDetailMap = new HashMap();
+			Map fmcsDisciplineMap = null;
+			
+			Map seqMap = null;
+			String OGG_CD = null;
+			
+			StringList slSelect = new StringList();
+			slSelect.add(DecConstants.SELECT_ID);
+			slSelect.add(DecConstants.SELECT_NAME); // SITE_CD, LV?_CD, CWA_CD, CWP_CD
+			slSelect.add(DecConstants.SELECT_DESCRIPTION); // LV?_DESC, CWA_DESC, CWP_DESC
+			slSelect.add(DecConstants.SELECT_ATTRIBUTE_DECWBSTYPE); // LV?_TYPE
+			slSelect.add(DecConstants.SELECT_ATTRIBUTE_DECDISCIPLINE); // DCPLN_CD
+			slSelect.add(DecConstants.SELECT_ATTRIBUTE_DECCWPACTIVITYTYPE); // ACTIVITY_TYPE
+//			slSelect.add(DecConstants.SELECT_ATTRIBUTE_DECSEQUENTIALNO); // SEQUENTIAL_NO
+			slSelect.add(DecConstants.SELECT_ATTRIBUTE_DECPRIORITYGROUP); // PRFR_GRP_CD
+			slSelect.add(DecConstants.SELECT_ATTRIBUTE_DECPRIORITYNO); // PRFR_RANK
+			slSelect.add(DecConstants.SELECT_ATTRIBUTE_DECSTAGE); // STAGE
+			slSelect.add(DecConstants.SELECT_CURRENT); // STATUS
+			slSelect.add(DecConstants.SELECT_ATTRIBUTE_DECSUBCONNO); // ORG1_CD
+			slSelect.add("attribute[decSubConNo2]"); // ORG2_CD
+			slSelect.add(DecConstants.SELECT_ATTRIBUTE_TASK_ESTIMATED_START_DATE); // STATUS, PLAN_ST_YMD
+			slSelect.add(DecConstants.SELECT_ATTRIBUTE_DECTASKFORECASTSTARTDATE); // STATUS, FCAST_ST_YMD
+			slSelect.add(DecConstants.SELECT_ATTRIBUTE_TASK_ACTUAL_START_DATE); // ACCP_ST_YMD
+			slSelect.add(DecConstants.SELECT_ATTRIBUTE_TASK_ESTIMATED_FINISH_DATE); // PLAN_ED_YMD
+			slSelect.add(DecConstants.SELECT_ATTRIBUTE_DECTASKFORECASTFINISHDATE); // FCAST_ED_YMD
+			slSelect.add(DecConstants.SELECT_ATTRIBUTE_TASK_ACTUAL_FINISH_DATE); // ACCP_ED_YMD
+			slSelect.add(DecConstants.SELECT_ATTRIBUTE_DECMATERIALRAS); // SITE_INWH_DEMYMD
+			slSelect.add(DecConstants.SELECT_ORIGINATED); // FST_REG_DT
+			slSelect.add(DecConstants.SELECT_ATTRIBUTE_ORIGINATOR); // FST_REG_USER_ID
+			slSelect.add(DecConstants.SELECT_MODIFIED); // FNL_EDIT_DT
+			slSelect.add(DecConstants.SELECT_ATTRIBUTE_DECIWPTYPE); // ACTV_TP_CD
+			
+			DomainObject doObj = null;
+			String projectCode = null;
+			MapList workPackageList = null;
+			
+			Map workPackageMap = null;
+			Map levelMap = new HashMap();
+			Map cwaMap = new HashMap();
+			Map cwpMap = new HashMap();
+			String level = null;
+			String name = null;
+			String type = null;
+			String desc = null;
+			String wbsType = null;
+			String activityType = null;
+			String activityTypeDesc = null;
+			String iwpType = null;
+			String iwpTypeDesc = null;
+			String forecastStartDate = null;
+			String estimatedStartDate = null;
+			String actualStartDate = null;
+			String forecastFinishDate = null;
+			String estimatedFinishDate = null;
+			String actualFinishDate = null;
+			String materialRAS = null;
+			String current = null;
+			String statusCode = null;
+			String statusDesc = null;
+			String stageCode = null;
+			String stageDesc = null;
+			String originated = null;
+			String modified = null;
+			String originator = null;
+			String discipline = null;
+			
+			MapList fmcsDisciplineList = null;
+			String fmcsDiscipline = null;
+			Map fmcsDisciplineTempMap = null; 
+			
+			Locale locale = context.getLocale();
+			
+			Date originatedDate = null;
+			Date modifiedDate = null;
+			Date date = new Date();
+	    	String today = DecDateUtil.changeDateFormat(date, DecDateUtil.IF_FORMAT);
+	    	
+	    	List<SimpleDateFormat> dateFormatList = DecDateUtil.getDateFormatList();
+	    	SimpleDateFormat parseSDF = new SimpleDateFormat(eMatrixDateFormat.getEMatrixDateFormat(), Locale.US);
+	    	SimpleDateFormat formatSDF = new SimpleDateFormat(DecDateUtil.FORMAT_YYYYMMDD);
+	    	
+			MapList ifCWPList = new MapList();
+			Map ifCWPMap = null;
+			
+			MapList ifIWPList = new MapList();
+			Map ifIWPMap = null;
+			
+			emxTask_mxJPO taskJPO = new emxTask_mxJPO(context, null);
+			
+			Map selectParamMap = new HashMap();
+			Map deleteParamMap = new HashMap();
+			Map insertParamMap = new HashMap();
+			
+			List<Map> latestCWPChangeUserList = null;
+			Map<String, Map> latestCWPChangeUserMap = null;
+			List<Map> latestIWPChangeUserList = null;
+			Map<String, Map> latestIWPChangeUserMap = null;
+			Map latestChangeUserInfo = null;
+			String latestChangeUser = null;
+			
+			for ( String projectId : projectIdList )
+			{
+				// Code Master 조회
+				cwpActivityTypeList = codeJPO.getProjectCodeDetailList(context, projectId, "CWP Activity Type");
+				cwpActivityTypeMap = decListUtil.getSelectKeyDataMapForMapList(cwpActivityTypeList, DecConstants.SELECT_ATTRIBUTE_DECCODE);
+				
+				iwpTypeList = codeJPO.getProjectCodeDetailList(context, projectId, "IWP Type");
+				iwpTypeMap = decListUtil.getSelectKeyDataMapForMapList(iwpTypeList, DecConstants.SELECT_ATTRIBUTE_DECCODE);
+				
+				cwpIwpStageList = codeJPO.getProjectCodeDetailList(context, projectId, "CWP/IWP Stage");
+				cwpIwpStageMap = decListUtil.getSelectKeyDataMapForMapList(cwpIwpStageList, DecConstants.SELECT_ATTRIBUTE_DECCODE);
+				
+				cwpIwpStatusList = codeJPO.getProjectCodeDetailList(context, projectId, "CWP/IWP Status");
+				cwpIwpStatusMap = decListUtil.getSelectKeyDataMapForMapList(cwpIwpStatusList, DecConstants.SELECT_ATTRIBUTE_DECCODE);
+				
+				selectCodeDetailMap.clear();
+				selectCodeDetailMap.put("projectId", projectId);
+				selectCodeDetailMap.put("codeMasterName", "Discipline");
+				selectCodeDetailMap.put("groupBySelect", DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILTYPE);
+				selectCodeDetailMap.put("groupByValue", "Discipline");
+				selectCodeDetailMap.put("groupByDetailSelect", DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILTYPE);
+				selectCodeDetailMap.put("groupByDetailValue", "FMCS Discipline");
+				
+				fmcsDisciplineMap = codeJPO.getCodeDetailListGroupBy(context, selectCodeDetailMap);
+				
+				// OGG 코드 채번
+				seqMap = sqlSession.selectOne("IF_WorkPackage.selectCWPListSeq");
+				OGG_CD = String.valueOf( seqMap.get("NEXTVAL") );
+				
+				doObj = DomainObject.newInstance(context, projectId);
+				projectCode = doObj.getInfo(context, DomainConstants.SELECT_NAME);
+				workPackageList = doObj.getRelatedObjects(context, DecConstants.RELATIONSHIP_SUBTASK, DecConstants.TYPE_TASK_MANAGEMENT
+						, slSelect, null
+						, false, true, (short) 0
+						, null, null
+						, 0);
+				
+				// Change Register에서 최종 수정자 정보 조회
+				selectParamMap.clear();
+				selectParamMap.put("SITE_CD", projectCode);
+				
+				latestCWPChangeUserList = sqlSession.selectList("IF_WorkPackage.selectCWPLatestChangeUserList", selectParamMap);
+				latestCWPChangeUserMap = decListUtil.getSelectKeyDataMapForMapList(latestCWPChangeUserList, "CWP_NO");
+				latestIWPChangeUserList = sqlSession.selectList("IF_WorkPackage.selectIWPLatestChangeUserList", selectParamMap);
+				latestIWPChangeUserMap = decListUtil.getSelectKeyDataMapForMapList(latestIWPChangeUserList, "IWP_NO");
+				
+				// 기존 데이터 삭제
+				deleteParamMap.clear();
+				deleteParamMap.put("SITE_CD", projectCode);
+				
+				sqlSession.delete("IF_WorkPackage.deleteCWPList", deleteParamMap);
+				sqlSession.delete("IF_WorkPackage.deleteIWPList", deleteParamMap);
+				
+				levelMap.clear();
+				cwaMap.clear();
+				cwpMap.clear();
+				
+				ifCWPList.clear();
+				ifIWPList.clear();
+				
+				for ( Object obj : workPackageList )
+				{
+					workPackageMap = (Map) obj;
+					level = (String) workPackageMap.get(DecConstants.SELECT_LEVEL);
+					name = (String) workPackageMap.get(DecConstants.SELECT_NAME);
+					type = (String) workPackageMap.get(DecConstants.SELECT_TYPE);
+					desc = (String) workPackageMap.get(DecConstants.SELECT_DESCRIPTION);
+					desc = StringUtils.isEmpty(desc) ? "---" : desc;
+					wbsType = (String) workPackageMap.get(DecConstants.SELECT_ATTRIBUTE_DECWBSTYPE);
+					
+					levelMap.put("PACK_LVL_CD" + level, name);
+					levelMap.put("PACK_CONT" + level, desc);
+					levelMap.put("LVL_TP_CD" + level, wbsType);
+					
+					if ( "CWA".equals(wbsType) )
+					{
+						cwaMap.put("CWA_NO", name);
+						cwaMap.put("CWA_CONT", desc);
+						continue;
+					}
+					
+					if ( DecConstants.TYPE_DECCWPTASK.equals(type) )
+					{
+						// get FMCS Discipline
+						discipline = (String) workPackageMap.get(DecConstants.SELECT_ATTRIBUTE_DECDISCIPLINE);
+						fmcsDisciplineList = (MapList) fmcsDisciplineMap.get(discipline);
+						if ( fmcsDisciplineList == null || fmcsDisciplineList.size() == 0 )
+						{
+							fmcsDiscipline = discipline;
+						}
+						else 
+						{
+							fmcsDisciplineTempMap = (Map) fmcsDisciplineList.get(0);
+							fmcsDiscipline = (String) fmcsDisciplineTempMap.getOrDefault(DecConstants.SELECT_NAME, discipline);
+						}
+						
+						// get Activity Type Desc
+						activityType = (String) workPackageMap.get(DecConstants.SELECT_ATTRIBUTE_DECCWPACTIVITYTYPE);
+						if ( cwpActivityTypeMap.containsKey(activityType) ) 
+						{
+							activityTypeDesc = (String) cwpActivityTypeMap.get(activityType).get(DecConstants.SELECT_DESCRIPTION);
+						}
+						else
+						{
+							activityTypeDesc = "---";
+						}
+						
+						// get Stage
+						stageCode = (String) workPackageMap.get(DecConstants.SELECT_ATTRIBUTE_DECSTAGE);
+						if ( cwpIwpStageMap.containsKey(stageCode) ) 
+						{
+							stageDesc = (String) cwpIwpStageMap.get(stageCode).get(DecConstants.SELECT_DESCRIPTION);
+						}
+						else
+						{
+							stageDesc = stageCode;
+						}
+						
+						// get Status
+						forecastStartDate = (String) workPackageMap.get(DecConstants.SELECT_ATTRIBUTE_DECTASKFORECASTSTARTDATE);
+						estimatedStartDate = (String) workPackageMap.get(DecConstants.SELECT_ATTRIBUTE_TASK_ESTIMATED_START_DATE);
+						current = (String) workPackageMap.get(DecConstants.SELECT_CURRENT);
+						
+						statusCode = taskJPO.getCWPTaskStateName(context, forecastStartDate, estimatedStartDate, current, today, locale);
+						if ( cwpIwpStatusMap.containsKey(statusCode) ) 
+						{
+							statusDesc = (String) cwpIwpStatusMap.get(statusCode).get(DecConstants.SELECT_DESCRIPTION);
+						}
+						else
+						{
+							statusDesc = statusCode;
+						}
+						
+						// format date 
+						actualStartDate = (String) workPackageMap.get(DecConstants.SELECT_ATTRIBUTE_TASK_ACTUAL_START_DATE);
+						estimatedFinishDate = (String) workPackageMap.get(DecConstants.SELECT_ATTRIBUTE_TASK_ESTIMATED_FINISH_DATE);
+						forecastFinishDate = (String) workPackageMap.get(DecConstants.SELECT_ATTRIBUTE_DECTASKFORECASTFINISHDATE);
+						actualFinishDate = (String) workPackageMap.get(DecConstants.SELECT_ATTRIBUTE_TASK_ACTUAL_FINISH_DATE);
+						materialRAS = (String) workPackageMap.get(DecConstants.SELECT_ATTRIBUTE_DECMATERIALRAS);
+						
+						estimatedStartDate = DecDateUtil.changeDateFormat(estimatedStartDate, parseSDF, formatSDF);
+						forecastStartDate = DecDateUtil.changeDateFormat(forecastStartDate, parseSDF, formatSDF);
+						actualStartDate = DecDateUtil.changeDateFormat(actualStartDate, parseSDF, formatSDF);
+						
+						estimatedFinishDate = DecDateUtil.changeDateFormat(estimatedFinishDate, parseSDF, formatSDF);
+						forecastFinishDate = DecDateUtil.changeDateFormat(forecastFinishDate, parseSDF, formatSDF);
+						actualFinishDate = DecDateUtil.changeDateFormat(actualFinishDate, parseSDF, formatSDF);
+						
+						materialRAS = DecDateUtil.changeDateFormat(materialRAS, parseSDF, formatSDF);
+						
+						// parse date
+						originated = (String) workPackageMap.get(DecConstants.SELECT_ORIGINATED);
+						modified = (String) workPackageMap.get(DecConstants.SELECT_MODIFIED);
+						
+						originatedDate = DecDateUtil.autoChangeDate(originated, dateFormatList);
+						modifiedDate = DecDateUtil.autoChangeDate(modified, dateFormatList);
+						
+						// get change user
+						originator = (String) workPackageMap.getOrDefault(DecConstants.SELECT_ATTRIBUTE_ORIGINATOR, "---");
+								
+						latestChangeUserInfo = latestCWPChangeUserMap.get(name);
+						if ( latestChangeUserInfo != null )
+						{
+							latestChangeUser = (String) latestChangeUserInfo.getOrDefault("CHANGE_USER", "---");
+						}
+						else
+						{
+							latestChangeUser = "---";
+						}
+						
+						// pack cwpMap for iwpMap
+						cwpMap.put("CWP_NO", name);
+						
+						// pack CWP variables
+						ifCWPMap = new HashMap();
+						ifCWPMap.put("SITE_CD", projectCode);
+						ifCWPMap.put("DCPLN_CD", fmcsDiscipline);
+						ifCWPMap.putAll(levelMap);
+						ifCWPMap.putAll(cwaMap);
+						ifCWPMap.put("ACTV_TP_CD", activityType);
+						ifCWPMap.put("ACTV_TP_CONT", activityTypeDesc);
+//						ifWorkPackageMap.put("SEQUENTIAL_NO", (String) workPackageMap.get(DecConstants.SELECT_ATTRIBUTE_DECSEQUENTIALNO));
+						ifCWPMap.put("CWP_NO", name);
+						ifCWPMap.put("CWP_CONT", desc);
+						ifCWPMap.put("PRFR_GRP_CD", (String) workPackageMap.get(DecConstants.SELECT_ATTRIBUTE_DECPRIORITYGROUP));
+						ifCWPMap.put("PRFR_RANK", (String) workPackageMap.get(DecConstants.SELECT_ATTRIBUTE_DECPRIORITYNO));
+						ifCWPMap.put("STAGE_CD", stageCode);
+						ifCWPMap.put("STAGE_CONT", stageDesc);
+						ifCWPMap.put("STS_CD", statusCode);
+						ifCWPMap.put("STS_CONT", statusDesc);
+						ifCWPMap.put("ORG_CD1", (String) workPackageMap.get(DecConstants.SELECT_ATTRIBUTE_DECSUBCONNO));
+						ifCWPMap.put("ORG_CD2", (String) workPackageMap.get("attribute[decSubConNo2]"));
+						ifCWPMap.put("PLAN_ST_YMD", estimatedStartDate);
+						ifCWPMap.put("FCAST_ST_YMD", forecastStartDate);
+						ifCWPMap.put("ACCP_ST_YMD", actualStartDate);
+						ifCWPMap.put("PLAN_ED_YMD", estimatedFinishDate);
+						ifCWPMap.put("FCAST_ED_YMD", forecastFinishDate);
+						ifCWPMap.put("ACCP_ED_YMD", actualFinishDate);
+						ifCWPMap.put("SITE_INWH_DEMYMD", materialRAS);
+						ifCWPMap.put("FST_REG_DT", originatedDate);
+						ifCWPMap.put("FST_REG_USER_ID", originator.length() > 10 ? originator.substring(0, 10) : originator);
+						ifCWPMap.put("FNL_EDIT_DT", modifiedDate);
+						ifCWPMap.put("FNL_EDIT_USER_ID", latestChangeUser.length() > 10 ? latestChangeUser.substring(0, 10) : latestChangeUser);
+						ifCWPMap.put("OBJECTID", (String) workPackageMap.get(DecConstants.SELECT_ID));
+						
+						ifCWPList.add(ifCWPMap);
+					}
+					else if ( DecConstants.TYPE_DECIWPTASK.equals(type) )
+					{
+						// get IWP Type Desc
+						iwpType = (String) workPackageMap.get(DecConstants.SELECT_ATTRIBUTE_DECIWPTYPE);
+						if ( iwpTypeMap.containsKey(iwpType) ) 
+						{
+							iwpTypeDesc = (String) iwpTypeMap.get(iwpType).get(DecConstants.SELECT_DESCRIPTION);
+						}
+						else
+						{
+							iwpTypeDesc = "---";
+						}
+						
+						// get Stage
+						stageCode = (String) workPackageMap.get(DecConstants.SELECT_ATTRIBUTE_DECSTAGE);
+						if ( cwpIwpStageMap.containsKey(stageCode) ) 
+						{
+							stageDesc = (String) cwpIwpStageMap.get(stageCode).get(DecConstants.SELECT_DESCRIPTION);
+						}
+						else
+						{
+							stageDesc = stageCode;
+						}
+						
+						// get Status
+						forecastStartDate = (String) workPackageMap.get(DecConstants.SELECT_ATTRIBUTE_DECTASKFORECASTSTARTDATE);
+						estimatedStartDate = (String) workPackageMap.get(DecConstants.SELECT_ATTRIBUTE_TASK_ESTIMATED_START_DATE);
+						current = (String) workPackageMap.get(DecConstants.SELECT_CURRENT);
+						
+						statusCode = taskJPO.getCWPTaskStateName(context, forecastStartDate, estimatedStartDate, current, today, locale);
+						statusCode = taskJPO.getCWPTaskStateName(context, forecastStartDate, estimatedStartDate, current, today, locale);
+						if ( cwpIwpStatusMap.containsKey(statusCode) ) 
+						{
+							statusDesc = (String) cwpIwpStatusMap.get(statusCode).get(DecConstants.SELECT_DESCRIPTION);
+						}
+						else
+						{
+							statusDesc = statusCode;
+						}
+						
+						// format date 
+						actualStartDate = (String) workPackageMap.get(DecConstants.SELECT_ATTRIBUTE_TASK_ACTUAL_START_DATE);
+						estimatedFinishDate = (String) workPackageMap.get(DecConstants.SELECT_ATTRIBUTE_TASK_ESTIMATED_FINISH_DATE);
+						forecastFinishDate = (String) workPackageMap.get(DecConstants.SELECT_ATTRIBUTE_DECTASKFORECASTFINISHDATE);
+						actualFinishDate = (String) workPackageMap.get(DecConstants.SELECT_ATTRIBUTE_TASK_ACTUAL_FINISH_DATE);
+						materialRAS = (String) workPackageMap.get(DecConstants.SELECT_ATTRIBUTE_DECMATERIALRAS);
+						
+						estimatedStartDate = DecDateUtil.changeDateFormat(estimatedStartDate, parseSDF, formatSDF);
+						forecastStartDate = DecDateUtil.changeDateFormat(forecastStartDate, parseSDF, formatSDF);
+						actualStartDate = DecDateUtil.changeDateFormat(actualStartDate, parseSDF, formatSDF);
+						
+						estimatedFinishDate = DecDateUtil.changeDateFormat(estimatedFinishDate, parseSDF, formatSDF);
+						forecastFinishDate = DecDateUtil.changeDateFormat(forecastFinishDate, parseSDF, formatSDF);
+						actualFinishDate = DecDateUtil.changeDateFormat(actualFinishDate, parseSDF, formatSDF);
+						
+						materialRAS = DecDateUtil.changeDateFormat(materialRAS, parseSDF, formatSDF);
+						
+						// parse date
+						originated = (String) workPackageMap.get(DecConstants.SELECT_ORIGINATED);
+						modified = (String) workPackageMap.get(DecConstants.SELECT_MODIFIED);
+						
+						originatedDate = DecDateUtil.autoChangeDate(originated, dateFormatList);
+						modifiedDate = DecDateUtil.autoChangeDate(modified, dateFormatList);
+						
+						// get change user
+						originator = (String) workPackageMap.getOrDefault(DecConstants.SELECT_ATTRIBUTE_ORIGINATOR, "---");
+						
+						latestChangeUserInfo = latestIWPChangeUserMap.get(name);
+						if ( latestChangeUserInfo != null )
+						{
+							latestChangeUser = (String) latestChangeUserInfo.getOrDefault("CHANGE_USER", "---");
+						}
+						else
+						{
+							latestChangeUser = "---";
+						}
+						
+						// pack IWP variables
+						ifIWPMap = new HashMap();
+						ifIWPMap.put("SITE_CD", projectCode);
+						ifIWPMap.putAll(cwpMap);
+						ifIWPMap.put("IWP_NO", name);
+						ifIWPMap.put("IWP_CONT", desc);
+						ifIWPMap.put("STAGE_CD", stageCode);
+						ifIWPMap.put("STAGE_CONT", stageDesc);
+						ifIWPMap.put("STS_CD", statusCode);
+						ifIWPMap.put("STS_CONT", statusDesc);
+						ifIWPMap.put("ACTV_TP_CD", iwpType);
+						ifIWPMap.put("ACTV_TP_CONT", iwpTypeDesc);
+						ifIWPMap.put("PLAN_ST_YMD", estimatedStartDate);
+						ifIWPMap.put("FCAST_ST_YMD", forecastStartDate);
+						ifIWPMap.put("ACCP_ST_YMD", actualStartDate);
+						ifIWPMap.put("PLAN_ED_YMD", estimatedFinishDate);
+						ifIWPMap.put("FCAST_ED_YMD", forecastFinishDate);
+						ifIWPMap.put("ACCP_ED_YMD", actualFinishDate);
+						ifIWPMap.put("FST_REG_DT", originatedDate);
+						ifIWPMap.put("FST_REG_USER_ID", originator.length() > 10 ? originator.substring(0, 10) : originator);
+						ifIWPMap.put("FNL_EDIT_DT", modifiedDate);
+						ifIWPMap.put("FNL_EDIT_USER_ID", latestChangeUser.length() > 10 ? latestChangeUser.substring(0, 10) : latestChangeUser);
+						ifIWPMap.put("OGG_CD", OGG_CD);
+						ifIWPMap.put("OBJECTID", (String) workPackageMap.get(DecConstants.SELECT_ID));
+						
+						ifIWPList.add(ifIWPMap);
+					}
+				}
+				
+				if ( ifCWPList.size() > 0 )
+				{
+					for (Object obj : ifCWPList)
+					{
+						insertParamMap = (Map) obj;
+						sqlSession.insert("IF_WorkPackage.insertCWP", insertParamMap);
+					}
+					
+					if ( ifIWPList.size() > 0 )
+					{
+						for (Object obj : ifIWPList)
+						{
+							insertParamMap = (Map) obj;
+							sqlSession.insert("IF_WorkPackage.insertIWP", insertParamMap);
+						}
+					}
+				}
+				
+				// 프로젝트 단위로 commit 처리
+				sqlSession.commit(); 
+				
+//				boolean result = decWebserviceUtil.callUrlGet(decWebserviceUtil.generateServiceURL(null, "url.if.project.workPackage", "?orgCd=" + projectCode));
+//				if ( result )
+//				{
+					resultMap.put("result", "Success");
+//				}
+//				else
+//				{
+//					resultMap.put("result", "Error");
+//					resultMap.put("msg", "WebService Error");
+//				}
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			resultMap.put("result", "Error");
+			resultMap.put("msg", e.getMessage());
+		}
+		return resultMap;
+	}
+}

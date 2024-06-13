@@ -1,0 +1,839 @@
+{
+  "maturity": {
+    "create": "Borrador",
+    "assign": "Tareas pendientes",
+    "active": "En curso",
+    "review": "En aprobación",
+    "closed": "Completada"
+  },
+  "priorities": {
+    "title": "Prioridad",
+    "low": "Baja",
+    "medium": "Media",
+    "high": "Alta",
+    "urgent": "Urgente"
+  },
+  "dates": {
+    "seconds": "{number} segundos",
+    "minutes": "{number} minutos",
+    "hours": "{number} horas",
+    "days": "{number} días",
+    "months": "{number} meses",
+    "years": "{number} años"
+  },
+  "placeholder": {
+    "reportedAgainstPlaceholder": "Busque, seleccione en 3D o coloque un objeto para establecer como Elemento afectado.",
+    "resolvedByPlaceholder": "Busque, seleccione en 3D o coloque un objeto para establecer como Solucionado por.",
+    "resolvedItemsPlaceholder": "Busque, seleccione en 3D o coloque un objeto para establecer como Elementos solucionados.",
+    "contextPlaceholder": "Busque o suelte un objeto para establecerlo como Contextos.",
+    "emptyRelatedDatagridView": "Agregar o soltar contenido aquí"
+  },
+  "lifecycle": {
+    "create": "Configure los problemas en el estado «Borrador» para indicar que comienza a trabajar en ellos.",
+    "assign": "Configure los problemas en el estado «Tareas pendientes» para permitir que las personas asignadas trabajen en ellos.",
+    "active": "Configure los problemas en el estado «En curso» para indicar que está trabajando en ellos.",
+    "review": "Configure los problemas en el estado «En aprobación» para permitir la revisión de su solución.",
+    "closed": "Configure los problemas en el estado «Completado» si se ha solucionado todo.",
+    "CREATE": "Configure los problemas en el estado «{stateDisplayName}» para indicar que comienza a trabajar en ellos.",
+    "ASSIGN": "Configure los problemas en el estado «{stateDisplayName}» para permitir que las personas asignadas trabajen en ellos.",
+    "ACTIVE": "Configure los problemas en el estado «{stateDisplayName}» para indicar que está trabajando en ellos.",
+    "REVIEW": "Configure los problemas en el estado «{stateDisplayName}» para permitir la revisión de su solución.",
+    "CLOSED": "Configure los problemas en el estado «{stateDisplayName}» si se ha solucionado todo.",
+    "partial": "Error en la operación debido a {number} problemas.",
+    "error": "Se ha producido un error. Actualice la página e inténtelo de nuevo.",
+    "notSupported": "Solo se pueden ascender o descender los problemas con el mismo estado de madurez y el mismo proceso de validación.",
+    "routeIndicatorTooltip": {
+      "rejectionTitle": "Rechazado por:",
+      "approvalTitle": "Aprobado por:",
+      "rejectionText": "{name} el {date}.",
+      "approvalText": "{name} el {date}.",
+      "moreTooltip": {
+        "title": "{number} decisiones",
+        "approvalText": "Aprobado el {date}",
+        "rejectionText": "Rechazado el {date}"
+      },
+      "inProgressTooltip": {
+        "title": "Esperando aprobación de:",
+        "multiSelectionTitle": "Los problemas seleccionados están pendientes de aprobación por parte de varios revisores."
+      }
+    },
+    "approveModal": {
+      "reasonLabel": "Comentario",
+      "reasonPlaceholder": "Comentario para su aprobación...",
+      "header": "Aprobar la promoción a '{approveTo}'",
+      "reasonRequired": "Proporcione un comentario para su aprobación.",
+      "okButton": "Aprobar",
+      "cancelButton": "Cancelar"
+    },
+    "rejectModal": {
+      "reasonLabel": "Motivo",
+      "reasonPlaceholder": "El motivo de su rechazo...",
+      "header": "Rechazar la promoción a '{approveTo}'",
+      "reasonRequired": "Indique un motivo para su rechazo.",
+      "okButton": "Rechazar",
+      "cancelButton": "Cancelar"
+    },
+    "paths": {
+      "anyStateToClose": "Permite establecer los problemas como «Completados» desde cualquier estado por parte del propietario.",
+      "approve": "Aprobar",
+      "reject": "Rechazar"
+    },
+    "orgs": {
+      "Reporting": "Organización informante",
+      "Responsible": "Organización responsable"
+    },
+    "varies": "Varía",
+    "goToNextState": "Estado siguiente",
+    "goToPrevState": "Estado anterior"
+  },
+  "routes": {
+    "header": {
+      "states": "Promoción de madurez",
+      "routes": "Decisiones"
+    },
+    "columns": {
+      "reviewer": "Revisor",
+      "date": "Fecha de decisión",
+      "reason": "Motivo/Comentario",
+      "action": "Acción",
+      "attachments": "Adjuntos"
+    },
+    "attachmentsManagerTitle": "Decisión de promoción de la madurez [{fromState} -> {toState}] [{status}]",
+    "status": {
+      "approved": "Aprobado",
+      "rejected": "Rechazado",
+      "inProgress": "En progreso"
+    },
+    "confirm": "Confirmar",
+    "approve": "Aprobar"
+  },
+  "create": {
+    "title": "problema",
+    "titleTemplate": "plantillas",
+    "templateName": "Nombre de plantilla",
+    "templateDesc": "Descripción",
+    "titleActionCreate": "Nuevo",
+    "titleActionEdit": "Editar",
+    "templateApplySuccess": "La plantilla «{name}» se ha aplicado correctamente.",
+    "templateApplyError": "Se ha producido un error al aplicar la plantilla «{name}».",
+    "templateApplyWarningAttachments": "Algunos archivos adjuntos a los que hace referencia la plantilla no se pueden obtener, no se agregarán.",
+    "templateApplyWarningRelated": "Algunos archivos adjuntos a los que hace referencia la plantilla no se pueden recuperar, no se agregarán.",
+    "issueApplySuccess": "El problema «{title} - {name}» se ha aplicado correctamente.",
+    "issueApplyError": "Se ha producido un error al aplicar el problema «{title} - {name}».",
+    "required": "El campo necesario no puede estar vacío.",
+    "creationSuccess": "Problema creado correctamente.",
+    "creationTemplateSuccess": "Plantilla creada correctamente.",
+    "updateTemplateSuccess": "Plantilla actualizada correctamente.",
+    "creationFailed": "Se ha producido un error durante la creación. Inténtelo de nuevo.",
+    "classificationFailed": "Se ha producido un error al clasificar el objeto",
+    "setAttributesFailed": "Se ha producido un error al establecer los atributos de clasificación",
+    "validationFailed": "Algunos campos no se han rellenado correctamente.",
+    "promotionSuccess": "El problema se ha promovido con éxito.",
+    "promotionFailed": "Se ha producido un error durante la promoción.",
+    "uploadImagesFailed": "Se ha producido un error durante la carga de imágenes.",
+    "sendButton": "Iniciar",
+    "saveButton": "Guardar",
+    "saveAsDraftButton": "Guardar como borrador",
+    "cancelButton": "Cancelar",
+    "settings": "Configuración",
+    "modeToggler": {
+      "multiStep": "Multipaso",
+      "fullView": "Vista completa",
+      "tooltipMultiStep": "Cambiar a la vista de varios pasos",
+      "tooltipFullView": "Cambiar a la vista de formulario completo"
+    },
+    "start": {
+      "title": "Crear problemas y plantillas",
+      "cancelButton": "Cancelar",
+      "actionPage": {
+        "issue": {
+          "title": "Problema",
+          "fromBlank": "Nuevo",
+          "fromIssue": "Duplicar un problema",
+          "fromTemplate": "A partir de una plantilla"
+        },
+        "template": {
+          "title": "Plantilla",
+          "fromBlank": "Nuevo",
+          "fromIssue": "A partir de un problema existente",
+          "edit": "Gestionar",
+          "cloneSuffix": "[DUP]"
+        }
+      }
+    },
+    "views": {
+      "properties": "Propiedades",
+      "relatedObjects": "Contenidos",
+      "team": "Miembros",
+      "attachments": "Adjuntos",
+      "moreAttributes": "Más atributos",
+      "finalize": "Finalizar"
+    },
+    "properties": {
+      "labels": {
+        "title": "Título",
+        "titlePlaceholder": "Título del nuevo problema…",
+        "titleHelper": "Breve resumen del problema en una línea.",
+        "required": " * ",
+        "type": "Tipo",
+        "escalationRequired": "Ascenso obligatorio",
+        "escalationRequired_Yes": "Sí",
+        "escalationRequired_No": "No",
+        "typePlaceHolder": "",
+        "typeHelper": "Tipo del objeto del problema",
+        "credentials": "Credenciales",
+        "similarIssues": "Problemas similares",
+        "Created": "Creado",
+        "Updated": "Actualizado",
+        "ago": "hace",
+        "similarIssuesHelper": "Estos problemas existentes tienen un título similar. Puede ser mejor comentar allí en lugar de crear otro problema similar.",
+        "description": "Descripción",
+        "descriptionPlaceholder": "Escribir una descripción…",
+        "descriptionHelper": "Una descripción detallada del problema.",
+        "classification": "Clasificaciones",
+        "classificationAddBtn": "Agregar",
+        "classificationPlaceholder": "Elegir una clase...",
+        "classificationHelper": "Una o más clasificaciones utilizadas para identificar el problema.",
+        "resolutionRecommendation": "Recomendación de resolución",
+        "resolutionRecommendationPlaceholder": "¿Cómo se debe hacer?",
+        "resolutionRecommendationHelper": "Una recomendación para explicar cómo se debe solucionar este problema.",
+        "priorityHelper": "La importancia del problema en relación con otros problemas.",
+        "priorityHelperUrgent": "Urgente: máxima prioridad. Indica que este problema tiene prioridad sobre todos los demás.",
+        "priorityHelperHigh": "Alto: indica que este problema está causando un conflicto y requiere atención urgente.",
+        "priorityHelperMedium": "Medio: indica que este problema tiene un impacto significativo.",
+        "priorityHelperLow": "Bajo: indica que este problema tiene un impacto relativamente menor.",
+        "dueDate": "Fecha de vencimiento",
+        "dueDatePlaceholder": "Seleccionar una fecha de vencimiento…",
+        "dueDateHelper": "La fecha en la que debe completarse este problema.",
+        "resolutionStatement": "Declaración de resolución",
+        "resolutionStatementPlaceholder": "¿Cómo se solucionaron los problemas?"
+      }
+    },
+    "related": {
+      "labels": {
+        "reportedAgainst": "Elementos afectados",
+        "reportedAgainstshortHelper": "Agregue uno o más objetos para los que se está manifestando el problema.",
+        "reportedAgainstlongHelper": "Por ejemplo, puede agregar documentos, objetos de ingeniería y fabricación, tareas o incluso imágenes (en destino)",
+        "reportedAgainstPlaceholder": "Busque, seleccione en 3D o coloque un objeto para establecer como Elemento afectado.",
+        "contexts": "Contextos",
+        "contextshortHelper": "Agregue uno o más objetos para proporcionar más detalles sobre el contexto del problema. ",
+        "contextlongHelper": "Por ejemplo, un problema tiene un documento que puede tener un proyecto como contexto, una pieza de ingeniería podría tener un modelo padre como contexto.",
+        "contextPlaceholder": "Busque o coloque un objeto para configurarlo como Contexto."
+      },
+      "search": "Busque y agregue un objeto.",
+      "remove": "Elimine los objetos seleccionados.",
+      "removeErrorNoSelection": "Seleccione algunos objetos para eliminarlos.",
+      "addBalloonAvailable": "Elija un elemento preciso en 3D para agregarlo al problema.",
+      "addBalloonNotAvailable": "La función de selección en 3D solo está disponible en «Revisión 3D del problema».",
+      "alreadyReportedAgainst": "Este objeto ya se ha agregado, seleccione otro.",
+      "dropError": "Algunos objetos colocados no son compatibles.",
+      "selectContextIn3D": "Elija un elemento preciso en 3D para seleccionar contexto para el problema.",
+      "contextMultiError": "No se admite la adición de varios objetos en contexto.",
+      "treelist": {
+        "tree": "Título",
+        "ds6w:type": "Tipo",
+        "ds6w:identifier": "Nombre",
+        "ds6wg:revision": "Revisión",
+        "occurrence": "Ruta"
+      }
+    },
+    "team": {
+      "labels": {
+        "owner": "Propietario",
+        "coOwners": "Coordinadores",
+        "ownerHelper": "La persona es propietaria del problema y tiene todas las responsabilidades.",
+        "coOwnersHelper": "Los coordinadores tienen las mismas responsabilidades que el propietario, pero no tienen permiso de eliminación.",
+        "assignees": "Personas asignadas",
+        "assigneesHelper": "Las personas asignadas pueden ver, editar y resolver el problema.",
+        "reviewers": "Revisores",
+        "contributors": "Colaboradores",
+        "contributorHelper": "Los colaboradores pueden ver y evaluar el problema.",
+        "informedUsers": "Usuarios informados",
+        "informedUserHelper": "Los usuarios informados pueden ver el problema y reciben notificaciones de actualizaciones.",
+        "assignToMe": "Asignar a mí",
+        "reportingOrganization": "Organización informante",
+        "reportingOrganizationHelper": "Establezca la organización que informa de este problema.",
+        "responsibleOrganization": "Organización responsable",
+        "responsibleOrganizationHelper": "Establezca la organización responsable de este problema."
+      },
+      "alreadyAssigned": "{name} ya se ha asignado.",
+      "removeAssignee": "Haga clic para eliminar este usuario.",
+      "cannotAddOwnerAsCoOwner": "No puede agregar al propietario como coordinador."
+    },
+    "attachments": {
+      "labels": {
+        "attachmentsshortHelper": "Agregue una o varias informaciones adicionales para ayudar en el análisis del problema.",
+        "attachmentslongHelper": "Por ejemplo, puede ser una imagen o documentos relacionados con el asunto, por ejemplo, un documento de solicitud de propuesta o artículos de noticias",
+        "attachmentsPlaceholder": "Cargar/soltar un archivo, buscar/soltar un objeto de 3DEXPERIENCE o utilizar un botón de captura de pantalla de anotación para crear y agregar un adjunto nuevo.",
+        "attachmentsPlaceholderNotAvailable": "Cargar/soltar un archivo, buscar/soltar un objeto de 3DEXPERIENCE para crear y agregar un adjunto nuevo.",
+        "attachments": "Adjuntos"
+      },
+      "screenshotAvailable": "Realice una captura de pantalla.",
+      "screenshotNotAvailable": "La función de captura de pantalla solo está disponible en «Revisión 3D del problema».",
+      "remove": "Elimine los documentos seleccionados.",
+      "removeErrorNoSelection": "Seleccione algunos documentos para eliminarlos.",
+      "attach": {
+        "fromLocalDisk": "Desde el disco local",
+        "from3DX": "Agregar existente"
+      },
+      "annotate": "Anotar"
+    },
+    "finalize": {
+      "labels": {
+        "lifecycle": "Ciclo de vida",
+        "approval": "Aprobación",
+        "template": "Plantilla",
+        "saveAsTemplate": "Guardar como plantilla",
+        "templateNamePlaceholder": "El nombre de la plantilla (campo obligatorio)…",
+        "templateDescriptionPlaceholder": "La descripción de la plantilla…",
+        "templateOverwrite": "Se sobrescribirá una plantilla existente con el mismo nombre."
+      },
+      "closeDialogToggle": "Cierre el cuadro de diálogo después de crearlo.",
+      "enableApproval": "Active la aprobación para garantizar la validación y revisión de este problema.",
+      "assignContentOwner": "Asigne automáticamente el propietario del contenido al problema.",
+      "saveAsTemplateToggle": "Guarde el problema como una plantilla reutilizable."
+    },
+    "moreAttributes": {
+      "selectPlaceholder": "Seleccionar un valor",
+      "textPlaceholder": "Introducir un valor",
+      "numberPlaceholder": "Introducir un valor"
+    }
+  },
+  "templates": {
+    "title": "Seleccionar una plantilla",
+    "titleEdit": "Administrar plantillas",
+    "cancelButton": "Cancelar",
+    "closeButton": "Cerrar",
+    "selectButton": "Seleccionar",
+    "treeList": {
+      "shared": "Compartido",
+      "tree": "Nombre",
+      "description": "Descripción",
+      "owner": "Propietario",
+      "isNotShared": "Esta es una plantilla privada",
+      "isShared": "Esta plantilla está compartida",
+      "placeholder": "No hay ninguna plantilla disponible"
+    },
+    "iconBar": {
+      "title": "Plantillas",
+      "create": "Nuevo",
+      "fromIssue": "Nuevo a partir de un problema",
+      "clone": "Duplicar",
+      "edit": "Editar",
+      "delete": "Eliminar",
+      "share": "Compartir"
+    },
+    "lastUsed": {
+      "title": "Utilizado recientemente"
+    },
+    "preview": {
+      "objectCount": "objetos",
+      "noObject": "No hay ningún objeto"
+    },
+    "shared": {
+      "title": "Plantilla compartida de problemas - {owner}",
+      "description": "Este documento contiene una plantilla compartida de problemas.",
+      "file": "Plantilla compartida de problemas - {owner}",
+      "popover": {
+        "title": "Vincular a esta plantilla compartida",
+        "copy": "Copiar enlace"
+      }
+    },
+    "confirmDelete": {
+      "title": "Eliminando {number} plantillas",
+      "text": "¿Seguro que desea eliminar las plantillas seleccionadas? Se eliminarán <b>permanentemente</b> y esta acción no se puede deshacer.",
+      "sharedInfo": "Las plantillas compartidas de las que no es propietario solo se eliminarán <b>de la lista</b>.",
+      "sharedWarning": "Las plantillas compartidas que posee se eliminarán <b>de todos los usuarios</b>.",
+      "okButton": "Eliminar",
+      "cancelButton": "Cancelar"
+    },
+    "clonePrefix": "Duplicado de {name}",
+    "errors": {
+      "get": "Se ha producido un error al recuperar las plantillas. Actualice la página e inténtelo de nuevo.",
+      "remove": "Se ha producido un error al eliminar las plantillas. Actualice la página e inténtelo de nuevo.",
+      "save": "Se ha producido un error al guardar las plantillas. Actualice la página e inténtelo de nuevo."
+    },
+    "notifications": {
+      "sharedSuccess": "Esta plantilla se ha compartido y se ha generado una URL que se puede compartir.",
+      "sharedTemplateAdded": "Se ha agregado correctamente una plantilla compartida a la lista de plantillas.",
+      "sharedTemplateNotValid": "Esta plantilla compartida ya no es válida. No se ha agregado a la lista de plantillas.",
+      "sharedTemplateAlreadyAdded": "Esta plantilla compartida ya está en su lista de plantillas.",
+      "sharedTemplateNotAdded": "Se ha producido un error al agregar la plantilla compartida. Actualice la página e inténtelo de nuevo.",
+      "sharedTemplateURL": "La URL de la plantilla compartida se ha copiado en el portapapeles."
+    }
+  },
+  "open": {
+    "dialog": {
+      "title": "Abrir objetos en…",
+      "open": "Abrir",
+      "cancel": "Cancelar"
+    },
+    "labels": {
+      "placeholder": "Seleccione su aplicación",
+      "contexts": "Contextos",
+      "reportedAgainst": "Elementos afectados",
+      "resolvedBy": "Solucionado por",
+      "resolvedItems": "Elementos solucionados",
+      "nothing": "No hay nada que abrir, seleccione otro objeto."
+    },
+    "error": "Se ha producido un error al abrir los objetos seleccionados. Actualice y vuelva a intentarlo."
+  },
+  "close": {
+    "preparing": "Preparando el cambio de estado a «Completado»…",
+    "titleSingle": "Establecer {number} problema como «Completado»",
+    "titleMultiple": "Establecer {number} problemas como «Completados»",
+    "nothing": "No hay ningún problema que establecer como «Completado».",
+    "close": "Establecer como Completado",
+    "cancel": "Cancelar",
+    "warning": "¿Está seguro de que desea establecer estos problemas como «Completados»?",
+    "closable": "Si se establecen los siguientes problemas como «Completados», se evitará cualquier modificación, a menos que se vuelva a abrir:",
+    "indelible": "Los siguientes problemas ya se han completado:",
+    "singleSuccess": "{title} se ha establecido como «Completado».",
+    "multipleSuccess": "{number} problemas se han establecido como «Completados».",
+    "error": "Se ha producido un error durante el cambio de estado a «Completado». Inténtelo de nuevo."
+  },
+  "reopen": {
+    "preparing": "Preparando para volver a abrir…",
+    "title": "Reabriendo {number} problemas",
+    "nothing": "No hay problemas que reabrir.",
+    "reopen": "Volver a abrir",
+    "cancel": "Cancelar",
+    "warning": "¿Seguro que desea reabrir estos problemas?",
+    "closable": "Reabriendo los siguientes problemas:",
+    "indelible": "Los siguientes problemas aún no se han establecido como «Completados»:",
+    "singleSuccess": "{title} se ha vuelto a abrir.",
+    "multipleSuccess": "{number} problemas se han reabierto.",
+    "error": "Se ha producido un error al reabrir los problemas. Inténtelo de nuevo."
+  },
+  "delete": {
+    "preparing": "Preparando la eliminación…",
+    "title": "Eliminando {number} problemas",
+    "nothing": "No hay problemas que eliminar.",
+    "delete": "Eliminar",
+    "cancel": "Cancelar",
+    "warning": "¿Seguro que desea eliminar este contenido?",
+    "deletable": "Si elimina los siguientes problemas los suprimirá <b>de forma permanente</b> y esta acción no se podrá deshacer:",
+    "indelible": "Los siguientes problemas no se pueden eliminar, no se encuentran en el estado \"Borrador\":",
+    "singleSuccess": "Se ha eliminado {title}.",
+    "multipleSuccess": "{number} problemas se han eliminado.",
+    "error": "Se ha producido un error durante la eliminación. Inténtelo de nuevo.",
+    "deletePrivilege": "Solo el usuario administrador puede eliminar la ruta finalizada."
+  },
+  "duplicate": {
+    "titleSingle": "{number} problema duplicado",
+    "titleMultiple": "{number} problemas duplicados",
+    "preparing": "Preparando la duplicación…",
+    "duplicate": "Duplicar",
+    "cancel": "Cancelar",
+    "content": "Los siguientes problemas se duplicarán (<i>los duplicados estarán bajo su propiedad en el estado «Borrador»</i>):",
+    "singleSuccess": "{title} se ha duplicado.",
+    "multipleSuccess": "{number} problemas se han duplicado.",
+    "multipleCopiesSuccess": "{number} problemas se han duplicado {multiplication} veces.",
+    "error": "Se ha producido un error durante la duplicación. Inténtelo de nuevo.",
+    "keepRelated": "Mantener el contexto y los elementos afectados existentes en problemas duplicados",
+    "keepAttachments": "Mantener los archivos adjuntos existentes en problemas duplicados",
+    "advancedOptions": "Duplicación avanzada",
+    "titleModifier": "Modificadores de título",
+    "copyCount": "Número de copias",
+    "replace": "Reemplazar",
+    "replacePlaceholder": "Reemplazar cadena de título",
+    "suffix": "Sufijo",
+    "suffixPlaceholder": "Sufijo del título",
+    "prefix": "Prefijo",
+    "prefixPlaceholder": "Prefijo del título",
+    "iterator": "Iterador",
+    "iteratorPlaceholder": "Patrón de iterador",
+    "replaceHelp": "Proporcione la parte del título que se va a reemplazar como una cadena o expresión regular seguida de una cadena por la que se va a reemplazar. Ambas partes estarán separadas por :. Por ejemplo, [a-z]*:La prueba reemplazará todas las cadenas de minúsculas del título con Prueba",
+    "suffixHelp": "Proporcione una cadena al sufijo Título de los problemas duplicados",
+    "prefixHelp": "Proporcione una cadena al prefijo Título de los problemas duplicados",
+    "iteratorHelp": "Proporcione la parte del título que se va a incrementar después de la duplicación como cadena o expresión regular. Se incrementará la parte numérica",
+    "confirmTitle": "Confirme la duplicación de {number} problemas.",
+    "confirm": "Confirmar",
+    "confirmMsg": "El problema {title} se duplicará como"
+  },
+  "images": {
+    "title": "{count} imágenes",
+    "actions": {
+      "download": "Descargar",
+      "upload": "Cargar",
+      "delete": "Eliminar",
+      "popup": "Ventana emergente",
+      "annotate": "Anotar"
+    },
+    "noImages": "No hay imágenes para mostrar.",
+    "popup": {
+      "title": "Visualización de imágenes",
+      "holdIssue": "Retener el problema actual",
+      "releaseIssue": "Publicar el problema actual"
+    },
+    "delete": {
+      "cancel": "Cancelar",
+      "confirmDeleteTitle": "Eliminar imagen",
+      "confirmDeleteMessage": "¿Seguro que quiere eliminar permanentemente esta imagen?",
+      "imageDisplayDeleteError": "Error al eliminar imágenes",
+      "okButton": "Aceptar",
+      "pictureDeleted": "Se han eliminado los archivos de imágenes."
+    },
+    "notSupported": "Este formato de archivo no es compatible. <br>Archivo: {name}.",
+    "errorUpload": "No se puede cargar la imagen {name}.",
+    "pictureUploaded": "Se han cargado los archivos de imágenes."
+  },
+  "team": {
+    "titleSingle": "{count} miembro",
+    "titleMultiple": "{count} miembros",
+    "error": {
+      "loadContent": "No se puede recuperar la información del problema.",
+      "alreadyAdded": "El usuario {name} ya se ha agregado a {role} de los problemas seleccionados.",
+      "isOwner": "El usuario {name} es el propietario de los problemas seleccionados y, por lo tanto, no se puede agregar como coordinador.",
+      "notSupportedDrop": "Los objetos colocados no son compatibles.",
+      "notFound": "No se encontraron resultados.",
+      "skipRemoveOwner": "El propietario se omitirá de la eliminación.",
+      "warnRemoveOwner": "El propietario no se puede quitar.",
+      "dropNotSupported": "Esta operación de soltar no es compatible.",
+      "notSupportedObjects": "Algunos objetos colocados no son compatibles."
+    },
+    "success": {
+      "update": "{role} se han actualizado."
+    },
+    "filter": {
+      "title": "Filtro",
+      "placeholder": "Filtrar miembros del equipo",
+      "filterByName": "Filtrar por título",
+      "searchPlaceholder": "Escribir título para filtrar…",
+      "filterByResponsibilities": "Filtrar por responsabilidades",
+      "filterAll": "Todo",
+      "filterAssignees": "Personas asignadas",
+      "filterCoowners": "Coordinadores",
+      "filterContributors": "Colaboradores"
+    },
+    "owner": {
+      "title": "Propietario",
+      "label": "Propietario",
+      "changeOwnership": "Cambiar propietario"
+    },
+    "confirmRemoveTitle": "Eliminar «{user}» de «{role}»",
+    "confirmRemoveText": "¿Seguro que desea suprimir «{user}» de «{role}»?",
+    "removeOkButton": "Suprimir",
+    "removeCancelButton": "Cancelar",
+    "coOwners": {
+      "title": "Coordinadores",
+      "label": "Coordinador",
+      "add": "Agregar un coordinador",
+      "propagate": "Propagar este coordinador a todos los problemas seleccionados",
+      "propagateAll": "Propagar todos los coordinadores a todos los problemas seleccionados",
+      "remove": "Eliminar coordinador de los problemas seleccionados",
+      "search": {
+        "placeholder": "Buscar un usuario para agregarlo como coordinador…"
+      },
+      "addSelf": "Asignar a mí"
+    },
+    "assignees": {
+      "title": "Personas asignadas",
+      "label": "Persona asignada",
+      "add": "Agregar una persona asignada",
+      "propagate": "Propagar esta persona asignada a todos los problemas seleccionados",
+      "propagateAll": "Propagar todas las personas asignadas a todos los problemas seleccionados",
+      "remove": "Eliminar personas asignadas de los problemas seleccionados",
+      "search": {
+        "placeholder": "Buscar un usuario para agregarlo como persona asignada…"
+      },
+      "addSelf": "Asígnese"
+    },
+    "contributors": {
+      "title": "Colaboradores",
+      "label": "Colaborador",
+      "add": "Agregar un colaborador",
+      "propagate": "Propagar este colaborador a todos los problemas seleccionados",
+      "propagateAll": "Propagar todos los colaboradores a todos los problemas seleccionados",
+      "remove": "Eliminar colaborador de los problemas seleccionados",
+      "search": {
+        "placeholder": "Buscar un usuario para agregarlo como colaborador…"
+      }
+    },
+    "informedUsers": {
+      "title": "Usuarios informados",
+      "label": "Usuario informado",
+      "propagate": "Propagar este usuario informado a todos los problemas seleccionados",
+      "propagateAll": "Propagar todos los usuarios informados a todos los problemas seleccionados",
+      "remove": "Eliminar usuario informado de los problemas seleccionados",
+      "search": {
+        "placeholder": "Buscar un usuario para agregarlo como usuario informado…"
+      }
+    },
+    "common": {
+      "tooltip": "Este miembro se ha asignado a todos los problemas seleccionados.",
+      "label": "Se ha asignado",
+      "notLabel": "Varía",
+      "varies": "Varía",
+      "allIssues": "Todos los problemas"
+    },
+    "notSaved": {
+      "tooltip": "Este miembro aún no se ha guardado."
+    },
+    "changeLayout": "Cambiar diseño de vista",
+    "columns": {
+      "name": "Nombre",
+      "title": "Título",
+      "memberof": "Miembro de",
+      "responsibility": "Responsabilidad",
+      "actions": "Acciones"
+    },
+    "toolbar": {
+      "gridView": "Vista de cuadrícula de datos",
+      "tileView": "Vista de mosaico",
+      "addMember": "Agregar miembros",
+      "assignToSelf": "Asignar a uno mismo",
+      "remove": "Suprimir",
+      "filter": "Filtro",
+      "propagateCoowners": "Propagar todos los coordinadores",
+      "propagateAssignees": "Propagar todas las personas asignadas",
+      "propagateContributors": "Propagar todos los colaboradores",
+      "propagateInformedUsers": "Propagar todos los usuarios informados"
+    },
+    "menu": {
+      "coowner": "Coordinador",
+      "assignee": "Persona asignada",
+      "contributor": "Colaborador",
+      "informedUser": "Usuario informado",
+      "remove": "Eliminar",
+      "profile": "Ver perfil",
+      "propagate": "Propagar",
+      "changeOwner": "Cambiar propietario"
+    },
+    "addMember": {
+      "assignee": "Personas asignadas",
+      "coowner": "Coordinadores",
+      "contributor": "Colaboradores",
+      "informedUser": "Usuarios informados",
+      "typeToSearch": "suelte aquí o escriba para buscar",
+      "noSearchFound": "No se ha encontrado ninguna búsqueda",
+      "add": "Agregar",
+      "cancel": "Cancelar"
+    },
+    "datagridPlaceholder": "No se ha encontrado ningún objeto",
+    "removeTitle": "Suprimir",
+    "removeMessage": "¿Está seguro de que desea eliminar este miembro del Problema?",
+    "memberAlreadyAdded": "Algunos miembros ya se han agregado."
+  },
+  "search": {
+    "error": {
+      "usersNotFound": "No se puede encontrar el usuario o la organización especificados: {users}.",
+      "orgNotFound": "No se puede encontrar la organización."
+    },
+    "info": {
+      "expressSearch": "Pulse Intro para añadir estos usuarios."
+    }
+  },
+  "resolveIssues": {
+    "title": "Resolver problema",
+    "okButton": "Aceptar",
+    "cancel": "Cancelar",
+    "reportedAgainst": "Elementos afectados",
+    "resolvedBy": "Solucionado por",
+    "resolvedItems": "Elementos solucionados",
+    "issue": "Problema",
+    "item": "{count} elemento",
+    "items": "{count} elementos",
+    "revisionFamily": "Familia de revisiones",
+    "addReportedAgainst": "Agregar elemento afectado",
+    "addResolvedBy": "Agregar Solucionado por",
+    "addResolvedItems": "Agregar Elementos solucionados",
+    "pickReportedAgainst": "Elegir elemento afectado",
+    "pickResolvedBy": "Elección resuelta por",
+    "pickResolvedItems": "Elegir Elementos solucionados",
+    "addObjectsForReportedAgainst": "Agregar a elementos afectados",
+    "addObjectsForResolvedBy": "Agregar a Solucionado por",
+    "changeViewLayout": "Cambiar diseño de vista",
+    "errorSameIssue": "No se puede agregar el mismo objeto de problema como solucionado por.",
+    "tooltips": {
+      "propagateHeaderTooltip": "Propagar",
+      "propagateTooltip": "Propagar a problemas seleccionados.",
+      "isLastRevision": "Esta es la última revisión",
+      "isNotLastRevision": "Esta no es la última revisión",
+      "noIsLastRevision": "No aplicable"
+    },
+    "contextualMenus": {
+      "remove": "Suprimir",
+      "propagate": "Propagar",
+      "maturity": "Madurez",
+      "compare": "Comparar",
+      "relationalExplorer": "Relaciones",
+      "openWith": "Abrir con",
+      "replaceByRevision": "Reemplazar por revisión",
+      "replaceByLatestRevision": "Reemplazar por revisión más reciente",
+      "replaceByReleasedLatestRevision": "Reemplazar por la revisión emitida más recientemente",
+      "replaceByStableLatestRevision": "Reemplazar por la revisión estable más reciente",
+      "preview": "Vista preliminar",
+      "edit": "Editar",
+      "undoEdit": "Deshacer Editar",
+      "update": "Actualizar",
+      "information": "Información",
+      "download": "Descargar"
+    },
+    "label": "Título",
+    "name": "Nombre",
+    "type": "Tipo",
+    "revision": "Revisión",
+    "isLastRevision": "Es la revisión más reciente",
+    "actions": "Acciones",
+    "common": "",
+    "propagate": "Propagar",
+    "state": "Estado de madurez",
+    "pickupError_needtoExitInspectionMode": "No se puede seleccionar el objeto si se encuentra en modo de inspección.",
+    "successResolved": "Se han actualizado los contenidos.",
+    "attachSuccess": {
+      "reportedAgainst": "Ha agregado correctamente {count} objetos a {issue} como Elementos afectados.",
+      "resolvedBy": "Ha agregado correctamente {count} objetos a {issue} como Solucionado por.",
+      "resolvedItems": "Ha agregado correctamente {count} objetos a {issue} como Elementos solucionados.",
+      "contexts": "Ha agregado correctamente {count} objetos a {issue} como Contextos.",
+      "attachments": "Ha agregado correctamente {count} objetos a {issue} como Adjuntos."
+    },
+    "attachSuccessMultiple": {
+      "reportedAgainst": "Ha agregado correctamente {count} objetos a varios problemas como Elementos afectados.",
+      "resolvedBy": "Ha agregado correctamente {count} objetos a varios problemas como Solucionado por.",
+      "resolvedItems": "Ha agregado correctamente {count} objetos a varios problemas como Elementos solucionados.",
+      "contexts": "Ha agregado correctamente {count} objetos a varios problemas como Contextos."
+    },
+    "errorResolved": "No se pueden actualizar los contenidos.",
+    "nothingToAdd": "Los objetos seleccionados ya se han agregado.",
+    "nothingToReplace": "No hay información que sustituir.",
+    "errorFetch": "No se puede recuperar la información del objeto.",
+    "errorGetIssues": "No se puede recuperar la información del problema.",
+    "errorShowIssues": "Seleccione los problemas que se encuentran en estado «En curso» y vuelva a intentarlo.",
+    "errorNotSupportedMultipleObject": "No es compatible con varios objetos.",
+    "errorNotSupportedObject": "Este tipo de contenido no es compatible. Utilice la aplicación adecuada de Compass para abrir este tipo de contenido.",
+    "issueNotDroppable": "Este objeto no es compatible.",
+    "propertiesTitle": "Propiedades",
+    "confirmDialog": {
+      "detachTitle": "Separar {number} objetos de {issues} problemas",
+      "confirmDetach": "¿Seguro que desea separar los objetos seleccionados?",
+      "propagateTitle": "Propagar {number} objetos a {issues} problemas",
+      "confirmPropagate": "¿Seguro que desea propagar los objetos seleccionados?",
+      "replaceByLatestRevisionTitle": "Reemplazar {number} objetos por la última revisión en {issues} problemas",
+      "confirmReplaceByLatestRevision": "¿Seguro que desea sustituir los objetos seleccionados por la última revisión?",
+      "replaceByReleasedLatestRevisionTitle": "Reemplazar {number} objetos por la última revisión publicada en {issues} problemas",
+      "confirmReplaceByReleasedLatestRevision": "¿Seguro que desea sustituir los objetos seleccionados por la última revisión publicada?",
+      "replaceByStableLatestRevisionTitle": "Reemplazar {number} objetos por la última revisión estable en {issues} problemas",
+      "confirmReplaceByStableLatestRevision": "¿Seguro que desea sustituir los objetos seleccionados por la última revisión estable?",
+      "confirmReplaceByTitleMessage": "{target} sustituido por {latest}"
+    },
+    "contexts": {
+      "okButton": "Aceptar",
+      "cancel": "Cancelar",
+      "contexts": "Contextos",
+      "columnTitle": "Título",
+      "columnName": "Nombre",
+      "columnType": "Tipo",
+      "columnRevision": "Revisión",
+      "addContext": "Agregar contexto",
+      "pickContext": "Seleccionar contexto",
+      "detachContext": "Desasociar contexto",
+      "contextualMenus": {
+        "detach": "Separar",
+        "propagate": "Propagar",
+        "collaborativeLifecycle": "Madurez",
+        "compare": "Comparar",
+        "relationalExplorer": "Relaciones",
+        "openWith": "Abrir con"
+      },
+      "errorNotSupportedMultipleObject": "No es compatible con varios objetos.",
+      "errorNotSupportedObject": "Este objeto no es compatible.",
+      "errorToGetContext": "No se puede recuperar la información del objeto del contexto.",
+      "successUpdateContext": "Se ha actualizado el contexto.",
+      "successDetachContext": "El contexto se ha desasociado.",
+      "errorUpdateContext": "No se puede actualizar el contexto.",
+      "errorDetachContext": "No se puede desasociar el contexto.",
+      "confirmDetachContextTitle": "Desasociar contexto",
+      "confirmDetachContextMessage": "¿Seguro que quiere desasociar este contexto?",
+      "confirmUpdateContextTitle": "Actualizar contexto",
+      "confirmUpdateContextMessage": "¿Seguro que quiere actualizar este contexto?"
+    }
+  },
+  "tasks": {
+    "selectIn3D": "Proporcione un objeto existente para agregar, seleccionado de una aplicación 3D compatible.",
+    "addObjects": "Proporcione algunos objetos existentes para agregar.",
+    "takeScreenshot": "Proporcione una imagen para agregar."
+  },
+  "helper": {
+    "states": {
+      "create": "El problema está recibiendo detalles antes de ser asignado.",
+      "assign": "El problema se ha asignado y está a la espera de ser resuelto.",
+      "active": "Las personas asignadas están trabajando en el problema.",
+      "review": "La solución propuesta se está revisando.",
+      "closed": "El creador acepta la solución y el problema se configura como «Completado»."
+    },
+    "dialog": {
+      "title": "Aplicaciones de Issue Management: Ayuda",
+      "tabStates": "Estados",
+      "tabShortcuts": "Accesos directos",
+      "subtitleShortcuts": "Teclas de accesos directos",
+      "subtitleMouseOperation": "Operaciones con el ratón",
+      "workflow": "Flujo de trabajo",
+      "states": {
+        "create": "El problema está recibiendo detalles antes de ser asignado.",
+        "assign": "El problema se ha asignado y está a la espera de ser resuelto.",
+        "active": "Las personas asignadas están trabajando en el problema.",
+        "review": "Se está revisando la solución propuesta para el problema.",
+        "closed": "El creador acepta la solución y el problema se configura como «Completado»."
+      },
+      "shortcut": {
+        "key": {
+          "shortcut": {
+            "delete": "Eliminar",
+            "arrowUp": "Arriba",
+            "arrowDown": "Abajo",
+            "arrowLeft": "Izquierda",
+            "arrowRight": "Derecha",
+            "enter": "Intro",
+            "shiftArrow": "Mayúsculas + Flechas",
+            "ctrlA": "Ctrl + A",
+            "ctrlC": "Ctrl + C"
+          },
+          "mouse": {
+            "ctrlClick": "Ctrl + clic",
+            "shiftClick": "Mayúsculas + clic",
+            "doubleClick": "Haga doble clic"
+          }
+        },
+        "detail": {
+          "shortcut": {
+            "delete": "Eliminar/Separar elemento",
+            "arrowUp": "Ir al elemento anterior",
+            "arrowDown": "Ir al elemento siguiente",
+            "arrowLeft": "Contraer elemento/Ir al elemento anterior",
+            "arrowRight": "Expandir elemento/Ir al elemento siguiente",
+            "enter": "Abrir el panel de propiedades/Enviar entrada de texto",
+            "shiftArrow": "Seleccionar varios elementos",
+            "ctrlA": "Seleccionar todos los elementos",
+            "ctrlC": "Copiar el elemento seleccionado"
+          },
+          "mouse": {
+            "ctrlClick": "Seleccionar varios elementos en los que haga clic/Anular la selección",
+            "shiftClick": "Seleccionar todos los elementos entre el clic",
+            "doubleClick": "Abrir el panel de propiedades/Expandir o contraer el elemento"
+          }
+        }
+      }
+    }
+  },
+  "users": {
+    "more": "Más información"
+  },
+  "toolbar": {
+    "ISU_TOOLTIP_GRID_VIEW": "Vista de cuadrícula de datos",
+    "ISU_TOOLTIP_TILE_VIEW": "Vista de mosaico",
+    "pickCommand": "Elegir contenido",
+    "pickAffectedItem": "Elegir elementos afectados",
+    "pickResolvedBy": "Elegir Solucionado por",
+    "pickResolvedItems": "Elegir Elementos solucionados",
+    "pickContext": "Elegir contextos",
+    "addCommand": "Agregar desde Búsqueda",
+    "addAffectedItem": "Agregar elementos afectados",
+    "addResolvedBy": "Agregar Solucionado por",
+    "addResolvedItems": "Agregar Elementos solucionados",
+    "addContexts": "Agregar contextos"
+  },
+  "columns": {
+    "actionsColumn": "Acciones"
+  }
+}

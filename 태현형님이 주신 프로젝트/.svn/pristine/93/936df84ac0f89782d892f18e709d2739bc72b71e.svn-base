@@ -1,0 +1,62 @@
+<div class="form-group" style="height: inherit;">
+	<label for="parameter-list-view-container">{{ title
+		}}</label>
+
+	<div id="parameter-list-view-container"
+		style="height: inherit; overflow-y: auto; border: 1px solid transparent;">
+		<table class="table edfm-paramlistview-table" id="dfm-derivedformatform-parameter-table"
+			style="height: 20px !important;">
+			<tbody style="height: 20px !important;">
+				<tr>
+					<td id="edfm-derivedformatparamview-input-paramName-col" width="45%"><select style="width:100% !important"
+						class="form-control edfm-derivedformatparamview-input"
+						id="edfm-derivedformatparamview-input-paramName">
+						<option selected disabled value="">{{labels.selectParameter}}</option>
+						{{#each rows.rowsParam}}
+							<option class="form-control"
+								value="{{name}}">{{displayName}}</option>
+						{{/each}}
+					</select></td>
+					<td id="edfm-derivedformatparamview-input-paramValue-col" width="45%" ><select style="width:100% !important"
+						class="form-control edfm-derivedformatparamview-input"
+						id="edfm-derivedformatparamview-input-paramEnumValue"
+						disabled=true>
+						<option selected disabled value="">{{labels.selectValue}}</option>
+					</select></td>
+					<td  width="10%" style="vertical-align: middle;">
+					   <div  id="edfm-derivedformatparamview-input-addparams">
+					       <!--span class="wux-ui-3ds wux-ui-3ds-1x wux-ui-3ds-plus" ></span-->
+					   </div>
+					</td>
+				</tr>
+				<tr id="edfm-derivedformatparamview-param-warning-row" >
+                      <td colspan="3" id="edfm-derivedformatparamview-param-warning" class="edfm-derivedformatparamview-param-warning-msg"></td>
+				</tr>
+				{{#each rows.mandatoryParam}}
+                <tr class="edfm-derivedformatparamview-mandatoryparam">
+                    <td>
+                        <input type="text" class="edfm-derivedformatparamview-param-col-inputkey" disabled value="{{displayName}}" name="{{name}}">
+                    </td>
+                    <td>
+                        <input type="text" class="edfm-derivedformatparamview-param-col-inputvalue" value="{{displayValue}}" name="{{value}}">
+                    </td>
+                </tr>
+                {{/each}}
+				{{#each rows.deployedParam}}
+				<tr>
+					<td>
+						<input type="text" class="edfm-derivedformatparamview-param-col-inputkey" disabled value="{{displayName}}" name="{{name}}">
+					</td>
+					<td>
+						<input type="text" class="edfm-derivedformatparamview-param-col-inputvalue" disabled value="{{displayValue}}" name="{{value}}">
+					</td>
+					<td>
+						<span class="wux-ui-3ds wux-ui-3ds-1x wux-ui-3ds-trash edfm-derivedformatparamview-input-row-delete" style="font-size: 18px; cursor: pointer !important;"></span>
+					</td>
+				</tr>
+				{{/each}}
+			</tbody>
+		</table>
+	</div>
+</div>
+

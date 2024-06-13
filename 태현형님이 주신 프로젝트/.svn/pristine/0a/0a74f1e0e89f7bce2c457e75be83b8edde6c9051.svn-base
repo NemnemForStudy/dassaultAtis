@@ -1,0 +1,15 @@
+m|VCXWebKernel\VCXWebQueryEngine.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.0.22092|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\VCXWebQueryEngine\VCXWebQueryEngine.js|1648868038|9181
+s|VCXWebKernel\VCXWebQueryEngine.mweb\src\VCXQueryEngine.js|1642576768|14082
+u|VCXWebKernel\VCXWebQueryEngine.mweb\src\VCXQueryEngineInputData.js|1487933884|3629
+u|VCXWebKernel\VCXWebQueryEngine.mweb\src\VCXQueryEngineMatchingActions.js|1540974993|5600
+u|VCXWebKernel\VCXWebQueryEngine.mweb\src\VCXQueryEngineNonMatchingActions.js|1499239286|4424
+u|VCXWebKernel\VCXWebQueryEngine.mweb\src\VCXQueryOperator.js|1487933884|4916
+u|VCXWebKernel\VCXWebQueryEngine.mweb\src\VCXQueryPropertyOperator.js|1497271293|2508
+u|VCXWebKernel\VCXWebQueryEngine.mweb\src\VCXQueryPropertyOperatorSet.js|1497271293|4048
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

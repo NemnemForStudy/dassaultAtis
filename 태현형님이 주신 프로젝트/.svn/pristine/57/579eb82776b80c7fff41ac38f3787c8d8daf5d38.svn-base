@@ -1,0 +1,1282 @@
+{
+  "activities": [
+    {
+      "id": "AccessYourWork",
+      "title": "AccessYourWork",
+      "isMainActivity": true,
+      "mainActivityId": "MyDocuments",
+      "actions": [
+        {
+          "id": "MyDocuments",
+          "text": "MyDocuments",
+          "fonticon": "doc",
+          "default": true,
+          "className": "action-new",
+          "options": {
+            "side": "main",
+            "collection": {
+              "url": "DS/ENOXDocumentControlUI/Collections/OwnedDocumentsCollection",
+              "options": {
+                "info": true,
+                "sendRequest": true,
+                "infiniteScroll": true,
+                "pageSize": 50,
+                "fedSearch": true
+              }
+            },
+            "view": {
+              "url": "DS/ENOXDocumentControlUI/DocSetViewUI/Views/ENOXSetView",
+              "options": {
+                "topbar": {
+                  "showMultiSel": false,
+                  "showController": false,
+                  "showCount": false,
+                  "enableSearch": false,
+                  "customActions": {
+                    "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                    "methodName": "documentCommands"
+                  },
+                  "actionCollections": [
+                    {
+                      "name": "Preview",
+                      "fonticon": "eye",
+                      "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                      "methodName": "ActionOpenPreview",
+                      "label": {
+                        "id": "ActionOpenPreview",
+                        "nls": "DS/ENOXDocumentControlUI/assets/nls/DocEnhancersUI"
+                      }
+                    },
+                    {
+                      "name": "ShowProperties",
+                      "fonticon": "info",
+                      "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                      "methodName": "ActionOpenProperties",
+                      "label": {
+                        "id": "ActionOpenInformation",
+                        "nls": "DS/ENOXDocumentControlUI/assets/nls/DocEnhancersUI"
+                      }
+                    },
+                    {
+                      "name": "Favorites",
+                      "fonticon": "favorite-off",
+                      "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                      "methodName": "ActionToggleFavorite",
+                      "label": {
+                        "id": "ActionUpdateFavorite",
+                        "nls": "DS/ENOXDocumentControlUI/assets/nls/DocEnhancersUI"
+                      }
+                    }
+                  ],
+                  "title": {
+                    "id": "MyDocuments",
+                    "nls": "DS/ENOXDocumentControlUI/assets/nls/ENOXDocumentControlUI"
+                  },
+                  "sortOptions": {
+                    "sort": [
+                      {
+                        "name": "title",
+                        "text": "Title",
+                        "dataIndex": "tree",
+                        "dataIndex6w": "ds6w:label",
+                        "type": "string",
+                        "nls": "DS/ENOXDocumentControlUI/assets/nls/DocEnhancersUI"
+                      },
+                      {
+                        "name": "name",
+                        "text": "Name",
+                        "dataIndex": "name",
+                        "dataIndex6w": "ds6w:identifier",
+                        "type": "string",
+                        "nls": "DS/ENOXDocumentControlUI/assets/nls/DocEnhancersUI"
+                      },
+                      {
+                        "name": "maturity",
+                        "text": "Maturity",
+                        "dataIndex": "current",
+                        "dataIndex6w": "ds6w:status",
+                        "type": "string",
+                        "nls": "DS/ENOXDocumentControlUI/assets/nls/DocEnhancersUI"
+                      },
+                      {
+                        "name": "modified",
+                        "text": "Modified Date",
+                        "dataIndex": "modified",
+                        "dataIndex6w": "ds6w:modified",
+                        "type": "date",
+                        "nls": "DS/ENOXDocumentControlUI/assets/nls/ENOXDocumentControlUI"
+                      }
+                    ],
+                    "currentSort": {
+                      "text": "Modified Date",
+                      "dataIndex": "modified",
+                      "dataIndex6w": "ds6w:modified",
+                      "order": "DESC"
+                    }
+                  }
+                },
+                "contents": {
+                  "itemView": "rowview",
+                  "type": "icondropdown",
+                  "events": [
+                    {
+                      "rowview": [
+                        {
+                          "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                          "name": "mainDocView",
+                          "event": "onSelect"
+                        }
+                      ]
+                    }
+                  ],
+                  "views": [
+                    {
+                      "id": "smalltile",
+                      "text": "SmallTileView",
+                      "view": "DS/ENOXDocumentControlUI/DocResponsiveCollectionUI/Views/ENOXResponsiveCollectionView",
+                      "fonticon": "view-small-tile",
+                      "preIconbar": {
+                        "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                        "methodName": "preIconbar"
+                      },
+                      "actions": [
+                        {
+                          "name": "Preview",
+                          "fonticon": "eye",
+                          "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                          "methodName": "ActionOpenPreview",
+                          "label": {
+                            "id": "ActionOpenPreview",
+                            "nls": "DS/ENOXDocumentControlUI/assets/nls/DocEnhancersUI"
+                          }
+                        },
+                        {
+                          "name": "Favorites",
+                          "fonticon": "favorite-off",
+                          "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                          "methodName": "actionUpdateFavorite",
+                          "label": {
+                            "id": "ActionUpdateFavorite",
+                            "nls": "DS/ENOXDocumentControlUI/assets/nls/DocEnhancersUI"
+                          }
+                        },
+                        {
+                          "name": "ShowProperties",
+                          "fonticon": "info",
+                          "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                          "methodName": "ActionOpenProperties",
+                          "label": {
+                            "id": "ActionOpenInformation",
+                            "nls": "DS/ENOXDocumentControlUI/assets/nls/DocEnhancersUI"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "id": "thumbnail",
+                      "text": "ThumbnailView",
+                      "view": "DS/ENOXDocumentControlUI/DocResponsiveCollectionUI/Views/ENOXResponsiveCollectionView",
+                      "fonticon": "view-big-thb",
+                      "preIconbar": {
+                        "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                        "methodName": "preIconbar"
+                      },
+                      "actions": [
+                        {
+                          "name": "Preview",
+                          "fonticon": "eye",
+                          "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                          "methodName": "ActionOpenPreview",
+                          "label": {
+                            "id": "ActionOpenPreview",
+                            "nls": "DS/ENOXDocumentControlUI/assets/nls/DocEnhancersUI"
+                          }
+                        },
+                        {
+                          "name": "Favorites",
+                          "fonticon": "favorite-off",
+                          "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                          "methodName": "actionUpdateFavorite",
+                          "label": {
+                            "id": "ActionUpdateFavorite",
+                            "nls": "DS/ENOXDocumentControlUI/assets/nls/DocEnhancersUI"
+                          }
+                        },
+                        {
+                          "name": "ShowProperties",
+                          "fonticon": "info",
+                          "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                          "methodName": "ActionOpenProperties",
+                          "label": {
+                            "id": "ActionOpenInformation",
+                            "nls": "DS/ENOXDocumentControlUI/assets/nls/DocEnhancersUI"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "id": "rowview",
+                      "text": "DatagridView",
+                      "view": "DS/ENOXDocumentControlUI/DocResponsiveCollectionUI/Views/ENOXResponsiveCollectionView",
+                      "fonticon": "view-list",
+                      "headers": [
+                        {
+                          "id": "title",
+                          "text": "Title",
+                          "dataIndex": "tree",
+                          "pinned": "left",
+                          "width": "300",
+                          "className": "preview-column"
+                        },
+                        {
+                          "id": "name",
+                          "text": "Name",
+                          "dataIndex": "name",
+                          "className": "preview-column"
+                        },
+                        {
+                          "id": "type",
+                          "text": "Type",
+                          "dataIndex": "type"
+                        },
+                        {
+                          "id": "collabSpaceTitle",
+                          "text": "Collabspace",
+                          "dataIndex": "collabSpaceTitle"
+                        },
+                        {
+                          "id": "revision",
+                          "text": "Rev",
+                          "dataIndex": "revision"
+                        },
+                        {
+                          "id": "isLatestRevision",
+                          "text": "IsLatestRevision",
+                          "dataIndex": "isLatestRevision",
+                          "className": "coloured-boolean",
+                          "typeRepresentation": "boolean"
+                        },
+                        {
+                          "id": "reservation",
+                          "text": "Reservation Status",
+                          "type": "reservation",
+                          "dataIndex": "reservation"
+                        },
+                        {
+                          "id": "owner",
+                          "text": "Responsible",
+                          "dataIndex": "owner",
+                          "type": "person",
+                          "typeRepresentation": "url"
+                        },
+                        {
+                          "id": "current",
+                          "text": "Maturity",
+                          "dataIndex": "current",
+                          "styleIndex": "stateclass",
+                          "style": true
+                        },
+                        {
+                          "id": "modified",
+                          "text": "Modified Date",
+                          "dataIndex": "modified",
+                          "type": "date",
+                          "typeRepresentation": "datetime"
+                        }
+                      ],
+                      "preIconbar": {
+                        "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                        "methodName": "preIconbar"
+                      },
+                      "actions": [
+                        {
+                          "name": "Preview",
+                          "fonticon": "eye",
+                          "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                          "methodName": "ActionOpenPreview",
+                          "label": {
+                            "id": "ActionOpenPreview",
+                            "nls": "DS/ENOXDocumentControlUI/assets/nls/DocEnhancersUI"
+                          }
+                        },
+                        {
+                          "name": "Favorites",
+                          "fonticon": "favorite-off",
+                          "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                          "methodName": "actionUpdateFavorite",
+                          "label": {
+                            "id": "ActionUpdateFavorite",
+                            "nls": "DS/ENOXDocumentControlUI/assets/nls/DocEnhancersUI"
+                          }
+                        },
+                        {
+                          "name": "ShowProperties",
+                          "fonticon": "info",
+                          "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                          "methodName": "ActionOpenProperties",
+                          "label": {
+                            "id": "ActionOpenInformation",
+                            "nls": "DS/ENOXDocumentControlUI/assets/nls/DocEnhancersUI"
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "idCard": {
+                    "name": {
+                      "dataindex": "title"
+                    },
+                    "version": {
+                      "dataindex": ""
+                    },
+                    "thumbnail": "image",
+                    "attributes": [
+                      {
+                        "label": {
+                          "id": "Label_Document_IDCard_Attributes_Responsible",
+                          "nls": "DS/ENOXDocumentControlUI/assets/nls/ENOXDocumentControlUI"
+                        },
+                        "dataindex": "owner"
+                      },
+                      {
+                        "label": {
+                          "id": "Label_Document_IDCard_Attributes_Modified",
+                          "nls": "DS/ENOXDocumentControlUI/assets/nls/DocEnhancersUI"
+                        },
+                        "type": "date",
+                        "dataindex": "modified"
+                      },
+                      {
+                        "label": {
+                          "id": "Label_Document_IDCard_Attributes_Type",
+                          "nls": "DS/ENOXDocumentControlUI/assets/nls/ENOXDocumentControlUI"
+                        },
+                        "dataindex": "type"
+                      }
+                    ],
+                    "stateSection": {
+                      "previous": "prevState",
+                      "next": "nextState",
+                      "current": "currState",
+                      "withExpandShow": false
+                    },
+                    "freezones": [
+                      {
+                        "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                        "methodName": "showMaturityState",
+                        "label": {
+                          "id": "Label_Document_IDCard_Attributes_MaturityState",
+                          "nls": "DS/ENOXDocumentControlUI/assets/nls/ENOXDocumentControlUI"
+                        },
+                        "dataindex": "maturitystate"
+                      },
+                      {
+                        "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                        "methodName": "showRevision",
+                        "label": {
+                          "id": "Label_Document_IDCard_Attributes_Revision",
+                          "nls": "DS/ENOXDocumentControlUI/assets/nls/ENOXDocumentControlUI"
+                        }
+                      },
+                      {
+                        "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                        "methodName": "showDescription",
+                        "label": {
+                          "id": "Label_Document_IDCard_Attributes_Description",
+                          "nls": "DS/ENOXDocumentControlUI/assets/nls/ENOXDocumentControlUI"
+                        }
+                      }
+                    ],
+                    "withHomeButton": false,
+                    "withActionsButton": true,
+                    "withInformationButton": false,
+                    "showBackButton": false,
+                    "toggleRightPanel": true,
+                    "withExpandCollapseButton": true,
+                    "showDownload": true,
+                    "nextAndPreviousAction": false,
+                    "updateFavorites": {
+                      "showFavorites": true,
+                      "require": "DS/ENOXDocumentControlUI/Models/OwnedDocumentModel",
+                      "methodName": "onFavoritesClick"
+                    },
+                    "iconbar": [
+                      {
+                        "name": "ShowProperties",
+                        "fonticon": "info",
+                        "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                        "methodName": "ActionOpenProperties",
+                        "label": {
+                          "id": "ActionOpenInformation",
+                          "nls": "DS/ENOXDocumentControlUI/assets/nls/DocEnhancersUI"
+                        }
+                      }
+                    ],
+                    "formatter": {
+                      "year": "numeric",
+                      "month": "long",
+                      "day": "numeric",
+                      "hour": "numeric",
+                      "minute": "numeric",
+                      "second": "numeric"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "id": "Favorites",
+          "text": "Favorites",
+          "fonticon": "favorite-on",
+          "default": true,
+          "className": "action-new",
+          "options": {
+            "side": "main",
+            "collection": {
+              "url": "DS/ENOXDocumentControlUI/Collections/FavoriteDocumentsCollection",
+              "options": {
+                "info": true,
+                "sendRequest": true,
+                "infiniteScroll": true,
+                "pageSize": 50
+              }
+            },
+            "view": {
+              "url": "DS/ENOXDocumentControlUI/DocSetViewUI/Views/ENOXSetView",
+              "options": {
+                "topbar": {
+                  "showMultiSel": false,
+                  "showController": false,
+                  "showCount": false,
+                  "enableSearch": false,
+                  "customActions": {
+                    "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                    "methodName": "documentCommands"
+                  },
+                  "actionCollections": [
+                    {
+                      "name": "Preview",
+                      "fonticon": "eye",
+                      "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                      "methodName": "ActionOpenPreview",
+                      "label": {
+                        "id": "ActionOpenPreview",
+                        "nls": "DS/ENOXDocumentControlUI/assets/nls/DocEnhancersUI"
+                      }
+                    },
+                    {
+                      "name": "ShowProperties",
+                      "fonticon": "info",
+                      "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                      "methodName": "ActionOpenProperties",
+                      "label": {
+                        "id": "ActionOpenInformation",
+                        "nls": "DS/ENOXDocumentControlUI/assets/nls/DocEnhancersUI"
+                      }
+                    },
+                    {
+                      "name": "Favorites",
+                      "fonticon": "favorite-off",
+                      "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                      "methodName": "ActionToggleFavorite",
+                      "label": {
+                        "id": "ActionUpdateFavorite",
+                        "nls": "DS/ENOXDocumentControlUI/assets/nls/DocEnhancersUI"
+                      }
+                    }
+                  ],
+                  "title": {
+                    "id": "Favorites",
+                    "nls": "DS/ENOXDocumentControlUI/assets/nls/ENOXDocumentControlUI"
+                  },
+                  "sortOptions": {
+                    "sort": [
+                      {
+                        "name": "title",
+                        "text": "Title",
+                        "dataIndex": "tree",
+                        "dataIndex6w": "ds6w:label",
+                        "type": "string",
+                        "nls": "DS/ENOXDocumentControlUI/assets/nls/DocEnhancersUI"
+                      },
+                      {
+                        "name": "name",
+                        "text": "Name",
+                        "dataIndex": "name",
+                        "dataIndex6w": "ds6w:identifier",
+                        "type": "string",
+                        "nls": "DS/ENOXDocumentControlUI/assets/nls/DocEnhancersUI"
+                      },
+                      {
+                        "name": "maturity",
+                        "text": "Maturity",
+                        "dataIndex": "current",
+                        "dataIndex6w": "ds6w:status",
+                        "type": "string",
+                        "nls": "DS/ENOXDocumentControlUI/assets/nls/DocEnhancersUI"
+                      },
+                      {
+                        "name": "modified",
+                        "text": "Modified Date",
+                        "dataIndex": "modified",
+                        "dataIndex6w": "ds6w:modified",
+                        "type": "date",
+                        "nls": "DS/ENOXDocumentControlUI/assets/nls/ENOXDocumentControlUI"
+                      }
+                    ],
+                    "currentSort": {
+                      "text": "Modified Date",
+                      "dataIndex": "modified",
+                      "dataIndex6w": "ds6w:modified",
+                      "order": "DESC"
+                    }
+                  }
+                },
+                "contents": {
+                  "itemView": "rowview",
+                  "type": "icondropdown",
+                  "events": [
+                    {
+                      "rowview": [
+                        {
+                          "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                          "name": "mainDocView",
+                          "event": "onSelect"
+                        }
+                      ]
+                    }
+                  ],
+                  "views": [
+                    {
+                      "id": "smalltile",
+                      "text": "SmallTileView",
+                      "view": "DS/ENOXDocumentControlUI/DocResponsiveCollectionUI/Views/ENOXResponsiveCollectionView",
+                      "fonticon": "view-small-tile",
+                      "preIconbar": {
+                        "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                        "methodName": "preIconbar"
+                      },
+                      "actions": [
+                        {
+                          "name": "Preview",
+                          "fonticon": "eye",
+                          "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                          "methodName": "ActionOpenPreview",
+                          "label": {
+                            "id": "ActionOpenPreview",
+                            "nls": "DS/ENOXDocumentControlUI/assets/nls/DocEnhancersUI"
+                          }
+                        },
+                        {
+                          "name": "Favorites",
+                          "fonticon": "favorite-off",
+                          "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                          "methodName": "actionUpdateFavorite",
+                          "label": {
+                            "id": "ActionUpdateFavorite",
+                            "nls": "DS/ENOXDocumentControlUI/assets/nls/DocEnhancersUI"
+                          }
+                        },
+                        {
+                          "name": "ShowProperties",
+                          "fonticon": "info",
+                          "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                          "methodName": "ActionOpenProperties",
+                          "label": {
+                            "id": "ActionOpenInformation",
+                            "nls": "DS/ENOXDocumentControlUI/assets/nls/DocEnhancersUI"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "id": "thumbnail",
+                      "text": "Thumbnail View",
+                      "view": "DS/ENOXDocumentControlUI/DocResponsiveCollectionUI/Views/ENOXResponsiveCollectionView",
+                      "fonticon": "view-big-thb",
+                      "preIconbar": {
+                        "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                        "methodName": "preIconbar"
+                      },
+                      "actions": [
+                        {
+                          "name": "Preview",
+                          "fonticon": "eye",
+                          "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                          "methodName": "ActionOpenPreview",
+                          "label": {
+                            "id": "ActionOpenPreview",
+                            "nls": "DS/ENOXDocumentControlUI/assets/nls/DocEnhancersUI"
+                          }
+                        },
+                        {
+                          "name": "Favorites",
+                          "fonticon": "favorite-off",
+                          "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                          "methodName": "actionUpdateFavorite",
+                          "label": {
+                            "id": "ActionUpdateFavorite",
+                            "nls": "DS/ENOXDocumentControlUI/assets/nls/DocEnhancersUI"
+                          }
+                        },
+                        {
+                          "name": "ShowProperties",
+                          "fonticon": "info",
+                          "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                          "methodName": "ActionOpenProperties",
+                          "label": {
+                            "id": "ActionOpenInformation",
+                            "nls": "DS/ENOXDocumentControlUI/assets/nls/DocEnhancersUI"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "id": "rowview",
+                      "text": "Datagrid View",
+                      "view": "DS/ENOXDocumentControlUI/DocResponsiveCollectionUI/Views/ENOXResponsiveCollectionView",
+                      "fonticon": "view-list",
+                      "headers": [
+                        {
+                          "id": "title",
+                          "text": "Title",
+                          "dataIndex": "tree",
+                          "pinned": "left",
+                          "width": "300",
+                          "className": "preview-column"
+                        },
+                        {
+                          "id": "name",
+                          "text": "Name",
+                          "dataIndex": "name",
+                          "className": "preview-column"
+                        },
+                        {
+                          "id": "type",
+                          "text": "Type",
+                          "dataIndex": "type"
+                        },
+                        {
+                          "id": "collabSpaceTitle",
+                          "text": "Collabspace",
+                          "dataIndex": "collabSpaceTitle"
+                        },
+                        {
+                          "id": "revision",
+                          "text": "Rev",
+                          "dataIndex": "revision"
+                        },
+                        {
+                          "id": "isLatestRevision",
+                          "text": "IsLatestRevision",
+                          "dataIndex": "isLatestRevision",
+                          "className": "coloured-boolean",
+                          "typeRepresentation": "boolean"
+                        },
+                        {
+                          "id": "reservation",
+                          "text": "Reservation Status",
+                          "type": "reservation",
+                          "dataIndex": "reservation"
+                        },
+                        {
+                          "id": "owner",
+                          "text": "Responsible",
+                          "dataIndex": "owner",
+                          "type": "person",
+                          "typeRepresentation": "url"
+                        },
+                        {
+                          "id": "current",
+                          "text": "Maturity",
+                          "dataIndex": "current",
+                          "styleIndex": "stateclass",
+                          "style": true
+                        },
+                        {
+                          "id": "modified",
+                          "text": "Modified Date",
+                          "dataIndex": "modified",
+                          "type": "date",
+                          "typeRepresentation": "datetime"
+                        }
+                      ],
+                      "preIconbar": {
+                        "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                        "methodName": "preIconbar"
+                      },
+                      "actions": [
+                        {
+                          "name": "Preview",
+                          "fonticon": "eye",
+                          "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                          "methodName": "ActionOpenPreview",
+                          "label": {
+                            "id": "ActionOpenPreview",
+                            "nls": "DS/ENOXDocumentControlUI/assets/nls/DocEnhancersUI"
+                          }
+                        },
+                        {
+                          "name": "Favorites",
+                          "fonticon": "favorite-off",
+                          "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                          "methodName": "actionUpdateFavorite",
+                          "label": {
+                            "id": "ActionUpdateFavorite",
+                            "nls": "DS/ENOXDocumentControlUI/assets/nls/DocEnhancersUI"
+                          }
+                        },
+                        {
+                          "name": "ShowProperties",
+                          "fonticon": "info",
+                          "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                          "methodName": "ActionOpenProperties",
+                          "label": {
+                            "id": "ActionOpenInformation",
+                            "nls": "DS/ENOXDocumentControlUI/assets/nls/DocEnhancersUI"
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "idCard": {
+                    "name": {
+                      "dataindex": "title"
+                    },
+                    "version": {
+                      "dataindex": ""
+                    },
+                    "thumbnail": "image",
+                    "attributes": [
+                      {
+                        "label": {
+                          "id": "Label_Document_IDCard_Attributes_Responsible",
+                          "nls": "DS/ENOXDocumentControlUI/assets/nls/ENOXDocumentControlUI"
+                        },
+                        "dataindex": "owner"
+                      },
+                      {
+                        "label": {
+                          "id": "Label_Document_IDCard_Attributes_Modified",
+                          "nls": "DS/ENOXDocumentControlUI/assets/nls/DocEnhancersUI"
+                        },
+                        "type": "date",
+                        "dataindex": "modified"
+                      },
+                      {
+                        "label": {
+                          "id": "Label_Document_IDCard_Attributes_Type",
+                          "nls": "DS/ENOXDocumentControlUI/assets/nls/ENOXDocumentControlUI"
+                        },
+                        "dataindex": "type"
+                      }
+                    ],
+                    "stateSection": {
+                      "previous": "prevState",
+                      "next": "nextState",
+                      "current": "currState",
+                      "withExpandShow": false
+                    },
+                    "freezones": [
+                      {
+                        "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                        "methodName": "showMaturityState",
+                        "label": {
+                          "id": "Label_Document_IDCard_Attributes_MaturityState",
+                          "nls": "DS/ENOXDocumentControlUI/assets/nls/ENOXDocumentControlUI"
+                        },
+                        "dataindex": "maturitystate"
+                      },
+                      {
+                        "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                        "methodName": "showRevision",
+                        "label": {
+                          "id": "Label_Document_IDCard_Attributes_Revision",
+                          "nls": "DS/ENOXDocumentControlUI/assets/nls/ENOXDocumentControlUI"
+                        }
+                      },
+                      {
+                        "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                        "methodName": "showDescription",
+                        "label": {
+                          "id": "Label_Document_IDCard_Attributes_Description",
+                          "nls": "DS/ENOXDocumentControlUI/assets/nls/ENOXDocumentControlUI"
+                        }
+                      }
+                    ],
+                    "withHomeButton": false,
+                    "withActionsButton": true,
+                    "withInformationButton": false,
+                    "showBackButton": false,
+                    "toggleRightPanel": true,
+                    "withExpandCollapseButton": true,
+                    "showDownload": true,
+                    "nextAndPreviousAction": false,
+                    "updateFavorites": {
+                      "showFavorites": true,
+                      "require": "DS/ENOXDocumentControlUI/Models/OwnedDocumentModel",
+                      "methodName": "onFavoritesClick"
+                    },
+                    "iconbar": [
+                      {
+                        "name": "ShowProperties",
+                        "fonticon": "info",
+                        "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                        "methodName": "ActionOpenProperties",
+                        "label": {
+                          "id": "ActionOpenInformation",
+                          "nls": "DS/ENOXDocumentControlUI/assets/nls/DocEnhancersUI"
+                        }
+                      }
+                    ],
+                    "formatter": {
+                      "year": "numeric",
+                      "month": "long",
+                      "day": "numeric",
+                      "hour": "numeric",
+                      "minute": "numeric",
+                      "second": "numeric"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "id": "AllDocuments",
+          "text": "AllDocuments",
+          "fonticon": "docs",
+          "default": true,
+          "className": "action-new",
+          "options": {
+            "side": "main",
+            "collection": {
+              "url": "DS/ENOXDocumentControlUI/Collections/AllDocumentsCollection",
+              "options": {
+                "info": true,
+                "sendRequest": true,
+                "infiniteScroll": true,
+                "fedSearch": true,
+                "pageSize": 50
+              }
+            },
+            "view": {
+              "url": "DS/ENOXDocumentControlUI/DocSetViewUI/Views/ENOXSetView",
+              "options": {
+                "topbar": {
+                  "showMultiSel": false,
+                  "showController": false,
+                  "showCount": false,
+                  "enableSearch": false,
+                  "customActions": {
+                    "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                    "methodName": "documentCommands"
+                  },
+                  "actionCollections": [
+                    {
+                      "name": "Preview",
+                      "fonticon": "eye",
+                      "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                      "methodName": "ActionOpenPreview",
+                      "label": {
+                        "id": "ActionOpenPreview",
+                        "nls": "DS/ENOXDocumentControlUI/assets/nls/DocEnhancersUI"
+                      }
+                    },
+                    {
+                      "name": "ShowProperties",
+                      "fonticon": "info",
+                      "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                      "methodName": "ActionOpenProperties",
+                      "label": {
+                        "id": "ActionOpenInformation",
+                        "nls": "DS/ENOXDocumentControlUI/assets/nls/DocEnhancersUI"
+                      }
+                    },
+                    {
+                      "name": "Favorites",
+                      "fonticon": "favorite-off",
+                      "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                      "methodName": "ActionToggleFavorite",
+                      "label": {
+                        "id": "ActionUpdateFavorite",
+                        "nls": "DS/ENOXDocumentControlUI/assets/nls/DocEnhancersUI"
+                      }
+                    }
+                  ],
+                  "title": {
+                    "id": "AllDocuments",
+                    "nls": "DS/ENOXDocumentControlUI/assets/nls/ENOXDocumentControlUI"
+                  },
+                  "sortOptions": {
+                    "sort": [
+                      {
+                        "name": "title",
+                        "text": "Title",
+                        "dataIndex": "tree",
+                        "dataIndex6w": "ds6w:label",
+                        "type": "string",
+                        "nls": "DS/ENOXDocumentControlUI/assets/nls/DocEnhancersUI"
+                      },
+                      {
+                        "name": "name",
+                        "text": "Name",
+                        "dataIndex": "name",
+                        "dataIndex6w": "ds6w:identifier",
+                        "type": "string",
+                        "nls": "DS/ENOXDocumentControlUI/assets/nls/DocEnhancersUI"
+                      },
+                      {
+                        "name": "maturity",
+                        "text": "Maturity",
+                        "dataIndex": "current",
+                        "dataIndex6w": "ds6w:status",
+                        "type": "string",
+                        "nls": "DS/ENOXDocumentControlUI/assets/nls/DocEnhancersUI"
+                      },
+                      {
+                        "name": "modified",
+                        "text": "Modified Date",
+                        "dataIndex": "modified",
+                        "dataIndex6w": "ds6w:modified",
+                        "type": "date",
+                        "nls": "DS/ENOXDocumentControlUI/assets/nls/ENOXDocumentControlUI"
+                      }
+                    ],
+                    "currentSort": {
+                      "text": "Modified Date",
+                      "dataIndex": "modified",
+                      "dataIndex6w": "ds6w:modified",
+                      "order": "DESC"
+                    }
+                  }
+                },
+                "contents": {
+                  "itemView": "rowview",
+                  "type": "icondropdown",
+                  "events": [
+                    {
+                      "rowview": [
+                        {
+                          "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                          "name": "mainDocView",
+                          "event": "onSelect"
+                        }
+                      ]
+                    }
+                  ],
+                  "views": [
+                    {
+                      "id": "smalltile",
+                      "text": "SmallTileView",
+                      "view": "DS/ENOXDocumentControlUI/DocResponsiveCollectionUI/Views/ENOXResponsiveCollectionView",
+                      "fonticon": "view-small-tile",
+                      "preIconbar": {
+                        "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                        "methodName": "preIconbar"
+                      },
+                      "actions": [
+                        {
+                          "name": "Preview",
+                          "fonticon": "eye",
+                          "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                          "methodName": "ActionOpenPreview",
+                          "label": {
+                            "id": "ActionOpenPreview",
+                            "nls": "DS/ENOXDocumentControlUI/assets/nls/DocEnhancersUI"
+                          }
+                        },
+                        {
+                          "name": "Favorites",
+                          "fonticon": "favorite-off",
+                          "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                          "methodName": "actionUpdateFavorite",
+                          "label": {
+                            "id": "ActionUpdateFavorite",
+                            "nls": "DS/ENOXDocumentControlUI/assets/nls/DocEnhancersUI"
+                          }
+                        },
+                        {
+                          "name": "ShowProperties",
+                          "fonticon": "info",
+                          "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                          "methodName": "ActionOpenProperties",
+                          "label": {
+                            "id": "ActionOpenInformation",
+                            "nls": "DS/ENOXDocumentControlUI/assets/nls/DocEnhancersUI"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "id": "thumbnail",
+                      "text": "Thumbnail View",
+                      "view": "DS/ENOXDocumentControlUI/DocResponsiveCollectionUI/Views/ENOXResponsiveCollectionView",
+                      "fonticon": "view-big-thb",
+                      "preIconbar": {
+                        "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                        "methodName": "preIconbar"
+                      },
+                      "actions": [
+                        {
+                          "name": "Preview",
+                          "fonticon": "eye",
+                          "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                          "methodName": "ActionOpenPreview",
+                          "label": {
+                            "id": "ActionOpenPreview",
+                            "nls": "DS/ENOXDocumentControlUI/assets/nls/DocEnhancersUI"
+                          }
+                        },
+                        {
+                          "name": "Favorites",
+                          "fonticon": "favorite-off",
+                          "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                          "methodName": "actionUpdateFavorite",
+                          "label": {
+                            "id": "ActionUpdateFavorite",
+                            "nls": "DS/ENOXDocumentControlUI/assets/nls/DocEnhancersUI"
+                          }
+                        },
+                        {
+                          "name": "ShowProperties",
+                          "fonticon": "info",
+                          "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                          "methodName": "ActionOpenProperties",
+                          "label": {
+                            "id": "ActionOpenInformation",
+                            "nls": "DS/ENOXDocumentControlUI/assets/nls/DocEnhancersUI"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "id": "rowview",
+                      "text": "Datagrid View",
+                      "view": "DS/ENOXDocumentControlUI/DocResponsiveCollectionUI/Views/ENOXResponsiveCollectionView",
+                      "fonticon": "view-list",
+                      "headers": [
+                        {
+                          "id": "title",
+                          "text": "Title",
+                          "dataIndex": "tree",
+                          "pinned": "left",
+                          "width": "300",
+                          "className": "preview-column"
+                        },
+                        {
+                          "id": "name",
+                          "text": "Name",
+                          "dataIndex": "name",
+                          "className": "preview-column"
+                        },
+                        {
+                          "id": "type",
+                          "text": "Type",
+                          "dataIndex": "type"
+                        },
+                        {
+                          "id": "collabSpaceTitle",
+                          "text": "Collabspace",
+                          "dataIndex": "collabSpaceTitle"
+                        },
+                        {
+                          "id": "revision",
+                          "text": "Rev",
+                          "dataIndex": "revision"
+                        },
+                        {
+                          "id": "isLatestRevision",
+                          "text": "IsLatestRevision",
+                          "dataIndex": "isLatestRevision",
+                          "className": "coloured-boolean",
+                          "typeRepresentation": "boolean"
+                        },
+                        {
+                          "id": "reservation",
+                          "text": "Reservation Status",
+                          "type": "reservation",
+                          "dataIndex": "reservation"
+                        },
+                        {
+                          "id": "owner",
+                          "text": "Responsible",
+                          "dataIndex": "owner",
+                          "type": "person",
+                          "typeRepresentation": "url"
+                        },
+                        {
+                          "id": "current",
+                          "text": "Maturity",
+                          "dataIndex": "current",
+                          "styleIndex": "stateclass",
+                          "style": true
+                        },
+                        {
+                          "id": "modified",
+                          "text": "Modified Date",
+                          "dataIndex": "modified",
+                          "type": "date",
+                          "typeRepresentation": "datetime"
+                        }
+                      ],
+                      "preIconbar": {
+                        "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                        "methodName": "preIconbar"
+                      },
+                      "actions": [
+                        {
+                          "name": "Preview",
+                          "fonticon": "eye",
+                          "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                          "methodName": "ActionOpenPreview",
+                          "label": {
+                            "id": "ActionOpenPreview",
+                            "nls": "DS/ENOXDocumentControlUI/assets/nls/DocEnhancersUI"
+                          }
+                        },
+                        {
+                          "name": "Favorites",
+                          "fonticon": "favorite-off",
+                          "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                          "methodName": "actionUpdateFavorite",
+                          "label": {
+                            "id": "ActionUpdateFavorite",
+                            "nls": "DS/ENOXDocumentControlUI/assets/nls/DocEnhancersUI"
+                          }
+                        },
+                        {
+                          "name": "ShowProperties",
+                          "fonticon": "info",
+                          "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                          "methodName": "ActionOpenProperties",
+                          "label": {
+                            "id": "ActionOpenInformation",
+                            "nls": "DS/ENOXDocumentControlUI/assets/nls/DocEnhancersUI"
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "idCard": {
+                    "name": {
+                      "dataindex": "title"
+                    },
+                    "version": {
+                      "dataindex": ""
+                    },
+                    "thumbnail": "image",
+                    "attributes": [
+                      {
+                        "label": {
+                          "id": "Label_Document_IDCard_Attributes_Responsible",
+                          "nls": "DS/ENOXDocumentControlUI/assets/nls/ENOXDocumentControlUI"
+                        },
+                        "dataindex": "owner"
+                      },
+                      {
+                        "label": {
+                          "id": "Label_Document_IDCard_Attributes_Modified",
+                          "nls": "DS/ENOXDocumentControlUI/assets/nls/DocEnhancersUI"
+                        },
+                        "type": "date",
+                        "dataindex": "modified"
+                      },
+                      {
+                        "label": {
+                          "id": "Label_Document_IDCard_Attributes_Type",
+                          "nls": "DS/ENOXDocumentControlUI/assets/nls/ENOXDocumentControlUI"
+                        },
+                        "dataindex": "type"
+                      }
+                    ],
+                    "stateSection": {
+                      "previous": "prevState",
+                      "next": "nextState",
+                      "current": "currState",
+                      "withExpandShow": false
+                    },
+                    "freezones": [
+                      {
+                        "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                        "methodName": "showMaturityState",
+                        "label": {
+                          "id": "Label_Document_IDCard_Attributes_MaturityState",
+                          "nls": "DS/ENOXDocumentControlUI/assets/nls/ENOXDocumentControlUI"
+                        },
+                        "dataindex": "maturitystate"
+                      },
+                      {
+                        "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                        "methodName": "showRevision",
+                        "label": {
+                          "id": "Label_Document_IDCard_Attributes_Revision",
+                          "nls": "DS/ENOXDocumentControlUI/assets/nls/ENOXDocumentControlUI"
+                        }
+                      },
+                      {
+                        "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                        "methodName": "showDescription",
+                        "label": {
+                          "id": "Label_Document_IDCard_Attributes_Description",
+                          "nls": "DS/ENOXDocumentControlUI/assets/nls/ENOXDocumentControlUI"
+                        }
+                      }
+                    ],
+                    "withHomeButton": false,
+                    "withActionsButton": true,
+                    "withInformationButton": false,
+                    "showBackButton": false,
+                    "toggleRightPanel": true,
+                    "withExpandCollapseButton": true,
+                    "showDownload": true,
+                    "nextAndPreviousAction": false,
+                    "updateFavorites": {
+                      "showFavorites": true,
+                      "require": "DS/ENOXDocumentControlUI/Models/OwnedDocumentModel",
+                      "methodName": "onFavoritesClick"
+                    },
+                    "iconbar": [
+                      {
+                        "name": "ShowProperties",
+                        "fonticon": "info",
+                        "require": "DS/ENOXDocumentControlUI/Views/ENOXDocumentsView",
+                        "methodName": "ActionOpenProperties",
+                        "label": {
+                          "id": "ActionOpenInformation",
+                          "nls": "DS/ENOXDocumentControlUI/assets/nls/DocEnhancersUI"
+                        }
+                      }
+                    ],
+                    "formatter": {
+                      "year": "numeric",
+                      "month": "short",
+                      "day": "numeric"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "StartNewActivity",
+      "title": "StartNewActivity",
+      "actions": [
+        {
+          "id": "NewDocument",
+          "text": "Upload",
+          "fonticon": "upload",
+          "default": true,
+          "className": "action-new",
+          "isNotHighlightable": true
+        }
+      ]
+    }
+  ]
+}

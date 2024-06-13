@@ -1,0 +1,14 @@
+m|MPFComponents\MPFShopSubmitComponent.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.1.22330|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\MPFShopSubmitComponent\MPFShopSubmitComponent.js|1669432489|2314
+s|MPFComponents\MPFShopSubmitComponent.mweb\src\MPFShopSubmitComponent.js|1669417578|0
+t|win_b64\webapps\MPFShopSubmitComponent\MPFShopSubmitComponent_en.js|1669432491|381
+s|MPFComponents\MPFShopSubmitComponent.mweb\src\assets\nls\ShopSubmitComponent_en.json|1669417578|268
+t|win_b64\webapps\MPFShopSubmitComponent\assets\nls\ShopSubmitComponent_en.json|1669432487|268
+s|MPFComponents\MPFShopSubmitComponent.mweb\src\assets\nls\ShopSubmitComponent_en.json|1669417578|268
+u|MPFComponents\MPFShopSubmitComponent.mweb\src\ShopSubmitComponent.js|1669417578|4724
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

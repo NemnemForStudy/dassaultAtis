@@ -1,0 +1,1 @@
+define("DS/RTwebrtcAPI/RTwebrtcAPI_fr",{});define("DS/RTwebrtcAPI/assets/nls/feed",{Call:"Appel",notCompatible:"Cette fonction n'est pas prise en charge par votre navigateur ou appareil actuel"});

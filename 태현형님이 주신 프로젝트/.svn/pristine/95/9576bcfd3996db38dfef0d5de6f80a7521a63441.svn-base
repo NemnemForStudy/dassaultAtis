@@ -1,0 +1,153 @@
+# ----------------------------------------------------------------------------
+# help tags
+# ----------------------------------------------------------------------------
+
+MaskCompilerHelp=\
+Uso\: java VPLMPosMaskCompiler [-h]\\n\
+\                                [-addpath <additional_input_directory>]\\n\
+\                                [-d <output_directory>]\\n\
+\                                [-log <log_directory>]\\n\
+\                                [-html <html_directory>]\\n\
+\                                [-solution <solution>]\\n\
+\                                [-m <mask_name>]\\n\
+\                                -connect <server_url>\\n\
+\\n\
+Compila todos os arquivos '.mask' localizados no subdiret\u00f3rio vplm/startup/mask/<mask_name>[@<solution>] do classpath.\\n\
+O arquivo compilado \u00e9\: <output_directory>/<mask_name>[@<solution>].SecurityMask\\n\
+O arquivo de log \u00e9     \: <log_directory>/result.log\\n\
+\\\
+Argumentos\:\\n\
+\  -h\:       essa ajuda\\n\
+\  -addpath\: define um diret\u00f3rio de entrada adicional onde pesquisar arquivos de m\u00e1scara (caminho absoluto)\\n\
+\  -d\:       define o diret\u00f3rio de sa\u00edda para arquivos de log compilados de m\u00e1scara\\n\
+\  -html\:    define o diret\u00f3rio de sa\u00edda para o arquivo de renderiza\u00e7\u00e3o de m\u00e1scara HTML\\n\
+\ -log\:     define o diret\u00f3rio de log de sa\u00edda (padr\u00e3o\: <output_directory>)\\n\
+\  -solution\:define a solu\u00e7\u00e3o (o padr\u00e3o \u00e9 sufixo vazio, que significa solu\u00e7\u00e3o 'Comum')\\n\
+\  -m\:       define o nome da m\u00e1scara (padr\u00e3o\: DEFAULT)\\n\
+\  -connect\: define o URL do servidor (ou seja, http://server:port/enovia/)\\n\
+\\\
+Implanta\u00e7\u00e3o\:\\n\
+\  O arquivo '.SecurityMask' deve ser copiado no diret\u00f3rio WEB-INF/classes/vplm/mask do aplicativo da web do ENOVIA.
+
+MaskGeneratorHelp=\
+Uso\: java VPLMPosMaskGenerator [-h]\\n\
+\                                 [-addpath <additional_input_directory>]\\n\
+\                                 [-d <output_directory>]\\n\
+\                                 [-log <log_directory>]\\n\
+\                                 [-solution <solution_name>]\\n\
+\                                 [-m <mask_name>]\\n\
+\                                 -connect <server_url>\\n\
+\                                 <modeler> [<modeler> ...]\\n\
+\\n\
+Gera determinados arquivos modeladores associados '.mask'.\\n\
+O arquivo gerado \u00e9\: <output_directory>/<modeler>.mask\\n\
+\\n\
+Argumentos\:\\n\
+\  -h\:       esta ajuda\\n\
+\  -addpath\: define um diret\u00f3rio de entrada adicional onde buscar arquivos mask (caminho absoluto)\\n\
+\  -d\:       define o diret\u00f3rio de sa\u00edda dos arquivos mask gerado for generated mask file(s)\\n\
+\  -log\:     define o diret\u00f3rio de sa\u00edda log (padr\u00e3o\: <output_directory>)\\n\
+\  -solution\:define a solu\u00e7\u00e3o (o padr\u00e3o est\u00e1 vaziodefault is empty, indicando a solu\u00e7\u00e3o 'Comum')\\n\
+\  -m\:       define o nome da m\u00e1scara (padr\u00e3o\: DEFAULT)\\n\
+\  -connect\: define o servidor URL (ou seja, http://server:port/enovia/)\\n\
+\\n\
+Observa\u00e7\u00e3o: depois da gera\u00e7\u00e3o (e, talvez, altera\u00e7\u00e3o), os arquivos '.mask' dever\u00e3o ser compilados\\n\
+\      usando a ferramenta VPLMPosMaskCompiler.
+
+# ----------------------------------------------------------------------------
+# Information and trace messages
+# ----------------------------------------------------------------------------
+
+INFO_ParentModeler_Mask=O arquivo de m\u00e1scara do modelador pai "{0}" \u00e9: {1}
+
+INFO_Entity_init_from_parent=Como inicializar a m\u00e1scara de atributos a partir da entidade "{0}"
+
+INFO_Entity_inherited_attribute=Copiar atributo "{0}"
+
+INFO_Entity_inherited_func_attribute=Copiar atributo "{0}"
+
+INFO_Attribute_skip_internal=Ignorar atributo interno "{0}"
+
+INFO_Attribute_skip_aggregate=Ignorar atributo agregado "{0}"
+
+INFO_Attribute=Adicionar o atributo "{0}", obrigat\u00f3rio={1}, externo={2}, modific\u00e1vel={3}
+
+INFO_IDSet=Adicionar o atributo "{0}"
+
+# ----------------------------------------------------------------------------
+# generation warnings and errors tags
+# ----------------------------------------------------------------------------
+
+Modeler_does_not_exist=o modelador "{0}" n\u00e3o existe
+
+Modeler_has_no_entity=O modelador "{0}" n\u00e3o tem entidade
+
+File_cannot_be_opened=N\u00e3o foi poss\u00edvel abrir o arquivo {0} "{1}" - motivo: {2}
+
+File_cannot_be_created=N\u00e3o foi poss\u00edvel criar o arquivo {0} "{1}" - motivo: {2}
+
+# ----------------------------------------------------------------------------
+# compilation warnings and errors tags
+# ----------------------------------------------------------------------------
+
+Command_is_Unknown=Comando desconhecido [{0}]
+
+Command_is_Unknown.advice=Verificar a sintaxe do comando
+
+UnexpectedMaskName=Nome de m\u00e1scara esperado "{0}", n\u00e3o "{1}"
+
+UnexpectedMaskName.advice=Modificar o nome da m\u00e1scara no comando MASK
+
+Entity_is_Unknown=A entidade "{0}" n\u00e3o pertence ao pacote "{1}"
+
+Entity_is_Unknown.advice=Isso pode ocorrer devido a um erro de ortografia \: verifique a sintaxe correta nos metadados
+
+Attr_was_not_Previously_Defined=Entidade "{0}": o atributo "{1}" n\u00e3o foi predefinido pelo comando 'ATTR'
+
+Attr_was_not_Previously_Defined.advice=Todo atributo deve ser declarado no comando 'ATTR' antes do uso no 'FATTR'
+
+Attr_is_Unknown=A entidade "{0} " n\u00e3o tem atributo "{1}"
+
+Attr_is_Unknown.advice=Isso pode ocorrer devido a um erro de ortografia \: \\nverifique a sintaxe correta nos metadados
+
+Attr_should_be_Mandatory=Entidade "{0}", atributo "{1}": a propriedade obrigat\u00f3ria n\u00e3o pode ser 'N' se os metadados forem 'Y'
+
+Attr_should_be_Mandatory.advice=O atributo MANDATORY nos metadados deve permanecer MANDATORY na m\u00e1scara
+
+Attr_should_have_AuthValues_instead_of_Help=Entidade "{0}", atributo "{1}": n\u00e3o \u00e9 poss\u00edvel usar valores HELP se os metadados estiverem definidos com valores AUTHORIZED
+
+Attr_should_have_AuthValues_instead_of_Help.advice=Definir indicador de valores de autoriza\u00e7\u00e3o/ajuda como 'Y' (valores AUTHORIZED)
+
+AttrValue_does_not_belong_to_Authorized_values=Entidade "{0}", atributo "{1}": n\u00e3o pode usar o valor "{2}" como valor autorizado
+
+AttrValue_does_not_belong_to_Authorized_values.advice=O valor autorizado declarado na m\u00e1scara deve ser um subconjunto de valores autorizados dos metadados
+
+AttrDefValue_must_be_set_when_Authorized_values=Entidade "{0}", atributo "{1}": o valor padr\u00e3o n\u00e3o deve ser nulo se o indicador de valor autorizado for 'Y'
+
+AttrDefValue_must_be_set_when_Authorized_values.advice=Defina um valor padr\u00e3o ou vire o indicador de valores autorizados para 'N'
+
+Function_is_Unknown=Fun\u00e7\u00e3o "{0}" inesperada
+
+Function_is_Unknown.advice=Use um dos nomes de fun\u00e7\u00e3o esperados
+
+Attr_External_cannot_be_used_with_function=Entidade "{0}": o atributo de tipo externo "{1}" n\u00e3o pode ser definido como modific\u00e1vel na fun\u00e7\u00e3o "{2}"
+
+Attr_External_cannot_be_used_with_function.advice=Defina-o como N\u00c3O modific\u00e1vel ('N') no comando FATTR\\nOu remova o atributo desta fun\u00e7\u00e3o (remova o comando FATTR)
+
+Attr_Mandatory_cannot_be_set_as_NOT_modifiable=Entidade "{0}": o atributo "{1}" MANDATORY n\u00e3o pode ser definido NOT EDITABLE na fun\u00e7\u00e3o 'CREATE'
+
+Attr_Mandatory_cannot_be_set_as_NOT_modifiable.advice=Defina o atributo MANDATORY como EDITABLE ('Y') na fun\u00e7\u00e3o 'CREATE'
+
+Attr_ReadOnly_cannot_be_modified_with_WRITE=Entidade "{0}": o atributo "{1}" cuja prote\u00e7\u00e3o \u00e9 Somente leitura n\u00e3o pode ser modificado na fun\u00e7\u00e3o 'WRITE'
+
+Attr_ReadOnly_cannot_be_modified_with_WRITE.advice=Defina o atributo Somente leitura como NOT EDITABLE ('N') na fun\u00e7\u00e3o 'WRITE'
+
+Attr_has_Invalid_Boolean_value=Valor booleano inesperado "{0}" \: esperado 'Y' ou 'N'
+
+Attr_cannot_be_masked_due_to_InvalidProtection=Entidade "{0}": n\u00e3o pode usar o atributo "{1}" na m\u00e1scara porque seu indicador de prote\u00e7\u00e3o ({2}) rejeita
+
+Attr_cannot_be_masked_due_to_InvalidProtection.advice=Remova os atributos privados/internos
+
+Package_has_NO_Mask=Este pacote n\u00e3o tem uma associa\u00e7\u00e3o de m\u00e1scara
+
+Package_has_NO_Mask.advice=Defina um arquivo .mask por pacote

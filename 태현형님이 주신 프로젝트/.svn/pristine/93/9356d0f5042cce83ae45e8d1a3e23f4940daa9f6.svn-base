@@ -1,0 +1,150 @@
+<meta charset="UTF-8"/>
+//---------------------------------------------------------------------------
+// Check_TeamDemoUsers
+//---------------------------------------------------------------------------
+Check_TeamDemoUsers.Title="One-Click Deployment Experience 보안 컨텍스트";
+Check_TeamDemoUsers.CheckButton="One-Click Deployment Experience 보안 컨텍스트 설정(데모용)";
+Check_TeamDemoUsers.Resume.true="One-Click Deployment Experience 보안 컨텍스트 설정: 예";
+Check_TeamDemoUsers.Resume.false="One-Click Deployment Experience 보안 컨텍스트 설정: 아니요";
+
+Text_DataTBS_wrap.Title="볼트 세부 정보";
+Text_DataTBS_wrap.Label1="생산 볼트의 데이터 및 인덱스 테이블 공간을 지정합니다.";
+Text_DataTBS_wrap.Label2="데이터베이스의 기본 저장 공간 영역을 사용하려면 필드를 비워 둡니다.";
+
+//---------------------------------------------------------------------------
+// Text_DataTBS_wrap
+//---------------------------------------------------------------------------
+Text_DataTBS_wrap.Label3="eService Production 볼트의 데이터 테이블 공간";
+Text_DataTBS_wrap.Resume="eService Production 볼트의 데이터 테이블 공간: /p1";
+
+//---------------------------------------------------------------------------
+// Text_IndexTBS_wrap
+//---------------------------------------------------------------------------
+Text_IndexTBS_wrap.Label1="eService Production 볼트의 인덱스 테이블 공간";
+Text_IndexTBS_wrap.Resume="eService Production 볼트의 인덱스 테이블 공간: /p1";
+
+//---------------------------------------------------------------------------
+// VplmDataTBS
+//---------------------------------------------------------------------------
+VplmDataTBS.Label1="vplm 볼트의 데이터 테이블 공간";
+VplmDataTBS.Resume="vplm 볼트의 데이터 테이블 공간: /p1";
+
+//---------------------------------------------------------------------------
+// VplmIndexTBS
+//---------------------------------------------------------------------------
+VplmIndexTBS.Label1="vplm 볼트의 인덱스 테이블 공간";
+VplmIndexTBS.Resume="vplm 볼트의 인덱스 테이블 공간: /p1";
+
+//---------------------------------------------------------------------------
+// VPLMCentralAdminUser
+//---------------------------------------------------------------------------
+VPLMCentralAdminUser.Title="관리자 정의";
+VPLMCentralAdminUser.Label1="관리자 이름";
+VPLMCentralAdminUser.Resume="관리자 이름: /p1";
+//VPLMCentralAdminUser.Label2 = "Click Next to continue.";
+
+//---------------------------------------------------------------------------
+// VPLMCentralAdminPwd
+//---------------------------------------------------------------------------
+VPLMCentralAdminPwd.Title="관리자 암호";
+VPLMCentralAdminPwd.Label1="관리자 암호";
+//VPLMCentralAdminPwd.Label2 = "Click Next to continue.";
+
+//---------------------------------------------------------------------------
+// VPLMRepositoryName
+//---------------------------------------------------------------------------
+VPLMRepositoryName.Title="기본 VPM 리포지토리 이름";
+VPLMRepositoryName.Label1="VPM 리포지토리의 이름을 입력하십시오(데이터 교환).";
+VPLMRepositoryName.Resume="VPM 리포지토리 이름(데이터 교환): /p1";
+//VPLMRepositoryName.Label2 = "Click Next to continue.";
+
+//---------------------------------------------------------------------------
+// VPLMCentralStorePath
+//---------------------------------------------------------------------------
+VPLMCentralStorePath.Title="VPM 저장소 경로";
+VPLMCentralStorePath.Label1="파일 저장을 위한 VPM 저장소의 경로를 입력하십시오.";
+VPLMCentralStorePath.Resume="VPM 저장소 경로: /p1";
+//VPLMCentralStorePath.Label2 = "Click Next to continue.";
+
+//---------------------------------------------------------------------------
+// Database insert of schema
+//---------------------------------------------------------------------------
+ExecuteFamiliesScript.Title="설치하는 동안 데이터베이스 업데이트";
+ExecuteFamiliesScript.Label1="데이터베이스를 업데이트하지 않고 스테이징 영역에만 설치하려면 선택 취소";
+
+
+//---------------------------------------------------------------------------
+// Hot Fix installer - VPMADM password check
+//---------------------------------------------------------------------------
+ConnectionVPMADMFailed.Title="관리자에 대한 데이터베이스 연결 오류";
+ConnectionVPMADMFailed.Text="다음 오류가 보고되었습니다.\n/p1";
+
+
+//---------------------------------------------------------------------------
+// mxmrun "INST_VPLMRepoName.mql" generation
+//---------------------------------------------------------------------------
+RepoNameMQLgenerationFailed.Title="INST_VPLMRepoName.mql 생성 실패";
+RepoNameMQLgenerationFailed.Text="'mxmrun' 유틸리티가 INST_VPLMRepoName.mql 파일을 생성하지 못했습니다.\nENOVIA Live Collaboration Server 설정 시 지정된 JDK의 레벨과 비트 모드를 확인하십시오.";
+
+
+//---------------------------------------------------------------------------
+// VPLMPosMigrateCompany Post Install Step Warning
+//---------------------------------------------------------------------------
+cmdToExecuteVPLMDataMigration.Title="데이터베이스 마이그레이션을 위한 필수 단계 ";
+cmdToExecuteVPLMDataMigration.Text="기존 설치를 마이그레이션하고 있습니다.\n모든 애플리케이션을 설치한 후 다음 MQL 명령을 수동으로 실행해야 합니다(몇 분 정도 걸릴 수 있음).\n<server> 설치에서 MQL 명령 창을 시작하고 다음을 입력합니다.\n  MQL>set context person creator;\n  MQL>exec prog VPLMDataMigration;";
+
+//---------------------------------------------------------------------------
+// Execute Data Migration
+//---------------------------------------------------------------------------
+Check_ExecuteDataMigration.Title="데이터베이스 인스턴스 데이터 마이그레이션";
+Check_ExecuteDataMigration.Label1="기존 데이터를 마이그레이션하려면 확인란을 선택합니다(필수 단계).";
+Check_ExecuteDataMigration.Label2="이 단계에는 시간이 걸릴 수 있으며, 이것은 데이터베이스 크기에 따라 다릅니다.";
+Check_ExecuteDataMigration.Label3="모든 애플리케이션이 설치되면 사후 설치 단계로 실행하는 것이 좋습니다.";
+Check_ExecuteDataMigration.Resume.true="선택한 데이터 마이그레이션: 예";
+Check_ExecuteDataMigration.Resume.false="선택한 데이터 마이그레이션: 아니요";
+Check_ExecuteDataMigration.CheckButton="기존 데이터 마이그레이션";
+
+//---------------------------------------------------------------------------
+// Check_VPMDemoUsers
+//---------------------------------------------------------------------------
+Check_VPMDemoUsers.Title="사용자 및 조직 데모 데이터";
+Check_VPMDemoUsers.Resume.true="사전 정의된 P&0 데모 데이터 설정: 예";
+Check_VPMDemoUsers.Resume.false="사전 정의된 P&0 데모 데이터 설정: 아니요";
+Check_VPMDemoUsers.CheckButton="사용자 및 조직 데모 데이터 설정(테스트 전용)";
+
+//---------------------------------------------------------------------------
+// Install VPM Customization Sample
+//---------------------------------------------------------------------------
+Check_InstallVPMCustoSample.Title="사용자 정의 샘플 설치";
+Check_InstallVPMCustoSample.Label1="확인란을 선택하여 VPM 사용자 정의 샘플을 설치합니다.";
+Check_InstallVPMCustoSample.Label2="(샘플은 테스트용으로만 사용해야 하며 생산 용도가 아닙니다.";
+Check_InstallVPMCustoSample.Label3="생산 시 완전한 사용자 정의가 필요합니다.)";
+Check_InstallVPMCustoSample.Resume.true="VPM 사용자 정의 샘플 선택: 예";
+Check_InstallVPMCustoSample.Resume.false="VPM 사용자 정의 샘플 선택: 아니요";
+Check_InstallVPMCustoSample.CheckButton="VPM 사용자 정의 샘플 설치";
+
+//---------------------------------------------------------------------------
+// Dynamic relationship checker
+//---------------------------------------------------------------------------
+relationshipNotDynamic.Title="데이터베이스 마이그레이션을 위한 필수 단계 ";
+relationshipNotDynamic.Text="사용자 정의 정책이 감지되었습니다. 부/주 기능을 준수하려면 수정해야 합니다.\n자세한 내용은 ENOVIA Live Collaboration 문서의 서버 설치 안내서에 있는 전환 명령에 대한 설명을 참조하십시오.\n이 절차를 적용할 때까지 서버를 시작하지 않아야 합니다.";
+
+//---------------------------------------------------------------------------
+// Mapping Removal - Installation not authorized.
+//---------------------------------------------------------------------------
+MappingRemovalCannotInstall.Title="이 레벨에서 마이그레이션하는 것은 허용되지 않습니다.";
+MappingRemovalCannotInstall.Text="데이터베이스에서 검색된 이전 설치가 너무 오래되었습니다.\n먼저 ENOVIA Multi-Discipline Collaboration Platform 2014x를 설치한 후 이 미디어를 설치하십시오.";
+
+//---------------------------------------------------------------------------
+// 16x FD01 migration of SR LastPIDAndRole
+//---------------------------------------------------------------------------
+cmdToExecuteVPLMDataMigrationHF.Title="핫픽스 설치 후 필수 단계";
+cmdToExecuteVPLMDataMigrationHF.Text="이 핫픽스 설치 후에는 수동 단계가 필요합니다.\n모든 애플리케이션을 설치한 후 다음 MQL 명령을 실행해야 합니다(몇 분 정도 걸릴 수 있음).\n<server> 설치에서 MQL 명령 창을 시작하고 다음을 입력합니다.\n  MQL>set context person creator;\n  MQL>exec prog VPLMDataMigration;";
+
+//---------------------------------------------------------------------------
+// error handling while executing installVPMMultiDisciplineV6R201xx.tcl
+//---------------------------------------------------------------------------
+execDBScript_failed.Title="데이터베이스 설치 실패";
+execDBScript_failed.Text="다음 데이터베이스 설치 스크립트에 실패했습니다.\n/P1\n다음 오류가 보고되었습니다.\n/P2";
+
+

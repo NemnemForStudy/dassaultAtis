@@ -1,0 +1,2 @@
+/*!  Copyright 2015 Dassault Systemes. All rights reserved. */
+define("DS/SPAContentOptimizer/COptExternalLink",["DS/CSICommandBinder/CSICommandBinder"],function(e){"use strict";var n=function(){this.filePath=""};return e.declareType({type:"COptExternalLink",serialize:function(e,n){return e.writeString("filePath",n.filePath),!0},unserialize:function(e){var t=new n;return t.filePath=e.readString("filePath"),t}}),n});

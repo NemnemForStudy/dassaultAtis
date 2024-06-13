@@ -1,0 +1,1 @@
+define("DS/DMUBaseCommands/DMUBaseCommands_ko",{});define("DS/DMUBaseCommands/assets/nls/DMUBaseCommands",{defaultSelectLabel:"요소를 선택하십시오.",exportSlideError:"슬라이드를 내보내는 중 오류가 발생했습니다.",issueImplLinks:"선택된 개체의 구현 관계를 탐색하는 동안 오류가 발생했습니다.",noWidgetLinked:"구현 링크에 의해 관련된 개체를 강조 표시하려면 이 위젯을 개체를 표시하는 다른 위젯에 연결해야 합니다."});

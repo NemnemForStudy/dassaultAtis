@@ -1,0 +1,16 @@
+################################################################################################
+# Added by thok on 2023.10.19
+# Admin Type : Command
+# Name : decMaterialStatusCommand4
+################################################################################################
+# delete command decMaterialStatusCommand4;
+add command decMaterialStatusCommand4
+	label 'Inst'
+	description 'Material Status Discipline Inst'
+	href '${COMMON_DIR}/emxIndentedTable.jsp?table=decMaterialStatus&program=emxProjectSpace:getMaterialStatusList&toolbar=decProjectMaterialStatusLinkToolBar&header=ProgramCentral.Label.Procurement_Schedule_-_Material_Status&parallelLoading=true&maxCellsToDraw=2000&scrollPageSize=50&pageSize=300&showPaginationToggle=false&decExport=true&exportMode=MaterialStatus&slideinFilter=true&Discipline=IC&filterParam=codeMaster:Sub-Con,codeMaster:Item Group,codeMaster:Group,Fab Category:true,Material Delay:true,Status_Updated:true,CWP_Plan:true'
+	setting 'Access Expression' 'type == "Project Space" && attribute[decProjectType] == "ongoing"'
+	setting 'Registered Suite' 'ProgramCentral'
+	setting 'Target Location' 'content'
+;
+add property command_decMaterialStatusCommand4 on prog eServiceSchemaVariableMapping.tcl to command decMaterialStatusCommand4
+;

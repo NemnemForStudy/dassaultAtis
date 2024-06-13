@@ -1,0 +1,22 @@
+#####################################################################################################
+# Created by changseopLim
+# Create Date : 2024-05-29
+# Name : simpleLifecyclePromote
+#####################################################################################################
+#del command simpleLifecyclePromote
+add command simpleLifecyclePromote
+	description 'Promote Object'
+	label 'emxFramework.Lifecycle.Promote'
+	href '${COMMON_DIR}/promoteFunction.jsp'
+	setting Access Expression value current != "Review"
+	setting 'Registered Suite' 'Framework'
+  	setting 'Access Program' emxLifecycle
+  	setting 'Currency Converter' false
+  	setting Image ${COMMON_DIR}/images/iconActionPromote.png
+  	setting 'Printer Friendly' false
+  	setting 'Registered Suite' Framework
+  	setting 'Target Location' listHidden
+  	user all
+;
+add property command_simplePropertiesCommand on prog eServiceSchemaVariableMapping.tcl to command simplePropertiesCommand
+;

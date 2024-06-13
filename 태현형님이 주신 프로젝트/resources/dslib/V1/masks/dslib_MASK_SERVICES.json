@@ -1,0 +1,123 @@
+{
+	"dslib:SimpleMask":[
+		"dsmvlib:basic.id",
+		"dsmvlib:basic.name",
+		"dsmvlib:attribute.title"
+	],
+	"dslib:LibraryDetailsMask":[
+		"dsmvlib:basic.id",
+		"dsmvlib:basic.name",
+		"dsmvlib:attribute.title",
+		"dsmvlib:basic.description",
+		"dsmvlib:basic.type",
+		"dsmvlib:basic.modified",
+		"dsmvlib:basic.created",
+		"dsmvlib:basic.revision",
+		"dsmvlib:basic.state",
+		"dsmvlib:basic.owner",
+		"dsmvlib:basic.organization",
+		"dsmvlib:basic.collabspace"
+	],
+	"dslib:ClassMask":[
+		{
+			"property": "reuseMask",
+			"mask": "dslib:SimpleMask"
+		},
+		{
+			"property": "to[Subclass].from.id",
+			"key": "ParentClassification",
+			"mask": "dslib:SimpleMask",
+			"maskAppliesTo": "bus",
+			"description": "The immediate parent (Library or Class)"
+		}
+	],
+	"dslib:ClassDetailsMask":[
+		{
+			"property": "reuseMask",
+			"mask": "dslib:LibraryDetailsMask"
+		},
+		{
+			"property": "to[Subclass].from.id",
+			"key": "ParentClassification",
+			"mask": "dslib:LibraryDetailsMask",
+			"maskAppliesTo": "bus",
+			"description": "The immediate parent (Library or Class)"
+		}
+	],
+	"dslib:ExpandClassesMask":[
+		{
+			"property": "reuseMask",
+			"mask": "dslib:SimpleMask"
+		},
+		"dsmvlib:computed.ChildClasses"
+	],
+	"dslib:ExpandClassesDetailsMask":[
+		{
+			"property": "reuseMask",
+			"mask": "dslib:LibraryDetailsMask"
+		},
+		"dsmvlib:computed.ChildClassesDetails"
+	],
+	"dslib:ExpandClassifiableClassesMask":[
+		{
+			"property": "reuseMask",
+			"mask": "dslib:LibraryDetailsMask"
+		},
+		"dsmvlib:computed.ClassifiableClasses"
+	],
+	"dslib:ClassifiedItemsMask":[
+		{
+			"property": "reuseMask",
+			"mask": "dslib:SimpleMask"
+		},
+		{
+			"property": "from[Classified Item].to.id",
+			"key": "ClassifiedItems",
+			"description": "The Classified Items of the Class",
+			"mask": "dslib:SimpleMask",
+			"maskAppliesTo": "bus"
+		}
+	],
+	"dslib:ClassAttributesMask":[
+		{
+			"property": "reuseMask",
+			"mask": "dslib:SimpleMask"
+		},
+		"dsmvlib:computed.ClassAttributes"
+	],
+	"dslib:ClassifiedItemBaseMask":[
+		{
+			"property":"reuseMask",
+			"mask":"dslib:SimpleMask"
+		}
+	],
+	"dslib:ClassificationAttributesMask":[
+		{
+			"property":"reuseMask",
+			"mask":"dslib:SimpleMask"
+		},
+		"dsmvlib:computed.ClassificationAttributes"
+	],
+	"dslib:ReverseClassificationMask":[
+		{
+			"property": "to[Classified Item].from.id",
+			"key": "ParentClassification",
+			"description": "The immediate parent (Library or Class)",
+			"mask": "dslib:ReverseClassificationPathMask",
+			"maskAppliesTo": "bus"
+		}
+	],
+	"dslib:ReverseClassificationPathMask":[
+		{
+			"property":"reuseMask",
+			"mask":"dslib:SimpleMask"
+		},
+		{
+			"property": "to[Subclass].from.id",
+			"key": "ParentClassification",
+			"description": "The immediate parent (Library or Class)",
+			"mask": "dslib:ReverseClassificationPathMask",
+			"maskAppliesTo": "bus"
+		}
+	]
+}

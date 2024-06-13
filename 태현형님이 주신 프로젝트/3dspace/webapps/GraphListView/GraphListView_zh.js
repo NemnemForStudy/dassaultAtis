@@ -1,0 +1,1 @@
+define("DS/GraphListView/GraphListView_zh",{});define("DS/GraphListView/assets/nls/ColumnsTitles",{colGraph:"图表",colTitle:"标题 ",colMenu:"菜单",colIntent:"意图",colSpecification:"",colFilter:"过滤"});

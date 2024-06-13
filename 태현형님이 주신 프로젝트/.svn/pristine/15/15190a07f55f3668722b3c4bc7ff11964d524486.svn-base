@@ -1,0 +1,62 @@
+@keyframes traceModePortOn {
+  100% {
+    fill: #009688; } }
+
+@keyframes traceModeDebugPortOn {
+  100% {
+    fill: #ff8c00; } }
+
+@keyframes traceModePortOff {
+  0% {
+    fill: #009688; }
+
+  100% {
+    fill: #b2dfdb; } }
+
+@keyframes traceModeDebugPortOff {
+  0% {
+    fill: #ff8c00; }
+
+  100% {
+    fill: #ffc782; } }
+
+.sch-port .sch-reroute-handler {
+  box-sizing: border-box;
+  fill: white;
+  stroke: black;
+  stroke-width: 0.5px;
+  stroke-linejoin: round; }
+
+.sch-block-port {
+  box-sizing: border-box; }
+  .sch-block-port > .sch-input-control-port, .sch-block-port > .sch-output-control-port {
+    fill: #f1f1f1;
+    stroke: #d1d4d4;
+    stroke-width: 0.75px;
+    stroke-linejoin: round; }
+    .sch-block-port > .sch-input-control-port .sch-event-port-handler, .sch-block-port > .sch-output-control-port .sch-event-port-handler {
+      opacity: 0; }
+  .sch-block-port:hover > .sch-input-control-port, .sch-block-port:hover > .sch-output-control-port, .sch-block-port.sch-port-highlight > .sch-input-control-port, .sch-block-port.sch-port-highlight > .sch-output-control-port, .sch-block-port.sch-trace-done:hover > .sch-input-control-port, .sch-block-port.sch-trace-done:hover > .sch-output-control-port, .sch-block-port.sch-trace-done.sch-port-highlight > .sch-input-control-port, .sch-block-port.sch-trace-done.sch-port-highlight > .sch-output-control-port {
+    fill: #368ec4;
+    stroke: #005686; }
+  .sch-block-port.selected > .sch-input-control-port, .sch-block-port.selected > .sch-output-control-port, .sch-block-port.selected:hover > .sch-input-control-port, .sch-block-port.selected:hover > .sch-output-control-port, .sch-block-port.selected.sch-port-highlight > .sch-input-control-port, .sch-block-port.selected.sch-port-highlight > .sch-output-control-port, .sch-block-port.sch-trace-done.selected > .sch-input-control-port, .sch-block-port.sch-trace-done.selected > .sch-output-control-port, .sch-block-port.sch-trace-done.selected:hover > .sch-input-control-port, .sch-block-port.sch-trace-done.selected:hover > .sch-output-control-port, .sch-block-port.sch-trace-done.selected.sch-port-highlight > .sch-input-control-port, .sch-block-port.sch-trace-done.selected.sch-port-highlight > .sch-output-control-port {
+    fill: #31afff;
+    stroke: #005686; }
+  .sch-block-port.sch-trace-done > .sch-input-control-port, .sch-block-port.sch-trace-done > .sch-output-control-port {
+    fill: #b2dfdb; }
+  .sch-block-port.sch-trace-done.sch-trace-on > .sch-input-control-port, .sch-block-port.sch-trace-done.sch-trace-on > .sch-output-control-port {
+    animation-duration: 0.2s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+    animation-name: traceModePortOn; }
+  .sch-block-port.sch-trace-done.sch-trace-off > .sch-input-control-port, .sch-block-port.sch-trace-done.sch-trace-off > .sch-output-control-port {
+    animation-duration: 0.2s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+    animation-name: traceModePortOff; }
+  .sch-block-port > .sch-input-control-port > .sch-reroute-handler {
+    box-sizing: border-box;
+    /*transform: translate(13px, -2.05px); Property not supported in IE11!*/ }
+  .sch-block-port > .sch-output-control-port > .sch-reroute-handler {
+    box-sizing: border-box;
+    /*transform: translate(13px, -2.05px); Property not supported in IE11!*/ }

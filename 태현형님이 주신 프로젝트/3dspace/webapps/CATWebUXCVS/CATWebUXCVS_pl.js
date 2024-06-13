@@ -1,0 +1,1 @@
+define("DS/CATWebUXCVS/CATWebUXCVS_pl",{});define("DS/CATWebUXCVS/assets/nls/CATWebUXCVS",{valStateChange:{dlgTitle:"Atestacja",closeBtn:"Zamknij",inProgress:"W toku",passed:"Zaliczone",failed:"Niepowodzenie"}});

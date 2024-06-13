@@ -1,0 +1,112 @@
+[
+    {
+        "ParsingVersion": "2.0",
+        "DeclarativeTypes": [
+            {
+                "ConceptualName": "DELLmiOperationInstance",
+                "ParentType": "PLMInstance",
+                "IsAbstract": true,
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "DELLmiOperationInstance",
+                        "Behavior": "INSTANCE"
+                    },
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "DELLmiOperationInstance",
+                        "Behavior": "INSTANCE"
+                    }
+                ],
+                "Dependencies": [
+                    [
+                        {
+                            "ConceptualName": "dsprcs:MfgProcess",
+                            "DependentAttributes": [
+                                "From_IDs"
+                            ]
+                        },
+                        {
+                            "ConceptualName": "dsprcs:MfgOperation",
+                            "DependentAttributes": [
+                                "TO_IDs"
+                            ]
+                        }
+                    ],
+                    [
+                        {
+                            "ConceptualName": "dsprcs:MfgOperation",
+                            "DependentAttributes": [
+                                "From_IDs",
+                                "TO_IDs"
+                            ]
+                        }
+                    ]
+                ],
+                "Attributes": [
+                    {
+                        "ConceptualName": "From_IDs",
+                        "State": "MANDATORY",
+                        "Checkers": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.tools.checkers.AttributeNotNullAndUniqueValueChecker"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "TO_IDs",
+                        "State": "MANDATORY",
+                        "Checkers": [
+                            {
+                                "Modeler": "_3DSpaceDB",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.tools.checkers.AttributeNotNullAndUniqueValueChecker"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "remoteObjectInfo",
+                        "Transforms": [
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.transforms.DELCRUDProcIndexRemoteObjectTransform"
+                            }
+                        ]
+                    },
+                    {
+                        "ConceptualName": "kind",
+                        "Checkers": [
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.corpus.tools.checkers.AttributeDefaultChecker"
+                            }
+                        ],
+                        "Getters": [
+                            {
+                                "Modeler": "_Index",
+                                "Class": "com.dassault_systemes.delmia.crud.process.attributes.getters.MfgProductionPlanningKindGetter"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "ConceptualName": "dsprcs:MfgOperationInstance",
+                "ParentType": "DELLmiOperationInstance",
+                "IsAbstract": true,
+                "ModelerMapping": [
+                    {
+                        "Modeler": "_3DSpaceDB",
+                        "Mapping": "DELLmiOperationPPRInstance",
+                        "Behavior": "INSTANCE"
+                    },
+                    {
+                        "Modeler": "_Index",
+                        "Mapping": "DELLmiOperationPPRInstance",
+                        "Behavior": "INSTANCE"
+                    }
+                ]
+            }
+        ]
+    }
+]

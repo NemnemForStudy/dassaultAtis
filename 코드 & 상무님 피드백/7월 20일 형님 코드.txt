@@ -1,0 +1,101 @@
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.json.JSONObject;
+
+import com.matrixone.apps.domain.DomainObject;
+import com.matrixone.apps.domain.DomainRelationship;
+import com.matrixone.apps.domain.util.MapList;
+import com.matrixone.apps.domain.util.MqlUtil;
+
+import matrix.db.Context;
+import matrix.db.JPO;
+import matrix.util.StringList;
+
+public class testDocument_mxJPO {
+
+   public MapList findDocuments(Context context, String[] args) throws Exception {
+      StringList selects = new StringList("id");
+      return DomainObject.findObjects(context, "testDocument", "*", "", selects);
+   }
+
+   public void connectRelatedDocument(Context context, String[] args) throws Exception {
+
+      HashMap programMap = (HashMap) JPO.unpackArgs(args);
+      HashMap requestMap = (HashMap) programMap.get("requestMap");
+      HashMap paramMap = (HashMap) programMap.get("paramMap");
+      String objectId = (String) paramMap.get("objectId");
+      String selectedValue = (String) paramMap.get("New Value");
+      if (objectId != null) {
+         DomainRelationship.connect(context, objectId, "testRelatedDocument", selectedValue, true);
+      } else {
+         return;
+      }
+
+   }
+
+   public int checkDocumentCategory(Context context, String[] args) throws Exception {
+      String objectId = args[0];
+      DomainObject dom = new DomainObject(objectId);
+      String documentCategory = dom.getAttributeValue(context, "testDocumentCategory");
+      if (documentCategory.equals("Etc")) {
+         MqlUtil.mqlCommand(context, "notice $1", "Etc Not Allowed");
+         return 1;
+      }
+      return 0;
+   }
+
+   public void makeJsonFile(Context context, String[] args) throws Exception {
+      String objectId = args[0];
+      DomainObject dom = new DomainObject(objectId);
+      StringList slSelect = new StringList();
+      slSelect.add("name");
+      Map info = dom.getInfo(context, slSelect);
+      String name = String.valueOf(info.get("name")); 
+
+      // 생성한 JSON 데이터를 파일로 저장합니다.
+      try (FileWriter fileWriter = new FileWriter("C:\\Users\\Administrator\\Desktop\\test\\" + name + ".json")) {
+         String category = dom.getAttributeValue(context, "testDocumentCategory");
+         String title = dom.getAttributeValue(context, "Title");
+         String desc = dom.getDescription(context);
+         String effectiveDate = dom.getAttributeValue(context, "testEffectiveDate");
+         
+         
+         // JSON 형식의 데이터를 생성합니다.
+         JSONObject jsonObject = new JSONObject();
+         jsonObject.put("attribute[Title]", title);
+         jsonObject.put("attribute[testDocumentCategory]", category);
+         jsonObject.put("description", desc);
+         jsonObject.put("attribute[testEffectiveDate]", effectiveDate);
+         fileWriter.write(jsonObject.toString());
+         System.out.println("JSON 파일이 성공적으로 생성되었습니다.");
+         
+      } catch (IOException e) {
+         System.err.println("JSON 파일 생성 중 오류가 발생했습니다: " + e.getMessage());
+      }
+   }
+   
+   public void removeJsonFile(Context context, String[] args) throws Exception {
+      String objectId = args[0];
+      DomainObject dom = new DomainObject(objectId);
+      StringList slSelect = new StringList();
+      slSelect.add("name");
+      Map info = dom.getInfo(context, slSelect);
+      String name = String.valueOf(info.get("name")); 
+      File file = new File("C:\\Users\\Administrator\\Desktop\\test\\" + name + ".json");
+           
+       if( file.exists() ){
+          if(file.delete()){
+             System.out.println("파일삭제 성공");
+          }else{
+             System.out.println("파일삭제 실패");
+          }
+       }else{
+          System.out.println("파일이 존재하지 않습니다.");
+       }
+      
+   }
+}

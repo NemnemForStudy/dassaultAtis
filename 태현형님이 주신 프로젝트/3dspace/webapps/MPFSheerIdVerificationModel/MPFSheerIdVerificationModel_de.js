@@ -1,0 +1,1 @@
+define("DS/MPFSheerIdVerificationModel/MPFSheerIdVerificationModel_de",{});define("DS/MPFSheerIdVerificationModel/assets/nls/MPFSheerIdVerificationModel",{firstName:"Vorname",lastName:"Nachname",emailAddress:"E-Mail-Adresse",birthData:"Geburtsdatum",organization:"Organisation",phoneNumber:"Telefonnummer",xIsInvalid:"{x} ist ungültig",xIsRequired:"{x} ist erforderlich"});

@@ -1,0 +1,27 @@
+################################################################################################
+# Modified By thok : 2023. 07. 25
+# Admin Type : command
+# Name : PMCProjectDetailsPropertiesAlertPreferences
+################################################################################################
+copy command PMCProjectDetailsPropertiesAlertPreferences PMCProjectDetailsPropertiesAlertPreferences_ootb;
+mod command PMCProjectDetailsPropertiesAlertPreferences
+	add setting 'Access Expression' '(type.kindOf[$<type_ProjectSpace>] && admin_platform==context.user)'
+;
+
+# Modified By thok : 2023. 07. 28
+mod command PMCProjectDetailsPropertiesAlertPreferences
+	add setting 'Access Expression' '(type.kindOf[$<type_ProjectSpace>] && context.user.isassigned[decSystemAdmin])'
+;
+
+# Modified by hslee on 2023.08.07
+mod command PMCProjectDetailsPropertiesAlertPreferences
+	add setting 'hasAccess' 'PIM,AWP'
+	add setting 'Access Program' 'decAccess'
+	add setting 'Access Function' 'hasAccess'
+	add setting 'Access Expression' '(type.kindOf[$<type_ProjectSpace>])'
+;
+
+# Modified by hslee on 2023.09.09
+mod command PMCProjectDetailsPropertiesAlertPreferences
+	add setting 'hasAccess' 'PIM'
+;

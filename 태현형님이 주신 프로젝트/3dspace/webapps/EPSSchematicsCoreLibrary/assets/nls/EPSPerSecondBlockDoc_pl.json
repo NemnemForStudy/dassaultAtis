@@ -1,0 +1,14 @@
+{
+  "version": "1.0.0",
+  "summary": "Interpoluje wartość danych wejściowych na każdym etapie wykonywania w ciągu sekundy, uwzględniając czas, jaki upłynął od poprzedniego kroku wykonywania.",
+  "description": "Ten blok może być bardzo przydatny w celu uzyskania <b>animacji opartych na ramkach</b>. Gwarantuje stałą szybkość animacji niezależnie od użytej mocy obliczeniowej.<br><br>Obiekt animowany <b>w oparciu o czas</b> przesunie się z <b>punktu A</b> do <b>punktu B</b> w <b>tym samym czasie</b>, niezależnie od częstotliwości klatek filmu. Im mniejsza częstotliwość odświeżania, <b>tym dalej obiekt przesuwa każdą klatkę</b> , aby utrzymać tę samą prędkość.<br><br>Z drugiej strony, jeśli animacja opiera <b>się na szybkości klatek</b>, obiekt zawsze będzie przyjmować <b>tę samą liczbę klatek</b> , aby dotrzeć z <b>punktu A</b> do <b>punktu B</b>. Im mniejsza częstotliwość odświeżania, tym dłuższy czas, ponieważ odległość przesunięcia każdej klatki nie ulega zmianie.<br><br>W próbce, gdy prędkość klatek spada, animacja oparta na klatkach <b>również zwalnia</b> i animacja oparta na czasie <b>traci płynność</b>.<br>Animacja oparta na czasie jest również znana jako animacja „niezależna od liczby klatek na sekundę”.",
+  "dataPorts": {
+    "Input": "odpowiada wartości wejściowej interpolowanej przez sekundę.",
+    "Output": "odpowiada wartości wyjściowej, gdzie <doc-odp-name translate=no>Output</doc-odp-name> = <doc-idp-name translate=no>Input</doc-idp-name> * czas, który upłynął (w sekundach).<br>Czas, który upłynął, oznacza czas trwania jednego kroku wykonania."
+  },
+  "controlPorts": {
+    "In": "wyzwala wykonanie bloku.",
+    "Out": "jest aktywowane po zakończeniu procesu."
+  },
+  "example": null
+}

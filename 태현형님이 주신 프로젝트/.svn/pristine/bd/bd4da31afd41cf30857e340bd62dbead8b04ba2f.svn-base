@@ -1,0 +1,603 @@
+[
+	{
+		"ParsingVersion": "2.0",
+		"Corpus": [
+			{
+				"version": "2.0",
+				"ArchiCompatiableVersions": [
+					"VERSION_4"
+				],
+				"DeclarativeTypes": [
+				{
+						"ConceptualName": "PLMEntity",
+						"IsAbstract": true,
+						"Attributes": [
+							{
+								"ConceptualName": "name",
+								"ModelerMapping": [
+									{
+										"Modeler": "_3DSpaceDB",
+										"Mapping": "PLMEntity.PLM_ExternalID"
+									},
+									{
+										"Modeler": "_Index",
+										"Mapping": "bo.PLMEntity.PLM_ExternalID"
+									}
+								]
+							},
+							{
+								"ConceptualName": "title",
+								"ModelerMapping": [
+									{
+										"Modeler": "_3DSpaceDB",
+										"Mapping": "PLMEntity.V_Name"
+									},
+									{
+										"Modeler": "_Index",
+										"Mapping": "bo.PLMEntity.V_Name"
+									}
+								]
+							},
+							{
+								"ConceptualName": "description",
+								"ModelerMapping": [
+									{
+										"Modeler": "_3DSpaceDB",
+										"Mapping": "PLMEntity.V_description"
+									},
+									{
+										"Modeler": "_Index",
+										"Mapping": "bo.PLMEntity.V_description"
+									}
+								]
+							}
+						]
+					},
+					{
+						"ConceptualName": "WorkInstruction",
+						"ParentType" : "PLMEntity",
+						"IsAbstract": true,
+						"Attributes": [
+						]
+					},
+					{
+						"ConceptualName": "dswo:SignOff",
+						"ParentType" : "WorkInstruction",
+						"ModelerMapping": [
+								{
+									"Modeler": "_3DSpaceDB",
+									"Mapping": "DELWkiSignOffReference",
+									"Behavior": "REFERENCE"
+								},
+								{
+									"Modeler": "_Index",
+									"Mapping": "DELWkiSignOffReference",
+									"Behavior": "REFERENCE"
+								}
+						],
+						"Attributes": [
+							{
+								"ConceptualName": "aggregatingReference",
+								"State": "MANDATORY",
+								"Checkers": [
+									{
+										"Modeler": "_3DSpaceDB",
+										"Class": "com.dassault_systemes.delmia.crud.corpus.tools.checkers.AttributeNotNullAndUniqueValueChecker"
+									}
+								],
+								"Setters": [
+									{
+										"Modeler": "_3DSpaceDB",
+										"Class": "com.dassault_systemes.delmia.crud.workinstruction.attributes.setters.AttributeWorkInstructionInstanceCreationSetter"
+									}
+								],
+								"Getters": [
+									{
+										"Modeler": "_3DSpaceDB",
+										"Class": "com.dassault_systemes.delmia.crud.workinstruction.attributes.getters.AttributeSignOffParentWOOPGetter"
+									}
+								]
+							},
+							{
+								"ConceptualName": "text",
+								"ModelerMapping": [
+									{
+										"Modeler": "_Index",
+										"Mapping": "bo.DELWkiSignOffReference.V_WISignOff_Text"
+									},
+									{
+										"Modeler": "_3DSpaceDB",
+										"Mapping": "DELWkiSignOffReference.V_WISignOff_Text"
+									}
+								],
+								"Getters": [
+									{
+										"Modeler": "_Index",
+										"Class": "com.dassault_systemes.delmia.crud.corpus.index.tools.getter.DELCRUDCorpusIndexCustomGetter"
+									}
+								]
+							},
+							{
+								"ConceptualName": "isPartialSignoffAllowed",
+								"ModelerMapping": [
+									{
+										"Modeler": "_Index",
+										"Mapping": "bo.DELWkiSignOffReference.V_WISignOff_AllowPartial"
+									},
+									{
+										"Modeler": "_3DSpaceDB",
+										"Mapping": "DELWkiSignOffReference.V_WISignOff_AllowPartial"
+									}
+								]
+							},
+							{
+								"ConceptualName": "isOptional",
+								"ModelerMapping": [
+									{
+										"Modeler": "_Index",
+										"Mapping": "bo.DELWkiSignOffReference.V_WISignOff_NotMandatory"
+									},
+									{
+										"Modeler": "_3DSpaceDB",
+										"Mapping": "DELWkiSignOffReference.V_WISignOff_NotMandatory"
+									}
+								]
+							},
+							{
+								"ConceptualName": "actors",
+								"ModelerMapping": [
+									{
+										"Modeler": "_Index",
+										"Mapping": "bo.DELWkiSignOffReference.V_WISignOff_Actors"
+									},
+									{
+										"Modeler": "_3DSpaceDB",
+										"Mapping": "DELWkiSignOffReference.V_WISignOff_Actors"
+									}
+								]
+							}
+						]
+					},
+					{
+						"ConceptualName": "dswo:Alert",
+						"ParentType" : "WorkInstruction",
+						"ModelerMapping": [
+								{
+									"Modeler": "_3DSpaceDB",
+									"Mapping": "DELWkiAlertReference",
+									"Behavior": "REFERENCE"
+								},
+								{
+									"Modeler": "_Index",
+									"Mapping": "DELWkiAlertReference",
+									"Behavior": "REFERENCE"
+								}
+						],
+						"Attributes": [
+							{
+								"ConceptualName": "aggregatingReference",
+								"State": "MANDATORY",
+								"Checkers": [
+									{
+										"Modeler": "_3DSpaceDB",
+										"Class": "com.dassault_systemes.delmia.crud.corpus.tools.checkers.AttributeNotNullAndUniqueValueChecker"
+									}
+								],
+								"Setters": [
+									{
+										"Modeler": "_3DSpaceDB",
+										"Class": "com.dassault_systemes.delmia.crud.workinstruction.attributes.setters.AttributeWorkInstructionInstanceCreationSetter"
+									}
+								],
+								"Getters": [
+									{
+										"Modeler": "_3DSpaceDB",
+										"Class": "com.dassault_systemes.delmia.crud.workinstruction.attributes.getters.AttributeAlertParentWOOPGetter"
+									}
+								]
+							},
+							{
+								"ConceptualName": "text",
+								"ModelerMapping": [
+									{
+										"Modeler": "_Index",
+										"Mapping": "bo.DELWkiAlertReference.V_WIAlert_Message"
+									},
+									{
+										"Modeler": "_3DSpaceDB",
+										"Mapping": "DELWkiAlertReference.V_WIAlert_Message"
+									}
+								],
+								"Getters": [
+									{
+										"Modeler": "_Index",
+										"Class": "com.dassault_systemes.delmia.crud.corpus.index.tools.getter.DELCRUDCorpusIndexCustomGetter"
+									}
+								]
+							},
+							{
+								"ConceptualName": "showMode",
+								"ModelerMapping": [
+									{
+										"Modeler": "_Index",
+										"Mapping": "bo.DELWkiAlertReference.V_WIAlert_ShowMode"
+									},
+									{
+										"Modeler": "_3DSpaceDB",
+										"Mapping": "DELWkiAlertReference.V_WIAlert_ShowMode"
+									}
+								],
+								"Transforms": [
+									{
+										"Modeler": "_3DSpaceDB",
+										"Class": "com.dassault_systemes.delmia.crud.process.attributes.transforms.wki.WkiAlertAttributeShowMode3DSpaceTransform"
+									}
+								]
+							},
+							{
+								"ConceptualName": "trackComfirmation",
+								"ModelerMapping": [
+									{
+										"Modeler": "_Index",
+										"Mapping": "bo.DELWkiAlertReference.V_WIAlert_TrackConfirmation"
+									},
+									{
+										"Modeler": "_3DSpaceDB",
+										"Mapping": "DELWkiAlertReference.V_WIAlert_TrackConfirmation"
+									}
+								]
+							}
+						]
+					},
+					{
+						"ConceptualName": "dswo:Instruction",
+						"ParentType": "WorkInstruction",
+						"ModelerMapping": [
+							{
+								"Modeler": "_3DSpaceDB",
+								"Mapping": "DELWkiInstructionReference",
+								"Behavior": "REFERENCE"
+							},
+							{
+								"Modeler": "_Index",
+								"Mapping": "DELWkiInstructionReference",
+								"Behavior": "REFERENCE"
+							}
+						],
+						"Attributes": [
+							{
+								"ConceptualName": "aggregatingReference",
+								"State": "MANDATORY",
+								"Checkers": [
+									{
+										"Modeler": "_3DSpaceDB",
+										"Class": "com.dassault_systemes.delmia.crud.corpus.tools.checkers.AttributeNotNullAndUniqueValueChecker"
+									}
+								],
+								"Setters": [
+									{
+										"Modeler": "_3DSpaceDB",
+										"Class": "com.dassault_systemes.delmia.crud.workinstruction.attributes.setters.AttributeWorkInstructionInstanceCreationSetter"
+									}
+								],
+								"Getters": [
+									{
+										"Modeler": "_3DSpaceDB",
+										"Class": "com.dassault_systemes.delmia.crud.workinstruction.attributes.getters.AttributeInstructionParentWOOPGetter"
+									}
+								]
+							},
+							{
+								"ConceptualName": "text",
+								"ModelerMapping": [
+									{
+										"Modeler": "_Index",
+										"Mapping": "bo.DELWkiInstructionReference.V_WIInstruction_Text"
+									},
+									{
+										"Modeler": "_3DSpaceDB",
+										"Mapping": "DELWkiInstructionReference.V_WIInstruction_Text"
+									}
+								],
+								"Getters": [
+									{
+										"Modeler": "_Index",
+										"Class": "com.dassault_systemes.delmia.crud.corpus.index.tools.getter.DELCRUDCorpusIndexCustomGetter"
+									}
+								]
+							}
+						]
+					},
+					{
+						"ConceptualName": "dswo:DataCollect",
+						"ParentType": "WorkInstruction",
+						"ModelerMapping": [
+							{
+								"Modeler": "_3DSpaceDB",
+								"Mapping": "DELWkiDataCollectReference",
+								"Behavior": "REFERENCE"
+							},
+							{
+								"Modeler": "_Index",
+								"Mapping": "DELWkiDataCollectReference",
+								"Behavior": "REFERENCE"
+							}
+						],
+						"Attributes": [
+							{
+								"ConceptualName": "aggregatingReference",
+								"State": "MANDATORY",
+								"Checkers": [
+									{
+										"Modeler": "_3DSpaceDB",
+										"Class": "com.dassault_systemes.delmia.crud.corpus.tools.checkers.AttributeNotNullAndUniqueValueChecker"
+									}
+								],
+								"Setters": [
+									{
+										"Modeler": "_3DSpaceDB",
+										"Class": "com.dassault_systemes.delmia.crud.workinstruction.attributes.setters.AttributeWorkInstructionInstanceCreationSetter"
+									}
+								],
+								"Getters": [
+									{
+										"Modeler": "_3DSpaceDB",
+										"Class": "com.dassault_systemes.delmia.crud.workinstruction.attributes.getters.AttributeDataCollectParentWOOPGetter"
+									}
+								]
+							},
+							{
+								"ConceptualName": "text",
+								"ModelerMapping": [
+									{
+										"Modeler": "_Index",
+										"Mapping": "bo.DELWkiDataCollectReference.V_WIDC_Text"
+									},
+									{
+										"Modeler": "_3DSpaceDB",
+										"Mapping": "DELWkiDataCollectReference.V_WIDC_Text"
+									}
+								],
+								"Getters": [
+									{
+										"Modeler": "_Index",
+										"Class": "com.dassault_systemes.delmia.crud.corpus.index.tools.getter.DELCRUDCorpusIndexCustomGetter"
+									}
+								]
+							},
+							{
+								"ConceptualName": "label",
+								"ModelerMapping": [
+									{
+										"Modeler": "_Index",
+										"Mapping": "bo.DELWkiDataCollectReference.V_WIDC_Label"
+									},
+									{
+										"Modeler": "_3DSpaceDB",
+										"Mapping": "DELWkiDataCollectReference.V_WIDC_Label"
+									}
+								]
+							},
+							{
+								"ConceptualName": "dcType",
+								"ModelerMapping": [
+									{
+										"Modeler": "_Index",
+										"Mapping": "bo.DELWkiDataCollectReference.V_WIDC_Type"
+									},
+									{
+										"Modeler": "_3DSpaceDB",
+										"Mapping": "DELWkiDataCollectReference.V_WIDC_Type"
+									}
+								],
+								"Transforms": [
+									{
+										"Modeler": "_3DSpaceDB",
+										"Class": "com.dassault_systemes.delmia.crud.process.attributes.transforms.wki.WkiDataCollectAttributeDCType3DSpaceTransform"
+									}
+								]
+							},
+							{
+								"ConceptualName": "sampleSize",
+								"ModelerMapping": [
+									{
+										"Modeler": "_Index",
+										"Mapping": "bo.DELWkiDataCollectReference.V_WIDC_SampleSize"
+									},
+									{
+										"Modeler": "_3DSpaceDB",
+										"Mapping": "DELWkiDataCollectReference.V_WIDC_SampleSize"
+									}
+								]
+							},
+							{
+								"ConceptualName": "hasMaxValuated",
+								"ModelerMapping": [
+									{
+										"Modeler": "_Index",
+										"Mapping": "bo.DELWkiDataCollectReference.V_WIDC_IsMaxValuated"
+									},
+									{
+										"Modeler": "_3DSpaceDB",
+										"Mapping": "DELWkiDataCollectReference.V_WIDC_IsMaxValuated"
+									}
+								]
+							},
+							{
+								"ConceptualName": "hasMinValuated",
+								"ModelerMapping": [
+									{
+										"Modeler": "_Index",
+										"Mapping": "bo.DELWkiDataCollectReference.V_WIDC_IsMinValuated"
+									},
+									{
+										"Modeler": "_3DSpaceDB",
+										"Mapping": "DELWkiDataCollectReference.V_WIDC_IsMinValuated"
+									}
+								]
+							},
+							{
+								"ConceptualName": "magnitude",
+								"ModelerMapping": [
+									{
+										"Modeler": "_Index",
+										"Mapping": "bo.DELWkiDataCollectReference.V_WIDC_Magnitude"
+									},
+									{
+										"Modeler": "_3DSpaceDB",
+										"Mapping": "DELWkiDataCollectReference.V_WIDC_Magnitude"
+									}
+								]
+							},
+							{
+								"ConceptualName": "maxValue",
+								"ModelerMapping": [
+									{
+										"Modeler": "_Index",
+										"Mapping": "bo.DELWkiDataCollectReference.V_WIDC_Max"
+									},
+									{
+										"Modeler": "_3DSpaceDB",
+										"Mapping": "DELWkiDataCollectReference.V_WIDC_Max"
+									}
+								]
+							},
+							{
+								"ConceptualName": "minValue",
+								"ModelerMapping": [
+									{
+										"Modeler": "_Index",
+										"Mapping": "bo.DELWkiDataCollectReference.V_WIDC_Min"
+									},
+									{
+										"Modeler": "_3DSpaceDB",
+										"Mapping": "DELWkiDataCollectReference.V_WIDC_Min"
+									}
+								]
+							},
+							{
+								"ConceptualName": "possibleValues",
+								"Transforms": [
+									{
+										"Modeler": "_3DSpaceDB",
+										"Class": "com.dassault_systemes.delmia.crud.process.attributes.transforms.wki.WkiDataCollectAttrPsblValues3DSpaceTransform"
+									},
+									{
+										"Modeler": "_Index",
+										"Class": "com.dassault_systemes.delmia.crud.process.attributes.transforms.wki.DataCollectAttrPossibleValuesIndexTransform"
+									}
+								]
+							},
+							{
+								"ConceptualName": "minIncluded",
+								"ModelerMapping": [
+									{
+										"Modeler": "_Index",
+										"Mapping": "bo.DELWkiDataCollectReference.V_WIDC_IsMinIncluded"
+									},
+									{
+										"Modeler": "_3DSpaceDB",
+										"Mapping": "DELWkiDataCollectReference.V_WIDC_IsMinIncluded"
+									}
+								]
+							},
+							{
+								"ConceptualName": "maxIncluded",
+								"ModelerMapping": [
+									{
+										"Modeler": "_Index",
+										"Mapping": "bo.DELWkiDataCollectReference.V_WIDC_IsMaxIncluded"
+									},
+									{
+										"Modeler": "_3DSpaceDB",
+										"Mapping": "DELWkiDataCollectReference.V_WIDC_IsMaxIncluded"
+									}
+								]
+							}
+						]
+					},
+										{
+						"ConceptualName": "dswo:DataCollectPlan",
+						"ParentType": "WorkInstruction",
+						"ModelerMapping": [
+							{
+								"Modeler": "_3DSpaceDB",
+								"Mapping": "DELWkiDataCollectPlanReference",
+								"Behavior": "REFERENCE"
+							},
+							{
+								"Modeler": "_Index",
+								"Mapping": "DELWkiDataCollectPlanReference",
+								"Behavior": "REFERENCE"
+							}
+						],
+						"Attributes": [
+							{
+								"ConceptualName": "aggregatingReference",
+								"State": "MANDATORY",
+								"Checkers": [
+									{
+										"Modeler": "_3DSpaceDB",
+										"Class": "com.dassault_systemes.delmia.crud.corpus.tools.checkers.AttributeNotNullAndUniqueValueChecker"
+									}
+								],
+								"Setters": [
+									{
+										"Modeler": "_3DSpaceDB",
+										"Class": "com.dassault_systemes.delmia.crud.workinstruction.attributes.setters.AttributeWorkInstructionInstanceCreationSetter"
+									}
+								],
+								"Getters": [
+									{
+										"Modeler": "_3DSpaceDB",
+										"Class": "com.dassault_systemes.delmia.crud.workinstruction.attributes.getters.AttributeDataCollectPlanParentWOOPGetter"
+									}
+								]
+							}
+						]
+					},
+					{
+						"ConceptualName": "dsprcs:CheckList",
+						"ParentType": "WorkInstruction",
+						"ModelerMapping": [
+							{
+								"Modeler": "_3DSpaceDB",
+								"Mapping": "DELWkiDataCollectChecklistReference",
+								"Behavior": "REFERENCE"
+							},
+							{
+								"Modeler": "_Index",
+								"Mapping": "DELWkiDataCollectChecklistReference",
+								"Behavior": "REFERENCE"
+							}
+						],
+						"Attributes": [
+							{
+								"ConceptualName": "aggregatingReference",
+								"State": "MANDATORY",
+								"Checkers": [
+									{
+										"Modeler": "_3DSpaceDB",
+										"Class": "com.dassault_systemes.delmia.crud.corpus.tools.checkers.AttributeNotNullAndUniqueValueChecker"
+									}
+								],
+								"Setters": [
+									{
+										"Modeler": "_3DSpaceDB",
+										"Class": "com.dassault_systemes.delmia.crud.workinstruction.attributes.setters.AttributeWorkInstructionInstanceCreationSetter"
+									}
+								],
+								"Getters": [
+									{
+										"Modeler": "_3DSpaceDB",
+										"Class": "com.dassault_systemes.delmia.crud.workinstruction.attributes.getters.AttributeDataCollectChecklistParentWOOPGetter"
+									}
+								]
+							}
+						]
+					}
+				]
+			}
+		]
+	}
+]

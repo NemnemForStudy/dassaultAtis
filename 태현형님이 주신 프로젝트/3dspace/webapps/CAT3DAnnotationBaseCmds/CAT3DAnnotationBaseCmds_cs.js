@@ -1,0 +1,1 @@
+define("DS/CAT3DAnnotationBaseCmds/CAT3DAnnotationBaseCmds_cs",{});define("DS/CAT3DAnnotationBaseCmds/assets/nls/CAT3DAnnotationBaseCmds",{DisplayHistorySuccessfulLbl:"Zobrazení a záznamy historie zobrazení byly odstraněny",InfosPanelTitle:"Sémantické standardy",CloseButton:"Zavřít",relatedAttrPanelTitle:"Informace týkající se funkcí"});

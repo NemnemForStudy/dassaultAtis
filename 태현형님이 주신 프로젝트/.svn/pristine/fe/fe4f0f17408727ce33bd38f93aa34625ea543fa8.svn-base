@@ -1,0 +1,43 @@
+################################################################################################
+# Created By thok : 2023. 07. 26
+# Admin Type : command
+# Name : decProjectOngoingRestart
+################################################################################################
+#delete command decProjectOngoingRestart;
+add command 'decProjectOngoingRestart' 
+	description 'Command to Restart Ongoing Project'
+	alt 'emxProgramCentral.Common.Gate.Resume' 
+	label 'emxProgramCentral.Common.Gate.Resume' 
+	href '${COMMON_DIR}/decProjectStatusControl.jsp?projectStatus=Restart' 
+	setting 'Confirm Message' 'emxProgramCentral.ProjectSpace.alert.Restart' 
+	setting 'Image' '${COMMON_DIR}/images/iconActionResume.png'
+	setting 'Registered Suite' 'ProgramCentral'
+	setting 'Target Location' 'hiddenFrame'
+	setting 'Submit' true
+	setting 'Access Expression' '(attribute[decProjectStatus]==Hold) && (context.user.isassigned[decSystemAdmin] || owner==context.user)'
+;
+add property command_decProjectOngoingRestart on program eServiceSchemaVariableMapping.tcl to command 'decProjectOngoingRestart'
+;
+
+# Modified By thok : 2023. 07. 27
+mod command 'decProjectOngoingRestart'
+	add setting 'Access Expression' '(attribute[decProjectType]==ongoing) && (attribute[decProjectStatus]==Hold) && (context.user.isassigned[decSystemAdmin] || owner==context.user)'
+;
+
+# Modified By thok : 2023. 09. 09
+mod command 'decProjectOngoingRestart'
+	add setting 'Access Expression' '(attribute[decProjectType]==ongoing) && (attribute[decProjectStatus]=="In-Progress") && (owner==context.user)'
+	add setting 'hasAccess' 'PIM'
+	add setting 'Access Program' 'decAccess' 
+	add setting 'Access Function' 'hasAccess'
+;
+
+# Modified By thok : 2023. 09. 11
+mod command 'decProjectOngoingRestart'
+	add setting 'Access Expression' '(attribute[decProjectType]==ongoing) && (attribute[decProjectStatus]=="In-Progress")'
+;
+
+# Modified By thok : 2023. 09. 12
+mod command 'decProjectOngoingRestart'
+	add setting 'Access Expression' '(attribute[decProjectType]==ongoing) && (attribute[decProjectStatus]=="Hold")'
+;

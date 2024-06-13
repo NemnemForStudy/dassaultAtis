@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+
+<!-- ENOVIA DICTIONARY FOR DELMIA Production System Application -->
+<!-- COPYRIGHT DASSAULT SYSTEMES 2022, All rights reserved -->
+<Package xmlns="PLMDictionaryUnified"
+         ModelerType="Top"
+         Name="DELLmiChangeOverOperation"
+         BelongsToModeler="DELLmiProductionSystem"
+         Uuid="ABF4B075-5CA6-4533-BC0D-9DB53D666355"
+         UseNames="DELLmiProductionSystemAbstract"
+         UseProcedures="ENOPsm_Procedures"
+         CustomerExposition="Programmer">
+
+  <CAAComment>
+    <ShortRole>PLM DELMIA Change Over Operation </ShortRole>
+    <Role>This package describes the PLM DELMIA Change Over Operation model on top of DELLmiProductionSystemAbstract</Role>
+  </CAAComment>
+
+  <Class Name="DELLmiChangeOverOperationReference"
+        Uuid="A287566A-3911-4237-9434-D2B46B962085"
+        Abstract="No"
+        SuperName="DELLmiAbstractProductionEntity"
+        CustomerExposition="Programmer"
+        Specializable="Yes"
+        CustomerExtensible="Yes"
+        Abbreviation="coop"
+        InstantiationOwnerTypes="None"
+        PublicResourceURI="/resources/v1/modeler/dsprcs/dsprcs:MfgOperation/{pid}">
+
+    <Property Name="KweNew_InstanciationMethod" Value="DELLmiChangeOverOperationDelegateInstanciation"/>
+    <Property Name="IconName" Value="I_PPRSeqChangeover"/>
+    <Property Name="3DIconName" Value="I_PPRSeqChangeover.cgr"/>
+    <Property Name="Newable" Value="No"/>
+    <Property Name="Searchable" Value="Yes"/>
+
+    <Simple Name="V_ChangeOverRules"
+              Uuid="D39F5439-FCAA-4263-A9BA-6EAB2F917221"
+              Type="Clob"
+              ResetOnCloning="No"
+              ResetOnNewVersion="No"
+              MultiValuated="No"
+              Protection="Internal">
+      <CAAComment>
+        <ShortRole>Change Over Rules.</ShortRole>
+      </CAAComment>
+    </Simple>
+
+    <Simple Name="V_SequencingMode"
+        Uuid="077A23F8-DACB-42BC-8E83-FAD7066D1B05"
+        Type="String"
+        MaxLength="50"
+        MultiValuated="No"
+        Protection="External"
+        CAAExposition="L0"
+        DefaultValue="Linear">
+      <Range>
+        <Equal>Linear</Equal>
+        <Equal>Advanced</Equal>
+      </Range>
+      <CAAComment>
+        <ShortRole>Sequencing mode.</ShortRole>
+      </CAAComment>
+    </Simple>
+
+    <CAAComment>
+      <ShortRole>PLM DELMIA Change Over Operation Reference</ShortRole>
+      <Role>PLM DELMIA Change Over Operation Reference</Role>
+    </CAAComment>
+
+    <Method ImplementationType="Self">
+      <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+      <ProcedureForUsage>
+        <Usage href="ExportScope.meth#Design"/>
+        <UsedProcedure href="ENOPsm_Procedures.proc#ProductionSystem_ExportAsDesign"/>
+      </ProcedureForUsage>
+      <ProcedureForUsage>
+        <Usage href="ExportScope.meth#Channel"/>
+        <UsedProcedure href="ENOPsm_Procedures.proc#ProductionSystem_ExportAsDesign"/>
+      </ProcedureForUsage>
+      <ProcedureForUsage>
+        <Usage href="ExportScope.meth#TransferSiteOwnership"/>
+        <UsedProcedure href="ENOPsm_Procedures.proc#Process_TSO_References"/>
+      </ProcedureForUsage>
+    </Method>
+
+    <Method ImplementationType="None">
+      <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+    </Method>
+
+  </Class>
+
+</Package>
+

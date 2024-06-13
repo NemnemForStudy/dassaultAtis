@@ -1,0 +1,14 @@
+m|WAfrUndoRedo\WAfrUndoRedo.mweb
+b|j|n,m
+b|c|n,m
+v|6.425.0.22078|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\WAfrUndoRedo\WAfrUndoRedo.js|1647692305|0
+s|WAfrUndoRedo\WAfrUndoRedo.mweb\src\WAfrUndoRedo.js|1513773057|1
+t|win_b64\webapps\WAfrUndoRedo\WAfrUndoRedoComponent.js|1647692305|2195
+s|WAfrUndoRedo\WAfrUndoRedo.mweb\src\WAfrUndoRedoComponent.js|1597153180|7846
+t|win_b64\webapps\WAfrUndoRedo\WAfrUndoRedoFlushAction.js|1647692306|329
+s|WAfrUndoRedo\WAfrUndoRedo.mweb\src\WAfrUndoRedoFlushAction.js|1547626702|1053
+t|win_b64\webapps\WAfrUndoRedo\WAfrUndoRedoOverviewAction.js|1647692306|95
+s|WAfrUndoRedo\WAfrUndoRedo.mweb\src\WAfrUndoRedoOverviewAction.js|1537535153|3043
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

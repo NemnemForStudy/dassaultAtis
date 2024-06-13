@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+
+<!-- ENOVIA DICTIONARY FOR DELMIA Production System Application -->
+<!-- COPYRIGHT DASSAULT SYSTEMES 2019, All rights reserved -->
+<Package xmlns="PLMDictionaryUnified"
+         ModelerType="Top"
+         Name="DELLmiProductionHeaderWorkplan"
+         BelongsToModeler="DELLmiProductionSystem"
+         Uuid="BC86E711-5B59-4647-AE94-D6BEE1CF4B09"
+         UseNames="DELLmiProductionHeaderProcessAbstract"
+         CustomerExposition="Programmer">
+
+
+  <CAAComment>
+    <ShortRole>PLM DELMIA Header Workplan</ShortRole>
+    <Role>This package describes the PLM DELMIA Header Workplan model on top of DELLmiProductionHeaderProcessAbstract</Role>
+  </CAAComment>
+
+  <Class Name="DELLmiHeaderWorkPlanReference"
+        Uuid="1DCDF7F3-2E5F-4E42-A0C4-7AB876A64FCC"
+        Abstract="No"
+        SuperName="DELLmiPPRHeaderProcessReferenceAbstract"
+        CustomerExposition="Programmer"
+        Specializable="Yes"
+        CustomerExtensible="Yes"
+        Abbreviation="hwpl"
+		PublicResourceURI="/resources/v1/modeler/dsprcs/dsprcs:MfgProcess/{pid}"
+        InstantiationOwnerTypes="None">
+
+    <Property Name="KweNew_InstanciationMethod" Value="DELLmiHeaderWorkPlanDelegateInstanciation"/>
+    <Property Name="IconName" Value="I_PPRHeaderWorkplan"/>
+    <Property Name="3DIconName" Value="I_PPRHeaderWorkplan.cgr"/>
+    <Property Name="Newable" Value="All_CAA"/>
+    <Property Name="Searchable" Value="Yes"/>
+	
+	<Path Name="DELContextForPreassignment"
+		Uuid="316C317E-C4FE-4EF8-8C3D-8BAE0D9F2A21"
+		MultiValuated="No"
+		RoleName="DEL_ContextForPreassignment"
+		Type="SemanticRelation" 
+		AdaptativeToMinor="No"
+		SynchroSensitivity="None"
+		RerouteOnEffectivityChange="No"
+		Semantics="Reference"/>
+
+    <CAAComment>
+      <ShortRole>PLM DELMIA Header Workplan Reference</ShortRole>
+      <Role>PLM DELMIA Header Workplan Reference</Role>
+    </CAAComment>
+
+    <Method ImplementationType="AsFather">
+      <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+    </Method>
+    <Method ImplementationType="AsFather">
+      <RealizeMethodType href="ExchangeScope.meth#ExchangeScope"/>
+    </Method>
+
+  </Class> 
+ 
+</Package>

@@ -1,0 +1,1 @@
+define("DS/ReviseFromWidget/ReviseFromWidget_zh",{});define("DS/ReviseFromWidget/assets/nls/ReviseFromPrefsDlg",{SettingsTitle:"设置",CopyTitleFromSource:"从源复制标题",WarningNoRevise:"如果访问权限不允许修订，则将显示警告"});

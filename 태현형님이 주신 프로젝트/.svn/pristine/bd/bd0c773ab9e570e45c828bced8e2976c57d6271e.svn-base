@@ -1,0 +1,115 @@
+################################################################################################
+# Create By thok : 2023. 09. 07
+# Admin Type : table
+# Name : decProjectComparisonIdentCdList
+################################################################################################
+#del table decProjectComparisonIdentCdList system;
+add table 'decProjectComparisonIdentCdList' system
+	column
+		name 'Part'
+		label 'Part'
+		alt ''
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Column Type' 'program'
+        setting 'function' 'getDBDataList'
+        setting 'program' 'emxProjectSpace'
+		setting 'columnName' 'PART_CD'
+		setting 'Width' '50'
+	column
+		name 'PartDescription'
+		label 'Part Description'
+		alt ''
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Column Type' 'program'
+        setting 'function' 'getDBDataList'
+        setting 'program' 'emxProjectSpace'
+		setting 'columnName' 'PART_SHORTDESC'
+	column
+		name 'CommodityCd'
+		label 'Commodity Code'
+		alt ''
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Column Type' 'program'
+        setting 'function' 'getDBDataList'
+        setting 'program' 'emxProjectSpace'
+		setting 'columnName' 'COMMODITY_CD'
+	column
+		name 'Description'
+		label 'Description'
+		alt ''
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Column Type' 'program'
+        setting 'function' 'getDBDataList'
+        setting 'program' 'emxProjectSpace'
+		setting 'columnName' 'COMMODITY_SHORTDESC'
+	column
+		name 'BaseMaterial'
+		label 'Base Material'
+		alt ''
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Column Type' 'program'
+        setting 'function' 'getDBDataList'
+        setting 'program' 'emxProjectSpace'
+		setting 'columnName' 'BASE_MAT_CD'
+	column
+		name 'Rating'
+		label 'Rating'
+		alt ''
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Column Type' 'program'
+        setting 'function' 'getDBDataList'
+        setting 'program' 'emxProjectSpace'
+		setting 'columnName' 'RAT_CD'
+	column
+		name 'IdentCd'
+		label 'Ident Code'
+		alt ''
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Column Type' 'program'
+        setting 'function' 'getDBDataList'
+        setting 'program' 'emxProjectSpace'
+		setting 'columnName' 'IDENT_CD'
+	column
+		name 'Size1'
+		label 'Size1'
+		alt ''
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Column Type' 'program'
+        setting 'function' 'getDBDataList'
+        setting 'program' 'emxProjectSpace'
+		setting 'columnName' 'SIZE1'
+	column
+		name 'Size2'
+		label 'Size2'
+		alt ''
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Column Type' 'program'
+        setting 'function' 'getDBDataList'
+        setting 'program' 'emxProjectSpace'
+		setting 'columnName' 'SIZE2'
+	column
+		name 'SCH1'
+		label 'SCH1'
+		alt ''
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Column Type' 'program'
+        setting 'function' 'getDBDataList'
+        setting 'program' 'emxProjectSpace'
+		setting 'columnName' 'SIZE3'
+	column
+		name 'SCH2'
+		label 'SCH2'
+		alt ''
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Column Type' 'program'
+        setting 'function' 'getDBDataList'
+        setting 'program' 'emxProjectSpace'
+		setting 'columnName' 'SIZE4'
+	column
+		name 'DynamicColumn'
+		setting 'Column Type' 'Dynamic' 
+		setting 'Dynamic Column Function' 'getDynamicMaterialComparisonColumn' 
+		setting 'Dynamic Column Program' 'emxProjectSpace'
+;
+add property 'table_decProjectComparisonIdentCdList' on program 'eServiceSchemaVariableMapping.tcl' to table 'decProjectComparisonIdentCdList' system
+;

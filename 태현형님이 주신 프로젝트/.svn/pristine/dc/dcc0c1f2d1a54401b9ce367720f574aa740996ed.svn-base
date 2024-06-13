@@ -1,0 +1,14 @@
+################################################################################################
+# Modified By thok : 2023. 05. 12
+# Admin Type : command
+# Name : PMCProjectSummaryDelete
+################################################################################################
+copy command PMCProjectSummaryDelete PMCProjectSummaryDelete_ootb;
+mod command PMCProjectSummaryDelete 
+	add setting 'Confirm Message' emxProgramCentral.ProjectDelete.notice
+;
+
+# Modified By thok : 2023. 07. 27
+mod command PMCProjectSummaryDelete 
+	add setting 'Access Expression' 'context.user.isassigned[decSystemAdmin]'
+;

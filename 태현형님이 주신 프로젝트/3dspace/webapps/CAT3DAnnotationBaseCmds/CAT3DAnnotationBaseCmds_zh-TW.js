@@ -1,0 +1,1 @@
+define("DS/CAT3DAnnotationBaseCmds/CAT3DAnnotationBaseCmds_zh-TW",{});define("DS/CAT3DAnnotationBaseCmds/assets/nls/CAT3DAnnotationBaseCmds",{DisplayHistorySuccessfulLbl:"檢視和擷取已刪除的顯示歷程記錄",InfosPanelTitle:"語義標準",CloseButton:"關閉",relatedAttrPanelTitle:"特徵相關資訊"});

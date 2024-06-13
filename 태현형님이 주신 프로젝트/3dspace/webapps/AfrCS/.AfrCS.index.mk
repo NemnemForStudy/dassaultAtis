@@ -1,0 +1,16 @@
+m|WAfrCS\AfrCS.mweb
+b|j|c,m
+b|c|n,m
+v|6.425.0.22276|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\AfrCS\AfrCS.js|1664827791|35656
+s|WAfrCS\AfrCS.mweb\src\AfrCore.js|1640093292|11366
+u|WAfrCS\AfrCS.mweb\src\FlushUndoRedoStacksCmd.js|1524495877|704
+u|WAfrCS\AfrCS.mweb\src\Private_AfrCS.js|1580999096|21462
+u|WAfrCS\AfrCS.mweb\src\Private_AfrCSController.js|1664545169|22409
+u|WAfrCS\AfrCS.mweb\src\Private_AfrCSInternalServices.js|1661517827|31345
+u|WAfrCS\AfrCS.mweb\src\Private_AfrCore.js|1531396566|1499
+u|WAfrCS\AfrCS.mweb\src\Private_UndoRedoCSServices.js|1664545459|13605
+u|WAfrCS\AfrCS.mweb\src\WAfrCSComponent.js|1611146725|6478
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

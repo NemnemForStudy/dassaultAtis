@@ -1,0 +1,1 @@
+define("DS/VCXWebLevelExploderGUI/VCXWebLevelExploderGUI_fr",{});define("DS/VCXWebLevelExploderGUI/assets/nls/VCXWebLevelExploderGUI",{PreviousLevelButton:"Retourner à la dernière vue éclatée",RestoreModelButton:"Restaurer le modèle éclaté à son état d'origine"});

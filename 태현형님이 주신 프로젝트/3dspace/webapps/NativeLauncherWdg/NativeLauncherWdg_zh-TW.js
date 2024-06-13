@@ -1,0 +1,1 @@
+define("DS/NativeLauncherWdg/NativeLauncherWdg_zh-TW",{});define("DS/NativeLauncherWdg/assets/nls/NativeLauncher",{Play:"播放"});

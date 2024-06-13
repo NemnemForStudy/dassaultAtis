@@ -1,0 +1,39 @@
+NAVIGATE   
+
+T0.PLMID, T1.PLMID
+
+FROM 
+PRODUCTCFG/VPMReference T0, PLMPCBLibrary/PLMPCBPackageFootprintCnx T1
+
+
+
+FROM_ROOTS [?1?]
+
+ON (
+
+		RELATION
+		(
+			FROM=PRODUCTCFG/VPMReference
+			TO=PLMPCBLibrary/PLMPCBPackageFootprintCnx
+			THROUGH=POINTEDBY
+		)
+		WITH QUALITY_FILTER ( CATEGORY=ISOWNEDBY )
+	)
+	
+	
+OR 
+	(
+		RELATION
+		(
+			FROM=PLMPCBLibrary/PLMPCBPackageFootprintCnx 
+			TO=PRODUCTCFG/VPMReference 
+			THROUGH=POINTSTO
+		) 
+	
+		WITH QUALITY_FILTER(CATEGORY=Reference5)
+
+	)
+	
+ITER = 10
+; 
+

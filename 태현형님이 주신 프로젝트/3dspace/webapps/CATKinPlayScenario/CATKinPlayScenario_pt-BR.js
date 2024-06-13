@@ -1,0 +1,1 @@
+define("DS/CATKinPlayScenario/CATKinPlayScenario_pt-BR",{});define("DS/CATKinPlayScenario/assets/nls/CATKinPlayRegister",{CATKinPlayRegister_Title:"Cinemática",CATKinPlayRegister_Description:"Registrar reproduzir uma animação",Animation_Title:"Player de animação",Animation_Description:"Repetir uma animação"});

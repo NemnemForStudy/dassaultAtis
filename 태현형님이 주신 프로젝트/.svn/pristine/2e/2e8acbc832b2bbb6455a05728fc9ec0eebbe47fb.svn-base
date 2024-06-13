@@ -1,0 +1,1 @@
+define("DS/DMUDeprecatedReview/DMUDeprecatedReview_ru",{});define("DS/DMUDeprecatedReview/assets/nls/DMUDeprecatedReview",{NominalSlide:"Номинальный"});

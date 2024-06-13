@@ -1,0 +1,1084 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<title>Camera Calibration</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<link rel=stylesheet href="css/base.css"/>
+	<style>  
+		body {
+			
+			text-align:center;
+		}
+		#info {
+				color: white; /*black;*/
+				position: absolute;
+				top: 0px; width: 100%;
+				padding: 5px;
+				z-index: 100;
+				font-size:200%
+			}
+		#status {
+			color: skyblue;
+			position: absolute;
+			bottom: 0px; width: 100%;
+			padding: 5px;
+			z-index: 100;
+		}
+        #BuildModel {
+            background-color: skyblue;
+            position: absolute;
+            bottom: 0px;
+			right:0px;
+            padding: 5px;
+            width: 200px;
+            z-index: 100;
+            border-radius: 10px;
+        }
+        #GenStudySolution {
+            background-color: skyblue;
+            position: absolute;
+            top : 0px;
+			right:0px;
+            padding: 5px;
+            width: 200px;
+            z-index: 100;
+            border-radius: 10px;
+        } 
+        #GA_Dialog {
+            text-align: left;
+        }
+        input[type=number]{
+    		width: 50px;
+		} 
+		a {
+			color: #0080ff;
+		}
+
+		b { color: lightgreen }
+
+	</style>
+	<script>
+		function Init() { /*
+			$(window).on("orientationchange",function(event){
+			  alert("Orientation is: " + window.orientation);
+			}); */
+		}
+	</script>
+</head>
+<body onload="Init()">
+
+<p id="errorMessage"></p>
+
+<video id="monitor" autoplay width="160" height="120" style="visibility: hidden; float:left;"></video>
+<canvas id="videoImage" width="160" height="120" style="visibility: hidden; float:left;"></canvas>
+
+
+<script>
+navigator.getUserMedia = navigator.webkitGetUserMedia || navigator.getUserMedia;
+window.URL = window.URL || window.webkitURL;
+
+
+var camvideo = document.getElementById('monitor');
+
+	if (!navigator.getUserMedia) 
+	{
+		document.getElementById('errorMessage').innerHTML = 
+			'Sorry. <code>navigator.getUserMedia()</code> is not available.';
+	//	return;
+	}
+	navigator.getUserMedia({video: true}, gotStream, noStream);
+
+function gotStream(stream) 
+{
+	if (window.URL) 
+	{   camvideo.src = window.URL.createObjectURL(stream);   } 
+	else // Opera
+	{   camvideo.src = stream;   }
+
+	camvideo.onerror = function(e) 
+	{   stream.stop();   };
+
+	stream.onended = noStream;
+}
+
+function noStream(e) 
+{
+	var msg = 'No camera available.';
+	if (e.code == 1) 
+	{   msg = 'User denied access to use camera.';   }
+	document.getElementById('errorMessage').textContent = msg;
+}
+</script> 
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+        <script type="text/javascript" src="js/math.min.js"></script>
+        <script type="text/javascript" src="../../../../../../jsfeat-0.0.8/build/jsfeat-min.js"></script>
+		<script type="text/javascript" src="js/dat.gui.min.js"></script>
+		<script type="text/javascript" src="js/profiler.js"></script>
+        <!--script type="text/javascript" src="js/compatibility.js"></script>
+        
+        <script type="text/javascript" src="js/dat.gui.min.js"></script-->
+        <!--script src="js/three.min.js"></script-->
+<script src="js/Three58.js"></script>
+<script src="js/Detector.js"></script>
+<script src="js/THREEx.KeyboardState.js"></script>
+<script src="js/THREEx.FullScreen.js"></script>
+<script src="js/THREEx.WindowResize.js"></script>
+
+
+<!-- jQuery code to display an information button and box when clicked. -->
+<script src="../../../../../../JavascriptMVC-3.3/can/lib/jquery.1.9.1.js"></script>
+<script src="../../../../../../jQueryUI/js/jquery-ui-1.11.2.js"></script>
+<link rel=stylesheet href="css/jquery-ui.css" />
+<link rel=stylesheet href="css/info.css"/>
+<script src="js/info.js"></script>
+<script src="../../../../../../numeric.js-1.2.6/numeric-1.2.6.js"></script>
+<script src="../../num_util.js"></script>
+<script src="../../../MetaHueristicSearch/MetaHueristicSearch.js"></script>
+<script src="../../../MetaHueristicSearch/Examples/TestGA_Sphere.js"></script>
+<script src="../../GA_Position.js"></script>
+<script src="../../GA_Orientation.js"></script>
+<script src="../../GA_CamCalibration.js"></script>
+<script src="../../CameraCalibrationAPIs.js"></script>
+<script src="js/keypoint_process.js" > </script>
+
+
+<!-- div id="infoButton"></div>
+<div id="infoBox" title="Demo Information">
+Movement controls: <br/>
+<ul>
+<li>W/S: Translate Forward/Backward
+<li>A/D: Rotate Left/Right
+<li>Q/E: Translate Left/Right
+</ul>
+</div -->
+
+<div id="BuildModel">   
+  <button type="button" id="match_points_btn">Get Matching Key Points</button> 
+  <button type="button" id="HomographTransform_BTN">Homograph Transformation</button>  
+  <!--input type="checkbox" id="UseGA">Using GA<br>
+  <input type="checkbox" id="UseBSF">Using BSF</br-->
+</div>
+<div id="GenStudySolution">  
+  <button type="button" id="calibration_btn">Calibration</button></br> 
+  <input type="radio" name="UseGA_DLT" value = "DLT">DLT,
+  <input type="radio" name="UseGA_DLT" value = "GA" checked="checked">GA</br>
+  <button type="button" id="settingGA_options">Set GA options</button>
+  <!--input type="checkbox" id="FindP" checked="checked">Position 
+  <input type="checkbox" id="FindR" checked="checked"> Orientation
+  X min: <input type="number" id="PosiRangeXmin" min="-500" max="500" value="-500">, X max: <input type="number" id="PosiRangeXmax" min="-500" max="500" value="500"></br>
+  Y min: <input type="number" id="PosiRangeYmin" min="-500" max="500" value="-10">, Y max: <input type="number" id="PosiRangeYmax" min="-500" max="500" value="500"></br>
+  Z min: <input type="number" id="PosiRangeZmin" min="-500" max="500" value="-500">, Z max: <input type="number" id="PosiRangeZmax" min="-500" max="500" value="500"></br>
+  <input type="checkbox" id="UseInitSol">Use Buttom Camera as Initial Sol.</br>
+  Position Radius <input type="number" id="BSF_Posi_Radius"  value="100"> </br>
+  Y Angle (degree) <input type="number" id="BSF_Y_Angle" value="60" > </br>
+  Z Angle (degree) <input type="number" id="BSF_Z_Angle" value="60">
+</br>  
+<hr>  
+<input type="checkbox" id="selectionRepetationAllowed">Selection Repetation Allowed </br>
+*Parent1 Selection Rule:</br>
+<input type="radio" name="parent1SelectionRule" value="Random"> Random</br>
+<input type="radio" name="parent1SelectionRule" value="EvalProportional" checked="checked">Proportion to Eval. 
+</br>
+*Parent2 Selection Rule: </br>
+<input type="radio" name="parent2SelectionRule" value="Random"> Random</br>
+<input type="radio" name="parent2SelectionRule" value="EvalProportional"checked="checked">Proportion to Eval. </br>
+<input type="radio" name="parent2SelectionRule" value="MatchingToMate">Matching to Parent1  </br> 
+
+*Crossover Rule: </br>
+<input type="radio" name="crossoverRule" value="Even">Evenly </br>
+<input type="radio" name="crossoverRule" value="EvalProportional" checked="checked">Proportional</br>  
+
+</div--> 
+
+<div id="GA_Dialog">
+        <ul>
+            <li><a href="#GA_General">General</a></li>
+            <li><a href="#Looping">Looping Control</a></li>
+            <li><a href="#FilterKeyPoints">Filter Keypoints</a></li> 
+            <li><a href="#CrossOver">CrossOver</a></li>
+            <li><a href="#Mutation">Mutation</a></li>
+            <li class="ui-tab-dialog-close"></li>
+        </ul>
+        <div>
+            <div id="GA_General"> 
+              Scope: <input type="checkbox" id="FindP" checked="checked">Position,  <input type="checkbox" id="FindR" checked="checked">Orientation </br>
+              <hr>
+              Ranges: </br>
+              X min: <input type="number" id="PosiRangeXmin" min="-500" max="500" value="-500">, 
+              Y min: <input type="number" id="PosiRangeYmin" min="-500" max="500" value="-500">,
+              Z min: <input type="number" id="PosiRangeZmin" min="-500" max="500" value="-500"> </br>
+              X max: <input type="number" id="PosiRangeXmax" min="-500" max="500" value="500">, 
+              Y max: <input type="number" id="PosiRangeYmax" min="-500" max="500" value="500">, 
+              Z max: <input type="number" id="PosiRangeZmax" min="-500" max="500" value="500"></br>
+              <hr>
+              <input type="checkbox" id="UseInitSol">Use Current Solution as Initial Point</br>
+              Position Radius <input type="number" id="BSF_Posi_Radius"  value="300">,
+              Y Angle (d) <input type="number" id="BSF_Y_Angle" value="60" >,
+              Z Angle (d) <input type="number" id="BSF_Z_Angle" value="60">
+            </div>  
+            <div id="Looping"> 
+                <input type="checkbox" id="debug_flag">console out for debuging </br>
+                ** Unit Loop Termination ** </br>
+                   Iteration Limit: <input type="number" id="IterationLimit" min="10"  value="100"></br>   
+                ** Global Loop Termination ** </br>
+                  <input type="checkbox" id="UseHigherLoopOnGA" checked="checked">Use Higer level Loop</br>
+                  Iteration Limit for resetting when no improvement: <input type="number" id="ResetIterationLimitForNoImprovement"  value="3"> (negative value for ne reset) </br> 
+                  Target Evaluation Value: <input type="number" id="TargetEvaluationValue"  value=-1> (error normalized 2D window [-1,1] * [-1,1])(negative value for no target)</br> 
+                  Time Out Limit: <input type="number" id="TimeOutLimit" min="0.5"  value="1"> sec. (negative value for no time out)</br> 
+            </div>
+            <div id="FilterKeyPoints">
+               <input type="checkbox" id="SelectKeyPoints"> Select Keypoints </br>
+               ** Noise Filtering ** </br>
+               Outlier Removing Theshold: <input type="number" id="OutlierThesholdSigmaN" min="-1" max="3" value="-1"> * standard deviation of image offsets.
+               (negative value for no outlier filtering out)</br> 
+            </div>
+
+            <div id="CrossOver">
+                <input type="checkbox" id="selectionRepetationAllowed">Selection Repeat Allowed </br>
+                -- Parent1 Rule: 
+                <input type="radio" name="parent1SelectionRule" value="Random"> Random, 
+                <input type="radio" name="parent1SelectionRule" value="EvalProportional" checked="checked">Proportion to Eval. 
+                </br>
+                -- Parent2 Rule: 
+                <input type="radio" name="parent2SelectionRule" value="Random"> Random,
+                <input type="radio" name="parent2SelectionRule" value="EvalProportional"checked="checked">Proportion to Eval.,
+                <input type="radio" name="parent2SelectionRule" value="MatchingToMate">Matching to Parent1  </br> 
+                -- Parents Influence Ratio: 
+                <input type="radio" name="crossoverRule" value="Even">Evenly,
+                <input type="radio" name="crossoverRule" value="EvalProportional" checked="checked">Proportional
+            </div>
+            <div id="Mutation">
+                -- High Level GA -- </br>
+                -- Minimum Ratio: <input type="number" id="MutationHLMinRatio" min="0" max="100" value="10"> %,
+                   Maximum Ratio: <input type="number" id="MutationHLMaxRatio" min="0" max="100" value="60"> %</br>
+                -- Ratio Control Policy: 
+                <input type="radio" name="MutationHLRatioPolicy" value="Static" checked="checked">Fixed,  
+                <input type="radio" name="MutationHLRatioPolicy" value="Increasing"> Increasing, 
+                <input type="radio" name="MutationHLRatioPolicy" value="Descreasing"> Decreasing </br>
+                -- Mutation Base: 
+                <input type="radio" name="MutationHLBasedOn" value="EachSolution">Each sol.,  
+                <input type="radio" name="MutationHLBasedOn" value="GBestSolution" checked="checked"> Global Best sol., 
+                <input type="radio" name="MutationHLBasedOn" value="Random"> Random
+                <hr>
+                -- Low Level GA -- </br>
+                -- Minimum Ratio: <input type="number" id="MutationLLMinRatio" min="0" max="100" value="10"> %,
+                   Maximum Ratio: <input type="number" id="MutationLLMaxRatio" min="0" max="100" value="60"> %</br>
+                -- Ratio Control Policy: 
+                <input type="radio" name="MutationLLRatioPolicy" value="Static" checked="checked">Fixed,  
+                <input type="radio" name="MutationLLRatioPolicy" value="Increasing"> Increasing, 
+                <input type="radio" name="MutationLLRatioPolicy" value="Descreasing"> Decreasing </br>
+                -- Mutation Base: 
+                <input type="radio" name="MutationLLBasedOn" value="EachSolution">Each sol.,  
+                <input type="radio" name="MutationLLBasedOn" value="LBestSolution" checked="checked"> Local Best, 
+                <input type="radio" name="MutationLLBasedOn" value="GBestSolution"> Global Best, 
+                <input type="radio" name="MutationLLBasedOn" value="Random"> Random  
+            </div>
+        </div>
+</div>
+<!-- ------------------------------------------------------------ -->
+<div id="debugOut">
+
+</div>
+
+ <div style="position:absolute; left:600px; top:450px;">
+     <div id="no_rtc" class="alert alert-error" style="display:none;"></div>
+      <div id="log" class="alert alert-info"></div>
+ 			<br/>
+ <div>
+<div id="gui" style="position:absolute; left:500px; top:250px; width:100px; height:100px"/>
+
+<div id="ThreeJS" style="position: absolute; left:0px; top:0px"></div>
+<script> 
+$.fn.tabbedDialog = function () {
+    this.tabs(); 
+    this.dialog({width:200,height:220, draggable:true, closeOnEscape:true}); 
+    //$("#GA_Dialog").dialog().data("dialog").uiDialog.draggable("option","containment",false);
+    //this.uiDialog.draggable("option", "containment", false);
+    //this.find('.ui-tab-dialog-close').append($('a.ui-dialog-titlebar-close'));
+    //this.find('.ui-tab-dialog-close').css({'position':'absolute','right':'0', 'top':'23px'});
+    //this.find('.ui-tab-dialog-close > a').css({'float':'none','padding':'0'});
+    var tabul = this.find('ul:first');
+    this.parent().addClass('ui-tabs').prepend(tabul).draggable('option','handle',tabul); 
+    this.siblings('.ui-dialog-titlebar').remove();
+    tabul.addClass('ui-dialog-titlebar');
+}
+$('#GA_Dialog').tabbedDialog();
+
+$( "#settingGA_options" ).click(function() { 
+   $('#GA_Dialog').dialog("open");
+}); 
+function get_good_match_and_indices() {
+    var num_matches = 0;
+	var good_matches = 0;
+
+	stat.start("matching");
+	var w = parseInt(window.innerWidth/2.0), h = parseInt(window.innerHeight/2.0);
+	var frameTop = frames["top"];
+	var frameBottom = frames["bottom"];
+					
+	var matches_obj = find_match(w, h, frameBottom.screen_descriptors, frameTop.screen_descriptors,
+									  frameBottom.screen_corners, frameTop.screen_corners  );         
+	//   good_matches = find_transform(matches, num_matches);
+	stat.stop("matching");
+    
+    var sx = ctx.canvas.width/w, sy = 0.5*ctx.canvas.height/h;
+    var good_indexes = [];
+    if(matches_obj.count) {
+        good_indexes = draw_matches(ctx, frameBottom.screen_corners,frameTop.screen_corners,
+              matches_obj.matches, matches_obj.count,h,
+              sx,sy) ; 
+    } 
+    return {matches_obj:matches_obj, good_indexes:good_indexes, frameBottom:frameBottom, frameTop:frameTop};
+}
+
+var good_matches = null;
+function getCorrespondingPointPairs_QP() {  
+    good_matches = get_good_match_and_indices(); 
+	var RawCorrespondingPointPairs =[]; 
+    //var good_indexes = get_good_match_indices(matches_obj);
+    for ( var i =0; i<  good_matches.good_indexes.length; i++) {
+      var m =  good_matches.matches_obj.matches[good_matches.good_indexes[i]]; 
+      
+      var P = good_matches.frameBottom.coords[m.screen_idx].P; // reference key point's 3D 
+      var Q = good_matches.frameTop.coords[m.pattern_idx].Q;   // new key point's 2D
+      var P2 = good_matches.frameTop.coords[m.pattern_idx].P;  // new key point's 3D 
+      
+      dbgr.log("P=["+P.x +", "+ P.y +", "+ P.z+"]");
+      dbgr.log("P2=["+P2.x +", "+ P2.y +", "+ P2.z+"]");
+      //if(isEqualVector([P.x, P.y, P.z], [P2.x, P2.y, P2.z]))
+      RawCorrespondingPointPairs.push({P:P, Q:Q});
+    }	 
+	return RawCorrespondingPointPairs;
+} 
+ 
+
+var CorPointPairs = []
+$( "#match_points_btn" ).click(function() { 
+	CorPointPairs = getCorrespondingPointPairs_QP();
+});
+/*
+function searchBestSolution(GoodMatchPoints, wwidth, wheight) {
+	var done = false;
+	var max_loop = 200; //500;
+	var best_eval = Number.MAX_VALUE; 
+	var best_sol= null; // 
+	// main loop until max_loop
+	for(var trial = 0; trial < max_loop; trial++) {
+        dbgr.log("trial="+trial);
+		var Random8Points = getRandomlySelected8Points(GoodMatchPoints);
+		if(Random8Points.length!= 8)
+			alert("|GoodMatchPoints|="+GoodMatchPoints.length+ ", |Random8Points| != 8 but " + Random8Points.length);
+		else {
+			var Wt = []; var Pt = []; 
+			try {  
+                var coresPointPairs = [];
+                for(var i=0; i<Random8Points.length; i++) {
+                    coresPointPairs.push([]);
+                    var q = Random8Points[i].Q; var p = Random8Points[i].P;
+                    coresPointPairs[i].push([q.u, q.v, 1]); coresPointPairs[i].push([p.x, p.y, p.z, 1]);
+                }
+                var Sequencing=true;    // make several sequences 
+                var Validation = false; // no validation needed 
+                var C_RRT_K_evals = getAnalyticSolutions(coresPointPairs, Sequencing, wwidth, wheight, Validation); // true means sequencing,
+                
+				for(var i=0; i< C_RRT_K_evals.length; i++) {
+					var sol = C_RRT_K_evals[i];
+					if(sol.eval < best_eval) {
+						best_eval = sol.eval;
+						best_sol = sol; 
+                        
+                        if(best_sol<0.001)
+                            break;
+					}
+				} // for 
+			}
+			catch(Error) {
+				console.log(Error);
+			} 
+		} // more than 8 point 
+	} // iteration is done.  
+	return best_sol;
+}
+*/
+
+$( "#HomographTransform_BTN" ).click(function() {  
+    go_match();
+});
+ 
+ 
+function set_2D_evaluations(Solutions, camera){
+	var N = Solutions.length;
+	var c = camera;
+	var Width = window.innerWidth/2.0;
+	var Height = window.innerHeight / 2.0;
+	
+	for(var ii=0; ii<N; ii++) {
+		var sol = Solutions[ii]; 
+		var matrixWorldInverse = getThreeMatrix4(THREE,  sol.RRT); 
+		var eval_2D = evaluate_in_nomalized_window(THREE, sol.P, sol.Q, camera.projectionMatrix, matrixWorldInverse, Width, Height);
+		sol["eval_2D"] = eval_2D;
+	}
+}
+
+function sortSolutions(Solutions, camera) { 
+	set_2D_evaluations(Solutions, camera);
+	Solutions.sort( function(a,b){ return a.eval_2D - b.eval_2D; } ); //{ return a.eval - b.eval; } ); 
+}
+
+   
+function setCameraSolution() {
+   if( !CalibrationSolutions || CalibrationSolutions.length==0 ) {
+		//   alert("Could not solve a solution!");
+		alert("No solution found!");
+	} else {
+		/*var sol = CalibrationSolutions[CalibrationSolutionIndex];
+		printSolutionInfo(sol, THREE);
+		setCameraPositionOrientation(camera[1], sol, THREE);  
+        */ 
+        var bsf_sol = CalibrationSolutions[CalibrationSolutionIndex];
+       //console.log("solution index="+s_index);
+       setCameraPositionOrientation(camera[1], bsf_sol, THREE); 
+       //addP_QtoScene(bsf_sol.P, bsf_sol.Q, correspondingPointPairs); 
+       
+        var c = camera[1];   
+        var matrixWorldInverse = getThreeMatrix4(THREE,  bsf_sol.RRT); 
+        var GWIDTH = window.innerWidth/2.0, GHEIGHT = window.innerHeight/2.0; 
+        var eval_2D = //evaluate_in_nomalized_window(sol.P, sol.Q, c.projectionMatrix, matrixWorldInverse, GWIDTH, GHEIGHT);
+                  evaluate_in_nomalized_window2(bsf_sol.P, bsf_sol.Q, c.projectionMatrix.elements, matrixWorldInverse.elements, GWIDTH, GHEIGHT, c.near);
+        console.log("eval_2D="+eval_2D);
+	}
+}
+
+var CalibrationSolutions=[];
+var CalibrationSolutionIndex=0;
+
+$( "#calibration_btn" ).click(function() {  
+	 	
+    if(CorPointPairs.length==0) {
+        console.log("empty matching points.");
+        return;
+    }
+        
+	time_object.StartTiming();   
+	try{			
+        var iteration_limit	=100; 		
+        var GA_DLT = $('input:radio[name=UseGA_DLT]:checked').val()
+        if(GA_DLT == "GA") {
+            var GWIDTH = window.innerWidth/2.0, GHEIGHT = window.innerHeight/2.0; 
+			var correspondingPointPairs = getArrayOfPointPairs(CorPointPairs);
+            var maxSols = 40;
+			//return searchAprxSolutionsFromArray(GoodMatchArrayPointPairs, 2, 100, max_solutions);
+            
+            var camMtx = new THREE.Matrix4().copy(camera[1].matrixWorld);  
+            var PosiRanges = [[parseFloat($('#PosiRangeXmin').val()), parseFloat($('#PosiRangeXmax').val())],
+                              [parseFloat($('#PosiRangeYmin').val()), parseFloat($('#PosiRangeYmax').val())],
+                              [parseFloat($('#PosiRangeZmin').val()), parseFloat($('#PosiRangeZmax').val())]];
+            var Ox = camMtx.elements[12], Oy = camMtx.elements[13]; Oz = camMtx.elements[14];
+            var UseInitSol = $('#UseInitSol').is(':checked');
+			var prjMtx = new THREE.Matrix4().copy(camera[1].projectionMatrix);  
+            var parent1SelectionRule =  $('input:radio[name=parent1SelectionRule]:checked').val();
+            var parent2SelectionRule =  $('input:radio[name=parent2SelectionRule]:checked').val();
+            var selectionRepetationAllowed = $('#selectionRepetationAllowed').is(':checked');
+            var crossoverRule =  $('input:radio[name=crossoverRule]:checked').val();
+            var posi_radius = parseFloat($('#BSF_Posi_Radius').val());
+            var y_angle = parseFloat($('#BSF_Y_Angle').val());
+            var z_angle = parseFloat($('#BSF_Z_Angle').val());
+            var debug_flag = $('#debug_flag').is(':checked');
+ //           var mutationOptions = getMutationOptions();
+            var TargetEvaluationValue = parseFloat($('#TargetEvaluationValue').val()) ;
+            var TimeOutLimit = parseFloat($('#TimeOutLimit').val()) ;
+            var UseHigherLoopOnGA = $('#UseHigherLoopOnGA').is(':checked');
+            var ResetIterationLimitForNoImprovement = parseInt($('#ResetIterationLimitForNoImprovement').val()) ;
+            var useAllKeypoints = false;
+            var OutlierThesholdSigmaN = parseFloat($('#OutlierThesholdSigmaN').val()) ;
+            if($('#FindP').is(':checked') && !$('#FindR').is(':checked'))  {
+                if(UseInitSol)
+                    PosiRanges = [[Ox-200, Ox+200], [Oy-200, Oy+200], [Oz-200, Oz+200]]; // position is known. 
+                var G_Generations = searchGASolutionsFromArray(correspondingPointPairs, iteration_limit, maxSols, 
+								     prjMtx.elements, camMtx.elements, PosiRanges, GWIDTH, GHEIGHT, UseInitSol,
+                                     parent1SelectionRule,parent2SelectionRule, selectionRepetationAllowed, crossoverRule, debug_flag, false, 
+                                     posi_radius);
+                var G_gen_index = G_Generations.length-1;
+                CalibrationSolutions = G_Generations[G_gen_index];
+            } 
+            else if(!$('#FindP').is(':checked') && $('#FindR').is(':checked')) {
+                PosiRanges = [[Ox, Ox], [Oy, Oy], [Oz, Oz]]; // position is known. 
+                var G_Generations =searchGARotationFromArray(correspondingPointPairs,  iteration_limit,  maxSols, 
+							 	     prjMtx.elements, camMtx.elements, PosiRanges, GWIDTH, GHEIGHT, camera[1].near, UseInitSol,
+                                     parent1SelectionRule, parent2SelectionRule, selectionRepetationAllowed, crossoverRule, debug_flag,false, 
+                                     y_angle, z_angle);
+                var G_gen_index = G_Generations.length-1;
+                CalibrationSolutions = G_Generations[G_gen_index];
+            }
+            else if($('#FindP').is(':checked') && $('#FindR').is(':checked')) {  
+                if(UseInitSol)
+                    PosiRanges = [[Ox-200, Ox+200], [Oy-200, Oy+200], [Oz-200, Oz+200]]; // position is known. 
+                var G_Generations =searchGACamCalibrationFromArray(correspondingPointPairs, iteration_limit,  maxSols, 
+							 	     prjMtx.elements, camMtx.elements, PosiRanges, GWIDTH, GHEIGHT, camera[1].near, UseInitSol,
+                                     parent1SelectionRule, parent2SelectionRule, selectionRepetationAllowed, crossoverRule, debug_flag,false, 
+                                     TargetEvaluationValue/*no threshold*/, TimeOutLimit, posi_radius, y_angle, z_angle, OutlierThesholdSigmaN); 
+                var G_gen_index = G_Generations.length-1;
+                CalibrationSolutions = G_Generations[G_gen_index];
+            }
+            else {
+                CalibrationSolutions = [];
+                alert("select what do you want to search by GA!");
+            } 
+            /*
+                var Generations =searchGACamCalibrationFromArray(GoodMatchArrayPointPairs, iteration_limit,  maxSols, 
+							 	     prjMtx.elements, camMtx.elements, PosiRanges, Width, Height, camera[1].near, useInit,
+                                     parent1SelectionRuleRule, parent2SelectionRuleRule, selectionRepetationAllowed, crossoverRule, debug_flag, useAllPoints);  
+                var gen_index = Generations.length-1;
+                CalibrationSolutions = Generations[gen_index];
+                */
+                
+		} 
+        else {
+			CalibrationSolutions = searchAprxSolutionsFromGoodMatches(CorPointPairs); // from CameraCalibrationAPIs
+		}
+		CalibrationSolutionIndex = 0;
+		sortSolutions(CalibrationSolutions, camera[1]);
+		setCameraSolution(CalibrationSolutions, 0);
+	}
+	catch(Error) {
+		console.log(Error);
+	} 
+    time_object.EndTiming(); 
+         
+    console.log("Elapsed Time:"+time_object.this_time_difference + " (secs)");
+});
+
+/*
+	Three.js "tutorials by example"
+	Author: Lee Stemkoski
+	Date: July 2013 (three.js v59dev)
+*/
+	
+// MAIN
+// standard global variables
+var container;
+var keyboard = new THREEx.KeyboardState();
+var clock = new THREE.Clock(); 
+var players = []; 
+
+// SCENE
+var	scenes = []  
+
+var camera=[]
+var topCamera=[]
+var renderers=[];
+
+var mouse = new THREE.Vector2(); // for ray-casting 
+var pickingObjects = []; // candidate of ray-casting 
+var correspondingPointPairs = []; // {(2Dp, 3Dp)}
+var materialColorMap=[]; // material color map
+
+init(scenes, 0);
+init(scenes, 1);
+
+//init canvas 2D
+var ww = window.innerWidth/2.0, hh = window.innerHeight/2.0;
+
+var container2d = $("<div></div>").attr("id","overlay").css({"position":"absolute","top":"0px","left":ww+"px","height":2*hh+"px","width":ww+"px","background-color":"beige"});
+var canvas2d = $("<canvas/>").css({"position":"absolute","top":"0px","left":"0px","height":2*hh+"px","width":ww+"px","background-color":"blue"});
+container2d.append(canvas2d);
+$($("canvas")[0]).parent().append(container2d); 
+var canvas$ = $(canvas2d[0]);
+var ctx = canvas2d[0].getContext('2d');
+ctx.canvas.width = ww;
+ctx.canvas.height = 2*hh;
+
+var imageObjTop = new Image();
+imageObjTop.onload = function() {
+  ctx.drawImage(this, 0, 0, parseInt(ctx.canvas.width), parseInt(ctx.canvas.height/2)); //, parseInt(this.width), parseInt(this.height)
+};
+
+var imageObjBottom = new Image();
+imageObjBottom.onload = function() {
+  ctx.drawImage(this, 0, ctx.canvas.height/2, parseInt(ctx.canvas.width), parseInt(ctx.canvas.height/2)); //, parseInt(this.width), parseInt(this.height)
+};
+
+/*
+  $(imageObj).appendTo("body")
+             .attr("src",renderers[0].domElement.toDataURL())
+             .css({position:"absolute",bottom:0,right:0}); //add the image to the DOM so we can see it
+*/
+
+var screenTexture = new THREE.WebGLRenderTarget( ww, hh, { minFilter: THREE.LinearFilter, magFilter: THREE.NearestFilter, format: THREE.RGBFormat });
+screenTexture.minFilter = THREE.LinearFilter;
+screenTexture.generateMipmaps = false;
+
+// init JSFeat
+var frames = {}; // frames data for mathing
+var stat = new profiler();
+$(window).load(function() {
+	keypoints_app( parseInt(ww), parseInt(hh)); //videoWidth, videoHeight)
+});
+
+// Start rendering
+animate(scenes);
+
+// FUNCTIONS 		
+function init(scenes, index) { 
+	scenes[index] = new THREE.Scene();
+	// CAMERA
+	var SCREEN_WIDTH = window.innerWidth, SCREEN_HEIGHT = window.innerHeight;
+	var VIEW_ANGLE = 45, ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 0.1, FAR = 20000;
+//	camera[index] = new THREE.OrthographicCamera( SCREEN_WIDTH / - 2, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, SCREEN_HEIGHT / - 2, -100, FAR)
+    camera[index] =new THREE.PerspectiveCamera( VIEW_ANGLE, ASPECT, NEAR, FAR);
+	scenes[index].add(camera[index]);
+	camera[index].position.set(0,0,400);
+	camera[index].lookAt(scenes[index].position);	
+	// RENDERER
+	if ( Detector.webgl )
+		renderers[index] = new THREE.WebGLRenderer( { antialias:true } );
+	else
+		renderers[index] = new THREE.CanvasRenderer(); 
+	renderers[index].setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+	container = document.createElement( 'div' );
+	// CSS added so the hidden HTML elements do not reposition this one
+	container.style.cssText = "position:absolute;top:0px;left:0px;";
+	document.body.appendChild( container );
+	container.appendChild( renderers[index].domElement );
+	THREEx.WindowResize(renderers[index], camera[index]);
+	THREEx.FullScreen.bindKey({ charCode : 'm'.charCodeAt(0) }); 
+	
+	//document.addEventListener( 'mousedown', onDocumentMouseDown, false ); // raycasting 
+	
+	// LIGHT
+	var light = new THREE.PointLight(0xffffff);
+	light.position.set(0,250,0);
+	scenes[index].add(light);
+	// FLOOR
+	var floorTexture = new THREE.ImageUtils.loadTexture( 'images/checkerboard.jpg' );
+	floorTexture.wrapS = floorTexture.wrapT = THREE.RepeatWrapping; 
+	floorTexture.repeat.set( 10, 10 );
+	var floorMaterial = new THREE.MeshBasicMaterial( { map: floorTexture, side: THREE.DoubleSide } );
+	var floorGeometry = new THREE.CircleGeometry(500, 20);
+	// var floorGeometry = new THREE.PlaneGeometry(1000, 1000, 10, 10);
+	var floor = new THREE.Mesh(floorGeometry, floorMaterial);
+	materialColorMap[floor.id] = floorMaterial.color.getHex(); // white?
+	
+	floor.position.y = -0.5;
+	floor.rotation.x = Math.PI / 2;
+	scenes[index].add(floor);
+	if(index==0) pickingObjects.push(floor);
+	
+	// SKYBOX/FOG
+	var materialArray = [];
+	materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'images/dawnmountain-xpos.png' ) }));
+	materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'images/dawnmountain-xneg.png' ) }));
+	materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'images/dawnmountain-ypos.png' ) }));
+	materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'images/dawnmountain-yneg.png' ) }));
+	materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'images/dawnmountain-zpos.png' ) }));
+	materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'images/dawnmountain-zneg.png' ) }));
+	for (var i = 0; i < 6; i++)
+	   materialArray[i].side = THREE.BackSide;
+	var skyboxMaterial = new THREE.MeshFaceMaterial( materialArray );
+	var skyboxGeom = new THREE.CubeGeometry( 5000, 5000, 5000, 1, 1, 1 );
+	var skybox = new THREE.Mesh( skyboxGeom, skyboxMaterial );
+	scenes[index].add( skybox );
+	players[index] = new THREE.Object3D();
+	scenes[index].add( players[index] ); 
+	if(index==0) pickingObjects.push(skybox);
+
+	var movieMaterial = new THREE.MeshBasicMaterial( {overdraw: true, side:THREE.DoubleSide } );
+	// the geometry on which the movie will be displayed;
+	var movieGeometry = new THREE.PlaneGeometry( 100, 100, 1, 1 );
+	// attach video to a mesh that will move with the camera[index]
+	//this.movieScreen = new THREE.Mesh( movieGeometry, movieMaterial );
+
+	// add a frame to the image.
+	var frameGeo = new THREE.CubeGeometry(120, 120, 20);
+	var frameMat = new THREE.MeshLambertMaterial( {color:0x888888, emissive:0x000011} );
+	this.frameMesh = new THREE.Mesh( frameGeo, frameMat );
+	
+	// "attach" player to camera[index] 
+	players[index].position = camera[index].position;
+	players[index].rotation = camera[index].rotation;
+	//player.add( movieScreen );
+	//players[index].add( frameMesh );
+  
+	// position the movieScreen so it is attached
+	//   to the front and center of the frameMesh
+	//movieScreen.position.y = 5;
+	//movieScreen.position.z = -12; 
+	
+	///////////////////
+	// Mirror Sphere //
+	///////////////////
+	
+	var sphereGeom =  new THREE.SphereGeometry( 50, 64, 32 ); // radius, segmentsWidth, segmentsHeight
+	//mirrorSphereCamera = new THREE.CubeCamera( 0.1, 5000, 256 );
+	//mirrorSphereCamera.renderTarget.minFilter = THREE.LinearMipMapLinearFilter;
+	//scenes[index].add( mirrorSphereCamera );
+	var mirrorSphereMaterial = new THREE.MeshPhongMaterial( { emissive: 0x8888aa, color:0x999999/*, envMap: mirrorSphereCamera.renderTarget*/ } );
+	mirrorSphere = new THREE.Mesh( sphereGeom, mirrorSphereMaterial );
+	materialColorMap[mirrorSphere.id] = 0x999999;
+	mirrorSphere.position.set(0, 50, 0);
+	//mirrorSphereCamera.position = mirrorSphere.position;
+	/*scenes[index].add(mirrorSphere);
+	if(index==0) pickingObjects.push(mirrorSphere);
+	*/
+	
+	var CubeGeom =  new THREE.CubeGeometry(100, 100, 100); // radius, segmentsWidth, segmentsHeight   
+	var EastRedCube = new THREE.Mesh(CubeGeom, new THREE.MeshPhongMaterial( { color: 0xffff00, specular: 0x009900, shininess: 30, shading: THREE.FlatShading } )); 
+	materialColorMap[EastRedCube.id] = 0xffff00;
+	EastRedCube.position.set(300, 50, 0); // X is East 
+	scenes[index].add(EastRedCube);
+	if(index==0) pickingObjects.push(EastRedCube);
+	
+	var NorthGreenCube = new THREE.Mesh(CubeGeom, new THREE.MeshPhongMaterial( { color: 0x00ff00,specular: 0x009900, shininess: 30, shading: THREE.FlatShading } ));
+	NorthGreenCube.position.set(0, 50, 300); // Z is South 
+	materialColorMap[NorthGreenCube.id] = 0x00ff00;
+	scenes[index].add(NorthGreenCube);
+	if(index==0) pickingObjects.push(NorthGreenCube);
+	
+	var WestBlueCube = new THREE.Mesh(CubeGeom, new THREE.MeshPhongMaterial( { color: 0x0000ff,specular: 0x009900, shininess: 30, shading: THREE.FlatShading } )); 
+	materialColorMap[WestBlueCube.id] = 0x0000ff;
+	WestBlueCube.position.set(-300, 50, 0); // -X is West   
+	scenes[index].add(WestBlueCube);
+	if(index==0) pickingObjects.push(WestBlueCube);
+	
+	camera[index].position.set(114,50,-61);
+	camera[index].rotation.set(3.14, 0.875, 3.14);
+	
+	//////////////////////
+	// Secondary camera[index] //
+	//////////////////////
+	//this.topCamera[index] 
+	topCamera[index] = new THREE.PerspectiveCamera( VIEW_ANGLE, ASPECT, NEAR, FAR );
+	scenes[index].add(topCamera[index]);
+	topCamera[index].position.set(0,200+50,550+200);
+	topCamera[index].lookAt(scenes[index].position);
+	
+	// other camera[index] stuff
+	renderers[index].setSize( SCREEN_WIDTH, SCREEN_HEIGHT );
+	renderers[index].setClearColor( 0x000000, 1 );
+	renderers[index].autoClear = false;
+}
+
+function animate(scenes) {
+    stat.new_frame();
+	
+	updateMovingCamera(camera[0], players[0]); 
+	var Width = window.innerWidth/2.0, Height = window.innerHeight/2.0;
+	render(camera[0], topCamera[0], scenes[0], renderers[0], 0, 0, Width, Height);
+	render(camera[1], topCamera[1], scenes[1], renderers[1], 0 , Height, Width, Height);	
+		
+    requestAnimationFrame( function() {
+		animate(scenes);
+	});
+	
+    $('#log').html(stat.log());
+}
+
+function go_match() {
+    // render pattern and matches 
+      if(!good_matches)
+        good_matches = get_good_match_and_indices();  
+      if(good_matches.matches_obj.count) { 
+           /* for ( var i =0; i<  good_matches.good_indexes.length; i++) {
+		      var m =  matches_obj.matches[good_indexes[i]];
+			  var src_P = frameTop.coords[m.screen_idx].P;
+			  var dst_u = frameBottom.coords[m.pattern_idx].u;bb
+			  var dst_v = frameBottom.coords[m.pattern_idx].v;
+			}		   */
+          // apply matrix to top camera
+          var RT = new THREE.Matrix4();
+          var RTInv = new THREE.Matrix4();
+          var t =good_matches. matches_obj.matrix;
+          /*
+          RT.set(t[0][0], t[0][1], t[0][2], t[0][3],
+							  t[1][0], t[1][1], t[1][2], t[1][3],
+							  0   , 0   , 1   , 0   ,
+							  t[2][0], t[2][1], t[2][2], t[2][3]);
+          */
+          RT.set(t[0][0], t[1][0], t[2][0], t[0][3],
+							  t[0][1], t[1][1], t[2][1], t[1][3],
+							  t[0][2], t[1][2], t[2][2], t[2][2],
+							  0, 0, 0, 1);
+         RTInv.getInverse( RT );
+        var m = good_matches.frameBottom.matrixWorld;    
+        var MV = new THREE.Matrix4();
+        MV.copy(good_matches.frameBottom.matrixWorld);
+        MV.multiply (RT);
+		/*
+        //camera[1].matrixWorldInverse = MV; // camera frame from world   
+       camera[1].matrixWorld = MV;      
+       // camera[1].applyMatrix(RT); 
+       // camera[1].matrixWorld= MV; // world from camera. 
+        camera[1].matrixAutoUpdate = false;
+        camera[1].rotationAutoUpdate = false;
+        */
+			
+	    var wfc = MV.elements;
+		camera[1].position.set(wfc[12],wfc[13],wfc[14]); // Q: is the position from world or parent?    
+		camera[1].rotation.setEulerFromRotationMatrix(MV);
+      }
+}
+
+function render_3dpoints(coords, points, img, step) {
+	var pix = (0xff << 24) | (0x00 << 16) | (0x00 << 8) | 0xff; // red
+	var count = coords.length;
+	for(var i=0; i < count; ++i)
+	{
+		var ii = coords[i].idx;
+		var x = points[ii].x;
+		var y = points[ii].y;
+		var off = (x + y * step);
+		img[off] = pix;
+		img[off-1] = pix;
+		img[off+1] = pix;
+		img[off-step] = pix;
+		img[off+step] = pix;
+	}
+}
+
+function keypoints_gen(context,w,h, imageData, framekey) {
+	var framedata = processFrame(w, h, context, imageData);
+	var coords = generate3dCoords(framedata,w,h);
+  var data_u32 = new Uint32Array(imageData.data.buffer);
+	render_3dpoints(coords, framedata.screen_corners, data_u32, w);
+  var M = new THREE.Matrix4();
+  M.copy( camera[0].matrixWorld);
+  
+  framedata.coords = coords;
+  framedata.matrixWorld = M;
+  frames[framekey] = framedata;
+}
+
+function generate3dCoords(framedata,w,h) {
+	// create a Ray with origin at the mouse position
+	//   and direction into the scene (camera direction)
+	var x = 0, y =0;
+	var count = framedata.num_corners;
+	var corners = framedata.screen_corners;
+	var vectors = [];
+	for(var i=0; i < count; ++i)
+	{
+		var x = 2*corners[i].x/w -1;
+		var y = 2*((h -corners[i].y)/h) -1;
+        
+		var xx = corners[i].x-w/2;
+		var yy =-(corners[i].y-h/2);
+        
+		var vector = new THREE.Vector3( x,y, camera[0].near); // 0.5 );
+		var	projector = new THREE.Projector();
+		projector.unprojectVector( vector, camera[0] );
+		//-- copy from Mouse-Click.html
+		// camera[0] is the camera used to generate the left top corner scene.
+		var raycaster = new THREE.Raycaster( camera[0].position, vector.sub( camera[0].position ).normalize() ); 
+		//raycaster.setFromCamera( mouse, camera[0] ); // depreciated 
+
+		var intersects = raycaster.intersectObjects( pickingObjects );
+
+		if ( intersects.length > 0 ) { 
+			SELECTEDOBJ= intersects[ 0 ];  
+			var P = SELECTEDOBJ.point;
+			vectors.push({idx:i,P:P, Q:{u:x,v:y}}); // back to the normalized window 2D 
+            //vectors.push({idx:i,P:P, Q:{u:xx,v:yy}});
+		}
+	}
+	return vectors;
+}
+
+function screenGrab (img, framekey) {
+	var Width = window.innerWidth/2.0, Height = window.innerHeight/2.0;
+	renderers[0].render( scenes[0], camera[0], screenTexture, true );	
+	var gl = renderers[0].context;
+	if (gl.checkFramebufferStatus(gl.FRAMEBUFFER) == gl.FRAMEBUFFER_COMPLETE) {
+		var newCanvas = $("<canvas>")
+			.attr("width", Width)
+			.attr("height", Height)[0];
+	 
+		var imageData = newCanvas.getContext("2d").createImageData(Width, Height);//ctx.getImageData(0, 0, Width, Height);
+		Width = imageData.width;
+		Height = imageData.height;
+		var pixels = new self.Uint8Array(Width * Height * 4);
+		gl.readPixels(0, 0, Width, Height, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
+/*		var framebuffer = screenTexture.__webglFramebuffer;
+		gl.bindFramebuffer(gl.FRAMEBUFFER, framebuffer);        
+		gl.viewport(0, 0, Width, Height);
+		gl.readPixels(0, 0, Width, Height, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
+		gl.bindFramebuffer(gl.FRAMEBUFFER, null);*/
+		
+		// populate data and flip image vertically
+		for (var i =0; i< Height; i++) {
+			 var row = (Height-1)- i;
+			 var r_img = i*Width*4;
+			 var r_buf = row*Width*4;
+			for ( var j=0; j< Width*4; j++) {
+				imageData.data[r_img + j] = pixels[r_buf + j]; //pix;
+			}
+		}
+		keypoints_gen(ctx, Width, Height, imageData, framekey);
+		newCanvas.getContext("2d").putImageData(imageData, 0, 0);
+	    img.src = newCanvas.toDataURL();
+	}
+}
+
+function updateMovingCamera(moving_camera, player) {		
+	if ( keyboard.pressed("p") && video) // pause webcam
+		video.pause();
+	if ( keyboard.pressed("r") && video ) // resume webcam
+		video.play();
+		
+	var delta = clock.getDelta(); // seconds.
+	var moveDistance = 100 * delta; // 100 pixels per second
+	var rotateAngle = Math.PI / 2 * delta;   // pi/2 radians (90 degrees) per second
+
+	var previousPosition = moving_camera.position.clone();
+	var previousRotation = moving_camera.rotation.clone();
+	
+	var bCRT_Changed = false;
+	// move forwards/backwards/left/right (local coordinates)
+	/*if ( keyboard.pressed("W") )
+		camera[0].translateZ( -moveDistance );
+	if ( keyboard.pressed("S") )
+		camera[0].translateZ(  moveDistance );
+	if ( keyboard.pressed("Q") )
+		camera[0].translateX( -moveDistance );
+	if ( keyboard.pressed("E") )
+		camera[0].translateX(  moveDistance );	*/
+	
+	if ( keyboard.pressed("X") && keyboard.pressed("J") ) { 
+		camera[0].translateX( -moveDistance ); bCRT_Changed = true;
+	}
+	if ( keyboard.pressed("X") && keyboard.pressed("L") ) {
+		camera[0].translateX(  moveDistance );	bCRT_Changed = true;
+	}
+	if ( keyboard.pressed("Z") && keyboard.pressed("J") ) {
+		camera[0].translateZ( -moveDistance ); bCRT_Changed = true;
+	}
+	if ( keyboard.pressed("Z") && keyboard.pressed("L") ) {
+		camera[0].translateZ(  moveDistance);	bCRT_Changed = true;
+	}
+	if ( keyboard.pressed("Y") && keyboard.pressed("J") ) {
+		camera[0].translateY( -moveDistance ); bCRT_Changed = true;
+	}
+	if ( keyboard.pressed("Y") && keyboard.pressed("L") ) {
+		camera[0].translateY(  moveDistance );	 bCRT_Changed = true;
+	}
+	// rotate left/right along the rotate_axis 
+	var rotate_axis = new THREE.Vector3(0,1,0); // default rotation axis: Y
+	if(keyboard.pressed("Z") )
+		rotate_axis = new THREE.Vector3(0,0,1); // rotation axis: Z
+	else if(keyboard.pressed("X") )
+		rotate_axis = new THREE.Vector3(1,0,0); // rotation axis: X 
+		
+	if ( keyboard.pressed("A") ) {
+		camera[0].rotateOnAxis( rotate_axis, rotateAngle*0.5 ); bCRT_Changed = true;
+	}
+	if ( keyboard.pressed("D") ) {
+		camera[0].rotateOnAxis( rotate_axis, -rotateAngle*0.5 ); bCRT_Changed = true;
+	}
+  
+	if ( keyboard.pressed("G") ) {
+		screenGrab (imageObjBottom,"bottom");
+	}
+	if ( keyboard.pressed("H") ) {
+		screenGrab (imageObjTop,"top");
+	}
+  
+	if ( keyboard.pressed("B") ) {
+		go_match ();
+	}
+
+	var d = moving_camera.position.distanceTo( mirrorSphere.position );
+	if ( d > 500 || d < 60 ) {
+		moving_camera.position = previousPosition;
+		moving_camera.rotation = previousRotation;
+		player.position = moving_camera.position;
+		player.rotation = moving_camera.rotation;
+	} else if(bCRT_Changed)
+	{
+		correspondingPointPairs=[];
+	}
+}
+
+function render(rcamera, tcamera, scene, renderer, Left, Top, Width, Height ) {	 
+	// update cameras
+	rcamera.aspect = Width / Height;
+	rcamera.updateProjectionMatrix();
+	tcamera.aspect = Width / Height;
+	tcamera.updateProjectionMatrix(); 
+	
+	// left side with right camera 
+	renderer.setViewport( Left, Top,  Width , Height  );  
+	/*
+	if(SELECTEDOBJ != null) {
+		if(rcamera == camera[0])
+			SELECTEDOBJ.object.material.color.setHex( 0xff0000 ); 
+		else
+			SELECTEDOBJ.object.material.color.setHex( materialColorMap[SELECTEDOBJ.object.id] ); 
+	} 
+	*/
+	renderer.render( scene, rcamera ); 
+
+	// right side with top camera 
+	//renderer.setViewport( Left + Width, Top, Width - 2, Height - 2 );
+	//renderer.render( scene, tcamera );	
+}
+var SELECTEDOBJ = null;
+function onDocumentMouseDown( event ) { 
+	event.preventDefault();
+	$("#eventX").html(event.clientX); $("#eventY").html(event.clientY); 
+	var Width = window.innerWidth/2.0;
+	var Height = window.innerHeight / 2.0;
+	
+	if(event.clientX > Width || event.clientY < Height)
+		return; // happens outside of the left top corner viewport. 
+	
+	mouse.x = ( event.clientX / Width )*2 -1;
+	mouse.y = ( (2*Height - event.clientY) / Height )*2 - 1 ;
+	//$("#WinWidth").html(window.innerWidth); $("#WinHeight").html(window.innerHeight);
+	$("#MouseX").html(mouse.x); 
+	$("#MouseY").html(mouse.y);
+	
+	// create a Ray with origin at the mouse position
+	//   and direction into the scene (camera direction)
+	var vector = new THREE.Vector3( mouse.x, mouse.y, camera[0].near); // 0.5 );
+	var	projector = new THREE.Projector();
+	projector.unprojectVector( vector, camera[0] );
+	//-- copy from Mouse-Click.html
+	// camera[0] is the camera used to generate the left top corner scene.
+	var raycaster = new THREE.Raycaster( camera[0].position, vector.sub( camera[0].position ).normalize() ); 
+	//raycaster.setFromCamera( mouse, camera[0] ); // depreciated 
+
+	var intersects = raycaster.intersectObjects( pickingObjects );
+
+	if ( intersects.length > 0 ) { 
+		SELECTEDOBJ= intersects[ 0 ];  
+		var P = SELECTEDOBJ.point;
+		$("#PX").html(P.x); $("#PY").html(P.y); $("#PZ").html(P.z);
+			// check ProjectedP = K * RT * WorldP;  
+		var cam = camera[0]; 
+		var Viewport_from_Camera = cam.projectionMatrix; // K
+		//var Camera_from_Viewport = cam.projectionMatrixInverse.getInverse( Viewport_from_Camera );
+		var World_from_Camera = cam.matrixWorld; 
+		var Camera_from_World = cam.matrixWorldInverse.getInverse( World_from_Camera ); // RT
+		var CamCal = new THREE.Matrix4().multiplyMatrices(Viewport_from_Camera, Camera_from_World );
+
+		var e = CamCal.elements; 
+		
+		var CW_T = [[e[0],e[4],e[8],e[12]],
+				    [e[1],e[5],e[9],e[13]],
+				    [e[2],e[6],e[10],e[14]],
+				    [e[3],e[7],e[11],e[15]]];  
+		
+		var P2D = new THREE.Vector3(mouse.x, mouse.y, camera[0].near); //   mouse.x, mouse.y in [-1, +1]
+        var bx = mouse.x* Width / camera[0].near;
+		var by = mouse.y * Height/ camera[0].near;
+		
+	    var q1 = [bx, by, 0, 1];
+		var Pv = new THREE.Vector3(P.x, P.y, P.z).applyMatrix4(CamCal);
+		var q = numeric.dot(CW_T, [P.x, P.y, P.z, 1]);  
+		
+		dbgr.log("check if q == P2D in terms of x, y, z"); 
+		var pair=[q1, [P.x, P.y, P.z, 1]]; // instead of [P2D, P3D]
+		//correspondingPointPairs.push(pair); 
+	}  
+}
+</script>

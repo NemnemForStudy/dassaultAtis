@@ -1,0 +1,33 @@
+################################################################################################
+# Created By thok : 2023. 08. 11
+# Admin Type : command
+# Name : decProjectBiddingEnterOrderResult
+################################################################################################
+#delete command decProjectBiddingEnterOrderResult;
+add command 'decProjectBiddingEnterOrderResult' 
+	description 'Enter Bidding Project Order Result'
+	alt 'emxProgramCentral.ProjectSpace.EnterOrderResult.Alt' 
+	label 'emxProgramCentral.ProjectSpace.EnterOrderResult.Alt' 
+	href '${COMMON_DIR}/decProjectEnterOrderResultDialogFS.jsp'
+	setting 'Confirm Message' 'emxProgramCentral.ProjectSpace.EnterOrderResult.Msg' 
+	setting 'Image' '${COMMON_DIR}/images/iconActionApprove.png'
+	setting 'Registered Suite' 'ProgramCentral'
+	setting 'Target Location' slidein
+	setting 'Popup Modal' true
+	setting 'Access Expression' '(attribute[decProjectType]==bidding) && (attribute[decProjectStatus]=="In-Progress") && (context.user.isassigned[decSystemAdmin] || owner==context.user)'
+;
+add property command_decProjectBiddingEnterOrderResult on program eServiceSchemaVariableMapping.tcl to command 'decProjectBiddingEnterOrderResult'
+;
+
+# Modified By thok : 2023. 09. 09
+mod command decProjectBiddingEnterOrderResult
+	add setting 'Access Expression' '(attribute[decProjectType]==bidding) && (attribute[decProjectStatus]=="In-Progress") && (owner==context.user)'
+	add setting 'hasAccess' 'PIM'
+	add setting 'Access Program' 'decAccess' 
+	add setting 'Access Function' 'hasAccess'
+;
+
+# Modified By thok : 2023. 09. 11
+mod command decProjectBiddingEnterOrderResult
+	add setting 'Access Expression' '(attribute[decProjectType]==bidding) && (attribute[decProjectStatus]=="In-Progress")'
+;

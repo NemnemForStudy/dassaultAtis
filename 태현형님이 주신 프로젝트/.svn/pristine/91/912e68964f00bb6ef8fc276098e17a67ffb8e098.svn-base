@@ -1,0 +1,14 @@
+# Added by hslee on 2023.08.21
+# del command decISOMaterialLink;
+add command decISOMaterialLink
+	label 'emxProgramCentral.Label.ISOMaterialList'
+	href '${COMMON_DIR}/emxIndentedTable.jsp?table=decISOMaterialSummary&program=emxProjectSpace:getISOMaterialList&editLink=false&parallelLoading=true&maxCellsToDraw=2000&scrollPageSize=50&pageSize=300&decExport=true&exportMode=MaterialStatus&slideinFilter=true&Discipline=PP&freezePane=UNIT_NM,CWA_NO,CWP_NO&codeMaster=Discipline|SUBCON&header=emxProgramCentral.Label.ISOMaterialList'
+	setting 'Target Location' 'content'
+	setting 'Registered Suite' 'ProgramCentral'
+	setting 'Access Expression' '(type == "Project Space" && attribute[decProjectType] == ongoing) || (type == "decCWPTask" && to[Project Access Key].from.from[Project Access List].to.attribute[decProjectType] == ongoing)'
+;
+
+# Modified by jhlee on 2023.08.23
+mod command decISOMaterialLink
+	href '${COMMON_DIR}/emxIndentedTable.jsp?table=decISOMaterialSummary&program=emxProjectSpace:getISOMaterialList&editLink=false&parallelLoading=true&maxCellsToDraw=2000&scrollPageSize=50&pageSize=300&decExport=true&exportMode=MaterialStatus&slideinFilter=true&Discipline=PP&freezePane=UNIT_NM,CWA_NO,CWP_NO&codeMaster=Discipline|Sub-Con&header=emxProgramCentral.Label.ISOMaterialList'
+;

@@ -1,0 +1,14 @@
+m|CAT3DPlayWeb\3DPlaySupport.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.3.23063|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\3DPlaySupport\3DPlaySupport.js|1677901253|26578
+s|CAT3DPlayWeb\3DPlaySupport.mweb\src\3DPlaySupport.js|1495516350|0
+u|CAT3DPlayWeb\3DPlaySupport.mweb\src\AssetSupport.js|1670845143|10357
+u|CAT3DPlayWeb\3DPlaySupport.mweb\src\ExperiencesList.js|1645794937|11690
+u|CAT3DPlayWeb\3DPlaySupport.mweb\src\Loader.js|1644854748|8076
+u|CAT3DPlayWeb\3DPlaySupport.mweb\src\SupportList.js|1677750127|37375
+u|CAT3DPlayWeb\3DPlaySupport.mweb\src\XCADSpatialSupportedFormats.js|1675782140|7152
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

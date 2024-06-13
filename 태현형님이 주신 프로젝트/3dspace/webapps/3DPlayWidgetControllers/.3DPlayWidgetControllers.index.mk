@@ -1,0 +1,10 @@
+m|CAT3DPlayWebWidget\3DPlayWidgetControllers.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.0.22078|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\3DPlayWidgetControllers\3DPlayWidgetControllers.js|1647692385|1326
+s|CAT3DPlayWebWidget\3DPlayWidgetControllers.mweb\src\3DPlayWidgetProxy.js|1618481789|1311
+u|CAT3DPlayWebWidget\3DPlayWidgetControllers.mweb\src\3DPlayWidgetProxyBase.js|1618478641|1272
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

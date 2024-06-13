@@ -1,0 +1,1 @@
+define("DS/ApplicationFrame/ApplicationFrame_de",{});define("DS/ApplicationFrame/assets/nls/ApplicationFrameActionBar",{hideActionBar:"Aktionsleiste ausblenden",showActionBar:"Aktionsleiste anzeigen"});

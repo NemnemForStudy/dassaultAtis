@@ -1,0 +1,43 @@
+#dev.driver=oracle.jdbc.driver.OracleDriver
+DEV.driver=net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+#dev.url=jdbc:oracle:thin:@EPCplatformdbdev.daewooenc.com:1521:orcl
+DEV.url=jdbc:log4jdbc:oracle:thin:@EPCplatformdbdev.daewooenc.com:1521:orcl
+DEV.username=X3DDEC_ADMIN
+DEV.password=X3DDEC_ADMIN
+
+PROD.driver=oracle.jdbc.driver.OracleDriver
+PROD.url=jdbc:oracle:thin:@EPCplatformdb.daewooenc.com:1521:orcl
+PROD.username=X3DDEC_ADMIN
+PROD.password=X3DDEC_ADMIN
+
+LOCAL.java_batch_service=http://localhost:8080/daewooenc.demon/epc/epc01/epc0101/
+DEV.java_batch_service=http://172.20.1.168:7051/cbat2/epc/epc01/epc0101/
+PROD.java_batch_service=http://iworks.daewooenc.com/cbat2/epc/epc01/epc0101/
+
+url.if.project=interfaceProjectMgmt.ep?orgCd=$1
+url.if.project.workPackage=interfaceWorkPackage.ep$1
+
+### choimingi Add [S]
+url.if.project.getEngProgress=interfaceProjectMgmtEP.ep?siteCd=$1
+url.if.project.getSitecdDcpln=interfaceProjectMgmtSD.ep?siteCd=$1
+url.if.project.getDeliverableList=interfaceProjectGDL.ep?siteCd=$1
+url.if.project.getVendorPrintList=interfaceProjectGVPL.ep?siteCd=$1
+
+### choimingi Add [E]
+
+### SSO Start ###
+LOCAL.ssoCheck.url=https://test.daewooenc.com/etls/v1/security/authenticate
+DEV.ssoCheck.url=https://test.daewooenc.com/etls/v1/security/authenticate
+PROD.ssoCheck.url=https://webservice.daewooenc.com:7444/etls/v1/security/authenticate
+
+LOCAL.ssoCheck.token=aab
+DEV.ssoCheck.token=aab
+PROD.ssoCheck.token=fc74946ef1652bbdbf9a1833f943bbd73be56c49724248312a81a2c7c518385d4ebb28c44340681517e895ba9f9a4e3caaab38c627149d343cea3fd648c1d
+### SSO End ###
+
+LOCAL.dsClientId=admin_platform
+LOCAL.dsClientSecret=7c6b3a6f-9870-4dcd-90a6-a9fdf4e7c7de
+DEV.dsClientId=admin_platform
+DEV.dsClientSecret=7c6b3a6f-9870-4dcd-90a6-a9fdf4e7c7de
+PROD.dsClientId=admin_platform
+PROD.dsClientSecret=405faf8a-6db4-4262-b059-0d3a82a6744a

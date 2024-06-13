@@ -1,0 +1,9 @@
+m|InstantMessaging\RTWapInterface.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.0.22134|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\RTWapInterface\RTWapInterface.js|1652500464|1247
+s|InstantMessaging\RTWapInterface.mweb\src\RTWapInterface.js|1652478321|2896
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

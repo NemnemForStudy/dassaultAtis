@@ -1,0 +1,1 @@
+define("DS/ENOCockpit/ENOCockpit_ja",{});define("DS/ENOCockpit/assets/nls/ENOCockpit",{appDescription:"簡単かつ効率的な方法で 3D モデルをナビゲートします",rootFrozen:"遷移に続くセッションが凍結されています",transitionRefusedStaticMapping:"インスタンス化された製品構成は、ターゲットアプリケーションではサポートされていません",transitionRefusedFlexibleAssemblies:"フレキシブルアセンブリーはターゲットアプリケーションではサポートされていません"});

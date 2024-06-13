@@ -1,0 +1,1 @@
+define("DS/DMUReviewFacets/DMUReviewFacets_ko",{});define("DS/DMUReviewFacets/assets/nls/DMUReviewFacets",{noHighlight:"선택된 검토에 강조 표시가 없습니다.",noCheck:"선택된 검토에 확인이 없습니다."});

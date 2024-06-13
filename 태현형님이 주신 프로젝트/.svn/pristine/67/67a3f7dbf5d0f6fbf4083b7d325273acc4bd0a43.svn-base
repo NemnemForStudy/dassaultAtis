@@ -1,0 +1,21 @@
+################################################################################################
+# Create By thok 2023. 06. 29
+# Admin Type : command
+# Name : decRequestList
+################################################################################################
+#delete command decRequestList
+add command decRequestList
+	description 'decRequest Table List'
+	label 'emxProgramCentral.Label.RequestView'
+	href '${COMMON_DIR}/emxIndentedTable.jsp?pageSize=300&program=decRequest:getRequest&table=decRequestList&sortColumnName=originated&sortDirection=descending&toolbar=decRequestListToolbar&HelpMarker=emxhelpcollections&header=emxProgramCentral.Label.RequestView&suiteKey=ProgramCentral&selection=multiple'
+	alt 'emxProgramCentral.Label.RequestView'
+	setting 'Registered Suite' 'ProgramCentral'
+	setting 'Target Location' 'content'
+;
+add property 'command_decRequestList' on prog eServiceSchemaVariableMapping.tcl to command 'decRequestList'
+;
+
+# Modified By thok 2023. 09. 20
+mod command decRequestList
+	href '${COMMON_DIR}/emxIndentedTable.jsp?program=decRequest:getRequest&table=decRequestList&toolbar=decRequestListToolbar&header=emxProgramCentral.Label.RequestView&selection=multiple&sortColumnName=originated&submitAction=refreshCaller&HelpMarker=emxhelpprogramlist&sortDirection=descending&pageSize=300'
+;

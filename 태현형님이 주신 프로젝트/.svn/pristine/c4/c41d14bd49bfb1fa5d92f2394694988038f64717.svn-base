@@ -1,0 +1,1 @@
+define("DS/CAT3DAnnotationUI/CAT3DAnnotationUI_ko",{});define("DS/CAT3DAnnotationUI/assets/nls/CAT3DAnnotationUI",{MoreLbl:"더 읽기...",FailureModes:{"0":"중요도 가장 낮음","1":"낮음","2":"중간","3":"높음","4":"매우 높음"}});

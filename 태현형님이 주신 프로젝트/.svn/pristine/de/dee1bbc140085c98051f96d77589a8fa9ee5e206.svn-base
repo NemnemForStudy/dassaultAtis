@@ -1,0 +1,1 @@
+define("DS/ENOXEngineerCommonUtils/ENOXEngineerCommonUtils_ru",{});define("DS/ENOXEngineerCommonUtils/assets/nls/XENCommonNls",{loading:"Загрузка ...","eng.ui.button.ok":"ОК","eng.ui.button.cancel":"Отмена","app.failure":"В приложении возникла непредвиденная ошибка. Обратитесь к администратору."});

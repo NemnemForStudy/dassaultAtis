@@ -1,0 +1,77 @@
+################################################################################################
+# Create By thok : 2023. 05. 24
+# Admin Type : table
+# Name : decProjectBizScheduleList
+################################################################################################
+#del table decProjectBizScheduleList system;
+add table 'decProjectBizScheduleList' system
+	column
+		name 'Revision'
+		label 'emxProgramCentral.Label.ModifiedOrder'
+		alt ''
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Column Type' 'program'
+        setting 'function' 'getDBDataList'
+        setting 'program' 'emxProjectSpace'
+		setting 'columnName' 'CHG_SQNUM'
+	column
+		name 'ContractStart'
+		label 'emxProgramCentral.Label.decContractStart'
+		alt ''
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Column Type' 'program'
+        setting 'function' 'getDBDataList'
+        setting 'program' 'emxProjectSpace'
+		setting 'columnName' 'CT_ST_YMD'
+		setting 'except' 'time'
+	column
+		name 'ContractFinish'
+		label 'emxProgramCentral.Label.decContractFinish'
+		alt ''
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Column Type' 'program'
+        setting 'function' 'getDBDataList'
+        setting 'program' 'emxProjectSpace'
+		setting 'columnName' 'CT_EN_YMD'
+		setting 'except' 'time'
+	column
+		name 'TermOfWork'
+		label 'emxProgramCentral.Label.decTermOfWork'
+		alt ''
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Column Type' 'program'
+        setting 'function' 'getDBDataList'
+        setting 'program' 'emxProjectSpace'
+		setting 'columnName' 'CON_PERIOD'
+	column
+		name 'ActualStartDate'
+		label 'emxProgramCentral.Label.decActualStartDate'
+		alt ''
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Column Type' 'program'
+        setting 'function' 'getDBDataList'
+        setting 'program' 'emxProjectSpace'
+		setting 'columnName' 'REAL_CONST_YMD'
+		setting 'except' 'time'
+	column
+		name 'ExpectedDate'
+		label 'emxProgramCentral.Label.decExpectedDate'
+		alt ''
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Column Type' 'program'
+        setting 'function' 'getDBDataList'
+        setting 'program' 'emxProjectSpace'
+		setting 'columnName' 'REAL_CONEND_YMD'
+		setting 'except' 'time'
+	column
+		name 'ChangeReason'
+		label 'emxProgramCentral.Label.decChangeReason'
+		alt ''
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Column Type' 'program'
+        setting 'function' 'getDBDataList'
+        setting 'program' 'emxProjectSpace'
+		setting 'columnName' 'CHG_RESN'
+;
+add property 'table_decProjectBizScheduleList' on program 'eServiceSchemaVariableMapping.tcl' to table 'decProjectBizScheduleList' system
+;

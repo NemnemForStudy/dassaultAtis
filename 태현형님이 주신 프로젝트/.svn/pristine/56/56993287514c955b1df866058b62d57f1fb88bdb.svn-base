@@ -1,0 +1,1 @@
+define("DS/ReviseFromWidget/ReviseFromWidget_zh-TW",{});define("DS/ReviseFromWidget/assets/nls/ReviseFromPrefsDlg",{SettingsTitle:"設定",CopyTitleFromSource:"從來源複製標題",WarningNoRevise:"若存取權限不允許修訂，則顯示警告"});

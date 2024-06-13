@@ -1,0 +1,1 @@
+define("DS/DMUReplyAndComments/DMUReplyAndComments_ja",{});define("DS/DMUReplyAndComments/assets/nls/DMUReplyAndComments",{replyTo:"返信先 ",commentPrefix:"コメント"});

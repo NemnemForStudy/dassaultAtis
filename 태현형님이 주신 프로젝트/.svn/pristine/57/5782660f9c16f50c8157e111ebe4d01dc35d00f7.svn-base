@@ -1,0 +1,1 @@
+define("DS/ENOX3DSpaceAttributesMgt/ENOX3DSpaceAttributesMgt_it",{});define("DS/ENOX3DSpaceAttributesMgt/assets/nls/ENOXAttributesMgtNls",{isCellEditableColumns:{title:"Modificabile dalla vista"},attributeForEditingColumns:{title:"Attributo per la modifica della cella"},Classification:{title:"Classificazione"},instance:"Istanza"});

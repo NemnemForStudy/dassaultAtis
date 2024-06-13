@@ -1,0 +1,61 @@
+### 230418 Created by CMG
+
+#delete relationship decCodeDetailRel;
+
+add relationship decCodeDetailRel
+	description 'from.decCodeMaster,decCodeDetail to decCodeDetail'
+	preventduplicates
+	from
+	 type "decCodeMaster","decCodeDetail"
+	 cardinality many
+	 revision none
+	 clone none
+	to
+	 type "decCodeDetail"
+	 cardinality many
+	 revision none
+	 clone replicate
+;
+
+add property relationship_decCodeDetailRel on program eServiceSchemaVariableMapping.tcl to relationship decCodeDetailRel;
+
+mod rel decCodeDetailRel add attr 'Sequence Order';
+
+
+
+
+
+
+
+# Modified by hslee on 2023.05.23
+mod relationship decCodeDetailRel
+	to
+		clone none
+;
+
+# Modified by hslee on 2023.07.06
+mod relationship decCodeDetailRel
+	add attribute 'decCodeDetailRelAtt1'
+	add attribute 'decCodeDetailRelAtt2'
+	add attribute 'decCodeDetailRelAtt3'
+	add attribute 'decCodeDetailRelAtt4'
+	add attribute 'decCodeDetailRelAtt5'
+;
+
+# Modified by hslee on 2023.05.23
+mod relationship decCodeDetailRel
+	from
+		clone replicate
+;
+
+# Modified by hslee on 2023.07.27
+mod relationship decCodeDetailRel
+	preventduplicates
+;
+
+mod relationship decCodeDetailRel
+	from
+		clone none
+	from
+		clone none
+;

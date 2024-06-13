@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0",
+  "summary": "Сравнивает значение нескольких компонентов данных ввода после указанного выражения настройки.",
+  "description": "Данный блок является динамическим, поэтому счетчик данных ввода можно изменить в диалоговом окне конфигурации блока.<br>Поддерживаются все типы порта данных.<br>Имя переменной, указанное в настройке <doc-setting-name translate=no>Expression</doc-setting-name>, должно соответствовать имени данных ввода, иначе выражение будет рассматриваться как недопустимое.<br><br>Значение выражения в этой настройке поддерживает расширенное сравнение выражений:<ul><li><doc-value translate=no>&quot;Value1 === Value2&quot;</doc-value>: проверяет, равно ли значение <doc-idp-name translate=no>Value1</doc-idp-name> значению <doc-idp-name translate=no>Value2</doc-idp-name>.</li><li><doc-value translate=no>&quot;Value3 > Value3 && Value3 < Value2&quot;</doc-value>: проверяет, находится ли значение <doc-idp-name translate=no>Value3</doc-idp-name> между <doc-idp-name translate=no>Value1</doc-idp-name> и <doc-idp-name translate=no>Value2</doc-idp-name> (<doc-idp-name translate=no>Value1</doc-idp-name>, <doc-idp-name translate=no>Value2</doc-idp-name> и <doc-idp-name translate=no>Value3</doc-idp-name> являются цифрами).</li><li><doc-value translate=no>&quot;Value1 !== Value2 || Value1 !== Value3&quot;</b>: проверяет, отличается ли значение <doc-idp-name translate=no>Value1</doc-idp-name> от <doc-idp-name translate=no>Value2</doc-idp-name> или <doc-idp-name translate=no>Value3</doc-idp-name>.</li></ul>",
+  "dataPorts": {
+    "Value1": "является первым значением для сравнения.",
+    "Value2": "является вторым значением для сравнения."
+  },
+  "controlPorts": {
+    "In": "запускает выполнение блока.",
+    "True": "активируется при положительном значении результата выражения, заполненного каждым значением данных ввода.",
+    "False": "активируется при отрицательном значении результата выражения, заполненного каждым значением данных ввода."
+  },
+  "settings": {
+    "Expression": "значение выражения с описанием сравнения значений данных ввода."
+  },
+  "example": null
+}

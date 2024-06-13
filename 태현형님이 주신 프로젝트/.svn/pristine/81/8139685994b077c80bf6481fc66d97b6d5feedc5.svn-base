@@ -1,0 +1,15 @@
+m|DELPPWModules\DELPPWWorkInstructionsModule.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.3.23054|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\DELPPWWorkInstructionsModule\DELPPWWorkInstructionsModule.js|1677184554|14972
+s|DELPPWModules\DELPPWWorkInstructionsModule.mweb\src\DataCollect\DataCollectDialogUI.js|1676966484|34533
+t|win_b64\webapps\DELPPWWorkInstructionsModule\assets\json\DataCollectTLVOptions.json|1651890889|9060
+s|DELPPWModules\DELPPWWorkInstructionsModule.mweb\src\assets\json\DataCollectTLVOptions.json|1649146037|9060
+t|win_b64\webapps\DELPPWWorkInstructionsModule\assets\xml\EditFormAttributes.xml|1653708427|5648
+s|DELPPWModules\DELPPWWorkInstructionsModule.mweb\src\assets\xml\EditFormAttributes.xml|1653310320|5648
+u|DELPPWModules\DELPPWWorkInstructionsModule.mweb\src\DataCollect\DataCollectMgmtUI.js|1649672120|14700
+u|DELPPWModules\DELPPWWorkInstructionsModule.mweb\src\WorkInstructionsModule.js|1671618144|6985
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

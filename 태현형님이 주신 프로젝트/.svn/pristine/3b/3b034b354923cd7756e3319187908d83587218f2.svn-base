@@ -1,0 +1,16 @@
+m|WebIV\VRModels.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.0.22078|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\VRModels\VRModels.js|1647692293|1210
+s|WebIV\VRModels.mweb\src\ControllerModel.js|1635253540|2522
+t|win_b64\webapps\VRModels\assets\models\vr_controller_vive_1_5\OpenVR_Controller.cgr|1647692292|1105883
+s|WebIV\VRModels.mweb\src\assets\models\vr_controller_vive_1_5\OpenVR_Controller.cgr|1513852615|1105883
+t|win_b64\webapps\VRModels\assets\models\vr_controller_vive_1_5\WindowsMR_Controller_Left.cgr|1647692292|256550
+s|WebIV\VRModels.mweb\src\assets\models\vr_controller_vive_1_5\WindowsMR_Controller_Left.cgr|1527667975|256550
+t|win_b64\webapps\VRModels\assets\models\vr_controller_vive_1_5\WindowsMR_Controller_Right.cgr|1647692292|258367
+s|WebIV\VRModels.mweb\src\assets\models\vr_controller_vive_1_5\WindowsMR_Controller_Right.cgr|1527667852|258367
+u|WebIV\VRModels.mweb\src\VRModels.js|1489684716|0
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

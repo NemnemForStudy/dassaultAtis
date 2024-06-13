@@ -1,0 +1,1 @@
+define("DS/DMUFormatEdition/DMUFormatEdition_ru",{});define("DS/DMUFormatEdition/assets/nls/DMUFormatEdition",{formatEditionModeStarted:"Редактирование форматов",slideEditionModeStarted:"Редактирование слайдов",currentFormatUpdatedMessage:"Точка обзора обновлена",NoFormat:"Нет формата",FormatChooserPanelTitle:"Формат",normalFormatTitle:"Формат",generateFormat:"Создать формат"});

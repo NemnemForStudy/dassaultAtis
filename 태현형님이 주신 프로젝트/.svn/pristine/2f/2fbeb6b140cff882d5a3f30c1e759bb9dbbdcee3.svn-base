@@ -1,0 +1,10 @@
+m|VENWebjQuery\WebjQueryLib.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.0.22078|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\WebjQueryLib\WebjQueryLib.js|1647692324|504
+s|VENWebjQuery\WebjQueryLib.mweb\src\WebjQuery.js|1603103620|1158
+u|VENWebjQuery\WebjQueryLib.mweb\src\WebjQueryLib.js|1603114621|0
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

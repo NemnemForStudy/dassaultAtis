@@ -1,0 +1,46 @@
+<div 
+  id="im-call-self" 
+  v-show="isVideo && showSelfView"
+  :class="{
+    isInUserList: isInUserList
+  }"
+>
+  <!--<im-call-video-item
+    :stream="stream"
+    muted
+    :isVideoMuted="isLocalVideoMuted"
+    :isAudioMuted="isLocalAudioMuted"
+  />-->
+  <div
+    v-if="$store.getters.selfViewInUserList"
+    class="username"
+  >
+    {{ username }}
+  </div>
+
+  <im-call-video-item
+    v-for="(stream, index) in streams"
+    :key="index"
+    :stream="stream"
+    :isVideoMuted="isLocalVideoMuted"
+    :isAudioMuted="isLocalAudioMuted"
+    :user_id="user_id"
+    :muted="true"
+    :isSelfView="true"
+  />
+
+  <div
+    class="fonticon fonticon-window"
+    @click="minimize"
+    v-tooltip.body.top="$store.getters.nls('minimize')"
+  />
+
+  <!--<div 
+    class="fonticon fonticon-videocamera-off"
+    :class="{ 
+      'fonticon-videocamera-off': isLocalVideoMuted, 
+      'fonticon-microphone-off': isLocalAudioMuted 
+    }"
+    v-show="isLocalVideoMuted || isLocalAudioMuted"
+  />-->
+</div>

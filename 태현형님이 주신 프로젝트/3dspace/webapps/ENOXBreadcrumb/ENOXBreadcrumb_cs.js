@@ -1,0 +1,1 @@
+define("DS/ENOXBreadcrumb/ENOXBreadcrumb_cs",{});define("DS/ENOXBreadcrumb/assets/nls/Breadcrumb",{HOME:"Domů"});

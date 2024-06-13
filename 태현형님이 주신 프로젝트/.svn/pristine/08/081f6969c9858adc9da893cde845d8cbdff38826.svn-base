@@ -1,0 +1,19 @@
+################################################################################################
+# Create By thok : 2023. 05. 03
+# Admin Type : relationship
+# Name : decProjectSubconRel
+################################################################################################
+add rel 'decProjectSubconRel' 
+	preventduplicates
+	from type 'Project Space' 
+		cardinality n 
+		revision none 
+		clone none 
+	to type Person 
+		meaning 'decSubcon'  
+		cardinality n 
+		revision none 
+		clone replicate
+;
+
+add property 'relationship_decProjectSubconRel' on program eServiceSchemaVariableMapping.tcl to relationship 'decProjectSubconRel';

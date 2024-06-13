@@ -1,0 +1,33 @@
+<vu-lightbox
+    z-index="210"
+    v-show="show"
+    :widget="isWidget"
+    disableCompass="true"
+    :title="title"
+    :objectType="mediaType"
+    :primaryActions="primaryActions"
+    :customActions="true"
+    :moreActionsLabel="moreActionsLabel"
+    :closeLabel="closeLabel"
+    :menuActions="menuActions"
+    :sideActions="sideActions"
+    :panels="panels"
+    @click-edit-document="editDocument"
+    @click-save-document="saveDocument"
+    @click-comment="comments"
+    @close-panel-comments="comments"
+    @click-information="toggleInformationPanel"
+    @close-panel-information="toggleInformationPanel"
+    @click-previous="refreshContent('previous')"
+    @click-next="refreshContent('next')"
+    @close="closeLightbox">
+        <template v-slot:lightbox-content>
+            <div ref="lightboxContent" id="lightbox--content"></div>
+        </template>
+        <template v-slot:lightbox-panel-comments>
+            <div ref="lightboxCommentsPanel" id="lightbox--comments-panel"></div>
+        </template>
+        <template v-slot:lightbox-panel-information>
+            <div ref="lightboxInformationPanel" id="lightbox--information-panel"></div>
+        </template>
+</vu-lightbox>

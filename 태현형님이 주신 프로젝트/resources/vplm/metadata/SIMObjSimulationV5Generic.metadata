@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ENOVIA DICTIONARY  -->
+<!-- COPYRIGHT DASSAULT SYSTEMES 2008, All rights reserved -->
+
+<Package xmlns="PLMDictionaryUnified" BelongsToModeler="SIMObjSimulation" ModelerType="Top" Name="SIMObjSimulationV5Generic" Uuid="f10fd39b-6257-4257-9ab8-8e144cb2a463" UseNames="SIMObjSimulation" CustomerExposition="Programmer">
+  <Property Name="FormerTypingLegacy" Value="Yes"/>
+
+  <CAAComment>
+    <ShortRole>This package includes the V5 simulation Representations.</ShortRole>
+    <Role>This package includes the V5 simulation Representations.</Role>
+  </CAAComment>
+
+  <Class Name="SIMObjSimulationV5RepReferenceGeneric" Uuid="ff2afc77-0350-44b7-b029-a38048f5df0a" Abstract="No" SuperName="SIMObjSimulationRepReference" CreateInstName="SIMObjSimulationV5RepInstanceGeneric" CustomerExposition="Programmer" Specializable="No" CustomerExtensible="No">
+    <Property Name="KweNew_InstanciationMethod" Value="CATESIMObjV5RepReferenceGeneric"/>
+    <Property Name="Searchable" Value="No"/>
+    <Property Name="IconName"        Value="I_SimulationRep"/>
+    <Property Name="3DIconName"        Value="PSM_REPGEN_3DNAVREP.cgr"/>
+    <Property Name="Configurable" Value="No" />
+    <Property Name="Filtrable" Value="No" />
+    <!-- Behavior patterns: default values -->
+    <Property Name="SaveAsNewAvailability"         Value="No"/>    
+    <CAAComment>
+      <ShortRole>Simulation V5 Representation Reference</ShortRole>
+      <Role>Simulation V5 Representation Reference</Role>
+    </CAAComment>
+
+    <!-- Simulation Rep data to expose at PLM level. -->
+    <!-- Positioned on the Rep itself so that native client apps can use CATIOmbOutliner to set the value. -->
+    <!-- Intent: To hold app data that can be retrieved via a web service and/or indexed (via a custom index procedure). -->
+    <Simple Name="V_ExtendedData"
+      Uuid="30db3d27-2060-487e-a80a-1ab350e6318a"
+      Type="Clob"
+      Protection="Internal"
+      Faceted="No"
+      />
+
+    <Method ImplementationType="None">
+      <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+    </Method>
+   <!-- <IdentifierSet Name="identifier" Uuid="36daed46-8c21-4a57-b71d-948fc3c2082a" IdentifierUuids="86A2CB5C-4D50-4593-8489DF068C40FAAB 9528ED8F-6280-43E0-AD67CCB0D32A0755" IdentifierNames="PLM_ExternalID V_version"/> -->
+  </Class>
+  
+  <RelationClass Name="SIMObjSimulationV5RepInstanceGeneric" Uuid="3b06da5b-eee7-4599-9156-35e71bc82ac3" Abstract="No" SuperName="SIMObjSimulationRepInstance" CustomerExposition="Programmer" Specializable="No" CustomerExtensible="No">
+    <Property Name="Searchable" Value="No"/>
+    <Property Name="Configurable" Value="No" />
+    <Property Name="Filtrable" Value="No" />
+    <Property Name="IconName"        Value="I_SimulationV5Rep"/>
+    <!-- Behavior patterns: default values -->
+    <Property Name="TransferOwnershipAvailability" Value="No"/>
+    <CAAComment>
+      <ShortRole>Simulation V5 Representation Instance</ShortRole>
+      <Role>Simulation V5 Representation Instance</Role>
+    </CAAComment>
+    <Method ImplementationType="None">
+      <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+    </Method>
+  </RelationClass>
+ 
+  <!-- Simulation (V5) Rep Extension -->
+  <!-- Now obsolete, replaced by the V_ExtendedData attribute (same name) on the Rep itself.  -->
+  <Extension Name="SIMObjSimulationV5RepExtension"
+    Uuid="5f1b3757-c34e-4fa6-ab19-1ff3da7c22c5" 
+    CustomerExposition="ProgrammerOnly"
+    ScopeNames="SIMObjSimulationV5RepReferenceGeneric"
+    Specializable="No"
+    Searchable="No" >
+
+    <!-- Simulation Rep PLM Data -->
+    <Simple Name="V_ExtendedData"
+      Uuid="0bacde66-81b1-4154-be4c-a69808ea2fcb"
+      Type="Clob"
+      Protection="Internal"
+      UIAccess="None"
+      />
+      <!-- UIAccess is left over: Originally Protection was External. But Clob cannot be External. -->
+  </Extension>
+    
+</Package>

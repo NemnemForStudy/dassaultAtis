@@ -1,0 +1,155 @@
+<?xml version="1.0"?>
+
+<!-- ENOVIA DICTIONARY for Ens Specifications Editor -->
+<!-- COPYRIGHT DASSAULT SYSTEMES 2019, all rights reserved -->
+
+<!-- 
+   =========
+    Package
+   =========
+ -->
+<Package xmlns="PLMDictionaryUnified" ModelerType="Top"
+    CustomerExposition="Programmer"
+    Name="PLMSystems3DArchitectureEngSpec"
+    Uuid="8237cf82-a2d2-4559-aa6a-e1db699682d5"
+    UseNames="PLMEnsSpecTechnoTable PLMEnsSpecSpecification" >
+    <!-- Preqreqs: ERCoreModeler;PLMABSTRACT;PLMCORE;PLMEnsSpecSpecification;PLMEnsSpecTechnoTable -->
+  <Property Name="IconName" Value="I_PLMSystems3DArchitectureEngSpec"/>  
+  <CAAComment>
+    <ShortRole>Systems 3D Architecture Engineering Specification Package</ShortRole>
+    <Role>This package describes the Engineering Specification objects for Systems 3D Architecture Application.</Role>
+  </CAAComment>
+
+  <Comment>[V6R021x] 12/2/2019 Initial creation</Comment>
+
+  <Class Name="Sys3D_AbstractTable"
+      Uuid="a434e2fe-0e8e-4dad-b511-b895af4b6466"
+      Abbreviation="s3dtab"
+      CustomerExposition="Programmer"
+      Abstract="Yes"
+      SuperName="EnsTechnologicalTable"
+      Discipline="Yes"
+      CustomerExtensible="No"
+      Specializable="No"
+      CreateInstName="EnsTechnologicalTableInstance">
+    
+    <Property Name="IconName"                    Value="I_Sys3D_AbstractTable"/>
+    <Property Name="Searchable"                  Value="Yes"/>
+
+  </Class>
+
+  <Class Name="Sys3D_ClassificationTable"
+      Uuid="e96902e9-f45e-4e92-941d-b61af9039c92"
+      Abbreviation="s3dcltab"
+      CustomerExposition="Programmer"
+      Abstract="No"
+      SuperName="Sys3D_AbstractTable"
+      Discipline="Yes"
+      CustomerExtensible="No"
+      Specializable="No"
+      CreateInstName="EnsTechnologicalTableInstance">
+
+    <Property Name="IconName"                    Value="I_Sys3D_ClassificationTable"/>
+    <Property Name="Searchable"                  Value="Yes"/>
+    <Property Name="Newable"                     Value="All"/>
+    <Property Name="KweNew_InstanciationMethod"  Value="CATEnsCompanyStdsInstanciation"/>
+    <Property Name="KweNew_ReturnedType"         Value="EnsTechnologicalTableInstance"/>
+    <Property Name="ProposedInDataSetup"         Value="Yes"/>
+
+  </Class>
+
+  <Class Name="Sys3D_AbstractCompatibilityTable"
+      Uuid="c578a3a4-4ad7-4372-868f-634af8ae50ab"
+      Abbreviation="s3dcotab"
+      CustomerExposition="Programmer"
+      Abstract="Yes"
+      SuperName="Sys3D_AbstractTable"
+      Discipline="Yes"
+      CustomerExtensible="No"
+      Specializable="No"
+      CreateInstName="EnsTechnologicalTableInstance">
+    
+    <Property Name="IconName"                    Value="I_Sys3D_AbstractCompatibilityTable"/>
+    <Property Name="Searchable"                  Value="Yes"/>
+
+  </Class>
+  
+  <Class Name="Sys3D_CompatibilityTablePathway"
+      Uuid="ee1be671-f300-4f2a-8c25-cc92c2f30bc5"
+      Abbreviation="s3dctp"
+      CustomerExposition="Programmer"
+      Abstract="No"
+      SuperName="Sys3D_AbstractCompatibilityTable"
+      Discipline="Yes"
+      CustomerExtensible="No"
+      Specializable="No"
+      CreateInstName="EnsTechnologicalTableInstance">
+
+    <Property Name="IconName"                    Value="I_Sys3D_CompatibilityTablePathway"/>
+    <Property Name="Searchable"                  Value="Yes"/>
+    <Property Name="Newable"                     Value="All"/>
+    <Property Name="KweNew_InstanciationMethod"  Value="CATEnsCompanyStdsInstanciation"/>
+    <Property Name="KweNew_ReturnedType"         Value="EnsTechnologicalTableInstance"/>
+    <Property Name="ProposedInDataSetup"         Value="Yes"/>
+    
+  </Class>
+
+  <Class Name="Sys3D_CompatibilityTableSignal"
+      Uuid="f10daa1f-8609-43ee-b23c-9a8531dac4b0"
+      Abbreviation="s3dcts"
+      CustomerExposition="Programmer"
+      Abstract="No"
+      SuperName="Sys3D_AbstractCompatibilityTable"
+      Discipline="Yes"
+      CustomerExtensible="No"
+      Specializable="No"
+      CreateInstName="EnsTechnologicalTableInstance">
+
+    <Property Name="IconName"                    Value="I_Sys3D_CompatibilityTableSignal"/>
+    <Property Name="Searchable"                  Value="Yes"/>
+    <Property Name="Newable"                     Value="All"/>
+    <Property Name="KweNew_InstanciationMethod"  Value="CATEnsCompanyStdsInstanciation"/>
+    <Property Name="KweNew_ReturnedType"         Value="EnsTechnologicalTableInstance"/>
+    <Property Name="ProposedInDataSetup"         Value="Yes"/>
+    
+  </Class>
+  
+    <Class Name="Sys3D_CompatibilityTablePathwaySignal"
+      Uuid="2df8d5df-f035-4774-964e-7d57480f14d0"
+      Abbreviation="s3dctps"
+      CustomerExposition="Programmer"
+      Abstract="No"
+      SuperName="Sys3D_AbstractCompatibilityTable"
+      Discipline="Yes"
+      CustomerExtensible="No"
+      Specializable="No"
+      CreateInstName="EnsTechnologicalTableInstance">
+
+    <Property Name="IconName"                    Value="I_Sys3D_CompatibilityTablePathwaySignal"/>
+    <Property Name="Searchable"                  Value="Yes"/>
+    <Property Name="Newable"                     Value="All"/>
+    <Property Name="KweNew_InstanciationMethod"  Value="CATEnsCompanyStdsInstanciation"/>
+    <Property Name="KweNew_ReturnedType"         Value="EnsTechnologicalTableInstance"/>
+    <Property Name="ProposedInDataSetup"         Value="Yes"/>
+    
+  </Class>
+  
+  <Class Name="Sys3D_Specification"
+      Uuid="785f36cf-2bdc-4114-8ea1-3333e86e3cab"
+      Abbreviation="s3dspe"
+      CustomerExposition="Programmer"
+      Abstract="No"
+      SuperName="EnsSpecification"
+      Discipline="Yes"
+      Specializable="No"
+      CustomerExtensible="No">
+    
+    <Property Name="IconName"                    Value="I_Sys3D_Specification"/>
+    <Property Name="Searchable"                  Value="Yes"/>
+    <Property Name="Newable"                     Value="New"/>
+    <Property Name="KweNew_InstanciationMethod"  Value="CATEnsCompanyStdsInstanciation"/>
+    <Property Name="ProposedInDataSetup"         Value="Yes"/>
+
+  </Class>
+  
+</Package>

@@ -1,0 +1,92 @@
+#####################################################################################################
+# Created by jonghunlee
+# Admin Type : Table
+# Create Date : 2023-07-13
+# Name : decIWPTaskHistoryTable
+#####################################################################################################
+#del table 'decIWPTaskHistoryTable' system;
+add table 'decIWPTaskHistoryTable' system
+    column
+        name    'IWP No'
+        label    'ProgramCentral.Label.IWP_No'
+        setting    'Registered Suite'   'ProgramCentral'
+        setting    'Column Type'   'program'
+        setting    'program'   'emxProjectSpace'
+        setting    'function'   'getDBDataList'
+        setting    'except' 'string'
+        setting    'Editable'   'false'
+        setting    'columnName' 'IWP_NO'
+    column
+        name    'Input Type'
+        label    'ProgramCentral.Label.Input_Type'
+        setting    'Registered Suite'   'ProgramCentral'
+        setting    'Column Type'   'program'
+        setting    'program'   'emxProjectSpace'
+        setting    'function'   'getDBDataList'
+        setting    'except' 'string'
+        setting    'Editable'   'false'
+        setting    'columnName' 'INPUT_TYPE'
+    column
+        name    'Action'
+        label    'ProgramCentral.Label.Action'
+        setting    'Registered Suite'   'ProgramCentral'
+        setting    'Column Type'   'program'
+        setting    'program'   'emxProjectSpace'
+        setting    'function'   'getDBDataList'
+        setting    'except' 'string'
+        setting    'Editable'   'false'
+        setting    'columnName' 'CHANGE_ACTION'
+    column
+        name    'Column Name'
+        label    'ProgramCentral.Label.Column_Name'
+        setting    'Registered Suite'   'ProgramCentral'
+        setting    'Column Type'   'program'
+        setting    'program'   'emxProjectSpace'
+        setting    'function'   'getDBDataList'
+        setting    'except' 'string'
+        setting    'Editable'   'false'
+        setting    'columnName' 'CHANGE_ATTRIBUTE'
+    column
+        name    'Before'
+        label    'ProgramCentral.Label.Before'
+        setting    'Registered Suite'   'ProgramCentral'
+        setting    'Column Type'   'program'
+        setting    'program'   'emxProjectSpace'
+        setting    'function'   'getDBDataList'
+        setting    'Editable'   'false'
+        setting    'columnName' 'BEFORE_VALUE'
+        setting    'except' 'time'
+    column
+        name    'After'
+        label    'ProgramCentral.Label.After'
+        setting    'Registered Suite'   'ProgramCentral'
+        setting    'Column Type'   'program'
+        setting    'program'   'emxProjectSpace'
+        setting    'function'   'getDBDataList'
+        setting    'Editable'   'false'
+        setting    'columnName' 'AFTER_VALUE'
+        setting    'except' 'time'
+    column
+        name    'Change User'
+        label    'ProgramCentral.Label.Change_User'
+        setting    'Registered Suite'   'ProgramCentral'
+        setting    'Column Type'   'program'
+        setting    'program'   'emxProjectSpace'
+        setting    'function'   'getDBDataList'
+        setting    'except' 'string'
+        setting    'Editable'   'false'
+        setting    'format'     'user'
+        setting    'columnName' 'CHANGE_USER'
+    column
+        name    'Change Date'
+        label    'ProgramCentral.Label.Change_Date'
+        setting    'Registered Suite'   'ProgramCentral'
+        setting    'Column Type'   'program'
+        setting    'program'   'emxProjectSpace'
+        setting    'function'   'getDBDataList'
+        setting    'Editable'   'false'
+        setting    'columnName' 'CHANGE_DATE'
+        setting    'except' 'time'
+        setting    'format'     'date'
+;
+add property 'table_decIWPTaskHistoryTable' on prog eServiceSchemaVariableMapping.tcl to table 'decIWPTaskHistoryTable' system;

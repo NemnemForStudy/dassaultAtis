@@ -1,0 +1,1 @@
+define("DS/SPYExtUI/SPYExtUI_it",{});define("DS/SPYExtUI/assets/nls/CATSimNavDataFrameViewXYChartUI",{rootName:"Passaggio corrente",loadCaseName:"Carico corrente"});

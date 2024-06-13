@@ -1,0 +1,1 @@
+define("DS/SPYExtUI/SPYExtUI_pl",{});define("DS/SPYExtUI/assets/nls/CATSimNavDataFrameViewXYChartUI",{rootName:"Bieżący krok",loadCaseName:"Bieżące obciążenie"});

@@ -1,0 +1,26 @@
+<?xml version="1.0" ?>
+<ProcedurePackage 
+	xmlns="PLMDictionaryProcedure"
+	Name="KWEpe_Procedures">
+			
+	<Procedure Name="Kwe_ExportRuleSet">
+		<Implementation Name="Kwe_ExportRuleSet" FileLocation="Kwe_ExportRuleSet.KProc" Language="EKL"/>
+		<Signature href="KWEpe_ProcedureSignatureExport"/>
+	</Procedure>
+	
+	<Procedure Name="Kwe_ExportRuleSet_Remove">
+		<Implementation Name="Kwe_ExportRuleSet_Remove" FileLocation="Kwe_ExportRuleSet_Remove.KProc" Language="EKL"/>
+		<Signature href="KWEpe_ProcedureSignatureExport"/>
+	</Procedure>
+
+	<Procedure Name="Kwe_ExportRuleSet_TSO">
+		<Implementation Name="Kwe_ExportRuleSet_TSO" FileLocation="Kwe_ExportRuleSet_TSO.KProc" Language="EKL"/>
+		<Signature href="KWEpe_ProcedureSignatureExport"/>
+	</Procedure>
+
+	<Signature id="KWEpe_ProcedureSignatureExport">
+		<Parameter Name="InputIds" Lower="0" Upper="-1" MultiValuated="Yes" Direction="in" DataType="PLMId"/>
+		<Parameter Name="OutputIds" Lower="0" Upper="-1" MultiValuated="Yes" Direction="out" DataType="PLMId"/>
+	</Signature>
+	
+</ProcedurePackage>

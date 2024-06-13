@@ -1,0 +1,93 @@
+{
+
+    "dsmvlog:Reference.Versions": {
+        "property": "computed",
+        "key": "versions",
+        "fetchOnce":true
+    },
+    
+    "dsmvlog:Reference.Model": {
+        "property": "computed",
+        "key": "modelInfo"
+    },
+
+    "dsmvlog:kindOfRFLP": {
+        "property": "computed",
+        "key": "kindOfRFLP",
+        "fetchOnce":true,
+        "example": "R/F/L/P"
+    },
+    
+    "dsmvlog:attribute.name": {
+        "property": "computed",
+        "key": "name",
+        "example": "My name",
+        "description": "Reference name",
+        "fetchOnce":true
+    },
+    
+    "dsmvlog:attribute.title": {
+        "property": "computed",
+        "key": "title",
+        "example": "My title",
+        "description": "Reference title",
+        "fetchOnce":true
+    },
+    
+    "dsmvlog:attribute.descripton": {
+        "property": "computed",
+        "key": "description",
+        "example": "My Description",
+        "description": "Reference Description",
+        "fetchOnce":true
+    },
+    
+    "dsmvlog:basic.typeDB": {
+        "property": "type",
+        "key": "typeDB",
+        "label": "CRS.common.Label.Attribute.Type",
+        "example": "My Type",
+        "description": "Basic type value"
+    },
+    
+    "dsmvlog:basic.typeNLS": {
+        "property": "type",
+        "key": "typeNLS",
+        "label": "CRS.common.Label.Attribute.Type",
+        "format": "type",
+        "example": "My Type",
+        "description": "Basic type NLS value"
+    },
+    
+	"dsmvlog:Reference.SpecificationDocument.Details": {
+		"property": "from[SpecificationDocument].to.physicalid",
+		"key": "specificationDocument",
+		"mask": "dsmvlog:DocumentMask",
+		"maskAppliesTo": "bus"
+	},
+		
+	"dsmvlog:Reference.ImplementLink.Implementing.Details": {
+		"property": "computed",
+		"key": "Implementing",
+        "example": "com.dassault_systemes.enovia.xapps.dslog.V1.openapi.custom.PRIVATE.implementing"
+	},
+	
+	"dsmvlog:Reference.ImplementLink.ImplementedBy.Details": {
+		"property": "computed",
+		"key": "Implemented by",
+        "example": "com.dassault_systemes.enovia.xapps.dslog.V1.openapi.custom.PRIVATE.implementedBy"
+	},
+	
+	"dsmvlog:Reference.SPPConnection.Details": {
+		"property": "computed",
+		"key": "SPPConnections",
+        "example": "TODOOpenAPI"
+	},
+
+	"dsmvlog:Reference.ProposedSolution.Details": {
+		"property": "from[ProposedSolution].to.physicalid",
+		"key": "proposedsolution",
+		"mask": "dsmvlog:BusMask",
+		"maskAppliesTo": "bus"
+	}
+}

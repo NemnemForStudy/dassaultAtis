@@ -1,0 +1,1 @@
+define("DS/MPFMiniCartComponent/MPFMiniCartComponent_de",{});define("DS/MPFMiniCartComponent/assets/nls/MiniCartComponent",{items:"{itemCount} Artikel",viewCart:"Warenkorb anzeigen"});

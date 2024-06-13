@@ -1,0 +1,201 @@
+{
+  "Boolean": {
+    "stdTemplate": "check"
+  },
+  "Double": {
+    "stdTemplate": "spinEdit",
+    "semantics": {
+      "numeric": true
+    }
+  },
+  "Integer": {
+    "stdTemplate": "spinEdit",
+    "semantics": {
+      "stepValue": 1,
+      "decimals": 0,
+      "numeric": true
+    }
+  },
+  "Float": {
+    "stdTemplate": "spinEdit",
+    "semantics": {
+      "numeric": true
+    }
+  },
+  "Int8": {
+    "stdTemplate": "spinEdit",
+    "semantics": {
+      "stepValue": 1,
+      "decimals": 0,
+      "minValue": -128,
+      "maxValue": 127,
+      "numeric": true
+    }
+  },
+  "Int16": {
+    "stdTemplate": "spinEdit",
+    "semantics": {
+      "stepValue": 1,
+      "decimals": 0,
+      "minValue": -32768,
+      "maxValue": 32767,
+      "numeric": true
+    }
+  },
+  "Int32": {
+    "stdTemplate": "spinEdit",
+    "semantics": {
+      "stepValue": 1,
+      "decimals": 0,
+      "minValue": -2147483648,
+      "maxValue": 2147483647,
+      "numeric": true
+    }
+  },
+  "Int64": {
+    "stdTemplate": "spinEdit",
+    "semantics": {
+      "stepValue": 1,
+      "decimals": 0,
+      "minValue": -9223372036854775808,
+      "maxValue": 9223372036854775807,
+      "numeric": true
+    }
+  },
+  "UInt8": {
+    "stdTemplate": "spinEdit",
+    "semantics": {
+      "stepValue": 1,
+      "decimals": 0,
+      "minValue": 0,
+      "maxValue": 255,
+      "numeric": true
+    }
+  },
+  "UInt16": {
+    "stdTemplate": "spinEdit",
+    "semantics": {
+      "stepValue": 1,
+      "decimals": 0,
+      "minValue": 0,
+      "maxValue": 65535,
+      "numeric": true
+    }
+  },
+  "UInt32": {
+    "stdTemplate": "spinEdit",
+    "semantics": {
+      "stepValue": 1,
+      "decimals": 0,
+      "minValue": 0,
+      "maxValue": 4294967295,
+      "numeric": true
+    }
+  },
+  "NonZeroUInt32": {
+    "stdTemplate": "spinEdit",
+    "semantics": {
+      "stepValue": 1,
+      "decimals": 0,
+      "minValue": 1,
+      "maxValue": 4294967295,
+      "numeric": true
+    }
+  },
+  "UInt64": {
+    "stdTemplate": "spinEdit",
+    "semantics": {
+      "stepValue": 1,
+      "decimals": 0,
+      "minValue": 0,
+      "maxValue": 18446744073709551615,
+      "numeric": true
+    }
+  },
+  "Object": {
+    "inlinedTemplate": "objectinline",
+    "stdTemplate": "object",
+    "semantics": {
+      "authoringFlag": true,
+      "recursionDepth": -1,
+      "augmentedDisplay": "dialog",
+      "dialogOptions": {
+        "modalFlag": true,
+        "width": 800,
+        "height": 500,
+        "title": "Object Editor",
+        "icon": "flow-cascade"
+      },
+      "authoringFilters": {
+        "allSupportedTypes": {
+          "types": [
+            "Boolean",
+            "Double",
+            "String",
+            "Object",
+            "Array<Boolean>",
+            "Array<Double>",
+            "Array<String>",
+            "Array<Object>"
+          ],
+          "defaultType": "Double",
+          "defaultValue": 0.0
+        }
+      }
+    }
+  },
+  "String": {
+    "inlinedTemplate": "editor2Inline",
+    "stdTemplate": "edit"
+  },
+  "Array": {
+    "inlinedTemplate": "array",
+    "stdTemplate": "array",
+    "semantics": {
+      "augmentedDisplay": "dialog"
+    }
+  },
+  "Buffer": {},
+  "valueTypeCombo": {
+    "stdTemplate": "valueTypeComboTemplate",
+    "semantics": {
+      "possibleValues": [],
+      "valueType": "enumString"
+    }
+  },
+  "NodeIdSelectorCriterion": {
+    "stdTemplate": "enumCombo",
+    "semantics": {
+      "allowResetToUndefinedByUIFlag": true,
+      "placeholder": "Select a criterion...",
+      "possibleValues": [
+        {
+          "label": "NoCriterion",
+          "value": -1,
+          "icon": "target"
+        },
+        {
+          "label": "Identifier",
+          "value": 0,
+          "icon": "target"
+        },
+        {
+          "label": "OnlyMyHypervisor",
+          "value": 1,
+          "icon": "target"
+        },
+        {
+          "label": "NotMyHypervisor",
+          "value": 2,
+          "icon": "target"
+        },
+        {
+          "label": "PreferMyHypervisor",
+          "value": 3,
+          "icon": "target"
+        }
+      ],
+      "valueType": "enumString"
+    }
+  }
+}

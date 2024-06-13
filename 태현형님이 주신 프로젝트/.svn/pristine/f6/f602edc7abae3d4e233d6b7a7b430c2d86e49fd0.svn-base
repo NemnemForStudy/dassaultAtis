@@ -1,0 +1,1781 @@
+<%@page import="org.apache.commons.lang.WordUtils"%>
+<%@page import="java.time.LocalDate"%>
+<%@page import="java.time.temporal.ChronoUnit"%>
+<%@page import="com.dec.util.DecDateUtil"%>
+<%@page import="com.dec.util.decListUtil"%>
+<%@page import="com.dec.util.DecConstants"%>
+<%@page import="com.dec.util.decCollectionUtil"%>
+<%@page import="org.apache.commons.lang3.StringUtils"%>
+<%@page trimDirectiveWhitespaces="true" %>
+<%@include file = "../common/emxNavigatorInclude.inc"%>
+<%@include file = "../emxUICommonHeaderBeginInclude.inc"%>
+<jsp:useBean id="indentedTableBean" class="com.matrixone.apps.framework.ui.decUITableIndented" scope="session"/>
+<emxUtil:localize id="i18nId" bundle="emxProgramCentralStringResource" locale='<xss:encodeForHTMLAttribute><%= request.getHeader("Accept-Language") %></xss:encodeForHTMLAttribute>' />
+
+<%!
+public int getPaddingCount(StringList strList) throws Exception{
+	try {
+		String maxLengthStr = strList.stream().max( new Comparator<String>(){
+			public int compare(String o1, String o2) {
+				return o1.length() - o2.length();
+			}
+		}).orElse("");
+		return maxLengthStr.length();
+	} catch(Exception e) {
+		e.printStackTrace();
+		throw e;
+	}
+}
+
+public StringList parseWebReport(Context context, String query, String... paramStr) throws Exception{
+	try {
+		String result = MqlUtil.mqlCommand(context, query, paramStr);
+		StringList slParse = new StringList();
+		if ( StringUtils.isNotEmpty(result) )
+		{
+			StringList strResultList = FrameworkUtil.split(result,"Objects");
+            StringList tokenList = new StringList();
+            
+            try ( BufferedReader in = new BufferedReader(new StringReader((String)strResultList.get(strResultList.size()-1))) ) {
+                String line;
+                String recToken;
+                Map objMap = null;
+                Vector idVector = new Vector();
+                while ((line = in.readLine()) != null)
+                {
+                    tokenList = FrameworkUtil.split(line,"=");
+                    if(tokenList.size()==2)
+                    {
+                        String booltoken = (String)tokenList.get(0);
+                        if(booltoken==null || booltoken.trim().length()<0)
+                        {
+                            booltoken="";
+                        }
+                        slParse.add(booltoken.trim());
+                    }
+                }
+            }
+		}
+		return slParse;
+	} catch(Exception e) {
+		e.printStackTrace();
+		throw e;
+	}
+}
+
+public void setFromToDateMap(Context context, Map map, boolean changeFromTo, Locale locale) throws Exception{
+	try {
+		String criteriaPrefix = "from"; 
+		String calculatedPrefix = "to";
+		if ( !changeFromTo )
+		{
+			criteriaPrefix = "to"; 
+			calculatedPrefix = "from"; 
+		}
+		
+		Map criteriaDateMap = DecDateUtil.getTodayMap(context, locale);
+		LocalDate criteriaLocalDate = (LocalDate) criteriaDateMap.get("localDate");
+		
+		Map calculatedDateMap = DecDateUtil.getCalculatedDateMap(context, criteriaLocalDate, ChronoUnit.WEEKS, 1, locale);
+		
+		map.put(criteriaPrefix + "Input", (String) criteriaDateMap.get("input"));
+		map.put(criteriaPrefix + "Display", (String) criteriaDateMap.get("display"));
+		map.put(criteriaPrefix + "msvalue", (long) criteriaDateMap.get("msvalue"));
+		map.put(calculatedPrefix + "Input", (String) calculatedDateMap.get("input"));
+		map.put(calculatedPrefix + "Display", (String) calculatedDateMap.get("display"));
+		map.put(calculatedPrefix + "msvalue", (long) calculatedDateMap.get("msvalue"));
+	} catch(Exception e) {
+		e.printStackTrace();
+		throw e;
+	}
+}
+
+public String generateFullSearchURL(Map fullSearchMap) throws Exception{
+	try {
+		StringBuffer sbURL = new StringBuffer("../common/emxFullSearch.jsp");
+		sbURL.append("?field=").append((String) fullSearchMap.get("field"));
+		sbURL.append("&table=").append((String) fullSearchMap.get("table"));
+		sbURL.append("&selection=").append((String) fullSearchMap.get("selection"));
+		sbURL.append("&submitURL=").append((String) fullSearchMap.get("submitURL"));
+		sbURL.append("&fieldNameDisplay=").append((String) fullSearchMap.get("fieldNameDisplay"));
+		sbURL.append("&fieldNameActual=").append((String) fullSearchMap.get("fieldNameActual"));
+		
+		if ( fullSearchMap.containsKey("selectExpr") )
+		{
+			sbURL.append("&selectExpr=").append((String) fullSearchMap.get("selectExpr"));
+		}
+		if ( fullSearchMap.containsKey("includeOIDprogram") )
+		{
+			sbURL.append("&includeOIDprogram=").append((String) fullSearchMap.get("includeOIDprogram"));
+		}
+		if ( fullSearchMap.containsKey("excludeOIDprogram") )
+		{
+			sbURL.append("&excludeOIDprogram=").append((String) fullSearchMap.get("excludeOIDprogram"));
+		}
+		
+		return sbURL.toString();
+		
+	} catch(Exception e) {
+		e.printStackTrace();
+		throw e;
+	}
+}
+%>
+
+<%
+try {
+	Locale locale = request.getLocale();
+	String lang = locale.getLanguage();
+	
+	String objectId = emxGetParameter(request, "objectId");
+// 	String codeMasterParam = emxGetParameter(request, "codeMaster");
+	String openerFrame = emxGetParameter(request, "openerFrame");
+	String showFilterFrame = "false";
+	String showHierarchyFrame = emxGetParameter(request, "showHierarchyFrame");
+	String showOtherFrame = emxGetParameter(request, "showOtherFrame");
+	String hierarchyFrameSelection = emxGetParameter(request, "hierarchyFrameSelection");
+	String filterParam = emxGetParameter(request, "filterParam");
+	String discipline = emxGetParameter(request, "Discipline");
+	String subcon = emxGetParameter(request, "Sub-Con");
+	
+	hierarchyFrameSelection = StringUtils.isEmpty(hierarchyFrameSelection) ? "single" : hierarchyFrameSelection;
+	
+	// for hierarchyFrame
+	String hierarchyFrameOriginURL = "../common/emxIndentedTable.jsp?table=decFilterHierarchySummary&expandProgram=emxTask:getWBSSubtasks&selection=" 
+		+ (StringUtils.isEmpty(hierarchyFrameSelection) ? "multiple" : hierarchyFrameSelection) 
+		+ "&objectId=" + objectId + "&hideHeader=true&hideToolbar=true"
+		+ "&Discipline=" + discipline + "&Sub-Con=" + subcon;
+%>
+
+<%
+	//Filter Page Start
+	String projectCode = "-";
+	String projectId = null;
+	
+	StringList slSelect = new StringList();
+	
+	if ( StringUtils.isNotEmpty(objectId) )
+	{
+		DomainObject doObj = DomainObject.newInstance(context, objectId);
+		
+		slSelect.add(DecConstants.SELECT_TYPE);
+		slSelect.add(DecConstants.SELECT_NAME);
+		slSelect.add("to[Project Access Key].from.from[Project Access List].to.id");
+		slSelect.add("to[Project Access Key].from.from[Project Access List].to.name");
+		
+		Map objInfo = doObj.getInfo(context, slSelect);
+		
+		String type = (String) objInfo.get(DecConstants.SELECT_TYPE);
+		if ( DecConstants.TYPE_PROJECT_SPACE.equals(type) )
+		{
+			projectCode = (String) objInfo.get(DomainConstants.SELECT_NAME);
+			projectId = objectId;
+		}
+		else
+		{
+			projectCode = (String) objInfo.get("to[Project Access Key].from.from[Project Access List].to.name");
+			projectId = (String) objInfo.get("to[Project Access Key].from.from[Project Access List].to.id");
+		}
+	}
+	else
+	{
+		showHierarchyFrame = "false";
+	}
+
+	// temp start
+	// Get Code Master
+	Map<String, StringList> codeListMap = new HashMap();
+	Map<String, StringList> valueListMap = new HashMap();
+	Map<String, StringList> parentIdListMap = new HashMap();
+	Map<String, StringList> selfIdListMap = new HashMap();
+	Map programMap = new HashMap();
+	MapList codeMasterList = null;
+	Map<String,StringList> codeMasterMap = null;
+	StringList codeList = null;
+	StringList valueList = null;
+	StringList parentIdList = null;
+	StringList selfIdList = null;
+	StringList tempDescendantList = new StringList();
+	StringList descendantList = new StringList(); // selectbox가 onchange되었을 때 함께 변경될 자식 selectbox 목록
+	String descendant = null; // selectbox가 onchange되었을 때 함께 변경될 자식 selectbox 이름
+	String codeMaster = null;
+	StringList slCodeMasterWithDetailType = null;
+	StringList slCodeMaster2HTML = new StringList(); // html tag로 출력될 Code Master 순서
+			
+	StringList slCodeMasterSplitByPipeline = null;
+	StringList slCodeMasterSplitByGT = null;
+	String codeMasterTemp = null;
+	
+	int descendantIdx = 0;
+	int paddingCount = 0;
+	String code = null;
+	int tdIdx = 0;
+	
+	String checkboxName = null;
+	String checkboxLabel = null;
+	
+	Map fromToDateFilterMap = null;
+	String fromToDateFilterName = null;
+	
+	String isMultiple = null;
+	
+	// Get Year/Month
+	String prefix = null;
+	String suffix = null;
+	String yearExpr = null;
+	String yearDisplay = null;
+	String yearValue = null;
+	String yearRange = null;
+	StringList yearRangeSplit = null;
+	int startYear = 0;
+	int endYear = 0;
+	String periodRange = null;
+	int periodIntValue = 0;
+	StringList periodRangeSplit = null;
+	
+	MapList fullSearchFilterList = new MapList();
+	Map fullSearchFilterMap = null;
+	String fullSearchURL = null;
+	String fieldNameDisplay = null;
+	String fieldNameActual = null;
+	// temp end
+
+	
+	
+	
+	
+	StringList attrNameList = new StringList();
+	StringList attrDisplayNameList = new StringList();
+	StringList isMultipleList = new StringList();
+	Map<String, StringList> attrValueMap = new HashMap<String, StringList>();
+	Map<String, StringList> attrDisplayMap = new HashMap<String, StringList>();
+	Map<String,String> defaultValueMap = new HashMap<String,String>();
+	StringList attrValueList = new StringList();
+	StringList attrDisplayList = new StringList();
+	String attrName = null;
+	String attrDisplayName = null;
+	boolean hasEmpty = false;
+	
+	// Get WBS
+	StringList wbsTypeList = new StringList(new String[] {"Unit", "EWP"});
+	MapList wbsList = null;
+	Map<String,StringList> wbsSummary = null;
+	
+	for ( String wbsType : wbsTypeList )
+	{
+		if ( StringUtils.isNotEmpty( emxGetParameter(request, wbsType) ) )
+		{
+			hasEmpty = false;
+			
+			attrName = wbsType; 
+			attrNameList.add( attrName );
+			attrDisplayName = wbsType;
+			attrDisplayNameList.add( attrDisplayName );
+					
+			if ( "Unit".equals(wbsType) )
+			{
+				slSelect.clear();
+				slSelect.add(DecConstants.SELECT_ID);
+				slSelect.add(DecConstants.SELECT_NAME);
+				slSelect.add(DecConstants.SELECT_DESCRIPTION);
+				
+				programMap.clear();
+				programMap.put("objectId", objectId);
+				programMap.put("wbsType", wbsType);
+				programMap.put("slSelect", slSelect);
+				
+				wbsList = JPO.invoke(context, "emxProjectSpace", null, "getActivityListWithWBSType", JPO.packArgs(programMap), MapList.class);
+				wbsSummary = decCollectionUtil.extractStringList(wbsList, DecConstants.SELECT_ID, DecConstants.SELECT_NAME, DecConstants.SELECT_DESCRIPTION);
+			}
+			else if ( "EWP".equals(wbsType) )
+			{
+				programMap.clear();
+				programMap.put("objectId", objectId);
+				
+				wbsList = JPO.invoke(context, "emxProjectSpace", null, "getEWPList", JPO.packArgs(programMap), MapList.class);
+				wbsSummary = decCollectionUtil.extractStringList(wbsList, DecConstants.SELECT_ID, DecConstants.SELECT_NAME, DecConstants.SELECT_DESCRIPTION);
+			}
+			
+			attrValueList = new StringList();
+			attrDisplayList = new StringList();
+			
+			attrValueList.addAll( wbsSummary.get(DecConstants.SELECT_ID) );
+			attrDisplayList.addAll( decListUtil.mergeList(" - ", wbsSummary.get(DecConstants.SELECT_NAME), wbsSummary.get(DecConstants.SELECT_DESCRIPTION)) );
+			
+// 			attrDisplayList.addAll( wbsSummary.get(DecConstants.SELECT_NAME) );
+			/*
+			attrValueList.add(0, "");
+			attrDisplayList.add(0, "All");
+			*/
+			
+			attrValueMap.put(attrName, attrValueList);
+			attrDisplayMap.put(attrName, attrDisplayList);
+			isMultipleList.add("true");
+		}
+	}
+		
+	// Get Action
+	if ( StringUtils.isNotEmpty( emxGetParameter(request, "Action") ) )
+	{
+		attrName = "Action"; 
+		attrNameList.add( attrName );
+		attrDisplayName = "Action";
+		attrDisplayNameList.add( attrDisplayName );
+				
+		/*
+		attrValueList = new StringList( new String[] {"", "Create", "Modify", "Delete"} );
+		attrDisplayList = new StringList( new String[] {"All", "Create", "Update", "Delete"}) ;
+		*/
+		attrValueList = new StringList( new String[] {"Create", "Modify", "Delete"} );
+		attrDisplayList = new StringList( new String[] {"Create", "Update", "Delete"}) ;
+		
+		attrValueMap.put(attrName, attrValueList);
+		attrDisplayMap.put(attrName, attrDisplayList);
+		isMultipleList.add("true");
+	}
+	
+	// Get Input Type
+	if ( StringUtils.isNotEmpty( emxGetParameter(request, "Input Type") ) )
+	{
+		attrName = "Input Type"; 
+		attrNameList.add( attrName );
+		attrDisplayName = "Input Type";
+		attrDisplayNameList.add( attrDisplayName );
+				
+		/*
+		attrValueList = new StringList( new String[] {"", "Excel", "View"} );
+		attrDisplayList = new StringList( new String[] {"All", "Excel", "View"} );
+		*/
+		attrValueList = new StringList( new String[] {"Excel", "View"} );
+		attrDisplayList = new StringList( new String[] {"Excel", "View"} );
+		
+		attrValueMap.put(attrName, attrValueList);
+		attrDisplayMap.put(attrName, attrDisplayList);
+		isMultipleList.add("false");
+	}
+	
+	StringList inputTextNameList = new StringList();
+	StringList inputTextLabelList = new StringList();
+	
+	// Get Document Search
+	if ( StringUtils.isNotEmpty( emxGetParameter(request, "Doc_StrSearch") ) )
+	{
+		inputTextNameList.add("Doc_Title");
+		inputTextNameList.add("Doc_No");
+		
+		inputTextLabelList.add("Doc Title");
+		inputTextLabelList.add("Doc No");
+	}
+	
+	String tdLabel = null;
+	StringList tdLabelList = new StringList();
+	StringList inputRadioLabelList = null;
+	Map<String,String> inputRadioNameMap = new HashMap<String,String>();
+	Map<String,StringList> inputRadioLabelMap = new HashMap<String,StringList>();
+	
+	// Get Date_StandType
+	/*
+	if ( StringUtils.isNotEmpty( emxGetParameter(request, "Date_StandType") ) )
+	{
+		tdLabel = "Date Type";
+		tdLabelList.add(tdLabel);
+		
+		inputRadioNameMap.put(tdLabel, "Date_StandType");
+		
+		inputRadioLabelList = new StringList();
+		inputRadioLabelList.add("Monthly");
+		inputRadioLabelList.add("Weekly");
+		
+		inputRadioLabelMap.put(tdLabel, inputRadioLabelList);
+	}
+	*/
+%>
+
+<script language="javascript" src="../common/scripts/emxUIConstants.js"></script>
+<script language="javascript" src="../common/scripts/emxUICore.js"></script>
+<script language="javascript" src="../common/scripts/emxUICoreMenu.js"></script>
+<script language="javascript" src="../common/scripts/emxUIModal.js"></script>
+<script language="javascript" src="../common/scripts/emxUICalendar.js"></script>
+<script type="text/javascript" src="../common/scripts/jquery-latest.js"></script>
+<script src="../plugins/multipleSelect/js/multiple-select.min.js"></script>
+<script type="text/javascript">
+let hierarchyFrameOriginURL = "<%=hierarchyFrameOriginURL %>";
+let openerFrame = null;
+
+function fnOnload() {
+	// emxIndentedTable의 table 정보를 전달
+	if ( "<%=openerFrame %>" !== "null" )
+	{
+		openerFrame = findFrame(top, "<%=openerFrame %>");
+		
+		if ( !openerFrame )
+		{
+			openerFrame = top.opener.frames["<%=openerFrame %>"];
+		}
+	}
+	
+	if ( !openerFrame )
+	{
+		openerFrame = top.opener;
+	}
+	try {
+		let timeStamp = openerFrame.document.getElementById("timeStamp").value;
+		
+		let url = "../common/decOtherFilterPage.jsp?timeStamp=" + timeStamp + "&objectId=<%=objectId %>";
+		let otherFrame = document.getElementById("otherFrame");
+		if ( otherFrame )
+		{
+			otherFrame.src = url; 
+		}
+	} catch(e) {
+		document.getElementById("otherDiv").remove();
+	}
+	
+	// selectbox를 multi-select로 변환
+	$('select').multipleSelect();
+	
+	fnAdjustHeight();
+	
+	// 검색 후 부모창이 새로 고쳐진 후 다시 openerFrame을 인식시키기 위해 message eventListener 등록
+	window.addEventListener("message", function() {
+		openerFrame = data.openerFrame;
+	}, false);
+}
+function fnAdjustHeight() {
+	let filterTableHeight = $("#filterTable").height();
+	$("form").height( filterTableHeight );
+	let hierarchyDiv = document.getElementById("hierarchyDiv");
+	let otherDiv = document.getElementById("otherDiv");
+	let divArr = new Array();
+	
+	if ( hierarchyDiv )
+	{
+		divArr.push( hierarchyDiv );
+	}
+	if ( otherDiv )
+	{
+		divArr.push( otherDiv );
+	}
+	
+	let wholeHeight = 96 / divArr.length;
+	filterTableHeight = filterTableHeight / divArr.length;
+	for (let k = 0; k < divArr.length; k++)
+	{
+		divArr[k].style.height = "calc(" + wholeHeight + "% - " + filterTableHeight + "px)";
+	}
+}
+function fnReloadHierarchyFrame() {
+	let filterParamKeyArr = new Array();
+	let filterParamValueArr = new Array();
+	let urlArr = new Array();
+	urlArr.push(hierarchyFrameOriginURL);
+	
+	fnSetSelectParam(filterParamKeyArr, filterParamValueArr);
+	
+	hierarchyFrame.location.href = fnApplyURL2QueryString(urlArr, filterParamKeyArr, filterParamValueArr);
+}
+function fnInit() {
+	location.reload();
+}
+function fnPushParam(filterParamKeyArr, filterParamValueArr, paramName, paramValue) {
+// 	if ( paramValue !== null )
+// 	{
+		filterParamKeyArr.push( encodeURIComponent( paramName ) );
+		filterParamValueArr.push( encodeURIComponent( paramValue ) );
+// 	}
+}
+function fnSetSelectParam(filterParamKeyArr, filterParamValueArr) {
+	// selectbox 처리
+	let isMultiple = false;
+	let isChecked = false;
+	let valueArray = null;
+	const delimiter = "|";
+	let paramName = null;
+	let paramValue = null;
+	$("select").each(function() {
+		// multi-select가 적용되었는지 체크
+		paramName = $(this).attr("name");
+		isMultiple = $(this).attr("multiple");
+		if ( isMultiple )
+		{
+			// selectAll인지 체크
+			isChecked = $("input[type='checkbox'][data-name='selectAll" + $(this).attr("name") + "']").prop("checked");
+			if ( isChecked )
+			{
+				// selectAll인 경우 parameter로 전달하지 않음.
+				// 변수 초기화만 진행
+				paramValue = null;
+			}
+			else
+			{
+				// multiple일 경우 하나만 선택해도 배열로 반환됨
+				// multi-select의 api로 조회해야 정확한 select된 객체만 조회 가능
+				valueArray = $(this).multipleSelect("getSelects");
+				// select된 것이 있는지 체크
+				if ( valueArray.length > 0 )
+				{
+					paramValue = valueArray.join( delimiter );
+				}
+				else
+				{
+					paramValue = null;
+				}
+			}
+		}
+		else
+		{
+			paramValue = $(this).val();
+		}
+		
+		fnPushParam(filterParamKeyArr, filterParamValueArr, paramName, paramValue);
+	});
+	
+	// input type인 경우 multi-select에서 자동으로 생성하는 input type과 구분을 위해 filter라는 class를 부여한다.
+	let inputType = null;
+	let isDate = null;
+	let msName = null;
+	let msValue = null;
+	$("input.filter").each(function() {
+		inputType = $(this).attr("type").toUpperCase();
+		paramName = $(this).attr("name");
+		msName = null;
+		msValue = null;
+		paramValue = null;
+		
+		if ( inputType === "TEXT" || inputType === "HIDDEN" )
+		{
+			// date인지 체크
+			isDate = $(this).hasClass("date");
+			paramValue = $(this).val();
+			
+			if ( isDate )
+			{
+				// date일 경우 msvalue도 함께 전달한다.
+				msName = paramName + "_msvalue";
+				msValue = $("input[name='" + msName + "']").val();
+				
+				fnPushParam(filterParamKeyArr, filterParamValueArr, msName, msValue);
+			}
+		}
+		else if ( inputType === "CHECKBOX" )
+		{
+			if ( $(this).prop("checked") === true )
+			{
+				paramValue = $(this).val();
+			}
+		}
+		else if ( inputType === "RADIO" )
+		{
+			let getValue = false;
+			let replace = false;
+			let keyArrIdx = 0;
+			if ( filterParamKeyArr.includes(paramName) )
+			{
+				// Radio 버튼일 경우 기존 checked된 Radio 버튼이 있고 값이 존재할 경우 이후 동일한 name의 Radio 버튼에 대한 처리는 하지 않는다.
+				keyArrIdx = filterParamKeyArr.indexOf(paramName);
+				let prevParamValue = filterParamValueArr[keyArrIdx];
+				if ( prevParamValue === null || prevParamValue === "null" )
+				{
+					getValue = true;
+					replace = true;
+				}
+				else
+				{
+					return true;
+				}
+			}
+			else
+			{
+				getValue = true;
+			}
+			
+			if ( getValue )
+			{
+				if ( $(this).prop("checked") === true )
+				{
+					paramValue = $(this).val();
+				}
+			}
+			
+			if ( replace )
+			{
+				filterParamValueArr[keyArrIdx] = paramValue;
+				return true;
+			}
+		}
+		
+		fnPushParam(filterParamKeyArr, filterParamValueArr, paramName, paramValue);
+	});
+}
+function fnApplyURL2QueryString(urlArr, filterParamKeyArr, filterParamValueArr) {
+	for (let k = 0; k < filterParamKeyArr.length; k++)
+	{
+		if ( filterParamValueArr[k] !== null )
+		{
+			urlArr.push( filterParamKeyArr[k] + "=" + filterParamValueArr[k] );
+		}
+	}
+	
+	return urlArr.join("&");
+}
+function fnDone() {
+<%-- 	let openerFrame = findFrame(getTopWindow(), "<%=openerFrame %>"); --%>
+	let originURL = openerFrame.location.href;
+	
+	let originalURLArr = originURL.split("&");
+	
+	let filterParamKey = new Array();
+	let filterParamValue = new Array();
+	
+	// filterFrame Parameter Summary
+	fnSetSelectParam(filterParamKey, filterParamValue);
+	
+	// hierarchyFrame Parameter Summary
+	let hierarchyFrame = frames["hierarchyFrame"];
+	if ( hierarchyFrame )
+	{
+		let emxTableRowIdExpr = "";
+		$(hierarchyFrame.document).find("input[name='emxTableRowIdActual']:checked").each(function() {
+			if ( emxTableRowIdExpr !== "" )
+			{
+				emxTableRowIdExpr += "|";
+			}
+			emxTableRowIdExpr += $(this).closest("tr").attr("o");
+			let trId = $(this).closest("tr").attr("id");
+			let level = trId.split(",").length - 1; // 0 level부터 시작
+			emxTableRowIdExpr += "," + level;
+		});
+		filterParamKey.push( "emxTableRowIdExpr" );
+		filterParamValue.push( emxTableRowIdExpr );
+	}	
+	
+	// otherFrame Parameter Summary
+	let otherFrame = frames["otherFrame"];
+	if ( otherFrame )
+	{
+		/*
+		let keyword = $(otherFrame.document).find("input#keyword").val();
+		if ( keyword !== "" )
+		{
+			$(otherFrame.document).find("input[name='columnName']:checked").each(function() {
+				filterParamKey.push( "kw_" + encodeURIComponent( $(this).val() ) );
+				filterParamValue.push( encodeURIComponent( keyword ) );
+			});
+		}
+		*/
+		$(otherFrame.document).find("input").each(function() {
+			let keyword = $(this).val();
+			if ( keyword !== "" )
+			{
+				filterParamKey.push( "kw_" + encodeURIComponent( $(this).attr("name") ) );
+				filterParamValue.push( encodeURIComponent( keyword ) );
+			}
+		});
+	}
+	
+	let filterApplied = false;
+	
+	// Replace Origin URL Parameter
+	if ( filterParamKey.length > 0 )
+	{
+		let tempQueryStr = null;
+		let tempQueryKey = null;
+		let filterQueryKeyIdx = null;
+		for (let k = 0; k < originalURLArr.length; k++)
+		{
+			tempQueryStr = originalURLArr[k];
+			tempQueryKey = tempQueryStr.substring(0, tempQueryStr.indexOf("="));
+			
+			if ( tempQueryKey.indexOf("kw_") > -1 || tempQueryKey === "filterApplied" )
+			{
+				originalURLArr[k] = "";
+				continue;
+			}
+			
+			filterQueryKeyIdx = filterParamKey.indexOf(tempQueryKey);
+			if ( filterQueryKeyIdx > -1 )
+			{
+				if ( filterParamValue[filterQueryKeyIdx] !== null )
+				{
+					originalURLArr[k] = filterParamKey[filterQueryKeyIdx] + "=" + filterParamValue[filterQueryKeyIdx];
+					
+					if ( filterParamValue[filterQueryKeyIdx] !== undefined && filterParamValue[filterQueryKeyIdx] !== null && filterParamValue[filterQueryKeyIdx] !== "" && filterParamValue[filterQueryKeyIdx] !== "null" )
+					{
+						filterApplied = true;
+					}
+					
+					filterParamKey.splice(filterQueryKeyIdx, 1);
+					filterParamValue.splice(filterQueryKeyIdx, 1);
+				}
+			}
+		}
+		
+		//openerFrame.location.href = fnApplyURL2QueryString(originalURLArr, filterParamKey, filterParamValue);
+		let redirectURL = fnApplyURL2QueryString(originalURLArr, filterParamKey, filterParamValue);
+		
+		if ( filterApplied ) 
+		{
+			redirectURL += "&filterApplied=true";
+		}
+		
+		try {
+			openerFrame.location.href = redirectURL;
+			var imgs = openerFrame.$('td.icon-button').find('img');
+			if(imgs){
+				for(var i=0; i<imgs.length; i++){
+					var src = imgs[i].src;
+					if(src.indexOf('iconActionSearchSpyGlass.png') != -1){
+						imgs[i].src = src.replace("iconActionSearchSpyGlass.png", "iconActionSearchSpyGlassApplied.png");
+						break;
+					}
+				}
+			}
+		} catch(e) {
+			top.opener.fnProcessFilter({
+				data: {
+					openerFrame: "<%=openerFrame %>",
+					url: redirectURL
+				}
+			});
+			
+		}
+	}
+	else
+	{
+		alert("<emxUtil:i18n localize="i18nId">emxProgramCentral.Msg.ThereIsNoSearchingOptionSelected</emxUtil:i18n>");
+	}
+}
+
+function fnClose() {
+	try {
+		if ( top.closeSlideInDialog )
+		{
+			top.closeSlideInDialog();
+		}
+		else
+		{
+			parent.fnCloseFromChild();
+		}
+	} catch(e) {
+		top.close();
+	}
+}
+
+// Code Master의 상위 레벨의 Selectbox 선택 시 하위 레벨의 Selectbox의 선택 option을 filtering한다.
+function fnApplyMasterFilter(selectDOM) {
+	// 반복해서 onchange event가 호출되는 부분에 대하여 isCalled attribute를 참고한다.
+// 	let isCalled = $(selectDOM).attr("isCalled");
+// 	$(selectDOM).attr("isCalled", isCalled === "false" ? "true" : "false");
+	
+// 	if ( isCalled === "false" )
+// 	{
+		let descendant = $(selectDOM).attr("descendant");
+		let selectedValue = $(selectDOM).val();
+		let selectedDOMOptionCnt = $(selectDOM).find("option").not("[style*='display: none']").length;
+		let selfId = $(selectDOM).find("option:selected").attr("selfid");
+		
+		if ( descendant !== "" )
+		{
+			// 하위 Code Detail이 존재할 경우
+			$("select[name='" + descendant + "']").each(function() {
+				// 자식 multi-select의 선택값 초기화
+				$(this).next().find("button span").text("All");
+				// 자식 multi-select 조회
+				let multiSelectDescendant = $(this).next().find("ul");
+				let $selectLabel = null;
+				
+				if ( selectedValue === "" && selectedDOMOptionCnt > 1 )
+				{	
+					// 선택된 값이 없을 경우 전체 목록이 나오도록 한다.
+					/*x
+					$(this).find("option").show();
+					$(this).find("option:eq(0)").prop("selected", true);
+					*/
+					// multi-select 사용 시 option이 아니라 li로 구성되어 있음.
+					multiSelectDescendant.find("li").show();
+					$selectLabel = multiSelectDescendant.find("li:eq(0)").find("label"); 
+					$selectLabel.find("span").trigger("click");
+					$selectLabel.find("input").trigger("click");
+				}
+				else
+				{
+					multiSelectDescendant.find("li:gt(0)").hide();
+					
+					let $toBeAppliedOptionArr = $(this).find("option[parentid='" + selfId + "']");
+					$toBeAppliedOptionArr.show();
+					
+					let optIdx = null;
+					if ( $toBeAppliedOptionArr.length > 1 )
+					{
+						for (let k = 0; k < $toBeAppliedOptionArr.length; k++)
+						{
+							optIdx = $toBeAppliedOptionArr.eq(k).index();
+							$selectLabel = multiSelectDescendant.find("li:eq(" + optIdx + ")").show();
+						}
+					}
+					else if ( $toBeAppliedOptionArr.length === 1 )
+					{
+						optIdx = $toBeAppliedOptionArr.eq(0).index();
+						$selectLabel = multiSelectDescendant.find("li:eq(" + optIdx + ")").show().find("label");
+						
+						$selectLabel.find("span").trigger("click");
+						$selectLabel.find("input").trigger("click");
+					}
+					else
+					{
+						$selectLabel = multiSelectDescendant.find("li:eq(0)").show().find("label");
+						$selectLabel.find("span").trigger("click");
+						$selectLabel.find("input").trigger("click");
+					}
+				}
+				
+				descendant = $(this).attr("descendant");
+				if ( descendant )
+				{
+					$(this).trigger("change");
+				}
+			});
+		}
+		else
+		{
+			// Discipline과 같이 hierarchFrame에도 영향을 주는 경우 선택된 Code Master 정보를 전달한다.
+			fnReloadHierarchyFrame();
+		}
+// 	}
+// 	else
+// 	{
+// 		// do nothing... 
+// 	}
+	
+}
+
+function fnGetDateValue(domId, unitExpr) {
+	let dateValue = null;
+	if ( unitExpr !== "today" )
+	{
+		dateValue = $("#" + domId).val();
+	}
+	return dateValue;
+}
+
+function fnSetInitialDate2ShowCalendar(anchorId, initialDate) {
+	$anchor = $("#" + anchorId);
+	let hrefValue = $anchor.attr("href");
+	let hrefValueSplit = hrefValue.split(",");
+	if ( hrefValueSplit.length >= 3 )
+	{
+		hrefValueSplit[2] = "'" + initialDate + "'"; 
+	}
+	$anchor.attr("href", hrefValueSplit.join(",") + ")");
+}
+
+function fnSetDate(fromId, fromUnitExpr, fromAmount, toId, toUnitExpr, toAmount) {
+	let fromDate = fnGetDateValue(fromId, fromUnitExpr);
+	let toDate = fnGetDateValue(toId, toUnitExpr);
+	
+	$.ajax(
+		"../common/decAjaxProcess.jsp"
+		, {
+			type : "post"
+			, dataType : "json"
+			, data : {
+				"mode" : "getFromToDate" 
+				, "fromDate" : fromDate
+				, "fromUnitExpr" : fromUnitExpr
+				, "fromAmount" : fromAmount
+				, "toDate" : toDate
+				, "toUnitExpr" : toUnitExpr
+				, "toAmount" : toAmount
+			}
+			, success : function(response, status, xhr) {
+				$("#" + fromId).val(response["from"]["display"]);
+				$("#" + toId).val(response["to"]["display"]);
+				
+				fnSetInitialDate2ShowCalendar(fromId + "_Anchor", response["from"]["input"]);
+				fnSetInitialDate2ShowCalendar(toId + "_Anchor", response["to"]["input"]);
+				
+				$("#" + fromId + "_msvalue").val(response["from"]["msvalue"]);
+				$("#" + toId + "_msvalue").val(response["to"]["msvalue"]);
+				
+				if ( localCalendars[fromId] )
+				{
+					localCalendars[fromId].initialized = false;
+				}
+				if ( localCalendars[toId] )
+				{
+					localCalendars[toId].initialized = false;
+				}
+			}
+			, error : function(xhr, status, error) {
+				console.error(status + " : " + error);
+			}
+		}
+	);
+}
+
+function fnClearDateField(dateFieldId) {
+	$("#" + dateFieldId).val("");
+	$("#" + dateFieldId + "_msvalue").val("");
+}
+
+window.onresize = function() {
+	var hFrame = document.getElementById("hierarchyFrame");
+	var oFrame = document.getElementById("otherFrame");
+	var filterWidth = document.getElementById("filterTable").clientWidth;
+	if(hFrame){
+		var hFWidth = hFrame.clientWidth;
+		hFrame.style.width = filterWidth + 'px';
+	}
+	if(oFrame){
+		var oFWidth = oFrame.clientWidth;
+		oFrame.style.width = filterWidth + 'px';
+	}
+}
+
+</script>
+
+<link rel="stylesheet" href="../common/styles/emxUIDefault.css"/>
+<link rel="stylesheet" href="../common/styles/emxUIList.css"/>
+<link rel="stylesheet" href="../common/styles/emxUIForm.css"/>
+<link rel="stylesheet" href="../common/styles/emxUICalendar.css"/>
+<link rel="stylesheet" href="../plugins/multipleSelect/css/multiple-select.min.css">
+<style type="text/css">
+select, option {
+/* 	font-family: monospace; */
+/* 	font-weight: bold; */
+}
+select {
+	width: 100%;
+}
+input[type=text].keyin {
+	width: calc(100% - 55px);
+}
+input[type=text].fullsearch {
+	width: calc(100% - 110px);
+}
+table.form tr td.label {
+	min-width: unset;
+	max-width: 100px;
+}
+html, body {
+	height: 100%;
+/* 	overflow: hidden; */
+	margin: 0px;
+}
+div.frameDiv {
+	width: 100%;
+/* 	height: 100%; */
+}
+iframe {
+	width: 100%;
+	height: 100%;
+}
+hr {
+	margin: 0px;
+}
+</style>
+
+<body onload="fnOnload()">
+
+<form name="commonFilterForm">
+	
+	<table id="filterTable" class="form">
+	<%
+		// filter table 시작
+// 		String queryStr = emxGetQueryString(request);
+		
+		StringList queryExprList = FrameworkUtil.splitString(filterParam, ",");
+		
+		StringList queryParamList = null;
+		String queryKey = null;
+		String queryValue = null;
+		String queryRange = null;
+		boolean bKPI = false;
+		boolean bMaterialStatus = false;
+		for ( String queryExpr : queryExprList ){
+			queryParamList = FrameworkUtil.splitString(queryExpr, ":");
+			queryKey = queryParamList.get(0);
+			queryKey = XSSUtil.decodeFromURL(queryKey);
+			queryValue = queryParamList.get(1);
+			queryValue = XSSUtil.decodeFromURL(queryValue);
+			if ("KPI".equals(queryKey) && "true".equals(queryValue)){
+				bKPI = true;
+				break;
+			}else if("Material_Status".equals(queryKey) && "true".equals(queryValue)){
+				bMaterialStatus = true;
+				break;
+			}
+		}
+		for ( String queryExpr : queryExprList )
+		{
+			queryParamList = FrameworkUtil.splitString(queryExpr, ":");
+			queryKey = queryParamList.get(0);
+			queryKey = XSSUtil.decodeFromURL(queryKey);
+			queryValue = queryParamList.get(1);
+			queryValue = XSSUtil.decodeFromURL(queryValue);
+			if ( queryParamList.size() >= 3 )
+			{
+				queryRange = queryParamList.get(2);
+				queryRange = XSSUtil.decodeFromURL(queryRange);
+			}
+			
+			if ( "codeMaster".equals(queryKey) )
+			{
+				slCodeMasterSplitByPipeline = FrameworkUtil.splitString(queryValue, "|");
+				slCodeMaster2HTML.clear();
+				
+				for ( String codeMasterSplitByPipeline : slCodeMasterSplitByPipeline )
+				{
+					slCodeMasterSplitByGT = FrameworkUtil.splitString(codeMasterSplitByPipeline, ">");
+					
+					tempDescendantList.clear();
+					descendantList.clear();
+					
+					for (int k = 0; k < slCodeMasterSplitByGT.size(); k++)
+					{
+						codeMasterTemp = slCodeMasterSplitByGT.get(k);
+						
+						programMap.clear();
+						programMap.put("projectId", projectId);
+						programMap.put("codeMasterRevision", projectCode);
+						programMap.put("applyFilter", true);
+						
+						if ( codeMasterTemp.contains(".") )
+						{
+							// Code Detail Type을 이용
+							slCodeMasterWithDetailType = FrameworkUtil.splitString(codeMasterTemp, ".");
+							
+							if ( slCodeMasterWithDetailType.size() >= 2 )
+							{
+								codeMaster = slCodeMasterWithDetailType.get(1);
+								
+								programMap.put("codeMasterName", slCodeMasterWithDetailType.get(0));
+								programMap.put("codeDetailType", codeMaster);
+								programMap.put("expandLevelParam", 0);
+								if(bKPI && "BOQ Key Item".equals(codeMaster)){
+									programMap.put("slSelectParam", new StringList("to[" + DecConstants.RELATIONSHIP_DECCODEDETAILREL + "]." + DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILRELATT1));
+								}
+							}
+							else
+							{
+								throw new Exception("Syntax of Code Master Parameter is not proper. codeMaster parameter : " + queryValue);
+							}
+						}
+						else if ( codeMasterTemp.contains("#") )
+						{
+							// Code Detail Level을 이용
+							slCodeMasterWithDetailType = FrameworkUtil.splitString(codeMasterTemp, "#");
+							
+							if ( slCodeMasterWithDetailType.size() >= 2 )
+							{
+								codeMaster = codeMasterTemp.replace("#", " ");
+								
+								programMap.put("codeMasterName", slCodeMasterWithDetailType.get(0));
+								programMap.put("codeDetailLevel", slCodeMasterWithDetailType.get(1));
+								programMap.put("expandLevelParam", 0);
+							}
+							else
+							{
+								throw new Exception("Syntax of Code Master Parameter is not proper. codeMaster parameter : " + queryValue);
+							}
+						}
+						else
+						{
+							codeMaster = codeMasterTemp;
+							
+							programMap.put("codeMasterName", codeMasterTemp);
+							programMap.put("expandLevelParam", 1);
+							// jhlee Add 2023-10-24 --[s]
+							if(bMaterialStatus && "Group".equals(codeMaster)){
+								programMap.put("codeMasterName", "Discipline");
+								programMap.put("codeDetailType", codeMasterTemp);
+								programMap.put("expandLevelParam", 0);
+								programMap.put("groupBySelect", DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILTYPE);
+								programMap.put("groupByValue", "Discipline");
+								programMap.put("groupByDetailSelect", DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILTYPE);
+								programMap.put("groupByDetailValue", codeMasterTemp);
+							}
+							// jhlee Add 2023-10-24 --[e]
+						}
+
+				//		codeMasterList = JPO.invoke(context, "decCodeMaster", null, "getCodeDetailList", JPO.packArgs(programMap), MapList.class);
+						// jhlee Add 2023-10-24 --[s]
+						if(bMaterialStatus && "Group".equals(codeMaster)){
+							Map<String, MapList> mGroupBy = JPO.invoke(context, "decCodeMaster", null, "getCodeDetailListGroupBy", JPO.packArgs(programMap), Map.class);
+							codeMasterList = (MapList)mGroupBy.get(discipline);
+						}else{
+							codeMasterList = JPO.invoke(context, "decCodeMaster", null, "getCodeDetailList", JPO.packArgs(programMap), MapList.class);
+						}
+						// jhlee Add 2023-10-24 --[e]
+						
+						codeMasterMap = decCollectionUtil.extractStringList(codeMasterList, "attribute[decCode]", DomainConstants.SELECT_DESCRIPTION, "from.id", DomainConstants.SELECT_ID, "to[" + DecConstants.RELATIONSHIP_DECCODEDETAILREL + "]." + DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILRELATT1);
+						
+						codeList = codeMasterMap.get("attribute[decCode]");
+						valueList = codeMasterMap.get(DomainConstants.SELECT_DESCRIPTION);
+						parentIdList = codeMasterMap.get("from.id");
+						selfIdList = codeMasterMap.get(DomainConstants.SELECT_ID);
+						// jhlee Add 2023-10-24 --[s]
+						if(bKPI && "BOQ Key Item".equalsIgnoreCase(codeMaster)){
+							StringList slBOQY = codeMasterMap.get("to[" + DecConstants.RELATIONSHIP_DECCODEDETAILREL + "]." + DecConstants.SELECT_ATTRIBUTE_DECCODEDETAILRELATT1);
+							for(int i=slBOQY.size()-1; i>=0; i--){
+								String sY = slBOQY.get(i);
+								if(!"Y".equalsIgnoreCase(sY)){
+									codeList.remove(i);
+									valueList.remove(i);
+									parentIdList.remove(i);
+									selfIdList.remove(i);
+								}
+							}
+						}
+						// jhlee Add 2023-10-24 --[e]
+						codeList.add(0, "");
+						valueList.add(0, "All");
+						parentIdList.add(0, "");
+						selfIdList.add(0, "");
+						
+						codeListMap.put(codeMaster, codeList);
+						valueListMap.put(codeMaster, valueList);
+						parentIdListMap.put(codeMaster, parentIdList);
+						selfIdListMap.put(codeMaster, selfIdList);
+						
+						if ( k == 0 )
+						{
+							descendant = "";
+						}
+						else
+						{
+							descendant = codeMaster;
+						}
+				
+						slCodeMaster2HTML.add(codeMaster);
+						tempDescendantList.add(descendant);
+					}
+					
+					// tempDescendantList 정리
+					// 1. idx:0의 데이터를 제거하고 --> 현재 tempDescendantList는 idx 하나씩 밀려있음.
+					// 2. 마지막에 ""을 add한다. --> 마지막 Code Master는 변경될 자식 없음.
+					tempDescendantList.remove(0);
+					tempDescendantList.add("");
+					descendantList.addAll(tempDescendantList);
+					descendantIdx = 0;
+					
+					for (String codeMaster2HTML : slCodeMaster2HTML)
+					{
+						tdIdx++;
+						codeList = codeListMap.get(codeMaster2HTML);
+						valueList = valueListMap.get(codeMaster2HTML);
+						parentIdList = parentIdListMap.get(codeMaster2HTML);
+						selfIdList = selfIdListMap.get(codeMaster2HTML);
+						descendant = descendantList.get(descendantIdx++);
+						
+						paddingCount = getPaddingCount(codeList);
+						
+						if ( tdIdx%2 == 1 )
+						{
+			%>		<tr>
+			<%			}
+			%>			<td class="label"><%=codeMaster2HTML %></td>
+						<td class="field">
+							<select id="<%=codeMaster2HTML %>" name="<%=codeMaster2HTML %>" <%=StringUtils.isNotEmpty(descendant) || "Discipline".equals(codeMaster2HTML) || "Sub-Con".equals(codeMaster2HTML) ? "onchange=\"fnApplyMasterFilter(this)\" descendant=\"" + descendant + "\"" : "" %>">
+			<%				for (int k = 0; k < codeList.size(); k++)
+							{
+								code = codeList.get(k);
+			%>					<option value="<%=code %>" parentId="<%=parentIdList.get(k) %>" selfId="<%=selfIdList.get(k) %>" isCalled="false"><%=valueList.get(k) %></option>
+			<%				}
+			%>				</select>
+						</td>
+			<%			if ( tdIdx%2 == 0 )
+						{
+			%>		</tr>
+			<%			}
+					}
+				}
+				
+			}
+			else if ( "decProjectType".equals(queryKey) )
+			{
+				attrName = DecConstants.ATTRIBUTE_DECPROJECTTYPE;
+				
+				attrDisplayName = i18nNow.getAttributeI18NString(attrName, langStr);
+				
+				AttributeType attrType = new AttributeType(attrName);
+				attrType.open(context);
+				attrValueList = attrType.getChoices(context);
+				attrDisplayList.clear();
+				for (String attrValue : attrValueList)
+				{
+					if ( StringUtils.isEmpty(attrValue) ) 
+					{
+						attrDisplayList.add( "---" );
+					}
+					else
+					{
+						attrDisplayList.add( i18nNow.getRangeI18NString(attrName, attrValue, lang) );
+					}
+				}
+				
+				isMultiple = "false";
+				
+				tdIdx++;
+				
+				if ( tdIdx%2 == 1 )
+				{
+			%>	<tr>
+			<%	}
+			%>		<td class="label"><%=attrDisplayName %></td>
+					<td class="field"> 
+						<select id="<%=attrName %>" name="<%=attrName %>" <%="true".equals(isMultiple) ? "multiple='multiple'" : "" %>>
+							<framework:optionList  valueList="<%=attrValueList%>" optionList="<%=attrDisplayList%>" selected="<%=queryValue %>"/>
+						</select>
+					</td>
+			<%	if ( tdIdx%2 == 0 )
+				{
+			%>	</tr>
+			<%	}
+			}
+			// added by thok 2023.09.04 [S]
+			else if ( "decProjectStatus".equals(queryKey) )
+			{
+				attrName = DecConstants.ATTRIBUTE_DECPROJECTSTATUS;
+				
+				attrDisplayName = i18nNow.getAttributeI18NString(attrName, lang);
+				
+				AttributeType attrType = new AttributeType(attrName);
+				attrType.open(context);
+				attrValueList = attrType.getChoices(context);
+				attrDisplayList.clear();
+				for (String attrValue : attrValueList)
+				{
+					if ( StringUtils.isEmpty(attrValue) ) 
+					{
+						attrDisplayList.add( "---" );
+					}
+					else
+					{
+						attrDisplayList.add( i18nNow.getRangeI18NString(attrName, attrValue, lang) );
+					}
+				}
+				
+				isMultiple = "false";
+				
+				tdIdx++;
+				
+				if ( tdIdx%2 == 1 )
+				{
+			%>	<tr>
+			<%	}
+			%>		<td class="label"><%=attrDisplayName %></td>
+					<td class="field"> 
+						<select id="<%=attrName %>" name="<%=attrName %>" <%="true".equals(isMultiple) ? "multiple='multiple'" : "" %>>
+							<framework:optionList  valueList="<%=attrValueList%>" optionList="<%=attrDisplayList%>" selected="<%=queryValue %>"/>
+						</select>
+					</td>
+			<%	if ( tdIdx%2 == 0 )
+				{
+			%>	</tr>
+			<%	}
+			}
+			// added by thok 2023.09.04 [E]
+			else if ( "decCountryCode".equals(queryKey) )
+			{
+				hasEmpty = false;
+				
+				attrName = DecConstants.ATTRIBUTE_DECCOUNTRYCODE;
+				attrDisplayName = i18nNow.getAttributeI18NString(attrName, lang);
+				
+				MapList countryList = JPO.invoke(context, "emxProjectSpace", null, "getCountryList", JPO.packArgs(new HashMap()), MapList.class);
+				Map allCountryMap = decListUtil.getSelectKeyDataMapForMapList(countryList, "attribute[Country Code (2 Letter)]");
+				
+				attrValueList = parseWebReport(context, "temp webreport searchcriteria $1 groupby value $2", "temp query bus 'Project Space' * *", DecConstants.SELECT_ATTRIBUTE_DECCOUNTRYCODE);
+				
+				Map countryMap = null;
+				attrDisplayList.clear();
+				for (String attrValue : attrValueList)
+				{
+					countryMap = (Map) allCountryMap.get(attrValue);
+					if ( countryMap == null )
+					{
+						if ( StringUtils.isEmpty(attrValue) )
+						{
+							attrValue = "---";
+						}
+						attrDisplayList.add(attrValue);
+					}
+					else
+					{
+						attrDisplayList.add((String) countryMap.get(DecConstants.SELECT_NAME));
+					}
+				}
+				
+				isMultiple = "true";
+				
+				tdIdx++;
+				
+				if ( tdIdx%2 == 1 )
+				{
+			%>	<tr>
+			<%	}
+			%>		<td class="label"><%=attrDisplayName %></td>
+					<td class="field"> 
+						<select id="<%=attrName %>" name="<%=attrName %>" <%="true".equals(isMultiple) ? "multiple='multiple'" : "" %>>
+							<framework:optionList  valueList="<%=attrValueList%>" optionList="<%=attrDisplayList%>" selected="<%=queryValue %>"/>
+						</select>
+					</td>
+			<%	if ( tdIdx%2 == 0 )
+				{
+			%>	</tr>
+			<%	}
+			}
+			else if ( "CWP_Plan".equals(queryKey) || "Select_Date".equals(queryKey) || "Status_Updated".equals(queryKey) || "Doc_Issued".equals(queryKey) )
+			{
+				if ( tdIdx%2 == 1 )
+				{
+					tdIdx = 0;
+	%>				<td class="field" colspan="2">&nbsp;</td>	
+				</tr>
+	<%			}
+				
+				fromToDateFilterMap = new HashMap();
+				if ( "CWP_Plan".equals(queryKey) )
+				{
+					fromToDateFilterMap.put("name", "CWP_Plan");
+					fromToDateFilterMap.put("label", "Plan Start");
+					fromToDateFilterMap.put("showTodayPlus", true);
+					
+					setFromToDateMap(context, fromToDateFilterMap, true, locale);
+				}
+				else if ( "Select_Date".equals(queryKey) )
+				{
+					fromToDateFilterMap.put("name", "Select_Date");
+					fromToDateFilterMap.put("label", "Date");
+				}
+				else if ( "Status_Updated".equals(queryKey) )
+				{
+					fromToDateFilterMap.put("name", "Status_Updated");
+					fromToDateFilterMap.put("label", "Status Updated");
+					fromToDateFilterMap.put("calendarStyleExpr", "style=\"display: none;\"");
+					fromToDateFilterMap.put("showTodayMinus", true);
+					
+					setFromToDateMap(context, fromToDateFilterMap, false, locale);
+				}
+				else if ( "Doc_Issued".equals(queryKey) )
+				{
+					fromToDateFilterMap.put("name", "Doc_Issued");
+					fromToDateFilterMap.put("label", "Issued");
+					fromToDateFilterMap.put("showTodayMinus", true);
+					
+					setFromToDateMap(context, fromToDateFilterMap, false, locale);
+				}
+				
+				fromToDateFilterName = (String) fromToDateFilterMap.get("name");
+	%>
+				<tr>
+					<td class="label"><%=(String) fromToDateFilterMap.getOrDefault("label", "Date") %></td>
+					<td class="field" colspan="3">
+						<table>
+							<tr <%=(String) fromToDateFilterMap.getOrDefault("calendarStyleExpr", "") %>>
+								<td>From</td>
+								<td>&nbsp;:&nbsp;</td>
+								<td>
+<%-- 									<input type="text" class="filter date" id="<%=fromToDateFilterName %>_Start" name="<%=fromToDateFilterName %>_Start" value="<%=(String) fromToDateFilterMap.getOrDefault("fromDisplay", "") %>" readonly="true" /><a id="<%=fromToDateFilterName %>_Start_Anchor" href="javascript:showCalendar('commonFilterForm', '<%=fromToDateFilterName %>_Start', '<%=(String) fromToDateFilterMap.getOrDefault("fromInput", "") %>', '', '', '', '');"><img src="../common/images/iconSmallCalendar.gif" alt="Date Picker" border="0" /></a> --%>
+<%-- 									<input type="hidden" id="<%=fromToDateFilterName %>_Start_msvalue" name="<%=fromToDateFilterName %>_Start_msvalue" value="<%=(long) fromToDateFilterMap.getOrDefault("frommsvalue", 0l) %>" /> --%>
+									<input type="text" class="filter date" id="<%=fromToDateFilterName %>_Start" name="<%=fromToDateFilterName %>_Start" value="" readonly="true" /><a id="<%=fromToDateFilterName %>_Start_Anchor" href="javascript:showCalendar('commonFilterForm', '<%=fromToDateFilterName %>_Start', '');"><img src="../common/images/iconSmallCalendar.gif" alt="Date Picker" border="0" /></a>
+									<input type="hidden" id="<%=fromToDateFilterName %>_Start_msvalue" name="<%=fromToDateFilterName %>_Start_msvalue" value="" />
+								   	<a class = "dialogClear" onclick = "javascript:fnClearDateField('<%=fromToDateFilterName %>_Start');"><emxUtil:i18n localize="i18nId">emxProgramCentral.Common.Clear</emxUtil:i18n></a>	
+								</td>
+							</tr>
+							<tr <%=(String) fromToDateFilterMap.getOrDefault("calendarStyleExpr", "") %>>
+								<td>To</td>
+								<td>&nbsp;:&nbsp;</td>
+								<td>
+<%-- 									<input type="text" class="filter date" id="<%=fromToDateFilterName %>_End" name="<%=fromToDateFilterName %>_End" value="<%=(String) fromToDateFilterMap.getOrDefault("toDisplay", "") %>" readonly="true" /><a id="<%=fromToDateFilterName %>_End_Anchor" href="javascript:showCalendar('commonFilterForm', '<%=fromToDateFilterName %>_End', '<%=(String) fromToDateFilterMap.getOrDefault("tpInput", "") %>', '', '', '', '');"><img src="../common/images/iconSmallCalendar.gif" alt="Date Picker" border="0" /></a> --%>
+<%-- 									<input type="hidden" id="<%=fromToDateFilterName %>_End_msvalue" name="<%=fromToDateFilterName %>_End_msvalue" value="<%=(long) fromToDateFilterMap.getOrDefault("tomsvalue", 0l) %>" /> --%>
+									<input type="text" class="filter date" id="<%=fromToDateFilterName %>_End" name="<%=fromToDateFilterName %>_End" value="" readonly="true" /><a id="<%=fromToDateFilterName %>_End_Anchor" href="javascript:showCalendar('commonFilterForm', '<%=fromToDateFilterName %>_End', '');"><img src="../common/images/iconSmallCalendar.gif" alt="Date Picker" border="0" /></a>
+									<input type="hidden" id="<%=fromToDateFilterName %>_End_msvalue" name="<%=fromToDateFilterName %>_End_msvalue" value="" />
+								   	<a class = "dialogClear" onclick = "javascript:fnClearDateField('<%=fromToDateFilterName %>_End');"><emxUtil:i18n localize="i18nId">emxProgramCentral.Common.Clear</emxUtil:i18n></a>
+								</td>
+							</tr>
+		<%
+						if ( (boolean) fromToDateFilterMap.getOrDefault("showTodayPlus", false) )
+						{
+		%>
+							<tr>
+								<td colspan="3">
+									Today +
+									<input type="button" value="1W" onclick="fnSetDate('<%=fromToDateFilterName %>_Start', 'today', '', '<%=fromToDateFilterName %>_End', 'week', 1)" />
+									<input type="button" value="2W" onclick="fnSetDate('<%=fromToDateFilterName %>_Start', 'today', '', '<%=fromToDateFilterName %>_End', 'week', 2)" />
+									<input type="button" value="1M" onclick="fnSetDate('<%=fromToDateFilterName %>_Start', 'today', '', '<%=fromToDateFilterName %>_End', 'month', 1)" />
+									<input type="button" value="3M" onclick="fnSetDate('<%=fromToDateFilterName %>_Start', 'today', '', '<%=fromToDateFilterName %>_End', 'month', 3)" />
+								</td>
+							</tr>
+		<%					
+						}
+
+						if ( (boolean) fromToDateFilterMap.getOrDefault("showTodayMinus", false) )
+						{
+		%>
+							<tr>
+								<td colspan="3">
+									<input type="button" value="3M" onclick="fnSetDate('<%=fromToDateFilterName %>_End', 'today', '', '<%=fromToDateFilterName %>_Start', 'month', -3)" />
+									<input type="button" value="1M" onclick="fnSetDate('<%=fromToDateFilterName %>_End', 'today', '', '<%=fromToDateFilterName %>_Start', 'month', -1)" />
+									<input type="button" value="2W" onclick="fnSetDate('<%=fromToDateFilterName %>_End', 'today', '', '<%=fromToDateFilterName %>_Start', 'week', -2)" /> 
+									<input type="button" value="1W" onclick="fnSetDate('<%=fromToDateFilterName %>_End', 'today', '', '<%=fromToDateFilterName %>_Start', 'week', -1)" /> 
+									Today -
+								</td>
+							</tr>
+		<%					
+						}
+		%>
+						</table>
+					</td>
+				</tr>
+		<%
+			}
+			else if ( "Material Delay".equals(queryKey) || "IFC".equals(queryKey) )
+			{
+				tdIdx++;
+				
+				checkboxName = queryKey;
+				checkboxLabel = queryKey;
+					
+				if ( tdIdx%2 == 1 )
+				{
+			%>	<tr>
+			<%	}
+			%>		<td class="label"><%=checkboxLabel %></td>
+					<td class="field"> 
+						<input type="checkbox" class="filter" name="<%=checkboxLabel %>" value="checked" />
+					</td>
+			<%	if ( tdIdx%2 == 0 )
+				{
+			%>	</tr>
+			<%	}
+			}
+			else if ( "EWP".equals(queryKey) || "Unit".equals(queryKey) )
+			{
+				attrName = queryKey; 
+				attrNameList.add( attrName );
+				attrDisplayName = queryKey;
+				attrDisplayNameList.add( attrDisplayName );
+						
+				if ( "Unit".equals(queryKey) )
+				{
+					slSelect.clear();
+					slSelect.add(DecConstants.SELECT_ID);
+					slSelect.add(DecConstants.SELECT_NAME);
+					slSelect.add(DecConstants.SELECT_DESCRIPTION);
+					
+					programMap.clear();
+					programMap.put("objectId", objectId);
+					programMap.put("wbsType", queryKey);
+					programMap.put("slSelect", slSelect);
+					
+					wbsList = JPO.invoke(context, "emxProjectSpace", null, "getActivityListWithWBSType", JPO.packArgs(programMap), MapList.class);
+					wbsSummary = decCollectionUtil.extractStringList(wbsList, DecConstants.SELECT_ID, DecConstants.SELECT_NAME, DecConstants.SELECT_DESCRIPTION);
+				}
+				else if ( "EWP".equals(queryKey) )
+				{
+					programMap.clear();
+					programMap.put("objectId", objectId);
+					
+					wbsList = JPO.invoke(context, "emxProjectSpace", null, "getEWPList", JPO.packArgs(programMap), MapList.class);
+					wbsSummary = decCollectionUtil.extractStringList(wbsList, DecConstants.SELECT_ID, DecConstants.SELECT_NAME, DecConstants.SELECT_DESCRIPTION);
+				}
+				
+				attrValueList = new StringList();
+				attrDisplayList = new StringList();
+				
+				attrValueList.addAll( wbsSummary.get(DecConstants.SELECT_ID) );
+				attrDisplayList.addAll( decListUtil.mergeList(" - ", wbsSummary.get(DecConstants.SELECT_NAME), wbsSummary.get(DecConstants.SELECT_DESCRIPTION)) );
+				
+				isMultiple = "true";
+				
+				tdIdx++;
+				
+				if ( tdIdx%2 == 1 )
+				{
+			%>	<tr>
+			<%	}
+			%>		<td class="label"><%=attrDisplayName %></td>
+					<td class="field"> 
+						<select id="<%=attrName %>" name="<%=attrName %>" <%="true".equals(isMultiple) ? "multiple='multiple'" : "" %>>
+							<framework:optionList  valueList="<%=attrValueList%>" optionList="<%=attrDisplayList%>" selected="<%=queryValue %>"/>
+						</select>
+					</td>
+			<%	if ( tdIdx%2 == 0 )
+				{
+			%>	</tr>
+			<%	}
+			}
+			else if ( "PO_No".equals(queryKey) )
+			{
+				attrName = "PO_No"; 
+				attrDisplayName = "PO No";
+						
+				programMap.clear();
+				programMap.put("objectId", objectId);
+				
+				MapList poList = JPO.invoke(context, "emxProjectSpace", null, "getPOList", JPO.packArgs(programMap), MapList.class);
+				Map<String,StringList> poSummary = decCollectionUtil.extractStringList(poList, "PO_NO", "PO_NM");
+				
+				attrValueList = new StringList();
+				attrDisplayList = new StringList();
+				
+				attrValueList.addAll( poSummary.get("PO_NO") );
+				attrDisplayList.addAll( decListUtil.mergeList(" - ", poSummary.get("PO_NO"), poSummary.get("PO_NM")) );
+				
+				isMultiple = "true";
+				
+				tdIdx++;
+				
+				if ( tdIdx%2 == 1 )
+				{
+			%>	<tr>
+			<%	}
+			%>		<td class="label"><%=attrDisplayName %></td>
+					<td class="field"> 
+						<select id="<%=attrName %>" name="<%=attrName %>" <%="true".equals(isMultiple) ? "multiple='multiple'" : "" %>>
+							<framework:optionList  valueList="<%=attrValueList%>" optionList="<%=attrDisplayList%>" selected="<%=queryValue %>"/>
+						</select>
+					</td>
+			<%	if ( tdIdx%2 == 0 )
+				{
+			%>	</tr>
+			<%	}
+			}
+			else if ( "Action".equals(queryKey) )
+			{
+				
+			}
+			else if ( "Input Type".equals(queryKey) )
+			{
+				
+			}
+			else if ( "Year".equals(queryKey) || "fromYear".equals(queryKey) || "toYear".equals(queryKey) || "Month".equals(queryKey) || "fromMonth".equals(queryKey) || "toMonth".equals(queryKey) )
+			{
+				if ( queryKey.indexOf("Year") > -1 )
+				{
+					prefix = queryKey.replace("Year", "");
+					suffix = "Year";
+				}
+				if ( queryKey.indexOf("Month") > -1 )
+				{
+					prefix = queryKey.replace("Month", "");
+					suffix = "Month";
+				}
+				attrName = queryKey; 
+				attrNameList.add( attrName );
+				attrDisplayName = WordUtils.capitalize( prefix + " " + suffix );
+				attrDisplayNameList.add( attrDisplayName );
+				
+				if ( "Year".equals(suffix) )
+					
+				{
+					// Year
+					attrValueList = new StringList(  );
+					attrDisplayList = attrValueList;
+					
+					periodRange = queryRange;
+					
+					// Year 범위 지정
+					if ( StringUtils.isEmpty(periodRange) )
+					{
+						periodRange = emxGetParameter(request, queryKey + "Range");
+					}
+					
+					if ( StringUtils.isEmpty(periodRange) )
+					{
+						// Year 범위 관련 parameter가 없을 경우
+						periodIntValue = LocalDate.now().getYear();
+						queryValue = String.valueOf(periodIntValue);
+					
+						for (int m = periodIntValue - 20; m < periodIntValue + 20; m++)
+						{
+							attrValueList.add( String.valueOf(m) );
+						}
+					}
+					else
+					{
+						// 있을 경우
+						periodRangeSplit = FrameworkUtil.splitString(periodRange, "-");
+						startYear = Integer.parseInt( periodRangeSplit.get(0) );
+						endYear = Integer.parseInt( periodRangeSplit.get(1) );
+						
+						for (int m = startYear; m <= endYear; m++)
+						{
+							attrValueList.add( String.valueOf(m) );
+						}
+					}
+				}
+				else
+				{
+					// Month
+					attrValueList = new StringList( new String[] {"1","2","3","4","5","6","7","8","9","10","11","12"} );
+					attrDisplayList = attrValueList;
+				}
+				
+				isMultiple = "false";
+				
+				tdIdx++;
+				
+				if ( tdIdx%2 == 1 )
+				{
+			%>	<tr>
+			<%	}
+			%>		<td class="label"><%=attrDisplayName %></td>
+					<td class="field"> 
+						<select id="<%=attrName %>" name="<%=attrName %>" <%="true".equals(isMultiple) ? "multiple='multiple'" : "" %>>
+							<framework:optionList  valueList="<%=attrValueList%>" optionList="<%=attrDisplayList%>" selected="<%=queryValue %>"/>
+						</select>
+					</td>
+			<%	if ( tdIdx%2 == 0 )
+				{
+			%>	</tr>
+			<%	}
+			}
+			else if ( "Fab Category".equals(queryKey) )
+			{
+				attrName = queryKey; 
+				attrDisplayName = queryKey;
+						
+				attrValueList = new StringList( new String[] {"", "Field", "Shop"} );
+				attrDisplayList = new StringList( new String[] {"All", "Field", "Shop"} );
+				
+				isMultiple = "false";
+				
+				tdIdx++;
+			
+				if ( tdIdx%2 == 1 )
+				{
+			%>	<tr>
+			<%	}
+			%>		<td class="label"><%=attrDisplayName %></td>
+					<td class="field"> 
+						<select id="<%=attrName %>" name="<%=attrName %>" <%="true".equals(isMultiple) ? "multiple='multiple'" : "" %>>
+							<framework:optionList  valueList="<%=attrValueList%>" optionList="<%=attrDisplayList%>" selected="<%=queryValue %>"/>
+						</select>
+					</td>
+			<%	if ( tdIdx%2 == 0 )
+				{
+			%>	</tr>
+			<%	}
+			}
+			else if ( "Change_User".equals(queryKey) )
+			{
+				fullSearchFilterMap = new HashMap();
+				fullSearchFilterList.add( fullSearchFilterMap );
+				
+				fullSearchFilterMap.put("name", "Change_User");
+				fullSearchFilterMap.put("label", "Change User");
+				fullSearchFilterMap.put("field", "TYPES=type_Person:CURRENT=policy_Person.state_Active");
+				fullSearchFilterMap.put("table", "PMCCommonPersonSearchTable");
+				fullSearchFilterMap.put("selection", "multiple");
+				fullSearchFilterMap.put("submitURL", "../common/AEFSearchUtil.jsp");
+				fullSearchFilterMap.put("fieldNameDisplay", "Change_UserDisplay");
+				fullSearchFilterMap.put("fieldNameActual", "Change_User");
+				fullSearchFilterMap.put("selectExpr", "name");
+			}
+			else if ( "DateRangeType".equals(queryKey) )
+			{
+				tdIdx++;
+				
+				if ( tdIdx%2 == 1 )
+				{
+			%>	<tr>
+			<%	}
+			%>		<td class="label">Date Range Type</td>
+					<td class="field"> 
+						&nbsp;<input type="radio" class="filter" name="DateRangeType" value="Monthly" checked="checked"/> Monthly
+						&nbsp;<input type="radio" class="filter" name="DateRangeType" value="Weekly" /> Weekly
+					</td>
+			<%	if ( tdIdx%2 == 0 )
+				{
+			%>	</tr>
+			<%	}
+			}
+			
+			for ( Object obj : fullSearchFilterList )
+			{
+				fullSearchFilterMap = (Map) obj;
+				fieldNameDisplay = (String) fullSearchFilterMap.get("fieldNameDisplay");
+				fieldNameActual = (String) fullSearchFilterMap.get("fieldNameActual");
+	%>	
+				<tr>
+					<td class="label"><%=(String) fullSearchFilterMap.getOrDefault("label", "Full Search") %></td>
+					<td class="field" colspan="3">
+						<input type="text" name="<%=fieldNameDisplay %>" id="<%=fieldNameDisplay %>" class="fullsearch" readonly="true" />
+						<input type="hidden" class="filter" name="<%=fieldNameActual %>" id="<%=fieldNameActual %>" />
+						<input type="button" value="..." onclick="javascript:showChooser('<%=generateFullSearchURL(fullSearchFilterMap) %>');" />
+						<a class ="dialogClear" onclick = "javascript:$('#<%=fieldNameDisplay %>').val(''); $('#<%=fieldNameActual %>').val('');"><emxUtil:i18n localize="i18nId">emxProgramCentral.Common.Clear</emxUtil:i18n></a>
+					</td>
+				</tr>
+	<%			
+			}
+		}
+		
+		String inputTextName = null;
+		String inputTextLabel = null;
+		
+		for (int k = 0; k < inputTextNameList.size(); k++)
+		{
+			tdIdx++;
+			inputTextName = inputTextNameList.get(k);
+			inputTextLabel = inputTextLabelList.get(k);
+
+			if ( tdIdx%2 == 1 )
+			{
+	%>
+		<tr>
+	<%				
+			}
+	%>
+				<td class="label"><%=inputTextLabel %></td>
+				<td class="field"> 
+					<input type="text" class="keyin filter" name="<%=inputTextName %>" value="" />
+				</td>
+	<%
+			if ( tdIdx%2 == 0 )
+			{
+	%>
+		</tr>
+	<%
+			}
+		}
+		
+%>		
+	</table>
+
+</form>
+
+<%
+if ( StringUtils.isEmpty(showHierarchyFrame) || Boolean.valueOf(showHierarchyFrame) )
+{
+%>
+	<div id="hierarchyDiv" class="frameDiv" style="height: calc(70% - 50px);">
+		<iframe id="hierarchyFrame" name="hierarchyFrame" src="<%=hierarchyFrameOriginURL %>"  frameborder="0"></iframe>
+	</div>
+	
+	<hr/>
+<%
+}
+%>
+
+<%
+if ( StringUtils.isEmpty(showOtherFrame) || Boolean.valueOf(showOtherFrame) )
+{
+%>
+	<div id="otherDiv" class="frameDiv">
+		<iframe id="otherFrame" name="otherFrame" src="../common/emxBlank.jsp" frameborder="0"></iframe>
+	</div>
+<%
+}
+%>
+
+</body>
+
+<%
+} catch(Exception e) {
+	e.printStackTrace();
+	throw e;
+}
+%>

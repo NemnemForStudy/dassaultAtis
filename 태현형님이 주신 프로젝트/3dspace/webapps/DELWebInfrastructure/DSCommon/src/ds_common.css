@@ -1,0 +1,206 @@
+body .ds_common,
+body .app-content,
+.ds_common .ui-widget,
+.ds_common .ui-widget input,
+.ds_common .ui-widget select,
+.ds_common .ui-widget textarea,
+.ds_common .ui-widget button {
+  /* if you want to re-enable the 3ds font, make sure you include "DSCommon/src/views/Fonts.css" */
+  /* font-family: '3ds','3dsregular',ds,DSFontIcon,FontAwesome,Arial,Verdana,sans-serif !important; */
+  font-family: Arial,DSFontIcon,FontAwesome,Verdana,sans-serif;
+  /** margin: 0; **/
+  line-height: 1.2em;
+}
+body .ds_common * { /* problems with the dashboard widget */
+  /* if you want to re-enable the 3ds font, make sure you include "DSCommon/src/views/Fonts.css" */
+  /* font-family: '3ds','3dsregular',ds,DSFontIcon,FontAwesome,Arial,Verdana,sans-serif !important; */
+  font-family: Arial,DSFontIcon,FontAwesome,Verdana,sans-serif;
+  /*line-height: 1.2em;*/ /*BVO2 removed for the ux refresh so that the datagridview headers would be center alligned vertically 5/12/2020*/
+}
+
+/* for use when running a Karma ODT */
+body > div.html-reporter ~ div.app-content.ds_common {
+    min-height:500px;
+}
+
+body.loading > #loading {
+  bottom: 0;
+  height: auto;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: auto;
+  z-index:-1;
+}
+
+body.loading > #loading .loading-indicator {
+  background: url("../graphics/splash-screen.gif") no-repeat scroll 0 0 #FFFFFF;
+  height: 400px;
+  padding: 0;
+  text-align: center;
+  width: 355px;
+}
+
+body.loading > #loading .loading-indicator #loading-msg {
+  background: url("../graphics/ajx_isloading.gif") no-repeat scroll 0 2px rgba(0, 0, 0, 0);
+  font-family: tahoma,arial,helvetica;
+  font-size: 13px;
+  line-height: normal;
+  padding-left: 24px;
+  position: relative;
+  top: 360px;
+  width: 223px;
+}
+
+.ui-widget-header-black {
+  background: rgb(76,76,76); /* Old browsers */
+  background: -moz-linear-gradient(top,  rgba(76,76,76,1) 0%, rgba(19,19,19,1) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(76,76,76,1)), color-stop(100%,rgba(19,19,19,1))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  rgba(76,76,76,1) 0%,rgba(19,19,19,1) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  rgba(76,76,76,1) 0%,rgba(19,19,19,1) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  rgba(76,76,76,1) 0%,rgba(19,19,19,1) 100%); /* IE10+ */
+  background: linear-gradient(to bottom,  rgba(76,76,76,1) 0%,rgba(19,19,19,1) 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4c4c4c', endColorstr='#131313',GradientType=0 ); /* IE6-9 */
+  color: #FFFFFF;
+  /* font-weight: bold; */
+  border:0;
+}
+.ui-widget-header {
+  background: #42708C; /* Old browsers - middle of the gradient */
+  background: -moz-linear-gradient(top,  rgba(90,137,164,1) 0%, rgba(50,85,107,1) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(90,137,164,1)), color-stop(100%,rgba(50,85,107,1))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  rgba(90,137,164,1) 0%,rgba(50,85,107,1) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  rgba(90,137,164,1) 0%,rgba(50,85,107,1) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  rgba(90,137,164,1) 0%,rgba(50,85,107,1) 100%); /* IE10+ */
+  background: linear-gradient(to bottom,  rgba(90,137,164,1) 0%,rgba(50,85,107,1) 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5A89A4', endColorstr='#32556B',GradientType=0 ); /* IE6-9 */
+  color: #FFFFFF;
+  border:0;
+}
+.ui-widget-header, .ui-widget-header *,
+.ui-widget-header-black, .ui-widget-header-black *
+{
+  vertical-align: middle;
+}
+
+.ui-widget-content {
+  background:Silver;
+  color: #222222;
+}
+
+.ui-dialog .ui-dialog-titlebar {
+  text-align:center;
+}
+
+.ui-menu .ui-menu-item {
+  text-align:left;
+}
+
+/* Interaction Cues
+----------------------------------*/
+.ds_common .ui-state-highlight, .ds_common .ui-widget-content .ui-state-highlight, .ds_common .ui-widget-header .ui-state-highlight  {border: 1px solid #ffde2e; background: #ffeb80 url(../../jQueryUI/css/3dexp/images/ui-bg_inset-hard_55_ffeb80_1x100.png) 50% bottom repeat-x; color: #363636; }
+.ds_common .ui-state-highlight a, .ds_common .ui-widget-content .ui-state-highlight a,.ds_common .ui-widget-header .ui-state-highlight a { color: #363636; }
+/*
+.ds_common_top_bar {
+  height:1em;
+}
+
+#ds_common_main {
+  width:100%;
+  height:100%;
+}
+*/
+
+.ds_common {
+  width:100%;
+  height:100%;
+  vertical-align:top;
+  z-index:-10;
+  padding:0;
+}
+.ds_common.ds_common_top_bar #topbar {
+  z-index: 2000000002; /* above the ui-front div */
+}
+.ds_common.ds_common_top_bar div.app-content {
+  position:absolute;
+  /* top:44px; */
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  height:auto;
+  width:auto;
+}
+
+.ds_common .ui-front.ui-dialog,
+.ds_common .ui-front {
+  z-index: 2000000002;
+}
+
+.ds_common .uwa-overlay,
+.ds_common .ui-front.ui-widget-overlay {
+  z-index: 2000000001;
+}
+
+.ds_common .uwa-overlay.ds-coachmark {
+  z-index: 2000000012;
+}
+
+.ds_common .dragHandle {
+  /*
+  width:10px;
+  height:100%;
+  min-height:1em;
+  position:absolute;
+  top:0;
+  left:0;
+  */
+  background-image:url("../graphics/drag_handle.png");
+  background-repeat:repeat-y;
+
+  cursor:hand;
+  cursor: grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+
+}
+.ds_common .dragHandle:active {
+  cursor: grabbing;
+  cursor: -moz-grabbing;
+  cursor: -webkit-grabbing;
+}
+
+.ds_search_result_dragging.not-allowed,
+.ds_search_result_dragging.not-allowed * {
+  cursor: not-allowed !important;
+}
+
+.ds_search_result_dragging.not-allowed .ds_search_result_droppable,
+.ds_search_result_dragging.not-allowed .snd_transit_station_droppable,
+.ds_search_result_dragging.not-allowed .ds_search_result_droppable *,
+.ds_search_result_dragging.not-allowed .snd_transit_station_droppable *
+ {
+  cursor: copy !important;
+}
+
+/* fix for compass element to obscure the other elements, which leads to missing clicks */
+#top-banner > table td.left {
+ height:auto;
+}
+
+/** widget corrections ***/
+
+.moduleUwa .moduleContent.ds_common  {
+  height: 100%;
+  min-height:100px;
+  width:auto;
+  /* font-size:16px; set this so that everything below us is relative to us */
+}
+.ds_common .ui-widget-overlay.ui-front {
+  position:absolute;
+  top:0;
+  bottom:0;
+  left:0;
+  right:0;
+}

@@ -1,0 +1,20 @@
+{
+  "version": "1.0.0",
+  "summary": "Erstellt ein neues Array, das die Ergebnisse des Aufrufens eines bereitgestellten Diagramms für jedes Element im aufrufenden Array enthält.",
+  "description": "Dieser Block kann jeden Arraytyp <doc-idp-Name Translate=no> Input</doc-idp-Name> einem beliebigen Ausgabearraytyp zuordnen. <br>Das innere Diagramm muss bearbeitet werden, um den Zuordnungsprozess zu erstellen.",
+  "dataPorts": {
+    "Input": "Das zuzuordnende Eingabearray. <br>Dieser Datenport verarbeitet alle Arraytypen.",
+    "SharedData": "Die Daten, die für jede interne Diagramminstanz freigegeben werden sollen. <br>Dieser Datenport verarbeitet alle Typen. <br>Wenn mehrere Daten mit unterschiedlichen Typen freigegeben werden müssen, wird die Erstellung eines Benutzertyps empfohlen.",
+    "Success": "Das Erfolgsausgabe-Array. <br>Dieser Datenport verarbeitet alle Arraytypen. <br>Die Größe dieses Arrays entspricht immer der Arraygröße <doc-idp-Name Translate=no> Input</doc-idp-Name>.",
+    "State": "Ein Array von <doc-valuetype Translate=no> ArrayMapState</doc-valuetype>, das <doc-valuetype Translate=no> EExecutionState</doc-valuetype> an jedem Index des< doc-odp-Name Translate=no>SUCCESS </doc-odp-Name> -Ausgabearrays gibt. <br>Die Größe dieses Arrays entspricht immer der Arraygröße <doc-idp-Name Translate=no> Input</doc-idp-Name>.",
+    "Progress": "Ein Array von <doc-valuetype Translate=no> ArrayMapProgress</doc-valuetype>, das <doc-valuetype Translate=no> EExecutionState</doc-valuetype> an jedem Index des< doc-odp-Name Translate=no>Input </doc-odp-Name> Eingabearrays angibt. <br>Dieses Array kann während eines Vorgangs mit mehreren Daten gefüllt werden, da es vom Verteilungsprozess hinter dem Block abhängt. <br>Die Größe dieses Arrays überschreitet jedoch nicht die Arraygröße <doc-idp-Name Translate=no> Input</doc-idp-Name>.",
+    "Error": "Ein Array von <doc-valuetype Translate=no> ArrayMapError</doc-valuetype>, das ein Fehlerobjekt für den Index des< doc-odp-Name Translate=no>Input </doc-odp-Name> -Eingabearrays angibt. <br>Die Größe dieses Arrays überschreitet nicht die Arraygröße <doc-idp-Name Translate=no> Input</doc-idp-Name>."
+  },
+  "controlPorts": {
+    "In": "löst die Blockausführung aus.",
+    "Success": "wird aktiviert, wenn der Prozess erfolgreich abgeschlossen ist.",
+    "Progress": "wird bei jedem Fortschritt aktiviert.",
+    "Error": "wird aktiviert, wenn ein Fehler aufgetreten ist."
+  },
+  "example": null
+}

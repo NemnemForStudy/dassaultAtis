@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Styles xmlns:syp="http://www.3ds.com/xsd/SYP">
+
+  <Template syp:name="DMUDesignValidationWidgetHdr" Target="CATCmdHeadersList">
+    <CATCmdHeadersList>
+      <!--ENOPAD command header-->
+<CATCommandHeader ID="Home"                               ClassName="DS/PADServices/commands/HomeCmd" HelpResourceFile="PADServices/PADServicesHelpForCommands" ResourceFile="PADServices/PADServices" />
+      <CATCommandHeader ID="RootPanel"                          ClassName="DS/ENOPAD3DViewer/commands/PAD3DViewerRootInfoPanelCmd" HelpResourceFile="PADUtils/PADUtilsHelpForCommands" ResourceFile="PADUtils/PADUtils" Available="1" Behavior="CATAfrHeaderCheck" />
+      <CATCommandHeader ID="RightSidePanel"                     ClassName="DS/DMUBaseCommands/DMURightSidePanelCmd" HelpResourceFile="PADUtils/PADUtilsHelpForCommands" ResourceFile="PADUtils/PADUtils" Behavior="CATAfrHeaderCheck">
+        <CATAfrCommandHeaderArgs>
+          <CATCommandHeaderArg ID="PropertiesReadOnly" Value="true" Mode="In" />
+        </CATAfrCommandHeaderArgs>
+      </CATCommandHeader>
+
+      <!--ENOPAD command header-->
+      <CATCommandHeader ID="AddRoot"                            ClassName="DS/PADUtils/commands/PADAddRoot_cmd"                           ResourceFile="PADUtils/PADUtils"/>
+      <CATCommandHeader ID="SwitchAuthoringIndex"               ClassName="DS/PADUtils/commands/SwitchAuthoringIndex"                     ResourceFile="PADUtils/PADUtils"      HelpResourceFile="PADUtils/PADUtilsHelpForCommands"   Behavior="CATAfrHeaderCheck"/>
+
+      <CATCommandHeader ID="VolumeQueryHdr"                     ClassName="DS/ENOWebNavVolumeQuery/ENOWebNavVolumeQueryCmd"               ResourceFile="ENOWebNavVolumeQuery/ENOWebNavVolumeQueryCmd"/>
+      <CATCommandHeader ID="FilterDropObjects"                  ClassName="DS/ENOPAD3DViewer/commands/PAD3DViewerFilterDropObjectsCmd"    ResourceFile="ENOPAD3DViewer/ENOPAD3DViewer"  HelpResourceFile="ENOPAD3DViewer/ENOPAD3DViewerHelpForCommands"/>
+      <CATCommandHeader ID="CleanAll"                           ClassName="DS/ENOPAD3DViewer/commands/PAD3DViewerRemoveAllCmd"            ResourceFile="PADUtils/PADUtils"              HelpResourceFile="PADUtils/PADUtilsHelpForCommands" />
+      <CATCommandHeader ID="ActionBar_Attributes"               ClassName="DS/ENOPAD3DViewer/commands/PAD3DViewerEditPropertiesCmd"       ResourceFile="ENOPAD3DViewer/ENOPAD3DViewer"  HelpResourceFile="ENOPAD3DViewer/ENOPAD3DViewerHelpForCommands"/>
+      <CATCommandHeader ID="PAD3DViewerRelationalNavigatorHdr"  ClassName="DS/ENOPAD3DViewer/commands/PAD3DViewerRelationalNavigatorCmd"  ResourceFile="ENOPAD3DViewer/ENOPAD3DViewer"  HelpResourceFile="ENOPAD3DViewer/ENOPAD3DViewerHelpForCommands"/>
+      <CATCommandHeader ID="PAD3DViewerNavigateOnSelectionHdr"  ClassName="DS/ENOPAD3DViewer/commands/PAD3DViewerNavigateOnSelectionCmd"  ResourceFile="ENOPAD3DViewer/ENOPAD3DViewer"  HelpResourceFile="ENOPAD3DViewer/ENOPAD3DViewerHelpForCommands"/>
+      <CATCommandHeader ID="SwitchVisuOnDemandHdr"              ClassName="DS/ENOPAD3DViewer/commands/PAD3DViewerSwitchVisuOnDemandCmd"   ResourceFile="ENOPAD3DViewer/ENOPAD3DViewer"  HelpResourceFile="ENOPAD3DViewer/ENOPAD3DViewerHelpForCommands"/>
+      <CATCommandHeader ID="PAD3DViewerPrintHdr"                ClassName="DS/ENOPAD3DViewer/commands/PAD3DViewerPrintCmd"                ResourceFile="ENOPAD3DViewer/ENOPAD3DViewer"  HelpResourceFile="ENOPAD3DViewer/ENOPAD3DViewerHelpForCommands"/>
+      <CATCommandHeader ID="DefineFilterHdr"                    ClassName="DS/ENOPAD3DViewer/commands/PAD3DViewerDefineFilterCmd"         ResourceFile="ENOPAD3DViewer/ENOPAD3DViewer"  HelpResourceFile="ENOPAD3DViewer/ENOPAD3DViewerHelpForCommands"/>
+
+      <CATCommandHeader ID="FlyWalkCmd" ClassName="DS/FlyWalkCommand/FlyWalkCmd" HelpResourceFile="FlyWalkCommand/FlyWalkCommandIDs" ResourceFile="FlyWalkCommand/FlyWalkCmd" Behavior="CATAfrHeaderCheck"/>
+
+      <!--Visualization Infra header-->
+      <CATCommandHeader ID="VisuVisibleSpace"               ClassName="DS/ViewerCommands/VisuVisibleSpaceCmd"               ResourceFile="ViewerCommands/ViewerCommands" HelpResourceFile="ViewerCommands/ViewerCommandsIDs"/>
+      <CATCommandHeader ID="VisuReframeView"                ClassName="DS/ViewerCommands/VisuReframeViewCmd"                ResourceFile="ViewerCommands/ViewerCommands" HelpResourceFile="ViewerCommands/ViewerCommandsIDs"/>
+      <CATCommandHeader ID="VisuPanView"                    ClassName="DS/ViewerCommands/VisuPanViewCmd"                    ResourceFile="ViewerCommands/ViewerCommands" HelpResourceFile="ViewerCommands/ViewerCommandsIDs"/>
+      <CATCommandHeader ID="VisuZoomView"                   ClassName="DS/ViewerCommands/VisuZoomViewCmd"                   ResourceFile="ViewerCommands/ViewerCommands" HelpResourceFile="ViewerCommands/ViewerCommandsIDs"/>
+      <CATCommandHeader ID="VisuRotateView"                 ClassName="DS/ViewerCommands/VisuRotateViewCmd"                 ResourceFile="ViewerCommands/ViewerCommands" HelpResourceFile="ViewerCommands/ViewerCommandsIDs"/>
+      <CATCommandHeader ID="VisuIsoView"                    ClassName="DS/ViewerCommands/VisuIsoViewCmd"                    ResourceFile="ViewerCommands/ViewerCommands" HelpResourceFile="ViewerCommands/ViewerCommandsIDs"/>
+      <CATCommandHeader ID="VisuFrontView"                  ClassName="DS/ViewerCommands/VisuFrontViewCmd"                  ResourceFile="ViewerCommands/ViewerCommands" HelpResourceFile="ViewerCommands/ViewerCommandsIDs"/>
+      <CATCommandHeader ID="VisuBackView"                   ClassName="DS/ViewerCommands/VisuBackViewCmd"                   ResourceFile="ViewerCommands/ViewerCommands" HelpResourceFile="ViewerCommands/ViewerCommandsIDs"/>
+      <CATCommandHeader ID="VisuLeftView"                   ClassName="DS/ViewerCommands/VisuLeftViewCmd"                   ResourceFile="ViewerCommands/ViewerCommands" HelpResourceFile="ViewerCommands/ViewerCommandsIDs"/>
+      <CATCommandHeader ID="VisuRightView"                  ClassName="DS/ViewerCommands/VisuRightViewCmd"                  ResourceFile="ViewerCommands/ViewerCommands" HelpResourceFile="ViewerCommands/ViewerCommandsIDs"/>
+      <CATCommandHeader ID="VisuTopView"                    ClassName="DS/ViewerCommands/VisuTopViewCmd"                    ResourceFile="ViewerCommands/ViewerCommands" HelpResourceFile="ViewerCommands/ViewerCommandsIDs"/>
+      <CATCommandHeader ID="VisuBottomView"                 ClassName="DS/ViewerCommands/VisuBottomViewCmd"                 ResourceFile="ViewerCommands/ViewerCommands" HelpResourceFile="ViewerCommands/ViewerCommandsIDs"/>
+      <CATCommandHeader ID="VisuViewPanelCommand" ClassName="DS/ViewerCommands/VisuViewPanelCommand" ResourceFile="ViewerCommands/ViewerCommands" HelpResourceFile="ViewerCommands/ViewerCommandsIDs" />
+      
+      <CATCommandHeader ID="DMURenameMarkupHdr" ClassName="DS/DMUPersistence/DMURenameMarkupCmd"    ResourceFile="DMUPersistence/DMUPersistence"          HelpResourceFile = "DMUPersistence/DMUPersistence"/>
+      <CATCommandHeader ID="DMUReviewHdr"                       ClassName="DS/DMUReviewPersistence/DMUCreateReviewCmd"                  ResourceFile="DMUReviewPersistence/DMUReviewPersistence"        HelpResourceFile = "DMUReviewPersistence/DMUReviewPersistence">
+        <CATAfrCommandHeaderArgs>
+          <CATCommandHeaderArg ID="WebAppID" Value="DMUDesignValidation" Mode="In" />
+        </CATAfrCommandHeaderArgs>
+      </CATCommandHeader>
+      <CATCommandHeader ID="DMUCreateSlideReplyHdr"             ClassName="DS/DMUReplyAndComments/DMUCreateSlideReplyCmd"               ResourceFile="DMUReplyAndComments/DMUReplyAndComments"          HelpResourceFile = "DMUReplyAndComments/DMUReplyAndComments"  />
+      <CATCommandHeader ID="DMUReviewMarkupHdr"                 ClassName="DS/DMUReviewPersistence/DMUCreateReviewMarkupCmd"            ResourceFile="DMUReviewPersistence/DMUReviewPersistence"        HelpResourceFile = "DMUReviewPersistence/DMUReviewPersistence"  />
+      <CATCommandHeader ID="DMUAddCheckHdr"                     ClassName="DS/DMUReviewPersistence/DMUAddCheckCmd"                      ResourceFile="DMUReviewPersistence/DMUReviewPersistence"        HelpResourceFile = "DMUReviewPersistence/DMUReviewPersistence"  />
+			<CATCommandHeader ID="DMUAddHighlightHdr"                 ClassName="DS/DMUReviewPersistence/DMUAddHighlightCmd"                  ResourceFile="DMUReviewPersistence/DMUReviewPersistence"        HelpResourceFile = "DMUReviewPersistence/DMUReviewPersistence"  />
+			<CATCommandHeader ID="DMUSetImpactedCheckHdr"             ClassName="DS/DMUReviewPersistence/DMUSetImpactedCheckCmd"              ResourceFile="DMUReviewPersistence/DMUReviewPersistence"        HelpResourceFile = "DMUReviewPersistence/DMUReviewPersistence"  />
+			<CATCommandHeader ID="DMUReviewMaturityChangeHdr"         ClassName="DS/DMUReviewPersistence/DMUReviewMaturityChangeCmd"          ResourceFile="DMUReviewPersistence/DMUReviewPersistence"        HelpResourceFile = "DMUReviewPersistence/DMUReviewPersistence"  />
+			<CATCommandHeader ID="DMUReviewStatusChangeHdr"           ClassName="DS/DMUReviewPersistence/DMUReviewStatusChangeCmd"            ResourceFile="DMUReviewPersistence/DMUReviewPersistence"        HelpResourceFile = "DMUReviewPersistence/DMUReviewPersistence"  />
+      <!--PIM command headers-->
+      <CATCommandHeader ID="PIMInteferenceListHdr" ClassName="DS/PIMwebViewController/PIMwebInteferenceListCmd" HelpResourceFile="PIMwebViewController/PIMwebViewController" ResourceFile="PIMwebViewController/PIMwebViewController" Behavior="CATAfrHeaderCheck" />
+      <CATCommandHeader ID="PIMDisplayClashCurveHdr" ClassName="DS/PIMwebViewController/PIMwebDisplayCmd" HelpResourceFile="PIMwebViewController/PIMwebViewController" ResourceFile="PIMwebViewController/PIMwebViewController" Behavior="CATAfrHeaderCheck" />
+      <CATCommandHeader ID="PIMDisplayContactCurveHdr" ClassName="DS/PIMwebViewController/PIMwebDisplayCmd" HelpResourceFile="PIMwebViewController/PIMwebViewController" ResourceFile="PIMwebViewController/PIMwebViewController" Behavior="CATAfrHeaderCheck" />
+      <CATCommandHeader ID="PIMDisplayClearanceCurveHdr" ClassName="DS/PIMwebViewController/PIMwebDisplayCmd" HelpResourceFile="PIMwebViewController/PIMwebViewController" ResourceFile="PIMwebViewController/PIMwebViewController" Behavior="CATAfrHeaderCheck" />
+      <CATCommandHeader ID="PIMDisplayQuantifiersHdr" ClassName="DS/PIMwebViewController/PIMwebDisplayCmd" HelpResourceFile="PIMwebViewController/PIMwebViewController" ResourceFile="PIMwebViewController/PIMwebViewController" Behavior="CATAfrHeaderCheck" />
+      <CATCommandHeader ID="PIMZoomOnInterferenceHdr" ClassName="DS/PIMwebViewController/PIMwebDisplayCmd" HelpResourceFile="PIMwebViewController/PIMwebViewController" ResourceFile="PIMwebViewController/PIMwebViewController" Behavior="CATAfrHeaderCheck" />
+      <CATCommandHeader ID="PIMApplyTransparencyHdr" ClassName="DS/PIMwebViewController/PIMwebDisplayCmd" HelpResourceFile="PIMwebViewController/PIMwebViewController" ResourceFile="PIMwebViewController/PIMwebViewController" Behavior="CATAfrHeaderCheck" />
+      <CATCommandHeader ID="PIMColorOverloadHdr" ClassName="DS/PIMwebViewController/PIMwebDisplayCmd" HelpResourceFile="PIMwebViewController/PIMwebViewController" ResourceFile="PIMwebViewController/PIMwebViewController" Behavior="CATAfrHeaderCheck" />
+      <CATCommandHeader ID="PIMwebExportFilteredHdr" ClassName="DS/PIMwebViewController/PIMwebExportAsCSVCmd" HelpResourceFile="PIMwebViewController/PIMwebViewController" ResourceFile="PIMwebViewController/PIMwebViewController" >
+        <CATAfrCommandHeaderArgs>
+          <CATCommandHeaderArg type="Visible" />
+        </CATAfrCommandHeaderArgs>
+      </CATCommandHeader>
+      <CATCommandHeader ID="PIMwebExportSelectedHdr" ClassName="DS/PIMwebViewController/PIMwebExportAsCSVCmd" HelpResourceFile="PIMwebViewController/PIMwebViewController" ResourceFile="PIMwebViewController/PIMwebViewController" >
+        <CATAfrCommandHeaderArgs>
+          <CATCommandHeaderArg type="Selected" />
+        </CATAfrCommandHeaderArgs>
+      </CATCommandHeader>
+
+      <!--DMU command header-->
+      <CATCommandHeader ID="DMUSwitch3DMarkersResponsiveDisplayHdr" ClassName="DS/DMUBaseCommands/DMUSwitch3DMarkersResponsiveDisplayCmd" ResourceFile="DMUBaseCommands/DMUBaseWebCommands" HelpResourceFile="DMUBaseCommands/DMUBaseCommands"/>
+      <CATCommandHeader ID="DMUCutHdr"            ClassName="DS/DMUBaseCommands/DMUCutCmd"              ResourceFile="DMUBaseCommands/DMUBaseWebCommands"      HelpResourceFile = "DMUBaseCommands/DMUBaseCommands" Available="0"/>
+      <CATCommandHeader ID="DMUCopyHdr"           ClassName="DS/DMUBaseCommands/DMUCopyCmd"             ResourceFile="DMUBaseCommands/DMUBaseWebCommands"      HelpResourceFile = "DMUBaseCommands/DMUBaseCommands" Available="0"/>
+      <CATCommandHeader ID="DMUPasteHdr"          ClassName="DS/DMUBaseCommands/DMUPasteCmd"            ResourceFile="DMUBaseCommands/DMUBaseWebCommands"      HelpResourceFile = "DMUBaseCommands/DMUBaseCommands" Available="0"/>
+      <CATCommandHeader ID="DMUPasteSpecialHdr"   ClassName="DS/DMUBaseCommands/DMUPasteSpecialCmd"     ResourceFile="DMUBaseCommands/DMUBaseWebCommands"      HelpResourceFile = "DMUBaseCommands/DMUBaseCommands" Available="0"/>
+      <CATCommandHeader ID="CATWebUXSlideShowHdr" ClassName="DS/CATWebUXSlideShow/CATWebUXSlideShowCmd" ResourceFile="CATWebUXSlideShow/CATWebUXSlideShow"      HelpResourceFile="CATWebUXSlideShow/CATWebUXSlideShow" Behavior="CATAfrHeaderCheck">
+        <CATAfrCommandHeaderArgs>
+          <CATCommandHeaderArg ID="ControllerID" Value="DMU3DMarkupSlideShow" Mode="In" />
+        </CATAfrCommandHeaderArgs>
+      </CATCommandHeader>
+
+      <CATCommandHeader ID="DMUGenerateFormatHdr"               ClassName="DS/DMUSlideEdition/DMUGenerateFormatCmd"                     ResourceFile="DMUSlideEdition/DMUSlideEdition"            HelpResourceFile = "DMUSlideEdition/DMUSlideEdition" />
+      <CATCommandHeader ID="DMUUpdateFormatSessionOverloadHdr"  ClassName="DS/DMUFormatEdition/DMUUpdateFormatSessionOverloadCmd"       ResourceFile="DMUFormatEdition/DMUFormatEdition"          HelpResourceFile = "DMUFormatEdition/DMUFormatEdition" />
+      <CATCommandHeader ID="DMUEditFormatsHdr"                  ClassName="DS/DMUFormatEdition/DMUEditFormatsCmd"                       ResourceFile="DMUFormatEdition/DMUFormatEdition"          HelpResourceFile = "DMUFormatEdition/DMUFormatEdition" />
+
+      <CATCommandHeader ID="DMUCreateValidatedMkrHdr"           ClassName="DS/DMUMarker/DMUMarkerTextCreateCmd"                         ResourceFile="DMUMarker/DMUMarker"                        HelpResourceFile = "DMUMarker/DMUMarker" />
+      <CATCommandHeader ID="DMUCreateRejectedMkrHdr"            ClassName="DS/DMUMarker/DMUMarkerTextCreateCmd"                         ResourceFile="DMUMarker/DMUMarker"                        HelpResourceFile = "DMUMarker/DMUMarker" />
+
+      <CATCommandHeader ID="markerTextCmdHdr"                   ClassName="DS/DMUMarker/DMUMarkerTextCreateCmd"                         ResourceFile="DMUMarker/DMUMarker"                        HelpResourceFile = "DMUMarker/DMUMarker" />
+      <CATCommandHeader ID="markerCircleCmdHdr"                 ClassName="DS/DMUMarker/DMUMarkerCircleCreateCmd"                       ResourceFile="DMUMarker/DMUMarker"                        HelpResourceFile = "DMUMarker/DMUMarker" />
+      <CATCommandHeader ID="markerArrowCmdHdr"                  ClassName="DS/DMUMarker/DMUMarkerArrowCreateCmd"                        ResourceFile="DMUMarker/DMUMarker"                        HelpResourceFile = "DMUMarker/DMUMarker" />
+      <CATCommandHeader ID="markerPictureCmdHdr"                ClassName="DS/DMUMarker/DMUMarkerPictureCreateCmd"                      ResourceFile="DMUMarker/DMUMarker"                        HelpResourceFile = "DMUMarker/DMUMarker" />
+      <CATCommandHeader ID="DMU3DRectangleCmdHdr"               ClassName="DS/DMUMarker/DMUMarkerRectangleCreateCmd"                    ResourceFile="DMUMarker/DMUMarker"                        HelpResourceFile = "DMUMarker/DMUMarker"/>
+      <CATCommandHeader ID="DMUFreehandCmdHdr"                  ClassName="DS/DMUMarker/DMUMarkerFreehandCreateCmd"                     ResourceFile="DMUMarker/DMUMarker"                        HelpResourceFile = "DMUMarker/DMUMarker"/>
+      <CATCommandHeader ID="marker2DTextCmdHdr"                 ClassName="DS/DMUMarker/DMUMarkerTextCreateCmd"                         ResourceFile="DMUMarker/DMUMarker"                        HelpResourceFile = "DMUMarker/DMUMarker" />
+      <CATCommandHeader ID="marker2DPictureCmdHdr"              ClassName="DS/DMUMarker/DMUMarkerPictureCreateCmd"                      ResourceFile="DMUMarker/DMUMarker"                        HelpResourceFile = "DMUMarker/DMUMarker" />
+
+      <CATCommandHeader ID="normalViewCmdHdr"                   ClassName="DS/DMUCommands/DMUNormalViewCmd"                             ResourceFile="DMUCommands/DMUCommands"                    HelpResourceFile = "DMUCommands/DMUCommands" />
+      <CATCommandHeader ID="3DcompareCmdHdr"                    ClassName="DS/DMUCommands/DMU3DCompareCmd"                              ResourceFile="DMUCommands/DMUCommands"                    HelpResourceFile = "DMUCommands/DMUCommands" />
+      <CATCommandHeader ID="slideCmdHdr"                        ClassName="DS/DMUSlideEdition/DMUCreateSlideCmd"                        ResourceFile="DMUSlideEdition/DMUSlideEdition"            HelpResourceFile = "DMUSlideEdition/DMUSlideEdition" />
+      <CATCommandHeader ID="LockUnlockSectionHdr"               ClassName="DS/DMUSection/DMULockUnlockSection"                          ResourceFile="DMUBaseCommands/3DPlayPro"                  HelpResourceFile = "DMUSection/DMUSection"                Behavior="CATAfrHeaderCheck"/>
+      <CATCommandHeader ID="DMUMarkupHdr"                       ClassName="DS/DMUPersistence/DMUCreateMarkupCmd"                        ResourceFile="DMUPersistence/DMUPersistence"              HelpResourceFile = "DMUPersistence/DMUPersistence" />
+      <CATCommandHeader ID="CATWebUXPreferencesHdr"             ClassName="DS/CATWebUXPreferences/CATWebUXPreferencesCmd"               ResourceFile="CATWebUXPreferences/CATWebUXPreferences"    HelpResourceFile = "CATWebUXPreferences/CATWebUXPreferences" />
+
+      <CATCommandHeader ID="measureCmdHdr"                      ClassName="DS/DMUMeasure/DMUCreateMeasureCmd"                           ResourceFile="DMUBaseCommands/3DPlayPro"            HelpResourceFile = "DMUMeasure/DMUMeasure" >
+        <CATAfrCommandHeaderArgs>
+          <CATCommandHeaderArg ID="3dPlayPro" Value="3dPlayPro" Mode="In" />
+          <CATCommandHeaderArg ID="RemoveNonPersistent" Value="false" Mode="In" />
+        </CATAfrCommandHeaderArgs>
+      </CATCommandHeader>
+      <CATCommandHeader ID="thicknessCmdHdr"                    ClassName="DS/DMUMeasure/DMUCreateMeasureCmd"                           ResourceFile="DMUBaseCommands/3DPlayPro"            HelpResourceFile ="DMUMeasure/DMUMeasure" >
+        <CATAfrCommandHeaderArgs>
+          <CATCommandHeaderArg ID="Thickness" Value="Thickness" Mode="In" />
+          <CATCommandHeaderArg ID="RemoveNonPersistent" Value="false" Mode="In" />
+        </CATAfrCommandHeaderArgs>
+      </CATCommandHeader>
+      <CATCommandHeader ID="sectionCmdHdr"                      ClassName="DS/DMUSection/DMUCreateSectionCmd"                           ResourceFile="DMUBaseCommands/3DPlayPro"            HelpResourceFile = "DMUSection/DMUSection" >
+        <CATAfrCommandHeaderArgs>
+          <CATCommandHeaderArg ID="3dReview" Value="3dReview" Mode="In" />
+        </CATAfrCommandHeaderArgs>
+      </CATCommandHeader>
+
+      <CATCommandHeader ID="DMUEditPropertiesHdr"               ClassName="DS/DMUCommands/DMUEditPropertiesCmd"                         ResourceFile="DMUCommands/DMUCommands"              HelpResourceFile = "DMUCommands/DMUCommands" />
+      <CATCommandHeader ID="CATWebUXGenerateIssueHdr"           ClassName="DS/DMUCommands/DMUGenerateTICCmd"             ResourceFile="CATWebUXTIC/CATWebUXTIC"              HelpResourceFile="CATWebUXTIC/CATWebUXTIC" />
+      <CATCommandHeader ID="CATWebUXGenerateCAHdr"              ClassName="DS/DMUCommands/DMUGenerateTICCmd"             ResourceFile="CATWebUXTIC/CATWebUXTIC"              HelpResourceFile="CATWebUXTIC/CATWebUXTIC" />
+
+    </CATCmdHeadersList>
+  </Template>
+
+  <Template syp:name="3DDesignValidationAfrWorkshopAccess" Target="CATCmdWorkbench">
+    <CATCmdWorkbench Name="3DDesignValidationWorkbench">
+
+      <CATCmdContainer Name="DMUFixedArea" RepresentationType="AfrActionBarFixedSection">
+        <CATCmdStarter Name="CATWebUXSlideShowHdrStr" Command="CATWebUXSlideShowHdr" />
+        <CATCmdStarter Name="DMUCutStr" Command="DMUCutHdr" />
+        <CATCmdStarter Name="DMUCopyStr" Command="DMUCopyHdr" />
+        <CATCmdContainer Name="PasteContainer" RepresentationType="AfrActionBarDropDown">
+          <CATCmdStarter Name="DMUPasteStr" Command="DMUPasteHdr" />
+          <CATCmdStarter Name="DMUPasteSpecialStr" Command="DMUPasteSpecialHdr" />
+        </CATCmdContainer>
+        <CATCmdStarter Name="ENOR3DHomeStr" Command="Home"/>
+      </CATCmdContainer>
+
+      <CATCmdContainer     Name="DMUValidation" Visibility="1" RepresentationType="AfrActionBarSection">
+        <CATCmdStarter     Name="DMUReviewStr"                Command="DMUReviewHdr"           />
+        <CATCmdSeparator    Name="CAT3DAnnotSeparator" />
+        <CATCmdStarter     Name="DMUReviewMarkupStr"          Command="DMUReviewMarkupHdr"           />
+        <CATCmdStarter     Name="DMUAddCheckStr"          Command="DMUAddCheckHdr"           />
+				<CATCmdStarter     Name="DMUAddHighlightStr"          Command="DMUAddHighlightHdr"           />
+        <CATCmdSeparator    Name="CAT3DAnnotSeparator" />
+        <CATCmdStarter     Name="DMUReviewGenerateIssueStr"     Command="CATWebUXGenerateIssueHdr" />
+        <CATCmdStarter     Name="DMUReviewGenerateCAStr"        Command="CATWebUXGenerateCAHdr" />
+      </CATCmdContainer>
+
+      <CATCmdContainer     Name="DMUMarkup" Visibility="1" RepresentationType="AfrActionBarSection">
+        <CATCmdStarter     Name="DMUMarkupStr"                Command="DMUMarkupHdr"           />
+
+        <CATCmdSeparator    Name="CAT3DAnnotSeparator" />
+        <CATCmdStarter      Name="Slide" Command="slideCmdHdr" />
+        <CATCmdStarter      Name="DMUEditFormatsStr" Command="DMUEditFormatsHdr"/>
+        <CATCmdSeparator    Name="CAT3DAnnotSeparator" />
+
+        <CATCmdContainer Name="Section" Visibility="1" RepresentationType="AfrActionBarDropDown">
+          <CATCmdStarter     Name="Section"             Command="sectionCmdHdr"/>
+          <CATCmdStarter     Name="LockUnlockSection"   Command="LockUnlockSectionHdr" />
+        </CATCmdContainer>
+
+        <CATCmdStarter Name="3DCompare" Command="3DcompareCmdHdr" />
+
+        <CATCmdContainer Name="Measure" Visibility="1" RepresentationType="AfrActionBarDropDown">
+          <CATCmdStarter Name="Measure"             Command="measureCmdHdr"/>
+          <CATCmdStarter Name="Thickness"           Command="thicknessCmdHdr"/>
+        </CATCmdContainer>
+
+        <CATCmdSeparator    Name="CAT3DAnnotSeparator" />
+
+        <CATCmdStarter     Name="MarkerArrow"         Command="markerArrowCmdHdr"    />
+
+        <CATCmdContainer Name="Marker3D" Visibility="1" RepresentationType="AfrActionBarDropDown">
+          <CATCmdStarter     Name="MarkerCircle"        Command="markerCircleCmdHdr"   />
+          <CATCmdStarter     Name="MarkerRectangle"     Command="DMU3DRectangleCmdHdr"   />
+          <CATCmdStarter     Name="MarkerFreehand"      Command="DMUFreehandCmdHdr"   />
+        </CATCmdContainer>
+
+        <CATCmdContainer Name="Notes" Visibility="1" RepresentationType="AfrActionBarDropDown">
+          <CATCmdStarter     Name="MarkerText"          Command="markerTextCmdHdr"     />
+          <CATCmdStarter     Name="MarkerPicture"       Command="markerPictureCmdHdr" />
+          <CATCmdStarter     Name="Marker2DText"        Command="marker2DTextCmdHdr" />
+          <CATCmdStarter     Name="Marker2DPicture"     Command="marker2DPictureCmdHdr" />
+        </CATCmdContainer>
+
+        <CATCmdSeparator    Name="SeparatorStr" />
+
+        <CATCmdStarter     Name="ValidatedHdr"          Command="DMUCreateValidatedMkrHdr"     />
+        <CATCmdStarter     Name="RejectedHdr"          Command="DMUCreateRejectedMkrHdr"     />
+      </CATCmdContainer>
+
+      <CATCmdContainer Name="PIMSection" RepresentationType="AfrActionBarSection">
+        <CATCmdStarter Name="PIMInteferenceListStr"       Command="PIMInteferenceListHdr" />
+        <CATCmdStarter Name="PIMwebDisplayClashCurveStr" Command="PIMDisplayClashCurveHdr" />
+        <CATCmdStarter Name="PIMwebDisplayContactCurveStr" Command="PIMDisplayContactCurveHdr" />
+        <CATCmdStarter Name="PIMwebDisplayClearanceCurveStr" Command="PIMDisplayClearanceCurveHdr" />
+        <CATCmdStarter Name="PIMwebDisplayQuantifiersStr" Command="PIMDisplayQuantifiersHdr" />
+        <CATCmdStarter Name="PIMwebZoomOnInterferenceStr" Command="PIMZoomOnInterferenceHdr" />
+        <CATCmdStarter Name="PIMwebColorOverloadStr" Command="PIMColorOverloadHdr" />
+        <CATCmdStarter Name="PIMwebItfApplyTransparencyStr" Command="PIMApplyTransparencyHdr" />
+      </CATCmdContainer>
+
+      <CATCmdContainer Name="DMUView" RepresentationType="AfrActionBarSection">
+        <CATCmdStarter  Name="LeftSidePanelStr" Command="RootPanel"/>
+        <CATCmdSeparator Name="ViewSepLeft"/>
+        <CATCmdStarter Name="DMUSwitch3DMarkersResponsiveDisplayStr" Command="DMUSwitch3DMarkersResponsiveDisplayHdr" />
+        <CATCmdStarter Command="VisuReframeView" Name="PADPADReframeCmd"/>
+        <CATCmdStarter Command="VisuPanView" Name="PADPanCmd"/>
+        <CATCmdStarter Command="VisuRotateView" Name="PADRotateCmd"/>
+        <CATCmdStarter Command="VisuZoomView" Name="PADZoomCmd"/>
+        <CATCmdContainer Name="PADCameraViews" RepresentationType="AfrActionBarDropDown" Visibility="1">
+          <CATCmdStarter Command="normalViewCmdHdr" Name="NormalView" />
+          <CATCmdStarter Command="VisuIsoView" Name="PADIsoViewCmd"/>
+          <CATCmdStarter Command="VisuBottomView" Name="PADBottomViewCmd"/>
+          <CATCmdStarter Command="VisuTopView" Name="PADTopViewCmd"/>
+          <CATCmdStarter Command="VisuRightView" Name="PADRightViewCmd"/>
+          <CATCmdStarter Command="VisuLeftView" Name="PADLeftViewCmd"/>
+          <CATCmdStarter Command="VisuBackView" Name="PADBackViewCmd"/>
+          <CATCmdStarter Command="VisuFrontView" Name="PADFrontViewCmd"/>
+        </CATCmdContainer>
+
+        <CATCmdStarter Command="VisuVisibleSpace" Name="VisuVisibleSpaceCmd"/>
+        <CATCmdStarter Name="VisuViewPanelCommand" Command="VisuViewPanelCommand" />
+        <CATCmdSeparator Name="PadViews_Separator"/>
+        <CATCmdStarter Name="FlyWalkStr" Command="FlyWalkCmd"/>
+        <CATCmdSeparator Name="PadViews_Separator_1"/>
+        <CATCmdStarter Command="CleanAll" Name="PADRemoveAll"/>
+        <CATCmdSeparator Name="ViewSepRight" />
+        <CATCmdStarter Name="RightSidePanelStr" Command="RightSidePanel" />
+      </CATCmdContainer>
+
+      <CATCmdContainer Name="DMUTools" RepresentationType="AfrActionBarSection">
+        <CATCmdStarter Command="VolumeQueryHdr" Name="3DSelection"/>
+        <CATCmdStarter Command="ActionBar_Attributes" Name="ActionBar_AttributesCmd"/>
+        <CATCmdStarter Command="PAD3DViewerRelationalNavigatorHdr" Name="PAD3DViewerRelationalNavigatorCmd"/>
+        <CATCmdStarter Name="DMUDefineFilterStr" Command="DefineFilterHdr"/>
+				<CATCmdStarter Name="SwitchAuthoringIndex" Command="SwitchAuthoringIndex"/>
+        <CATCmdStarter Command="PAD3DViewerPrintHdr" Name="PAD3DViewerPrintCmd"/>
+        <CATCmdSeparator Name="ToolsSeparator"/>
+        <CATCmdStarter Name="CATWebUXPreferencesStr" Command="CATWebUXPreferencesHdr" />
+      </CATCmdContainer>
+    </CATCmdWorkbench>
+  </Template>
+
+</Styles>

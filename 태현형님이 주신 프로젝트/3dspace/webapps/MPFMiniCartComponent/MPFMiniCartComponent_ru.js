@@ -1,0 +1,1 @@
+define("DS/MPFMiniCartComponent/MPFMiniCartComponent_ru",{});define("DS/MPFMiniCartComponent/assets/nls/MiniCartComponent",{items:"Элементов: {itemCount}",viewCart:"Просмотреть корзину"});

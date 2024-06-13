@@ -1,0 +1,1 @@
+define("DS/PCOverview/PCOverview_ko",{});define("DS/PCOverview/assets/nls/PCOverviewPresenter",{ERROR_NOT_INDEXED:"선택한 제품 사양이 인덱싱되지 않았습니다.",ERROR_DIFFERENT_MV:"선택한 제품 사양이 다른 모델 버전에 속합니다.",ERROR_VARIABILIY_LOAD:"파생 정보를 가져오는 중 오류가 발생했습니다.",ERROR_DATA_LOAD:"제품 사양 세부 정보를 가져오는 중 오류 발생"});

@@ -1,0 +1,1 @@
+define("DS/RichEditorCusto/RichEditorCusto_ko",{});define("DS/RichEditorCusto/assets/nls/RichEditorCusto",{Title_Confirm:"진행하시겠습니까?",Msg_Download:"이 파일을 다운로드하시겠습니까?"});

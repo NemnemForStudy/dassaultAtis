@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+<title>Mail Reader</title>
+
+<meta name="description" content="Access your personal messages." />
+<meta name="keywords" content="mail email message imap" />
+<meta name="version" content="2.0" />
+<meta name="author" content="3DDashboard Team" />
+<meta name="autoRefresh" content="10" />
+<meta name="debugMode" content="false" />
+<meta name="apiVersion" content="1.3" />
+
+<widget:preferences xmlns="http://www.netvibes.com/ns/">
+    <widget:preference name="title" type="text" label="titleLabel_html" defaultValue="" />
+    <widget:preference name="x3dTitleShowAppName" type="boolean" label="displayAppName_html" defaultValue="true" />
+    <widget:preference name="protocol" type="list" label="protocolLabel_html" defaultValue="imap">
+        <widget:option value="imap" label="IMAP" />
+        <widget:option value="pop" label="POP" />
+    </widget:preference>
+    <widget:preference name="ssl" type="boolean" label="sslLabel_html" defaultValue="true" />
+    <widget:preference name="server" type="text" label="serverLabel_html" defaultValue="" />
+    <widget:preference name="login" type="text" label="loginLabel_html" defaultValue="" />
+    <widget:preference name="password" type="password" label="passwordLabel_html" defaultValue="" />
+    <widget:preference name="profile" type="boolean" label="profileLabel_html" defaultValue="true" />
+</widget:preferences>
+
+<link rel="stylesheet" type="text/css" href="../UIKIT/UIKIT.css" />
+
+<script type="text/javascript" src="../UIKIT/UIKIT.js"></script>
+
+<script type="text/javascript">
+//<![CDATA[
+
+/* global require, widget */
+require(['DS/MailWdg/Mail'], function (Mail) {
+    'use strict';
+    new Mail(widget);
+});
+//]]>
+</script>
+
+</head>
+    <body>
+        <p class="mail"></p>
+    </body>
+</html>

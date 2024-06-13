@@ -1,0 +1,42 @@
+{
+    "editableColumnsDataIndex": ["tree", "ds6w:label-Instance", "ds6w:description", "ds6w:responsible", "ds6w:reserved", "ds6w:manufacturable", "ds6w:description-Instance"],
+    "editableColumnsAttribute": ["V_Name", "PLM_ExternalID-Instance", "V_description", "owner", "reserved", "V_IsManufacturable", "V_description-Instance"],
+    "editBehavior": {
+        "tree": {
+            "mode": "inline",
+            "attribute": "V_Name"
+        },
+        "ds6w:label-Instance": {
+            "mode": "inline",
+            "attribute": "PLM_ExternalID"
+        },
+        "ds6w:description": {
+            "mode": "inline",
+            "attribute": "V_description"
+        },
+        "ds6w:responsible": {
+            "mode": "command",
+            "command": "ActionBar_ChangeOwner"
+        },
+        "ds6w:reserved": {
+            "mode": "commandByValue",
+            "commands": [{
+                    "name": "ActionBar_UnreserveCmd",
+                    "value": "TRUE"
+                },
+                {
+                    "name": "ActionBar_ReserveCmd",
+                    "value": "FALSE"
+                }
+            ]
+        },
+        "ds6w:manufacturable": {
+            "mode": "inline",
+            "attribute": "V_IsManufacturable"
+        },
+        "ds6w:description-Instance": {
+            "mode": "inline",
+            "attribute": "V_description"
+        }
+    }
+}

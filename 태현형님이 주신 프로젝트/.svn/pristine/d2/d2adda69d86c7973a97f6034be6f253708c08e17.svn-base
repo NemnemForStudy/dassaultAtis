@@ -1,0 +1,113 @@
+<%@page import="java.util.Map"%>
+<%@page import="com.google.gson.Gson"%>
+<%@page import="com.daewooenc.mybatis.main.decSQLSessionFactory"%>
+<%@page import="org.apache.ibatis.session.SqlSession"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
+<%@page import="java.io.PrintWriter"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="java.math.BigDecimal"%>
+<%
+  String projectCode = (String) request.getParameter("projectCode");
+  String disciplineCode = (String) request.getParameter("disciplineCode");
+ 
+  String sSubCon = (String) request.getParameter("subCon");
+  String sConstrcutionItemType = (String) request.getParameter("constrcutionItemType");
+  String sDestination = (String) request.getParameter("destination");
+  String sFabCat = (String) request.getParameter("fabCat");
+  String hRowLevel = (String) request.getParameter("rowLevel");
+  String hRowName = (String) request.getParameter("rowName");
+  
+  System.out.println(sSubCon);
+  System.out.println(sConstrcutionItemType);
+  System.out.println(sDestination);
+  System.out.println(sFabCat);
+  System.out.println(hRowLevel);
+  System.out.println(hRowName);
+  
+  HashMap map = new HashMap();	
+  PrintWriter out2 = response.getWriter();
+  
+  List<Map> ClickItemList = null;
+  List<Map> ClickStatusList = null;
+  List<Map> ClickItemStatusList = null;
+  
+  List<String> itemList = new ArrayList();
+  List<String> statusList = new ArrayList();
+  
+
+  Map<String, Integer> mItem = new HashMap();
+  
+  List<List> itemCntListList = new ArrayList();
+  
+  List<List> sendList = new ArrayList();
+  
+  try(SqlSession sqlSession = decSQLSessionFactory.getSession())
+  {
+  	Map selectParamMap = new HashMap();
+  	selectParamMap.put("SITE_CD",projectCode);
+	selectParamMap.put("DCPLN_CD",disciplineCode);
+	
+	if(sSubCon.length() > 0){
+		selectParamMap.put("ORG_CD",sSubCon); 
+	}
+	if(sConstrcutionItemType.length() > 0){
+		selectParamMap.put("OBJ_TP_CD",sConstrcutionItemType); 
+	}
+	if(sDestination.length() > 0){
+		selectParamMap.put("DELI_DEST_NM",sDestination); 
+	}
+	if(sFabCat.length() > 0){
+		selectParamMap.put("FAB_CAT_NM",sFabCat); 
+	}
+	
+	if(hRowName.length() > 0)
+	{
+		selectParamMap.put("PACK_LVL_CD", "PACK_LVL_CD" + hRowLevel);
+		selectParamMap.put("rowName", hRowName);
+	}
+	
+	ClickItemList = sqlSession.selectList("Project.selectDashMaterialItemList", selectParamMap);
+	ClickStatusList = sqlSession.selectList("Project.selectDashMaterialStatusList", selectParamMap);
+	ClickItemStatusList = sqlSession.selectList("Project.selectDashMaterialItemStatusList", selectParamMap);
+	
+	for(int i=0;i < ClickItemList.size();i++){
+		map = (HashMap) ClickItemList.get(i);
+		itemList.add(String.valueOf(map.get("ITEM")));
+	}
+	for(int j=0;j < ClickStatusList.size();j++){
+		map = (HashMap) ClickStatusList.get(j);
+		statusList.add(String.valueOf(map.get("ITEM_STS_CD")));
+	}
+	for(int z=0;z < ClickItemStatusList.size();z++){
+		map = (HashMap) ClickItemStatusList.get(z);
+		mItem.put(String.valueOf(map.get("ITEM_STATUS")), Integer.parseInt(String.valueOf(map.get("CNT"))));
+	}
+	
+	for(String status : statusList){
+		List<Integer> itemCntList = new ArrayList();
+		for(String item : itemList){
+			itemCntList.add(mItem.getOrDefault(item + "_" + status, 0));
+		}
+		itemCntListList.add(itemCntList);
+	}
+	sendList.add(itemList);
+	sendList.add(statusList);
+	sendList.add(itemCntListList);
+	System.out.println(sendList);
+  }catch(Exception e){
+  	e.printStackTrace();
+		throw e;
+  }
+  
+  Map jsonMap = new HashMap();
+  jsonMap.put("data", sendList);
+// out.println(sendList);
+
+//   String json = new com.google.gson.Gson().toJson(sendList);
+String json = new com.google.gson.Gson().toJson(jsonMap);
+  out2.flush();
+  out2.write(json);
+  out2.flush();
+//   System.out.println("json : "+json);
+%>

@@ -1,0 +1,21 @@
+################################################################################################
+# Created By thok : 2023. 08. 10
+# Admin Type : command
+# Name : decRequestReply
+################################################################################################
+#delete command decRequestReply;
+add command 'decRequestReply' 
+	description 'Request Reply' 
+	alt 'emxProgramCentral.Label.RequestReply' 
+	label 'emxProgramCentral.Label.RequestReply' 
+	href '${COMMON_DIR}/decRequestStatus.jsp?mode=reply'
+	setting 'Submit' 'true' 
+	setting 'Target Location' 'pagehidden'
+	setting 'Registered Suite' 'ProgramCentral' 
+	setting 'Image' '${COMMON_DIR}/images/iconActionReAssignTask.png'
+	setting 'Access Function' 'isRequestReplyAvailable' 
+	setting 'Access Program' 'decRequest'
+	setting 'Confirm Message' 'emxProgramCentral.Alarm.RequestReply'
+;
+add property command_decRequestReply on program eServiceSchemaVariableMapping.tcl to command 'decRequestReply'
+;

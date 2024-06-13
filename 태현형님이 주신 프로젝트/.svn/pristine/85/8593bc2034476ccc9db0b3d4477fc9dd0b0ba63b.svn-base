@@ -1,0 +1,20 @@
+################################################################################################
+# Created By jhlee : 2023. 08. 16
+# Admin Type : command
+# Name : decCWPPlanListPortal
+################################################################################################
+#delete command decCWPPlanListPortal;
+add command 'decCWPPlanListPortal' 
+	description 'PropertiesPowerView Command' 
+	label 'ProgramCentral.Command.decCwpPlanList'
+	href '${COMMON_DIR}/emxPortal.jsp?portal=decCWPPlanPortal&showPageHeader=false&HelpMarker=emxhelpprojectdetails' 
+	setting 'Registered Suite' 'ProgramCentral' 
+	setting 'Target Location' 'content'
+	property version value '1' 
+	property 'installed date' value '08-16-2023' 
+	property 'original name' value 'decCWPPlanListPortal'
+;
+add property command_decCWPPlanListPortal on program eServiceSchemaVariableMapping.tcl to command 'decCWPPlanListPortal';
+
+# Modified by jhlee on 2023.10.25
+delete command decCWPPlanListPortal;

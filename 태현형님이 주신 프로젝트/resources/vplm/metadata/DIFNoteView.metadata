@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<!-- ENOVIA DICTIONARY FOR MBDView                 -->
+<!-- COPYRIGHT DASSAULT SYSTEMES 2014, All rights reserved -->
+<Package xmlns="PLMDictionaryUnified"
+         ModelerType="Top"
+         Name="DIFNoteView"
+         Uuid="EF713CCA-70F4-4E36-9CA2-448DDC5FF807"
+         UseNames="DIFModelerAbstractView"
+         BelongsToModeler="DIFModelerAnnotationSet"
+         CustomerExposition="Programmer">
+
+
+	<!-- ******************************************* -->
+	<!-- *  DIFNoteView (PLMCoreReference)             * -->
+	<!-- ******************************************* -->
+	<Class Name="DIFNoteView"
+		   Uuid="68282068-2806-492C-B15D-61DB8F79D92A"
+		   Abstract="No"
+		   SuperName="DIFAbstractView"
+		   Abbreviation="nvw"
+		   CreateInstName="DIFNoteViewInstance"
+		   CustomerExposition="Programmer"
+		   Specializable="Yes"
+		   DeleteAvailability="Yes">
+
+		<CAAComment>
+			<ShortRole>DIF Note View Object</ShortRole>
+			<Role>DIF Note View Object</Role>
+		</CAAComment>
+
+		<!-- PLM New UI/KWE Scripts New -->
+		<Property Name="KweNew_InstanciationMethod" Value="CATDifKBEDelegateInstanciation"/>
+
+		<!-- Icon and 3D Icon -->
+		<Property Name="IconName" Value="I_VPMNavDifView"/>
+
+		<!-- Collaborative Space Applicability -->
+		<Property Name="ShareBetweenProjectsAvailability" Value="Yes"/>
+
+		<!-- Change Management support -->
+		<Property Name="ChangeManagementSupport" Value="Yes"/>
+
+		<!-- Export -->
+		<Method ImplementationType="None">
+			<RealizeMethodType href="ExportScope.meth#ExportScope"/>
+		</Method>
+
+
+	</Class>
+
+	<!-- ********************************************** -->
+	<!-- * DIFViewNoteInstance (PLMCoreInstance)          * -->
+	<!-- ********************************************** -->
+	<RelationClass Name="DIFNoteViewInstance"
+		   Uuid="972B1835-A67A-46BF-B2A4-EE1977618CC6"
+		   Abstract="No"
+		   SuperName="DIFAbstractViewInstance"
+		   CustomerExposition="Programmer"
+		   Specializable="Yes">
+
+		<CAAComment>
+			<ShortRole>DIF  View Instance Object</ShortRole>
+			<Role>DIF View Instance Object</Role>
+		</CAAComment>
+
+		<!-- Configuration -->
+		<Property Name="Filtrable" Value="Yes"/>
+
+		<!-- PLM New UI/KWE Scripts New -->
+		<Property Name="KweNew_InstanciationMethod" Value="CATDifKBEDelegateInstanciation"/>
+
+		<!-- Icon and 3D Icon -->
+		<Property Name="IconName" Value="I_VPMNavDifView"/>
+
+		<!-- Export -->
+		<Method ImplementationType="None">
+			<RealizeMethodType href="ExportScope.meth#ExportScope"/>
+		</Method>
+
+		<SubClause Name="from"   TargetName="DIFAnnotationSet"/>
+		<SubClause Name="from"   TargetName="DIFLayout"/>
+		<SubClause Name="to"   TargetName="DIFNoteView"/>
+
+	</RelationClass>
+
+</Package>

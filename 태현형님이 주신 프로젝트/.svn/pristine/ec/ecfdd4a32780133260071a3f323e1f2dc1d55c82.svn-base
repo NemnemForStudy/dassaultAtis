@@ -1,0 +1,17 @@
+# Added by hslee on 2023.06.20
+# del command decProjectKeyQtyMasterCloneCmd;
+add command decProjectKeyQtyMasterCloneCmd
+	label 'Set/Reset Master Configuration'
+	#href '${SUITE_DIR}/decProjectKeyQtyMasterCloneValidate.jsp'
+	href '${COMMON_DIR}/decTurnOnProgress.jsp?forwardURL=../programcentral/decKeyQtyMasterCloneValidate.jsp'
+	setting 'Registered Suite' 'ProgramCentral'
+	setting 'Target Location' 'listHidden'
+	setting 'Image' '${COMMON_DIR}/images/I_Duplicate32.png'
+;
+
+# Modified by hslee on 2023.09.09
+mod command decProjectKeyQtyMasterCloneCmd
+	add setting 'hasAccess' 'PIM'
+	add setting 'Access Program' 'decAccess'
+	add setting 'Access Function' 'hasAccess'
+;

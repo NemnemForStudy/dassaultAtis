@@ -1,0 +1,1 @@
+define("DS/XCTInfResources/XCTInfResources_es",{});define("DS/XCTInfResources/assets/nls/XCTInfResources",{Common:{Link:"Vincular",Parameter:"Parámetro"}});

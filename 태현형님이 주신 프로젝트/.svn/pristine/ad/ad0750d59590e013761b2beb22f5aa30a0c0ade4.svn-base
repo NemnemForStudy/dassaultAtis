@@ -1,0 +1,1 @@
+Proj4js.defs["EPSG:4312"] = "+proj=longlat +datum=hermannskogel +no_defs";

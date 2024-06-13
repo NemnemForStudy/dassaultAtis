@@ -1,0 +1,14 @@
+{
+  "version": "1.0.0",
+  "summary": "Interpoluje hodnotu vstupních dat při každém kroku spuštění po dobu jedné sekundy se zohledněním času uplynulého od předchozího kroku spuštění.",
+  "description": "Tento blok je velmi užitečný při tvorbě <b>snímkových animací</b>. Garantuje konstantní rychlost animace bez ohledu na využitý výpočetní výkon.<br><br>Objekt animovaný <b>podle času</b> přejde <b>z bodu A</b> do <b>bodu B</b> za <b>stejný čas</b> bez ohledu na obnovovací frekvenci videa. Čím menší obnovovací frekvence, tím <b>rychleji se objekt v každém snímku posune</b>, aby zůstala zachována konstantní rychlost.<br><br>Jestliže je ale animace <b>založená na obnovovací frekvenci</b>, bude objekt na přesun z <b>bodu A</b> do <b>bodu B</b> stejný potřebovat vždy <b>stejný počet snímků</b>. Čím nižší obnovovací frekvence, tím déle přesun potrvá, protože vzdálenost uražená v každém snímku se nemění.<br><br>Lze tedy říci, že s nižší obnovovací frekvencí snímková animace <b>také zpomaluje</b>, zatímco časová animace se bude přehrávat <b>trhaně</b>.<br>Časová animace je též známa pod názvem „nezávislost na obnovovací frekvenci“.",
+  "dataPorts": {
+    "Input": "odpovídá vstupní hodnotě pro interpolaci za sekundu.",
+    "Output": "odpovídá výstupní hodnotě, kde <doc-odp-name translate=no>Output</doc-odp-name> = <doc-idp-name translate=no>Input</doc-idp-name> * Uplynulý čas (v sekundách).<br>Uplynulý čas představuje dobu trvání jednoho kroku provádění."
+  },
+  "controlPorts": {
+    "In": "vyvolá spuštění bloku.",
+    "Out": "aktivuje se po dokončení procesu."
+  },
+  "example": null
+}

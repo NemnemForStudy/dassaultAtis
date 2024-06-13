@@ -1,0 +1,689 @@
+<!-- Begin Modification Basic expand -->
+<RELATIONSHIPTYPEFIELDS name="cv.rel">
+    <FIELD name="sdccode" key="expandrel" onlyForSXI="TRUE" type="STRING" select="CONST:expand" />
+</RELATIONSHIPTYPEFIELDS>
+
+<BOTYPEFIELDS name="cv.bo">
+    <FIELD name="typecode" type="NUM" retrievable="TRUE" searchable="TRUE" ramBased="TRUE" multiValued="TRUE" select="CONST:" fts="false" hidden="true"/>
+    <FIELD name="sdccode"  key="expandbo" onlyForSXI="TRUE" type="STRING" select="CONST:expand" hidden="true"/>
+    
+    <!-- BEGIN MATConnectionsAggregationProcessor -->
+    <FIELD key="cv.bo.matcon.material_connections" name="material_connections" ramBased="TRUE" select="CONST:" type="IDENTIFIER"/>
+    <FIELD hidden="true" key="cv.bo.matcon.sdccode" name="sdccode" onlyForSXI="TRUE" select="CONST:matconnections" type="STRING"/>
+    <!-- END MATConnectionsAggregationProcessor --> 
+</BOTYPEFIELDS>
+
+<BOTYPE.EXTFIELDS name="PLMCoreReference"    includes="cv.bo" />
+<BOTYPE.EXTFIELDS name="PLMCoreRepReference" includes="cv.bo" />
+
+<BOTYPEFIELDS name="expand.repaggr">
+    <FIELD name="isOnceInstantiable" select="evaluate[if (attribute[PLMCoreRepReference.V_isOnceInstantiable] == 'TRUE') then ('1') else ('0')]" type="INTEGER" retrievable="TRUE" searchable="FALSE" ramBased="TRUE" multiValued="FALSE" useSimpleProperty="true" fts="false" hidden="true"/>
+</BOTYPEFIELDS>
+<BOTYPE.EXTFIELDS name="PLMCoreRepReference" includes="expand.repaggr" />
+<!-- End modification Basic expand -->
+
+
+<!-- Begin modification Matrix -->
+<RELATIONSHIPTYPEFIELDS name="expand.volume.rel">
+    <FIELD name="sdccode" key="volumic" onlyForSXI="TRUE" type="STRING" select="CONST:matrix" /> 
+    <FIELD name="matrixtxt" key="core" type="IDENTIFIER" select="CONST:" ramBased="true"/>
+</RELATIONSHIPTYPEFIELDS>
+
+<RELATIONSHIPTYPE.EXTFIELDS name="LPAbstract3DRepInstance" includes="expand.volume.rel" />
+<RELATIONSHIPTYPE.EXTFIELDS name="LPAbstractInstance"      includes="expand.volume.rel" />
+<!-- End modification Matrix -->
+
+
+
+<!-- Begin modification CONFIG -->
+<BOTYPEFIELDS name="cv.config.connec.sm" usage="path">
+    <FIELD name="markerpaths" key="sm" onlyForSXI="TRUE" type="STRING" select="paths[SemanticRelation]" hidden="true"/>
+    <FIELD name="sdccode"     key="sm" onlyForSXI="TRUE" type="STRING" select="CONST:staticmapping" hidden="true"/>
+</BOTYPEFIELDS>
+
+<BOTYPEFIELDS name="cv.config.connec.model" usage="path">
+    <FIELD name="markerpaths" key="model" onlyForSXI="TRUE" type="STRING" select="paths[SemanticRelation]" hidden="true"/>
+    <FIELD name="sdccode"     key="connexionmodel" onlyForSXI="TRUE" type="STRING" select="CONST:connexionmodel" hidden="true"/>
+</BOTYPEFIELDS>
+
+<BOTYPEFIELDS name="cv.config.model">
+    <FIELD name="sdcphysicalid" onlyForSDC="true" type="STRING" select="physicalid" hidden="true"/> 
+    <FIELD name="sdccode"     key="model" onlyForSXI="TRUE" type="STRING" select="CONST:model" hidden="true"/>
+</BOTYPEFIELDS>
+
+<RELATIONSHIPTYPEFIELDS name="cv.config.rules.attr">
+    <FIELD name="compobinary"  onlyForSDC="TRUE" type="STRING" select="attribute[Composition Binary]" />
+</RELATIONSHIPTYPEFIELDS>
+
+<RELATIONSHIPTYPE name="Products" active="true" isIndexed="true" includes="" />
+<RELATIONSHIPTYPE name="Child Composition Binary" active="true" isIndexed="false" includes="cv.config.rules.attr" />
+<RELATIONSHIPTYPE name="Series Master" active="true" isIndexed="true" includes="" />
+<RELATIONSHIPTYPE name="Managed Series" active="true" isIndexed="true" includes="" />
+<RELATIONSHIPTYPE name="Model Build" active="true" searchable="false" includes="ro.navigation"/>
+<RELATIONSHIPTYPE name="Parent Composition Binary" active="true" isIndexed="false" includes="cv.config.rules.attr" />
+
+<BOTYPE name="Manufacturing Plan Master" active="true" isIndexed="true"/>
+
+<BOTYPE.EXTFIELDS name="VPMCfgInstanceConfiguration" includes="cv.config.connec.sm"    />
+<BOTYPE.EXTFIELDS name="Model"                       includes="cv.config.model"      />     
+<BOTYPE.EXTFIELDS name="VPMCfgContext"               includes="cv.config.connec.model" />                            
+
+<BOTYPEFIELDS name="cv.config.fieldcreation">
+    <FIELD name="staticmapping" type="STRING" retrievable="TRUE" searchable="FALSE" ramBased="TRUE" multiValued="FALSE" useSimpleProperty="true" select="CONST:" fts="false" hidden="true"/>
+    <FIELD name="rules" type="STRING" retrievable="TRUE" searchable="FALSE" ramBased="TRUE" multiValued="TRUE" useSimpleProperty="true" select="CONST:" fts="false" hidden="true"/>
+</BOTYPEFIELDS>
+
+<BOTYPE.EXTFIELDS name="Model" includes="cv.config.fieldcreation" />
+<!-- End modification CONFIG -->
+
+
+<!-- Begin modification Thumbnails -->
+<BOTYPEFIELDS name="cv.thumb">
+      <FIELD name="sdc.2dthb.name" key="dwh" select="format[6].file.name" type="STRING" onlyForSDC="true" hidden="true"/>
+      <FIELD name="sdc.3dthb.name" select="format[4].file.name" type="STRING" onlyForSDC="true" hidden="true"/>
+      <!-- <FIELD name="sdc.2dthb.phyid" select="physicalid" type="STRING" /> -->
+      <FIELD name="sdccode" key="thumb" type="STRING" onlyForSXI="TRUE" select="CONST:dwhthumbnails" hidden="true"/>
+      <FIELD name="markerderivedof"   key="thumb" type="STRING" onlyForSXI="true" select="attribute[PLMDerivedObjRepresentation.V_DerivedOf]" hidden="true"/>
+
+      <FIELD name="sdc.2dthb.format" key="dwh" onlyForSDC="true" select="CONST:6" type="STRING" hidden="true"/>
+      <FIELD name="sdc.3dthb.format" onlyForSDC="true" select="CONST:4" type="STRING" hidden="true"/>
+</BOTYPEFIELDS>
+
+<BOTYPEFIELDS name="cv.thumb.fieldcreation">
+      <FIELD name="2dthb.phyid"  select="CONST:" type="STRING" fts="false"  hidden="true"/>
+      <FIELD name="3dthb.phyid"  select="CONST:" type="STRING" fts="false"  hidden="true" ramBased="true"/>
+      <FIELD name="2dthb.name"   select="CONST:" type="STRING" fts="false"  hidden="true"/>
+      <FIELD name="3dthb.name"   select="CONST:" type="STRING" fts="false"  hidden="true" ramBased="true"/>
+      <FIELD name="2dthb.format" select="CONST:" type="STRING" fts="false"  hidden="true"/>
+      <FIELD name="3dthb.format" select="CONST:" type="STRING" fts="false"  hidden="true" ramBased="true"/>
+</BOTYPEFIELDS>
+
+<BOTYPE.EXTFIELDS name="PLMDerivedObjRepresentation" includes="cv.thumb,cv.thumb.fieldcreation" />
+
+<!-- RLL1 is adding octree wms START-->
+
+<BOTYPEFIELDS name="cv.rep.cgr.octreewms">
+    <FIELD name="octreewms" key="vplm_octreewms" select="CONST:" type="STRING" fts="false" hidden="true"/>
+</BOTYPEFIELDS>
+
+<!-- note : it's useless to add the field to specific types because anyways the field will be created in the datamodel, but I am doing it to inform people of the current rep types in SXI which are also horribly hardcoded in the code -->
+<BOTYPE.EXTFIELDS name="LPAbstract3DRepReference" includes="cv.rep.cgr.octreewms" />
+<BOTYPE.EXTFIELDS name="CATShape" includes="cv.rep.cgr.octreewms" />
+<BOTYPE.EXTFIELDS name="CATIA V4 Model" includes="cv.rep.cgr.octreewms" />
+<BOTYPE.EXTFIELDS name="CATIA CGR" includes="cv.rep.cgr.octreewms" />
+<BOTYPE.EXTFIELDS name="MCAD Component" includes="cv.rep.cgr.octreewms" />
+
+<!-- RLL1 is adding octree wms END-->
+
+<BOTYPEFIELDS name="mat.thumb">
+    <FIELD name="sdc.2dthb.name"   key="mat" select="format[6].file.name" type="STRING" onlyForSDC="true"  hidden="true"/>
+    <FIELD name="sdc.2dthb.format" key="mat" select="CONST:6" type="STRING" onlyForSDC="true"  hidden="true"/>
+</BOTYPEFIELDS>
+
+<BOTYPE.EXTFIELDS name="dsc_matref_rep_Rendering" includes="mat.thumb" />
+
+<BOTYPE.EXTFIELDS name="ENOSTMatDomainDS" includes="mat.thumb" />
+<BOTYPE.EXTFIELDS name="MaterialDomainDS" includes="mat.thumb" />
+
+<BOTYPEFIELDS name="cv.thumb.aec">
+      <FIELD name="sdccode" key="thumbaec" type="STRING" onlyForSXI="TRUE" select="CONST:aecthumbnails"  hidden="true"/>
+</BOTYPEFIELDS>
+<BOTYPE.EXTFIELDS name="ObjectTypeReference" includes="cv.thumb.aec" />
+<!-- End modification Thumbnails -->
+
+
+<!-- Begin modification CGR -->
+<BOTYPEFIELDS name="cv.cgr">
+    <FIELD name="cgr.phyid"  key="vplm" select="CONST:" type="STRING" fts="false"  hidden="true" ramBased="true"/>
+    <FIELD name="cgr.name"   key="vplm" select="CONST:" type="STRING" fts="false"  hidden="true" ramBased="true"/>
+    <FIELD name="cgr.format" key="vplm" select="CONST:" type="STRING" fts="false"  hidden="true" ramBased="true"/>
+    
+    <FIELD name="markerformat2" type="STRING" onlyForSXI="TRUE" select="format[2].file.name"  hidden="true"/>
+    <FIELD name="markerformat1" type="STRING" onlyForSXI="TRUE" select="format[1].file.name"  hidden="true"/>
+    <FIELD name="markersd"      type="STRING" onlyForSXI="TRUE" select="attribute[StreamDescriptors]"  hidden="true"/>
+    
+    <FIELD name="sdccode" key="cgr" type="STRING" onlyForSXI="TRUE" select="CONST:cgr"  hidden="true"/>
+</BOTYPEFIELDS>
+
+<BOTYPE.EXTFIELDS name="LPAbstract3DRepReference" includes="cv.cgr" />  
+<!-- End modification CGR -->
+
+
+<!-- Begin modification SVG -->
+<BOTYPEFIELDS name="cv.svgdrawing">
+    <FIELD name="svg.phyid"  key="svgdrawing" select="CONST:" type="STRING" fts="false" />
+    <FIELD name="svg.name"   key="svgdrawing" select="CONST:" type="STRING" fts="false" />
+    <FIELD name="svg.format" key="svgdrawing" select="CONST:" type="STRING" fts="false" />
+
+    <FIELD name="sdccode" key="svgdrawing" type="STRING" onlyForSXI="TRUE" select="CONST:svgurl" />
+</BOTYPEFIELDS>
+
+<!-- End modification SVG -->
+
+<!-- Begin modification UDL -->
+<BOTYPEFIELDS name="cv.udldrawing">
+    <FIELD name="udl.phyid"  key="udldrawing" select="CONST:" type="STRING" fts="false" />
+    <FIELD name="udl.name"   key="udldrawing" select="CONST:" type="STRING" fts="false" />
+    <FIELD name="udl.format" key="udldrawing" select="CONST:" type="STRING" fts="false" />
+
+    <FIELD name="sdccode" key="udldrawing" type="STRING" onlyForSXI="TRUE" select="CONST:udl" />
+</BOTYPEFIELDS>
+
+<!-- End modification UDL -->
+
+<!-- Begin modification UDL DOS-->
+<BOTYPEFIELDS name="cv.udldrawing.dos">
+    <FIELD fts="false" hidden="true" key="udldrawingdos" name="2dthb.dosfileid" select="physicalid" type="STRING"/>
+    <FIELD fts="false" hidden="true" key="udldrawingdos" name="2dthb.dosbucketname" select="CONST:ldvspace2dt" type="STRING"/>
+</BOTYPEFIELDS>
+<!-- End modification UDL DOS-->
+
+<!-- Begin modification rep 2dthbrep DOS -->
+<BOTYPEFIELDS name="cv.shape.dos.thb">
+    <FIELD fts="false" hidden="true" key="shapethbdos" name="2dthb.dosfileid" select="CONST:" type="STRING"/>
+    <FIELD fts="false" hidden="true" key="shapethbdos" name="2dthb.dosbucketname" select="CONST:" type="STRING"/>
+     <FIELD key="shapethbdos" name="sdccode" onlyForSXI="TRUE" select="CONST:shapedos2dthb" type="STRING"/>
+</BOTYPEFIELDS>
+<BOTYPE.EXTFIELDS name="LPAbstract3DRepReference" includes="cv.shape.dos.thb" />
+<!-- End modification rep 2dthbrep DOS -->
+
+<!-- Begin modification ANIMATION -->
+<BOTYPEFIELDS name="cv.anm">
+    <FIELD name="anm.phyid"  key="anmkey1" select="CONST:" type="STRING" fts="false" />
+    <FIELD name="anm.name"   key="anmkey1" select="CONST:" type="STRING" fts="false" />
+    <FIELD name="anm.format" key="anmkey1" select="CONST:" type="STRING" fts="false" />
+
+    <FIELD name="sdccode" key="anmkey1" type="STRING" onlyForSXI="TRUE" select="CONST:anm" />
+</BOTYPEFIELDS>
+
+<BOTYPE.EXTFIELDS name="CATANIMDISCIPLINE" includes="cv.anm" />
+
+<!-- End modification ANIMATION -->
+
+
+<BOTYPE.EXTFIELDS name="Drawing" includes="cv.udldrawing,cv.svgdrawing,cv.udldrawing.dos" />
+<BOTYPE.EXTFIELDS name="DIFViewStream" includes="cv.udldrawing" />
+<BOTYPE.EXTFIELDS name="DIFBackgroundViewRep" includes="cv.udldrawing" />
+
+<!-- Begin modification Navigation -->
+<BOTYPEFIELDS name="bo.navigation.sr" usage="path">
+    <FIELD name="markerpaths" key="srbo" onlyForSXI="TRUE" type="STRING" select="paths[SemanticRelation]" hidden="true"/>
+</BOTYPEFIELDS>
+
+<RELATIONSHIPTYPEFIELDS name="ro.navigation.sr" usage="path">
+    <FIELD name="markerpaths" key="srro" onlyForSXI="TRUE" type="STRING" select="paths[SemanticRelation]" hidden="true" />
+</RELATIONSHIPTYPEFIELDS>
+
+<RELATIONSHIPTYPEFIELDS name="ro.navigation">
+    <FIELD name="from.physicalid" type="IDENTIFIER" select="from.physicalid" fts="false" />
+    <FIELD name="from.logicalid"  type="IDENTIFIER" select="evaluate[from.logicalid]"  fts="false" />
+    <FIELD name="from.majorid"    type="IDENTIFIER" select="evaluate[from.majorid]"    fts="false" />
+    <FIELD name="from.type"       type="IDENTIFIER" select="evaluate[from.type]"       fts="false" />
+    
+    <FIELD name="to.physicalid" type="IDENTIFIER" select="to.physicalid" fts="false" />
+    <FIELD name="to.logicalid"  type="IDENTIFIER" select="evaluate[to.logicalid]"  fts="false" />
+    <FIELD name="to.majorid"    type="IDENTIFIER" select="evaluate[to.majorid]"    fts="false" />
+    <FIELD name="to.type"       type="IDENTIFIER" select="evaluate[to.type]"       fts="false" />
+	
+	<FIELD name="fromrel.physicalid" type="IDENTIFIER" select="fromrel.physicalid" fts="false" />
+    <FIELD name="torel.physicalid"   type="IDENTIFIER" select="torel.physicalid"   fts="false" />
+
+</RELATIONSHIPTYPEFIELDS>
+
+<RELATIONSHIPTYPEFIELDS name="ebom.cfgrevcompiledform">
+      <FIELD key="ebom.cfgrevcompiledform" name="cfgrevcompiledform" select="CONST:" type="IDENTIFIER" />
+      <FIELD key="ebom.cfgrevcompiledform" name="sdccode" onlyForSXI="TRUE" select="CONST:cfgrevcompiledform" type="STRING"/>
+</RELATIONSHIPTYPEFIELDS>
+
+<BOTYPE.EXTFIELDS name="PLMCoreRepReference" includes="bo.navigation.sr" />
+<BOTYPE.EXTFIELDS name="PLMConnection"       includes="bo.navigation.sr" />
+<BOTYPE.EXTFIELDS name="PLMPort"             includes="bo.navigation.sr" />
+<BOTYPE.EXTFIELDS name="PLMReference"        includes="bo.navigation.sr" />
+
+<RELATIONSHIPTYPE.EXTFIELDS name="PLMInstance" includes="ro.navigation,ro.navigation.sr" />
+
+<!-- Start BPS types : those types do not come from the IRPC model, so they must be added manually. This is very annoying, so in the future we would like the applications to handle this part. -->
+<RELATIONSHIPTYPE.EXTFIELDS name="MfgProcessAlternate" includes="ro.navigation,ro.navigation.sr" />
+<RELATIONSHIPTYPE.EXTFIELDS name="EBOM" includes="ro.navigation,ro.navigation.sr,ebom.cfgrevcompiledform" />
+    <!-- navigation for classif start -->
+    <RELATIONSHIPTYPE.EXTFIELDS name="Subclass" includes="ro.navigation" />
+    <RELATIONSHIPTYPE.EXTFIELDS name="Classified Item" includes="ro.navigation" />
+    <!-- navigation for classif end -->
+<!-- End BPS types -->
+
+<RELATIONSHIPTYPE name="VPLMrel/PLMConnection/V_Owner" active="true" includes="ro.navigation" searchable="false" />
+<RELATIONSHIPTYPE name="VPLMrel/PLMPort/V_Owner"       active="true" includes="ro.navigation" searchable="false" />
+<!-- End modification Navigation -->
+
+<!-- Begin modification 3DIndex legacy -->
+<BOTYPEFIELDS name="cgrwmsvvs">
+  <!-- wms,vvs -->
+  <FIELD name="cgrwms" select="CONST:" type="STRING" hidden="true" ramBased="true"/>
+  <FIELD name="cgrvvs" select="CONST:" type="STRING" hidden="true"/>
+  <FIELD name="3dthbwms" select="CONST:" type="STRING" hidden="true"/>
+  <FIELD name="3dthbvvs" select="CONST:" type="STRING" hidden="true"/>
+  <FIELD name="2dthbwms" select="CONST:" type="STRING" hidden="true"/>
+  <FIELD name="2dthbvvs" select="CONST:" type="STRING" hidden="true"/>
+</BOTYPEFIELDS>
+
+<!-- Begin modification proc status -->
+<BOTYPEFIELDS name="procstatus">
+  <FIELD name="processingStatus_LASTERROROCTREE" select="CONST:" type="STRING" hidden="true"/>
+  <FIELD name="processingStatus_OCTREE_errorCode" select="CONST:" type="NUM" hidden="true" ramBased="TRUE"/>
+  <FIELD name="processingStatus_OCTREE" select="CONST:" type="STRING" hidden="true"/>
+  <FIELD name="processingStatus_TWODTHB" select="CONST:" type="STRING" hidden="true"/>
+  <FIELD name="processingStatus_NAVREP" select="CONST:" type="STRING" hidden="true"/>
+  <FIELD name="processingStatus_SEND_TO_VISU" select="CONST:" type="STRING" hidden="true"/>
+  <FIELD name="processingStatus_CADFILE_XCAD" select="CONST:" type="STRING" hidden="true"/>
+  <FIELD name="processingStatus_FILE_DOCPDF" select="CONST:" type="STRING" hidden="true"/>
+  <FIELD name="nbRetry_OCTREE" select="CONST:" type="INTEGER" hidden="true"/>
+  <FIELD name="nbRetry_TWODTHB" select="CONST:" type="INTEGER" hidden="true"/>
+  <FIELD name="nbRetry_NAVREP" select="CONST:" type="INTEGER" hidden="true"/>
+  <FIELD name="nbRetry_SEND_TO_VISU" select="CONST:" type="INTEGER" hidden="true"/>
+  <FIELD name="nbRetry_CADFILE_XCAD" select="CONST:" type="INTEGER" hidden="true"/>
+  <FIELD name="nbRetry_FILE_DOCPDF" select="CONST:" type="INTEGER" hidden="true"/>
+  <FIELD name="visu_URL_NAVREP" select="CONST:" type="STRING" hidden="true" ramBased="true"/>
+</BOTYPEFIELDS>
+
+<BOTYPEFIELDS name="cgrwmsvvssdctrigger">
+  <FIELD name="sdccode" key="3dindexcgrvmswws" type="STRING" onlyForSXI="TRUE" select="CONST:3dindexcgrvmswws"  hidden="true"/>
+</BOTYPEFIELDS>
+
+<BOTYPEFIELDS name="thbwmsvvssdctrigger">
+  <FIELD name="sdccode" key="3dindexthbvmswws" type="STRING" onlyForSXI="TRUE" select="CONST:3dindexthbvmswws"  hidden="true"/>
+</BOTYPEFIELDS>
+
+ <BOTYPEFIELDS name="expand.volume.rep"> 
+ <FIELD fts="false" key="key987" name="non3drep" select="CONST:" type="INTEGER" ramBased="TRUE" retrievable="TRUE" searchable="FALSE"/> 
+ </BOTYPEFIELDS> 
+
+
+<BOTYPE.EXTFIELDS name="PLMDerivedObjRepresentation" includes="thbwmsvvssdctrigger" />
+<BOTYPE.EXTFIELDS name="LPAbstract3DRepReference" includes="cgrwmsvvssdctrigger,cgrwmsvvs,procstatus,expand.volume.rep,plmtdoc.stream" />
+<!-- End modification 3DIndex legacy -->
+
+<!-- Begin modification DEC -->
+<BOTYPEFIELDS name="dec.bo.expand">
+    <FIELD name="sdccode" key="decboexpand" onlyForSXI="TRUE" type="STRING" select="CONST:decexpand"  hidden="true"/>
+    <!-- <FIELD name="majorid" key="dec" type="VALUE" retrievable="TRUE" searchable="TRUE" ramBased="TRUE" multiValued="FALSE" useSimpleProperty="true" select="majorid" /> -->
+    <!-- Adding logicalid for DEC objects (3DIndex compatibility) -->
+    <FIELD name="logicalid" key="dec" type="VALUE" select="logicalid" hidden="true"/>
+    <FIELD name="minororder" key="dec" type="NUM" retrievable="TRUE" searchable="FALSE" ramBased="TRUE" multiValued="FALSE" useSimpleProperty="true" select="minororder" fts="false"  hidden="true"/>
+    <FIELD name="cestamp" key="bodec" type="VALUE" select="cestamp" fts="false"  hidden="true"/>
+</BOTYPEFIELDS>
+
+<RELATIONSHIPTYPEFIELDS name="dec.ro.expand">
+    <FIELD name="sdccode" key="decroexpand" onlyForSXI="TRUE" type="STRING" select="CONST:decexpand" />
+    <!-- Adding logicalid for DEC objects (3DIndex compatibility) -->
+    <FIELD name="logicalid" key="reldec" type="VALUE" select="logicalid"/>
+    <FIELD name="cestamp" key="reldec" type="VALUE" select="cestamp" fts="false" />
+</RELATIONSHIPTYPEFIELDS>
+
+<RELATIONSHIPTYPEFIELDS name="dec.ro.expand.matrix">
+    <FIELD name="sdccode" key="decromatrix" onlyForSXI="TRUE" type="STRING" select="CONST:decmatrix" /> 
+</RELATIONSHIPTYPEFIELDS>
+
+<RELATIONSHIPTYPEFIELDS name="dec.inst.expand.matrix">
+    <FIELD name="attribute[Spatial Location]" onlyForSXI="TRUE" type="STRING" select="attribute[Spatial Location]" />
+</RELATIONSHIPTYPEFIELDS>
+
+<BOTYPEFIELDS name="dec.rep.check">
+    <FIELD name="markderdecreptofrom" key="decrep" type="STRING" onlyForSXI="TRUE" select="to[Viewable].from.type"  hidden="true"/>
+</BOTYPEFIELDS>
+
+<BOTYPEFIELDS name="dec.rep.cgr">
+    <FIELD name="cgr.phyid"  key="dec" select="physicalid"            type="STRING" fts="false"  hidden="true" ramBased="true"/>
+    <FIELD name="cgr.name"   key="dec" select="format[CGR].file.name" type="STRING" fts="false"  hidden="true" ramBased="true"/>
+    <FIELD name="cgr.format" key="dec" select="CONST:CGR"             type="STRING" fts="false"  hidden="true" ramBased="true"/>
+</BOTYPEFIELDS>
+
+<RELATIONSHIPTYPEFIELDS name="dec.rel.check">
+    <FIELD name="markerdecfrom" key="decrelcheck" type="STRING" onlyForSXI="TRUE" select="from.type" />
+    <FIELD name="markerdecto"   key="decrelcheck" type="STRING" onlyForSXI="TRUE" select="to.type" />
+</RELATIONSHIPTYPEFIELDS>
+
+<BOTYPE.EXTFIELDS name="MCAD Component"           includes="dec.bo.expand" />
+<BOTYPE.EXTFIELDS name="MCAD Assembly"            includes="dec.bo.expand" />
+<BOTYPE.EXTFIELDS name="CATDrawing"               includes="dec.bo.expand" />
+<BOTYPE.EXTFIELDS name="CATIA CGR"                includes="dec.bo.expand" />
+<BOTYPE.EXTFIELDS name="CATShape"                 includes="dec.bo.expand" />
+<BOTYPE.EXTFIELDS name="CATIA V4 Model"           includes="dec.bo.expand" />
+
+<BOTYPE.EXTFIELDS name="CgrViewable" includes="dec.bo.expand,dec.rep.check,dec.rep.cgr" />
+
+<RELATIONSHIPTYPE.EXTFIELDS name="Viewable"           includes="dec.ro.expand,dec.ro.expand.matrix,dec.rel.check" />
+<RELATIONSHIPTYPE.EXTFIELDS name="CAD SubComponent"   includes="dec.ro.expand,dec.ro.expand.matrix,dec.inst.expand.matrix,dec.rel.check" />
+<RELATIONSHIPTYPE.EXTFIELDS name="CatProcess"  includes="dec.ro.expand,dec.ro.expand.matrix,dec.rel.check" />
+<RELATIONSHIPTYPE.EXTFIELDS name="CatAnalysis" includes="dec.ro.expand,dec.ro.expand.matrix,dec.rel.check" />
+<RELATIONSHIPTYPE.EXTFIELDS name="Associated Drawing" includes="dec.ro.expand,dec.ro.expand.matrix,dec.rel.check" />
+<RELATIONSHIPTYPE.EXTFIELDS name="CAD Representation" includes="dec.ro.expand,dec.ro.expand.matrix,dec.rel.check" />
+
+<BOTYPEFIELDS name="dec.thb">
+    <FIELD name="sdc.2dthb.name"   key="dec" select="format[PNG].file.name" type="STRING" onlyForSDC="true"  hidden="true"/>
+    <FIELD name="sdc.2dthb.format" key="dec" select="CONST:PNG" type="STRING" onlyForSDC="true"  hidden="true"/>
+</BOTYPEFIELDS>
+<BOTYPE.EXTFIELDS name="ThumbnailViewable" includes="dec.thb" />
+
+<RELATIONSHIPTYPE.EXTFIELDS name="CatAnalysis"        includes="ro.navigation" />
+<RELATIONSHIPTYPE.EXTFIELDS name="CatProcess"         includes="ro.navigation" />
+<RELATIONSHIPTYPE.EXTFIELDS name="Associated Drawing" includes="ro.navigation" />
+<RELATIONSHIPTYPE.EXTFIELDS name="CAD SubComponent"   includes="ro.navigation" />
+<RELATIONSHIPTYPE.EXTFIELDS name="CAD Representation" includes="ro.navigation" />
+<RELATIONSHIPTYPE.EXTFIELDS name="Sub Vaults"         includes="ro.navigation" />
+<RELATIONSHIPTYPE.EXTFIELDS name="Data Vaults"        includes="ro.navigation" />
+<RELATIONSHIPTYPE.EXTFIELDS name="Vaulted Objects"    includes="ro.navigation" />
+<RELATIONSHIPTYPE.EXTFIELDS name="CatDesignTable"     includes="ro.navigation" />
+
+<RELATIONSHIPTYPEFIELDS name="dec.filter.rel">
+    <FIELD name="sdccode" key="decfilterrel" onlyForSXI="TRUE" type="STRING" select="CONST:filterCADSub" /> 
+</RELATIONSHIPTYPEFIELDS>
+<RELATIONSHIPTYPEFIELDS name="dec.type.rel">
+    <FIELD name="TYPE_TAG" key="dectyperel" select="type" type="STRING,PARAMETRIC" ramBased="true" sixw="ds6w:type" />
+</RELATIONSHIPTYPEFIELDS>
+<RELATIONSHIPTYPE.EXTFIELDS name="CAD SubComponent" includes="dec.filter.rel,dec.type.rel" />
+<RELATIONSHIPTYPE.EXTFIELDS name="CAD Representation" includes="dec.type.rel" />
+
+<BOTYPE.EXTFIELDS name="SW Component Instance" includes="dec.bo.expand" />
+<BOTYPE.EXTFIELDS name="SW Assembly Instance" includes="dec.bo.expand" /> 
+<!-- End modification DEC -->
+
+
+<!-- Begin modification Searchability -->
+<BOTYPEFIELDS name="search.shape">
+    <FIELD name="sdccode" key="searchshape" onlyForSXI="TRUE" type="STRING" select="CONST:filterShape"  hidden="true"/> 
+</BOTYPEFIELDS>
+
+<BOTYPE.EXTFIELDS name="3DShape" includes="search.shape" />
+
+<BOTYPEFIELDS name="search.person">
+    <FIELD name="sdccode" key="searchperson" onlyForSXI="TRUE" type="STRING" select="CONST:filterPerson"  hidden="true"/> 
+</BOTYPEFIELDS>
+
+<BOTYPE.EXTFIELDS name="Person" includes="search.person" />
+
+<BOTYPEFIELDS name="search.conceptMap">
+   <FIELD name="sdccode" key="searchconceptmap" onlyForSXI="TRUE" type="STRING" select="CONST:filterConceptMap"  hidden="true"/>
+</BOTYPEFIELDS>
+
+<BOTYPE.EXTFIELDS name="PLMDMTDocument" includes="search.conceptMap" />
+<!-- End modification Searchability -->
+
+
+<!-- Begin modification Relcount -->
+<RELATIONSHIPTYPEFIELDS name="relcount">
+    <FIELD name="relcount" type="NUM" select="CONST:" fts="false" />
+</RELATIONSHIPTYPEFIELDS>
+
+<RELATIONSHIPTYPE.EXTFIELDS name="LPAbstractInstance" includes="relcount" />
+
+<RELATIONSHIPTYPEFIELDS name="exclude.relcount">
+    <FIELD name="sdctype" key="relcount" type="STRING" onlyForSXI="true" select="CONST:excludeRelCount" />
+</RELATIONSHIPTYPEFIELDS>
+
+<RELATIONSHIPTYPE.EXTFIELDS name="CATIA V5 Geometry Import"             includes="exclude.relcount" />
+<RELATIONSHIPTYPE.EXTFIELDS name="CATIA V5 Knowledge Import"            includes="exclude.relcount" />
+<RELATIONSHIPTYPE.EXTFIELDS name="CATIA V5 Context"                     includes="exclude.relcount" />
+<RELATIONSHIPTYPE.EXTFIELDS name="CATIA V5 Contextual Geometry Import"  includes="exclude.relcount" />
+<RELATIONSHIPTYPE.EXTFIELDS name="CATIA V5 Contextual Knowledge Import" includes="exclude.relcount" />
+<RELATIONSHIPTYPE.EXTFIELDS name="CatMML"                               includes="exclude.relcount" />
+<RELATIONSHIPTYPE.EXTFIELDS name="Viewable"                             includes="exclude.relcount" />
+<RELATIONSHIPTYPE.EXTFIELDS name="Derived Output"                       includes="exclude.relcount" />
+<RELATIONSHIPTYPE.EXTFIELDS name="Vaulted Objects"                      includes="exclude.relcount" />
+<!-- End modification Relcount -->
+
+<!-- Begin modification workspace name -->
+<BOTYPEFIELDS name="ensure.workspace.has.a.name.in.consobox">
+    <FIELD name="sdcworkspacename" onlyForSDC="true" select="attribute[PLMEntity.V_Name]" type="STRING"  hidden="true"/>
+</BOTYPEFIELDS>
+<BOTYPE.EXTFIELDS name="ENOWSP_WorkspaceRef" includes="ensure.workspace.has.a.name.in.consobox" />
+<BOTYPEFIELDS name="flattened.workspace.name.on.PLMEntity">
+    <FIELD name="sdccode" key="searchwk" onlyForSXI="TRUE" type="STRING" select="CONST:workspace"  hidden="true"/>
+</BOTYPEFIELDS>
+<BOTYPE.EXTFIELDS name="PLMEntity" includes="flattened.workspace.name.on.PLMEntity" />
+<!-- End modification workspace name -->
+
+<!-- Begin modification aggregation rules -->
+<BOTYPEFIELDS name="sr.projection.bo" usage="path">
+  <FIELD name="markerpaths" key="srprojbo" onlyForSXI="TRUE" type="STRING" select="paths[SemanticRelation]" hidden="true"/>
+  <FIELD name="sdccode" key="srprojbo" onlyForSXI="TRUE" type="STRING" select="CONST:srproj" hidden="true" />
+</BOTYPEFIELDS>
+
+<RELATIONSHIPTYPEFIELDS name="sr.projection.ro" usage="path">
+  <FIELD name="markerpaths" key="srprojro" onlyForSXI="TRUE" type="STRING" select="paths[SemanticRelation]" hidden="true" />
+  <FIELD name="sdccode" key="srprojro" onlyForSXI="TRUE" type="STRING" select="CONST:srproj" hidden="true" />
+</RELATIONSHIPTYPEFIELDS>
+<!-- End modification aggregation rules -->
+
+
+<!-- Begin modification PLMParam -->
+<BOTYPEFIELDS name="search.plmparam">
+    <FIELD name="allplmparam"            type="IDENTIFIER"               select="CONST:" fts="false" searchable="false"  hidden="true"/>
+    <FIELD name="sdctype" key="plmparam" type="STRING" onlyForSXI="true" select="CONST:aggrPLMParameter"  hidden="true"/>
+</BOTYPEFIELDS>
+<!-- End modification PLMParam -->
+
+
+<!-- Begin IR-453810 -->
+<BOTYPEFIELDS name="fix.url.cgrviewable">
+    <FIELD name="format[CGR].file.name" key="fixga" onlyForSDC="true" select="format[CGR].file.name" type="STRING" hidden="true"/>
+</BOTYPEFIELDS>
+<BOTYPE.EXTFIELDS name="CgrViewable" includes="fix.url.cgrviewable" />
+
+<BOTYPEFIELDS name="fix.url.thumbnailviewable">
+    <FIELD name="format[THUMBNAIL].file.name" key="fixga" onlyForSDC="true" select="format[THUMBNAIL].file.name" type="STRING" hidden="true"/>
+    <FIELD name="format[PNG].file.name" key="fixga" onlyForSDC="true" select="format[PNG].file.name" type="STRING" hidden="true"/>
+</BOTYPEFIELDS>
+<BOTYPE.EXTFIELDS name="ThumbnailViewable" includes="fix.url.thumbnailviewable" />
+<BOTYPE.EXTFIELDS name="DerivedOutputEntity" includes="fix.url.thumbnailviewable" />
+
+<BOTYPEFIELDS name="fix.url.derivedoutput">
+    <FIELD name="format[SVG].file.name" key="fixga" onlyForSDC="true" select="format[SVG].file.name" type="STRING" hidden="true"/>
+</BOTYPEFIELDS>
+<BOTYPE.EXTFIELDS name="Derived Output" includes="fix.url.derivedoutput" />
+<!-- End IR-453810 -->
+
+<!-- Begin modification Relevancy -->
+    <!-- ALL -->
+<RELEVANCY sixw="ds6w:label"      weight="3" withWildcard="true" />
+<RELEVANCY sixw="ds6w:identifier" weight="3" withWildcard="true" />
+
+    <!-- ENOVIA DOC -->
+<RELEVANCY sixw="ds6wg:PLMDMTDocument.V_PrimaryFileName" weight="3" withWildcard="true" />
+
+    <!-- CATIA AEC -->
+<RELEVANCY sixw="ds6wg:GeolocationCoordinateReferenceSystem.V_GL_Name" weight="3" withWildcard="true" />
+<RELEVANCY sixw="ds6wg:GeolocationCoordinateReferenceSystem.V_GL_Code" weight="3" withWildcard="true" />
+
+    <!-- CATIA System -->
+<RELEVANCY sixw="ds6wg:CATSysBehaviorLibReference.V_LibraryId"      weight="3" withWildcard="true" />
+<RELEVANCY sixw="ds6wg:CATSysBehaviorLibReference.V_LibraryVersion" weight="3" withWildcard="true" />
+<RELEVANCY sixw="ds6wg:CATSysBehaviorLibRepReference.V_LibraryId"   weight="3" withWildcard="true" />
+<RELEVANCY sixw="ds6w:release"                                      weight="3" withWildcard="true" />
+
+    <!-- DELMIA -->
+<RELEVANCY sixw="ds6w:supplier" weight="3" withWildcard="true" />
+
+    <!-- P&O -->
+<RELEVANCY sixw="ds6w:First_Name" weight="3" withWildcard="true" />
+<RELEVANCY sixw="ds6w:Last_Name"  weight="3" withWildcard="true" />
+<!-- End modification Relevancy -->
+
+
+<!-- Start Deleted Items Interface -->
+
+<BOTYPEFIELDS name="search.logicaldelete">
+    <FIELD name="sdccode" key="logicalDelete" onlyForSXI="TRUE" type="STRING" select="CONST:filterLogicalDelete" />
+</BOTYPEFIELDS>
+
+<BOTYPE.EXTFIELDS name="Documents" includes="search.logicaldelete" />
+<BOTYPE.EXTFIELDS name="CAD Model" includes="search.logicaldelete" />
+<BOTYPE.EXTFIELDS name="CAD Drawing" includes="search.logicaldelete" />
+<BOTYPE.EXTFIELDS name="CATDrawing" includes="search.logicaldelete" />
+<BOTYPE.EXTFIELDS name="MCAD Drawing" includes="search.logicaldelete" />
+<BOTYPE.EXTFIELDS name="CATPart" includes="search.logicaldelete" />
+<BOTYPE.EXTFIELDS name="CATAnalysis" includes="search.logicaldelete" />
+<BOTYPE.EXTFIELDS name="CATProcess" includes="search.logicaldelete" />
+<BOTYPE.EXTFIELDS name="CATProduct" includes="search.logicaldelete" />
+<BOTYPE.EXTFIELDS name="CATIA Embedded Component" includes="search.logicaldelete" />
+<BOTYPE.EXTFIELDS name="CATShape" includes="search.logicaldelete" />
+<BOTYPE.EXTFIELDS name="ECAD Model" includes="search.logicaldelete" />
+<BOTYPE.EXTFIELDS name="MCAD Model" includes="search.logicaldelete" />
+<BOTYPE.EXTFIELDS name="CATIA V4 Model" includes="search.logicaldelete" />
+<BOTYPE.EXTFIELDS name="CATIA CGR" includes="search.logicaldelete" />
+<BOTYPE.EXTFIELDS name="SW Assembly Instance" includes="search.logicaldelete" />
+<BOTYPE.EXTFIELDS name="SW Component Instance" includes="search.logicaldelete" />
+<BOTYPE.EXTFIELDS name="Service Content" includes="search.logicaldelete" />
+
+<!-- End Deleted Items Interface -->
+
+
+<!-- Begin modification XCAD PERSISTENCY FILE NAME -->
+<BOTYPEFIELDS name="xcad.persistency.file.name.fieldcreation">
+    <FIELD name="xcadpersistencyfilename"  select="CONST:" type="STRING" sixw="ds6w:xcadFileName" />
+</BOTYPEFIELDS>
+
+<BOTYPE.EXTFIELDS name="VPMReference" includes="xcad.persistency.file.name.fieldcreation" />
+<BOTYPE.EXTFIELDS name="PLMCoreRepReference" includes="xcad.persistency.file.name.fieldcreation" />
+<!-- End modification XCAD PERSISTENCY FILE NAME -->
+
+<!-- Begin modification ds6w:deformability -->
+<BOTYPEFIELDS name="bo.deformability">
+  <FIELD name="deformability" select="CONST:" sixw="ds6w:deformability" type="STRING,PARAMETRIC"/>
+  <FIELD key="bo.deformability" name="sdccode" onlyForSXI="TRUE" select="CONST:ds6w.deformability" type="STRING"/>
+</BOTYPEFIELDS>
+<BOTYPE.EXTFIELDS includes="bo.deformability" name="VPMReference"/>
+<!-- End modification ds6w:deformability -->
+
+<!-- Begin modification ds6w:cadVersion & ds6w:cadFileVersion -->
+<BOTYPEFIELDS name="bo.cadversion">
+  <FIELD name="bo.cadversion.V_CADFileVersion" select="CONST:" type="STRING,PARAMETRIC" sixw="ds6w:cadFileVersion" />
+  <FIELD name="bo.cadversion.V_CADVersion" select="CONST:" type="STRING,PARAMETRIC" sixw="ds6w:cadVersion" />
+  <FIELD key="bo.cadversion" name="sdccode" onlyForSXI="TRUE" select="CONST:ds6w.cadversion" type="STRING"/>
+</BOTYPEFIELDS>
+<BOTYPE.EXTFIELDS includes="bo.cadversion" name="VPMReference"/>
+<BOTYPE.EXTFIELDS includes="bo.cadversion" name="PLMCoreRepReference"/>
+<!-- End modification ds6w:cadVersion & ds6w:cadFileVersion -->
+
+<!-- Begin modification for ds6w:derivedOutputs computation -->
+<BOTYPEFIELDS name="repDerivedOutputs">
+  <FIELD fts="false" hidden="false" name="derivedOutputs" select="CONST:" type="STRING,PARAMETRIC" sixw="ds6w:derivedOutputs" />
+  <FIELD key="repDerivedOutputs" name="sdccode" onlyForSXI="TRUE" type="STRING" select="CONST:ds6w.derivedOutputs" hidden="true" />
+</BOTYPEFIELDS>
+<BOTYPE.EXTFIELDS name="PLMCoreRepReference" includes="repDerivedOutputs"/>
+<!-- End modification for ds6w:derivedOutputs computation -->
+
+<!-- Begin modification for StepCGR -->
+        <BOTYPEFIELDS name="cv.stepcgr">
+      <FIELD fts="false" key="cvstepcgr" name="stepcgr.phyid" select="CONST:" type="STRING"/>
+      <FIELD fts="false" key="cvstepcgr" name="stepcgr.name" select="CONST:" type="STRING"/>
+      <FIELD fts="false" key="cvstepcgr" name="stepcgr.format" select="CONST:" type="STRING"/>
+      <FIELD key="cvstepcgr" name="sdccode" onlyForSXI="TRUE" select="CONST:stepcgrurl" type="STRING"/>
+    </BOTYPEFIELDS>
+    <BOTYPE.EXTFIELDS includes="cv.stepcgr" name="PHYSICALAbstract3DRepReference"/>
+
+<!-- End modification for StepCGR -->
+
+<!-- Begin modification for V4Model on 3DShape -->
+    <BOTYPEFIELDS name="cv.v4model">
+      <FIELD fts="false" key="cvv4model" name="v4model.phyid" select="CONST:" type="STRING"/>
+      <FIELD fts="false" key="cvv4model" name="v4model.name" select="CONST:" type="STRING"/>
+      <FIELD fts="false" key="cvv4model" name="v4model.format" select="CONST:" type="STRING"/>
+      <FIELD key="cvv4model" name="sdccode" onlyForSXI="TRUE" select="CONST:v4model" type="STRING"/>
+    </BOTYPEFIELDS>
+    <BOTYPE.EXTFIELDS includes="cv.v4model" name="3DShape"/>
+<!-- End modification for V4Model on 3DShape -->
+
+<!-- Begin modification for Penetrating materials -->        
+<BOTYPEFIELDS name="cv.matpen">
+     <FIELD name="sdccode" key="matpenkey1" onlyForSXI="TRUE" type="STRING" select="CONST:matpen" /> 
+     <FIELD name="matpen.jsonstreamstorage" key="matpenkey1" type="STRING" select="CONST:"/>
+</BOTYPEFIELDS >
+
+<BOTYPE.EXTFIELDS name="dsc_mat_cnx_Core" includes="cv.matpen" />
+<BOTYPE.EXTFIELDS name="dsc_mat_cnx_Covering" includes="cv.matpen" />
+
+<!-- End modification for Penetrating materials  -->
+
+<!-- BEGIN MATConnectionsAggregationProcessor -->
+
+<BOTYPE.EXTFIELDS includes="sr.projection.bo" name="dsc_mat_cnx_Core" />
+<BOTYPE.EXTFIELDS includes="sr.projection.bo" name="dsc_mat_cnx_Covering" />
+
+<!-- END MATConnectionsAggregationProcessor --> 
+
+<!-- Begin modification for Relational Explorer Process Composer Relationships -->
+<RELATIONSHIPTYPE.EXTFIELDS name="Simulation Input" includes="ro.navigation" />
+<RELATIONSHIPTYPE.EXTFIELDS name="Simulation Output" includes="ro.navigation" />
+<RELATIONSHIPTYPE.EXTFIELDS name="Simulation Data" includes="ro.navigation" />
+<RELATIONSHIPTYPE.EXTFIELDS name="Simulation Activity" includes="ro.navigation" />
+<RELATIONSHIPTYPE.EXTFIELDS name="Simulation Template" includes="ro.navigation" />
+<RELATIONSHIPTYPE.EXTFIELDS name="Simulation Attribute Group" includes="ro.navigation" />
+<RELATIONSHIPTYPE.EXTFIELDS name="Simulation Connector" includes="ro.navigation" />
+<RELATIONSHIPTYPE.EXTFIELDS name="Requirement Validation" includes="ro.navigation" />
+<RELATIONSHIPTYPE.EXTFIELDS name="Referenced Simulations" includes="ro.navigation" />
+<RELATIONSHIPTYPE.EXTFIELDS name="Simulation Job" includes="ro.navigation" />
+<RELATIONSHIPTYPE.EXTFIELDS name="Analytics Data" includes="ro.navigation" />
+<RELATIONSHIPTYPE.EXTFIELDS name="Analytics Case - Created From" includes="ro.navigation" />
+<RELATIONSHIPTYPE.EXTFIELDS name="Test Execution Test Case" includes="ro.navigation" />
+<RELATIONSHIPTYPE.EXTFIELDS name="Analytics Requirement" includes="ro.navigation"/>                                                                                
+<!-- End modification for Relational Explorer Process Composer Relationships -->
+
+<!-- Begin modification ECM Relational Navigator -->
+<RELATIONSHIPTYPE.EXTFIELDS name="Change Action" includes="ro.navigation" />
+<RELATIONSHIPTYPE.EXTFIELDS name="Change Order" includes="ro.navigation" />
+<RELATIONSHIPTYPE.EXTFIELDS name="Change Breakdown" includes="ro.navigation" />
+<RELATIONSHIPTYPE.EXTFIELDS name="Change Follower" includes="ro.navigation" />
+<RELATIONSHIPTYPE.EXTFIELDS name="Change Reviewer" includes="ro.navigation" />
+<RELATIONSHIPTYPE.EXTFIELDS name="Technical Assignee" includes="ro.navigation" />
+<RELATIONSHIPTYPE.EXTFIELDS name="Resolved To" includes="ro.navigation" />
+<RELATIONSHIPTYPE.EXTFIELDS name="Reported Against Change" includes="ro.navigation" />
+<!-- End modification ECM Relational Navigator -->
+
+<!-- Begin modification PLMDMTDocument -->
+<BOTYPEFIELDS name="plmtdoc.stream">
+    <FIELD name="plmtdoc.stream.name"   key="plmtdoc" select="format[1].file.name" type="STRING"   hidden="true"/>
+</BOTYPEFIELDS>
+<BOTYPE.EXTFIELDS name="PLMDMTDocument" includes="plmtdoc.stream" />
+<!-- End modification PLMDMTDocument -->
+
+<!-- Begin modification for Linkable status -->
+<BOTYPEFIELDS name="cv.linkable">
+      <FIELD fts="false" key="cvlinkable" name="cvlinkable.status" select="CONST:" type="STRING,PARAMETRIC" sixw="ds6w:exactGeometryReadiness" />
+</BOTYPEFIELDS>
+<BOTYPE.EXTFIELDS includes="cv.linkable" name="3DShape"/>
+<BOTYPE.EXTFIELDS includes="cv.linkable" name="LPAbstractReference"/>
+
+<!-- End modification for for Linkable status -->
+
+<!-- Begin modification for Test Simulation in Relational Explorer-->
+<RELATIONSHIPTYPE.EXTFIELDS name="VV_Dependency" includes="ro.navigation" />
+<RELATIONSHIPTYPE.EXTFIELDS name="VV_FinalTestExecutionResult" includes="ro.navigation" />
+<RELATIONSHIPTYPE.EXTFIELDS name="VV_Sub_Specification" includes="ro.navigation" />
+<RELATIONSHIPTYPE.EXTFIELDS name="VV_TestCase_Requirement" includes="ro.navigation" />
+<RELATIONSHIPTYPE.EXTFIELDS name="VV_TestCase_TestScript" includes="ro.navigation" />
+<RELATIONSHIPTYPE.EXTFIELDS name="VV_TestExecution_Target" includes="ro.navigation" />
+<RELATIONSHIPTYPE.EXTFIELDS name="VV_TestExecution_TestCase" includes="ro.navigation" />
+<RELATIONSHIPTYPE.EXTFIELDS name="VV_TestExecution_TestResult" includes="ro.navigation" />
+<RELATIONSHIPTYPE.EXTFIELDS name="VV_TestExecution_TestScript" includes="ro.navigation" />
+<RELATIONSHIPTYPE.EXTFIELDS name="VV_TestExecution_TestSpecification" includes="ro.navigation" />
+<RELATIONSHIPTYPE.EXTFIELDS name="VV_TestResult_Data" includes="ro.navigation" />
+<RELATIONSHIPTYPE.EXTFIELDS name="VV_TestResult_TestStepResult" includes="ro.navigation" />
+<RELATIONSHIPTYPE.EXTFIELDS name="VV_TestScript_Data" includes="ro.navigation" />
+<RELATIONSHIPTYPE.EXTFIELDS name="VV_TestScript_TestStep" includes="ro.navigation" />
+<RELATIONSHIPTYPE.EXTFIELDS name="VV_TestSpecRequirementSpec" includes="ro.navigation" />
+<RELATIONSHIPTYPE.EXTFIELDS name="VV_TestSpecification_ProjectSpace" includes="ro.navigation" />
+<RELATIONSHIPTYPE.EXTFIELDS name="VV_TestSpecification_TestCase" includes="ro.navigation" />
+<RELATIONSHIPTYPE.EXTFIELDS name="VV_TestStepResult_Data" includes="ro.navigation" />
+<RELATIONSHIPTYPE.EXTFIELDS name="VV_TestStepResult_TestStep" includes="ro.navigation" />
+<RELATIONSHIPTYPE.EXTFIELDS name="VV_TestStep_Data" includes="ro.navigation" />
+<RELATIONSHIPTYPE.EXTFIELDS name="VV_TestStrategyFor" includes="ro.navigation" />
+<!-- End modification for for Test Simulation Relational Explorer-->
+
+<!-- Meeting and  Decision fields -->
+<RELATIONSHIPTYPE.EXTFIELDS name="Meeting" includes="ro.navigation" />
+<RELATIONSHIPTYPE.EXTFIELDS name="Meeting Context" includes="ro.navigation" />
+<RELATIONSHIPTYPE.EXTFIELDS name="Agenda Item" includes="ro.navigation" />
+<RELATIONSHIPTYPE.EXTFIELDS name="Decision" includes="ro.navigation" />
+<RELATIONSHIPTYPE.EXTFIELDS name="Decision Applies To" includes="ro.navigation" />
+i<!-- Meeting and Decision fields end -->
+

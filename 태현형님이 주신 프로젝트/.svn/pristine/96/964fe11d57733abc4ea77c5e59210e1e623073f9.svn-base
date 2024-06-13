@@ -1,0 +1,157 @@
+
+.treesContainer-root {
+  width: 100%;
+  height: 100%;
+  background: gray;
+  display: flex;
+  flex-direction: row;
+}
+.treesContainer-root-minwidth {
+  min-width: 900px;
+}
+
+.treePanel-root {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: flex-basis 500ms ease-in-out;
+}
+
+.treePanel-root.treePanel-hidden {
+  display: none;
+}
+
+.treePanel-root.treePanel-maximized {
+  flex-basis: 100%;
+}
+
+.treePanel-ref {
+  background: rgb(165, 226, 147);
+}
+.treePanel-act {
+  background: rgb(165, 226, 147);
+  flex-basis: 45px;
+}
+.treePanel-src {
+  background: rgb(116, 131, 199);
+}
+.treePanel-res {
+  background: rgb(226, 147, 190);
+  flex-grow: 1;
+}
+.treePanel-cmpBase {
+  background: rgb(165, 226, 147);
+}
+.treePanel-cmpCmp {
+    background: rgb(226, 147, 190);
+  flex-grow: 1;
+  width:50%;
+}
+
+.treePanel-expandedPanel33 {
+  flex-basis: 33%;
+}
+
+.treePanel-expandedPanel50 {
+  flex-basis: 50%;
+  width:50%;
+}
+
+.treePanel-collapsedPanel {
+  flex-basis: 30px;
+}
+
+.treePanel-panelHeader {
+  position: relative;
+  flex-basis: 30px;
+  background: #f1f1f1;
+  width: 100%;
+  padding-top:7px;
+  display:flex;
+}
+    .treePanel-panelHeader > .fonticon-stop{
+        flex:none;
+
+    }
+
+    .treePanel-headerText {
+        /*position: relative;*/
+        color: #3d3d3d;
+        /*left: 4px;
+  top: 6px;*/
+        white-space: nowrap;
+        overflow: hidden;
+        /*display: inline;*/
+        margin-left: 10px;
+        flex:1 1 0;
+        text-overflow:ellipsis;
+        margin-right:40px;
+        width:100px;
+    }
+.treePanel-headerButton {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f1f1f1;
+  cursor: pointer;
+  top: 4px;
+  right: 4px;
+  height: 24px;
+  width: 24px !important;
+  min-width:24px !important;
+  transition: background 250ms ease-in-out;
+  border-radius: 4px;
+}
+
+.treePanel-headerButton.treePanel-hidden {
+  display: none;
+}
+
+.treePanel-headerButton:hover {
+  /*background: #c9d4ec;*/
+}
+.treePanel-headerButtonIcon {
+  /*color: white;*/
+}
+.treePanel-headerButton:hover .treePanel-headerButtonIcon {
+  /*color: rgb(80, 82, 173);*/
+}
+
+.treePanel-contentContainer {
+  position: relative;
+  flex-grow: 1;
+  width: 100%;
+}
+.treePanel-content {
+  position: absolute;
+  background: white;
+  width: 100%;
+  height: 100%;
+  border: 1px solid rgb(139, 138, 138);
+  overflow: hidden;
+}
+
+.treePanel-content-hide {
+  display: none;
+  white-space: nowrap;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background: #e0dfdf;
+  z-index: 1;
+  transition: background 250ms ease-in-out;
+}
+
+.treePanel-content-hide-expander:hover {
+  background: #f0f0fa;
+  cursor: pointer;
+}
+
+.treePanel-caption-collapsed {
+  position: relative;
+  top: 8px;
+  left: 5px;
+  writing-mode: vertical-lr;
+  -ms-writing-mode: tb-lr;
+}

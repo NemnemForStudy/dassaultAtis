@@ -1,0 +1,32 @@
+################################################################################################
+# Create By choimingi 2023. 07. 25
+# Admin Type : command
+# Name : decChangeLogList
+################################################################################################
+
+#del command 'decChangeLogList';
+add command 'decChangeLogList'
+	description 'type_project Change HistoryList'
+	label 'emxProgramCentral.Command.decChangeLogList'
+	alt 'emxProgramCentral.Command.decChangeLogList'
+	setting 'Registered Suite' 'ProgramCentral'
+	setting 'Target Location' 'content'
+;
+add property 'command_decChangeLogList' on prog eServiceSchemaVariableMapping.tcl to command 'decChangeLogList';
+
+mod command decChangeLogList
+	href '${COMMON_DIR}/emxIndentedTable.jsp?program=decInterfaceDV:getChangeLogList&table=decChangeLogTable&toolbar=decChangeLogToolbar&EditRootNode=true&header=ProgramCentral.Command.decChangeLogList&HelpMarker=emxhelpprogramlist&Export=true&sortColumnName=Name&sortDirection=ascending&StringResourceFileId=emxProgramCentralStringResource&selection=multiple&parallelLoading=true&massPromoteDemote=true&slideinFilter=true&pageSize=300'
+;
+
+mod command decChangeLogList
+ label 'emxProgramCentral.Command.decChangeHistory';
+ 
+# Modify By choimingi 2023. 09. 14
+mod command decChangeLogList
+ href '${COMMON_DIR}/emxIndentedTable.jsp?program=decInterfaceDV:getChangeLogList&table=decChangeLogTable&toolbar=decChangeLogToolbar&EditRootNode=true&header=ProgramCentral.Command.decChangeLogList&HelpMarker=emxhelpprogramlist&Export=true&sortColumnName=ChangeLogNumber&sortDirection=descending&StringResourceFileId=emxProgramCentralStringResource&selection=multiple&parallelLoading=true&massPromoteDemote=true&pageSize=300'
+ ;
+ 
+# Modify By choimingi 2023.11 .06
+mod command decChangeLogList
+ href '${COMMON_DIR}/emxIndentedTable.jsp?program=decInterfaceDV:getChangeLogList&table=decChangeLogTable&toolbar=decChangeLogToolbar&EditRootNode=true&header=emxProgramCentral.Command.decChangeLogList&HelpMarker=emxhelpprogramlist&Export=true&sortColumnName=ChangeLogNumber&sortDirection=descending&StringResourceFileId=emxProgramCentralStringResource&selection=multiple&parallelLoading=true&massPromoteDemote=true&pageSize=300'
+;

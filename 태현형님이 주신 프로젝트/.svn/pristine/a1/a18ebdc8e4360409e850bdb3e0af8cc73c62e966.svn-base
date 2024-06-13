@@ -1,0 +1,1 @@
+"undefined"==typeof define&&(define=function(e){JsonField=e(),define=void 0}),define("DS/CSIJSONToolsWeb/CSIGrammarUpgraderJsonField",[],function(){"use strict";var e=function(e,t){this.field=e,this.jsonObject=t};return e.prototype.getField=function(){return this.field},e.prototype.getValue=function(){return this.jsonObject[this.field]},e});

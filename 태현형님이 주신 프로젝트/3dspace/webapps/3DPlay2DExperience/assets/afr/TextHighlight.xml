@@ -1,0 +1,25 @@
+
+<?xml version="1.0" encoding="utf-8" ?>
+<Styles xmlns:syp="http://www.3ds.com/xsd/SYP">
+
+  <Template syp:name="3DPlayDocumentAfrWorkshopInterface" Target="CATCmdInterface">
+    <CATCmdInterface  WkbInterface= "CATI3DPlayProAfrWorkshopConfiguration"/>
+  </Template>
+
+  <Template syp:name="3DPlayDocumentAfrWorkshopHeaders" Target="CATCmdHeadersList">
+    <CATCmdHeadersList>
+      <CATCommandHeader ID="HighlightText" ClassName="DS/3DPlay2DExperience/Commands/CmdManageHighlightText" HelpResourceFile = "3DPlayCommands/3DPlayHelpForCommands2D" ResourceFile="3DPlay2DExperience/3DPlay2DExperience">
+        <CATAfrCommandHeaderArgs>
+          <CATCommandHeaderArg ID="HighlightText" Value="Add" Mode="In" />
+        </CATAfrCommandHeaderArgs>
+      </CATCommandHeader>
+    </CATCmdHeadersList>
+  </Template>
+  <Template syp:name="3DPlayDocumentAfrWorkshopAccess" Target="CATCmdWorkbench">
+    <CATCmdWorkbench Name="3DPlayDocumentWorkbench">
+      <CATCmdContainer Name="SectionViews" Visibility="1" RepresentationType="AfrActionBarSection">
+        <CATCmdStarter Name = "HighlightText" Command = "HighlightText"/>
+      </CATCmdContainer>
+    </CATCmdWorkbench>
+  </Template>
+</Styles>

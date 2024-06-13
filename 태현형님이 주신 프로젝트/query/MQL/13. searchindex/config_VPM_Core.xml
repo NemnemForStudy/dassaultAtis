@@ -1,0 +1,161 @@
+
+<!-- The Index specs for IRPC Core model (corresponds to the projection of both PLMCORE.metadata and LPLMABSTRACT.metadata) -->
+
+  <BOTYPEFIELDS name="bo.PLMConnection" >
+    <FIELD name="bo.PLMConnection.V_CnxTreeOrder" select="attribute[PLMConnection.V_CnxTreeOrder]" type="STRING" />
+    <FIELD name="bo.PLMConnection.V_isVPLMControlled" select="attribute[PLMConnection.V_isVPLMControlled]" type="BOOLEAN" sixw="ds6wg:PLMConnection.V_isVPLMControlled" />
+  </BOTYPEFIELDS>
+  <BOTYPE name="PLMConnection" includes="bo.PLMConnection" inheritfields="true" active="true" searchable="false" excludetypes="" excludepolicies="" excludestates="" />
+  
+  <BOTYPEFIELDS name="bo.PLMPort" > 
+    <FIELD name="bo.PLMPort.V_PortTreeOrder" select="attribute[PLMPort.V_PortTreeOrder]" type="STRING" />
+    <FIELD name="bo.PLMPort.V_isVPLMControlled" select="attribute[PLMPort.V_isVPLMControlled]" type="BOOLEAN" sixw="ds6wg:PLMPort.V_isVPLMControlled" />
+  </BOTYPEFIELDS>
+  <BOTYPE name="PLMPort" includes="bo.PLMPort" inheritfields="true" active="true" searchable="false" excludetypes="" excludepolicies="" excludestates="" />
+  
+  <BOTYPEFIELDS name="bo.PLMReference" >
+    <FIELD name="bo.PLMReference.V_ApplicabilityDate" select="attribute[PLMReference.V_ApplicabilityDate]" type="DATE" sixw="ds6wg:PLMReference.V_ApplicabilityDate" />
+    <FIELD name="bo.PLMReference.V_AuthorityControl" select="attribute[PLMReference.V_AuthorityControl]" type="BOOLEAN" sixw="ds6wg:PLMReference.V_AuthorityControl" />
+    <FIELD name="bo.PLMReference.V_DerivedFrom" select="attribute[PLMReference.V_DerivedFrom]" type="STRING" />
+    <FIELD name="bo.PLMReference.V_EffectivityKind" select="attribute[PLMReference.V_EffectivityKind]" type="STRING" />
+    <FIELD name="bo.PLMReference.V_ProjectApplicability" select="attribute[PLMReference.V_ProjectApplicability]" type="STRING" sixw="ds6wg:PLMReference.V_ProjectApplicability" />
+    <FIELD name="bo.PLMReference.V_VersionID" select="attribute[PLMReference.V_VersionID]" type="IDENTIFIER" />
+    <FIELD name="bo.PLMReference.V_fromExternalID" select="attribute[PLMReference.V_fromExternalID]" type="STRING" sixw="ds6wg:PLMReference.V_fromExternalID" />
+    <FIELD name="bo.PLMReference.V_hasConfigContext" select="attribute[PLMReference.V_hasConfigContext]" type="BOOLEAN" />
+    <FIELD name="bo.PLMReference.V_isLastMinorVersion" select="attribute[PLMReference.V_isLastMinorVersion]" type="BOOLEAN" />
+    <FIELD name="bo.PLMReference.V_isLastVersion" select="attribute[PLMReference.V_isLastVersion]" type="BOOLEAN" sixw="ds6wg:PLMReference.V_isLastVersion" />
+    <FIELD name="bo.PLMReference.V_isVPLMControlled" select="attribute[PLMReference.V_isVPLMControlled]" type="BOOLEAN" sixw="ds6wg:PLMReference.V_isVPLMControlled" />
+    <FIELD name="bo.PLMReference.V_order" select="attribute[PLMReference.V_order]" type="STRING" sixw="ds6wg:PLMReference.V_order" />
+    <FIELD name="bo.PLMReference.V_versionComment" select="attribute[PLMReference.V_versionComment]" type="STRING" sixw="ds6wg:PLMReference.V_versionComment" />
+    <FIELD name="ispublished" key="bo" select="ispublished" type="BOOLEAN" sixw="ds6wg:ispublished"/>
+    <FIELD name="majororder" key="bo" select="majororder" type="STRING" />
+    <!--
+    <FIELD name="minororder" select="minororder" type="STRING" />
+    -->
+    <FIELD name="minororder" key="bo" type="NUM" retrievable="TRUE" searchable="FALSE" ramBased="TRUE" multiValued="FALSE" useSimpleProperty="true" select="minororder" />
+    <FIELD name="versionid" key="bo" select="versionid" type="STRING" />
+  </BOTYPEFIELDS>
+  <BOTYPE name="PLMReference" includes="bo.PLMReference" inheritfields="true" active="false" excludetypes="" excludepolicies="" excludestates="" />
+        
+  <RELATIONSHIPTYPEFIELDS name="ro.PLMInstance" >
+    <FIELD name="ro.PLMInstance.C_updatestamp" select="attribute[PLMInstance.C_updatestamp]" type="STRING" />
+    <FIELD name="ro.PLMInstance.PLM_ExternalID" select="attribute[PLMInstance.PLM_ExternalID]" type="STRING" sixw="ds6w:label" ramBased="true"/>
+    <FIELD name="ro.RepoPrivilege" select="attribute[RepoPrivilege]" type="STRING" />
+    <FIELD name="ro.PLMInstance.V_CustoDiscipline" select="attribute[PLMInstance.V_CustoDiscipline]" type="STRING,PARAMETRIC" />
+    <FIELD name="ro.PLMInstance.V_Name" select="attribute[PLMInstance.V_Name]" type="STRING" />
+    <FIELD name="ro.PLMInstance.V_TreeOrder" select="attribute[PLMInstance.V_TreeOrder]" type="STRING" fts="false" ramBased="TRUE" />      <!--  hardcoded in CV attrgraph -->
+    <FIELD name="ro.PLMInstance.V_description" select="attribute[PLMInstance.V_description]" type="STRING" />
+    <FIELD name="ro.PLMInstance.V_discipline" select="attribute[PLMInstance.V_discipline]" type="STRING,PARAMETRIC" />
+    <FIELD name="ro.PLMInstance.V_hasConfigEffectivity" select="attribute[PLMInstance.V_hasConfigEffectivity]" type="BOOLEAN" />
+    <FIELD name="ro.PLMInstance.V_hasConfigStaticMapping" select="attribute[PLMInstance.V_hasConfigStaticMapping]" type="BOOLEAN,PARAMETRIC" sixw="ds6w:instantiatedconfiguration" />
+    <FIELD name="ro.PLMInstance.V_isUptodate" select="attribute[PLMInstance.V_isUptodate]" type="STRING" />
+    <FIELD name="ro.PLMInstance.V_isVPLMControlled" select="attribute[PLMInstance.V_isVPLMControlled]" type="BOOLEAN" />
+    <FIELD name="ro.PLMInstance.V_nature" select="attribute[PLMInstance.V_nature]" type="STRING" />
+    <FIELD name="ro.PLMInstance.V_sec_level" select="attribute[PLMInstance.V_sec_level]" type="STRING" />
+    <FIELD name="ro.PLMInstance.V_usage" select="attribute[PLMInstance.V_usage]" type="STRING,PARAMETRIC" />
+    <FIELD name="isbestsofar" key="rel" select="isbestsofar" type="BOOLEAN" />
+    <FIELD name="updatestamp" key="rel" select="updatestamp" type="STRING" />
+    <FIELD name="ro.PLMInstance.workspaceid" select="attribute[PLMInstance.workspaceid]" type="STRING" />
+    <!-- Commented cause superseded by CV definition
+    <FIELD name="majorid" key="rel" select="majorid" type="STRING" />
+    <FIELD name="logicalid" key="rel" select="logicalid" type="STRING" />
+    <FIELD name="cestamp" key="rel" select="cestamp" type="STRING" />
+    
+    <FIELD name="ro.PLMInstance.V_EffectivityCompiledForm" key="rel" select="attribute[PLMInstance.V_EffectivityCompiledForm]" type="STRING" />
+    -->
+    
+    <FIELD name="ro.PLMInstance.V_EffectivityCompiledForm" type="STRING" retrievable="TRUE" searchable="FALSE" ramBased="TRUE" multiValued="FALSE" useSimpleProperty="true" select="attribute[PLMInstance.V_EffectivityCompiledForm]" />
+    
+    <!-- Cloud-View specific -->
+    <!-- <FIELD name="majorid" key="rel" type="VALUE" retrievable="TRUE" searchable="TRUE" ramBased="TRUE" multiValued="FALSE" useSimpleProperty="true" select="majorid" /> -->
+    <FIELD name="logicalid" key="rel" type="VALUE" select="logicalid" />
+    <FIELD name="cestamp" key="rel" type="VALUE" select="cestamp" />
+    <FIELD name="ro.StreamDescriptors" key="rel" select="attribute[StreamDescriptors]" type="STRING" />
+  </RELATIONSHIPTYPEFIELDS>
+  <RELATIONSHIPTYPE name="PLMInstance" includes="ro.PLMInstance" active="true" searchable="false" excludetypes="" excludepolicies="" excludestates="" />
+  
+  <BOTYPEFIELDS name="bo.PLMCoreReference" >
+    <FIELD name="bo.PLMCoreReference.V_ChangeHistory" select="attribute[PLMCoreReference.V_ChangeHistory]" type="BOOLEAN" sixw="ds6wg:PLMCoreReference.V_ChangeHistory" />
+    <FIELD name="bo.PLMCoreReference.V_isTerminal" select="attribute[PLMCoreReference.V_isTerminal]" type="BOOLEAN" sixw="ds6wg:PLMCoreReference.V_isTerminal" />
+  </BOTYPEFIELDS>
+  <BOTYPE name="PLMCoreReference" includes="bo.PLMCoreReference" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  
+  <BOTYPEFIELDS name="bo.PLMCoreRepReference" >
+    <FIELD name="bo.PLMCoreRepReference.V_isOnceInstantiable" select="attribute[PLMCoreRepReference.V_isOnceInstantiable]" type="BOOLEAN" sixw="ds6w:composed" />
+    <!-- <FIELD name="bo.PLMCoreRepReference.V_isOnceInstantiable" select="attribute[PLMCoreRepReference.V_isOnceInstantiable]" type="BOOLEAN" retrievable="TRUE" searchable="FALSE" ramBased="TRUE" multiValued="FALSE" useSimpleProperty="true" /> -->
+    <FIELD name="bo.PLMCoreRepReference.V_markstamp" select="attribute[PLMCoreRepReference.V_markstamp]" type="STRING" />
+  </BOTYPEFIELDS>
+  <BOTYPE name="PLMCoreRepReference" includes="bo.PLMCoreRepReference" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  
+  <RELATIONSHIPTYPE name="PLMCoreInstance" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  
+  <RELATIONSHIPTYPE name="PLMCoreRepInstance" inheritfields="true" active="true" excludetypes="" excludepolicies="" excludestates="" />
+  
+  <BOTYPEFIELDS name="bo.PLMEntity" >
+
+    <FIELD name="bo.PLMEntity.C_updatestamp" select="attribute[PLMEntity.C_updatestamp]" type="STRING" />
+    <!-- following fields are hardcoded in SXI -->
+    <FIELD name="bo.PLMEntity.PLM_ExternalID" select="attribute[PLMEntity.PLM_ExternalID]" type="STRING" />
+    <FIELD name="bo.PLMEntity.V_Name" select="attribute[PLMEntity.V_Name]" type="STRING" />
+    <FIELD name="bo.PLMEntity.V_description" select="attribute[PLMEntity.V_description]" type="STRING" />
+    
+    <FIELD name="bo.RepoPrivilege" select="attribute[RepoPrivilege]" type="STRING" />
+    <FIELD name="bo.PLMEntity.V_CustoDiscipline" select="attribute[PLMEntity.V_CustoDiscipline]" type="STRING" />
+    <FIELD name="bo.PLMEntity.V_discipline" select="attribute[PLMEntity.V_discipline]" type="STRING" />
+    <FIELD name="bo.PLMEntity.V_isUptodate" select="attribute[PLMEntity.V_isUptodate]" type="STRING" />
+    <FIELD name="bo.PLMEntity.V_nature" select="attribute[PLMEntity.V_nature]" type="STRING" sixw="ds6wg:PLMEntity.V_nature" />
+    <FIELD name="bo.PLMEntity.V_sec_level" select="attribute[PLMEntity.V_sec_level]" type="STRING" sixw="ds6wg:PLMEntity.V_sec_level" />
+    <FIELD name="bo.PLMEntity.V_usage" select="attribute[PLMEntity.V_usage]" type="STRING,PARAMETRIC" sixw="ds6w:kind" />
+    <FIELD name="isbestsofar" key="bo" select="isbestsofar" type="BOOLEAN" sixw="ds6wg:isbestsofar" />
+    <!-- 
+    <FIELD name="majorid" select="majorid" type="STRING" /> 
+    <FIELD name="logicalid" select="logicalid" type="STRING" /> 
+    <FIELD name="cestamp" select="cestamp" type="STRING" /> 
+    -->
+    <!-- <FIELD name="majorid" key="bo" type="VALUE" retrievable="TRUE" searchable="TRUE" ramBased="TRUE" multiValued="FALSE" useSimpleProperty="true" select="majorid" /> -->
+    <FIELD name="logicalid" key="bo" type="VALUE" select="logicalid" />
+    <FIELD name="cestamp" key="bo" type="VALUE" select="cestamp" />
+    <FIELD name="updatestamp" key="bo" select="updatestamp" type="STRING" />
+    <FIELD name="bo.PLMEntity.workspaceid" select="attribute[PLMEntity.workspaceid]" type="STRING" />
+    <FIELD name="bo.StreamDescriptors" key="bo" select="attribute[StreamDescriptors]" type="IDENTIFIER" />
+  </BOTYPEFIELDS>
+  <BOTYPE name="PLMEntity" includes="bo.PLMEntity" active="false" excludetypes="" excludepolicies="" excludestates="" />
+  <BOTYPEFIELDS name="bo.assignedspace">
+      <FIELD fts="false" hidden="false" name="flat_assigned_space" select="CONST:" type="STRING,PARAMETRIC" sixw="ds6w:assignedSpace" />
+      <FIELD key="bo.flatassignedspace" name="sdccode" onlyForSXI="TRUE" select="CONST:flatassignedspace" type="STRING"/>
+  </BOTYPEFIELDS>
+  <BOTYPE.EXTFIELDS includes="bo.assignedspace" name="LPAbstractReference"/>
+
+  <BOTYPE.EXTFIELDS includes="sr.projection.bo" name="SPPConnection"/>
+
+  
+
+<!-- BEGIN MfgItemScopeAndResultingProductFieldsAggregationProcessor -->
+
+    <RELATIONSHIPTYPEFIELDS name="MFGItemInstancesFields">
+        <FIELD name="matrixtxt" key="MFGR" select="CONST:" ramBased="true" type="IDENTIFIER"/>
+        <FIELD name="expand3d" key="MFGR" select="CONST:" type="BOOLEAN"/>
+        <FIELD hidden="true" key="mfgiteminstancefields" name="sdccode" onlyForSXI="TRUE" select="CONST:mfgiteminstancefields" type="STRING"/>
+        <FIELD name="MFGItemInstancesFields_globalType" select="CONST:ds6w:Instance" sixw="ds6w:globalType" ramBased="true" type="STRING"/>
+    </RELATIONSHIPTYPEFIELDS>
+    <RELATIONSHIPTYPE.EXTFIELDS includes="MFGItemInstancesFields" name="DELFmiFunctionInstance"/>
+    <RELATIONSHIPTYPE.EXTFIELDS includes="sr.projection.ro" name="DELFmiFunctionInstance"/>
+
+    <BOTYPEFIELDS name="MFGItemFunctionReferenceFields">
+        <FIELD name="MFGItemFunctionReferenceFields_globalType" select="CONST:ds6w:Part" sixw="ds6w:globalType" ramBased="true" type="STRING"/>
+    </BOTYPEFIELDS>
+    <BOTYPE.EXTFIELDS includes="MFGItemFunctionReferenceFields" name="DELFmiFunctionReference"/>
+
+    <BOTYPEFIELDS name="MFGItemScopeAndResultingProductFields">
+        <FIELD name="matrixtxt" key="MFG" select="CONST:" ramBased="true" type="IDENTIFIER"/> 
+        <FIELD name="expand3d" key="MFG" select="CONST:" type="BOOLEAN"/>
+        <FIELD name="to.physicalid" fts="false" key="MFG" select="CONST:" type="IDENTIFIER"/>
+        <FIELD name="from.physicalid" fts="false" key="MFG" select="CONST:" type="IDENTIFIER"/>
+        <FIELD name="MFGItemScopeAndResultingProductFields_globalType" select="CONST:ds6w:Instance" sixw="ds6w:globalType" ramBased="true" type="STRING"/>
+        <FIELD hidden="true" key="mfgitemscopeandresultingproductfields" name="sdccode" onlyForSXI="TRUE" select="CONST:mfgitemscopeandresultingproductfields" type="STRING"/>
+    </BOTYPEFIELDS>
+    <BOTYPE.EXTFIELDS includes="MFGItemScopeAndResultingProductFields" name="DELFmiProcessImplementCnx"/>
+    <BOTYPE.EXTFIELDS includes="MFGItemScopeAndResultingProductFields" name="DELFmiProcessOutputPrereqMaterializationCnx" />
+    <BOTYPE.EXTFIELDS includes="sr.projection.bo" name="DELFmiProcessImplementCnx" />
+
+<!-- END MfgItemScopeAndResultingProductFieldsAggregationProcessor -->

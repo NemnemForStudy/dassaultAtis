@@ -1,0 +1,150 @@
+<meta charset="UTF-8"/>
+//---------------------------------------------------------------------------
+// Check_TeamDemoUsers
+//---------------------------------------------------------------------------
+Check_TeamDemoUsers.Title="一鍵部署體驗安全性關聯";
+Check_TeamDemoUsers.CheckButton="設定一鍵部署體驗安全性關聯 (僅供示範之用)";
+Check_TeamDemoUsers.Resume.true="設定一鍵部署體驗安全性關聯：是";
+Check_TeamDemoUsers.Resume.false="設定一鍵部署體驗安全性關聯：否";
+
+Text_DataTBS_wrap.Title="資料保險箱詳細資料";
+Text_DataTBS_wrap.Label1="指定生產資料保險箱的資料和索引表格空間。";
+Text_DataTBS_wrap.Label2="若要使用資料庫的預設儲存區域，請將欄位留白。";
+
+//---------------------------------------------------------------------------
+// Text_DataTBS_wrap
+//---------------------------------------------------------------------------
+Text_DataTBS_wrap.Label3="eService 生產資料保險箱的資料表格空間";
+Text_DataTBS_wrap.Resume="eService 生產資料保險箱的資料表格空間：/p1";
+
+//---------------------------------------------------------------------------
+// Text_IndexTBS_wrap
+//---------------------------------------------------------------------------
+Text_IndexTBS_wrap.Label1="eService 生產資料保險箱的索引表格空間";
+Text_IndexTBS_wrap.Resume="eService 生產資料保險箱的索引表格空間：/p1";
+
+//---------------------------------------------------------------------------
+// VplmDataTBS
+//---------------------------------------------------------------------------
+VplmDataTBS.Label1="VPLM 資料保險箱的資料表格空間";
+VplmDataTBS.Resume="VPLM 資料保險箱的資料表格空間：/p1";
+
+//---------------------------------------------------------------------------
+// VplmIndexTBS
+//---------------------------------------------------------------------------
+VplmIndexTBS.Label1="VPLM 資料保險箱的索引表格空間";
+VplmIndexTBS.Resume="VPLM 資料保險箱的索引表格空間：/p1";
+
+//---------------------------------------------------------------------------
+// VPLMCentralAdminUser
+//---------------------------------------------------------------------------
+VPLMCentralAdminUser.Title="管理員定義";
+VPLMCentralAdminUser.Label1="管理員名稱";
+VPLMCentralAdminUser.Resume="管理員名稱：/p1";
+//VPLMCentralAdminUser.Label2 = "Click Next to continue.";
+
+//---------------------------------------------------------------------------
+// VPLMCentralAdminPwd
+//---------------------------------------------------------------------------
+VPLMCentralAdminPwd.Title="管理員密碼";
+VPLMCentralAdminPwd.Label1="管理員密碼";
+//VPLMCentralAdminPwd.Label2 = "Click Next to continue.";
+
+//---------------------------------------------------------------------------
+// VPLMRepositoryName
+//---------------------------------------------------------------------------
+VPLMRepositoryName.Title="預設 VPM 存放庫名稱";
+VPLMRepositoryName.Label1="請輸入 VPM 存放庫名稱 (用於資料交換)";
+VPLMRepositoryName.Resume="VPM 存放庫名稱 (用於資料交換)：/p1";
+//VPLMRepositoryName.Label2 = "Click Next to continue.";
+
+//---------------------------------------------------------------------------
+// VPLMCentralStorePath
+//---------------------------------------------------------------------------
+VPLMCentralStorePath.Title="VPM 儲存區路徑";
+VPLMCentralStorePath.Label1="請輸入 VPM 儲存區路徑以儲存檔案";
+VPLMCentralStorePath.Resume="VPM 儲存區路徑：/p1";
+//VPLMCentralStorePath.Label2 = "Click Next to continue.";
+
+//---------------------------------------------------------------------------
+// Database insert of schema
+//---------------------------------------------------------------------------
+ExecuteFamiliesScript.Title="在安裝期間更新資料庫";
+ExecuteFamiliesScript.Label1="取消核取以僅安裝於臨時區域，而不更新資料庫";
+
+
+//---------------------------------------------------------------------------
+// Hot Fix installer - VPMADM password check
+//---------------------------------------------------------------------------
+ConnectionVPMADMFailed.Title="管理員的資料庫連線錯誤";
+ConnectionVPMADMFailed.Text="已回報下列錯誤：\n/p1";
+
+
+//---------------------------------------------------------------------------
+// mxmrun "INST_VPLMRepoName.mql" generation
+//---------------------------------------------------------------------------
+RepoNameMQLgenerationFailed.Title="INST_VPLMRepoName.mql 產生失敗";
+RepoNameMQLgenerationFailed.Text="「mxmrun」公用程式無法產生 INST_VPLMRepoName.mql 檔案。\n請檢查在 ENOVIA Live Collaboration Server 設定期間指定的 JDK 層級與位元模式。";
+
+
+//---------------------------------------------------------------------------
+// VPLMPosMigrateCompany Post Install Step Warning
+//---------------------------------------------------------------------------
+cmdToExecuteVPLMDataMigration.Title="資料庫移轉的必要步驟 ";
+cmdToExecuteVPLMDataMigration.Text="您正在移轉現有的安裝。\n所有應用程式安裝完成後，必須手動執行下列 MQL 命令 (可能需要幾分鐘)。\n從 <server> 安裝啟動 MQL 命令視窗，並輸入此內容：\nMQL>set context person creator;\nMQL>exec prog VPLMDataMigration;";
+
+//---------------------------------------------------------------------------
+// Execute Data Migration
+//---------------------------------------------------------------------------
+Check_ExecuteDataMigration.Title="資料庫執行個體資料移轉";
+Check_ExecuteDataMigration.Label1="選擇移轉現有資料核取方塊 (此為必要步驟)";
+Check_ExecuteDataMigration.Label2="此步驟可能需要時間，時間視資料庫大小而定。";
+Check_ExecuteDataMigration.Label3="我們建議您在所有應用程式安裝完成後，以後續安裝步驟的方式執行。";
+Check_ExecuteDataMigration.Resume.true="已選擇資料移轉：是";
+Check_ExecuteDataMigration.Resume.false="已選擇資料移轉：否";
+Check_ExecuteDataMigration.CheckButton="移轉現有資料";
+
+//---------------------------------------------------------------------------
+// Check_VPMDemoUsers
+//---------------------------------------------------------------------------
+Check_VPMDemoUsers.Title="人員與組織示範資料";
+Check_VPMDemoUsers.Resume.true="設定預先定義的 P&0 示範資料：是";
+Check_VPMDemoUsers.Resume.false="設定預先定義的 P&0 示範資料：否";
+Check_VPMDemoUsers.CheckButton="設定人員與組織示範資料 (僅供測試用途)";
+
+//---------------------------------------------------------------------------
+// Install VPM Customization Sample
+//---------------------------------------------------------------------------
+Check_InstallVPMCustoSample.Title="自訂範例安裝";
+Check_InstallVPMCustoSample.Label1="選擇核取方塊以安裝 VPM 自訂範例";
+Check_InstallVPMCustoSample.Label2="(範例僅可用於測試用途，非供生產之用";
+Check_InstallVPMCustoSample.Label3="若要進行生產則需完全自訂。)";
+Check_InstallVPMCustoSample.Resume.true="已選擇 VPM 自訂範例：是";
+Check_InstallVPMCustoSample.Resume.false="已選擇 VPM 自訂範例：否";
+Check_InstallVPMCustoSample.CheckButton="安裝 VPM 自訂範例";
+
+//---------------------------------------------------------------------------
+// Dynamic relationship checker
+//---------------------------------------------------------------------------
+relationshipNotDynamic.Title="資料庫移轉的必要步驟 ";
+relationshipNotDynamic.Text="偵測到自訂原則。需要加以修改才能符合次要/主要功能要求。\n請參閱「在 ENOVIA Live Collaboration 中安裝伺服器」文件指南中的轉換命令描述\n套用此程序後才可啟動伺服器。";
+
+//---------------------------------------------------------------------------
+// Mapping Removal - Installation not authorized.
+//---------------------------------------------------------------------------
+MappingRemovalCannotInstall.Title="未授權從此層級進行移轉";
+MappingRemovalCannotInstall.Text="在資料庫中偵測到的先前安裝過舊。\n請先安裝 ENOVIA Multi-Discipline Collaboration Platform 2014x，然後再安裝此媒體";
+
+//---------------------------------------------------------------------------
+// 16x FD01 migration of SR LastPIDAndRole
+//---------------------------------------------------------------------------
+cmdToExecuteVPLMDataMigrationHF.Title="安裝 Hot Fix 後的必要步驟";
+cmdToExecuteVPLMDataMigrationHF.Text="此 Hot Fix 安裝完畢後，必須執行手動步驟。\n所有應用程式安裝完成後 (可能需要幾分鐘)，必須執行下列 MQL 命令。\n從 <server> 安裝啟動 MQL 命令視窗，並輸入此內容：\nMQL>set context person creator;\nMQL>exec prog VPLMDataMigration;";
+
+//---------------------------------------------------------------------------
+// error handling while executing installVPMMultiDisciplineV6R201xx.tcl
+//---------------------------------------------------------------------------
+execDBScript_failed.Title="資料庫安裝失敗";
+execDBScript_failed.Text="下列資料庫安裝指令碼失敗：\n/P1\n已回報下列錯誤：\n/P2";
+
+

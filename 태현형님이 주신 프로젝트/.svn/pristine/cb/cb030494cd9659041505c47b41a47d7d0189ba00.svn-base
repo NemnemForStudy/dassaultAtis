@@ -1,0 +1,1 @@
+define("DS/ENODOUtilsServices/ENODOUtilsServices_ko",{});define("DS/ENODOUtilsServices/assets/nls/enodo_notifications",{error:{title:"오류",security_context_fail:"서버 요청을 보낼 수 없습니다. 보안 컨텍스트를 가져오지 못했습니다."}});

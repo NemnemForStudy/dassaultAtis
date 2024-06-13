@@ -1,0 +1,11 @@
+m|WebPolyhedralOperators\WebPolyPlanarSectionOper.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.0.22078|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\WebPolyPlanarSectionOper\WebPolyPlanarSectionOper.js|1647692327|3773
+s|WebPolyhedralOperators\WebPolyPlanarSectionOper.mweb\src\WebPolyPlanarSectionOper.js|1637909447|14569
+u|WebPolyhedralOperators\WebPolyPlanarSectionOper.mweb\src\WebPolyPolyLine2D.js|1436155754|1489
+u|WebPolyhedralOperators\WebPolyPlanarSectionOper.mweb\src\WebPolyPolygon2D.js|1436155762|1556
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

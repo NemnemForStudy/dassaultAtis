@@ -1,0 +1,683 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:widget="http://www.netvibes.com/ns/">
+    <head>
+        <!--
+            This widget has been developed for a demo and has been quickly delivered in 16x beta2.
+            Code will be rewritten ASAP in order to fully use UWA
+        -->
+        <!-- Application Metas -->
+        <title>Media Gallery Reader</title>
+        <meta name="apiVersion" content="1.3" />
+        <meta name="version" content="0.4" />
+        <meta name="author" content="ou6" />
+        <meta name="description" content="Embed all your medias in a gallery" />
+        <meta name="noSearchInWidgetUI" content="true" />
+
+        <!-- Application Standalone emulation files -->
+        <!--<link rel="stylesheet" type="text/css"
+            href="//uwa.netvibes.com/lib/c/UWA/assets/css/standalone.css" />
+        <script type="text/javascript"
+            src="//uwa.netvibes.com/lib/c/UWA/js/UWA_Standalone_Alone.js"></script>-->
+
+        <!-- Application Preferences -->
+        <widget:preferences>
+            <widget:preference name="title" type="input" label="Title" defaultValue="" />
+            <widget:preference name="height" type="input" label="Height" defaultValue="350" />
+            <widget:preference name="columns" type="range" step="1" min="1" max="10" label="Columns number" defaultValue="3" />
+            <widget:preference name="hq" type="boolean" checked="checked" label="Display HQ" defaultValue="true" />
+            <widget:preference name="medias" type="input" maxlength="10000" style="height:227px;"  label="List your medias url separated by a comma" defaultValue="" />
+        </widget:preferences>
+
+
+        <style>
+
+        .clearfix:after {
+            clear: both;content: ".";
+            display: block;
+            font-size: 0;
+            height: 0;
+            line-height: 0;
+            visibility: hidden;
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            /*height: 350px;*/
+            overflow: auto;
+            overflow-x: hidden;
+        }
+
+        .maximize {
+            height: 100%!important;
+        }
+
+        .container .media{
+            width: 100%;
+            float:left;
+            border-bottom: 1px #fff solid;
+            border-left: 1px #fff solid;
+        }
+
+        .columns {
+            height: 100%;
+            display: block;
+            float: left;
+        }
+
+        .columns:after {
+            content:"";
+            display:table;
+            clear: both;
+        }
+
+        .gradient {
+            display: block;
+            height: 45px;
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            content: " ";
+            background: -moz-linear-gradient(bottom, #FFFFFF 0%, transparent 100%);
+            background: -webkit-linear-gradient(bottom, #FFFFFF 0%,transparent 100%);
+            background: -o-linear-gradient(bottom, #FFFFFF 0%,transparent 100%);
+            background: -ms-linear-gradient(bottom, #FFFFFF 0%,transparent 100%);
+            background: linear-gradient(bottom, #FFFFFF 0%,transparent 100%);
+        }
+
+        #slideshow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: #191919;
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .slideshow-selected-media {
+            z-index: 3;
+            position: fixed;
+            border: none!important;
+            float: none!important;
+        }
+
+        .slideshow-media {
+            margin: auto;
+            display: inline-block;
+        }
+        .slideshow-selected-media {
+
+        }
+
+        #slideshow_header {
+            height: 30px;
+            position: fixed;
+            width: 100%;
+        }
+
+        #slideshow-close {
+            float: right;
+            padding: 8px;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        </style>
+        <!-- Application JavaScript Source -->
+        <script type="text/javascript">
+        //<![CDATA[
+        require(
+        [
+            'UWA/Core',
+            'UWA/Json'
+        ],
+        function (UWA, UWAJson) {
+            'use strict';
+
+            var defaultMedias = "http://media-cache-ec0.pinimg.com/236x/67/53/43/675343aad74511cb217456559364e41e.jpg, http://media-cache-ak0.pinimg.com/236x/72/87/c1/7287c15ce738602d3406a9f3ef31a3fb.jpg, http://media-cache-ak0.pinimg.com/236x/22/8d/91/228d91a4add15bd2869337fd513ae345.jpg, http://media-cache-ec0.pinimg.com/236x/d9/6a/df/d96adf50a8a5dd1098a2e4e95deacf05.jpg, http://media-cache-ak0.pinimg.com/236x/5b/ca/79/5bca79aed5f6acd28b6842fa733b4cb6.jpg, http://media-cache-ak0.pinimg.com/236x/65/92/05/6592056cdcb1daed4f954771c02a7f7b.jpg, http://media-cache-ak0.pinimg.com/236x/a0/eb/22/a0eb221676173e298e4373ec1ca30f5c.jpg";
+
+            // just in case... (running theme)
+            defaultMedias = "http://media-cache-ak0.pinimg.com/236x/1f/22/ff/1f22ff9337ee25ea0e6344f3d0eed539.jpg, http://media-cache-ak0.pinimg.com/236x/c7/de/3a/c7de3a1df85f39f235b12900edc9c1e9.jpg, http://media-cache-ec0.pinimg.com/236x/a2/10/cc/a210ccb95d270cda7e6be0fda742b262.jpg, http://media-cache-ec0.pinimg.com/236x/99/ed/b5/99edb5216357249d7764d177d390c6ee.jpg, http://media-cache-ak0.pinimg.com/236x/50/27/cf/5027cf1de3bc69b884c546b7c9b8eca6.jpg, http://media-cache-ec0.pinimg.com/236x/a1/73/0b/a1730be0495983b46b04dbb7bc4b54aa.jpg, http://media-cache-ak0.pinimg.com/236x/6b/a9/4f/6ba94f7fbf131e2fce46c7d9a8338459.jpg, http://media-cache-ak0.pinimg.com/236x/8e/18/08/8e1808e382212c2d3cdaa1a11d34a2cd.jpg, http://media-cache-ec0.pinimg.com/236x/b1/8a/4d/b18a4df8a32e06e45dfb8204f21cc726.jpg, http://media-cache-ec0.pinimg.com/236x/bc/64/43/bc6443c6603d4a2f08b4840920a69934.jpg, http://media-cache-ec0.pinimg.com/236x/d9/27/28/d92728d3c1059d4c75ff5d915a4054c4.jpg, http://media-cache-ak0.pinimg.com/236x/ab/59/b2/ab59b209c84ce516398b047a15e4338d.jpg, http://media-cache-ec0.pinimg.com/236x/3b/56/24/3b5624f59cdc661d9f377cc37ccc0b79.jpg, http://media-cache-ak0.pinimg.com/236x/10/d6/2f/10d62f58a9795180c75ba98d1f11743f.jpg, http://media-cache-ak0.pinimg.com/236x/c9/fd/26/c9fd26bc073b874c261c6ee0b20eec5c.jpg, http://media-cache-ak0.pinimg.com/236x/f6/e9/69/f6e969da5e2d455c67e71b5a37f5ab8c.jpg, http://media-cache-cd0.pinimg.com/236x/ca/6b/da/ca6bdacc5cc5f307e0029accae9b49e1.jpg, http://media-cache-ak0.pinimg.com/236x/14/43/9f/14439f4bf02149ff20954b69b9afa142.jpg, http://media-cache-cd0.pinimg.com/236x/a8/8f/ff/a88ffff3d64b6d05d176a5e433618472.jpg, http://media-cache-ec0.pinimg.com/236x/5e/39/ae/5e39aeed5f774ebcc070a0420b56b4a8.jpg, http://media-cache-cd0.pinimg.com/236x/ac/c1/7a/acc17a2e7e1e9661efadd763d5d706f5.jpg, http://media-cache-ak0.pinimg.com/236x/25/5a/5c/255a5c75f9aea86afb8c1a612c63b721.jpg, http://media-cache-ak0.pinimg.com/236x/38/36/33/38363385231a0d34de3b89ef9d69d917.jpg, http://media-cache-ak0.pinimg.com/236x/7a/1b/0c/7a1b0c4289c0324f241922a0f82649c4.jpg, http://media-cache-ec0.pinimg.com/236x/52/46/36/52463694e8a4bfceb42e74b9535536fd.jpg, http://media-cache-ec0.pinimg.com/236x/22/43/4e/22434e64c2b2162279abc9bb30135eac.jpg, http://media-cache-ec0.pinimg.com/236x/7f/58/ce/7f58ce22febf0ce0ac2c5ee4a4e7c2fc.jpg, http://media-cache-ec0.pinimg.com/236x/a4/72/e1/a472e1af3a54ef5098e738e3363d3bc8.jpg, http://media-cache-ak0.pinimg.com/236x/44/03/62/4403629f563d1bde7cc281a546bd61ef.jpg, http://media-cache-ec0.pinimg.com/236x/eb/2c/dc/eb2cdcdc6c08325eae13b622106c0bd4.jpg, http://media-cache-ec0.pinimg.com/236x/b5/a5/90/b5a5909cadef56cd60020e910383031a.jpg, http://media-cache-ak0.pinimg.com/236x/cd/ac/26/cdac26781e4ccbab240143ccbf834ef0.jpg, http://media-cache-ec0.pinimg.com/236x/68/73/19/687319d5de59fa0ed5eecc1844d56578.jpg, http://media-cache-ec0.pinimg.com/236x/52/c6/d9/52c6d942d33f52670b0632da92e4a6da.jpg, http://media-cache-ak0.pinimg.com/236x/b7/e4/d5/b7e4d5e84db98bcde469fd333e123d9d.jpg, http://media-cache-ec0.pinimg.com/236x/77/49/e8/7749e83c2cdec19543575095111e1b76.jpg, http://media-cache-ak0.pinimg.com/236x/54/7b/46/547b469b550ae6fccc07e4fd11703a72.jpg, http://media-cache-ec0.pinimg.com/236x/38/5b/21/385b21774f07575467a9e371d59f7502.jpg, http://media-cache-ak0.pinimg.com/236x/93/d6/d4/93d6d496a77308430c24354ac0ad4a48.jpg, http://media-cache-ec0.pinimg.com/236x/62/50/43/6250438c61b4c4b87d91b41c09c3a783.jpg, http://media-cache-ec0.pinimg.com/236x/75/a7/a1/75a7a18537220a3b84a6fc818e133588.jpg, http://media-cache-ak0.pinimg.com/236x/9e/40/f2/9e40f29072dcdb054ff4b525afca2aff.jpg, http://media-cache-cd0.pinimg.com/236x/27/4e/81/274e81f633a7ca41b991cd8c871833d4.jpg, http://media-cache-ec0.pinimg.com/236x/1b/e8/8f/1be88ff98a498543a85ec487f86a84c8.jpg, http://media-cache-ec0.pinimg.com/236x/51/81/10/518110d17823248372d6da8bf2c8098a.jpg, http://media-cache-ec0.pinimg.com/236x/42/ea/b0/42eab0c596c48c54c95ef8ab12d31e98.jpg";
+
+            function gallery(o) {
+
+                if (!(this instanceof gallery))
+                    return new gallery(o);
+
+                if (App._loading)
+                    return;
+
+                App._loading = true;
+
+                o = o || {};
+                o.medias = this._parseMedias(o.medias || "");
+                o.width = o.width || 500;
+                o.height = o.height || 500;
+                o.columns = o.columns || 3;
+                o.onComplete = o.onComplete || false;
+                o.hq = typeof o.hq != "undefined" ? o.hq : true;
+
+                if (!o.medias.length)
+                    o.medias = this._parseMedias(defaultMedias);
+
+                this._opts = o;
+                this._cache = {};
+
+                this.initGallery();
+
+                return this;
+            }
+
+            gallery.prototype._parseMedias = function (mediasStr) {
+
+                var result = [], medias = (mediasStr || "").split(/[ ,;]/);
+
+                for (var i = 0, arrLength = medias.length; i < arrLength; i++) {
+                    medias[i] = ("" + medias[i]).trim();
+
+                    if (medias[i].length && /^(embed:|)((https?:|)\/\/|data:).+/i.test(medias[i]))
+                        result.push({
+                            type: medias[i].toLowerCase().indexOf("embed:") === 0 ? "embed" : "photo",
+                            src: medias[i].replace(/^embed:/i, "").trim()
+                        });
+                }
+
+                return result;
+            };
+
+            gallery.prototype.initGallery = function () {
+
+                this._cache = {};
+                for (var i = 0; i < this._opts.columns; i++) {
+                    this._cache["column_" + i] = 0;
+                }
+
+                this._sanitizeMedias();
+
+                this._createContainer();
+
+                this._addMedias(function () {
+                    App._loading = false;
+                });
+
+                this._opts.onComplete && this._opts.onComplete();
+
+                return this;
+            };
+
+            gallery.prototype._sanitizeMedias = function () {
+                for (var i = 0, arrLength = this._opts.medias.length; i < arrLength; i++) {
+                    if (this._opts.hq && /(?:.+?)\.pinimg\.com\/236x\/(?:.+?)/i.test(this._opts.medias[i].src))
+                        this._opts.medias[i].src = this._opts.medias[i].src.replace("/236x/", "/1200x/");
+                }
+            };
+
+            gallery.prototype._createContainer = function () {
+                widget.setBody({
+                    tag: 'div',
+                    styles: {
+                        position: "relative"
+                    },
+                    html: [
+                        {
+                            tag: "div",
+                            id: "container",
+                            "class": "container"
+                        },
+                        {
+                            tag: "div",
+                            id: "gradient",
+                            "class": "gradient"
+                        }
+                    ]
+                });
+
+                this._cache.container = document.getElementById("container");
+
+                this._createColumns();
+            };
+
+            gallery.prototype._createColumns = function () {
+
+                var columnWidth = (Math.floor(1E2 * 1E2 / this._opts.columns) / 1E2) + "%";
+                for (var i = 0; i < this._opts.columns; i++) {
+                    widget.createElement("div", {
+                        id: "column_" + i,
+                        "class": "columns",
+                        styles: {
+                           width: columnWidth
+                        }
+                    }).inject(this._cache.container, 'bottom');
+                }
+
+                this._resize();
+            };
+
+            gallery.prototype._resize = function () {
+                var self = this;
+
+                this._cache.container.set("style", "height", self._opts.height);
+                /*var self = this;
+                var myScroller = new Scroller(this._cache.container, {
+                    height: self._opts.height,
+                    bounce: false,
+                    scrollableX: false,
+                    scrollbarH: false,
+                    scrollDrag: false
+                });*/
+            };
+
+            gallery.prototype._addMedias = function (cb) {
+                var self = this,
+                    elem,
+                    elemType,
+                    pos = 0,
+                    column,
+                    nbPhotosLoaded = 0,
+                    container = this._cache.container,
+                    fcOnComplete = function () {
+                        ++nbPhotosLoaded;
+                        if (nbPhotosLoaded == self._opts.medias.length)
+                            return cb && cb();
+                    };
+
+                for (var i = 0; i < this._opts.medias.length; i++) {
+                    (function (i) {
+                        elemType = self._opts.medias[i].type === "embed" ? "iframe" : "img";
+                        elem = widget.createElement(elemType, {
+                            src: self._opts.medias[i].src,
+                            "class": "media",
+                            events: {
+                                load: function (event) {
+                                    var img = this;
+                                    column = "column_" + self._getColumnIndex(i, img.height);
+
+                                    img.setAttributes({
+                                        "data-pos": pos,
+                                        "data-type": self._opts.medias[i].type,
+                                        "data-width": img.width,
+                                        "data-height": img.height
+                                    });
+                                    ++pos;
+                                    elemType !== "iframe" && document.getElementById(column).appendChild(this);
+                                    fcOnComplete();
+                                },
+                                error: function (event) {
+                                    fcOnComplete();
+                                },
+                                click: function () {
+                                    var mediasSrc = [], mediasElems = self._cache.container.getElementsByClassName("media");
+                                    for (var k = 0, arrLength = mediasElems.length; k < arrLength; k++)
+                                        mediasSrc.push({
+                                            src: mediasElems[k].src,
+                                            type: mediasElems[k].getAttribute("data-type"),
+                                            pos: mediasElems[k].getAttribute("data-pos"),
+                                            width: mediasElems[k].getAttribute("data-width"),
+                                            height: mediasElems[k].getAttribute("data-height")
+                                        });
+                                    new slideshow({ container: self._cache.container, medias: mediasSrc, start: this.getAttribute("data-pos") });
+                                }
+                            }
+                        });
+
+                        if (elemType === "iframe") {
+                            column = "column_" + self._getColumnIndex(i, 250);
+                            //elem.height = 250;
+                            elem.inject(document.getElementById(column), 'bottom');
+                        }
+
+                    }(i));
+                }
+            };
+
+            gallery.prototype._getColumnIndex = function (indexImg, imgHeight) {
+                //return (indexImg + 1) % this._opts.columns;
+                var  columnIndex = 0, lastValue = this._cache["column_" + columnIndex];
+                for (var i = 0; i < this._opts.columns; i++) {
+                    if (this._cache["column_" + i] < lastValue) {
+                        columnIndex = i;
+                        lastValue = this._cache["column_" + columnIndex];
+                    }
+                }
+
+                this._cache["column_" + columnIndex] += imgHeight;
+
+                return columnIndex;
+            };
+
+            var utils = {}
+            utils.mod = function (val, n) {
+                return ((val % n) + n) % n;
+            };
+
+            function slideshow(o) {
+
+                if (!(this instanceof slideshow))
+                    return new slideshow(o);
+
+                o = o || {};
+                o.container = o.container || document.body;
+                o.medias = o.medias || [];
+                o.start = o.start || 0;
+
+                this._opts = o;
+
+                this.initSlideshow();
+
+                return this;
+            }
+
+            slideshow.prototype.initSlideshow = function () {
+
+                if (!this._opts.medias || !this._opts.medias.length)
+                    return this;
+
+                this._createSlideshow();
+
+                this._displayMedia(this._opts.start, function () {
+
+                });
+
+                var bodySlideshow = document.getElementById("slideshow_body");
+                bodySlideshow.set({
+                    events: {
+                        click: function (event) {console.log("click");
+                            self.next();
+                        },
+                        mousedown: function (event) {
+
+                        }
+                    }
+                });
+
+                var self = this;
+
+                document.onkeyup = function (e) {
+                    e = e || w.event;
+
+                    switch (e.keyCode) {
+                        case 27:
+                            self.close();
+                            break;
+                        case 39:
+                            self.next();
+                            break;
+                        case 37:
+                            self.previous();
+                            break;
+                        default:
+                            break;
+                    }
+                };
+
+                return this;
+            };
+
+            slideshow.prototype._getMedia = function (pos) {
+
+                var self = this;
+                var media = null;
+
+                for (var i = 0, arrLength = self._opts.medias.length; i < arrLength; ++i) {
+                    if (self._opts.medias[i].pos == pos) {
+                        media = self._opts.medias[i];
+                        break;
+                    }
+                }
+
+                return media;
+            };
+
+            slideshow.prototype._createSlideshow = function () {
+
+                var self = this;
+
+                var slideshowElem = document.getElementById("slideshow"), parentElem = slideshowElem && slideshowElem.parentNode;
+
+                slideshowElem && parentElem.removeChild(slideshowElem);
+
+                slideshowElem = widget.createElement("div", {
+                    id: "slideshow"
+                }).inject(this._opts.container, 'bottom');
+
+                widget.createElement("div", {
+                    id: "slideshow_header",
+                    "class": "clearfix",
+                    html: [
+                        {
+                            tag: "div",
+                            id: "slideshow-close",
+                            text: "\u00D7",
+                            events: {
+                                click: function (event) {
+                                    self.close();
+                                }
+                            }
+                        },
+                        {
+                            tag: "div",
+                            id: "slideshow-tools",
+                            html: [
+                                {
+                                    tag: "div",
+                                    id: "slideshow-tools-previous"
+                                },
+                                {
+                                    tag: "div",
+                                    id: "slideshow-tools-next"
+                                }
+                            ]
+                        }
+                    ]
+                }).inject(slideshowElem, 'bottom');
+
+                widget.createElement("div", {
+                    id: "slideshow_body"
+                }).inject(slideshowElem, 'bottom');
+
+                widget.createElement("div", {
+                    id: "slideshow_footer"
+                }).inject(slideshowElem, 'bottom');
+
+                return this;
+            };
+
+            slideshow.prototype._displayMedia = function (pos, cb) {
+                pos = pos || 0;
+                console.log("pos1:", pos);
+                pos = utils.mod(pos, this._opts.medias.length);
+                console.log("pos mod:", pos);
+
+                var self = this;
+                var mediaInfo = self._getMedia(pos);
+                var elemType = mediaInfo.type === "embed" ? "iframe" : "img";
+                var fcOnComplete = function (err) {
+                    cb && cb(err);
+                };
+                //var slideshowStyle = window.getComputedStyle(document.getElementById("slideshow"));
+                var fitSize = { width: mediaInfo.width, height: mediaInfo.height };
+                var maxSize = { width: document.documentElement.clientWidth, height: document.documentElement.clientHeight };
+
+                if (fitSize.width >= maxSize.width) {
+                    fitSize.width = maxSize.width;
+                    fitSize.height = fitSize.width * mediaInfo.height / mediaInfo.width;
+                }
+
+                if (fitSize.height >= maxSize.height) {
+                    fitSize.height = maxSize.height;
+                    fitSize.width = fitSize.height * mediaInfo.width / mediaInfo.height;
+                }
+
+                var styles = {};
+                styles["margin-top"] = (maxSize.height - fitSize.height) / 2;
+                styles["margin-left"] = (maxSize.width - fitSize.width) / 2;
+
+
+                var slideshowElem = document.getElementById("slideshow"), bodySlideshow = document.getElementById("slideshow_body");
+
+                var elem = widget.createElement(elemType, {
+                    src: mediaInfo.src,
+                    "class": "slideshow-media",
+                    width: fitSize.width,
+                    height: fitSize.height,
+                    "data-pos": pos,
+                    styles: styles,
+                    events: {
+                        load: function (event) {
+                            if (elemType !== "iframe") {
+                                //bodySlideshow.innerHTML = "";
+                                var elems = bodySlideshow.getElementsByClassName("slideshow-media");
+                                for (var i = 0, arrLength = elems.length; i < arrLength; i++) {
+                                    bodySlideshow.removeChild(elems[0]);
+                                }
+                                bodySlideshow.appendChild(this);
+                            }
+
+                            fcOnComplete();
+                        },
+                        error: function (event) {
+                            fcOnComplete();
+                        }
+                    }
+                });
+
+                if (mediaInfo.type === "iframe") {
+                    //elem.height = 250;
+                    elem.inject(bodySlideshow, 'bottom');
+                }
+
+
+                return this;
+            };
+
+            slideshow.prototype._getCurrentPos = function () {
+                var pos = 0;
+                var body = document.getElementById("slideshow_body");
+
+                if (body) {
+                    var elems = body.getElementsByClassName("slideshow-media");
+                    elems[0] && (pos = parseInt(elems[0].getAttribute("data-pos") || 0, 10));
+                }
+
+                return pos;
+            };
+
+            slideshow.prototype.next = function (pos) {
+                console.log("next");
+
+                this._displayMedia(this._getCurrentPos() + 1);
+
+                return this;
+            };
+
+            slideshow.prototype.previous = function (media) {
+                console.log("prev");
+
+                this._displayMedia(this._getCurrentPos() - 1);
+
+                return this;
+            };
+
+            slideshow.prototype.close = function () {
+                if (!this._opts.container)
+                    return this;
+
+                this._opts.container.removeChild(document.getElementById("slideshow"));
+
+                return this;
+            };
+
+
+            /*
+                The "onLoad" event is the very first event triggered when
+                the widget is fully loaded or when the preferences are validated.
+
+                Here, we add MyWidget.onLoad() function as "onLoad" event
+                listener on the widget.
+            */
+            var App = {
+                _loading: false,
+                _gallery: null,
+                _maximized: false,
+                /*_resize: function () {
+                    var $container = UWA.extendElement(document.getElementById("container"));
+                    $container && $container.set({
+                        styles: {
+                            height: parseFloat(widget.getPreference("height").value || 0) + "px"
+                        }
+                    });
+
+                    return this;
+                },*/
+                onLoad: function (o) {
+                    o = o || {};
+                    o.height = o.height || false;
+
+                    if (widget.getPreference("title").value)
+                        widget.setTitle(widget.getPreference("title").value);
+
+                    App._gallery = new gallery({
+                        medias: widget.getPreference("medias").value,
+                        columns: widget.getPreference("columns").value,
+                        height: o.height || parseFloat(widget.getPreference("height").value || 0),
+                        hq: widget.getPreference("hq").value === "true",
+                        onComplete: function () {}
+                    });
+                },
+                onViewChange: function (e) {
+                    //var galleryLoadOpts = {};
+                    if (e && (e.type === "fullscreen" || e.type === "maximized")) {
+                        App._maximized = true;
+
+                        /*if (!document.getElementById("container").hasClassName("maximize"))
+                            document.getElementById("container").addClassName("maximize");*/
+
+                        document.getElementById("container").setStyle("height", e.height);
+
+                        document.getElementById("gradient").removeClassName("gradient");
+                        //galleryLoadOpts.height = "100%";
+                    }
+                    else {
+                        App._maximized = false;
+                        /*if (document.getElementById("container").hasClassName("maximize"))
+                            document.getElementById("container").removeClassName("maximize");*/
+
+                        document.getElementById("container").setStyle("height", widget.getValue("height"));
+
+                        document.getElementById("gradient").addClassName("gradient");
+                    }
+
+                    //App.onLoad(galleryLoadOpts);
+                },
+                endEdit: function () {
+                    App._gallery._resize();
+                }
+            };
+
+            widget.addEvents({
+                onLoad: App.onLoad
+                , onRefresh: App.onLoad
+                //, onResize: App.onLoad
+                //, endEdit: App.endEdit
+                , onViewChange: App.onViewChange
+            });
+        });
+        //]]>
+        </script>
+    </head>
+    <body></body>
+</html>

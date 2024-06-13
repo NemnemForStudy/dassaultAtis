@@ -1,0 +1,19 @@
+################################################################################################
+# Create By thok 2023. 06. 29
+# Admin Type : command
+# Name : decRequestCreate
+################################################################################################
+#del command 'decRequestCreate';
+add command decRequestCreate
+	description 'Request Create'
+	label 'emxProgramCentral.Label.RequestCreate'
+	href '${COMMON_DIR}/decRequestDialogFS.jsp?mode=create'
+	alt 'emxProgramCentral.Label.RequestCreate'
+	setting 'Image' '${COMMON_DIR}/images/iconActionCreate.png'
+	setting 'Registered Suite' 'ProgramCentral'
+	setting 'Target Location' 'slidein'
+	setting 'Popup Modal' true
+	setting 'Width' 100
+;
+add property 'command_decRequestCreate' on prog eServiceSchemaVariableMapping.tcl to command 'decRequestCreate'
+;

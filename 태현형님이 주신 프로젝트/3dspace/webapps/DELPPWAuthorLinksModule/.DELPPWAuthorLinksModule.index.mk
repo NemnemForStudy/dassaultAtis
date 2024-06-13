@@ -1,0 +1,11 @@
+m|DELPPWModules\DELPPWAuthorLinksModule.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.3.23054|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\DELPPWAuthorLinksModule\DELPPWAuthorLinksModule.js|1677184554|17649
+s|DELPPWModules\DELPPWAuthorLinksModule.mweb\src\AuthorLinksModule.js|1676978085|16826
+u|DELPPWModules\DELPPWAuthorLinksModule.mweb\src\AuthorLinksUI.js|1663669560|16432
+u|DELPPWModules\DELPPWAuthorLinksModule.mweb\src\AuthorLinksUIManager.js|1668492688|49895
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

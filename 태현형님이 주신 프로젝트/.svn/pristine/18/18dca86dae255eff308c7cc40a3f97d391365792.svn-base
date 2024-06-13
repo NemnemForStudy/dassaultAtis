@@ -1,0 +1,15 @@
+################################################################################################
+# Create By thok : 2023. 05. 03
+# Admin Type : command
+# Name : decProjectMaster
+################################################################################################
+#del command decProjectMaster;
+add command decProjectMaster
+	label 'emxFramework.MenuItem.Projects'
+	href '${COMMON_DIR}/emxIndentedTable.jsp?pageSize=300&program=decProjectMaster:findProjectMaster&table=decProjectList&selection=multiple&header=emxProgramCentral.ProgramTop.Projects&sortDirection=ascending&Export=false&HelpMarker=emxhelpprojectsummary'
+	alt 'emxFramework.MenuItem.Projects'
+	setting 'Registered Suite' ProgramCentral
+	setting 'Target Location' content
+
+add property 'command_decProjectMaster' on program 'eServiceSchemaVariableMapping.tcl' to command 'decProjectMaster'
+;

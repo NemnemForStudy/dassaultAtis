@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!-- COPYRIGHT DASSAULT SYSTEMES 2012, All rights reserved -->
+
+<Package CustomerExposition = "Programmer" ModelerType = "Top" Name = "DrainageSpatialStructureElement" UseNames = "CivilEngineeringSpatialStructureElement" Uuid = "0EC0CD93-8A9C-445A-81E3-1DBABF66F9CC" xmlns = "PLMDictionaryUnified">
+  <Class CustomerExposition = "Programmer" Discipline = "Yes" Name = "Drainage" SuperName = "DrainageSpatialStructureElement" Uuid = "34E2F211-B148-4A9A-8198-7B0F3BD63B3B">
+    <Property Name = "IconName" Value = "I_Drainage"/>
+    <Property Name = "3DIconName" Value = "I_Drainage.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATEAECDelegateInstanciation"/>
+    <Property Name = "KweNew_ReturnedType" Value = "VPMInstance"/>
+    <Property Name = "Newable" Value = "All_Offline_CAA"/>
+    <Property Name = "InstantiationOwnerTypes" Value = "PPRContext;AecOtherSpatialStructureElement;AecSite;Dam;DamOtherSpatialStructureElement;Railway;RailwayOtherSpatialStructureElement;RailwayStretch;RailwaySwitch;Road;RoadInterchange;RoadOtherSpatialStructureElement;RoadRamp;RoadStretch;Subgrade;SubgradeOtherSpatialStructureElement;Drainage"/>
+    <Property Name = "3DPartAvailability" Value = "UserChoiceReferenceDefault"/>
+  </Class>
+  <Class CustomerExposition = "Programmer" Discipline = "Yes" Name = "DrainageCulvert" SuperName = "DrainagePart" Uuid = "00CE89E5-A3D6-43F7-8F2C-5A88C16CFF05">
+    <Property Name = "IconName" Value = "I_DrainageCulvert"/>
+    <Property Name = "3DIconName" Value = "I_DrainageCulvert.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATEAECDelegateInstanciation"/>
+    <Property Name = "KweNew_ReturnedType" Value = "VPMInstance"/>
+    <Property Name = "Newable" Value = "All_Offline_CAA"/>
+    <Property Name = "InstantiationOwnerTypes" Value = "PPRContext;Drainage;DrainageOtherSpatialStructureElement"/>
+    <Property Name = "3DPartAvailability" Value = "UserChoiceReferenceDefault"/>
+  </Class>
+  <Class CustomerExposition = "Programmer" Discipline = "Yes" Name = "DrainageCulvertType" SuperName = "DrainagePartType" Uuid = "44BE8DD6-131B-4E5D-8033-4CA27A41AEDE" lowobjectcount = "Yes">
+    <Property Name = "IconName" Value = "I_DrainageCulvertType"/>
+    <Property Name = "3DIconName" Value = "I_DrainageCulvertType.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATCbaObjectTypeDelegateInstanciation"/>
+    <Property Name = "Newable" Value = "New_Offline_CAA"/>
+    <Property Name = "3DPartAvailability" Value = "ReferenceOnly"/>
+  </Class>
+  <Class CustomerExposition = "Programmer" Discipline = "Yes" Name = "DrainageOtherSpatialStructureElement" Specializable = "Yes" SuperName = "DrainagePart" Uuid = "A11D478C-571E-42CD-9A7F-8F4E01C9BC8C">
+    <Property Name = "IconName" Value = "I_DrainageOtherSpatialStructureElement"/>
+    <Property Name = "3DIconName" Value = "I_DrainageOtherSpatialStructureElement.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATEAECDelegateInstanciation"/>
+    <Property Name = "KweNew_ReturnedType" Value = "VPMInstance"/>
+    <Property Name = "Newable" Value = "All_Offline_CAA"/>
+    <Property Name = "InstantiationOwnerTypes" Value = "PPRContext;Drainage;DrainageOtherSpatialStructureElement"/>
+    <Property Name = "3DPartAvailability" Value = "UserChoiceReferenceDefault"/>
+  </Class>
+  <Class CustomerExposition = "Programmer" Discipline = "Yes" Name = "DrainageOtherSpatialStructureElementType" Specializable = "Yes" SuperName = "DrainagePartType" Uuid = "76DD2447-4841-481A-8A6C-428C6FBE1CD7" lowobjectcount = "Yes">
+    <Property Name = "IconName" Value = "I_DrainageOtherSpatialStructureElementType"/>
+    <Property Name = "3DIconName" Value = "I_DrainageOtherSpatialStructureElementType.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATCbaObjectTypeDelegateInstanciation"/>
+    <Property Name = "Newable" Value = "New_Offline_CAA"/>
+    <Property Name = "3DPartAvailability" Value = "ReferenceOnly"/>
+  </Class>
+  <Class Abstract = "Yes" CustomerExposition = "Programmer" Discipline = "Yes" Name = "DrainagePart" SuperName = "DrainageSpatialStructureElement" Uuid = "BC262DAE-A870-4408-9626-A49D2EF068A5"/>
+  <Class Abstract = "Yes" CustomerExposition = "Programmer" Discipline = "Yes" Name = "DrainagePartType" SuperName = "DrainageSpatialStructureElementType" Uuid = "1F84E368-5B0E-4FB6-B5C7-DB4A7EF30AED"/>
+  <Class Abstract = "Yes" CustomerExposition = "Programmer" Discipline = "Yes" Name = "DrainageSpatialStructureElement" SuperName = "CivilEngineeringSpatialStructureElement" Uuid = "7A9CEEB5-7AB2-4B96-894F-12B46BE6803F">
+    <Property Name = "GroupingType" Value = "DrainageSpatialStructureElement"/>
+  </Class>
+  <Class Abstract = "Yes" CustomerExposition = "Programmer" Discipline = "Yes" Name = "DrainageSpatialStructureElementType" SuperName = "CivilEngineeringSpatialStructureElementType" Uuid = "076F5086-9ACB-4AE0-B6F7-805BE4603AF1">
+    <Property Name = "GroupingType" Value = "DrainageSpatialStructureElementType"/>
+  </Class>
+  <Class CustomerExposition = "Programmer" Discipline = "Yes" Name = "DrainageTrench" SuperName = "DrainagePart" Uuid = "2F148607-1E45-4AAA-B215-B190D53A5C8E">
+    <Property Name = "IconName" Value = "I_DrainageTrench"/>
+    <Property Name = "3DIconName" Value = "I_DrainageTrench.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATEAECDelegateInstanciation"/>
+    <Property Name = "KweNew_ReturnedType" Value = "VPMInstance"/>
+    <Property Name = "Newable" Value = "All_Offline_CAA"/>
+    <Property Name = "InstantiationOwnerTypes" Value = "PPRContext;Drainage;DrainageOtherSpatialStructureElement"/>
+    <Property Name = "3DPartAvailability" Value = "UserChoiceReferenceDefault"/>
+  </Class>
+  <Class CustomerExposition = "Programmer" Discipline = "Yes" Name = "DrainageTrenchType" SuperName = "DrainagePartType" Uuid = "91027179-6874-4664-AACD-242BDF8BB15D" lowobjectcount = "Yes">
+    <Property Name = "IconName" Value = "I_DrainageTrenchType"/>
+    <Property Name = "3DIconName" Value = "I_DrainageTrenchType.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATCbaObjectTypeDelegateInstanciation"/>
+    <Property Name = "Newable" Value = "New_Offline_CAA"/>
+    <Property Name = "3DPartAvailability" Value = "ReferenceOnly"/>
+  </Class>
+</Package>

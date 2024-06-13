@@ -1,0 +1,560 @@
+// ===========================================================
+// PACKAGE   : PLMSteelConnectionDesign
+// ===========================================================
+// Generated : May 2021
+// Owner     : M5M (R424)
+// -----------------------------------------------------------
+// Syntax: 
+//   MASK DEFAULT
+//   ENTITY <entity>
+//   ATTR   <attr>;<required>;<are_values_authorized_values>;<def_val>
+//   VALUE  <value>
+//   FUNC   <method>
+//   FATTR  <attr>;<modif>
+// with: <entity>   = entity name
+//       <attr>     = atribute name
+//       <required> = requires attr logical flag (Y or N)
+//       <are_values_authorized_values>
+//                  = authorized values logical flag (Y or N):
+//                    N -> help values
+//                    Y -> authorized values
+//       <def_val>  = default value
+//       <value>    = a string value (can have blanks)
+//                    When <are_values_authorized_values> equals:
+//                    N -> an help valuem//                    Y -> an authorized value
+//       <method>   = one of the following operations:
+//                    Create        : attr appears in creation panels
+//                    Read/List/Tree: attr appears in browse/query result panels
+//                    Write         : attr appears in properties panels
+//                    Query/EZQuery : attr appears in query condition panels
+//       <modif>    = writable field logical flag (Y or N):
+//                    N -> NOT modifiable
+//                    Y -> modifiable
+// ===========================================================
+MASK DEFAULT
+// 6 entity :
+// - StdConnectionPlate
+// - StdConnectionLPlate
+// - StdConnectionHole
+// - StdConnectionCircularHole
+// - StdConnectionWeld
+// - StdConnectionAssembly
+// - StdPlateConnectionAssembly
+// - StdGussetConnectionAssembly
+
+// ===========================================================
+ENTITY StdConnectionPlate
+// ===========================================================
+// --- attributes: 13
+ATTR V_StdComponentId;N;N;$
+ATTR V_StdComponentType;N;N;$
+ATTR V_StdComponentCategory;N;N;$
+ATTR V_StdComponentThickness;N;N;$
+ATTR V_StdComponentWidth;N;N;$
+ATTR V_StdComponentHeight;N;N;$
+ATTR V_StdComponentPerimeter;N;N;$
+ATTR V_StdComponentGrossArea;N;N;$
+ATTR V_StdComponentNetArea;N;N;$
+ATTR V_StdComponentGrossVolume;N;N;$
+ATTR V_StdComponentNetVolume;N;N;$
+ATTR V_StdComponentGrossWeight;N;N;$
+ATTR V_StdComponentNetWeight;N;N;$
+
+// -----------------------------------------------------------
+FUNC EZQuery
+// -----------------------------------------------------------
+// - ordered
+// - unordered
+FATTR V_StdComponentId;Y
+FATTR V_StdComponentType;Y
+FATTR V_StdComponentCategory;Y
+FATTR V_StdComponentThickness;Y
+FATTR V_StdComponentWidth;Y
+FATTR V_StdComponentHeight;Y
+FATTR V_StdComponentPerimeter;Y
+FATTR V_StdComponentGrossArea;Y
+FATTR V_StdComponentNetArea;Y
+FATTR V_StdComponentGrossVolume;Y
+FATTR V_StdComponentNetVolume;Y
+FATTR V_StdComponentGrossWeight;Y
+FATTR V_StdComponentNetWeight;Y
+
+// -----------------------------------------------------------
+FUNC Query
+// -----------------------------------------------------------
+// - ordered
+// - unordered
+FATTR V_StdComponentId;Y
+FATTR V_StdComponentType;Y
+FATTR V_StdComponentCategory;Y
+FATTR V_StdComponentThickness;Y
+FATTR V_StdComponentWidth;Y
+FATTR V_StdComponentHeight;Y
+FATTR V_StdComponentPerimeter;Y
+FATTR V_StdComponentGrossArea;Y
+FATTR V_StdComponentNetArea;Y
+FATTR V_StdComponentGrossVolume;Y
+FATTR V_StdComponentNetVolume;Y
+FATTR V_StdComponentGrossWeight;Y
+FATTR V_StdComponentNetWeight;Y
+
+// -----------------------------------------------------------
+FUNC Read
+// -----------------------------------------------------------
+// - ordered
+// - unordered
+FATTR V_StdComponentId;N
+FATTR V_StdComponentType;N
+FATTR V_StdComponentCategory;N
+FATTR V_StdComponentThickness;N
+FATTR V_StdComponentWidth;N
+FATTR V_StdComponentHeight;N
+FATTR V_StdComponentPerimeter;N
+FATTR V_StdComponentGrossArea;N
+FATTR V_StdComponentNetArea;N
+FATTR V_StdComponentGrossVolume;N
+FATTR V_StdComponentNetVolume;N
+FATTR V_StdComponentGrossWeight;N
+FATTR V_StdComponentNetWeight;N
+
+// -----------------------------------------------------------
+FUNC Write
+// -----------------------------------------------------------
+// - ordered
+// - unordered
+FATTR V_StdComponentCategory;Y
+FATTR V_StdComponentThickness;Y
+FATTR V_StdComponentWidth;Y
+FATTR V_StdComponentHeight;Y
+FATTR V_StdComponentPerimeter;Y
+FATTR V_StdComponentGrossArea;Y
+FATTR V_StdComponentNetArea;Y
+FATTR V_StdComponentGrossVolume;Y
+FATTR V_StdComponentNetVolume;Y
+FATTR V_StdComponentGrossWeight;Y
+FATTR V_StdComponentNetWeight;Y
+
+// ===========================================================
+ENTITY StdConnectionLPlate
+// ===========================================================
+// --- attributes: 14
+ATTR V_StdComponentId;N;N;$
+ATTR V_StdComponentType;N;N;$
+ATTR V_StdComponentCategory;N;N;$
+ATTR V_StdComponentThickness;N;N;$
+ATTR V_StdComponentWidth;N;N;$
+ATTR V_StdComponentHeight;N;N;$
+ATTR V_StdComponentLength;N;N;$
+ATTR V_StdComponentPerimeter;N;N;$
+ATTR V_StdComponentGrossArea;N;N;$
+ATTR V_StdComponentNetArea;N;N;$
+ATTR V_StdComponentGrossVolume;N;N;$
+ATTR V_StdComponentNetVolume;N;N;$
+ATTR V_StdComponentGrossWeight;N;N;$
+ATTR V_StdComponentNetWeight;N;N;$
+
+// -----------------------------------------------------------
+FUNC EZQuery
+// -----------------------------------------------------------
+// - ordered
+// - unordered
+FATTR V_StdComponentId;Y
+FATTR V_StdComponentType;Y
+FATTR V_StdComponentCategory;Y
+FATTR V_StdComponentThickness;Y
+FATTR V_StdComponentWidth;Y
+FATTR V_StdComponentHeight;Y
+FATTR V_StdComponentLength;Y
+FATTR V_StdComponentPerimeter;Y
+FATTR V_StdComponentGrossArea;Y
+FATTR V_StdComponentNetArea;Y
+FATTR V_StdComponentGrossVolume;Y
+FATTR V_StdComponentNetVolume;Y
+FATTR V_StdComponentGrossWeight;Y
+FATTR V_StdComponentNetWeight;Y
+
+// -----------------------------------------------------------
+FUNC Query
+// -----------------------------------------------------------
+// - ordered
+// - unordered
+FATTR V_StdComponentId;Y
+FATTR V_StdComponentType;Y
+FATTR V_StdComponentCategory;Y
+FATTR V_StdComponentThickness;Y
+FATTR V_StdComponentWidth;Y
+FATTR V_StdComponentHeight;Y
+FATTR V_StdComponentLength;Y
+FATTR V_StdComponentPerimeter;Y
+FATTR V_StdComponentGrossArea;Y
+FATTR V_StdComponentNetArea;Y
+FATTR V_StdComponentGrossVolume;Y
+FATTR V_StdComponentNetVolume;Y
+FATTR V_StdComponentGrossWeight;Y
+FATTR V_StdComponentNetWeight;Y
+
+// -----------------------------------------------------------
+FUNC Read
+// -----------------------------------------------------------
+// - ordered
+// - unordered
+FATTR V_StdComponentId;N
+FATTR V_StdComponentType;N
+FATTR V_StdComponentCategory;N
+FATTR V_StdComponentThickness;N
+FATTR V_StdComponentWidth;N
+FATTR V_StdComponentHeight;N
+FATTR V_StdComponentLength;N
+FATTR V_StdComponentPerimeter;N
+FATTR V_StdComponentGrossArea;N
+FATTR V_StdComponentNetArea;N
+FATTR V_StdComponentGrossVolume;N
+FATTR V_StdComponentNetVolume;N
+FATTR V_StdComponentGrossWeight;N
+FATTR V_StdComponentNetWeight;N
+
+// -----------------------------------------------------------
+FUNC Write
+// -----------------------------------------------------------
+// - ordered
+// - unordered
+FATTR V_StdComponentCategory;Y
+FATTR V_StdComponentThickness;Y
+FATTR V_StdComponentWidth;Y
+FATTR V_StdComponentHeight;Y
+FATTR V_StdComponentLength;Y
+FATTR V_StdComponentPerimeter;Y
+FATTR V_StdComponentGrossArea;Y
+FATTR V_StdComponentNetArea;Y
+FATTR V_StdComponentGrossVolume;Y
+FATTR V_StdComponentNetVolume;Y
+FATTR V_StdComponentGrossWeight;Y
+FATTR V_StdComponentNetWeight;Y
+
+// ===========================================================
+ENTITY StdConnectionHole
+// ===========================================================
+// --- attributes: 9
+ATTR V_StdComponentId;N;N;$
+ATTR V_StdComponentType;N;N;$
+ATTR V_StdComponentCategory;N;N;$
+ATTR V_StdComponentDepth;N;N;$
+ATTR V_StdComponentDiameter;N;N;$
+ATTR V_StdComponentHCount;N;N;$
+ATTR V_StdComponentVCount;N;N;$
+ATTR V_StdComponentHPitch;N;N;$
+ATTR V_StdComponentVPitch;N;N;$
+ATTR V_StdComponentWidth;N;N;$
+ATTR V_StdComponentHeight;N;N;$
+ATTR V_StdComponentArea;N;N;$
+ATTR V_StdComponentVolume;N;N;$
+
+// -----------------------------------------------------------
+FUNC EZQuery
+// -----------------------------------------------------------
+// - ordered
+// - unordered
+FATTR V_StdComponentId;Y
+FATTR V_StdComponentType;Y
+FATTR V_StdComponentCategory;Y
+FATTR V_StdComponentDepth;Y
+FATTR V_StdComponentDiameter;Y
+FATTR V_StdComponentHCount;Y
+FATTR V_StdComponentVCount;Y
+FATTR V_StdComponentHPitch;Y
+FATTR V_StdComponentVPitch;Y
+FATTR V_StdComponentWidth;Y
+FATTR V_StdComponentHeight;Y
+FATTR V_StdComponentArea;Y
+FATTR V_StdComponentVolume;Y
+
+// -----------------------------------------------------------
+FUNC Query
+// -----------------------------------------------------------
+// - ordered
+// - unordered
+FATTR V_StdComponentId;Y
+FATTR V_StdComponentType;Y
+FATTR V_StdComponentCategory;Y
+FATTR V_StdComponentDepth;Y
+FATTR V_StdComponentDiameter;Y
+FATTR V_StdComponentHCount;Y
+FATTR V_StdComponentVCount;Y
+FATTR V_StdComponentHPitch;Y
+FATTR V_StdComponentVPitch;Y
+FATTR V_StdComponentWidth;Y
+FATTR V_StdComponentHeight;Y
+FATTR V_StdComponentArea;Y
+FATTR V_StdComponentVolume;Y
+
+// -----------------------------------------------------------
+FUNC Read
+// -----------------------------------------------------------
+// - ordered
+// - unordered
+FATTR V_StdComponentId;N
+FATTR V_StdComponentType;N
+FATTR V_StdComponentCategory;N
+FATTR V_StdComponentDepth;N
+FATTR V_StdComponentDiameter;N
+FATTR V_StdComponentHCount;N
+FATTR V_StdComponentVCount;N
+FATTR V_StdComponentHPitch;N
+FATTR V_StdComponentVPitch;N
+FATTR V_StdComponentWidth;N
+FATTR V_StdComponentHeight;N
+FATTR V_StdComponentArea;N
+FATTR V_StdComponentVolume;N
+
+// -----------------------------------------------------------
+FUNC Write
+// -----------------------------------------------------------
+// - ordered
+// - unordered
+FATTR V_StdComponentCategory;Y
+FATTR V_StdComponentDepth;Y
+FATTR V_StdComponentDiameter;Y
+FATTR V_StdComponentHCount;Y
+FATTR V_StdComponentVCount;Y
+FATTR V_StdComponentHPitch;Y
+FATTR V_StdComponentVPitch;Y
+FATTR V_StdComponentWidth;Y
+FATTR V_StdComponentHeight;Y
+FATTR V_StdComponentArea;Y
+FATTR V_StdComponentVolume;Y
+
+// ===========================================================
+ENTITY StdConnectionCircularHole
+// ===========================================================
+// --- attributes: 9
+ATTR V_StdComponentId;N;N;$
+ATTR V_StdComponentType;N;N;$
+ATTR V_StdComponentCategory;N;N;$
+ATTR V_StdComponentDepth;N;N;$
+ATTR V_StdComponentDiameter;N;N;$
+ATTR V_StdComponentAixalInstance;N;N;$
+ATTR V_StdComponentAixalAngularSpacing;N;N;$
+ATTR V_StdComponentCircle;N;N;$
+ATTR V_StdComponentCircleSpacing;N;N;$
+ATTR V_StdComponentWidth;N;N;$
+ATTR V_StdComponentHeight;N;N;$
+ATTR V_StdComponentArea;N;N;$
+ATTR V_StdComponentVolume;N;N;$
+
+// -----------------------------------------------------------
+FUNC EZQuery
+// -----------------------------------------------------------
+// - ordered
+// - unordered
+FATTR V_StdComponentId;Y
+FATTR V_StdComponentType;Y
+FATTR V_StdComponentCategory;Y
+FATTR V_StdComponentDepth;Y
+FATTR V_StdComponentDiameter;Y
+FATTR V_StdComponentAixalInstance;Y
+FATTR V_StdComponentAixalAngularSpacing;Y
+FATTR V_StdComponentCircle;Y
+FATTR V_StdComponentCircleSpacing;Y
+FATTR V_StdComponentWidth;Y
+FATTR V_StdComponentHeight;Y
+FATTR V_StdComponentArea;Y
+FATTR V_StdComponentVolume;Y
+
+// -----------------------------------------------------------
+FUNC Query
+// -----------------------------------------------------------
+// - ordered
+// - unordered
+FATTR V_StdComponentId;Y
+FATTR V_StdComponentType;Y
+FATTR V_StdComponentCategory;Y
+FATTR V_StdComponentDepth;Y
+FATTR V_StdComponentDiameter;Y
+FATTR V_StdComponentAixalInstance;Y
+FATTR V_StdComponentAixalAngularSpacing;Y
+FATTR V_StdComponentCircle;Y
+FATTR V_StdComponentCircleSpacing;Y
+FATTR V_StdComponentWidth;Y
+FATTR V_StdComponentHeight;Y
+FATTR V_StdComponentArea;Y
+FATTR V_StdComponentVolume;Y
+
+// -----------------------------------------------------------
+FUNC Read
+// -----------------------------------------------------------
+// - ordered
+// - unordered
+FATTR V_StdComponentId;N
+FATTR V_StdComponentType;N
+FATTR V_StdComponentCategory;N
+FATTR V_StdComponentDepth;N
+FATTR V_StdComponentDiameter;N
+FATTR V_StdComponentAixalInstance;N
+FATTR V_StdComponentAixalAngularSpacing;N
+FATTR V_StdComponentCircle;N
+FATTR V_StdComponentCircleSpacing;N
+FATTR V_StdComponentWidth;N
+FATTR V_StdComponentHeight;N
+FATTR V_StdComponentArea;N
+FATTR V_StdComponentVolume;N
+
+// -----------------------------------------------------------
+FUNC Write
+// -----------------------------------------------------------
+// - ordered
+// - unordered
+FATTR V_StdComponentCategory;Y
+FATTR V_StdComponentDepth;Y
+FATTR V_StdComponentDiameter;Y
+FATTR V_StdComponentAixalInstance;Y
+FATTR V_StdComponentAixalAngularSpacing;Y
+FATTR V_StdComponentCircle;Y
+FATTR V_StdComponentCircleSpacing;Y
+FATTR V_StdComponentWidth;Y
+FATTR V_StdComponentHeight;Y
+FATTR V_StdComponentArea;Y
+FATTR V_StdComponentVolume;Y
+
+// ===========================================================
+ENTITY StdConnectionWeld
+// ===========================================================
+// --- attributes: 3
+ATTR V_StdComponentId;N;N;$
+ATTR V_StdComponentType;N;N;$
+ATTR V_StdComponentCategory;N;N;$
+// -----------------------------------------------------------
+FUNC EZQuery
+// -----------------------------------------------------------
+// - ordered
+// - unordered
+FATTR V_StdComponentId;Y
+FATTR V_StdComponentType;Y
+FATTR V_StdComponentCategory;Y
+// -----------------------------------------------------------
+FUNC Query
+// -----------------------------------------------------------
+// - ordered
+// - unordered
+FATTR V_StdComponentId;Y
+FATTR V_StdComponentType;Y
+FATTR V_StdComponentCategory;Y
+// -----------------------------------------------------------
+FUNC Read
+// -----------------------------------------------------------
+// - ordered
+// - unordered
+FATTR V_StdComponentId;N
+FATTR V_StdComponentType;N
+FATTR V_StdComponentCategory;N
+// -----------------------------------------------------------
+FUNC Write
+// -----------------------------------------------------------
+// - ordered
+// - unordered
+FATTR V_StdComponentCategory;Y
+
+// ===========================================================
+ENTITY StdConnectionAssembly
+// ===========================================================
+// --- attributes: 2
+ATTR V_StdAssemblyType;N;N;$
+ATTR V_StdAssemblyCategory;N;N;$
+// -----------------------------------------------------------
+FUNC EZQuery
+// -----------------------------------------------------------
+// - ordered
+// - unordered
+FATTR V_StdAssemblyType;Y
+FATTR V_StdAssemblyCategory;Y
+// -----------------------------------------------------------
+FUNC Query
+// -----------------------------------------------------------
+// - ordered
+// - unordered
+FATTR V_StdAssemblyType;Y
+FATTR V_StdAssemblyCategory;Y
+// -----------------------------------------------------------
+FUNC Read
+// -----------------------------------------------------------
+// - ordered
+// - unordered
+FATTR V_StdAssemblyType;N
+FATTR V_StdAssemblyCategory;N
+// -----------------------------------------------------------
+FUNC Write
+// -----------------------------------------------------------
+// - ordered
+// - unordered
+FATTR V_StdAssemblyCategory;Y
+
+// ===========================================================
+ENTITY StdPlateConnectionAssembly
+// ===========================================================
+// --- attributes: 2
+ATTR V_StdAssemblyType;N;N;$
+ATTR V_StdAssemblyCategory;N;N;$
+// -----------------------------------------------------------
+FUNC EZQuery
+// -----------------------------------------------------------
+// - ordered
+// - unordered
+FATTR V_StdAssemblyType;Y
+FATTR V_StdAssemblyCategory;Y
+// -----------------------------------------------------------
+FUNC Query
+// -----------------------------------------------------------
+// - ordered
+// - unordered
+FATTR V_StdAssemblyType;Y
+FATTR V_StdAssemblyCategory;Y
+// -----------------------------------------------------------
+FUNC Read
+// -----------------------------------------------------------
+// - ordered
+// - unordered
+FATTR V_StdAssemblyType;N
+FATTR V_StdAssemblyCategory;N
+// -----------------------------------------------------------
+FUNC Write
+// -----------------------------------------------------------
+// - ordered
+// - unordered
+FATTR V_StdAssemblyCategory;Y
+
+// ===========================================================
+ENTITY StdGussetConnectionAssembly
+// ===========================================================
+// --- attributes: 2
+ATTR V_StdAssemblyType;N;N;$
+ATTR V_StdAssemblyCategory;N;N;$
+// -----------------------------------------------------------
+FUNC EZQuery
+// -----------------------------------------------------------
+// - ordered
+// - unordered
+FATTR V_StdAssemblyType;Y
+FATTR V_StdAssemblyCategory;Y
+// -----------------------------------------------------------
+FUNC Query
+// -----------------------------------------------------------
+// - ordered
+// - unordered
+FATTR V_StdAssemblyType;Y
+FATTR V_StdAssemblyCategory;Y
+// -----------------------------------------------------------
+FUNC Read
+// -----------------------------------------------------------
+// - ordered
+// - unordered
+FATTR V_StdAssemblyType;N
+FATTR V_StdAssemblyCategory;N
+// -----------------------------------------------------------
+FUNC Write
+// -----------------------------------------------------------
+// - ordered
+// - unordered
+FATTR V_StdAssemblyCategory;Y
+
+// ===========================================================
+// End of PLMSteelConnectionDesign package's DEFAULT mask file
+// ===========================================================

@@ -1,0 +1,101 @@
+{
+	"properties": {
+		"objectReferences": {
+			"type": "array",
+			"description": "List of Manufacturing Process objectReferences and number of entries passed is limited to 10.",
+			"items": {
+				"type": "object",
+				"properties": {
+					"source": {
+						"type": "string",
+						"example": "$3DSpace"
+					},
+					"type": {
+						"type": "string",
+						"example": "DELLmiWorkPlanSystemReference"
+					},
+					"identifier": {
+						"type": "string",
+						"example": "MfgProcessRefID1"
+					},
+					"relativePath": {
+						"type": "string",
+						"example": "resource/v1/dsprcs/dsprcs:MfgProcess/MfgProcessRefID1"
+					}
+				}
+			}
+		},
+		"searchCriteria": {
+			"type": "object",
+			"description": "Attributes supported is limited to attributes defined in  default mask dsprcs:MfgProcessMask.Default. The Value of the attribute also supports the wild character * search as well.",
+			"properties": {
+				"title": {
+					"type": "string",
+					"example": "My title",
+					"description": "Object title value"
+				},
+				"type": {
+					"type": "string",
+					"example": "My type",
+					"description": "Object type value"
+				},
+				"name": {
+					"type": "string",
+					"example": "My name",
+					"description": "Object name value"
+				},
+				"description": {
+					"type": "string",
+					"example": "My description",
+					"description": "Object description value"
+				},
+				"revision": {
+					"type": "string",
+					"example": "My revision",
+					"description": "Object revision value"
+				},
+				"state": {
+					"type": "string",
+					"example": "My state",
+					"description": "Object state value"
+				},
+				"owner": {
+					"type": "string",
+					"example": "My owner",
+					"description": "Object owner value"
+				},
+				"organization": {
+					"type": "string",
+					"example": "My organization",
+					"description": "Object organization value"
+				},
+				"collabspace": {
+					"type": "string",
+					"example": "My collabspace",
+					"description": "Object collabspace value"
+				}
+			}
+		},
+		"navigateTo": {
+			"type": "array",
+			"items": {
+				"type": "string"
+			},
+			"example": [
+				"dsprcs:MfgProcessInstance"
+			],
+			"description": "specify requested type"
+		},
+		"navigateFrom": {
+			"type": "array",
+			"items": {
+				"type": "string"
+			},
+			"example": [
+				"dsprcs:PrimaryCapableResource",
+				"dsprcs:ItemSpecification"
+			],
+			"description": "specify requested type"
+		}
+	}
+}

@@ -1,0 +1,68 @@
+# ----------------------------------------------------------------------------
+# help tags
+# ----------------------------------------------------------------------------
+
+MaskMergerHelp= \
+Pou\u017eit\u00ed\: java VPLMPosMaskMerger [-h]\n\
+\                                -p <previous_default_dir> <current_default_dir> [<previous_custo_dir>]\n\
+\                                [-d <output_directory>]\n\
+\                                -m <mask_name>...\n\
+\n\
+Slou\u010d\u00ed v\u0161echny soubory .mask v podadres\u00e1\u0159\u00edch vplm/mask/<mask_name> zadan\u00fdch z\u00e1kladn\u00edch adres\u00e1\u0159\u016f.\n\
+Slou\u010den\u00ed prob\u00edh\u00e1 na z\u00e1klad\u011b 3 vstup\u016f:\n\
+\ 1. upraven\u00fd soubor masky (p\u0159edchoz\u00ed verze) ulo\u017een\u00fd v adres\u00e1\u0159i <previous_custo_dir>/vplm/mask/<mask_name>\n\
+\ 2. p\u0159\u00edslu\u0161n\u00fd soubor masky DEFAULT (p\u0159edchoz\u00ed verze) ulo\u017een\u00fd v adres\u00e1\u0159i <previous_default_dir>/vplm/mask/DEFAULT\n\
+\ 3. p\u0159\u00edslu\u0161n\u00fd soubor masky DEFAULT (aktu\u00e1ln\u00ed verze) ulo\u017een\u00fd v adres\u00e1\u0159i <current_default_dir>/vplm/mask/DEFAULT\n\
+Ve v\u00fdchoz\u00edm stavu je adres\u00e1\u0159 <previous_custo_dir> nastaven na <previous_default_dir>.\n\
+\n\
+Vygenerovan\u00e9 soubory\:\n\
+\ - soubory masky jsou vygenerov\u00e1ny v adres\u00e1\u0159i \: <output_directory>/vplm/mask/<mask_name>\n\
+\ - soubor protokolu                \: <output_directory>/merger.log\n\
+\n\
+Argumenty\:\n\
+\  -h:   tato n\u00e1pov\u011bda\n\
+\  -p:   definuje z\u00e1kladn\u00ed vstupn\u00ed adres\u00e1\u0159e, kde se maj\u00ed hledat soubory masky (absolutn\u00ed cesta)\n\
+\  -d:   definuje v\u00fdstupn\u00ed adres\u00e1\u0159 pro protokoly a cestu do ko\u0159enov\u00e9ho adres\u00e1\u0159e vygenerovan\u00fdch soubor\u016f masky\n\
+\  -m:   definuje n\u00e1zvy masek, na kter\u00fdch se m\u00e1 operace slou\u010den\u00ed prov\u00e9st\n\
+\n\
+Upozorn\u011bn\u00ed\:\n\
+\  Vygenerovan\u00e9 soubory masky mus\u00ed b\u00fdt pot\u00e9 znovu zkompilovat a znovu tak vytvo\u0159it p\u0159\u00edslu\u0161n\u00fd soubor masky zabezpe\u010den\u00ed.\n\
+\  Vygenerovan\u00fd soubor masky zabezpe\u010den\u00ed je pot\u00e9 t\u0159eba znovu nasadit na serveru EV6.
+
+# ----------------------------------------------------------------------------
+# Information and trace messages
+# ----------------------------------------------------------------------------
+
+
+# ----------------------------------------------------------------------------
+# warnings and errors messages
+# ----------------------------------------------------------------------------
+
+WAR_Invalid_rule_line= Neplatn\u00fd form\u00e1t \u0159\u00e1dku pravidla na \u0159\u00e1dku {0}
+
+WAR_Invalid_Action_Type= Neplatn\u00fd typ akce pravidla "{1}" na \u0159\u00e1dku {0} : o\u010dek\u00e1v\u00e1 se parametr KEEP nebo IGNORE
+
+WAR_Invalid_Node_Type= Neplatn\u00fd typ uzlu pravidla "{1}" na \u0159\u00e1dku {0} : o\u010dek\u00e1v\u00e1 se parametr REF nebo CUSTO
+
+WAR_Invalid_Node_Format= Neplatn\u00fd form\u00e1t pravidla "{1}" na \u0159\u00e1dku {0}
+
+WAR_Empty_mask= Maska "{0}" neobsahuje \u017e\u00e1dn\u00fd soubor masky
+
+ERR_Directory_not_created= Adres\u00e1\u0159 {0} nelze vytvo\u0159it
+
+ERR_Directory_not_found= Adres\u00e1\u0159 {0} nelze nal\u00e9zt
+
+ERR_Directory_not_RW= Do adres\u00e1\u0159e {0} nelze zapisovat
+
+ERR_Directory_not_specified= Nen\u00ed zad\u00e1n \u017e\u00e1dn\u00fd adres\u00e1\u0159
+
+ERR_Output_dir_same_as_custo= V\u00fdstupn\u00ed adres\u00e1\u0159 {0} je stejn\u00fd jako adres\u00e1\u0159 CUSTO
+
+ERR_File_is_not_a_directory= Soubor {0} existuje, ale nejde o adres\u00e1\u0159
+
+ERR_File_not_found= Soubor {0} nelze nal\u00e9zt
+
+ERR_Empty_file= Soubor {0} je pr\u00e1zdn\u00fd nebo neobsahuje \u017e\u00e1dn\u00e9 cenn\u00e9 informace
+
+ERR_No_mask_param= Nebyl zad\u00e1n \u017e\u00e1dn\u00fd n\u00e1zev masky pomoc\u00ed p\u0159ep\u00edna\u010de -m
+

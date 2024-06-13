@@ -1,0 +1,14 @@
+{
+  "version": "1.0.0",
+  "summary": "Interpoliert den Eingabewert bei jedem Ausführungsschritt über eine Sekunde unter Berücksichtigung der seit dem vorherigen Ausführungsschritt verstrichenen Zeit.",
+  "description": "Dieser Block kann für <b>bildbasierte Animationen</b> sehr nützlich sein. Er garantiert eine konstante Animationsgeschwindigkeit unabhängig von der verwendeten Rechenleistung.<br><br>Ein Objekt in einer <b>zeitbasierten</b> Animation bewegt sich von <b>Punkt A</b> zu <b>Punkt B</b> in der <b>gleichen Zeitspanne</b>, unabhängig von der Bildwechselfrequenz des Films. Je geringer die Bildwechselfrequenz, <b>desto weiter bewegt das Objekt jedes Bild</b>, um die gleiche Geschwindigkeit beizubehalten.<br><br>Wenn die Animation jedoch <b>auf der Bildwechselfrequenz basiert</b>, benötigt das Objekt immer die <b>gleiche Anzahl von Bildern</b>, um von <b>Punkt A</b> zu <b>Punkt B</b> zu gelangen. Je geringer die Bildwechselfrequenz, desto länger dauert es, da sich der Abstand zwischen den einzelnen Bildern nicht ändert.<br><br>Wenn sich z. B. die Bildwechselfrequenz verlangsamt, wird auch die bildbasierte Animation <b>verlangsamt</b> und die zeitbasierte Animation wirkt <b>abgehackt</b>.<br>Die zeitbasierte Animation wird auch als 'unabhängig von der Bildwechselfrequenz' bezeichnet.",
+  "dataPorts": {
+    "Input": "entspricht dem Eingabewert, der in über 1 Sekunde zu interpolieren ist.",
+    "Output": "entspricht dem Ausgabewert, wobei <doc-odp-name translate=no>Output</doc-odp-name> = <doc-idp-name translate=no>Input</doc-idp-name> * Verstrichene Zeit (in Sekunden).<br>Die verstrichene Zeit stellt die Dauer eines Ausführungsschritts dar."
+  },
+  "controlPorts": {
+    "In": "löst die Blockausführung aus.",
+    "Out": "Wird aktiviert, wenn der Prozess abgeschlossen ist."
+  },
+  "example": null
+}

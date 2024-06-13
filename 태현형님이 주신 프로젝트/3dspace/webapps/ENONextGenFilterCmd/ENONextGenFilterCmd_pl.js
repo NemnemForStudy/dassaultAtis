@@ -1,0 +1,1 @@
+define("DS/ENONextGenFilterCmd/ENONextGenFilterCmd_pl",{});define("DS/ENONextGenFilterCmd/assets/nls/ENONextGenFilterCmd",{RootsToFilter:"Wybierz obiekt główny do filtrowania"});

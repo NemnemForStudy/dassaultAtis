@@ -1,0 +1,1 @@
+define(["DS/MPFMarketplaceAdmin/MarketplaceAdmin"],e=>{"use strict";return{run:()=>{console.log("Marketplace Admin")}}});

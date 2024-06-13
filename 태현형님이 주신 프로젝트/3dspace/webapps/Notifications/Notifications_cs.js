@@ -1,0 +1,1 @@
+define("DS/Notifications/Notifications_cs",{});define("DS/Notifications/assets/nls/translation",{closeAll:"Zavřít vše",close:"Zavřít",closeAllTooltip:"Zavřít všechna oznámení",closeTooltip:"Zavřít oznámení"});

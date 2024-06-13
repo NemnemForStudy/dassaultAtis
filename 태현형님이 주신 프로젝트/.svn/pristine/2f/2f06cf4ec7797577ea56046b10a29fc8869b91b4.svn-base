@@ -1,0 +1,1 @@
+define("DS/ENOX3DSpaceAttributesMgt/ENOX3DSpaceAttributesMgt_ko",{});define("DS/ENOX3DSpaceAttributesMgt/assets/nls/ENOXAttributesMgtNls",{isCellEditableColumns:{title:"보기에서 편집할 수 있습니다."},attributeForEditingColumns:{title:"셀 편집에 대한 속성"},Classification:{title:"분류"},instance:"인스턴스"});

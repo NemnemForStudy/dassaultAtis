@@ -1,0 +1,75 @@
+################################################################################################
+# Create By jhlee : 2023. 04. 24
+# Admin Type : type
+# Name : decCWPTask
+################################################################################################
+
+#del type 'decCWPTask';
+copy type 'Task' 'decCWPTask';
+
+add property 'type_decCWPTask' on prog eServiceSchemaVariableMapping.tcl to type 'decCWPTask';
+
+mod type 'decCWPTask' add attribute decCWPActivityType;
+mod type 'decCWPTask' add attribute decDiscipline;
+mod type 'decCWPTask' add attribute decSequentialNo;
+mod type 'decCWPTask' add attribute decEWPNo;
+mod type 'decCWPTask' add attribute decDesignOffice;
+mod type 'decCWPTask' add attribute decConstOffice;
+mod type 'decCWPTask' add attribute decPriorityGroup;
+mod type 'decCWPTask' add attribute decPriorityNo;
+mod type 'decCWPTask' add attribute decStage;
+mod type 'decCWPTask' add attribute decSubConNo;
+mod type 'decCWPTask' add attribute decEngineer;
+mod type 'decCWPTask' add attribute decPlanner;
+mod type 'decCWPTask' add attribute decSuperintendent;
+mod type 'decCWPTask' add attribute decForeman;
+mod type 'decCWPTask' add attribute decReleasePlan;
+mod type 'decCWPTask' add attribute decReleaseForecast;
+mod type 'decCWPTask' add attribute decReleaseActual;
+mod type 'decCWPTask' add attribute decTaskForecastStartDate;
+mod type 'decCWPTask' add attribute decTaskForecastFinishDate;
+mod type 'decCWPTask' add attribute decEWPStage;
+mod type 'decCWPTask' add attribute decEWPStatus;
+mod type 'decCWPTask' add attribute decEWPReleasePlan;
+mod type 'decCWPTask' add attribute decEWPReleaseForecast;
+mod type 'decCWPTask' add attribute decEWPReleaseActual;
+mod type 'decCWPTask' add attribute decIFCLastPlanDate;
+mod type 'decCWPTask' add attribute decIFCLastForecastDate;
+mod type 'decCWPTask' add attribute decIFCLastActualDate;
+mod type 'decCWPTask' add attribute decMaterialDeliveryStartDate;
+mod type 'decCWPTask' add attribute decMaterialDeliveryFinishDate;
+mod type 'decCWPTask' add attribute decMaterialRAS;
+mod type 'decCWPTask' add attribute decKeyQuantityType;
+mod type 'decCWPTask' add attribute decKeyQuantityUOM;
+mod type 'decCWPTask' add attribute decKeyQuantityTotal;
+mod type 'decCWPTask' add attribute decKeyQuantityCompleted;
+mod type 'decCWPTask' add attribute decEngineeringHeldupAction;
+mod type 'decCWPTask' add attribute decProcurementHeldupAction;
+mod type 'decCWPTask' add attribute decIWPCounts;
+mod type 'decCWPTask' add attribute decIWPCrewComposition;
+mod type 'decCWPTask' add attribute decRemark;
+mod type 'decCWPTask' add attribute decUPF1;
+mod type 'decCWPTask' add attribute decUPF2;
+mod type 'decCWPTask' add attribute decUPF3;
+
+## Modified by jhlee on 2023.05.25 --- [S]
+mod type 'decCWPTask' remove attribute decEWPStage;
+mod type 'decCWPTask' remove attribute decEWPStatus;
+mod type 'decCWPTask' remove attribute decEWPReleasePlan;
+mod type 'decCWPTask' remove attribute decEWPReleaseForecast;
+mod type 'decCWPTask' remove attribute decEWPReleaseActual;
+## Modified by jhlee on 2023.05.25 --- [E]
+## Modified by jhlee on 2023.05.26 --- [S]
+mod type 'decCWPTask' remove attribute decEWPNo;
+
+## Modified by jhlee on 2023.06.23 --- [S]
+mod type 'decCWPTask' add trigger ModifyAttribute Check emxTriggerManager Input TypedecCWPTaskModifyAttributeCheck;
+## Modified by jhlee on 2023.06.23 --- [E]
+
+## Modified by jhlee on 2023.06.27 --- [S]
+mod type 'decCWPTask' add attribute decSubConNo2;
+## Modified by jhlee on 2023.06.27 --- [E]
+
+## Modified by jhlee on 2023.06.29 --- [S]
+mod type 'decCWPTask' add trigger delete check emxTriggerManager input 'TypedecCWPTaskDeleteCheck';
+## Modified by jhlee on 2023.06.29 --- [E]

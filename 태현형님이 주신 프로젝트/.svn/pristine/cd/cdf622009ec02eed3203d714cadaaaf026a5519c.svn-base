@@ -1,0 +1,25 @@
+################################################################################################
+# Create By jhlee : 2023. 05. 25
+# Admin Type : type
+# Name : decEWP
+################################################################################################
+add type decEWP
+	attribute decEWPStage
+	attribute decEWPStatus
+	attribute decEWPReleasePlan
+	attribute decEWPReleaseForecast
+	attribute decEWPReleaseActual
+	attribute decUPF1
+	attribute decUPF2
+	attribute decUPF3
+;
+
+add property type_decEWP on program eServiceSchemaVariableMapping.tcl to type 'decEWP';
+
+mod type decEWP
+	add attribute decDiscipline
+;
+# jhlee Add 2023-07-24 CWP의 DP를 가져올것
+mod type decEWP
+	remove attribute decDiscipline
+;

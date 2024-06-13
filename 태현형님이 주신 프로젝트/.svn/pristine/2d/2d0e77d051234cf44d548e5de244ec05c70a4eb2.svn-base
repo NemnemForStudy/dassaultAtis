@@ -1,0 +1,1 @@
+define("DS/MIBQueryWidget/MIBQueryWidget_cs",{});define("DS/MIBQueryWidget/assets/nls/MIBQueryWidgetNls",{CommandDialogTitle:"Vyhledejte obsah databáze MIB",BtnOK:"Hledat",BtnCancel:"Zrušit",BtnOk2:"Otevřít",Query:"Hledat"});

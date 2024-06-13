@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Styles xmlns:syp="http://www.3ds.com/xsd/SYP">
+
+  <Template syp:name="DMUValidationWebAppHdr" Target="CATCmdHeadersList">
+    <CATCmdHeadersList>
+      <!--ENOPAD command header-->
+      <CATCommandHeader ID="Home" ClassName="DS/PADServices/commands/HomeCmd" HelpResourceFile="PADServices/PADServicesHelpForCommands" ResourceFile="PADServices/PADServices" />
+      <CATCommandHeader ID="RootPanel" ClassName="DS/ENOPAD3DViewer/commands/PAD3DViewerRootInfoPanelCmd" HelpResourceFile="PADUtils/PADUtilsHelpForCommands" ResourceFile="PADUtils/PADUtils" Available="1" Behavior="CATAfrHeaderCheck" />
+      <CATCommandHeader ID="RightSidePanel" ClassName="DS/DMUBaseCommands/DMURightSidePanelCmd" HelpResourceFile="PADUtils/PADUtilsHelpForCommands" ResourceFile="PADUtils/PADUtils" Behavior="CATAfrHeaderCheck">
+        <CATAfrCommandHeaderArgs>
+          <CATCommandHeaderArg ID="PropertiesReadOnly" Value="true" Mode="In" />
+        </CATAfrCommandHeaderArgs>
+      </CATCommandHeader>
+      <CATCommandHeader ID="AddRoot" ClassName="DS/PADUtils/commands/PADAddRoot_cmd" ResourceFile="PADUtils/PADUtils"/>
+      <CATCommandHeader ID="SwitchAuthoringIndex" ClassName="DS/PADUtils/commands/SwitchAuthoringIndex" ResourceFile="PADUtils/PADUtils" HelpResourceFile="PADUtils/PADUtilsHelpForCommands" Behavior="CATAfrHeaderCheck"/>
+      <CATCommandHeader ID="PAD3DToggleStatusBarHdr" ClassName="DS/ENOPAD3DViewer/commands/PAD3DToggleStatusBarCmd" ResourceFile="ENOPAD3DViewer/ENOPAD3DViewer" HelpResourceFile="ENOPAD3DViewer/ENOPAD3DViewerHelpForCommands" Behavior="CATAfrHeaderCheck" />
+      <CATCommandHeader ID="PAD3DToggleSimplifiedHdr" ClassName="DS/ENOPAD3DViewer/commands/PAD3DViewerToggleGeometry" ResourceFile="ENOPAD3DViewer/ENOPAD3DViewer">
+        <CATAfrCommandHeaderArgs>
+          <CATCommandHeaderArg ID="mode" Value="optimized" Mode="In"/>
+        </CATAfrCommandHeaderArgs>
+      </CATCommandHeader>
+      <CATCommandHeader ID="PAD3DToggleAccurateHdr" ClassName="DS/ENOPAD3DViewer/commands/PAD3DViewerToggleGeometry" ResourceFile="ENOPAD3DViewer/ENOPAD3DViewer">
+        <CATAfrCommandHeaderArgs>
+          <CATCommandHeaderArg ID="mode" Value="high" Mode="In"/>
+        </CATAfrCommandHeaderArgs>
+      </CATCommandHeader>
+
+
+      <CATCommandHeader ID="DMUReviewHdr" ClassName="DS/DMUReviewPersistence/DMUCreateReviewCmd" ResourceFile="DMUReviewPersistence/DMUReviewPersistence"        HelpResourceFile = "DMUReviewPersistence/DMUReviewPersistence">
+        <CATAfrCommandHeaderArgs>
+          <CATCommandHeaderArg ID="WebAppID" Value="DMUDesignValidation" Mode="In" />
+        </CATAfrCommandHeaderArgs>
+      </CATCommandHeader>
+
+      <CATCommandHeader ID="DMUReviewMarkupHdr" ClassName="DS/DMUReviewPersistence/DMUCreateReviewMarkupCmd" ResourceFile="DMUReviewPersistence/DMUReviewPersistence"        HelpResourceFile = "DMUReviewPersistence/DMUReviewPersistence" />
+      <CATCommandHeader ID="DMUUpdateValidatedListHdr" ClassName="DS/DMUReviewPersistence/DMUUpdateValidatedListCmd" ResourceFile="DMUReviewPersistence/DMUReviewPersistence"        HelpResourceFile = "DMUReviewPersistence/DMUReviewPersistence">
+        <CATAfrCommandHeaderArgs>
+          <CATCommandHeaderArg ID="updateMode" Value="add" Mode="In" />
+        </CATAfrCommandHeaderArgs>
+      </CATCommandHeader>
+
+      <CATCommandHeader ID="DMUAddCheckHdr" ClassName="DS/DMUReviewPersistence/DMUAddCheckCmd" ResourceFile="DMUReviewPersistence/DMUReviewPersistence"        HelpResourceFile = "DMUReviewPersistence/DMUReviewPersistence" />
+      <CATCommandHeader ID="DMUReviewMaturityChangeHdr" ClassName="DS/DMUReviewPersistence/DMUReviewMaturityChangeCmd" ResourceFile="DMUReviewPersistence/DMUReviewPersistence"        HelpResourceFile = "DMUReviewPersistence/DMUReviewPersistence" />
+      <CATCommandHeader ID="DMUReviewStatusChangeHdr" ClassName="DS/DMUReviewPersistence/DMUReviewStatusChangeCmd" ResourceFile="DMUReviewPersistence/DMUReviewPersistence"        HelpResourceFile = "DMUReviewPersistence/DMUReviewPersistence" />
+
+      <CATCommandHeader ID="CATWebUXPreferencesHdr" ClassName="DS/CATWebUXPreferences/CATWebUXPreferencesCmd" ResourceFile="CATWebUXPreferences/CATWebUXPreferences"    HelpResourceFile = "CATWebUXPreferences/CATWebUXPreferences" />
+      <CATCommandHeader ID="DMUEditPropertiesHdr" ClassName="DS/DMUCommands/DMUEditPropertiesCmd" ResourceFile="DMUCommands/DMUCommands"                    HelpResourceFile = "DMUCommands/DMUCommands" />
+      <CATCommandHeader ID="DMURemoveAllHdr" ClassName="DS/DMUCommands/DMURemoveAllcmd" ResourceFile="DMUReviewPersistence/DMUReviewPersistence"        HelpResourceFile = "DMUReviewPersistence/DMUReviewPersistence" />
+    </CATCmdHeadersList>
+  </Template>
+
+  <Template syp:name="3DDesignValidationAfrWorkshopAccess" Target="CATCmdWorkbench">
+    <CATCmdWorkbench Name="3DDesignValidationWorkbench">
+      <CATCmdContainer Name="DMUFixedArea" RepresentationType="AfrActionBarFixedSection">
+        <CATCmdStarter Name="ENOR3DHomeStr" Command="Home"/>
+      </CATCmdContainer>
+
+      <CATCmdContainer Name="DMUValidation" Visibility="1" RepresentationType="AfrActionBarSection">
+        <CATCmdStarter Name="DMUReviewStr" Command="DMUReviewHdr" />
+        <CATCmdSeparator Name="CAT3DAnnotSeparator" />
+        <CATCmdStarter Name="DMUReviewMarkupStr" Command="DMUReviewMarkupHdr" />
+        <CATCmdStarter Name="DMUAddCheckStr" Command="DMUAddCheckHdr" />
+        <CATCmdSeparator Name="ToolsSeparator"/>
+        <CATCmdStarter Name="CATWebUXPreferencesStr" Command="CATWebUXPreferencesHdr" />
+        <CATCmdSeparator Name="ViewSepRight" />
+        <CATCmdStarter Name="RightSidePanelStr" Command="RightSidePanel" />
+        <CATCmdStarter Name="DMURemoveAllcmd" Command="DMURemoveAllHdr" />
+      </CATCmdContainer>
+
+    </CATCmdWorkbench>
+  </Template>
+</Styles>

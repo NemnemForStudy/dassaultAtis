@@ -1,0 +1,68 @@
+# ----------------------------------------------------------------------------
+# help tags
+# ----------------------------------------------------------------------------
+
+MaskMergerHelp= \
+Użycie\: java VPLMPosMaskMerger [-h]\n\
+\                                -p <previous_default_dir> <current_default_dir> [<previous_custo_dir>]\n\
+\                                [-d <output_directory>]\n\
+\                                -m <mask_name>...\n\
+\n\
+Scala wszystkie pliki .mask znajdujące się w podkatalogach vplm/mask/<mask_name> wskazanych katalogów bazowych.\n\
+Proces scalania wykorzystuje 3 rodzaje danych wejściowych:\n\
+\ 1. niestandardowy plik maski (poprzednia wersja) znajdujący się w podkatalogu <previous_custo_dir>/vplm/mask/<mask_name>\n\
+\ 2. odnośny plik maski DEFAULT (poprzednia wersja) znajdujący się w podkatalogu <previous_default_dir>/vplm/mask/DEFAULT\n\
+\ 3. odnośny plik maski DEFAULT (obecna wersja) znajdujący się w podkatalogu <current_default_dir>/vplm/mask/DEFAULT\n\
+Domyślnie atrybut <previous_custo_dir> ma wartość <previous_default_dir>.\n\
+\n\
+Generowane pliki\:\n\
+\ - pliki maski są tworzone w podkatalogu \: <output_directory>/vplm/mask/<mask_name>\n\
+\ - plik dziennika                \: <output_directory>/merger.log\n\
+\n\
+Argumenty\:\n\
+\  -h:   ten system pomocy\n\
+\  -p:   określa wejściowe katalogi bazowe, gdzie należy szukać plików maski (ścieżka bezwzględna)\n\
+\  -d:   określa katalog wyjściowy pliku dziennika oraz główną ścieżkę generowanych plików maski\n\
+\  -m:   określa nazwy masek, na których należy wykonać operację scalania\n\
+\n\
+Uwaga\:\n\
+\  Wygenerowane pliki maski należy następnie zrekompilować, aby utworzyć odpowiedni plik maski zabezpieczeń.\n\
+\  Następnie wygenerowany plik maski zabezpieczeń należy zainstalować na serwerze programu EV6.
+
+# ----------------------------------------------------------------------------
+# Information and trace messages
+# ----------------------------------------------------------------------------
+
+
+# ----------------------------------------------------------------------------
+# warnings and errors messages
+# ----------------------------------------------------------------------------
+
+WAR_Invalid_rule_line= Nieprawidłowy format wiersza reguły w wierszu {0}
+
+WAR_Invalid_Action_Type= Nieprawidłowy typ akcji reguły "{1}" w wierszu {0}: oczekiwano akcji KEEP lub IGNORE
+
+WAR_Invalid_Node_Type= Nieprawidłowy typ węzła reguły "{1}" w wierszu {0}: oczekiwano REF lub CUSTO
+
+WAR_Invalid_Node_Format= Nieprawidłowy format reguły "{1}" w wierszu {0}
+
+WAR_Empty_mask= Maska "{0}" nie zawiera żadnego pliku maski
+
+ERR_Directory_not_created= Nie można utworzyć katalogu {0}
+
+ERR_Directory_not_found= Nie udało się odnaleźć katalogu {0}
+
+ERR_Directory_not_RW= Nie można zapisać w katalogu {0}
+
+ERR_Directory_not_specified= Nie określono żadnego katalogu
+
+ERR_Output_dir_same_as_custo= Katalog wyjściowy {0} jest taki sam, jak katalog węzła CUSTO
+
+ERR_File_is_not_a_directory= Plik {0} istnieje, ale nie znajduje się w katalogu
+
+ERR_File_not_found= Nie udało się odnaleźć pliku {0}
+
+ERR_Empty_file= Plik {0} jest pusty lub nie zawiera żadnych przydatnych informacji
+
+ERR_No_mask_param= Nie określono żadnej nazwy maski za pomocą opcji -m
+

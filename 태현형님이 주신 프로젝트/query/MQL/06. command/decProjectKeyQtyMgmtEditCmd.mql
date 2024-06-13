@@ -1,0 +1,15 @@
+# Added by hslee on 2023.09.09
+# del command decProjectKeyQtyMgmtEditCmd;
+add command decProjectKeyQtyMgmtEditCmd
+	label 'emxProgramCentral.Button.EditDetails'
+	href 'javascript:editMode();'
+	setting 'Registered Suite' 'ProgramCentral'
+;
+
+mod command decProjectKeyQtyMgmtEditCmd
+	add setting 'hasAccess' 'PIM'
+	add setting 'Access Program' 'decAccess'
+	add setting 'Access Function' 'hasAccess'
+	add setting 'Image' '${COMMON_DIR}/images/iconActionEdit.png'
+;
+

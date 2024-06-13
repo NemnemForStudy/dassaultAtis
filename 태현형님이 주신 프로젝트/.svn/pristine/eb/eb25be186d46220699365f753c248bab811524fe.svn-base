@@ -1,0 +1,69 @@
+# ----------------------------------------------------------------------------
+# help tags
+# ----------------------------------------------------------------------------
+
+MaskMergerHelp=\
+Usage\: java VPLMPosMaskMerger [-h]\\n\
+\                                -p <previous_default_dir> <current_default_dir> [<previous_custo_dir>]\\n\
+\                                [-d <output_directory>]\\n\
+\                                -m <mask_name>...\\n\
+\\n\
+Merges all .mask files located in the vplm/mask/<mask_name> subdirectories of the specified base directories.\\n\
+The merge is based on 3 inputs:\\n\
+\ 1. the customized mask file (previous version), contained in <previous_custo_dir>/vplm/mask/<mask_name>\\n\
+\ 2. the corresponding DEFAULT mask file (previous version), contained in <previous_default_dir>/vplm/mask/DEFAULT\\n\
+\ 3. the corresponding DEFAULT mask file (current version), contained in <current_default_dir>/vplm/mask/DEFAULT\\n\
+By default, <previous_custo_dir> is set to <previous_default_dir>.\\n\
+\\n\
+Generated files\:\\n\
+\ - mask files are generated in \: <output_directory>/vplm/mask/<mask_name>\\n\
+\ - the log file                \: <output_directory>/merger.log\\n\
+\\n\
+Arguments\:\\n\
+\  -h:   this help\\n\
+\  -p:   defines the input base directories where to search mask files (absolute path)\\n\
+\  -d:   defines the output directory for log and root path of generated mask files\\n\
+\  -m:   defines the mask name(s) on which to merge operation must be performed\\n\
+\\n\
+Notice\:\\n\
+\  The generated mask files must be then recompiled to regenerate the corresponding SecurityMask file.\\n\
+\  Then, the generated SecurityMask file must be redeployed in the EV6 server.
+
+# ----------------------------------------------------------------------------
+# Information and trace messages
+# ----------------------------------------------------------------------------
+
+
+# ----------------------------------------------------------------------------
+# warnings and errors messages
+# ----------------------------------------------------------------------------
+
+WAR_Invalid_rule_line=선 {0}의 유효하지 않은 규칙 선 형식
+
+WAR_Invalid_Action_Type=선 {0}의 유효하지 않은 규칙 작업 유형 "{1}": KEEP 또는 IGNORE 예상됨
+
+WAR_Invalid_Node_Type=선 {0}의 유효하지 않은 규칙 노드 유형 "{1}": REF 또는 CUSTO 예상됨
+
+WAR_Invalid_Node_Format=선 {0}의 유효하지 않은 규칙 형식 "{1}"
+
+WAR_Empty_mask=마스크 "{0}"에 마스크 파일이 없습니다.
+
+ERR_Directory_not_created=디렉터리 {0}을(를) 생성할 수 없음
+
+ERR_Directory_not_found=디렉터리 {0}을(를) 찾을 수 없음
+
+ERR_Directory_not_RW=디렉터리 {0}에 쓸 수 없음
+
+ERR_Directory_not_specified=디렉터리가 지정되지 않았습니다.
+
+ERR_Output_dir_same_as_custo=출력 디렉터리 {0}은(는) CUSTO 디렉터리와 동일합니다.
+
+ERR_File_is_not_a_directory=파일 {0}이(가) 존재하지만 디렉터리가 아닙니다.
+
+ERR_File_not_found=파일 {0}을(를) 찾을 수 없음
+
+ERR_Empty_file=파일 {0}이(가) 비어 있거나 유효한 정보가 없습니다.
+
+ERR_No_mask_param=마스크 이름이 -m 옵션을 사용하여 지정되지 않았습니다.
+
+

@@ -1,0 +1,20 @@
+start trans;
+############################## DO NOT EDIT ABOVE
+# Modified By thok : 2023. 10. 16
+add command 'decMaterialStatusLegend'
+	description 'Material Status Legend'
+	href "javascript:window.open('${COMMON_DIR}/images/Material_Status_Legend.png', 'Material Status Legend','width=1505, height=633,location=no,status=no')"
+	label 'emxProgramCentral.Label.Legend'
+	alt 'emxProgramCentral.Label.Legend'
+	setting 'Target Location' 'popup'
+	setting 'Registered Suite' 'ProgramCentral'
+;
+add property 'command_decMaterialStatusLegend' on prog eServiceSchemaVariableMapping.tcl to command 'decMaterialStatusLegend'
+;
+
+mod command decProjectMaterialStatusLink
+	href '${COMMON_DIR}/emxIndentedTable.jsp?table=decMaterialStatusSummary&program=emxProjectSpace:getMaterialStatusList&toolbar=decProjectMaterialStatusLinkToolBar&header=ProgramCentral.Label.Procurement_Schedule_-_Material_Status&editLink=true&parallelLoading=true&maxCellsToDraw=2000&scrollPageSize=50&pageSize=300&showPaginationToggle=false&decExport=true&exportMode=MaterialStatus&slideinFilter=true&codeMaster=Sub-Con&Material Delay=true'
+;
+
+############################## DO NOT EDIT BELOW
+commit trans;

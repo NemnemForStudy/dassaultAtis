@@ -1,0 +1,90 @@
+################################################################################################
+# Create By jhlee : 2023. 07. 27
+# Admin Type : command
+################################################################################################
+
+copy command PMCAssignee                              PMCAssignee_ootb                             ;
+copy command PMCCollaboration                         PMCCollaboration_ootb                        ;
+copy command PMCDeliverableCommandPowerView           PMCDeliverableCommandPowerView_ootb          ;
+copy command PMCDependency                            PMCDependency_ootb                           ;
+copy command PMCTaskEffort                            PMCTaskEffort_ootb                           ;
+copy command PMCRisk                                  PMCRisk_ootb                                 ;
+copy command PMCGateAndTaskRouteAndApprovalsCommand   PMCGateAndTaskRouteAndApprovalsCommand_ootb  ;
+copy command PMCProjectOpportunity                    PMCProjectOpportunity_ootb                   ;
+copy command PMCTaskManagmentMultipleOwnershipCommand PMCTaskManagmentMultipleOwnershipCommand_ootb;
+copy command ContextIssueListPage                     ContextIssueListPage_ootb                    ;
+copy command PMCGateProperties                        PMCGateProperties_ootb                       ;
+copy command PMCWBSAssignSelected                     PMCWBSAssignSelected_ootb                       ;
+copy command PMCWBSAddRemoveSelectedDependency        PMCWBSAddRemoveSelectedDependency_ootb                       ;
+copy menu 	 PMCAddProjectMenu                        PMCAddProjectMenu_ootb                                       ;
+copy menu 	 PMCSBEditActions                         PMCSBEditActions_ootb                                        ;
+copy command PMCLeftTaskIndentation                   PMCLeftTaskIndentation_ootb                                  ;
+copy command PMCRightTaskIndentation                  PMCRightTaskIndentation_ootb                                 ;
+copy command PMCTaskMoveUp                            PMCTaskMoveUp_ootb                                           ;
+copy command PMCTaskMoveDown                          PMCTaskMoveDown_ootb                                         ;
+copy command PMCLinkWBSTasks                          PMCLinkWBSTasks_ootb                                         ;
+copy command PMCSchedule                          	  PMCSchedule_ootb                                         ;
+copy command PMCPromoteSuccessor                          	  PMCPromoteSuccessor_ootb                                         ;
+copy command PMCProjectExport                          	  PMCProjectExport_ootb                                         ;
+
+
+
+
+mod command PMCAssignee                               add setting   'Access Expression'   'context.user.isassigned[decSystemAdmin]'  ;
+mod command PMCCollaboration                          add setting   'Access Expression'   'context.user.isassigned[decSystemAdmin]'  ;
+mod command PMCDeliverableCommandPowerView            add setting   'Access Expression'   'context.user.isassigned[decSystemAdmin]'  ;
+mod command PMCDependency                             add setting   'Access Expression'   'context.user.isassigned[decSystemAdmin]'  ;
+mod command PMCTaskEffort                             add setting   'Access Expression'   'context.user.isassigned[decSystemAdmin]'  ;
+mod command PMCRisk                                   add setting   'Access Expression'   'context.user.isassigned[decSystemAdmin]'  ;
+mod command PMCGateAndTaskRouteAndApprovalsCommand    add setting   'Access Expression'   'context.user.isassigned[decSystemAdmin]'  ;
+mod command PMCProjectOpportunity                     add setting   'Access Expression'   'context.user.isassigned[decSystemAdmin]'  ;
+mod command PMCTaskManagmentMultipleOwnershipCommand  add setting   'Access Expression'   'context.user.isassigned[decSystemAdmin]'  ;
+mod command ContextIssueListPage                      add setting   'Access Expression'   'context.user.isassigned[decSystemAdmin]'  ;
+mod command PMCGateProperties                         add setting   'Access Expression'   'false'  ;
+mod command PMCWBSAssignSelected				      add setting   'Access Expression'   '(!((to[Project Access Key].from.from[Project Access List].to.type.kindof[Project Template]==TRUE) || (type.kindof[Project Template]==TRUE))) && context.user.isassigned[decSystemAdmin]';
+mod command PMCWBSAddRemoveSelectedDependency         add setting   'Access Expression'   'context.user.isassigned[decSystemAdmin]'  ;
+mod menu 	 PMCAddProjectMenu                        add setting   'Access Expression'   'context.user.isassigned[decSystemAdmin]'  ;
+mod menu 	 PMCSBEditActions                         add setting   'Access Expression'   'context.user.isassigned[decSystemAdmin]'  ;
+mod command PMCLeftTaskIndentation                    add setting   'Access Expression'   '(current.access[modify] == true) && context.user.isassigned[decSystemAdmin]'  ;
+mod command PMCRightTaskIndentation                   add setting   'Access Expression'   '(current.access[modify] == true) && context.user.isassigned[decSystemAdmin]'  ;
+mod command PMCTaskMoveUp                             add setting   'Access Expression'   '(current.access[modify] == true) && context.user.isassigned[decSystemAdmin]'  ;
+mod command PMCTaskMoveDown                           add setting   'Access Expression'   '(current.access[modify] == true) && context.user.isassigned[decSystemAdmin]'  ;
+mod command PMCLinkWBSTasks                           add setting   'Access Expression'   'context.user.isassigned[decSystemAdmin]'  ;
+mod command PMCSchedule								  add setting   'Access Expression'   'false;
+mod command PMCPromoteSuccessor						  add setting   'Access Expression'   'false'  ;
+mod command PMCProjectExport						  add setting   'Access Expression'   'false'  ;
+
+
+
+
+mod command PMCAssignee                               add setting   'Access Expression'   'false'  ;
+mod command PMCCollaboration                          add setting   'Access Expression'   'false'  ;
+mod command PMCDeliverableCommandPowerView            add setting   'Access Expression'   'false'  ;
+mod command PMCDependency                             add setting   'Access Expression'   'false'  ;
+mod command PMCTaskEffort                             add setting   'Access Expression'   'false'  ;
+mod command PMCRisk                                   add setting   'Access Expression'   'false'  ;
+mod command PMCGateAndTaskRouteAndApprovalsCommand    add setting   'Access Expression'   'false'  ;
+mod command PMCProjectOpportunity                     add setting   'Access Expression'   'false'  ;
+mod command PMCTaskManagmentMultipleOwnershipCommand  add setting   'Access Expression'   'false'  ;
+mod command ContextIssueListPage                      add setting   'Access Expression'   'false'  ;
+mod command PMCGateProperties                         add setting   'Access Expression'   'false'  ;
+mod command PMCWBSAssignSelected				      add setting   'Access Expression'   'false'  ;
+mod command PMCWBSAddRemoveSelectedDependency         add setting   'Access Expression'   'false'  ;
+mod menu 	 PMCAddProjectMenu                        add setting   'Access Expression'   'false'  ;
+mod menu 	 PMCSBEditActions                         add setting   'Access Expression'   'false'  ;
+mod command PMCLeftTaskIndentation                    add setting   'Access Expression'   'false'  ;
+mod command PMCRightTaskIndentation                   add setting   'Access Expression'   'false'  ;
+mod command PMCTaskMoveUp                             add setting   'Access Expression'   'false'  ;
+mod command PMCTaskMoveDown                           add setting   'Access Expression'   'false'  ;
+mod command PMCLinkWBSTasks                           add setting   'Access Expression'   'false'  ;
+mod command PMCSchedule								  add setting   'Access Expression'   'false'  ;
+mod command PMCPromoteSuccessor						  add setting   'Access Expression'   'false'  ;
+mod command PMCProjectExport						  add setting   'Access Expression'   'false'  ;
+
+
+
+
+mod command PMCSchedule								  remove setting   'Access Expression';
+
+
+

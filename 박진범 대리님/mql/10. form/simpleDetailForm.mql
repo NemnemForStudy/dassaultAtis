@@ -1,0 +1,32 @@
+#####################################################################################################
+# Created by changseopLim
+# Create Date : 2024-05-29
+# Name : simpleDetailForm
+#####################################################################################################
+#del form simpleDetailForm
+add form simpleDetailForm web
+field
+	name Name 
+	label 'emxFramework.label.name'
+	bus '$<name>'
+	setting 'Field Type' basic
+	setting 'Registered Suite' 'Framework'
+	setting Editable false
+field
+	name simpleTitle
+	label 'emxFramework.label.simpleTitle'
+	bus '$<attribute[simpleTitle]>'
+	setting 'Field Type' attribute
+	setting 'Admin Type' attribute_simpleTitle
+	setting 'Registered Suite' 'Framework'
+field
+	name connectObject
+	label 'emxFramework.label.connectObject'
+	setting 'Field Type' programHTMLOutput
+	setting 'program' secondProject
+	setting 'function' showObject
+	setting 'Registered Suite' 'Framework'
+;
+add property form_simpleDetailForm on prog eServiceSchemaVariableMapping.tcl to form simpleDetailForm
+;
+;

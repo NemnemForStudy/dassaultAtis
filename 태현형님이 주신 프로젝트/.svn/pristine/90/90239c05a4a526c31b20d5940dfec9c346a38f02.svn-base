@@ -1,0 +1,1 @@
+define("DS/DMUSlideEdition/DMUSlideEdition_zh-TW",{});define("DS/DMUSlideEdition/assets/nls/DMUSlideEdition",{normalSlideTitle:"投影片",createSlideMessage:"已產生",normalFormatTitle:"格式",formatGenerated:"已成功產生格式",formatGenerationError:"產生格式時發生非預期的錯誤",generateAndEditLabel:"關閉並編輯",generateFormatTitle:"產生格式"});

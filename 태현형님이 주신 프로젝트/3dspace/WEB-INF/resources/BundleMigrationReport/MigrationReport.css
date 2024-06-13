@@ -1,0 +1,157 @@
+* {
+    font-size: 1rem;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+div {
+  position: relative;
+}
+input[type="checkbox"] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+
+label {
+  cursor: pointer;
+}
+label {
+  position: relative;
+  display: block;
+  padding-left: 30px;
+}
+label::before {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  top: 50%;
+  left: 10px;
+  border-left: 8px solid black;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  margin-top: -8px;
+}
+
+input[type="checkbox"]:checked ~ h2 label::before {
+  border-left: 8px solid transparent;
+  border-top: 8px solid black;
+  border-right: 8px solid transparent;
+  margin-left: -4px;
+  margin-top: -4px;
+}
+
+.report {
+  display: none;
+  overflow: hidden;
+  padding-left: 30px;
+  transition: max-height 0.4s ease;
+}
+
+input[type="checkbox"]:checked ~ h2 ~ div.report {
+  display: block;
+}
+
+
+
+.rtable {
+  /*!
+  // IE needs inline-block to position scrolling shadows otherwise use:
+  // display: block;
+  // max-width: min-content;
+  */
+  display: inline-block;
+  vertical-align: top;
+  max-width: 100%;
+  
+  overflow-x: auto;
+  
+  // optional - looks better for small cell values
+  white-space: nowrap;
+
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.rtable tbody {
+  
+  // scrolling shadows
+  background: radial-gradient(left, ellipse, rgba(0,0,0, .2) 0%, rgba(0,0,0, 0) 75%) 0 center,
+              radial-gradient(right, ellipse, rgba(0,0,0, .2) 0%, rgba(0,0,0, 0) 75%) 100% center;
+  background-size: 10px 100%, 10px 100%;
+  background-attachment: scroll, scroll;
+  background-repeat: no-repeat;
+}
+
+// change these gradients from white to your background colour if it differs
+// gradient on the first cells to hide the left shadow
+.rtable td:first-child {
+  background-image: linear-gradient(to right, rgba(255,255,255, 1) 50%, rgba(255,255,255, 0) 100%);
+  background-repeat: no-repeat;
+  background-size: 20px 100%;
+}
+
+// gradient on the last cells to hide the right shadow
+.rtable td:last-child {
+  background-image: linear-gradient(to left, rgba(255,255,255, 1) 50%, rgba(255,255,255, 0) 100%);
+  background-repeat: no-repeat;
+  background-position: 100% 0;
+  background-size: 20px 100%;
+}
+
+.rtable th {
+  font-size: 11px;
+  text-align: left;
+  text-transform: uppercase;
+  background: #f2f0e6;
+}
+
+.rtable th,
+.rtable td {
+  padding: 6px 12px;
+  border: 1px solid #d9d7ce;
+}
+
+body {
+  margin: 0;
+  padding: 25px;
+  color: #494b4d;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+h1, h2, h3, summary {
+  margin: 0 0 10px 0;
+  color: #1d97bf;
+}
+
+h1 {
+  font-size: 25px;
+  line-height: 30px;
+}
+
+h2 {
+  font-size: 20px;
+  line-height: 25px;
+}
+
+h3 {
+  font-size: 16px;
+  line-height: 20px;
+}
+
+table {
+  margin-bottom: 30px;
+}
+
+a {
+  color: #ff6680;
+}
+
+code {
+  background: #fffbcc;
+  font-size: 12px;
+}

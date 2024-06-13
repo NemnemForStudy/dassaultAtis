@@ -1,0 +1,1 @@
+define("DS/MPFMiniCartComponent/MPFMiniCartComponent_ja",{});define("DS/MPFMiniCartComponent/assets/nls/MiniCartComponent",{items:"{itemCount} 個の項目",viewCart:"カートを表示"});

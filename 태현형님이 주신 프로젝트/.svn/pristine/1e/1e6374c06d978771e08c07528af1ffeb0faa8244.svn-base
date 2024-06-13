@@ -1,0 +1,9 @@
+m|DELPPWModules\DELPPWResultingProductModule.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.3.23044|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\DELPPWResultingProductModule\DELPPWResultingProductModule.js|1676326042|2161
+s|DELPPWModules\DELPPWResultingProductModule.mweb\src\ResultingProductModule.js|1675161290|9483
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

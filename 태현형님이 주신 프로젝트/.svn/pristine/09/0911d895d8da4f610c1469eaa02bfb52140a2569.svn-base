@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapping xmlns="http://www.3ds.com/enovia-matrixone/vplm-m1/mapping" version="9">
+
+  <!-- Package -->
+  <pattern.VPLM_PACKAGE>
+    <vplm.Package name="SoftwareArchitecture1" />
+    <m1.package name="SoftwareArchitecture1" />
+
+    <!-- Class -->
+    <pattern.VPLM_CLASS>
+      <vplm.PLMCoreReference name="EEAbstractType" />
+      <m1.type name="EEAbstractType" />
+
+    </pattern.VPLM_CLASS>
+
+    <!-- Class -->
+    <pattern.VPLM_CLASS>
+      <vplm.PLMCoreReference name="EESenderReceiverInterface" />
+      <m1.type name="EESenderReceiverInterface" />
+
+      <!-- Simple -->
+      <pattern.VPLM_SIMPLE>
+        <vplm.Simple name="V_EE_MessageNbMax" />
+        <m1.attribute name="EESenderReceiverInterface.V_EE_MessageNbMax" local="yes" />
+      </pattern.VPLM_SIMPLE>
+
+      <!-- Simple -->
+      <pattern.VPLM_SIMPLE>
+        <vplm.Simple name="V_EE_MessageSizeMax" />
+        <m1.attribute name="EESenderReceiverInterface.V_EE_MessageSizeMax" local="yes" />
+      </pattern.VPLM_SIMPLE>
+
+      <!-- Simple -->
+      <pattern.VPLM_SIMPLE>
+        <vplm.Simple name="queueLength" />
+        <m1.attribute name="EESenderReceiverInterface.queueLength" local="yes" />
+      </pattern.VPLM_SIMPLE>
+
+    </pattern.VPLM_CLASS>
+
+    <!-- Class -->
+    <pattern.VPLM_CLASS>
+      <vplm.PLMCoreReference name="EEVariableDataPrototype" />
+      <m1.type name="EEVariableDataPrototype" />
+
+      <!-- Simple -->
+      <pattern.VPLM_SIMPLE>
+        <vplm.Simple name="dataType" />
+        <m1.attribute name="EEVariableDataPrototype.dataType" local="yes" />
+      </pattern.VPLM_SIMPLE>
+
+      <!-- Simple -->
+      <pattern.VPLM_SIMPLE>
+        <vplm.Simple name="initValue" />
+        <m1.attribute name="EEVariableDataPrototype.initValue" local="yes" />
+      </pattern.VPLM_SIMPLE>
+
+      <!-- Simple -->
+      <pattern.VPLM_SIMPLE>
+        <vplm.Simple name="isDeviceManagerMode" />
+        <m1.attribute name="EEVariableDataPrototype.isDeviceManagerMode" local="yes" />
+      </pattern.VPLM_SIMPLE>
+
+    </pattern.VPLM_CLASS>
+
+    <!-- RelationClass -->
+    <pattern.VPLM_RELATIONCLASS>
+      <vplm.PLMCoreInstance name="EEAbstractVariableSpecification" />
+      <m1.relationship name="EEAbstractVariableSpecification" />
+
+    </pattern.VPLM_RELATIONCLASS>
+
+    <!-- RelationClass -->
+    <pattern.VPLM_RELATIONCLASS>
+      <vplm.PLMCoreInstance name="EEPortPrototype" />
+      <m1.relationship name="EEPortPrototype" />
+
+      <!-- Simple -->
+      <pattern.VPLM_SIMPLE>
+        <vplm.Simple name="V_EE_MessageNbMax" />
+        <m1.attribute name="EEPortPrototype.V_EE_MessageNbMax" local="yes" />
+      </pattern.VPLM_SIMPLE>
+
+      <!-- Simple -->
+      <pattern.VPLM_SIMPLE>
+        <vplm.Simple name="V_EE_MessageSizeMax" />
+        <m1.attribute name="EEPortPrototype.V_EE_MessageSizeMax" local="yes" />
+      </pattern.VPLM_SIMPLE>
+
+      <!-- Simple -->
+      <pattern.VPLM_SIMPLE>
+        <vplm.Simple name="V_EE_SWInterfaceModeEnum" />
+        <m1.attribute name="EEPortPrototype.V_EE_SWInterfaceModeEnum" local="yes" />
+      </pattern.VPLM_SIMPLE>
+
+    </pattern.VPLM_RELATIONCLASS>
+
+    <!-- RelationClass -->
+    <pattern.VPLM_RELATIONCLASS>
+      <vplm.PLMCoreInstance name="EEVariableDataPrototypeInstance" />
+      <m1.relationship name="EEVariableDataPrototypeInstance" />
+
+    </pattern.VPLM_RELATIONCLASS>
+
+    <!-- Class -->
+    <pattern.VPLM_CLASS>
+      <vplm.PLMCoreReference name="EEArrayType" />
+      <m1.type name="EEArrayType" />
+
+    </pattern.VPLM_CLASS>
+
+    <!-- Class -->
+    <pattern.VPLM_CLASS>
+      <vplm.PLMCoreReference name="EEPrimitiveType" />
+      <m1.type name="EEPrimitiveType" />
+
+      <!-- Simple -->
+      <pattern.VPLM_SIMPLE>
+        <vplm.Simple name="V_EE_BitSize" />
+        <m1.attribute name="EEPrimitiveType.V_EE_BitSize" local="yes" />
+      </pattern.VPLM_SIMPLE>
+
+      <!-- Simple -->
+      <pattern.VPLM_SIMPLE>
+        <vplm.Simple name="V_EE_Encoding" />
+        <m1.attribute name="EEPrimitiveType.V_EE_Encoding" local="yes" />
+      </pattern.VPLM_SIMPLE>
+
+      <!-- Simple -->
+      <pattern.VPLM_SIMPLE>
+        <vplm.Simple name="V_EE_EnumerationValues" />
+        <m1.attribute name="EEPrimitiveType.V_EE_EnumerationValues" local="yes" />
+      </pattern.VPLM_SIMPLE>
+
+      <!-- Simple -->
+      <pattern.VPLM_SIMPLE>
+        <vplm.Simple name="V_EE_IsSigned" />
+        <m1.attribute name="EEPrimitiveType.V_EE_IsSigned" local="yes" />
+      </pattern.VPLM_SIMPLE>
+
+    </pattern.VPLM_CLASS>
+
+    <!-- Class -->
+    <pattern.VPLM_CLASS>
+      <vplm.PLMCoreReference name="EERecordType" />
+      <m1.type name="EERecordType" />
+
+    </pattern.VPLM_CLASS>
+
+    <!-- Class -->
+    <pattern.VPLM_CLASS>
+      <vplm.PLMCoreReference name="EETcpInterface" />
+      <m1.type name="EETcpInterface" />
+
+      <!-- Simple -->
+      <pattern.VPLM_SIMPLE>
+        <vplm.Simple name="V_EE_VirtualLinkId" />
+        <m1.attribute name="EETcpInterface.V_EE_VirtualLinkId" local="yes" />
+      </pattern.VPLM_SIMPLE>
+
+    </pattern.VPLM_CLASS>
+
+    <!-- Class -->
+    <pattern.VPLM_CLASS>
+      <vplm.PLMCoreReference name="EEUdpInterface" />
+      <m1.type name="EEUdpInterface" />
+
+      <!-- Simple -->
+      <pattern.VPLM_SIMPLE>
+        <vplm.Simple name="V_EE_VirtualLinkId" />
+        <m1.attribute name="EEUdpInterface.V_EE_VirtualLinkId" local="yes" />
+      </pattern.VPLM_SIMPLE>
+
+    </pattern.VPLM_CLASS>
+
+    <!-- RelationClass -->
+    <pattern.VPLM_RELATIONCLASS>
+      <vplm.PLMCoreInstance name="EEArrayVariableSpecification" />
+      <m1.relationship name="EEArrayVariableSpecification" />
+
+      <!-- Simple -->
+      <pattern.VPLM_SIMPLE>
+        <vplm.Simple name="V_EE_MaxSize" />
+        <m1.attribute name="EEArrayVariableSpecification.V_EE_MaxSize" local="yes" />
+      </pattern.VPLM_SIMPLE>
+
+      <!-- Simple -->
+      <pattern.VPLM_SIMPLE>
+        <vplm.Simple name="V_EE_MinSize" />
+        <m1.attribute name="EEArrayVariableSpecification.V_EE_MinSize" local="yes" />
+      </pattern.VPLM_SIMPLE>
+
+    </pattern.VPLM_RELATIONCLASS>
+
+    <!-- RelationClass -->
+    <pattern.VPLM_RELATIONCLASS>
+      <vplm.PLMCoreInstance name="EEPrimitiveVariableSpecification" />
+      <m1.relationship name="EEPrimitiveVariableSpecification" />
+
+      <!-- Simple -->
+      <pattern.VPLM_SIMPLE>
+        <vplm.Simple name="V_EE_MaxValue" />
+        <m1.attribute name="EEPrimitiveVariableSpecification.V_EE_MaxValue" local="yes" />
+      </pattern.VPLM_SIMPLE>
+
+      <!-- Simple -->
+      <pattern.VPLM_SIMPLE>
+        <vplm.Simple name="V_EE_MinValue" />
+        <m1.attribute name="EEPrimitiveVariableSpecification.V_EE_MinValue" local="yes" />
+      </pattern.VPLM_SIMPLE>
+
+      <!-- Simple -->
+      <pattern.VPLM_SIMPLE>
+        <vplm.Simple name="V_EE_Offset" />
+        <m1.attribute name="EEPrimitiveVariableSpecification.V_EE_Offset" local="yes" />
+      </pattern.VPLM_SIMPLE>
+
+      <!-- Simple -->
+      <pattern.VPLM_SIMPLE>
+        <vplm.Simple name="V_EE_Resolution" />
+        <m1.attribute name="EEPrimitiveVariableSpecification.V_EE_Resolution" local="yes" />
+      </pattern.VPLM_SIMPLE>
+
+      <!-- Simple -->
+      <pattern.VPLM_SIMPLE>
+        <vplm.Simple name="V_EE_Unit" />
+        <m1.attribute name="EEPrimitiveVariableSpecification.V_EE_Unit" local="yes" />
+      </pattern.VPLM_SIMPLE>
+
+    </pattern.VPLM_RELATIONCLASS>
+
+    <!-- RelationClass -->
+    <pattern.VPLM_RELATIONCLASS>
+      <vplm.PLMCoreInstance name="EERecordVariableSpecification" />
+      <m1.relationship name="EERecordVariableSpecification" />
+
+    </pattern.VPLM_RELATIONCLASS>
+
+    <!-- RelationClass -->
+    <pattern.VPLM_RELATIONCLASS>
+      <vplm.PLMCoreInstance name="EETcpPortPrototype" />
+      <m1.relationship name="EETcpPortPrototype" />
+
+      <!-- Simple -->
+      <pattern.VPLM_SIMPLE>
+        <vplm.Simple name="V_EE_PortNumber" />
+        <m1.attribute name="EETcpPortPrototype.V_EE_PortNumber" local="yes" />
+      </pattern.VPLM_SIMPLE>
+
+    </pattern.VPLM_RELATIONCLASS>
+
+    <!-- RelationClass -->
+    <pattern.VPLM_RELATIONCLASS>
+      <vplm.PLMCoreInstance name="EEUdpPortPrototype" />
+      <m1.relationship name="EEUdpPortPrototype" />
+
+      <!-- Simple -->
+      <pattern.VPLM_SIMPLE>
+        <vplm.Simple name="V_EE_PortNumber" />
+        <m1.attribute name="EEUdpPortPrototype.V_EE_PortNumber" local="yes" />
+      </pattern.VPLM_SIMPLE>
+
+    </pattern.VPLM_RELATIONCLASS>
+
+  </pattern.VPLM_PACKAGE>
+
+</mapping>

@@ -1,0 +1,1 @@
+define("DS/MPFLanguageSelector/MPFLanguageSelector_en",{});define("DS/MPFLanguageSelector/assets/nls/languageSelector",{languagePreferences:"Language preferences",english:"English (English)",french:"French (Français)",german:"German (Deutsch)",japanese:"Japanese (日本語)",korean:"Korean (한국어)",russian:"Russian (Pусский)",chinese:"Chinese (中文)"});

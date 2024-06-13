@@ -1,0 +1,17 @@
+################################################################################################
+# Create By thok 2023. 05. 25
+# Admin Type : command
+# Name : decProjectScheduleListCommand
+################################################################################################
+#del command 'decProjectScheduleListCommand';
+add command 'decProjectScheduleListCommand'
+	description 'ProjectBizScheduleList'
+	label 'emxProgramCentral.Label.Group.decProjectPeriod'
+	href '${COMMON_DIR}/emxTable.jsp?pageSize=300&program=emxProjectSpace:getProjectSelect&table=decProjectBizScheduleList&header=emxProgramCentral.Label.decProjectPeriod&HelpMarker=emxhelpprogramlist&Export=true&sortColumnName=Revision&sortDirection=ascending&StringResourceFileId=emxProgramCentralStringResource&select=Project.selectProjectSchedule'
+	alt 'emxProgramCentral.Label.Group.decProjectPeriod'
+	setting 'Registered Suite' 'ProgramCentral'
+	setting 'Target Location' 'content'
+	setting 'Access Expression' '(attribute[decProjectType]==ongoing)'
+;
+add property 'command_decProjectScheduleListCommand' on prog eServiceSchemaVariableMapping.tcl to command 'decProjectScheduleListCommand'
+;

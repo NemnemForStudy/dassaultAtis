@@ -1,0 +1,9 @@
+m|WebappsUtils\DataDragAndDrop.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.0.22078|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\DataDragAndDrop\DataDragAndDrop.js|1647691780|2477
+s|WebappsUtils\DataDragAndDrop.mweb\src\DataDragAndDrop.js|1444147806|13681
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

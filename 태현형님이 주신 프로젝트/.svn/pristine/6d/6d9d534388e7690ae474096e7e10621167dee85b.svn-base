@@ -1,0 +1,24 @@
+#####################################################################################################
+# Created by jonghunlee
+# Create Date : 2023-05-11
+# Name : decEWPStage
+#####################################################################################################
+#del attribute 'decEWPStage';
+add attribute 'decEWPStage'
+    description ''
+    type        'String'
+    notmultiline
+    nothidden
+    property 'original name'    value 'decEWPStage'
+    property 'version'          value 'R2018X'
+    property 'installed date'   value '2023-05-11'
+;
+add property attribute_decEWPStage on program 'eServiceSchemaVariableMapping.tcl' to attribute 'decEWPStage';
+
+mod attribute 'decEWPStage'
+	add range = 'To be started'
+	add range = 'Plan Start'
+	add range = 'Late Start'
+	add range = 'Close-out'
+	default 'To be started'
+;

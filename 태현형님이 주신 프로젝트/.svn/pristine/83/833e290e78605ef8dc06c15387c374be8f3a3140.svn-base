@@ -1,0 +1,27 @@
+################################################################################################
+# Created By jhlee : 2023. 09. 06
+# Admin Type : command
+# Name : decProjectMemberRoleSettingCmd
+################################################################################################
+#delete command decProjectMemberRoleSettingCmd;
+add command decProjectMemberRoleSettingCmd 
+	label 'ProgramCentral.Label.ProjectMemberRoleSetting'
+	alt 'ProgramCentral.Label.ProjectMemberRoleSetting' 
+	href '${COMMON_DIR}/decProjectMemberRoleSettingDialogFS.jsp'
+	setting 'Registered Suite' 'ProgramCentral'
+	user all  
+	setting 'Submit' 'true'
+	setting 'Row Select' 'multi'
+	property version value '1'
+	property installer value 'ENOVIAEngineering' 
+	property 'installed date' value '09-06-2023' 
+	property 'original name' value 'decProjectMemberRoleSettingCmd'
+;
+add property command_decProjectMemberRoleSettingCmd on program eServiceSchemaVariableMapping.tcl to command 'decProjectMemberRoleSettingCmd'
+;
+mod command decProjectMemberRoleSettingCmd 
+	href '${COMMON_DIR}/decProjectMemberRoleSettingDialog.jsp'
+	add setting 'hasAccess' 'PIM'
+	add setting 'Access Program' 'emxProjectSpace'
+	add setting 'Access Function' 'isAccessPMCUpdate'
+;

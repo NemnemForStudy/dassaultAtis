@@ -1,0 +1,1 @@
+define("DS/ControlsEx/ControlsEx_zh",{});define("DS/ControlsEx/assets/nls/translation",{information:"信息",home:"主页",expand:"展开",collapse:"折叠"});

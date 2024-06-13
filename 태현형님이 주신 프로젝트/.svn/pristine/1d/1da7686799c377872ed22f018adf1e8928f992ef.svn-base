@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<!-- COPYRIGHT DASSAULT SYSTEMES 2012, All rights reserved -->
+<!-- Metadata for ODT. It is a specialization of PRODUCT package -->
+<!-- Do not modify this metadata. You must update it when the following mql is updated :
+The corresponding MQL is VPMDictionaryODT\CNext.internal\reffiles\DBMS\ddl\DICTestCustoProduct2.mql 
+ -->
+<Package
+     xmlns="PLMDictionaryUnified"
+     ModelerType="Top"
+     CustomerExposition="Programmer"
+     Name="PLMInsulationRaw"
+     Uuid="314C6E66-E10E-4802-B341-BA213F6D96C6"
+     UseNames="RawMaterialSpecification"
+     BelongsToModeler="PLMInsulation">
+  <CAAComment>
+    <ShortRole>Insulation Raw Material Package</ShortRole>
+    <Role>This package describes the Raw material for Insulation Design Applications.</Role>
+  </CAAComment>
+
+  <Class Name="InsRawMaterial"
+         Uuid="73C85531-3710-47F7-937D-F83A2B2C06C0"
+         Abbreviation="rawins"
+         Abstract="Yes"
+         CustomerExposition="Programmer"
+         SuperName="Raw_Material"
+         Discipline="Yes"
+         Specializable="No">
+    <Property Name="IconName"              Value="I_PLM_RawInsulation"/>
+    <Property Name="3DIconName"            Value="I_PLM_RawInsulation.cgr"/>
+
+    <Simple Name="V_MinTemperature"        Uuid="FBB563D9-EF4F-444C-A0CA-72F687779110" Type="Double" Magnitude="TEMPRTRE"  Protection="Free"     MultiValuated="No"/>
+    <Simple Name="V_MaxTemperature"        Uuid="9B55E586-C497-47F4-8788-D8FA4BFB2411" Type="Double" Magnitude="TEMPRTRE"  Protection="Free"     MultiValuated="No"/>
+    <Simple Name="V_ThermalConductivity"   Uuid="AC52EC22-9FFD-4595-B1AF-BBE4D023041C" Type="Double" Magnitude="THERMALCONDUCTIVITY" Protection="Free"    MultiValuated="No"/>
+    <Simple Name="V_InsulationThickness"   Uuid="6359970F-A52C-4657-80AF-F7E7E007151C" Type="Double" Magnitude="LENGTH"    Protection="Free"     MultiValuated="No">
+      <Range>
+        <GreaterThanEqual>0.0</GreaterThanEqual>
+      </Range>
+    </Simple>
+    <Simple Name="V_MinBendRadius"        Uuid="D3261B9C-50DC-4F39-999A-CC7262FB4CA0" Type="Double"  Magnitude="LENGTH"    Protection="Free"    MultiValuated="No">
+      <Range>
+        <GreaterThanEqual>0.</GreaterThanEqual>
+      </Range>
+    </Simple>
+    <Simple Name="V_Flexibility"          Uuid="B57B5441-2BC5-4763-BF5D-A9DFE16D45C2" Type="Integer" Protection="Free" DefaultValue="-1">
+      <Range>
+        <Between>
+          <MinEqual>-1</MinEqual>
+          <MaxEqual>5</MaxEqual>
+        </Between>
+      </Range>
+    </Simple>
+  </Class>
+
+  <Class Name="InsLinearRawMaterial"
+       Uuid="60207555-BC1A-496D-9E62-E4F4694EF119"
+       Abbreviation="rawlinins"
+       CustomerExposition="Programmer"
+       SuperName="InsRawMaterial"
+       Discipline="Yes"
+       Specializable="No"
+       CustomerExtensible="Yes"
+       Searchable="Yes"
+       InstantiationOwnerTypes="None">
+    <Property Name="KweNew_InstanciationMethod"   Value="CATEInsRawDelegateInstanciation"/>
+    <Property Name="Newable"                      Value="New"/>
+    <Property Name="IconName"                     Value="I_PLM_RawLinearInsulation"/>
+    <Property Name="3DIconName"                   Value="I_PLM_RawLinearInsulation.cgr"/>
+    <Simple Name="V_EquivalentSize"        Uuid="53383E1D-ED20-4951-8484-E7E525060EAC" Type="Double"  Magnitude="LENGTH"   Protection="Free"   MultiValuated="No"/>
+    <Simple Name="V_EquivalentDimension"   Uuid="65A4FA10-C317-476A-8561-693FF40CF0A9" Type="String"  MaxLength="80"       Protection="Free"   MultiValuated="No"/>
+    <Simple Name="V_Linearweight"          Uuid="4430E5A6-9281-4700-9C13-F6C84FC5AFC9" Type="Double"  Magnitude="LINEMASS" Protection="Free"   MultiValuated="No"/>
+  </Class>
+
+  <Class Name="InsFlatRawMaterial"
+       Uuid="BE03557C-20DF-4F45-BE4A-562B0F73441F"
+       Abbreviation="rawflins"
+       CustomerExposition="Programmer"
+       SuperName="InsRawMaterial"
+       Discipline="Yes"
+       Specializable="No"
+       CustomerExtensible="Yes"
+       Searchable="Yes"
+       InstantiationOwnerTypes="None">
+    <Property Name="KweNew_InstanciationMethod"   Value="CATEInsRawDelegateInstanciation"/>
+    <Property Name="Newable"                      Value="New"/>
+    <Property Name="IconName"                     Value="I_PLM_RawFlatInsulation"/>
+    <Property Name="3DIconName"                   Value="I_PLM_RawFlatInsulation.cgr"/>
+    <Simple Name="V_InsRaw_Width"          Uuid="A58FFB45-D702-4D39-8827-36CB7E4237DC" Type="Double" Magnitude="LENGTH"       Protection="Free" MultiValuated="No"/>
+    <Simple Name="V_AreaMass"              Uuid="C1258D87-566A-4137-855C-4B20ADBCABAB" Type="Double" Magnitude="SURFACICMASS" Protection="Free" MultiValuated="No"/>
+  </Class>
+  
+</Package>

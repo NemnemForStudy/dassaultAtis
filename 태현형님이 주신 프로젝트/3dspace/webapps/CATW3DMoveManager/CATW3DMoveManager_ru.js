@@ -1,0 +1,1 @@
+define("DS/CATW3DMoveManager/CATW3DMoveManager_ru",{});define("DS/CATW3DMoveManager/assets/nls/CATW3DMoveReferent",{title:"Переместить",allowDirectManipulation:"Разрешить прямое управление",moveSection:"Переместите при перетаскивании 3D-геометрии",first:"Первый уровень сборки",leaf:"Листовая деталь"});

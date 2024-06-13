@@ -1,0 +1,11 @@
+m|MPFModels\MPFCompanyInformationModel.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.1.22330|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\MPFCompanyInformationModel\MPFCompanyInformationModel.js|1669432467|1311
+s|MPFModels\MPFCompanyInformationModel.mweb\src\CompanyInformationDataProxy.js|1669417586|781
+u|MPFModels\MPFCompanyInformationModel.mweb\src\CompanyInformationFactory.js|1669417586|1152
+u|MPFModels\MPFCompanyInformationModel.mweb\src\CompanyInformationModel.js|1669417586|973
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

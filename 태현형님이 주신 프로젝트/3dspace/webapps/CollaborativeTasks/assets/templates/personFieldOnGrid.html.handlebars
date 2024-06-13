@@ -1,0 +1,24 @@
+{{~#if multiple~}}
+  {{~#each persons~}}
+  <div class='grid-object-thumbnail'>
+        {{~#if firstname}}
+          <img draggable="true" src="{{image}}" title="{{firstname}} {{lastname}}" data-id={{id}}>
+          </img>
+        {{~else}}
+          <img draggable="true" src="{{image}}" title="{{name}}" data-id={{id}}>
+          </img>
+        {{~/if~}}
+  </div>
+  {{~/each~}}
+{{~else}}
+  {{~#each persons~}}
+    {{~#if firstname}}
+      <span class='wux-tweakers-string-label'>{{firstname}} {{lastname}}</span>
+    {{~else}}
+      <span class='wux-tweakers-string-label'>{{name}}</span>
+    {{~/if~}}
+  {{~/each~}}
+{{~/if~}}
+  {{~#if noPerson~}}
+  <div class='grid-object-thumbnail'></div>
+{{~/if~}}

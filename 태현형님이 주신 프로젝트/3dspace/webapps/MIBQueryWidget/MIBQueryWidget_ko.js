@@ -1,0 +1,1 @@
+define("DS/MIBQueryWidget/MIBQueryWidget_ko",{});define("DS/MIBQueryWidget/assets/nls/MIBQueryWidgetNls",{CommandDialogTitle:"MIB 콘텐츠 검색",BtnOK:"검색",BtnCancel:"취소",BtnOk2:"열기",Query:"검색"});

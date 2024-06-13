@@ -1,0 +1,34 @@
+################################################################################################
+# Create By jhlee 2023. 06. 01
+# Admin Type : command
+# Name : decIWPExcutionList
+################################################################################################
+
+#del command 'decIWPExcutionList';
+add command 'decIWPExcutionList'
+	description 'StandardList'
+	label 'ProgramCentral.Command.decIWPExcutionList'
+	alt 'ProgramCentral.Command.decIWPExcutionList'
+	setting 'Registered Suite' 'ProgramCentral'
+	setting 'Target Location' 'content'
+;
+add property 'command_decIWPExcutionList' on prog eServiceSchemaVariableMapping.tcl to command 'decIWPExcutionList';
+
+mod command 'decIWPExcutionList'
+	href '${COMMON_DIR}/emxIndentedTable.jsp?program=emxProjectSpace:getIWPTask&table=decIWPExcutionTable&header=ProgramCentral.Command.decIWPExcutionList&toolbar=decIWPExcutionListToolBar&HelpMarker=emxhelpprogramlist&Export=true&sortColumnName=Name&sortDirection=ascending&StringResourceFileId=emxProgramCentralStringResource&selection=multiple&editLink=true&slideinFilter=true&postProcessJPO=emxTask:decUpdateScheduleChanges&freezePane=IWP No,IWP Description&pageSize=300'
+;
+
+mod command 'decIWPExcutionList'
+	add setting 'Access Function' 'isAccessIWPExcutionList' 
+	add setting 'Access Program' 'emxProjectSpace'	
+;
+
+# Modified by jhlee on 2023.09.05
+mod command 'decIWPExcutionList'
+	href '${COMMON_DIR}/emxIndentedTable.jsp?program=emxProjectSpace:getIWPTask&table=decIWPExcutionTable&header=ProgramCentral.Command.decIWPExcutionList&toolbar=decIWPExcutionListToolBar&HelpMarker=emxhelpprogramlist&Export=true&sortColumnName=Name&sortDirection=ascending&StringResourceFileId=emxProgramCentralStringResource&selection=multiple&slideinFilter=true&filterParam=codeMaster:Discipline,codeMaster:CWP/IWP Stage,codeMaster:CWP/IWP Status,codeMaster:Sub-Con,CWP_Plan:true,codeMaster:BOQ Key Item>BOQ Key Item.UOM&postProcessJPO=emxTask:decUpdateScheduleChanges&freezePane=IWP No,IWP Description&pageSize=300'
+;
+
+# Modified by jhlee on 2023.11.06
+mod command 'decIWPExcutionList'
+	href '${COMMON_DIR}/emxIndentedTable.jsp?program=emxProjectSpace:getIWPTask&table=decIWPExcutionTable&header=ProgramCentral.Command.decIWPExcutionList&toolbar=decIWPExcutionListToolBar&HelpMarker=emxhelpprogramlist&Export=true&sortColumnName=Name&sortDirection=ascending&StringResourceFileId=emxProgramCentralStringResource&selection=multiple&slideinFilter=true&filterParam=codeMaster:Discipline,codeMaster:CWP/IWP Stage,codeMaster:CWP/IWP Status,codeMaster:Sub-Con,CWP_Plan:true,codeMaster:BOQ Key Item&postProcessJPO=emxTask:decUpdateScheduleChanges&freezePane=IWP No,IWP Description&pageSize=300'
+;

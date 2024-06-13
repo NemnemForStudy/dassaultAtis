@@ -1,0 +1,11 @@
+m|FolderNGUX\UsageMetrics.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.1.22302|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\UsageMetrics\BEMetrics.html|1667006162|4732
+s|FolderNGUX\UsageMetrics.mweb\src\BEMetrics.html|1665746709|4732
+t|win_b64\webapps\UsageMetrics\UsageMetrics.js|1666424764|833
+s|FolderNGUX\UsageMetrics.mweb\src\Metrics.js|1665680237|1937
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

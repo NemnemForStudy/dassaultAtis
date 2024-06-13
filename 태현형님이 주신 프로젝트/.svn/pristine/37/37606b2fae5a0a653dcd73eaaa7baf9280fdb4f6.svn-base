@@ -1,0 +1,329 @@
+{
+  "version": "2.0.4",
+  "model": {
+    "definition": {
+      "uid": "c839f268-7348-4a4c-9d3f-7a08dbb90f59"
+    },
+    "name": "Test Schematic",
+    "dataPorts": [],
+    "controlPorts": [
+      {
+        "name": "Start",
+        "portType": 0
+      }
+    ],
+    "settings": [
+      {
+        "name": "CastLevel",
+        "valueType": "ECastLevel",
+        "override": false,
+        "value": 1
+      }
+    ],
+    "startupPort": "$ref:$.controlPorts[0]",
+    "nodeIdSelectors": [],
+    "blocks": [
+      {
+        "definition": {
+          "uid": "381afc55-87e9-4663-9211-59abab491c7e"
+        },
+        "name": "Notify",
+        "dataPorts": [
+          {
+            "name": "Title",
+            "portType": 0,
+            "valueType": "String",
+            "override": true,
+            "value": "Info",
+            "dataPorts": []
+          },
+          {
+            "name": "Message",
+            "portType": 0,
+            "valueType": "String",
+            "override": true,
+            "value": "Display an information message into the notification area!",
+            "dataPorts": []
+          }
+        ],
+        "controlPorts": [
+          {
+            "name": "In",
+            "portType": 0
+          },
+          {
+            "name": "Out",
+            "portType": 1
+          }
+        ],
+        "settings": [
+          {
+            "name": "Severity",
+            "valueType": "ESeverity",
+            "override": false,
+            "value": 0
+          }
+        ]
+      },
+      {
+        "definition": {
+          "uid": "381afc55-87e9-4663-9211-59abab491c7e"
+        },
+        "name": "Notify",
+        "dataPorts": [
+          {
+            "name": "Title",
+            "portType": 0,
+            "valueType": "String",
+            "override": true,
+            "value": "Warning",
+            "dataPorts": []
+          },
+          {
+            "name": "Message",
+            "portType": 0,
+            "valueType": "String",
+            "override": true,
+            "value": "Display a warning message into the notification area!",
+            "dataPorts": []
+          }
+        ],
+        "controlPorts": [
+          {
+            "name": "In",
+            "portType": 0
+          },
+          {
+            "name": "Out",
+            "portType": 1
+          }
+        ],
+        "settings": [
+          {
+            "name": "Severity",
+            "valueType": "ESeverity",
+            "override": true,
+            "value": 1
+          }
+        ]
+      },
+      {
+        "definition": {
+          "uid": "381afc55-87e9-4663-9211-59abab491c7e"
+        },
+        "name": "Notify",
+        "dataPorts": [
+          {
+            "name": "Title",
+            "portType": 0,
+            "valueType": "String",
+            "override": true,
+            "value": "Debug",
+            "dataPorts": []
+          },
+          {
+            "name": "Message",
+            "portType": 0,
+            "valueType": "String",
+            "override": true,
+            "value": "Display a debug message into the notification area!",
+            "dataPorts": []
+          }
+        ],
+        "controlPorts": [
+          {
+            "name": "In",
+            "portType": 0
+          },
+          {
+            "name": "Out",
+            "portType": 1
+          }
+        ],
+        "settings": [
+          {
+            "name": "Severity",
+            "valueType": "ESeverity",
+            "override": true,
+            "value": 2
+          }
+        ]
+      },
+      {
+        "definition": {
+          "uid": "381afc55-87e9-4663-9211-59abab491c7e"
+        },
+        "name": "Notify",
+        "dataPorts": [
+          {
+            "name": "Title",
+            "portType": 0,
+            "valueType": "String",
+            "override": true,
+            "value": "Error",
+            "dataPorts": []
+          },
+          {
+            "name": "Message",
+            "portType": 0,
+            "valueType": "String",
+            "override": true,
+            "value": "Display an error message into the notification area!",
+            "dataPorts": []
+          }
+        ],
+        "controlPorts": [
+          {
+            "name": "In",
+            "portType": 0
+          },
+          {
+            "name": "Out",
+            "portType": 1
+          }
+        ],
+        "settings": [
+          {
+            "name": "Severity",
+            "valueType": "ESeverity",
+            "override": true,
+            "value": 3
+          }
+        ]
+      },
+      {
+        "definition": {
+          "uid": "381afc55-87e9-4663-9211-59abab491c7e"
+        },
+        "name": "Notify",
+        "dataPorts": [
+          {
+            "name": "Title",
+            "portType": 0,
+            "valueType": "String",
+            "override": true,
+            "value": "Success",
+            "dataPorts": []
+          },
+          {
+            "name": "Message",
+            "portType": 0,
+            "valueType": "String",
+            "override": true,
+            "value": "Display a success message into the notification area!",
+            "dataPorts": []
+          }
+        ],
+        "controlPorts": [
+          {
+            "name": "In",
+            "portType": 0
+          },
+          {
+            "name": "Out",
+            "portType": 1
+          }
+        ],
+        "settings": [
+          {
+            "name": "Severity",
+            "valueType": "ESeverity",
+            "override": true,
+            "value": 4
+          }
+        ]
+      }
+    ],
+    "dataLinks": [],
+    "controlLinks": [
+      {
+        "startPort": "$ref:$.controlPorts[0]",
+        "endPort": "$ref:$.blocks[0].controlPorts[0]",
+        "waitCount": 0
+      },
+      {
+        "startPort": "$ref:$.blocks[0].controlPorts[1]",
+        "endPort": "$ref:$.blocks[1].controlPorts[0]",
+        "waitCount": 0
+      },
+      {
+        "startPort": "$ref:$.blocks[1].controlPorts[1]",
+        "endPort": "$ref:$.blocks[2].controlPorts[0]",
+        "waitCount": 0
+      },
+      {
+        "startPort": "$ref:$.blocks[2].controlPorts[1]",
+        "endPort": "$ref:$.blocks[3].controlPorts[0]",
+        "waitCount": 0
+      },
+      {
+        "startPort": "$ref:$.blocks[3].controlPorts[1]",
+        "endPort": "$ref:$.blocks[4].controlPorts[0]",
+        "waitCount": 0
+      }
+    ]
+  },
+  "ui": {
+    "graphLeft": 0,
+    "graphTop": 0,
+    "width": 1100,
+    "height": 400,
+    "blocks": [
+      {
+        "top": 190,
+        "left": 100,
+        "dataPorts": []
+      },
+      {
+        "top": 190,
+        "left": 300,
+        "dataPorts": []
+      },
+      {
+        "top": 190,
+        "left": 500,
+        "dataPorts": []
+      },
+      {
+        "top": 190,
+        "left": 700,
+        "dataPorts": []
+      },
+      {
+        "top": 190,
+        "left": 900,
+        "dataPorts": []
+      }
+    ],
+    "dataPorts": [],
+    "controlPorts": [
+      {
+        "offset": 200
+      }
+    ],
+    "dataLinks": [],
+    "controlLinks": [
+      {},
+      {},
+      {},
+      {},
+      {}
+    ],
+    "shortcuts": []
+  },
+  "templates": {
+    "model": {
+      "graphs": {},
+      "scripts": {}
+    },
+    "ui": {
+      "graphs": {},
+      "scripts": {}
+    }
+  },
+  "types": {
+    "model": {
+      "objects": {}
+    }
+  }
+}

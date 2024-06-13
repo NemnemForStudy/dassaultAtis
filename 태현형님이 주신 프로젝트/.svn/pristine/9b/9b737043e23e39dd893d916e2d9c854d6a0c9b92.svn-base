@@ -1,0 +1,153 @@
+# ----------------------------------------------------------------------------
+# help tags
+# ----------------------------------------------------------------------------
+
+MaskCompilerHelp= \
+U\u017cycie\: java VPLMPosMaskCompiler [-h]\n\
+\                                [-addpath <additional_input_directory>]\n\
+\                                [-d <output_directory>]\n\
+\                                [-log <log_directory>]\n\
+\                                [-html <html_directory>]\n\
+\                                [-solution <solution>]\n\
+\                                [-m <mask_name>]\n\
+\                                -connect <server_url>\n\
+\n\
+Kompiluje wszystkie pliki ".mask" znajduj\u0105ce si\u0119 w podkatalogu vplm/startup/mask/<mask_name>[@<solution>] \u015bcie\u017cki klasy.\n\
+Skompilowany plik nosi nazw\u0119\: <output_directory>/<mask_name>[@<solution>].SecurityMask\n\
+Plik dziennika nosi nazw\u0119     \: <log_directory>/result.log\n\
+\n\
+Argumenty\:\n\
+\  -h\:       ten system pomocy\n\
+\  -addpath\: okre\u015bla dodatkowy katalog wej\u015bciowy, gdzie nale\u017cy szuka\u0107 plik\u00f3w maski (\u015bcie\u017cka bezwzgl\u0119dna)\n\
+\  -d\:       okre\u015bla katalog wyj\u015bciowy dla dziennika i skompilowanych plik\u00f3w maski\n\
+\  -html\:    okre\u015bla katalog wyj\u015bciowy dla pliku maski wyrenderowanego w formacie HTML \n\
+\  -log\:     okre\u015bla katalog dziennika operacji generowania danych wyj\u015bciowych (domy\u015blnie\: <output_directory>)\n\
+\  -solution\: okre\u015bla rozwi\u0105zanie (domy\u015blnie sufiks jest pusty, co powoduje u\u017cywanie rozwi\u0105zania "Wsp\u00f3lne")\n\
+\  -m\:       okre\u015bla nazw\u0119 maski (domy\u015blnie\: DEFAULT)\n\
+\  -connect\: okre\u015bla adres URL serwera (np. http://serwer:port/enovia/)\n\
+\n\
+Wdra\u017canie\:\n\
+\  Plik ".SecurityMask" nale\u017cy skopiowa\u0107 do katalogu WEB-INF/classes/vplm/mask aplikacji internetowej ENOVIA.
+
+MaskGeneratorHelp= \
+U\u017cycie\: java VPLMPosMaskGenerator [-h]\n\
+\                                 [-addpath <additional_input_directory>]\n\
+\                                 [-d <output_directory>]\n\
+\                                 [-log <log_directory>]\n\
+\                                 [-solution <solution_name>]\n\
+\                                 [-m <mask_name>]\n\
+\                                 -connect <server_url>\n\
+\                                 <modeler> [<modeler> ...]\n\
+\n\
+Generuje odpowiednie pliki ".mask" wybranego modelarza.\n\
+Wygenerowany plik nosi nazw\u0119\: <output_directory>/<modeler>.mask\n\
+\n\
+Argumenty\:\n\
+\  -h\:       ten system pomocy\n\
+\  -addpath\: okre\u015bla dodatkowy katalog wej\u015bciowy, gdzie nale\u017cy szuka\u0107 plik\u00f3w maski (\u015bcie\u017cka bezwzgl\u0119dna)\n\
+\  -d\:       okre\u015bla katalog wyj\u015bciowy dla wygenerowanych plik\u00f3w maski\n\
+\  -log\:     okre\u015bla katalog dziennika operacji generowania danych wyj\u015bciowych (domy\u015blnie\: <output_directory>)\n\
+\  -solution\: okre\u015bla rozwi\u0105zanie (domy\u015blnie atrybut jest pusty, co powoduje u\u017cywanie rozwi\u0105zania "Wsp\u00f3lne")\n\
+\  -m\:       okre\u015bla nazw\u0119 maski (domy\u015blnie\: DEFAULT)\n\
+\  -connect\: okre\u015bla adres URL serwera (np. http://serwer:port/enovia/)\n\
+\n\
+Uwaga: po wygenerowaniu (i by\u0107 mo\u017ce r\u00f3wnie\u017c zmodyfikowaniu) pliki ".mask" nale\u017cy skompilowa\u0107\n\
+\      za pomoc\u0105 narz\u0119dzia VPLMPosMaskCompiler.
+
+# ----------------------------------------------------------------------------
+# Information and trace messages
+# ----------------------------------------------------------------------------
+
+INFO_ParentModeler_Mask= Plik maski modelarza obiekt\u00f3w g\u0142\u00f3wnych "{0}" nosi nazw\u0119 {1}
+
+INFO_Entity_init_from_parent= Inicjowanie maski atrybut\u00f3w z elementu "{0}"
+
+INFO_Entity_inherited_attribute= Kopiuj atrybut "{0}"
+
+INFO_Entity_inherited_func_attribute= Kopiuj atrybut "{0}"
+
+INFO_Attribute_skip_internal= Pomi\u0144 atrybut wewn\u0119trzny "{0}"
+
+INFO_Attribute_skip_aggregate= Pomi\u0144 atrybut agreguj\u0105cy "{0}"
+
+INFO_Attribute= Dodaj atrybut "{0}", wymagany = {1}, zewn\u0119trzny = {2}, modyfikowany = {3}
+
+INFO_IDSet= Dodaj atrybut "{0}"
+
+# ----------------------------------------------------------------------------
+# generation warnings and errors tags
+# ----------------------------------------------------------------------------
+
+Modeler_does_not_exist= Modelarz "{0}" nie istnieje
+
+Modeler_has_no_entity= Modelarz "{0}" nie zawiera \u017cadnego elementu
+
+File_cannot_be_opened= Nie mo\u017cna otworzy\u0107 pliku {0} "{1}" - Przyczyna: {2}
+
+File_cannot_be_created= Nie mo\u017cna utworzy\u0107 pliku {0} "{1}" - Przyczyna: {2}
+
+# ----------------------------------------------------------------------------
+# compilation warnings and errors tags
+# ----------------------------------------------------------------------------
+
+Command_is_Unknown= Nieznane polecenie [{0}]
+
+Command_is_Unknown.advice= Sprawd\u017a sk\u0142adni\u0119 polecenia
+
+UnexpectedMaskName= Oczekiwano nazwy maski "{0}", a nie "{1}"
+
+UnexpectedMaskName.advice= Zmie\u0144 nazw\u0119 maski w poleceniu MASK
+
+Entity_is_Unknown= Element "{0}" nie nale\u017cy do pakietu "{1}"
+
+Entity_is_Unknown.advice= Mo\u017ce to by\u0107 spowodowane b\u0142\u0119dem pisowni\: sprawd\u017a poprawno\u015b\u0107 sk\u0142adni w metadanych
+
+Attr_was_not_Previously_Defined= Element "{0}": atrybut "{1}" nie by\u0142 poprzedzony poleceniem "ATTR"
+
+Attr_was_not_Previously_Defined.advice= Ka\u017cdy atrybut musi by\u0107 zadeklarowany w poleceniu "ATTR", zanim b\u0119dzie go mo\u017cna u\u017cy\u0107 w poleceniu "FATTR"
+
+Attr_is_Unknown= Element "{0}" nie zawiera atrybutu "{1}"
+
+Attr_is_Unknown.advice= Mo\u017ce to by\u0107 spowodowane b\u0142\u0119dem pisowni\: \nsprawd\u017a poprawno\u015b\u0107 sk\u0142adni w metadanych
+
+Attr_should_be_Mandatory= Element "{0}", atrybut "{1}": obowi\u0105zkowa w\u0142a\u015bciwo\u015b\u0107 nie mo\u017ce mie\u0107 warto\u015bci "N", je\u017celi w metadanych ma warto\u015b\u0107 "Y"
+
+Attr_should_be_Mandatory.advice= Atrybut o statusie MANDATORY w metadanych musi pozostawa\u0107 jako MANDATORY w masce
+
+Attr_should_have_AuthValues_instead_of_Help= Element "{0}", atrybut "{1}": Nie mo\u017cna u\u017cywa\u0107 warto\u015bci HELP, je\u017celi w metadanych zdefiniowano warto\u015bci AUTHORIZED
+
+Attr_should_have_AuthValues_instead_of_Help.advice= Ustaw flag\u0119 warto\u015bci atrybutu auth/help na "Y" (warto\u015bci AUTHORIZED)
+
+AttrValue_does_not_belong_to_Authorized_values= Element "{0}", atrybut "{1}": nie mo\u017cna u\u017cy\u0107 warto\u015bci "{2}" jako autoryzowanej
+
+AttrValue_does_not_belong_to_Authorized_values.advice= Autoryzowana warto\u015b\u0107 zadeklarowana w masce musi nale\u017ce\u0107 do podzbioru autoryzowanych warto\u015bci metadanych
+
+AttrDefValue_must_be_set_when_Authorized_values= Element "{0}", atrybut "{1}": Domy\u015blna warto\u015b\u0107 nie mo\u017ce wynosi\u0107 null, je\u017celi flaga autoryzowania warto\u015b\u0107 to "Y"
+
+AttrDefValue_must_be_set_when_Authorized_values.advice= Ustaw warto\u015b\u0107 domy\u015bln\u0105 albo ustaw flag\u0119 autoryzowania warto\u015bci na "N"
+
+Function_is_Unknown= Nieoczekiwana funkcja "{0}"
+
+Function_is_Unknown.advice= U\u017cyj jednej z oczekiwanych nazw funkcji
+
+Attr_External_cannot_be_used_with_function= Element "{0}": nie mo\u017cna ustawi\u0107 atrybutu zewn\u0119trznego typu "{1}" jako modyfikowalnego w funkcji "{2}"
+
+Attr_External_cannot_be_used_with_function.advice= Ustaw go jako NIEmodyfikowalny ("N") w poleceniu FATTR lub\nUsu\u0144 atrybut z tej funkcji (usu\u0144 polecenie FATTR)
+
+Attr_Mandatory_cannot_be_set_as_NOT_modifiable= Element "{0}": Atrybut "{1}" o statusie MANDATORY nie mo\u017ce zosta\u0107 ustawiony jako NOT EDITABLE w funkcji "CREATE"
+
+Attr_Mandatory_cannot_be_set_as_NOT_modifiable.advice= W funkcji "CREATE" ustaw atrybut MANDATORY jako EDITABLE ("Y")
+
+Attr_ReadOnly_cannot_be_modified_with_WRITE= Element "{0}": atrybut "{1}", kt\u00f3rego rzutowanie jest tylko do odczytu, nie mo\u017ce by\u0107 modyfikowany w funkcji "WRITE"
+
+Attr_ReadOnly_cannot_be_modified_with_WRITE.advice= W funkcji "WRITE" ustaw atrybut tylko do odczytu jako NOT EDITABLE ("Y")
+
+Attr_has_Invalid_Boolean_value= Nieoczekiwana warto\u015b\u0107 logiczna "{0}"\: oczekiwano "Y" lub "N"
+
+Attr_cannot_be_masked_due_to_InvalidProtection= Element "{0}": nie mo\u017cna u\u017cy\u0107 atrybutu "{1}" w masce, poniewa\u017c zabrania tego jego flaga ochrony ({2})
+
+Attr_cannot_be_masked_due_to_InvalidProtection.advice= Usu\u0144 atrybuty prywatne/wewn\u0119trzne
+
+Package_has_NO_Mask= Ten pakiet nie ma powi\u0105zanej maski
+
+Package_has_NO_Mask.advice= Okre\u015bl osobne pliki .mask dla ka\u017cdego pakietu

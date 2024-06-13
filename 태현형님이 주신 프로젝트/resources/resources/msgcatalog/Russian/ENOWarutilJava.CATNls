@@ -1,0 +1,74 @@
+<meta charset="UTF-8"/>
+// execution message
+warutil_NoCAS.ExecuteAppli="Создание архивов J2EE (без CAS)...";
+warutil_CAS.ExecuteAppli="Создание архивов J2EE (CAS)...";
+configureUTF8="Настройка параметров UTF-8...";
+
+// BOOL X3DCSMA_build_archives
+X3DCSMA_build_archives.Title="Установите и разверните сервер веб-приложений";
+X3DCSMA_build_archives.Label1="Установите флажок, чтобы создать приложение (.war)";
+X3DCSMA_build_archives.Label2="(не обязательно, если для установки имеются дополнительные приложения)";
+X3DCSMA_build_archives.Resume.true="Создать приложение: да";
+X3DCSMA_build_archives.Resume.false="Создать приложение: нет";
+X3DCSMA_build_archives.CheckButton="Создать приложение";
+
+// BOOL X3DCSMA_deploy_archives
+X3DCSMA_deploy_archives.Title="Сервер веб-приложений и развертывание";
+X3DCSMA_deploy_archives.Resume.true="Установить встроенный Apache TomEE+ и развернуть приложение: да";
+X3DCSMA_deploy_archives.Resume.false="Установить встроенный Apache TomEE+ и развернуть приложение: нет";
+X3DCSMA_deploy_archives.CheckButton="Установите встроенный Apache TomEE+ и разверните приложение\n(только для тестирования или демонстрации, не для производства)";
+
+// TEXT X3DCSMA_webappnameCAS
+X3DCSMA_webappnameCAS.Title="Имя приложения, развернутое на сервере приложений";
+X3DCSMA_webappnameCAS.Label1="Имя приложения:";
+X3DCSMA_webappnameCAS.Resume="Имя приложения, развернутое на сервере приложений: /P1";
+
+// TEXT X3DCSMA_webappnameNoCAS
+X3DCSMA_webappnameNoCAS.Title="Имя внутреннего приложения, развернутого на сервере приложений";
+X3DCSMA_webappnameNoCAS.Label1="Имя внутреннего приложения:";
+X3DCSMA_webappnameNoCAS.Resume="Имя внутреннего приложения, развернутого на сервере приложений: /P1";
+
+// TEXT X3DCSMA_portCAS
+X3DCSMA_portCAS.Title="Номер порта сервера приложений";
+X3DCSMA_portCAS.Label1="Будет установлен встроенный Apache TomEE+.";
+X3DCSMA_portCAS.Label2="\n";
+X3DCSMA_portCAS.Label3="Порт подключения Apache TomEE+";
+X3DCSMA_portCAS.Resume="Будет установлен встроенный Apache TomEE+.\n  Порт подключения Apache TomEE+: /P1";
+
+// TEXT X3DCSMA_portNoCAS
+X3DCSMA_portNoCAS.Title="Номер порта внутреннего приложения";
+X3DCSMA_portNoCAS.Label1="Номер порта внутреннего приложения:";
+X3DCSMA_portNoCAS.Resume="Порт сервера внутренних приложений: /P1";
+
+// popup at the end
+X3DCSMA_summary_ports_chosen.Text="Выбранный порт подключения Apache TomEE+ [CAS]: /P1\nАвтоматически фиксированные порты:\n- порт отключения TomEE+: /P2\n\nАвтоматически фиксированные порты для Apache TomEE+ [без CAS]:\n- порт подключения TomEE+: /P3\n- порт отключения TomEE+: /P4";
+
+// BOOL X3DCSMA_JavaHeapSize
+X3DCSMA_JavaHeapSize.Title="Выбор размера кучи Java";
+X3DCSMA_JavaHeapSize.Label1="Выберите размер кучи Java (это влияет на параметры распределения памяти Java)";
+X3DCSMA_JavaHeapSize.Resume="Размер кучи Java: /P1";
+
+BOOL_LargeJavaHeapSize="Большой размер кучи Java 3072 МБ";
+BOOL_MediumJavaHeapSize="Средний размер кучи Java 2048 МБ";
+
+// X3DCSMA_BOOL_ToolsinStartMenu
+X3DCSMA_BOOL_ToolsinStartMenu.Title="Записи инструментов в меню Пуск и ярлыки";
+//X3DCSMA_BOOL_ToolsinStartMenu.Label1 = "Select the check box to create Tools entries in Start Menu";
+X3DCSMA_BOOL_ToolsinStartMenu.Resume.true="Создать записи инструментов в меню Пуск: да";
+X3DCSMA_BOOL_ToolsinStartMenu.Resume.false="Создать записи инструментов в меню Пуск: нет";
+X3DCSMA_BOOL_ToolsinStartMenu.CheckButton="Создать записи инструментов в меню Пуск";
+
+// X3DCSMA_BOOL_ShortcutsOnDesktop
+X3DCSMA_BOOL_ShortcutsOnDesktop.Title="Создать ярлыки на рабочем столе";
+//X3DCSMA_BOOL_ShortcutsOnDesktop.Label1 = "Select the check box to create Shortcuts on the Desktop";
+X3DCSMA_BOOL_ShortcutsOnDesktop.Resume.true="Создать ярлыки на рабочем столе: да";
+X3DCSMA_BOOL_ShortcutsOnDesktop.Resume.false="Создать ярлыки на рабочем столе: нет";
+X3DCSMA_BOOL_ShortcutsOnDesktop.CheckButton="Создать ярлыки на рабочем столе";
+
+// check 3DSpaceURL consitency
+check3DSpaceURLconsistencyKO.Title="Несоответствие имени приложения";
+check3DSpaceURLconsistencyKO.Text="Имя приложения не соответствует URL-адресу службы 3DSpace\nИзмените URL-адрес службы 3DSpace или имя приложения.";
+
+// check presence of PassportAuthentication.web.xml.part.deactivated
+no_fragment_origin.Title="Отсутствует обязательный файл";
+no_fragment_origin.Text="Следующий файл не обнаружен:\nPassportAuthentication.web.xml.part.deactivated\nОжидаемое местоположение: <install_path>/<os>/resources/warutil/fragment\nНеобходимо заново создать его из файла PassportAuthentication.web.xml.part перед установкой этого исправления.";

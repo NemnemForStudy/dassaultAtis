@@ -1,0 +1,144 @@
+<?xml version="1.0"?>
+
+<!-- ENOVIA DICTIONARY FOR DELMIA Production System Application -->
+<!-- COPYRIGHT DASSAULT SYSTEMES 2008, All rights reserved -->
+<Package xmlns="PLMDictionaryUnified"
+         ModelerType="Top"
+         Name="DELLmiQtyControlProcess"
+	     Uuid="B1097005-19A9-4014-B7F5-63523B0C25A9"
+         BelongsToModeler="DELLmiProductionSystem"
+         UseNames="DELLmiProductionSystemPPR"
+         UseProcedures="ENOPsm_Procedures"
+         CustomerExposition="Programmer">
+
+  <CAAComment>
+    <ShortRole>PLM DELMIA Quality Control Process </ShortRole>
+    <Role>This package describes the PLM DELMIA Quality Control Process model on top of DELLmiProductionSystemPPR</Role>
+  </CAAComment>
+
+  <Comment>creation 2021-03-23</Comment>
+
+  <Class Name="DELLmiQtyControlProcessReference"
+		 Uuid="84565BE2-0684-4ba2-9ECE-D45389E1F216"
+		 Abstract="No"
+         SuperName="DELLmiPPRSystemReference"
+         CustomerExposition="Programmer"
+         Specializable="Yes"
+         CustomerExtensible="Yes"
+         CreateInstName="DELLmiQtyControlProcessInstance"
+         Abbreviation="qcp"
+         PublicResourceURI="/resources/v1/modeler/dsprcs/dsprcs:MfgProcess/{pid}"
+         InstantiationOwnerTypes="DELLmiServiceHeaderWorkPlanReference;DELLmiHeaderWorkPlanReference">
+
+    <Property Name="DMCDerivable" Value="No"/>
+    <Property Name="KweNew_InstanciationMethod" Value="DELMPProdSystemAdvDelegateInstanciation"/>
+    <Property Name="KweNew_ReturnedType" Value="DELLmiQtyControlProcessInstance"/>
+    <Property Name="IconName" Value="I_PPRQualityControlProcess"/>
+    <Property Name="3DIconName" Value="I_PPRQualityControlProcess.cgr"/>
+    <Property Name="Newable" Value="All_CAA"/>
+    <Property Name="Searchable" Value="Yes"/>
+		
+
+    <CAAComment>
+      <ShortRole>PLM DELMIA Quality Control Process Reference</ShortRole>
+      <Role>PLM DELMIA Quality Control Process Reference</Role>
+    </CAAComment>
+	
+    <!-- Path declaration for Quality Control Process Reference -->
+    <Path Name="DELContextForPreassignment"
+		Uuid="5F07FF4B-265B-4070-A159-DB1E02B2DFD7"
+		MultiValuated="No"
+		RoleName="DEL_ContextForPreassignment"
+		Type="SemanticRelation" 
+		AdaptativeToMinor="No"
+		SynchroSensitivity="None"
+		RerouteOnEffectivityChange="No"
+		Semantics="Reference"/>
+
+    <Path Name="DELReferentialForResourcePositioning"
+          Uuid="F85E3C67-48D3-4b56-977C-D3400F7257A3"
+          RoleName="DEL_ContextForResourcePositioning"
+          MultiValuated="No"
+          Type="SemanticRelation" 
+		  AdaptativeToMinor="No"
+          SynchroSensitivity="None"
+          RerouteOnEffectivityChange="No"
+          Orientation="In"
+          Protection="External"
+          Semantics="Reference"/>
+	
+    <Method ImplementationType="AsFather">
+      <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+    </Method>
+    <Method ImplementationType="Self">
+      <RealizeMethodType href="ExchangeScope.meth#ExchangeScope"/>
+      <ProcedureForUsage>
+        <Usage href="ExchangeScope.meth#XPDM"/>
+        <UsedProcedure href="ENOPsm_Procedures.proc#ProductionSystem_ExchangeXPDM_GetAllEntities"/>
+      </ProcedureForUsage>
+      <ProcedureForUsage>
+        <Usage href="ExchangeScope.meth#StandAlone"/>
+        <UsedProcedure href="ENOPsm_Procedures.proc#ProductionSystem_ExchangeXPDM_StandAlone"/>
+      </ProcedureForUsage>
+      <ProcedureForUsage>
+        <Usage href="ExchangeScope.meth#AllLevelNoRsc"/>
+        <UsedProcedure href="ENOPsm_Procedures.proc#ProductionSystem_ExchangeXPDM_AllLevelNoRsc"/>
+      </ProcedureForUsage>
+      <ProcedureForUsage>
+        <Usage href="ExchangeScope.meth#SupplyChainSourcing"/>
+        <UsedProcedure href="ENOPsm_Procedures.proc#ProductionSystem_ExchangeXPDM_SupplyChainSourcing"/>
+      </ProcedureForUsage>
+      <ProcedureForUsage>
+        <Usage href="ExchangeScope.meth#GetAllEntitiesWithRootRscScope"/>
+        <UsedProcedure href="ENOPsm_Procedures.proc#ProductionSystem_ExchangeXPDM_GetAllEntitiesWithRootRscScope"/>
+      </ProcedureForUsage>
+      <ProcedureForUsage>
+        <Usage href="ExchangeScope.meth#XPDM2"/>
+        <UsedProcedure href="ENOPsm_Procedures.proc#ProductionSystem_ExchangeXPDM_XPDM2"/>
+      </ProcedureForUsage>
+      <ProcedureForUsage>
+        <Usage href="ExchangeScope.meth#Execution"/>
+        <UsedProcedure href="ENOPsm_Procedures.proc#ProductionSystem_ExchangeXPDM_Execution"/>
+      </ProcedureForUsage>
+    </Method>
+    
+  </Class>
+
+  <RelationClass Name="DELLmiQtyControlProcessInstance"
+		 Uuid="326D80A4-6F76-4067-96AB-DD2FBAC8B63F"
+		 Abstract="No"
+         SuperName="DELLmiPPRSystemInstance"
+         CustomerExposition="Programmer"
+         Specializable="Yes"
+         CustomerExtensible="Yes"
+		 PublicResourceURI="/resources/v1/modeler/dsprcs/dsprcs:MfgProcess/{pid}/dsprcs:MfgProcessInstance/{pid}">
+
+    <Property Name="DMCDerivable" Value="No"/>
+    <Property Name="KweNew_InstanciationMethod" Value="DELMPProdSystemAdvDelegateInstanciation"/>
+    <Property Name="KweNew_ReturnedType" Value="DELLmiQtyControlProcessInstance"/>
+
+    <CAAComment>
+      <ShortRole>PLM DELMIA Quality Control Process Instance.</ShortRole>
+      <Role>PLM DELMIA Quality Control Process Instance</Role>
+    </CAAComment>
+
+    <Volatile Name="Reference"
+              Uuid="DE78D9A9-BACC-41b5-AE3B-BAE310F31AD2"
+              Accessor="PLMModelerReferenceKweAttribute"
+              TypeName="DELLmiQtyControlProcessReference"
+              AccessMode="ReadOnly" />
+
+	<!--<SubClause Name="from" TargetName="DELLmiServiceWorkPlanReference"/>
+	<SubClause Name="from" TargetName="DELLmiHeaderWorkPlanReference"/>-->
+    <SubClause Name="to"   TargetName="DELLmiQtyControlProcessReference"/>
+
+    <Method ImplementationType="AsFather">
+      <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+    </Method>
+    <Method ImplementationType="AsFather">
+      <RealizeMethodType href="ExchangeScope.meth#ExchangeScope"/>
+    </Method>
+
+  </RelationClass>
+
+</Package>

@@ -1,0 +1,26 @@
+################################################################################################
+# Created By thok : 2023. 08. 11
+# Admin Type : menu
+# Name : decRequestListToolbarActions
+################################################################################################
+#delete menu decRequestListToolbarActions;
+add menu 'decRequestListToolbarActions' 
+	label 'ProgramCentral.Toolbar.Actions' 
+	command 'decRequestCreate'
+	command 'decRequestDelete'
+	command 'decRequestListRequest'
+	command 'decRequestListAccept'
+	command 'decRequestListReply'
+	command 'decRequestListComplete'
+	setting 'Registered Suite' 'ProgramCentral' 
+	setting 'Image' '${COMMON_DIR}/images/iconActionActions.png'
+;
+add property menu_decRequestListToolbarActions on program eServiceSchemaVariableMapping.tcl to menu 'decRequestListToolbarActions'
+;
+
+# Modified By thok : 2023. 09. 12
+mod menu 'decRequestListToolbarActions' 
+	remove command 'decRequestListAccept'
+	remove command 'decRequestListReply'
+	remove command 'decRequestListComplete'
+;

@@ -1,0 +1,51 @@
+{
+  "type": "object",
+  "properties": {
+    "totalItems": {
+      "type": "integer",
+      "example": "1"
+    },
+    "member": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "source": {
+            "description": "source",
+            "type": "string",
+            "example": "https://server_name.dsone.3ds.com:443/3DSpace"
+          },
+          "type": {
+            "description": "type",
+            "type": "string",
+            "example": "CreateAssembly"
+          },
+          "id": {
+            "description": "Corresponding Eng Item ID",
+            "type": "string",
+            "example": "07188256124D00005FBF9A2D000A8671"
+          },
+          "identifier": {
+            "description": "Entity physical id dsmfg:MfgItem ID",
+            "type": "string",
+            "example": "07188256124D00005FBF9A2D000A8671"
+          },
+          "relativePath": {
+            "description": "relativePath",
+            "type": "string",
+            "example": "/resources/v1/modeler/dsmfg/dsmfg:MfgItem/07188256124D00005FBF9A2D000A8671"
+          },
+          "relationType": {
+            "description": "relationType value",
+            "type": "string",
+            "enum": [
+              "dsmfg:ScopeEngItem",
+              "dsmfg:PartialScopeEngItem",
+              "dsmfg:ResultingEngItem"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

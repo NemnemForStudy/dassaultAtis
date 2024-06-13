@@ -1,0 +1,44 @@
+getInfo, getRelatedObjects, findObjects
+
+1. Read 주요 API
+getInfo, getRelatedObjects 파라미터 보고 설명
+
+business에 대한 정보를 가져옴.
+getInfo 	- context : data를 담고 있는 DB커넥션 정보
+	- select : 선택 가능한 목록
+
+getRelatedObjects
+- context : data를 담고 있는 DB커넥션 정보
+- relationshipPattern : 관계에 맞는 relationship 패턴
+- typePattern : 관계에 맞는 type 패턴
+- objectSelects : business Objects와 관련된 선택 문 목록 보유 StringList 개체
+- relationshipSelects : relationship과 관련된 선택 문 목록 보유 StringList개체
+- getTo : relationship이 To인지
+- getFrom : relationship이 From인지
+- recursionLevel : 확장할 수준의 숫자이며 0이면 모두 확장함(보여줌.)
+- objectWhere : object에 적용할 조건절은 비워둘 수 있음.
+- relationshipWhere : relationship에 적용할 조건절은 비워둘 수 있음.
+- limit : 사용 가능한 모든 데이터를 반환하기 위해 확장. 0은 사용 가능한 모든 데이터를 반환시킴.
+
+2. Create 주요 API
+createObject
+- type : object Type
+- name : object의 name. 이름이 null일 수 있지만 null이면 고유 이름 할당 됨.
+- revision : object의 revision. null일 수 있지만, null이면 지정된 policy 첫 번째 리비전이 할당됨.
+- policy : policy가 null일 수 있지만, null이면 기본 정책이 할당됨.
+- vault : null이면 상위 개체 vault로 설정됨. 상위 개체가 없으면 현재 사용자 vault로 설정.
+
+3. Connection 주요 API
+connect
+- context : data를 담고 있는 DB
+- fromObjectId : 연결할 objectId
+- relationshipName : 연결할 relationship 이름
+- toObjectId : fromObjectId와 connect할 ObjectId
+- preserve : true는 from 개체 수정 날짜 보존하는 데 사용. 보존이 켜져 있으면 mql 클래스가 요청을 실행하는 데 사용
+true이면 수정일이 바뀌지 않게끔 사용하는 기능
+
+fromObjectId와 toObjectId를 relationshipName으로 연결해줍니다.
+
+disconnect
+- context : data를 담고 있는 DB
+- relationshipId : 제거할 관계의 Id

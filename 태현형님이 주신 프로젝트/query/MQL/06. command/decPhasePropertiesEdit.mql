@@ -1,0 +1,29 @@
+################################################################################################
+# Created       : 2023. 06. 01 04:41:52 PM
+# Last Modified : 2023. 06. 01 04:42:38 PM
+# Create By jhlee : 2023. 09. 13
+# Admin Type : command
+# Name : decPhasePropertiesEdit
+################################################################################################
+
+#del command 'decPhasePropertiesEdit';
+add command 'decPhasePropertiesEdit'
+    description "Edit Project Task Properties"
+    label       ""
+    href        "${COMMON_DIR}/emxForm.jsp?mode=edit&form=PMCProjectTaskViewForm&formHeader=emxProgramCentral.Common.Edit&PrinterFriendly=true&HelpMarker=emxhelpwbstaskedit&findMxLink=false&submitAction=doNothing&portalCmdName=PMCWBS&Export=false&showTabHeader=true&postProcessURL=../programcentral/emxProjectManagementUtil.jsp?mode=refreshAfterEdit"
+    alt         "emxProgramCentral.Button.Edit"
+    code        ""
+    setting    'Access Function'         "canEditPhaseProperties"
+    setting    'Access Program'          "emxTask"
+    setting    'Image'                   "${COMMON_DIR}/images/iconActionEdit.png"
+    setting    'Registered Suite'        "ProgramCentral"
+    setting    'Submit'                  "true"
+    setting    'Target Location'         "self"
+    setting    'hasAccess' 'PIM,AWP,WFP'
+    property    'application'        value "ProgramManagementBase"
+    property    'installed date'     value "06-01-2023"
+    property    'installer'          value "ENOVIAEngineering"
+    property    'original name'      value "decPhasePropertiesEdit"
+    property    'version'            value "R424.HF2"
+;
+add property 'command_decPhasePropertiesEdit' on prog eServiceSchemaVariableMapping.tcl to command 'decPhasePropertiesEdit';

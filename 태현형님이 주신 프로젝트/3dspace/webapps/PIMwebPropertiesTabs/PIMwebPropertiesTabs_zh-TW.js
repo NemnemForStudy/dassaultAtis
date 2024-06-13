@@ -1,0 +1,1 @@
+define("DS/PIMwebPropertiesTabs/PIMwebPropertiesTabs_zh-TW",{});define("DS/PIMwebPropertiesTabs/assets/nls/PIMwebPropertiesTabs",{privLevelSimulationError:"無法存取模擬定義",isrInfoRetrievalFailed:"無法擷取干擾模擬資訊"});

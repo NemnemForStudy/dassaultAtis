@@ -1,0 +1,496 @@
+########################################################################################################################
+## Issue Management NLS used on UX side
+########################################################################################################################
+
+# The states of an issue
+issue.states.create=拔模
+issue.states.assign=待辦事項
+issue.states.active=工作中
+issue.states.review=核准中
+issue.states.closed=已完成
+
+# The priority of an issue
+issue.priority.pre-assigned=預先指定
+issue.priority.low=低
+issue.priority.medium=中
+issue.priority.high=高
+issue.priority.urgent=急迫
+
+# Notifications, please do not translate text between <strong> and </strong>
+issue.notifications.review.setting=議題已達到「核准中」狀態
+issue.notifications.assignment.setting=您已被指派一項問題
+issue.notifications.unassignment.setting=您已被取消指派至問題
+issue.notifications.comments.mentioned.setting=有人在問題中提到您
+issue.notifications.comments.commented.setting=有人對您有存取的問題提出意見
+issue.notifications.approval.setting=需要您的核准
+issue.notifications.decision.setting=有人已核准或拒絕升級您擁有的問題
+
+issue.notifications.assigned.msg=<strong>###FROM_USER_NAME###</strong> 已指派您至問題 <strong>###INSTANCE_NAME###</strong>。
+issue.notifications.unassigned.msg=<strong>###FROM_USER_NAME###</strong> 已將您從問題 <strong>###INSTANCE_NAME###</strong> 取消指派。
+issue.notifications.promoted.msg=<strong>###FROM_USER_NAME###</strong> 已將問題 <strong>###INSTANCE_NAME###</strong> 升級至 <strong>###STATE_NAME###</strong>。
+issue.notifications.demoted.msg=<strong>###FROM_USER_NAME###</strong> 已將問題 <strong>###INSTANCE_NAME###</strong> 降級至 <strong>###STATE_NAME###</strong>。
+issue.notifications.comments.mentioned.msg=<strong>###FROM_USER_NAME###</strong> 已在問題 <strong>###INSTANCE_NAME###</strong> 中提到您。
+issue.notifications.comments.commented.msg=<strong>###FROM_USER_NAME###</strong> 已在問題 <strong>###INSTANCE_NAME###</strong> 提出意見。
+issue.notifications.approval.msg=需要您的核准才能升級議題 <strong>###INSTANCE_NAME###</strong>。
+issue.notifications.decision.approved.msg=<strong>###FROM_USER_NAME###</strong> 已核准將問題 <strong>###INSTANCE_NAME###</strong> 升級至 <strong>###STATE_NAME###</strong>。
+issue.notifications.decision.rejected.msg=<strong>###FROM_USER_NAME###</strong> 已拒絕將問題 <strong>###INSTANCE_NAME###</strong> 升級至 <strong>###STATE_NAME###</strong>。
+
+# Export PPTX
+issue.export.pptx.actionTaken=執行的動作
+issue.export.pptx.actualEndDate=實際結束日期
+issue.export.pptx.actualStartDate=實際開始日期
+issue.export.pptx.assignees=受指派者
+issue.export.pptx.contexts=關聯
+issue.export.pptx.created=建立日期
+issue.export.pptx.description=說明
+issue.export.pptx.dueDate=到期日
+issue.export.pptx.estimatedEndDate=實際結束日期
+issue.export.pptx.modified=修改日期
+issue.export.pptx.owner=擁有者
+issue.export.pptx.priority=優先順序
+issue.export.pptx.reportedAgainst=受影響的項目
+issue.export.pptx.reportingOrganization=報告組織
+issue.export.pptx.resolutionDate=解決日期
+issue.export.pptx.resolutionRecommendation=解決建議
+issue.export.pptx.resolutionStatement=解決方法陳述
+issue.export.pptx.resolvedBy=解決方案
+issue.export.pptx.responsibleOrganization=責任組織
+issue.export.pptx.state=成熟狀態
+
+# Automation for issue
+issue.automation.closure.actionTaken=未採取動作是在狀態變更為問題「已完成」期間所設定
+issue.automation.closure.resolutionStatement=無解決方法聲明是在狀態變更為問題「已完成」期間所設定
+
+# Automation for route
+issue.automation.routes.abstain=問題的升級已由其他人核准或拒絕。已自動放棄
+issue.automation.routes.description=已針對問題管理核准程序產生此流程
+
+# HTTP errors
+issue.errors.http.badRequest=
+issue.errors.http.notFound=
+issue.errors.http.unauthorized=
+issue.errors.http.internalServerError=
+
+# Batch generic error message
+issue.errors.batch=因為下列原因無法執行請求：\n
+
+# Permissions for the roles
+issue.roles.originator=發起者
+issue.roles.owner=擁有者
+issue.roles.coOwner=協調者
+issue.roles.assignee=受指派者
+issue.roles.contributor=參與者
+issue.permissions.roles=您必須為 {roles} 以執行此操作
+issue.permissions.rolesenhanced=您沒有適當的責任可在這些問題上執行操作。可能解決方法：必須在成員面板中將您加入為問題的擁有者、協調者或受指派者
+
+# Policy decline error message
+issue.errors.policydecline.addRelated=如果問題為開啟，您的責任不允許您新增受影響的項目、關聯或解決方案。如果問題為關閉，則無法新增相關物件或關聯
+
+# Permissions checker for creation
+issue.permissions.creation=這個問題需要核准，而您需要至少一個受指派者
+issue.permissions.restrictcreation=此角色的建立操作受到限制
+
+# Permissions checker for members
+issue.permissions.assignees.add=作用中的流程目前已附加至問題，禁止加入受指派者
+issue.permissions.assignees.remove=作用中的流程目前已附加至問題，禁止移除受指派者
+issue.permissions.coowners.remove=作用中的流程目前已附加至問題，禁止移除協調者
+issue.closed.permission.assignees.add=問題處於已關閉狀態，禁止加入受指派者
+issue.closed.permission.contributors.add=問題處於已關閉狀態，禁止加入撰稿者
+issue.permissions.contributors.remove=您的憑證不允許您移除撰稿者
+
+# Permissions checker for properties
+issue.permissions.properties.closed=問題無法手動設定為「已完成」，因為此問題目前需要核准
+
+# Permissions checker for lifecycle
+issue.permissions.lifecycle.approval.assignee=這個問題需要核准，而您需要至少一個受指派者
+issue.permissions.lifecycle.approval.assigneeenhanced=此問題需要核准並需要至少一位受指派者。可能解決方法：請在成員面板中指派至少一位受指派者
+issue.permissions.promotion.approval=問題無法手動設定為「已完成」，因為此問題目前需要核准
+issue.permissions.demotion.approval=問題無法手動設定為「已完成」，因為此問題目前需要核准
+issue.permissions.closure.approval=問題無法手動設定為「已完成」，因為此問題目前需要核准
+issue.permissions.reopener.closed=問題無法重新開啟，因為尚未設定為「已完成」
+issue.permissions.delete.create=問題無法手動設定為「已完成」，因為此問題目前需要核准
+
+issue.access.export.pptx=您無法在一個 PPTX 中輸出超過 100 個問題
+issue.access.closure=僅問題的擁有者或受指派者可以將其設定為「已完成」
+issue.access.reopener=問題必須設定為「已完成」才能重新開啟
+issue.access.approval.promotion=問題無法手動設定為「已完成」，因為此問題目前需要核准
+issue.access.approval.demotion=問題無法手動設定為「已完成」，因為此問題目前需要核准
+issue.access.approval.assignees.disconnect=您無法移除此問題的受指派者，此問題目前需要核准
+
+##
+#Internal Errors code. no need to translate error codes
+issue.error.duplicateissue=ErrorCode:2003.
+issue.error.createissue=ErrorCode:2004.
+issue.error.closedissue=ErrorCode:2005.
+issue.error.memberissue=ErrorCode:2006.
+##End Issue error codes
+
+###############################
+## Issue Modeler Entries Start
+IssueMdl.Notice.IncorrectType=輸入物件不是問題類型
+IssueMdl.Notice.ObjectNotFound=找不到輸入物件
+IssueMdl.Notice.ProxyNotCreated=建立代理時發生未預期的錯誤
+IssueMdl.Notice.TransactionActive=交易應為使用中
+IssueMdl.Notice.IssueReviewStateError=問題應在此操作的「審查」狀態前
+IssueMdl.Notice.UserOwnerCoownerError=使用者應為擁有者或協調者，才能進行此操作
+IssueMdl.Notice.CoownerAlreadyConnected=輸入協調者已連接至問題
+IssueMdl.Notice.AssigneeAlreadyConnected=輸入受指派者已連接至問題
+IssueMdl.Notice.ContributorAlreadyConnected=輸入參與者已連接至問題
+IssueMdl.Notice.PersonNotFound=找不到人員
+IssueMdl.Notice.UserOwnerCoownerAssigneeError=使用者應為擁有者或協調者或受指派者，才能進行此操作
+IssueMdl.Notice.AlreadyConnectedAsContextItem=輸入物件已連接為關聯項目
+IssueMdl.Notice.NotConnectedAsContextItem=輸入物件未連接為關聯項目
+IssueMdl.Notice.AlreadyConnectedAsAffectedItem=輸入物件已連接為受影響項目
+IssueMdl.Notice.NotConnectedAsAffectedItem=輸入物件未連接為受影響項目
+IssueMdl.Notice.AlreadyConnectedAsResolvedBy=輸入物件已連接為解決方案
+IssueMdl.Notice.NotConnectedAsResolvedBy=輸入物件未連接為解決方案
+IssueMdl.Notice.ModifyAccessError=沒有問題的修改存取權
+IssueMdl.Notice.DueDateSetInThePast=到期日不能在目前日期之前。
+IssueMdl.Notice.BusinessLogicFailure=PLMActionCreate 業務邏輯執行失敗
+IssueMdl.Notice.ParametersInstantiate=參數應具現化
+IssueMdl.Notice.PageOutOfBound=頁面尺寸超出範圍 (每頁 1 到 1000)
+IssueMdl.Notice.ChangeConstructor.NotAccessible=物件無法顯示。一些可能的原因包括：\n - 物件不存在資料庫中。\n - 您沒有檢視此物件的存取權。
+IssueMdl.Notice.ApproveReject.NoTask=此使用者沒有工作可核准或拒絕。
+IssueMdl.Notice.Approval.NoUsers=此問題需要核准並需要至少一位受指派者。請在「成員」面板中指派至少一位受指派者
+IssueMdl.Notice.InputObjectNotCompliantWithSpecifiedType=輸入物件不符合指定的類型
+IssueMdl.Notice.InputObjectNotCompliantForResolvedBy=只有類型物件變更及任務將支援為解決方案
+IssueMdl.Notice.UserInactive=無法將非使用中人員加入為受指派者
+IssueMdl.Notice.CannotConnectIssueWithCancelChange=不允許在已取消的變更物件上執行此操作。
+IssueMdl.NoticeCAA.TypeNotAllowed=輸入指定的類型無效
+IssueMdl.NoticeCAA.DescriptionMandatory=說明為必填
+IssueMdl.NoticeCAA.PriorityNotAllowed=輸入指定的優先順序無效
+IssueMdl.NoticeCAA.WithApprovalNotAllowed=輸入指定的取得核准無效
+IssueMdl.NoticeCAA.EstimatedStartPriorToCurrent=「估計開始日期」不可設定早於目前日期
+IssueMdl.NoticeCAA.EstimatedEndPriorToCurrent=「估計結束日期」不可設定早於目前日期
+IssueMdl.NoticeCAA.EstimatedEndPriorToEstimatedStart=「估計結束日期」不可設定早於「估計開始日期」
+IssueMdl.NoticeCAA.InvalidCeStamp=輸入指定的 Cestamp 無效
+IssueMdl.NoticeCAA.TitleMandatory=標題為必填
+IssueMdl.NoticeCAA.ActualStartPriorToCurrent=「實際開始日期」不可設定早於目前日期
+IssueMdl.NoticeCAA.ActualEndPriorToCurrent=「實際結束日期」不可設定早於目前日期
+IssueMdl.NoticeCAA.ActualEndPriorToActualStart=「實際結束日期」不可設定早於「實際開始日期」
+IssueMdl.NoticeCAA.TargetBallonPositionMandatory=目標零件號球必須包含在輸入中
+IssueMdl.NoticeCAA.IdentifierMustBeDefined=必須定義識別碼
+IssueMdl.NoticeCAA.InvalidSource=輸入指定的來源無效
+IssueMdl.NoticeCAA.InputObjectNotFound=找不到輸入物件
+IssueMdl.NoticeCAA.InputObjectNotCompliantWithTypeSpecified=輸入物件不符合指定的類型
+IssueMdl.NoticeCAA.InputObjectNotCompliantWithRelativePathSpecified=輸入物件不符合指定的相對路徑
+IssueMdl.NoticeCAA.InvalidComment=必須定義註解
+IssueMdl.NoticeCAA.MembersLimit=單一通話中每個密鑰的成員增減限制為 10 人。
+IssueMdl.NoticeCAA.InvalidInputJson=JSON 傳入的輸入資料無效。
+IssueMdl.Notice.UserAccessError=內容使用者沒有執行此操作的存取權限
+IssueMdl.Notice.UserAccessErrorReopenIssue=內容使用者沒有重新開啟「問題」的存取權限
+IssueMdl.Notice.UserAccessErrorCloseIssue=內容使用者沒有關閉「問題」的存取權限
+IssueMdl.Notice.MarkCompleteNotAllowed=無法從『核准中』狀態將問題標示為「完成」
+IssueMdl.Notice.IssuePromoteResolvingItemIncomplete=<type> <name> 無法升級，因為連接的至少一項解決變更沒有達到其最終狀態。
+IssueMdl.Notice.ApprovalAlreadyEnable=無法啟用核准。核准程序已啟用。
+IssueMdl.Notice.ApprovalOperationNotAllowed=問題上的核准程序由行政設定管理，所以問題層級的操作無法執行。
+IssueMdl.Notice.ApprovalActiveCannotDisable=無法停用核准，因為核准程序使用中。
+IssueMdl.Notice.ApprovalAlreadyDisable=無法停用核准。核准程序已停用。
+IssueMdl.Notice.AlreadyConnectedAsResolution=<type> <name> 已連接為解決方法
+IssueMdl.Notice.FollowerAlreadyConnected=輸入追蹤者已連接至問題
+IssueMdl.Notice.IsNotAssignee=輸入者未連接為問題的受指派者
+IssueMdl.Notice.IsNotCoOwner=輸入者未連接為問題的協調者
+IssueMdl.Notice.IsNotContributor=輸入者未連接為問題的撰稿者
+IssueMdl.Notice.IsNotFollower=輸入者未連接為問題的追蹤者
+IssueMdl.Notice.NotConnectedAsResolutionItem=輸入物件未連接為解決方法項目
+IssueMdl.Notice.NumberFormatException=略過與頂端的輸入值應為適當的數字格式
+IssueMdl.Notice.SkipLessThanZero=略過的輸入值不應少於零
+IssueMdl.Notice.TopGreaterThanMax=頂端的輸入值大於允許值的上限
+IssueMdl.Notice.TopPositiveInteger=頂端的輸入值應為正整數
+
+
+## Issue Access Errors
+IssueMdl.Notice.UserCoownerError=您不被允許管理「協調者」。\n請驗證您的責任和「問題」的成熟狀態與此操作相容。
+IssueMdl.Notice.UserAssigneeError=您不可以管理「受指派者」。\n請驗證您的責任和「問題」的成熟狀態與此操作相容。
+IssueMdl.Notice.UserContributorError=您不可以管理「參與者」。\n請驗證您的責任和「問題」的成熟狀態與此操作相容。
+IssueMdl.Notice.UserFollowerError=您不被允許管理「已通知的使用者」。\n請驗證您的責任和「問題」的成熟狀態與此操作相容。
+IssueMdl.Notice.ModifyAffectedItemError=您不可以管理「受影響的項目」。\n 請驗證您的責任和「問題」的成熟狀態與此操作相容。
+IssueMdl.Notice.ModifyResolvedByError=您不可以管理「解決方案」。\n 請驗證您的責任和「問題」的成熟狀態與此操作相容。
+IssueMdl.Notice.ModifyContextError=您不可以管理「關聯項目」。\n請驗證您的責任和「問題」的成熟狀態與此操作相容。
+IssueMdl.Notice.ModifyResolutionError=您不可以管理「解決方法」。\n請驗證您的責任和「問題」的成熟狀態與此操作相容。
+IssueMdl.Notice.ModifyAttributeAccessError=您不可以修改屬性。\n請驗證您的責任和「問題」的成熟狀態與此操作相容。
+IssueMdl.Notice.ResponsibleOrganizationManagement=您不可以管理「責任組織」。\n請驗證您的責任和「問題」的成熟狀態與此操作相容。
+IssueMdl.Notice.UserCoownerPartOfApprovalError=問題核准程序涉及目前狀態的協調者。無法移除協調者。
+IssueMdl.Notice.UserAsigneePartOfApprovalError=問題核准程序涉及目前狀態的受指派者。無法移除受指派者。
+IssueMdl.Notice.ReportingOrganizationManagement=您不被允許管理「報告組織」。\n請驗證您的責任和「問題」的成熟狀態與此操作相容。
+IssueMdl.Notice.EnableDisableApprovalManagement=您不可以管理「核准啟用」。\n請驗證您的責任和「問題」的成熟狀態與此操作相容。
+
+## Issue Modeler Entries End
+###############################
+
+########################################################################################################################
+## Issue Management parametrization
+########################################################################################################################
+
+## Issue Management parametrization
+OOTBParameterization.IssueManagement=問題管理
+OOTBParameterization.IssueManagement.tooltip=定義規則以控制問題管理指令的行為。
+
+# Family for the approvals
+OOTBParameterization.IssueManagement.Approvals=流程觸發動作的核准
+OOTBParameterization.IssueManagement.Approvals.tooltip=選擇流程觸發動作的核准者
+
+# Approval from New to Pending
+OOTBParameterization.IssueManagement.Approvals.param_CreateToAssign=從「草稿」到「待辦事項」流程的觸發動作需要核准
+OOTBParameterization.IssueManagement.Approvals.param_CreateToAssign.tooltip=從「草稿」到「待辦事項」流程的觸發動作需要的核准類型
+OOTBParameterization.IssueManagement.Approvals.param_CreateToAssign.Argument=核准者選項
+OOTBParameterization.IssueManagement.Approvals.param_CreateToAssign.Argument.tooltip=選擇此流程的核准者
+OOTBParameterization.IssueManagement.Approvals.param_CreateToAssign.Argument.None=-
+OOTBParameterization.IssueManagement.Approvals.param_CreateToAssign.Argument.All=全部共同責任者與擁有者 (相等)
+OOTBParameterization.IssueManagement.Approvals.param_CreateToAssign.Argument.AllButOwnerMandatory=全部共同責任者與擁有者 (需要擁有者判斷並為定案)
+OOTBParameterization.IssueManagement.Approvals.param_CreateToAssign.Argument.AnyOneResponsible=一位共同責任者或擁有者
+OOTBParameterization.IssueManagement.Approvals.param_CreateToAssign.Argument.AnyOneAssignee=任何一位受指派者
+OOTBParameterization.IssueManagement.Approvals.param_CreateToAssign.Argument.AllAssignees=全部受指派者
+
+# Approval from Pending to Active
+OOTBParameterization.IssueManagement.Approvals.param_AssignToActive=從「待辦事項」到「工作中」流程的觸發動作需要核准
+OOTBParameterization.IssueManagement.Approvals.param_AssignToActive.tooltip=從「待辦事項」到「工作中」流程的觸發動作需要的核准類型
+OOTBParameterization.IssueManagement.Approvals.param_AssignToActive.Argument=核准者選項
+OOTBParameterization.IssueManagement.Approvals.param_AssignToActive.Argument.tooltip=選擇此流程的核准者
+OOTBParameterization.IssueManagement.Approvals.param_AssignToActive.Argument.None=-
+OOTBParameterization.IssueManagement.Approvals.param_AssignToActive.Argument.All=全部共同責任者與擁有者 (相等)
+OOTBParameterization.IssueManagement.Approvals.param_AssignToActive.Argument.AllButOwnerMandatory=全部共同責任者與擁有者 (需要擁有者判斷並為定案)
+OOTBParameterization.IssueManagement.Approvals.param_AssignToActive.Argument.AnyOneResponsible=一位共同責任者或擁有者
+OOTBParameterization.IssueManagement.Approvals.param_AssignToActive.Argument.AnyOneAssignee=任何一位受指派者
+OOTBParameterization.IssueManagement.Approvals.param_AssignToActive.Argument.AllAssignees=全部受指派者
+
+# Approval from Active to Review
+OOTBParameterization.IssueManagement.Approvals.param_ActiveToReview=從「工作中」到「核准中」流程的觸發動作需要核准
+OOTBParameterization.IssueManagement.Approvals.param_ActiveToReview.tooltip=從「工作中」到「核准中」流程的觸發動作需要的核准類型
+OOTBParameterization.IssueManagement.Approvals.param_ActiveToReview.Argument=核准者選項
+OOTBParameterization.IssueManagement.Approvals.param_ActiveToReview.Argument.tooltip=選擇此流程的核准者
+OOTBParameterization.IssueManagement.Approvals.param_ActiveToReview.Argument.None=-
+OOTBParameterization.IssueManagement.Approvals.param_ActiveToReview.Argument.All=全部共同責任者與擁有者 (相等)
+OOTBParameterization.IssueManagement.Approvals.param_ActiveToReview.Argument.AllButOwnerMandatory=全部共同責任者與擁有者 (需要擁有者判斷並為定案)
+OOTBParameterization.IssueManagement.Approvals.param_ActiveToReview.Argument.AnyOneResponsible=一位共同責任者或擁有者
+OOTBParameterization.IssueManagement.Approvals.param_ActiveToReview.Argument.AnyOneAssignee=任何一位受指派者
+OOTBParameterization.IssueManagement.Approvals.param_ActiveToReview.Argument.AllAssignees=全部受指派者
+
+# Approval from Review to Close
+OOTBParameterization.IssueManagement.Approvals.param_ReviewToClosed=從「核准中」到「完成」流程的觸發動作需要核准
+OOTBParameterization.IssueManagement.Approvals.param_ReviewToClosed.tooltip=從「核准中」到「完成」流程的觸發動作需要的核准類型
+OOTBParameterization.IssueManagement.Approvals.param_ReviewToClosed.Argument=核准者選項
+OOTBParameterization.IssueManagement.Approvals.param_ReviewToClosed.Argument.tooltip=選擇此流程的核准者
+OOTBParameterization.IssueManagement.Approvals.param_ReviewToClosed.Argument.None=-
+OOTBParameterization.IssueManagement.Approvals.param_ReviewToClosed.Argument.All=全部共同責任者與擁有者 (相等)
+OOTBParameterization.IssueManagement.Approvals.param_ReviewToClosed.Argument.AllButOwnerMandatory=全部共同責任者與擁有者 (需要擁有者判斷並為定案)
+OOTBParameterization.IssueManagement.Approvals.param_ReviewToClosed.Argument.AnyOneResponsible=一位共同責任者或擁有者
+OOTBParameterization.IssueManagement.Approvals.param_ReviewToClosed.Argument.AnyOneAssignee=任何一位受指派者
+OOTBParameterization.IssueManagement.Approvals.param_ReviewToClosed.Argument.AllAssignees=全部受指派者
+
+# Access Controls - Properties Read
+OOTBParameterization.IssueManagement.AccessControls.Properties_Read=讀取特性的存取控制
+OOTBParameterization.IssueManagement.AccessControls.Properties_Read.tooltip=讀取問題特性需要的存取控制類型
+OOTBParameterization.IssueManagement.AccessControls.Properties_Read.Argument=存取控制站
+OOTBParameterization.IssueManagement.AccessControls.Properties_Read.Argument.tooltip=選擇讀取特性的存取控制器
+OOTBParameterization.IssueManagement.AccessControls.Properties_Read.Argument.Contributor=參與者
+OOTBParameterization.IssueManagement.AccessControls.Properties_Read.Argument.Assignee=受指派者
+OOTBParameterization.IssueManagement.AccessControls.Properties_Read.Argument.Owner=擁有者
+OOTBParameterization.IssueManagement.AccessControls.Properties_Read.Argument.Co-Owner=協調者
+
+# Access Controls - Properties Edit
+OOTBParameterization.IssueManagement.AccessControls.Properties_Edit=編輯特性的存取控制
+OOTBParameterization.IssueManagement.AccessControls.Properties_Edit.tooltip=編輯問題特性需要的存取控制類型
+OOTBParameterization.IssueManagement.AccessControls.Properties_Edit.Argument=存取控制站
+OOTBParameterization.IssueManagement.AccessControls.Properties_Edit.Argument.tooltip=選擇編輯特性的存取控制器
+OOTBParameterization.IssueManagement.AccessControls.Properties_Edit.Argument.Contributor=參與者
+OOTBParameterization.IssueManagement.AccessControls.Properties_Edit.Argument.Assignee=受指派者
+OOTBParameterization.IssueManagement.AccessControls.Properties_Edit.Argument.Owner=擁有者
+OOTBParameterization.IssueManagement.AccessControls.Properties_Edit.Argument.Co-Owner=協調者
+
+# Access Controls - Lifecycle Promote
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Promote=生命週期問題升級的存取控制
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Promote.tooltip=生命週期問題升級需要的存取控制類型
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Promote.Argument=存取控制站
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Promote.Argument.tooltip=選擇生命週期升級的存取控制器
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Promote.Argument.Contributor=參與者
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Promote.Argument.Assignee=受指派者
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Promote.Argument.Owner=擁有者
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Promote.Argument.Co-Owner=協調者
+
+# Access Controls - Lifecycle Demote
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Demote=生命週期問題降級的存取控制
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Demote.tooltip=生命週期問題降級需要的存取控制類型
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Demote.Argument=存取控制站
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Demote.Argument.tooltip=選擇生命週期降級的存取控制器
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Demote.Argument.Contributor=參與者
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Demote.Argument.Assignee=受指派者
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Demote.Argument.Owner=擁有者
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Demote.Argument.Co-Owner=協調者
+
+# Access Controls - Lifecycle Close
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Close=生命週期問題關閉的存取控制
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Close.tooltip=生命週期問題關閉需要的存取控制類型
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Close.Argument=存取控制站
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Close.Argument.tooltip=選擇生命週期關閉的存取控制器
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Close.Argument.Contributor=參與者
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Close.Argument.Assignee=受指派者
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Close.Argument.Owner=擁有者
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Close.Argument.Co-Owner=協調者
+
+# Access Controls - Lifecycle Close
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_ReopenAfterClose=生命週期問題 (在關閉後) 重新開啟的存取控制
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_ReopenAfterClose.tooltip=生命週期問題 (在關閉後) 重新開啟需要的存取控制類型
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_ReopenAfterClose.Argument=存取控制站
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_ReopenAfterClose.Argument.tooltip=選擇生命週期 (在關閉後) 重新開啟的存取控制器
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_ReopenAfterClose.Argument.Contributor=參與者
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_ReopenAfterClose.Argument.Assignee=受指派者
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_ReopenAfterClose.Argument.Owner=擁有者
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_ReopenAfterClose.Argument.Co-Owner=協調者
+
+# Access Controls - Lifecycle Close
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Delete=生命週期問題刪除的存取控制
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Delete.tooltip=問題刪除需要的存取控制類型 (僅適用於新的生命週期狀態)
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Delete.Argument=存取控制站
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Delete.Argument.tooltip=選擇刪除生命週期的存取控制器
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Delete.Argument.Contributor=參與者
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Delete.Argument.Assignee=受指派者
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Delete.Argument.Owner=擁有者
+OOTBParameterization.IssueManagement.AccessControls.Lifecycle_Delete.Argument.Co-Owner=協調者
+
+# Access Controls - RelatedObjects Add
+OOTBParameterization.IssueManagement.AccessControls.RelatedObject_Add=加入問題相關物件的存取控制
+OOTBParameterization.IssueManagement.AccessControls.RelatedObject_Add.tooltip=加入問題相關物件需要的存取控制類型
+OOTBParameterization.IssueManagement.AccessControls.RelatedObject_Add.Argument=存取控制站
+OOTBParameterization.IssueManagement.AccessControls.RelatedObject_Add.Argument.tooltip=選擇加入問題相關物件的存取控制器
+OOTBParameterization.IssueManagement.AccessControls.RelatedObject_Add.Argument.Contributor=參與者
+OOTBParameterization.IssueManagement.AccessControls.RelatedObject_Add.Argument.Assignee=受指派者
+OOTBParameterization.IssueManagement.AccessControls.RelatedObject_Add.Argument.Owner=擁有者
+OOTBParameterization.IssueManagement.AccessControls.RelatedObject_Add.Argument.Co-Owner=協調者
+
+# Access Controls - Related Objects Delete
+OOTBParameterization.IssueManagement.AccessControls.RelatedObject_Delete=刪除問題相關物件的存取控制
+OOTBParameterization.IssueManagement.AccessControls.RelatedObject_Delete.tooltip=刪除問題相關物件需要的存取控制類型
+OOTBParameterization.IssueManagement.AccessControls.RelatedObject_Delete.Argument=存取控制站
+OOTBParameterization.IssueManagement.AccessControls.RelatedObject_Delete.Argument.tooltip=選擇刪除問題相關物件的存取控制器
+OOTBParameterization.IssueManagement.AccessControls.RelatedObject_Delete.Argument.Contributor=參與者
+OOTBParameterization.IssueManagement.AccessControls.RelatedObject_Delete.Argument.Assignee=受指派者
+OOTBParameterization.IssueManagement.AccessControls.RelatedObject_Delete.Argument.Owner=擁有者
+OOTBParameterization.IssueManagement.AccessControls.RelatedObject_Delete.Argument.Co-Owner=協調者
+
+# Access Controls - Team Change Owner
+OOTBParameterization.IssueManagement.AccessControls.Team_ChangeOwner=用於變更問題擁有者的存取控制
+OOTBParameterization.IssueManagement.AccessControls.Team_ChangeOwner.tooltip=讀取問題特性需要的存取控制類型
+OOTBParameterization.IssueManagement.AccessControls.Team_ChangeOwner.Argument=存取控制站
+OOTBParameterization.IssueManagement.AccessControls.Team_ChangeOwner.Argument.tooltip=選擇加入問題附件的存取控制器
+OOTBParameterization.IssueManagement.AccessControls.Team_ChangeOwner.Argument.Contributor=參與者
+OOTBParameterization.IssueManagement.AccessControls.Team_ChangeOwner.Argument.Assignee=受指派者
+OOTBParameterization.IssueManagement.AccessControls.Team_ChangeOwner.Argument.Owner=擁有者
+OOTBParameterization.IssueManagement.AccessControls.Team_ChangeOwner.Argument.Co-Owner=協調者
+
+# Access Controls - Team Add Co-Owner
+OOTBParameterization.IssueManagement.AccessControls.Team_AddCo-Owner=用於變更問題擁有者的存取控制
+OOTBParameterization.IssueManagement.AccessControls.Team_AddCo-Owner.tooltip=讀取問題特性需要的存取控制類型
+OOTBParameterization.IssueManagement.AccessControls.Team_AddCo-Owner.Argument=存取控制站
+OOTBParameterization.IssueManagement.AccessControls.Team_AddCo-Owner.Argument.tooltip=選擇加入問題附件的存取控制器
+OOTBParameterization.IssueManagement.AccessControls.Team_AddCo-Owner.Argument.Contributor=參與者
+OOTBParameterization.IssueManagement.AccessControls.Team_AddCo-Owner.Argument.Assignee=受指派者
+OOTBParameterization.IssueManagement.AccessControls.Team_AddCo-Owner.Argument.Owner=擁有者
+OOTBParameterization.IssueManagement.AccessControls.Team_AddCo-Owner.Argument.Co-Owner=協調者
+
+# Access Controls - Team Add Assignee Owner
+OOTBParameterization.IssueManagement.AccessControls.Team_AddAssignee=用於變更問題擁有者的存取控制
+OOTBParameterization.IssueManagement.AccessControls.Team_AddAssignee.tooltip=讀取問題特性需要的存取控制類型
+OOTBParameterization.IssueManagement.AccessControls.Team_AddAssignee.Argument=存取控制站
+OOTBParameterization.IssueManagement.AccessControls.Team_AddAssignee.Argument.tooltip=選擇加入問題附件的存取控制器
+OOTBParameterization.IssueManagement.AccessControls.Team_AddAssignee.Argument.Contributor=參與者
+OOTBParameterization.IssueManagement.AccessControls.Team_AddAssignee.Argument.Assignee=受指派者
+OOTBParameterization.IssueManagement.AccessControls.Team_AddAssignee.Argument.Owner=擁有者
+OOTBParameterization.IssueManagement.AccessControls.Team_AddAssignee.Argument.Co-Owner=協調者
+
+# Access Controls - Team Add Participant
+OOTBParameterization.IssueManagement.AccessControls.Team_AddParticipant=用於變更問題擁有者的存取控制
+OOTBParameterization.IssueManagement.AccessControls.Team_AddParticipant.tooltip=讀取問題特性需要的存取控制類型
+OOTBParameterization.IssueManagement.AccessControls.Team_AddParticipant.Argument=存取控制站
+OOTBParameterization.IssueManagement.AccessControls.Team_AddParticipant.Argument.tooltip=選擇加入問題附件的存取控制器
+OOTBParameterization.IssueManagement.AccessControls.Team_AddParticipant.Argument.Contributor=參與者
+OOTBParameterization.IssueManagement.AccessControls.Team_AddParticipant.Argument.Assignee=受指派者
+OOTBParameterization.IssueManagement.AccessControls.Team_AddParticipant.Argument.Owner=擁有者
+OOTBParameterization.IssueManagement.AccessControls.Team_AddParticipant.Argument.Co-Owner=協調者
+
+# Access Controls - Team Remove Co-Owner
+OOTBParameterization.IssueManagement.AccessControls.Team_RemoveCo-Owner=用於變更問題擁有者的存取控制
+OOTBParameterization.IssueManagement.AccessControls.Team_RemoveCo-Owner.tooltip=讀取問題特性需要的存取控制類型
+OOTBParameterization.IssueManagement.AccessControls.Team_RemoveCo-Owner.Argument=存取控制站
+OOTBParameterization.IssueManagement.AccessControls.Team_RemoveCo-Owner.Argument.tooltip=選擇加入問題附件的存取控制器
+OOTBParameterization.IssueManagement.AccessControls.Team_RemoveCo-Owner.Argument.Contributor=參與者
+OOTBParameterization.IssueManagement.AccessControls.Team_RemoveCo-Owner.Argument.Assignee=受指派者
+OOTBParameterization.IssueManagement.AccessControls.Team_RemoveCo-Owner.Argument.Owner=擁有者
+OOTBParameterization.IssueManagement.AccessControls.Team_RemoveCo-Owner.Argument.Co-Owner=協調者
+
+# Access Controls - Team Remove Assignee
+OOTBParameterization.IssueManagement.AccessControls.Team_RemoveAssignee=用於變更問題擁有者的存取控制
+OOTBParameterization.IssueManagement.AccessControls.Team_RemoveAssignee.tooltip=讀取問題特性需要的存取控制類型
+OOTBParameterization.IssueManagement.AccessControls.Team_RemoveAssignee.Argument=存取控制站
+OOTBParameterization.IssueManagement.AccessControls.Team_RemoveAssignee.Argument.tooltip=選擇加入問題附件的存取控制器
+OOTBParameterization.IssueManagement.AccessControls.Team_RemoveAssignee.Argument.Contributor=參與者
+OOTBParameterization.IssueManagement.AccessControls.Team_RemoveAssignee.Argument.Assignee=受指派者
+OOTBParameterization.IssueManagement.AccessControls.Team_RemoveAssignee.Argument.Owner=擁有者
+OOTBParameterization.IssueManagement.AccessControls.Team_RemoveAssignee.Argument.Co-Owner=協調者
+
+# Access Controls - Team Remove Participant
+OOTBParameterization.IssueManagement.AccessControls.Team_RemoveParticipant=用於變更問題擁有者的存取控制
+OOTBParameterization.IssueManagement.AccessControls.Team_RemoveParticipant.tooltip=讀取問題特性需要的存取控制類型
+OOTBParameterization.IssueManagement.AccessControls.Team_RemoveParticipant.Argument=存取控制站
+OOTBParameterization.IssueManagement.AccessControls.Team_RemoveParticipant.Argument.tooltip=選擇加入問題附件的存取控制器
+OOTBParameterization.IssueManagement.AccessControls.Team_RemoveParticipant.Argument.Contributor=參與者
+OOTBParameterization.IssueManagement.AccessControls.Team_RemoveParticipant.Argument.Assignee=受指派者
+OOTBParameterization.IssueManagement.AccessControls.Team_RemoveParticipant.Argument.Owner=擁有者
+OOTBParameterization.IssueManagement.AccessControls.Team_RemoveParticipant.Argument.Co-Owner=協調者
+
+# Access Controls - Attachments Download
+OOTBParameterization.IssueManagement.AccessControls.Attachments_Download=下載問題附件的存取控制
+OOTBParameterization.IssueManagement.AccessControls.Attachments_Download.tooltip=下載問題附件需要的存取控制類型
+OOTBParameterization.IssueManagement.AccessControls.Attachments_Download.Argument=存取控制站
+OOTBParameterization.IssueManagement.AccessControls.Attachments_Download.Argument.tooltip=選擇下載問題附件的存取控制器
+OOTBParameterization.IssueManagement.AccessControls.Attachments_Download.Argument.Contributor=參與者
+OOTBParameterization.IssueManagement.AccessControls.Attachments_Download.Argument.Assignee=受指派者
+OOTBParameterization.IssueManagement.AccessControls.Attachments_Download.Argument.Owner=擁有者
+OOTBParameterization.IssueManagement.AccessControls.Attachments_Download.Argument.Co-Owner=協調者
+
+# Access Controls - Attachments Add
+OOTBParameterization.IssueManagement.AccessControls.Attachments_Add=加入問題物件的存取控制
+OOTBParameterization.IssueManagement.AccessControls.Attachments_Add.tooltip=加入問題附件需要的存取控制類型
+OOTBParameterization.IssueManagement.AccessControls.Attachments_Add.Argument=存取控制站
+OOTBParameterization.IssueManagement.AccessControls.Attachments_Add.Argument.tooltip=選擇加入問題附件的存取控制器
+OOTBParameterization.IssueManagement.AccessControls.Attachments_Add.Argument.Contributor=參與者
+OOTBParameterization.IssueManagement.AccessControls.Attachments_Add.Argument.Assignee=受指派者
+OOTBParameterization.IssueManagement.AccessControls.Attachments_Add.Argument.Owner=擁有者
+OOTBParameterization.IssueManagement.AccessControls.Attachments_Add.Argument.Co-Owner=協調者
+
+# Access Controls - Attachments Delete
+OOTBParameterization.IssueManagement.AccessControls.Attachments_Remove=刪除問題附件的存取控制
+OOTBParameterization.IssueManagement.AccessControls.Attachments_Remove.tooltip=刪除問題附件需要的存取控制類型
+OOTBParameterization.IssueManagement.AccessControls.Attachments_Remove.Argument=存取控制站
+OOTBParameterization.IssueManagement.AccessControls.Attachments_Remove.Argument.tooltip=選擇刪除問題附件的存取控制器
+OOTBParameterization.IssueManagement.AccessControls.Attachments_Remove.Argument.Contributor=參與者
+OOTBParameterization.IssueManagement.AccessControls.Attachments_Remove.Argument.Assignee=受指派者
+OOTBParameterization.IssueManagement.AccessControls.Attachments_Remove.Argument.Owner=擁有者
+OOTBParameterization.IssueManagement.AccessControls.Attachments_Remove.Argument.Co-Owner=協調者
+
+# Access Controls - Comments
+OOTBParameterization.IssueManagement.AccessControls.Comments_Comments=更新問題意見的存取控制
+OOTBParameterization.IssueManagement.AccessControls.Comments_Comments.tooltip=更新問題意見需要的存取控制類型
+OOTBParameterization.IssueManagement.AccessControls.Comments_Comments.Argument=存取控制站
+OOTBParameterization.IssueManagement.AccessControls.Comments_Comments.Argument.tooltip=選擇更新問題意見的存取控制器
+OOTBParameterization.IssueManagement.AccessControls.Comments_Comments.Argument.Contributor=參與者
+OOTBParameterization.IssueManagement.AccessControls.Comments_Comments.Argument.Assignee=受指派者
+OOTBParameterization.IssueManagement.AccessControls.Comments_Comments.Argument.Owner=擁有者
+OOTBParameterization.IssueManagement.AccessControls.Comments_Comments.Argument.Co-Owner=協調者
+
+# Issue Approval Enforcements
+OOTBParameterization.IssueParameterization=問題管理
+OOTBParameterization.IssueParameterization.tooltip=設定問題管理經驗
+OOTBParameterization.IssueParameterization.IssueApproval=問題核准
+OOTBParameterization.IssueParameterization.IssueApproval.tooltip=管理問題核准
+OOTBParameterization.IssueParameterization.IssueApproval.ISS_ApprovalEnforcement=問題核准強制執行
+OOTBParameterization.IssueParameterization.IssueApproval.ISS_ApprovalEnforcement.tooltip=選擇任何一個選項
+OOTBParameterization.IssueParameterization.IssueApproval.ISS_ApprovalEnforcement.Argument=問題核准強制執行
+OOTBParameterization.IssueParameterization.IssueApproval.ISS_ApprovalEnforcement.Argument.tooltip=定義管理問題核准程序的行為。您可以要求「問題」一律需要核准才能建立、永不需要核准就能建立，或者您也可以允許使用者做選擇。
+OOTBParameterization.IssueParameterization.IssueApproval.ISS_ApprovalEnforcement.Argument.Always=一律
+OOTBParameterization.IssueParameterization.IssueApproval.ISS_ApprovalEnforcement.Argument.Always.tooltip=一律建立核准簽核流程
+OOTBParameterization.IssueParameterization.IssueApproval.ISS_ApprovalEnforcement.Argument.Never=永不
+OOTBParameterization.IssueParameterization.IssueApproval.ISS_ApprovalEnforcement.Argument.Never.tooltip=永不建立核准簽核流程
+OOTBParameterization.IssueParameterization.IssueApproval.ISS_ApprovalEnforcement.Argument.UserChoice=使用者選擇
+OOTBParameterization.IssueParameterization.IssueApproval.ISS_ApprovalEnforcement.Argument.UserChoice.tooltip=根據使用者選擇建立核准簽核流程
+

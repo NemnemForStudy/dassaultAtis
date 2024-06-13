@@ -1,0 +1,1 @@
+define("DS/CAT3DAnnotationUI/CAT3DAnnotationUI_zh-TW",{});define("DS/CAT3DAnnotationUI/assets/nls/CAT3DAnnotationUI",{MoreLbl:"閱讀更多 ...",FailureModes:{"0":"最不重要","1":"低","2":"中","3":"高","4":"極高"}});

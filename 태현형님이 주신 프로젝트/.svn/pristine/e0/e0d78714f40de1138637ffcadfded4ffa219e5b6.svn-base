@@ -1,0 +1,1 @@
+define("DS/RichEditorCusto/RichEditorCusto_pt-BR",{});define("DS/RichEditorCusto/assets/nls/RichEditorCusto",{Title_Confirm:"Tem certeza?",Msg_Download:"Deseja baixar este arquivo?"});

@@ -1,0 +1,1 @@
+define("DS/NotificationManager/NotificationManager_en",{});define("DS/NotificationManager/assets/nls/feed",{openInNewTab:"Open in New Tab",close:"Close"});

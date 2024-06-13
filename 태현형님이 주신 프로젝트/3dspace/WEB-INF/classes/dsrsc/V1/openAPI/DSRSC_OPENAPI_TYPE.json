@@ -1,0 +1,147 @@
+{
+	"dsrsc:Resource": {
+		"summary": "Resource",
+		"description": "Resource type",
+		"PUBLICMasks": [
+			"dsmvrsc:ResourceMask.Common",
+			"dsmvrsc:ResourceMask.Details"
+		],
+		"PROTECTEDMasks": [],
+		"PRIVATEMasks": [],
+		"PUBLICExtensions": [],
+		"PROTECTEDExtensions": [
+			"dseno:EnterpriseAttributes"
+		],
+		"PRIVATEExtensions": [],
+		"PUBLICFields": [
+			"dsmveno:basic.id",
+        	"dsmveno:basic.type.public",
+        	"dsmveno:basic.modified.public",
+        	"dsmveno:basic.created.public",
+        	"dsmveno:basic.revision",
+	        "dsmveno:basic.state.public",
+	        "dsmveno:basic.owner.public",
+	        "dsmveno:basic.organization",
+	        "dsmveno:basic.collabspace",
+	        "dsmveno:attribute.reference.name",
+	        "dsmveno:attribute.reference.title",
+	        "dsmveno:attribute.reference.description",
+        	"dsmvrsc:program.getResourceType",
+			"dsmvrsc:program.getIsAsset",
+			"dsmvrsc:attribute.extension.resourceCategory",
+			"dsmvrsc:attribute.extension.resourceManufacturer",
+			"dsmvrsc:attribute.extension.resourceSubType",
+			"dsmvrsc:attribute.extension.resourceCalculatedCycleTime",
+			"dsmvrsc:attribute.extension.resourceConsumableCost",
+			"dsmvrsc:attribute.extension.resourceCycleTime",
+			"dsmvrsc:attribute.extension.resourceEnergyCost",
+			"dsmvrsc:attribute.extension.resourceMeanTimeBeforeFailure",
+			"dsmvrsc:attribute.extension.resourceMeanTimeToRepair",
+			"dsmvrsc:attribute.extension.resourceMaintenanceCost",
+			"dsmvrsc:attribute.extension.resourcePurchaseCost",
+			"dsmvrsc:attribute.extension.resourceRepairCost",
+			"dsmvrsc:attribute.extension.resourceSetUpTime",
+			"dsmvrsc:attribute.extension.resourceSetUpTimeReduced",
+			"dsmvrsc:attribute.extension.resourceTargetCost",
+			"dsmvrsc:attribute.extension.resourceTargetedCycleTime",
+			"dsmvrsc:program.CP.EnterpriseAttributes"
+		],
+		"PUBLICExcludedURIs": ["getItems", "PATCH", "GETAll"]
+	},
+	 "dsrsc:ResourceItem": {
+        "summary": "Resource Item",
+        "description": "Resource Item",
+        "PUBLICMasks": ["dsmvrsc:ResourceMask.Common", "dsmvrsc:ResourceMask.Details"],
+        "PROTECTEDMasks": [],
+        "PUBLICExtensions": ["dsrsc:SerialReference"]
+    },
+	 "dsrsc:ResourceItemInstance": {
+        "summary": "Resource Instance",
+        "description": "Resource Instance",
+        "PUBLICMasks": ["dsmvrsc:ResourceItemInstanceMask.Common", "dsmvrsc:ResourceItemInstanceMask.Details"],
+        "PROTECTEDMasks": [],
+        "PUBLICExtensions": []
+    },
+	 "dsrsc:ResourceAsset": {
+        "summary": "Resource Asset",
+        "description": "Resource Asset",
+        "PUBLICMasks": ["dsmvrsc:ResourceAssetMask.Common", "dsmvrsc:ResourceAssetMask.Details"],
+        "PROTECTEDMasks": [],
+        "PUBLICExtensions": ["dsrsc:OriginItem"],
+        "PUBLICFields": [
+        	"dsmvrsc:program.serialNumber",
+        	"dsmvrsc:program.genericObjectReference"
+		]
+    },
+    "dsrsc:OriginItem": {
+        "summary": "Historization Link from Generic Resource to Asset Resource Reference",
+        "description": "Gets the Historization Link from Generic Resource to Asset Resource Reference",
+        "PUBLICMasks": ["dsmvrsc:OriginItemMask.Common", "dsmvrsc:OriginItemMask.Details"],
+        "PROTECTEDMasks": [],
+        "PUBLICExtensions": []
+    },
+    "dsrsc:ResourceAssetInstance": {
+        "summary": "Resource Instance",
+        "description": "Resource Instance",
+        "PUBLICMasks": ["dsmvrsc:ResourceAssetInstanceMask.Common", "dsmvrsc:ResourceAssetInstanceMask.Details"],
+        "PROTECTEDMasks": [],
+        "PUBLICExtensions": [],
+        "PUBLICFields": [
+        	"dsmvrsc:program.resourceFlows"
+		]
+    },
+    "dsrsc:OrganizationalResource": {
+	    "summary": "Organizational Resource",
+	    "description": "Organizational Resource",
+	    "PUBLICMasks": ["dsmvrsc:OrganizationalResourceMask.Common","dsmvrsc:OrganizationalResourceMask.Details"],
+	    "PROTECTEDMasks": [],
+	    "PUBLICExtensions": [],
+	    "PUBLICFields": [
+		]
+    },
+    "dsrsc:OrganizationalResourceInstance": {
+	    "summary": "Organizational Resource",
+	    "description": "Organizational Resource",
+	    "PUBLICMasks": ["dsmvrsc:OrganizationalResourceInstanceMask.Common","dsmvrsc:OrganizationalResourceMask.Details"],
+	    "PROTECTEDMasks": [],
+	    "PUBLICExtensions": [],
+	    "PUBLICFields": [
+		]
+    },
+    "dsrsc:Pool": {
+	    "summary": "Pool",
+	    "description": "Pool",
+	    "PUBLICMasks": ["dsmvrsc:PoolResourceMask.Common","dsmvrsc:PoolResourceMask.Details"],
+	    "PROTECTEDMasks": [],
+	    "PUBLICExtensions": [],
+	    "PUBLICFields": [
+		]
+    },
+    "dsrsc:PoolInstance": {
+	    "summary": "Pool",
+	    "description": "Pool",
+	    "PUBLICMasks": ["dsmvrsc:PoolResourceInstanceMask.Common","dsmvrsc:PoolResourceInstanceMask.Details"],
+	    "PROTECTEDMasks": [],
+	    "PUBLICExtensions": [],
+	    "PUBLICFields": [
+		]
+    },
+    "dsrsc:Worker": {
+	    "summary": "Worker",
+	    "description": "Worker",
+	    "PUBLICMasks": ["dsmvrsc:WorkerResourceMask.Common","dsmvrsc:WorkerResourceMask.Details"],
+	    "PROTECTEDMasks": [],
+	    "PUBLICExtensions": [],
+	    "PUBLICFields": [
+		]
+    },
+    "dsrsc:WorkerInstance": {
+	    "summary": "Worker",
+	    "description": "Worker",
+	    "PUBLICMasks": ["dsmvrsc:WorkerResourceInstanceMask.Common","dsmvrsc:WorkerResourceInstanceMask.Details"],
+	    "PROTECTEDMasks": [],
+	    "PUBLICExtensions": [],
+	    "PUBLICFields": [
+		]
+    }
+}

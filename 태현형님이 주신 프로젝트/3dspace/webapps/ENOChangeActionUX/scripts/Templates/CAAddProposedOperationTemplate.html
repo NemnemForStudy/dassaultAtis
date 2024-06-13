@@ -1,0 +1,64 @@
+<div class="' + this.getClassNames('-container') + '">
+    {{#each changes}}
+    <div class="' + this.getClassNames('-sub-container') + '">
+        <div class="Realized-tile-collapsed" id="Realized-collapsed-{{@index}}">
+            <div class="Realized-accordion-div Realized-icon-class" id="Realized-accordion-div-{{@index}}">
+                <div>
+                    <div class="Realized-action-icon-wrapper Realized-accordion-div-inner" id="Realized-accordion-div-inner-{{@index}}"><span class="fonticon fonticon-2x fonticon-expand-right" id={{@index}}></span></div>
+                    <div class="Realized-checked-action"><input type="checkbox" class="Realized-checkbox-accord hidden" id="Realized-checkbox-accord-{{Details.id}}"></div>
+                </div>
+            </div>
+            <div class="Realized-tile-inner" id="inner-{{@index}}">
+                <div class="Realized-change-info-text" id="info-text-{{@index}}">
+                    <div class="Realized-change-TNR-text" id="TNR-text-{{@index}}">
+                        <div class="Realized-change-TNR-text_sub">
+                            <div class="Realized-change-TNR-Preference" id="TNR-Preference-{{@index}}">
+                                <img class="Realized-change-info-icon" id="info-icon-{{@index}}" src ={{Details.icon}}></img>
+                                <div class="Realized-name-title" id="Realized-name-title-{{@index}}" title="{{Details.name}} +' '+ {{Details.revision}}">
+                                    <span class="Realized-name-span" id="Realized-name-span-{{@index}}">{{Details.name}}</span>
+                                    <span class="Realized-revision-span" id="Realized-revision-span-{{@index}}">{{Details.revision}}</span>
+                                    <span class="context-actions-container">
+                                        <span class="action-icon-wrapper">
+                                            <span class="Realized-operation-action-open fonticon fonticon-2x fonticon-down-open" id="Realized-Op-Clicked-{{Details.displayId}}"></span>
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="Realized-change-info-text-1 ">
+                        <div class="Realized-change-info-text-2">
+                            <p class="Realized-change-maturity">
+                                <span class="Realized-change-maturity-span">Flowdown Status:</span>
+                                <span class="Realized-change-maturityValue-span">Partial</span>
+                                <span class="context-actions-container">
+                                    <span class="action-icon-wrapper">
+                                        <span class="Realized-operation-action-open fonticon fonticon-2x fonticon-down-open" id="Realized-Op-Clicked-{{Details.displayId}}"></span>
+                                    </span>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="Realized-transfer-info-text-1">
+                        <div class="Realized-transfer-info-text-3">
+                            <p class="Realized-change-targetCA" id="targetCA-{{index}}">
+                                <span class="Realized-change-targetCA-span" id="targetCA-span-{{index}}">Selected Proposed:</span>
+                                <span class="Realized-change-targetCA-value-span" id={{OperationsInfo.targetCAID}}>Mfg Component 4.1.1</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="Realized-actions-container Realized-icon-class-1" id="Realized-operation-action-container-{{Details.displayId}}">
+                <div class="context-actions-container">
+                    <div class="action-icon-wrapper">
+                        <span class="Realized-operation-action-open fonticon fonticon-2x fonticon-object-related" id="Realized-Op-Clicked-{{Details.displayId}}"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="Realized-tile-expanded hidden" id="Realized-expanded-{{@index}}"></div>
+    </div>
+    {{/each}}
+</div>
+

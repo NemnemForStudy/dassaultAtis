@@ -1,0 +1,1 @@
+define("DS/CATW3DMoveManager/CATW3DMoveManager_es",{});define("DS/CATW3DMoveManager/assets/nls/CATW3DMoveReferent",{title:"Mover",allowDirectManipulation:"Permitir la manipulación directa",moveSection:"Mover al arrastrar geometría 3D",first:"Primer nivel de ensamblaje",leaf:"Pieza de hoja"});

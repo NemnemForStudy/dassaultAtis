@@ -1,0 +1,120 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "CSIPoolVersion2JSONSchema.json",
+  "title": "CSI Pool version 2",
+  "type": "object",
+  "description": "JSON Schema of a CSI Pool version 2",
+  "required": [
+    "grammarVersion",
+    "desc"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "grammarVersion": {
+      "type": "integer",
+      "description": "Grammatical Version",
+      "enum": [
+        2
+      ]
+    },
+    "recordable": {
+      "type": "boolean",
+      "description": "Description of the Pool"
+    },
+    "desc": {
+      "type": "string",
+      "description": "Description of the Pool",
+      "minLength": 1
+    },
+    "implementation": {
+      "type": "object",
+      "description": "Specify the C++ library / Java JAR for this Pool",
+      "additionalProperties": false,
+      "oneOf": [
+        {
+          "required": [
+            "library"
+          ]
+        },
+        {
+          "required": [
+            "javaClassPath"
+          ]
+        }
+      ],
+      "properties": {
+        "library": {
+          "type": "string",
+          "description": "Library's name",
+          "minLength": 1
+        },
+        "javaClassPath": {
+          "type": "string",
+          "description": "JAR's name"
+        },
+        "version": {
+          "type": "integer",
+          "description": "Library's version",
+          "enum": [
+            1,
+            2
+          ]
+        }
+      }
+    },
+    "imports": {
+      "description": "List of imports, per Pool or per Function",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "pool": {
+            "type": "string"
+          },
+          "callables": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "version": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "emit": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "description": "Events that can be emitted by nodes from the Pool",
+        "required": [
+          "event",
+          "desc"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "event": {
+            "type": "string",
+            "description": "Name of the Event",
+            "pattern": "^[A-Z][A-Za-z0-9]*$"
+          },
+          "desc": {
+            "type": "string",
+            "description": "Description of the Event"
+          }
+        }
+      }
+    }
+  }
+}

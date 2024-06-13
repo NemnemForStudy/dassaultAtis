@@ -1,0 +1,1 @@
+define("DS/VCXWebScenarioManager/VCXWebScenarioManager_de",{});define("DS/VCXWebScenarioManager/assets/nls/VCXWebScenarioManager",{"ScenarioManager.FPS":"F/s (Bilder pro Sekunde)","ScenarioManager.startScenarioId":"Startszenario-ID"});

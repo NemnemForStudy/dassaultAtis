@@ -1,0 +1,1 @@
+define("DS/ENOPS/ENOPS_app_fr",{});define("DS/ENOPS_app/assets/nls/ENOPS_app",{appDescription:"Explorer et modifier votre structure facilement et efficacement",newProduct:"Nouveau produit",newPart:"Nouvelle pièce",newDrawing:"Nouveau dessin"});

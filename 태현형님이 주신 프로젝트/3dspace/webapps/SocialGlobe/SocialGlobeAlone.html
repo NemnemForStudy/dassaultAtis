@@ -1,0 +1,146 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:widget="http://www.netvibes.com/ns/">
+    <head>
+
+        <title>Globe Viewer</title>
+
+        <meta name="author" content="xa4, mau1" />
+        <meta name="description" content="Globe Viewer widget" />
+        <meta name="version" content="1.0" />
+
+        <widget:preferences>
+        <widget:preference name="widgetTitle" type="text" label="Widget title" defaultValue="Globe Viewer" />
+        <widget:preference name="feedUrl" type="hidden" label="GEORSS feed url" defaultValue="" />
+        <widget:preference name="jsonFile" type="hidden" label="JSON file" defaultValue="" />
+        <widget:preference name="uwaServer" type="hidden" label="Intercom server name" defaultValue="" />
+        <widget:preference name="theme" type="hidden" label="Textures / themes" defaultValue="natural">
+            <widget:option label="Natural" value="natural"></widget:option>
+            <widget:option label="Minimal" value="minimal"></widget:option>
+            <widget:option label="High-tech" value="high-tech"></widget:option>
+        </widget:preference>
+        <widget:preference name="tilemapserver" type="hidden" label="TMS (Tile Map Service) URL (http://the.path.before/Z/Y/X.ext)" defaultValue="" />
+        <widget:preference name="tileextension" type="hidden" label="Tile extension (default .png)" defaultValue="" />
+        <widget:preference name="tilemapserver-max" type="hidden" label="TMS max level" defaultValue="" />
+        <widget:preference name="cors-exception" type="hidden" label="CORS exception servers" defaultValue="" />
+        <widget:preference name="backcolor" type="hidden" label="Background color (#html color)" defaultValue="" />
+        <!--preference name="links" type="hidden" defaultValue=""/-->
+        <widget:preference name="autoTurn" type="hidden" label="Auto-rotation speed" defaultValue="0">
+            <widget:option label="DESACTIVATE" value="0"></widget:option>
+            <widget:option label="Low" value="0.5"></widget:option>
+            <widget:option label="Medium" value="1"></widget:option>
+            <widget:option label="Fast" value="2"></widget:option>
+        </widget:preference>
+        <widget:preference name="inertia" type="hidden" label="Interaction speed" defaultValue="50">
+            <widget:option label="Low" value="120"></widget:option>
+            <widget:option label="Medium" value="50"></widget:option>
+            <widget:option label="Fast" value="10"></widget:option>
+        </widget:preference>
+        <widget:preference name="allowZoom" type="hidden" label="Enable Zoom" defaultValue="true"/>
+        <widget:preference name="enableproxypassport" type="hidden" label="Enable proxy passport" defaultValue="false"/>
+        <!--widget:preference name="showFrontiers" type="boolean" label="Show Frontiers" defaultValue="false"/-->
+        <widget:preference name="countrySelection" type="hidden" label="Activate country selection" defaultValue="false"/>
+        <widget:preference name="initGeoloc" type="hidden" label="Initial viewpoint (lat,lon)" defaultValue="" />
+        <widget:preference name="initDistance" type="hidden" label="Zoom distance" defaultValue="7" step="1" min="1" max="10" />
+        <widget:preference name="editMode" type="hidden" label="EDIT MODE" defaultValue="true"/>
+        <widget:preference name="widgetHeight" type="hidden" label="Widget height (px)" defaultValue="400" step="50" min="200" max="1000" />
+        </widget:preferences>
+
+        <link rel="stylesheet" type="text/css" href="../c/UWA/assets/css/standalone.css" />
+        <link rel="stylesheet" type="text/css" href="../SocialGlobe/balloon.css" />
+        <link rel="stylesheet" type="text/css" href="../SocialGlobe/style.css" />
+
+
+        <!-- AMDLoader -->
+        <script type="text/javascript" src="../AmdLoader/AmdLoader.js"></script>
+        <script type="text/javascript" src="../WebappsUtils/WebappsUtils.js"></script>
+
+        <!-- UWA -->
+        <script type="text/javascript" src="../c/UWA/js/UWA_Standalone_Alone.js"></script>
+
+        <script type="text/javascript" src="../WebUX/WebUX.js"></script>
+        <script type="text/javascript" src="../WebVisualization/WebVisualization.js"></script>
+        <script type="text/javascript" src="../SocialGlobe/SocialGlobe.js"></script>
+
+
+        <!-- Application Styles -->
+        <style type="text/css">
+        .section {
+            border-bottom: 1px solid #c4c4c4;
+            padding: 10px;
+            font-size: 16px; /* the default font size of UWA is way too small,
+                                thus breaking the correct look and feel of inputs */
+        }
+        .section.buttons .inner {
+            overflow-x: auto;
+            margin-top: auto; /* fix an IE9 bug http://stackoverflow.com/a/6425130 */
+        }
+
+        .uwa-text,
+        .uwa-file,
+        .uwa-select {
+            width: 220px;
+        }
+
+        </style>
+
+
+
+        <script type="text/javascript">
+
+            'use strict';
+
+            var globe = null;
+            var uiFrame;
+
+            require(
+                ['DS/Core/Core', 'DS/SocialGlobe/GlobeUWA', 'DS/SocialGlobe/Globals', 'DS/ApplicationFrame/FrameWindow'],
+                function (WUXCore, GlobeUWA, Globals, FrameWindow) {
+
+                    var myWidget = {
+                        onLoad: function()
+                        {
+                            Globals.path = "../SocialGlobe/";
+                            Globals.tilespath = "../SocialGlobe/assets/tiles/";
+
+                            var browserSupported = Globals.isBrowserSupported();
+                            if (!browserSupported)
+                            {
+                                canvas.innerHTML = Globals.getBrowserErrorMsg();
+                            } else {
+
+                                uiFrame = widget.body;
+
+                                uiFrame.style.height = "600px";
+
+                                //var widgetHeight = widget.getValue("widgetHeight").toString() + 'px';
+
+                                globe = new GlobeUWA(widget,{container: uiFrame, use2D: false, height: 400});
+                                globe.elements.container.inject(uiFrame);
+
+                                globe.createFrameWindow(400);
+/*                                globe.frmWindow = new FrameWindow({
+                                    workbench: 'GlobeViewer.xml',
+                                    workbenchModule: 'SocialGlobe',
+                                    viewer: 'none',
+                                    height: 400
+                                });*/
+
+                                globe.loadPreferences();
+
+                                //globe.setFragShader("assets/shaders/tileplanet_fragment_transparent.ps");
+
+                                globe.setCountrySelection(true);
+
+                                globe.go();
+                            }
+                        }
+                    };
+
+					widget.addEvent('onLoad', myWidget.onLoad);
+                });
+
+        </script>
+    </head>
+<body>
+</body>
+</html>

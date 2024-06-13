@@ -1,0 +1,20 @@
+{
+  "version": "1.0.0",
+  "summary": "呼び出し元の配列内のすべての要素に対して、指定されたグラフを呼び出した結果を入力した新しい配列を作成します。",
+  "description": "このブロックでは、<doc-idp-name translate=no>Input</doc-idp-name> 配列タイプを任意の出力配列タイプにマッピングできます。<br>マッピング プロセスを提供するには、内部グラフを編集する必要があります。",
+  "dataPorts": {
+    "Input": "マッピングする入力配列。<br>このデータ ポートは、すべての配列タイプを処理します。",
+    "SharedData": "各内部グラフ インスタンス間で共有するデータ。<br>このデータ ポートは、すべてのタイプを処理します。<br>各種タイプの複数のデータを共有する必要がある場合は、ユーザー タイプを作成することをお勧めします。",
+    "Success": "成功出力配列。<br>このデータ ポートは、すべての配列タイプを処理します。<br>この配列のサイズは、常に <doc-idp-name translate=no>Input</doc-idp-name> 配列サイズと同じになります。",
+    "State": "<doc-odp-name translate=no>Success</doc-odp-name> 出力配列の各インデックスで、<doc-valuetype translate=no>EExecutionState</doc-valuetype> を提供する <doc-valuetype translate=no>ArrayMapState</doc-valuetype> の配列。<br>この配列のサイズは常に、<doc-idp-name translate=no>Input</doc-idp-name> 配列サイズと等しくなります。",
+    "Progress": "<doc-odp-name translate=no>Input</doc-odp-name> 入力配列の各インデックスで、<doc-valuetype translate=no>EExecutionState</doc-valuetype> を提供する <doc-valuetype translate=no>ArrayMapProgress</doc-valuetype> の配列。<br>この配列は、ブロックの背後にある配布プロセスに依存するため、1 回の進行中に複数のデータが入力される可能性があります。<br>ただし、この配列のサイズが <doc-idp-name translate=no>Input</doc-idp-name> 配列サイズを超えることはありません。",
+    "Error": "<doc-odp-name translate=no>Input</doc-odp-name> 入力配列のインデックスに対してエラー オブジェクトを提供する <doc-valuetype translate=no>ArrayMapError</doc-valuetype> の配列。<br>この配列のサイズが <doc-idp-name translate=no>Input</doc-idp-name> 配列サイズを超えることはありません。"
+  },
+  "controlPorts": {
+    "In": "ブロック実行をトリガーします。",
+    "Success": "プロセスが正常に完了すると活動化されます。",
+    "Progress": "処理が発生するたびに活動化されます。",
+    "Error": "エラーが発生したときに活動化されます。"
+  },
+  "example": null
+}

@@ -1,0 +1,90 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "CSITypeVersion3JSONSchema.json",
+  "title": "CSI Type version 3",
+  "description": "JSON Schema of a CSI Type version 3",
+  "type": "object",
+  "required": [
+    "grammarVersion",
+    "desc",
+    "category",
+    "definition"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "grammarVersion": {
+      "type": "integer",
+      "enum": [
+        3
+      ],
+      "description": "Grammar version used for the Type definition"
+    },
+    "desc": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Description of the Type"
+    },
+    "category": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Category of the Type"
+    },
+    "translatable": {
+      "type": "string",
+      "description": "Translatable property"
+    },
+    "implementation": {
+      "type": "object",
+      "minProperties": 1,
+      "description": "Specify the libraries for this Type",
+      "additionalProperties": false,
+      "properties": {
+        "library": {
+          "type": "string",
+          "description": "C++ DLL's name"
+        },
+        "jsModule": {
+          "type": "string",
+          "minLength": 1,
+          "description": "JS Module's name"
+        },
+        "javaClassPath": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Java classpath's name"
+        },
+        "version": {
+          "type": "integer",
+          "enum": [
+            1,
+            2
+          ],
+          "description": "Implementation's version"
+        }
+      },
+      "anyOf": [
+        {
+          "required": [
+            "library"
+          ]
+        },
+        {
+          "required": [
+            "jsModule"
+          ]
+        },
+        {
+          "required": [
+            "javaClassPath"
+          ]
+        }
+      ]
+    },
+    "definition": {
+      "type": "array",
+      "items": {
+        "$ref": "CSIParametersJSONSchema.json#/definitions/property"
+      }
+    }
+  }
+}

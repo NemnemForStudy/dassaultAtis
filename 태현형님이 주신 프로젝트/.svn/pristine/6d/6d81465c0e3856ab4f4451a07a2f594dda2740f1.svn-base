@@ -1,0 +1,1 @@
+define("DS/ENX3DScene/ENX3DScene_it",{});define("DS/ENX3DScene/assets/nls/ENX3DScene",{appDescription:"Consente di esplorare i modelli 3D in modo semplice ed efficiente"});

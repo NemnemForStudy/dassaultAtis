@@ -1,0 +1,34 @@
+{
+    "dseng:EngItem": {
+        "summary": "Engineering Item",
+        "description": "Engineering Item",
+        "PUBLICMasks": ["dsmveng:EngItemMask.Common", "dsmveng:EngItemMask.Details","dsmveng:EngItemMask.Config"],
+        "PROTECTEDMasks": [
+            "dsmveng:EngItemMask.3DPart",
+            "dsmveng:EngItemMask.Assembly"
+        ],
+        "PUBLICExtensions": ["dseng:EnterpriseReference", "dslc:changeControl", "dscfg:Configured"],
+		"PROTECTEDExtensions": ["dseno:EnterpriseAttributes"],
+        "PRIVATEExtensions": [],
+        "PUBLICFields": ["dsmvcfg:attribute.isConfigured"]
+    },
+    "dseng:EngInstance": {
+        "summary": "Engineering Item Instance",
+        "description": "Engineering Item Instance",
+        "PUBLICMasks": ["dsmveng:EngInstanceMask.Details","dsmveng:EngInstanceMask.Filterable"],
+        "PROTECTEDMasks": ["dsmveng:EngItemMask.Instance"],
+        "PUBLICExtensions": ["dscfg:Filterable"]
+    },
+    "dseng:EnterpriseReference": {
+        "summary": "Enterprise Reference",
+        "description": "Enterprise Reference",
+        "PUBLICMasks": ["dsmveng:EnterpriseReference.Details"],
+        "PROTECTEDMasks": []
+    },
+    "dseng:Alternate": {
+        "summary": "Engineering Item Alternates",
+        "description": "Engineering Item Alternates",
+        "PUBLICMasks": ["dsmveng:AlternateMask.Default","dsmveng:AlternateMask.Details"],
+        "PUBLICExcludedURIs" : ["POSTSearch", "PATCHBulk", "getItems" , "GETAll", "DELETEBulk", "BULKUPDATE"]
+    }
+}

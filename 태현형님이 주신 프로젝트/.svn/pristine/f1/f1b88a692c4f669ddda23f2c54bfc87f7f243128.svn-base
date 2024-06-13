@@ -1,0 +1,1 @@
+define("DS/PIMwebI3Dapp/PIMwebI3Dapp_ja",{});define("DS/PIMwebI3Dapp/assets/nls/PIMwebI3Dapp",{isr:"干渉シミュレーションを開く",itf:"干渉メトリックを開く",customApp:"アプリケーションをカスタマイズ",prefs:"プリファレンス",backToIssue:"問題に戻る"});

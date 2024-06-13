@@ -1,0 +1,29 @@
+################################################################################################
+# Create By choimingi 2023. 08. 07
+# Admin Type : menu
+# Name : decChangeLogCreate
+################################################################################################
+#delete command decChangeLogCreate;
+
+add command decChangeLogCreate
+	label "emxFramework.Label.decChangeLogCreate"
+	href "${COMMON_DIR}/decCreateProjectChangeLogDialogFS.jsp?mode=create"
+	setting "Registered Suite" "Framework"
+	setting "Image" "${COMMON_DIR}/images/iconActionCreate.png"
+	setting "Popup Modal" true
+	setting "Target Location" "slidein"
+	setting "Submit" true
+	property "installer" value "ENOVIAEngineering"
+	property "application" value "Framework"
+	property "original name" value "decChangeLogCreate"
+;
+
+#mod menu decChangeHistoryToolbar add command decChangeLogCreate;
+
+mod command decChangeLogCreate href "${COMMON_DIR}/decCreateProjectChangeLogDialogFS.jsp?mode=create";
+
+mod command decChangeLogCreate
+	add setting 'hasAccess' 'PIM,AWP,WFP' 
+	add setting 'Access Program' 'decAccess'
+	add setting 'Access Function' 'hasAccess'
+;

@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<!-- ENOVIA DICTIONARY FOR Service                 -->
+<!-- COPYRIGHT DASSAULT SYSTEMES 2017, All rights reserved -->
+<Package xmlns="PLMDictionaryUnified" 
+         ModelerType="Top" 
+         Name="RFLVPMLogicalSystem" 
+         Uuid="68C64641-F5BE-4DF0-907F-3919694ECF75" 
+         UseNames="RFLVPMLogical"
+         CustomerExposition="Programmer">
+
+  <!-- ******************************************* -->
+  <!-- *  LogicalSystemReference (PLMCoreReference)     * -->
+  <!-- ******************************************* -->
+  <Class Name="RFLVPMLogicalSystemReference" 
+         Uuid="ABE40E62-2BFC-42FB-8711-F4824909F1F6" 
+         Abstract="No" 
+         SuperName="RFLVPMLogicalReference"
+		 Abbreviation="lsys"
+         CreateInstName="RFLVPMLogicalSystemInstance"
+		 Discipline="Yes"
+		 Specializable="Yes"
+		 CustomerExtensible="Yes"
+		 PublicResourceURI="/resources/v1/modeler/dslog/dslog:LogItem/{pid}"
+         CustomerExposition="Programmer">  
+  
+    <CAAComment>
+      <ShortRole>Logical System Object</ShortRole>
+      <Role>Logical System Object</Role>
+    </CAAComment>
+
+    <!-- PLM New UI/KWE Scripts New -->
+    <Property Name="KweNew_InstanciationMethod" Value="CATELogDelegateInstanciation"/>
+	<Property Name="KweNew_ReturnedType" Value="RFLVPMLogicalSystemInstance"/>
+
+    <Property Name="AggregatableTypes" Value="RFLVPMLogicalSystemReference;RFLVPMLogicalRepReference;RFLVPMSystemTypeReference;RFLVPMLogicalConnection;PARParameter"/>
+    <Property Name="InstantiationOwnerTypes" Value="RFLVPMLogicalSystemReference"/>
+	
+	<Property Name="Newable" Value="All_CAA"/>
+    <Property Name="IconName" Value="I_FLE_SYSTEM"/>	
+    <Property Name="Configurable" Value="Yes"/>
+    <Property Name="ChangeManagementSupport" Value="Yes"/>
+    <Property Name="ChangeManagementReferential" Value="Yes"/>
+    <Property Name="ChangeManagementContext" Value="Yes"/>
+    <Property Name="Searchable" Value="Yes"/>
+	<Property Name="ShareBetweenProjectsAvailability" Value="Yes"/> <!-- Collaborative Space Applicability -->
+
+    <!-- Export -->
+    <Method ImplementationType="AsFather">
+      <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+    </Method>
+
+  </Class>
+
+  <!-- *************************************************** -->
+  <!-- * RFLVPMLogicalSystemInstance (PLMCoreInstance)       * -->
+  <!-- *************************************************** -->
+  <RelationClass Name="RFLVPMLogicalSystemInstance" 
+         Uuid="914387FF-1BD8-48C7-A184-1189F61421B9" 
+         Abstract="No" 
+         SuperName="RFLVPMLogicalInstance"
+ 		 Discipline="Yes"
+		 Specializable="Yes"
+		 CustomerExtensible="Yes"
+		 PublicResourceURI="/resources/v1/modeler/dslog/dslog:LogItem/{pid}/dslog:LogInstance/{pid}"
+         CustomerExposition="Programmer">
+
+    <CAAComment>
+      <ShortRole>Logical System Instance Object</ShortRole>
+      <Role>Logical System Instance Object</Role>
+    </CAAComment>
+
+    <!-- PLM New UI/KWE Scripts New -->
+    <Property Name="KweNew_InstanciationMethod" Value="CATELogDelegateInstanciation"/>
+	<Property Name="KweNew_ReturnedType" Value="RFLVPMLogicalSystemInstance"/>
+	
+    <!-- Configuration -->
+    <Property Name="Filtrable" Value="Yes"/>
+	<Property Name="Searchable" Value="No"/>
+    <Property Name="IconName" Value="I_FLE_SYSTEM"/>
+
+  </RelationClass>
+</Package>

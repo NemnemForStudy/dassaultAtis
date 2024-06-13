@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:widget="http://www.netvibes.com/ns/">
+
+<head>
+  <title>Filter</title>
+  <meta name="author" content="Dassault Systèmes" />
+  <meta name="brand" content="ENOVIA" />
+  <meta name="description" content="ENOVIA Next Gen Filtering" />
+  <meta name="charset" content="utf-8" />
+  <!-- <meta name="autoRefresh" content="0" /> -->
+
+  <!-- UWA and UIKit stylesheets -->
+  <script src="../AmdLoader/AmdLoader.js"></script>
+  <link rel="stylesheet" href="../UIKIT/UIKIT.css">
+
+  <!-- Tagger stylesheets -->
+  <link rel="stylesheet" href="../TagNavigator/TagNavigator.css">
+
+  <!-- NextGenFilter Purpose -->
+  <link rel="stylesheet" href="ENONextGenFilterUX.css">
+
+  <script type="text/javascript">
+    var myAdvFilterWebinWin = null;
+    var init_options = null;
+    window.onload = function() {
+      dscef.sendString("AdvFilter_Ready");
+      // sendNotificationToWin("AdvFilter_Ready", "AdvFilter_Ready");
+    };
+
+    // ################
+    // Init the Infra Search Frame Controller
+    // ################
+    function initInfraSearchFrameController(controller) { //-- overload TopFrame.initInfraSearchFrameController()
+      controller.init({
+        //container: that.dataFilterPanelCtn,
+        container: document.body,
+        open: function() {
+          that._isDataFilterPanelVisible = true;
+          that._isCompassVisible = false;
+          hideTagger('compass'); //-- TopFrame.hideTagger()
+          updateColumn('left', 'dataFilterPanelCtn'); //-- TopFrame.updateColumn()
+        },
+        close: function() {
+          that._isDataFilterPanelVisible = false;
+          updateColumn('left', 'dataFilterPanelCtn'); //-- TopFrame.updateColumn()
+        }
+      });
+    }
+
+    function Init(rootPLMID, aliasName, url3DSpace, urlFederated, roles, securityCtx, tenantID, tenantNls, userID) {
+
+          require([
+            'UWA/Core',
+            'UWA/Drivers/Alone',
+            'DS/ENONFilterBIUX/NGFServices',
+            'DS/ENONextGenFilterUX/ENONextGenFilterUXWIW',
+            'DS/UWPClientCode/PublicAPI'
+          ], function(
+            UWACore, StandAlone, NGFServices, ENONextGenFilterUXWIW, PublicAPI
+          ) {
+            var NGFUXId = '123456';
+            var appId = NGFUXId;
+            var UXId = NGFServices.computeUXId(appId, rootPLMID);
+            options = {
+              NGFUXId: NGFUXId ,
+              UXId: UXId,
+              rootAlias: aliasName,
+              rootID: rootPLMID,
+              widgetId: '96L4R99_00',
+              widgetTenant: 'OnPremise',
+              appId: appId,
+              isWebInWin: '1',
+              filterSettings: {
+                "platform_services": [{
+                  "3DSpace": url3DSpace,
+                  "Federated": urlFederated,
+                  "platformId": tenantID,
+                  "platformNls": tenantNls,
+                  "userID": userID
+                }],
+                "user_granted_roles": roles
+                },
+            };
+            myAdvFilterWebinWin = new ENONextGenFilterUXWIW(options);
+          });
+        }
+
+    function sendNotificationToWin(name, message) {
+          if (typeof CATCefSendString !== 'undefined') {
+            //CATCefSendString(name + '=' + message);
+            dscef.sendString(name + '=' + message);
+
+          } else {
+            var textarea = document.createElement("textarea");
+            textarea.setAttribute("name", name);
+            textarea.appendChild(document.createTextNode(message));
+            var form = document.createElement("form");
+            form.setAttribute("method", "POST");
+            form.setAttribute("action", "jsnotif://");
+            form.appendChild(textarea);
+            document.documentElement.appendChild(form);
+            form.submit();
+            form.parentNode.removeChild(form);
+            form = null;
+          }
+        }
+
+    function PassCSOToUI(path, alias) {
+          var info = {
+            pathAlias: alias,
+            selectedPaths: path
+          }
+          require([
+            'UWA/Core',
+            'UWA/Widget',
+            'DS/ENONextGenFilterUX/utils/FilterAdvServicesWebInWin'
+          ], function(UWACore, Widget, FilterAdvServicesWebInWin) {
+            //widget = new Widget();
+            FilterAdvServicesWebInWin.addRemovePaths(info);
+          });
+        }
+
+  </script>
+</head>
+
+</html>

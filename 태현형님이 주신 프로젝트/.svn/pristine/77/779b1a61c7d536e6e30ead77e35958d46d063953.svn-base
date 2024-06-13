@@ -1,0 +1,1 @@
+define("DS/ENX3DScene/ENX3DScene_zh-TW",{});define("DS/ENX3DScene/assets/nls/ENX3DScene",{appDescription:"用簡單又有效的方式瀏覽 3D 模型"});

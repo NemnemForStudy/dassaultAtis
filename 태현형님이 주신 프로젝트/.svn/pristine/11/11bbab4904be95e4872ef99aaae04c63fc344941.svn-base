@@ -1,0 +1,1 @@
+define("DS/GraphListView/GraphListView_es",{});define("DS/GraphListView/assets/nls/ColumnsTitles",{colGraph:"Gráfico",colTitle:"Título ",colMenu:"Menú",colIntent:"Intención",colSpecification:"",colFilter:"Filtrar"});

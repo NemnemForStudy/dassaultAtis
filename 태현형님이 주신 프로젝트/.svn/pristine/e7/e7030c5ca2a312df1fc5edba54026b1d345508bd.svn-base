@@ -1,0 +1,9 @@
+m|CSIViewModelWebUx\CSIViewModel3DFrame.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.0.22204|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\CSIViewModel3DFrame\CSIViewModel3DFrame.js|1658540242|1327
+s|CSIViewModelWebUx\CSIViewModel3DFrame.mweb\src\CSIViewModel3DFrame.js|1655714021|3147
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

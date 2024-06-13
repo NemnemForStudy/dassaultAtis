@@ -1,0 +1,35 @@
+/*********************************************************************************************************************************/
+/* ExchangeXPDM procedure for Physical Resource                                                                                        */
+/* --> Retrieves all agregated PLM objects (References, Ref Instances, Rep References, Rep Instances, Ports and Connections)     */
+/*********************************************************************************************************************************/
+#Prog PhysicalResource_ExchangeXPDM_XPDM2( iPLMIDSet : #In PLMIDSet, oPLMIDSet : #Out PLMIDSet ) : VoidType
+{
+	let PLMRouteSet2 (PLMRouteSet)
+	let PLMRouteSetHistoRef (PLMRouteSet)
+
+	let PLMIDSet1 (PLMIDSet)
+	let PLMIDSet1Ref (PLMIDSet)
+	let PLMIDFlowAndHistoCnx (PLMIDSet)
+	let PLMIDSetHistoRefCnx (PLMIDSet)
+	let PLMIDSetHistoRef (PLMIDSet)
+	
+	let restrictedPLMIDSet (PLMIDSet)
+	restrictedPLMIDSet = Restrict(iPLMIDSet, "PRODUCTCFG/VPMReference")
+
+	/* Retrieves all aggregated representations (references / instances) */
+	PLMIDSet1 = ExecutePLMProcedure("VPMEditor_XPDM2_VPMReferenceCompletion", restrictedPLMIDSet)
+	PLMIDSet1Ref = Restrict(PLMIDSet1 ,"PRODUCTCFG/VPMReference") + Restrict(iPLMIDSet,"PRODUCTCFG/VPMReference") 
+
+	/* Retrieves all aggregated Resource Flow and Historization connections for RESOURCES */
+	PLMRouteSet2 = ExecutePLMFunction("DELPPRContextModel", "ENORsc_Resource_addAllFlowConnections", PLMIDSet1Ref)
+	PLMIDFlowAndHistoCnx = Ids(PLMRouteSet2 ,"all")
+
+	/* Get Original MBOM References from Historiztion connections */
+	PLMIDSetHistoRefCnx = Restrict(PLMIDFlowAndHistoCnx, "PLMHistorizationCnx/PLMHistoLinkCnx")
+	PLMRouteSetHistoRef = ExecutePLMFunction("PLMHistorizationCnx", "PLMHistorizationCnx_addHistoEntitiesFromCnx", PLMIDSetHistoRefCnx)
+	PLMIDSetHistoRef = Ids(PLMRouteSetHistoRef,"all")
+
+
+	oPLMIDSet = iPLMIDSet + PLMIDSet1 + PLMIDFlowAndHistoCnx + PLMIDSetHistoRef
+
+}

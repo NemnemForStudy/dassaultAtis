@@ -1,0 +1,11 @@
+m|CAT3DAnnotSemanticWebUX\CAT3DAnnotSemanticController.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.0.22078|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\CAT3DAnnotSemanticController\CAT3DAnnotSemanticController.js|1647691640|6211
+s|CAT3DAnnotSemanticWebUX\CAT3DAnnotSemanticController.mweb\src\_copyright.js|1480428882|63
+u|CAT3DAnnotSemanticWebUX\CAT3DAnnotSemanticController.mweb\src\CAT3DAnnotSemanticContInstance.js|1623138439|16666
+u|CAT3DAnnotSemanticWebUX\CAT3DAnnotSemanticController.mweb\src\CAT3DAnnotSemanticController.js|1620393894|107
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

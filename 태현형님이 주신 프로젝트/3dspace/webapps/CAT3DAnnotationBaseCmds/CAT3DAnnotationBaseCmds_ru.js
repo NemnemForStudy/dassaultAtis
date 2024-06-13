@@ -1,0 +1,1 @@
+define("DS/CAT3DAnnotationBaseCmds/CAT3DAnnotationBaseCmds_ru",{});define("DS/CAT3DAnnotationBaseCmds/assets/nls/CAT3DAnnotationBaseCmds",{DisplayHistorySuccessfulLbl:"История отображений видов и снимков удалена",InfosPanelTitle:"Стандарты семантики",CloseButton:"Закрыть",relatedAttrPanelTitle:"Информация об элементах"});

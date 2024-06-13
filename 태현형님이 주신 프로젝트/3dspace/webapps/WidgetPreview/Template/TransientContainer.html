@@ -1,0 +1,14 @@
+    {{#if isMultiApp}}
+    <div class="preview-header-float">
+        <div class="search-ctn"></div>
+        <span class="moduleHeader__right">
+            <span class="search-icon preview-header-icon ifwe-action-icon fonticon fonticon-search clickable" title=""></span>
+            {{#unless addinMode}}
+            <span class="pin-icon preview-header-icon ifwe-action-icon fonticon fonticon-pin clickable" title=""></span>
+            <span class="close-icon preview-header-icon ifwe-action-icon fonticon fonticon-cancel clickable" title=""></span>
+            {{/unless}}
+        </span>
+    </div>
+    {{/if}}
+    <div class="preview-content{{#if isFloatMode}} preview-content-float{{else if isMultiApp}} preview-content-multiapp{{else}} preview-content-nominal{{/if}}{{#unless isMultiApp}}{{#unless isFloatMode}} disabled{{/unless}}{{/unless}}">
+    </div>

@@ -1,0 +1,27 @@
+### 230419 create by CMG
+
+#delete command decDeskCodeMaster;
+
+add command decDeskCodeMaster
+	description ""
+	label "emxFramework.Command.decCodeMasterCommand"
+	href "${COMMON_DIR}/emxPortal.jsp?portal=decCodeMasterPortal&header=emxFramework.Label.decCodeMasterPortal"
+	setting "Target Location" "content"
+	setting "Registered Suite" "Framework"
+property "installer" value "ENOVIAEngineering"
+property "application" value "Framework"
+property "original name" value "decDeskCodeMaster";
+
+
+mod command decDeskCodeMaster href "${COMMON_DIR}/emxPortal.jsp?portal=decCodeMasterPortal&header=emxFramework.Label.decCodeMasterPortal";
+
+
+# Modified by choimingi on 2023.09.09
+mod command decDeskCodeMaster
+	add setting 'hasAccess' 'PIM' 
+	add setting 'Access Program' 'decAccess'
+	add setting 'Access Function' 'hasAccess'
+;
+mod command decDeskCodeMaster
+   href '${COMMON_DIR}/emxIndentedTable.jsp?program=decCodeMaster:findCodeMaster&table=decCodeMasterTable&header=emxFramework.Command.decCodeMasterCommand&toolbar=decCodeMasterToolbar&selection=multiple&sortColumnName=Name&sortDirection=ascending&submitAction=refreshCaller'
+;

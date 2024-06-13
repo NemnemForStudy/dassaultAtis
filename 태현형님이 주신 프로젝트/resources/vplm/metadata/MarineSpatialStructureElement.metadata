@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!-- COPYRIGHT DASSAULT SYSTEMES 2012, All rights reserved -->
+
+<Package CustomerExposition = "Programmer" ModelerType = "Top" Name = "MarineSpatialStructureElement" UseNames = "AECKernel" Uuid = "1F804A11-FFEF-4683-AC8F-E127687CD821" xmlns = "PLMDictionaryUnified">
+  <Class Abbreviation = "mar" CustomerExposition = "Programmer" Discipline = "Yes" Name = "MarineFacility" SuperName = "MarineFacilitySpatialStructureElement" Uuid = "65304EF4-188D-4158-A673-C9D222081E12">
+    <Property Name = "IconName" Value = "I_MarineFacility"/>
+    <Property Name = "3DIconName" Value = "I_MarineFacility.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATEAECDelegateInstanciation"/>
+    <Property Name = "KweNew_ReturnedType" Value = "VPMInstance"/>
+    <Property Name = "Newable" Value = "All_Offline_CAA"/>
+    <Property Name = "InstantiationOwnerTypes" Value = "PPRContext;AecOtherSpatialStructureElement;AecSite;MarineFacility;MarineOtherSpatialStructureElement"/>
+    <Property Name = "3DPartAvailability" Value = "UserChoiceReferenceDefault"/>
+  </Class>
+  <Class Abstract = "Yes" CustomerExposition = "Programmer" Discipline = "Yes" Name = "MarineFacilitySpatialStructureElement" SuperName = "AecSpatialStructureElement" Uuid = "77606754-2B70-43F0-B2D0-5A566244DBBA">
+    <Property Name = "GroupingType" Value = "MarineFacilitySpatialStructureElement"/>
+  </Class>
+  <Class Abstract = "Yes" CustomerExposition = "Programmer" Discipline = "Yes" Name = "MarineFacilitySpatialStructureElementType" SuperName = "AecSpatialStructureElementType" Uuid = "6BA0E4AE-17AD-478C-A0B3-51B56D121A41">
+    <Property Name = "GroupingType" Value = "MarineFacilitySpatialStructureElementType"/>
+  </Class>
+  <Class CustomerExposition = "Programmer" Discipline = "Yes" Name = "MarineFacilityType" SuperName = "MarineFacilitySpatialStructureElementType" Uuid = "EC5461A1-51B8-46DF-96C6-736E82EF67BC" lowobjectcount = "Yes">
+    <Property Name = "IconName" Value = "I_MarineFacilityType"/>
+    <Property Name = "3DIconName" Value = "I_MarineFacilityType.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATCbaObjectTypeDelegateInstanciation"/>
+    <Property Name = "Newable" Value = "New_Offline_CAA"/>
+    <Property Name = "3DPartAvailability" Value = "ReferenceOnly"/>
+  </Class>
+  <Class CustomerExposition = "Programmer" Discipline = "Yes" Name = "MarineOtherSpatialStructureElement" Specializable = "Yes" SuperName = "MarinePart" Uuid = "702A05EB-B10C-43BB-923B-08F308CA7F46">
+    <Property Name = "IconName" Value = "I_MarineOtherSpatialStructureElement"/>
+    <Property Name = "3DIconName" Value = "I_MarineOtherSpatialStructureElement.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATEAECDelegateInstanciation"/>
+    <Property Name = "KweNew_ReturnedType" Value = "VPMInstance"/>
+    <Property Name = "Newable" Value = "All_Offline_CAA"/>
+    <Property Name = "InstantiationOwnerTypes" Value = "PPRContext;AecOtherSpatialStructureElement;AecSite;MarineFacility;MarineOtherSpatialStructureElement"/>
+    <Property Name = "3DPartAvailability" Value = "UserChoiceReferenceDefault"/>
+  </Class>
+  <Class CustomerExposition = "Programmer" Discipline = "Yes" Name = "MarineOtherSpatialStructureElementType" Specializable = "Yes" SuperName = "MarinePartType" Uuid = "216E9113-2BBA-4B5D-82B9-438838E8732C" lowobjectcount = "Yes">
+    <Property Name = "IconName" Value = "I_MarineOtherSpatialStructureElementType"/>
+    <Property Name = "3DIconName" Value = "I_MarineOtherSpatialStructureElementType.cgr"/>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATCbaObjectTypeDelegateInstanciation"/>
+    <Property Name = "Newable" Value = "New_Offline_CAA"/>
+    <Property Name = "3DPartAvailability" Value = "ReferenceOnly"/>
+  </Class>
+  <Class Abstract = "Yes" CustomerExposition = "Programmer" Discipline = "Yes" Name = "MarinePart" SuperName = "MarineFacilitySpatialStructureElement" Uuid = "064E4370-47CF-44E8-AFB6-19354F736909"/>
+  <Class Abstract = "Yes" CustomerExposition = "Programmer" Discipline = "Yes" Name = "MarinePartType" SuperName = "MarineFacilitySpatialStructureElementType" Uuid = "4AD28553-90AC-46BB-9ACB-E0F6F4146E95"/>
+</Package>

@@ -1,0 +1,216 @@
+<meta charset="UTF-8"/>
+//---------------------------------------------------------------------------
+// Check_SMBECCusto
+//---------------------------------------------------------------------------
+Check_SMBECCusto.Title="Настройка деталей EC для командного проектирования";
+Check_SMBECCusto.Label1="Установите или снимите флажок, чтобы установить или не устанавливать настройку деталей EC";
+Check_SMBECCusto.Resume="Установите настройку деталей EC для командного проектирования: /P1";
+InstallSMBECCusto="Настройки деталей EC";
+
+//---------------------------------------------------------------------------
+//  SMB Server Products Selection => PRF Only w/o TES configuration selected
+//---------------------------------------------------------------------------
+TESnotSelected.Title="Предупреждение";
+TESnotSelected.Text="Невозможно установить выбранные продукты без TES; выберите также TES";
+TESnotSelected.ok="OK";
+
+//---------------------------------------------------------------------------
+//  SMB Server Products Selection => PRF Only w/o MIS product selected
+//---------------------------------------------------------------------------
+PRFnotSelected.Title="Предупреждение";
+PRFnotSelected.Text="Невозможно установить выбранный MIS продукта без PRF; выберите также PRF";
+PRFnotSelected.ok="OK";
+
+//---------------------------------------------------------------------------
+//  ALL IN ONE INSTALLER HIGH END
+//---------------------------------------------------------------------------
+CPFOnly.Title="Предупреждение";
+CPFOnly.Text="Необходимо выбрать конфигурацию CPF. Выберите CPF";
+CPFOnly.ok="OK";
+
+Check_InstallTomcat.Title="Установка сервера приложений Apache Tomcat";
+Check_InstallTomcat.Label1="Установите флажок, чтобы установить сервер приложений Tomcat и развернуть веб-приложение ENOVIA";
+Check_InstallTomcat.Resume.true="Выбрана установка Tomcat: да";
+Check_InstallTomcat.Resume.false="Выбрана установка Tomcat: нет";
+Check_InstallTomcat.CheckButton="Установите сервер приложений Tomcat. Выберите порт подключения:";
+
+Check_BuildJ2EEArchive.Title="Создание архивов J2EE и установка Tomcat";
+Check_BuildJ2EEArchive.Label1="Установите флажок для создания архивов J2EE (.war и .ear)";
+Check_BuildJ2EEArchive.Resume.true="Создание архивов J2EE: да";
+Check_BuildJ2EEArchive.Resume.false="Создание архивов J2EE: нет";
+Check_BuildJ2EEArchive.CheckButton="Создайте файлы .ear/.war. Введите имя веб-приложения:";
+
+Text_WebAppNameAllinOne.Title="Определение имени приложения J2EE";
+//Text_WebAppNameAllinOne.Label1 = "Please enter the name of the web application"; 
+Text_WebAppNameAllinOne.Resume="Имя веб-приложения: /p1";
+
+TomcatSelectedButNoWarFiles.Title="Выбор не согласован";
+TomcatSelectedButNoWarFiles.Text="Выберите параметр 'build .war', если вы собираетесь развернуть приложение в TomEE!";
+
+Port_tomcaAllinOne.Title="Номер порта подключения Tomcat";
+//Port_tomcaAllinOne.Label1 = "Please define the Tomcat connection port number:";  
+Text_Port_tomcaAllinOne.Resume="Порт подключения TomEE: /P1";
+
+Text_SuperUserNameAllInOne.Title="Определение суперпользователя, создание архивов J2EE и установка Tomcat";
+Text_SuperUserNameAllInOne.Label1="Укажите имя пользователя с правами администратора бизнеса и системы";
+Text_SuperUserNameAllInOne.Resume="Имя суперпользователя: /P1";
+
+Text_SuperUserPasswordAllInOne.Label1="Укажите пароль пользователя с правами администратора бизнеса и системы";
+
+Check_SMBProgramCentralCusto.Title="Настройка центральной настройки программы одним щелчком мыши";
+Check_SMBProgramCentralCusto.Label1="Установка центральной настройки программы одним щелчком мыши";
+Check_SMBProgramCentralCusto.Resume="Установите центральную настройку программы одним щелчком мыши: /P1";
+
+X3DCSMA_previousInstallDetected.Title="Обнаружена существующая установка";
+X3DCSMA_previousInstallDetected.Text="Обнаружена существующая установка.\nЭтот установщик следует использовать только для новых установок";
+
+X3DCSMA_cmdToUpdateDB.Title="Обновление базы данных";
+X3DCSMA_cmdToUpdateDB.Text="Выполните следующую команду в запросе MQL для обновления базы данных:\n  MQL<1>set context user creator;\n  MQL<2>run <server_installation_path>/Apps/install3DSpaceV6R2023x.tcl;\n";
+
+X3DCSMA_failure_registration_3DPassport.Title="Регистрация 3DSpace в 3DPassport";
+X3DCSMA_failure_registration_3DPassport.Text="Выполните следующий сценарий, чтобы завершить регистрацию 3DSpace в 3DPassport:\n<server>/<os>/code/command/3DSpaceRegistrationIn3DPassport.[sh|bat]\nПеред запуском этого сценария убедитесь, что 3DPassport запущен.";
+
+passportRegistration.ExecuteAppli="Регистрация 3DSpace в 3DPassport...";
+
+X3DCSMA_cmdToUpdateDBscript.Title="Обновление базы данных";
+X3DCSMA_cmdToUpdateDBscript.Text="Выполните следующий сценарий для обновления базы данных:\n   <server_installation_path>/Apps/install3DSpaceR2023x[.sh|.bat];\n";
+
+certificates_repository.Title="Местоположение сертификатов";
+certificates_repository.Label1="Выберите местоположение сертификатов";
+certificates_repository.Label2="(Оно должно содержать только файлы сертификатов.";
+certificates_repository.Label3=" Если оставить его пустым, сертификаты необходимо будет импортировать вручную с помощью утилиты keytool.)";
+certificates_repository.Resume="Местоположение сертификатов: /P1";
+
+certificates_import_error.Title="Ошибка импорта сертификатов";
+certificates_import_error.Text="Как минимум один сертификат не импортирован.\nДополнительные сведения можно найти в файле IINFO_import_certs.log:\n/P1";
+
+X3DCSMA_SXI_postinstall.Title="Этапы конфигурации полнотекстового поиска";
+X3DCSMA_SXI_postinstall.Label1="Установите флажок для настройки и запуска индексирования после установки 3DSpace";
+X3DCSMA_SXI_postinstall.Label2="Не устанавливайте флажок, если требуется установка других приложений.";
+X3DCSMA_SXI_postinstall.CheckButton="Настройка и запуск индексирования полнотекстового поиска сразу после установки 3DSpace.";
+X3DCSMA_SXI_postinstall.Resume.true="Этапы конфигурации полнотекстового поиска: да";
+X3DCSMA_SXI_postinstall.Resume.false="Этапы конфигурации полнотекстового поиска: нет";
+
+SXI_baseline_indexation.ExecuteAppli="Запуск конфигурации индексирования поиска...";
+
+
+//---------------------------------------------------------------------------
+// VPLMCentralAdminUser
+//---------------------------------------------------------------------------
+X3DCSMA_administor_name.Title="Определение администратора";
+X3DCSMA_administor_name.Label1="Имя администратора:";
+X3DCSMA_administor_name.Resume="Имя администратора: /p1";
+
+//---------------------------------------------------------------------------
+// VPLMCentralAdminPwd
+//---------------------------------------------------------------------------
+X3DCSMA_administor_password.Title="Пароль администратора:";
+X3DCSMA_administor_password.Label1="Будет создан администратор: admin_platform";
+X3DCSMA_administor_password.Label2="Пароль администратора:";
+
+X3DCSMA_slashvar_notwritable="Для установки необходимо создать папки в /var/DassaultSystemes/. Перед началом установки убедитесь, что эта папка существует";
+
+//---------------------------------------------------------------------------
+// Text_SuperUserName
+//---------------------------------------------------------------------------
+X3DCSMA_creator_name.Title="Суперпользователь/пароль";
+X3DCSMA_creator_name.Label1="Укажите имя пользователя с правами администратора бизнеса и системы.";
+X3DCSMA_creator_name.Resume="Имя суперпользователя: /p1";
+
+//---------------------------------------------------------------------------
+// Text_SuperUserPwd
+//---------------------------------------------------------------------------
+X3DCSMA_creator_password.Title="Суперпользователь/пароль";
+X3DCSMA_creator_password.Label1="Укажите пароль пользователя с правами администратора бизнеса и системы.";
+
+X3DCSMA_CheckCredentialsFailed.Title="Ошибка аутентификации";
+X3DCSMA_CheckCredentialsFailed.Text="При попытке подключения произошла следующая ошибка:\n\n/P1";
+
+X3DCSMA_upgradefailed.Title="Ошибка MQL";
+X3DCSMA_upgradefailed.Label1="Ошибка при выполнении команды MQL>upgrade:\n/P1";
+X3DCSMA_upgradefailed.ExecuteAppli="Выполнение MQL>upgrade...";
+
+//---------------------------------------------------------------------------
+// Reconfiguration Change creator's password
+//---------------------------------------------------------------------------
+BOOL_ChangeCreatorPassword.Title="Изменить пароль суперпользователя (creator)";
+BOOL_ChangeCreatorPassword.CheckButton="Измените пароль суперпользователя (creator)";
+BOOL_ChangeCreatorPassword.Resume.true="Изменить пароль суперпользователя: да";
+BOOL_ChangeCreatorPassword.Resume.false="Изменить пароль суперпользователя: нет";
+
+
+X3DCSMA_creator_old_password.Title="Старый пароль суперпользователя (creator):";
+X3DCSMA_creator_old_password.Label1="Старый пароль суперпользователя (creator):";
+X3DCSMA_creator_new_password.Title="Новый пароль суперпользователя (creator):";
+X3DCSMA_creator_new_password.Label1="Новый пароль суперпользователя (creator):";
+
+//---------------------------------------------------------------------------
+// Reconfiguration Change passwords
+//--------------------------------------------------------------------------- 
+BOOL_ChangeAdministratorPassword.Title="Изменить пароль администратора платформы (admin_platform)";
+BOOL_ChangeAdministratorPassword.CheckButton="Измените пароль администратора платформы (admin_platform)";
+BOOL_ChangeAdministratorPassword.Resume.true="Изменить пароль администратора платформы: да";
+BOOL_ChangeAdministratorPassword.Resume.false="Изменить пароль администратора платформы: нет";
+
+
+X3DCSMA_admin_platform_old_password.Title="Старый пароль администратора платформы:";
+X3DCSMA_admin_platform_old_password.Label1="Старый пароль администратора платформы:";
+X3DCSMA_admin_platform_new_password.Title="Новый пароль администратора платформы:";
+X3DCSMA_admin_platform_new_password.Label1="Новый пароль администратора платформы:";
+
+//---------------------------------------------------------------------------
+// Reconfiguration Error changing password
+//--------------------------------------------------------------------------- 
+changePasswordFailed.Title="Ошибка при изменении пароля";
+changePasswordFailed.Text="При изменении пароля обнаружена следующая ошибка:\n/p1";
+
+//---------------------------------------------------------------------------
+// Reconfig Store path
+//---------------------------------------------------------------------------
+BOOL_ChangeStorePath.Title="Изменить путь к хранилищам";
+BOOL_ChangeStorePath.CheckButton="Изменить путь к хранилищам?";
+BOOL_ChangeStorePath.Resume.true="Изменить путь к хранилищу: да";
+BOOL_ChangeStorePath.Resume.false="Изменить путь к хранилищам: нет";
+
+//---------------------------------------------------------------------------
+// Reconfiguration Update Store fcurl
+//---------------------------------------------------------------------------
+BOOL_reconfigure_FCSURL.Title="Изменить URL-адрес FCS";
+BOOL_reconfigure_FCSURL.CheckButton="Измените URL-адрес FCS магазинов";
+BOOL_reconfigure_FCSURL.Resume.true="Изменить URL-адрес FCS магазинов: Да";
+BOOL_reconfigure_FCSURL.Resume.false="Изменить URL-адрес FCS магазинов: Нет";
+
+RECONF_X3DCSMA_FCSURL.Title="Новый URL-адрес службы FCS:";
+RECONF_X3DCSMA_FCSURL.Label1="URL-адрес службы FCS:";
+RECONF_X3DCSMA_FCSURL.Resume="URL-адрес службы FCS: /p1";
+
+changePasswordFailed.Title="Ошибка при изменении fcsurl хранилищ";
+changePasswordFailed.Text="При изменении fcsurl хранилищ обнаружена следующая ошибка:\n/p1";
+
+//---------------------------------------------------------------------------
+// Reconfiguration check creator password
+//--------------------------------------------------------------------------- 
+ConnectionSuperUserFailed.Title="Ошибка подключения";
+ConnectionSuperUserFailed.Text="При попытке подключения обнаружена следующая ошибка:\n/p1";
+
+//---------------------------------------------------------------------------
+// check execution of inspectdb
+//--------------------------------------------------------------------------- 
+inspectDBKO.Title="Ошибка при выполнении команды MQL";
+inspectDBKO.Text="При выполнении команды MQL>list обнаружена ошибка\nДополнительные сведения можно найти в этом файле журнала:\n/P1";
+inspectDBKO.ok="OK";
+inspectDBKO.quit="Выйти";
+
+//---------------------------------------------------------------------------
+// /tmp in noexec mount
+//---------------------------------------------------------------------------
+test_execution_rights_script.Exceptions.actCreateProcess.Title="Невозможно выполнить сценарии из временной папки по умолчанию";
+test_execution_rights_script.Exceptions.actCreateProcess.Text="Если временная папка (например, /tmp) смонтирована в режиме 'noexec', необходимо экспортировать переменную 'TMPDIR' в папку, в которой можно выполнять сценарии.\nЗатем перезапустите программу установки с этим набором переменных.";
+
+
+// ----------------------------------------
+// Special char in admin_platform password
+// ----------------------------------------
+X3DCSMA_Check_special_chars.Title="Обнаружены специальные символы";
+X3DCSMA_Check_special_chars.Text="В пароле admin_platform обнаружены специальные символы\nРекомендуется не использовать следующие символы: \ [ { } ! $";
+X3DCSMA_Check_special_chars.ok="OK";

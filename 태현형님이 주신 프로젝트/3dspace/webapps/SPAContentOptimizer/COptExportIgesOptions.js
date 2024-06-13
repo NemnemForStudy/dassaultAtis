@@ -1,0 +1,2 @@
+/*!  Copyright 2020 Dassault Systemes. All rights reserved. */
+define("DS/SPAContentOptimizer/COptExportIgesOptions",["DS/CSICommandBinder/CSICommandBinder"],function(n){"use strict";var t=function(){this.unit=0};return n.declareType({type:"COptExportIgesOptions",serialize:function(n,t){return null!=t&&n.writeInt32("unit",t.unit),!0},unserialize:function(n){var e=new t;return e.unit=n.readInt32("unit"),e}}),t});

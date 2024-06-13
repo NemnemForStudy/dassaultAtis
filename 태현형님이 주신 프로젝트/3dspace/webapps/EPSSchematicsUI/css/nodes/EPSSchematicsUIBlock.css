@@ -1,0 +1,333 @@
+@keyframes traceModeBlockOn {
+  100% {
+    background: #009688; } }
+
+@keyframes traceModeBlockOff {
+  0% {
+    background: #009688; }
+
+  100% {
+    background: #b2dfdb; } }
+
+@keyframes traceModeBlockErrorOn {
+  100% {
+    background: #ea4f37; } }
+
+@keyframes traceModeBlockErrorOff {
+  0% {
+    background: #ea4f37; }
+
+  100% {
+    background: #ff9696; } }
+
+@keyframes traceModeBlockWarningOn {
+  100% {
+    background: #ff8c00; } }
+
+@keyframes traceModeBlockWarningOff {
+  0% {
+    background: #ff8c00; }
+
+  100% {
+    background: #ffc782; } }
+
+@keyframes traceModeBlockProgress {
+  0% {
+    background-position: bottom right; }
+
+  100% {
+    background-position: bottom left; } }
+
+@keyframes blockConfigurationAnimation {
+  from {
+    transform: rotate(0deg); }
+
+  to {
+    transform: rotate(360deg); } }
+
+@keyframes schBlockAddButtonAnim {
+  0% {
+    transform: scale(0); }
+
+  80% {
+    transform: scale(1.1); }
+
+  100% {
+    transform: scale(1); } }
+
+.sch-immersive-frame.sch-activetab-edit .sch-block .sch-block-breakpoint-icon, .sch-immersive-frame.sch-activetab-play .sch-block .sch-block-breakpoint-icon {
+  visibility: hidden; }
+
+.sch-block {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  position: absolute;
+  background: #f1f1f1;
+  border: 1px solid #d1d4d4;
+  border-radius: 8px;
+  box-shadow: rgba(0, 0, 0, 0.14) 0px 2px 6px 2px;
+  min-width: 120px;
+  min-height: 40px; }
+  .sch-block:not(.move).hover .sch-block-triggerzone-button {
+    visibility: visible;
+    animation: schBlockAddButtonAnim 0.15s ease-in-out both; }
+  .sch-block:not(.move) > .sch-block-triggerzone-container > .sch-block-triggerzone:hover > .sch-block-triggerzone-button {
+    visibility: visible;
+    animation: schBlockAddButtonAnim 0.15s ease-in-out both; }
+  .sch-block.sch-block-halo {
+    box-shadow: #31afff 0px 0px 10px 5px; }
+  .sch-block .sch-block-container {
+    box-sizing: border-box;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    cursor: move; }
+    .sch-block .sch-block-container:hover .sch-block-breakpoint-icon:not(.visible) {
+      border: 1px dashed #d1d4d4;
+      width: 12px;
+      height: 12px; }
+      .sch-block .sch-block-container:hover .sch-block-breakpoint-icon:not(.visible):hover {
+        border-color: #f1f1f1;
+        animation: blockConfigurationAnimation 5s linear infinite; }
+    .sch-block .sch-block-container > .sch-block-container-left {
+      box-sizing: border-box;
+      min-width: 18px;
+      width: 18px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between; }
+      .sch-block .sch-block-container > .sch-block-container-left > .sch-block-breakpoint-icon {
+        box-sizing: border-box;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        margin: 3px;
+        cursor: pointer; }
+        .sch-block .sch-block-container > .sch-block-container-left > .sch-block-breakpoint-icon.visible {
+          background-color: red;
+          margin: 4px; }
+        .sch-block .sch-block-container > .sch-block-container-left > .sch-block-breakpoint-icon.deactivated {
+          visibility: hidden;
+          pointer-events: none; }
+      .sch-block .sch-block-container > .sch-block-container-left > .sch-block-configuration-icon {
+        box-sizing: border-box;
+        text-align: center;
+        cursor: pointer;
+        color: #b4b6ba;
+        height: 16px; }
+        .sch-block .sch-block-container > .sch-block-container-left > .sch-block-configuration-icon > span {
+          pointer-events: none;
+          font-size: 16px; }
+        .sch-block .sch-block-container > .sch-block-container-left > .sch-block-configuration-icon:hover {
+          color: #f1f1f1; }
+          .sch-block .sch-block-container > .sch-block-container-left > .sch-block-configuration-icon:hover > span {
+            animation: blockConfigurationAnimation 5s linear infinite; }
+    .sch-block .sch-block-container > .sch-block-container-middle {
+      box-sizing: border-box;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column; }
+      .sch-block .sch-block-container > .sch-block-container-middle > .sch-block-container-middle-top, .sch-block .sch-block-container > .sch-block-container-middle > .sch-block-container-middle-bottom {
+        box-sizing: border-box;
+        height: 10px; }
+      .sch-block .sch-block-container > .sch-block-container-middle > .sch-block-container-middle-center {
+        box-sizing: border-box;
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        align-self: center;
+        flex-direction: column; }
+        .sch-block .sch-block-container > .sch-block-container-middle > .sch-block-container-middle-center > .sch-block-name, .sch-block .sch-block-container > .sch-block-container-middle > .sch-block-container-middle-center > .sch-block-subname {
+          box-sizing: border-box;
+          font-family: "eps3dsFont", Arial, sans-serif;
+          color: #3d3d3d;
+          font-weight: bold;
+          font-size: 16px;
+          white-space: nowrap; }
+        .sch-block .sch-block-container > .sch-block-container-middle > .sch-block-container-middle-center > .sch-block-subname {
+          font-size: 10px;
+          color: #77797c; }
+      .sch-block .sch-block-container > .sch-block-container-middle > .sch-block-container-middle-bottom {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start; }
+        .sch-block .sch-block-container > .sch-block-container-middle > .sch-block-container-middle-bottom > .sch-block-state-container {
+          box-sizing: border-box;
+          width: 50px;
+          height: 7px;
+          border-radius: 10px;
+          background-color: #d1d4d4;
+          cursor: default;
+          font-family: "eps3dsFont", Arial, sans-serif;
+          font-weight: bold;
+          font-size: 7px;
+          color: #3d3d3d;
+          display: flex;
+          justify-content: space-evenly;
+          align-items: center; }
+          .sch-block .sch-block-container > .sch-block-container-middle > .sch-block-container-middle-bottom > .sch-block-state-container > .sch-block-state-element {
+            cursor: help; }
+            .sch-block .sch-block-container > .sch-block-container-middle > .sch-block-container-middle-bottom > .sch-block-state-container > .sch-block-state-element:hover {
+              color: white; }
+    .sch-block .sch-block-container > .sch-block-container-right {
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-width: 18px;
+      width: 18px;
+      height: 100%; }
+      .sch-block .sch-block-container > .sch-block-container-right > .sch-block-info-icon {
+        box-sizing: border-box;
+        width: 100%;
+        height: 18px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center; }
+        .sch-block .sch-block-container > .sch-block-container-right > .sch-block-info-icon > span {
+          box-sizing: border-box;
+          font-size: 14px;
+          cursor: pointer; }
+          .sch-block .sch-block-container > .sch-block-container-right > .sch-block-info-icon > span.sch-block-severity-warning {
+            color: orange; }
+          .sch-block .sch-block-container > .sch-block-container-right > .sch-block-info-icon > span.sch-block-severity-error {
+            color: red; }
+        .sch-block .sch-block-container > .sch-block-container-right > .sch-block-info-icon:hover > span {
+          transform: scale(1.1); }
+      .sch-block .sch-block-container > .sch-block-container-right > .sch-block-category-icon {
+        box-sizing: border-box;
+        width: 100%;
+        height: 15px;
+        text-align: center;
+        cursor: pointer; }
+        .sch-block .sch-block-container > .sch-block-container-right > .sch-block-category-icon > span {
+          box-sizing: border-box;
+          pointer-events: none;
+          color: #d1d4d4;
+          font-size: 14px; }
+        .sch-block .sch-block-container > .sch-block-container-right > .sch-block-category-icon:hover > span {
+          color: #f1f1f1;
+          transform: scale(1.1); }
+  .sch-block .sch-block-triggerzone-container {
+    box-sizing: border-box;
+    position: absolute;
+    width: 100%;
+    height: 100%; }
+    .sch-block .sch-block-triggerzone-container > .sch-block-triggerzone {
+      box-sizing: border-box;
+      position: absolute;
+      display: flex; }
+      .sch-block .sch-block-triggerzone-container > .sch-block-triggerzone.sch-block-triggerzone-top {
+        justify-content: flex-end;
+        align-items: flex-end;
+        padding-bottom: 2px;
+        width: calc(100% + 6px);
+        height: 20px;
+        top: -20px; }
+      .sch-block .sch-block-triggerzone-container > .sch-block-triggerzone.sch-block-triggerzone-bottom {
+        justify-content: flex-end;
+        width: calc(100% + 6px);
+        height: 20px;
+        top: 100%;
+        padding-top: 2px; }
+      .sch-block .sch-block-triggerzone-container > .sch-block-triggerzone.sch-block-triggerzone-left {
+        justify-content: flex-end;
+        align-items: flex-end;
+        padding-right: 4px;
+        width: 20px;
+        height: calc(100% + 6px);
+        left: -20px; }
+      .sch-block .sch-block-triggerzone-container > .sch-block-triggerzone.sch-block-triggerzone-right {
+        align-items: flex-end;
+        width: 20px;
+        height: calc(100% + 6px);
+        left: 100%;
+        padding-left: 4px; }
+      .sch-block .sch-block-triggerzone-container > .sch-block-triggerzone.sch-block-triggerzone-middle {
+        box-sizing: border-box;
+        position: absolute;
+        width: 100%;
+        height: 100%; }
+    .sch-block .sch-block-triggerzone-container .sch-block-triggerzone-button {
+      visibility: hidden;
+      box-sizing: border-box;
+      position: absolute;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer; }
+      .sch-block .sch-block-triggerzone-container .sch-block-triggerzone-button > span {
+        pointer-events: none;
+        font-size: 14px; }
+        .sch-block .sch-block-triggerzone-container .sch-block-triggerzone-button > span:first-child {
+          position: absolute;
+          color: white; }
+        .sch-block .sch-block-triggerzone-container .sch-block-triggerzone-button > span:last-child {
+          color: #66b1fb; }
+      .sch-block .sch-block-triggerzone-container .sch-block-triggerzone-button:hover > span {
+        transform: scale(1.1); }
+  .sch-block.hover, .sch-block.hover.sch-trace-done {
+    background: #368ec4;
+    border-color: #005686; }
+  .sch-block.selected, .sch-block.selected.sch-trace-done {
+    background: #31afff;
+    border-color: #005686; }
+  .sch-block.sch-trace-done {
+    background: #b2dfdb; }
+    .sch-block.sch-trace-done.sch-trace-error {
+      background: #ff9696; }
+    .sch-block.sch-trace-done.sch-trace-warning {
+      background: #ffc782; }
+    .sch-block.sch-trace-done.sch-trace-on {
+      animation-duration: 0.2s;
+      animation-timing-function: ease;
+      animation-fill-mode: forwards;
+      animation-name: traceModeBlockOn; }
+      .sch-block.sch-trace-done.sch-trace-on.sch-trace-error {
+        animation-name: traceModeBlockErrorOn; }
+      .sch-block.sch-trace-done.sch-trace-on.sch-trace-warning {
+        animation-name: traceModeBlockWarningOn; }
+    .sch-block.sch-trace-done.sch-trace-off {
+      animation-duration: 0.2s;
+      animation-timing-function: ease;
+      animation-fill-mode: forwards;
+      animation-name: traceModeBlockOff; }
+      .sch-block.sch-trace-done.sch-trace-off.sch-trace-error {
+        animation-name: traceModeBlockErrorOff; }
+      .sch-block.sch-trace-done.sch-trace-off.sch-trace-warning {
+        animation-name: traceModeBlockWarningOff; }
+    .sch-block.sch-trace-done.sch-trace-pending {
+      animation-name: traceModeBlockProgress;
+      background-size: 200% 100%;
+      background-repeat: no-repeat;
+      background-position: bottom right;
+      animation-duration: 1s;
+      animation-iteration-count: infinite;
+      animation-timing-function: ease-in-out;
+      background-image: linear-gradient(to right, #009688 50%, #b2dfdb 50%); }
+    .sch-block.sch-trace-done.sch-trace-worker {
+      animation-name: traceModeBlockProgress;
+      background-size: 200% 100%;
+      background-repeat: no-repeat;
+      background-position: bottom right;
+      animation-duration: 1s;
+      animation-iteration-count: infinite;
+      animation-timing-function: ease-in-out;
+      background-image: linear-gradient(to right, #fce205 50%, #fcfaa3 50%); }
+  .sch-block.sch-block-invalid {
+    background-image: repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2) 10px, rgba(255, 255, 255, 0) 10px, rgba(255, 255, 255, 0) 20px);
+    background-color: #ff6464; }
+    .sch-block.sch-block-invalid:hover {
+      background-color: #ea4f37;
+      border-color: #844138; }
+    .sch-block.sch-block-invalid.selected {
+      background-color: #ff9696;
+      border-color: #844138; }

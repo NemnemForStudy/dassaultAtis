@@ -1,0 +1,10 @@
+m|CATKinPlayWeb\CATKinPlayExperience.mweb
+b|j|c,m
+b|c|n,m
+v|6.425.0.22078|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\CATKinPlayExperience\CATKinPlayExperience.js|1647691686|1150
+s|CATKinPlayWeb\CATKinPlayExperience.mweb\src\CATKinPlayExperience.js|1515492574|1112
+u|CATKinPlayWeb\CATKinPlayExperience.mweb\src\KinPlayHelper.js|1580226715|2116
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

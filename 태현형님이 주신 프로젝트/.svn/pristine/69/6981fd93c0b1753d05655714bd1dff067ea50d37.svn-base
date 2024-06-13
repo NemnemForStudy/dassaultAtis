@@ -1,0 +1,15 @@
+m|Web3DXCity\XCityModelWorkers.mweb
+b|j|n,u
+b|c|n,u
+v|6.425.3.23035|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\XCityModelWorkers\FakeDomForWebWorker.js|1669417165|2035
+s|Web3DXCity\XCityModelWorkers.mweb\src\FakeDomForWebWorker.js|1669417165|2035
+t|win_b64\webapps\XCityModelWorkers\FeatureSorterWorker.js|1669417165|29643
+s|Web3DXCity\XCityModelWorkers.mweb\src\FeatureSorterWorker.js|1669417165|29643
+t|win_b64\webapps\XCityModelWorkers\GeneralWorker.js|1675471218|16905
+s|Web3DXCity\XCityModelWorkers.mweb\src\GeneralWorker.js|1675471218|16905
+t|win_b64\webapps\XCityModelWorkers\LineBuilderSubWorker.js|1669417165|31764
+s|Web3DXCity\XCityModelWorkers.mweb\src\LineBuilderSubWorker.js|1669417165|31764
+t|win_b64\webapps\XCityModelWorkers\PolygonBuilderSubWorker.js|1673043606|68143
+s|Web3DXCity\XCityModelWorkers.mweb\src\PolygonBuilderSubWorker.js|1673043606|68143

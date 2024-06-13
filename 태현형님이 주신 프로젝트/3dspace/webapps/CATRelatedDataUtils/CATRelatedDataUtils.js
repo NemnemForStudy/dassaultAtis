@@ -1,0 +1,2 @@
+/*!  Copyright 2014 Dassault Systemes. All rights reserved. */
+define("DS/CATRelatedDataUtils/CATRelatedDataTransientWidget",["UWA/Class","DS/TransientWidget/TransientWidget"],function(t,e){"use strict";return t.extend({init:function(t){var i=t||{};this._parent(i),this.showWidget=function(t){if(t.length&&t.length>1)e.showWidget(t);else{var i=t.length?t[0]:t;e.showWidget(i.id,i.title,i.data)}}}})}),define("DS/CATRelatedDataUtils/CATRelatedDataUtils",[],function(){});

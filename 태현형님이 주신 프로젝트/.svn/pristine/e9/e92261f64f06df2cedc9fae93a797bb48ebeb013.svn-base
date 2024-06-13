@@ -1,0 +1,1 @@
+define("DS/W3DDashboardSearchActions/W3DDashboardSearchActions_zh-TW",{});define("DS/W3DDashboardSearchActions/assets/nls/main",{goToDashboard:"開啟",type:"類型",typeValue:"儀表板",title:"標題",creationDate:"產生日期",modificationDate:"修改日期",responsible:"負責人",propertiesFacet:"屬性",membersFacet:"成員"});

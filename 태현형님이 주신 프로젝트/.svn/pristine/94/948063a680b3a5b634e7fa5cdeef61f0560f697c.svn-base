@@ -1,0 +1,1 @@
+define("DS/NotificationAPI/NotificationAPI_ko",{});define("DS/NotificationAPI/assets/nls/feed",{permissionBannerTitle:"새 메시지 알림 받기",permissionBannerText:"바탕 화면 알림 켜기"});

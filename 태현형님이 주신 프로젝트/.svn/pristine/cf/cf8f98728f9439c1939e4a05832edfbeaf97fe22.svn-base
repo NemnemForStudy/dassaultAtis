@@ -1,0 +1,1 @@
+define("DS/MIBQueryWidget/MIBQueryWidget_ja",{});define("DS/MIBQueryWidget/assets/nls/MIBQueryWidgetNls",{CommandDialogTitle:"MIB コンテンツを検索",BtnOK:"検索",BtnCancel:"キャンセル",BtnOk2:"開く",Query:"検索"});

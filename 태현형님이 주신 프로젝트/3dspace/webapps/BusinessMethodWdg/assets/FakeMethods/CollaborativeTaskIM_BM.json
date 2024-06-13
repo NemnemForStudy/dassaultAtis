@@ -1,0 +1,39 @@
+{
+  "schema": {
+    "type": "object",
+    "properties": {
+      "stringProp": {
+        "type": "string",
+        "title": "I'm a string",
+        "description": "This description is used as a help message."
+      },
+      "objectFileBlobProp1": {
+        "type": "object",
+        "title": "I'm a file as an object with Blob data",
+        "x-display": "file",
+        "writeOnly": true,
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "size": {
+            "type": "number"
+          },
+          "type": {
+            "type": "string"
+          },
+          "lastModified": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "objectFileBlobProp3": {
+        "type": "object",
+        "title": "I'm a file with Blob data",
+        "x-display": "file",
+        "writeOnly": true
+      }
+    }
+  }
+}

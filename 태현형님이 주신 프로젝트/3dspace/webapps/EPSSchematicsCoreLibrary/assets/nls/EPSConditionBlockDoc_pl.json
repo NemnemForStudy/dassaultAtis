@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0",
+  "summary": "Porównuje wartość wielu danych wejściowych zgodnie z określonym wyrażeniem ustawienia.",
+  "description": "Ten blok jest dynamiczny, dlatego liczbę danych wejściowych można zmienić w oknie dialogowym konfiguracji bloku.<br>Port danych obsługuje wszystkie typy wartości.<br>Nazwa zmiennej zapisana w ustawieniu <doc-setting-name translate=no>Expression</doc-setting-name> musi być zgodna z nazwą danych wejściowych, w przeciwnym razie wyrażenie zostanie uznane za nieprawidłowe.<br><br>Wartość wyrażenia ustawienia przetwarza zaawansowane porównanie wyrażenia:<ul><li><doc-value translate=no>&quot;Value1 === Value2&quot;</doc-value>: sprawdza, czy <doc-idp-name translate=no>Value1</doc-idp-name> jest równa <doc-idp-name translate=no>Value2</doc-idp-name>.</li><li><doc-value translate=no>&quot;Value3 > Value3 && Value3 < Value2&quot;</doc-value>: sprawdza, czy <doc-idp-name translate=no>Value3</doc-idp-name> mieści się w zakresie od <doc-idp-name translate=no>Value1</doc-idp-name> do <doc-idp-name translate=no>Value2</doc-idp-name> (<doc-idp-name translate=no>Value1</doc-idp-name>, <doc-idp-name translate=no>Value2</doc-idp-name> oraz <doc-idp-name translate=no>Value3</doc-idp-name> są liczbami).</li><li><doc-value translate=no>&quot;Value1 !== Value2 || Value1 !== Value3&quot;</doc-value>: sprawdza, czy <doc-idp-name translate=no>Value1</doc-idp-name> różni się od <doc-idp-name translate=no>Value2</doc-idp-name> lub <doc-idp-name translate=no>Value3</doc-idp-name>.</li></ul>",
+  "dataPorts": {
+    "Value1": "to pierwsza wartość do porównania.",
+    "Value2": "to druga wartość do porównania."
+  },
+  "controlPorts": {
+    "In": "wyzwala wykonanie bloku.",
+    "True": "jest aktywowane, gdy wynik wyrażenia spełnionego przez każdą z wartości danych wejściowych jest pozytywny.",
+    "False": "jest aktywowane, gdy wynik wyrażenia spełnionego przez każdą z wartości danych wejściowych jest negatywny."
+  },
+  "settings": {
+    "Expression": "wartość wyrażenia opisującego porównanie wartości danych wejściowych."
+  },
+  "example": null
+}

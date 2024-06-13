@@ -1,0 +1,25 @@
+{
+    "dslog:LogItem": {
+        "summary": "Logical Item",
+        "description": "Logical Item",
+        "PUBLICMasks": ["dsmvlog:LogItem.Mask.Reference.Details"],
+        "PUBLICFields": ["dsmveno:SupportedTypes", "dsmveno:CustomerAttributes"],
+        "PUBLICExtensions": ["dslog:LogItemEnterpriseAttributes", "dscfg:Configured", "dslc:changeControl"],
+        "PUBLICExcludedURIs" : ["POSTSearch", "PATCHBulk", "getItems" , "GETAll", "DELETEBulk", "BULKUPDATE"]
+    },
+    "dslog:LogInstance": {
+        "summary": "Logical Item Instance",
+        "description": "Logical Item Instance",
+        "PUBLICMasks": ["dsmvlog:LogInstance.Mask.Instance.Details"],        
+        "PUBLICFields": ["dsmveno:SupportedTypes", "dsmveno:CustomerAttributes"],
+        "PUBLICExtensions": ["dscfg:Filterable"],
+        "PUBLICExcludedURIs" : ["POSTSearch", "PATCHBulk", "getItems" , "GETSearch", "DELETEBulk", "BULKUPDATE"]
+    },
+    "dslog:LogItemEnterpriseAttributes": {
+        "summary": "Parametric attributes",
+        "description": "dslog:LogItemEnterpriseAttributes",
+        "PUBLICFields": ["dsmvlog:LogItemEnterpriseAttributes"],
+        "PUBLICExcludedURIs": ["GET", "PATCH"]
+    }
+}
+

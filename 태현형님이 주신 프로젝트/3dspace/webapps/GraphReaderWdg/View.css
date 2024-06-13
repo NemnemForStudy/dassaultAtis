@@ -1,0 +1,369 @@
+
+/**
+ * CSS of Widget GraphReader View module.
+ */
+
+/**
+ * Global
+ */
+.gr-btn {
+    margin-top: 8px;
+}
+.separator {
+    margin: 16px;
+    border-top: 1px solid #eee;
+}
+.title,
+.subtitle {
+    font-weight: bold;
+}
+.form-data,
+.form-options {
+    padding: 0 8px 8px;
+    max-width: 70%;
+    margin: auto;
+}
+.nav-btn-ctn {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: 50px;
+    bottom: 0;
+    right: 0;
+    background-color: #fff;
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    text-align: right;
+    white-space: nowrap;
+}
+.nav-btn-ctn .gr-btn {
+    margin: 6px 6px 0 0;
+}
+.link {
+    cursor: pointer;
+    color: #86bbdb;
+    -webkit-transition: color 0.2s;
+       -moz-transition: color 0.2s;
+            transition: color 0.2s;
+}
+.link:hover {
+    color: #368ec4;
+}
+.link.disabled,
+.link.disabled:hover {
+    color: #86bbdb;
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+.flex {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -webkit-flexbox;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+            align-items: center;
+}
+
+.w3dx-GraphView {
+    overflow-y: auto;
+}
+.w3dx-GraphView-table .th-col,
+.w3dx-GraphView-table .tb-col {
+    text-align: center;
+}
+/* End Global */
+
+
+/**
+ * ALL SCREEN
+ **/
+.screen-home,
+.screen-options,
+.screen-graph {
+    -webkit-transition: opacity 0.2s;
+       -moz-transition: opacity 0.2s;
+            transition: opacity 0.2s;
+}
+.gr-disable .screen-home,
+.gr-disable .screen-options,
+.gr-disable .screen-graph {
+    opacity: 0.1;
+}
+
+.screen-home,
+.screen-options {
+    height: 100%;
+    text-align: left;
+    overflow: auto;
+}
+/* End ALL SCREEN */
+
+
+/**
+ * SCREEN HOME
+ */
+.screen-home .big-title,
+.screen-home .format-title {
+    text-align: center;
+    font-size: 1.2em;
+}
+.screen-home .format-title {
+    font-size: 0.85em;
+    margin-top: 5px;
+}
+.screen-home .gr-input-radio,
+.screen-home .check-data-link-ctn {
+    margin-top: 22px;
+}
+.screen-home .gr-input-radio label {
+    font-weight: bold;
+}
+.screen-home .existing-data-radio,
+.screen-home .paste-data-ctn,
+.screen-home .authbox-input-ctn,
+.screen-home .existing-data-ctn,
+.screen-home .checkdata-preview-ctn,
+.screen-home .error-message-ctn,
+.screen-home .csvseparator-ctn,
+.screen-home .drop-zone {
+    display: none;
+}
+.data-url-ctn,
+.paste-data-ctn {
+    margin-left: 6px;
+    padding-left: 10px;
+    border-left: 4px solid #eee;
+}
+.screen-home .show-csvseparator-input .csvseparator-ctn {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -webkit-flexbox;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+}
+.screen-home .refresh-ctn,
+.screen-home .csvseparator-ctn {
+    margin-top: 12px;
+}
+.screen-home .refresh-title {
+    max-width: 5em;
+    min-width: 5em;
+}
+.screen-home .csvseparator-title {
+    max-width: 10em;
+    min-width: 10em;
+}
+.screen-home .refresh-input-ctn {
+    max-width: 16em;
+    min-width: 7em;
+}
+.screen-home .gr-input-text {
+    margin-top: 8px;
+}
+.screen-home .hasPlaceholder {
+    color: #aaa;
+}
+.screen-home .gr-input-textarea {
+    resize: none;
+}
+.screen-home .drop-zone {
+    height: 100px;
+    line-height: 100px;
+    color: #ccc;
+    text-align: center;
+    border-radius: 4px;
+    border: 2px dashed #aaa;
+    opacity: 0.5;
+    background-color: #fff;
+    font-size: 1.6em;
+    transition: opacity 0.2s;
+}
+.screen-home .drop-zone.hover {
+    opacity: 1;
+}
+.screen-home .checkdata-preview-ctn {
+    margin: 11px 0 50px 0;
+}
+.screen-home .error-message-ctn {
+    position: relative;
+    margin: 10px 0;
+}
+.screen-home .error-message-ctn .alert,
+.denied-notif.alert {
+    height: auto;
+}
+.screen-home .error-message-ctn .alert .alert-message,
+.denied-notif.alert .alert-message {
+    position: relative;
+    overflow: auto;
+}
+.screen-home .existing-data-ctn {
+    margin-bottom: 50px;
+}
+/* End SCREEN HOME */
+
+
+/**
+ * SCREEN OPTIONS
+ */
+.screen-options .title {
+    margin: 20px 0 4px 0;
+}
+.screen-options .title:first-child {
+    margin-top: 0;
+}
+.screen-options .next-btn {
+    margin-right: 22px;
+}
+.screen-options .advanced-options-link-ctn {
+    margin-top: 20px;
+    color: #86bbdb;
+}
+.screen-options.advanced-options-show .advanced-options-link-ctn {
+    margin-bottom: 10px;
+}
+.screen-options .advanced-options-link .icon {
+    font-size: 1.2em;
+    margin-right: 4px;
+    margin-left: -4px;
+}
+.screen-options.advanced-options-show .show-advanced-options,
+.screen-options.advanced-options-show .advanced-options-link .close-icon,
+.screen-options .hide-advanced-options,
+.screen-options .advanced-options-link .open-icon {
+    display: none;
+}
+.screen-options.advanced-options-show .hide-advanced-options,
+.screen-options.advanced-options-show .advanced-options-link .open-icon {
+    display: inline-block;
+}
+.screen-options .previews-ctn {
+    margin: 20px 0 50px 0;
+}
+.screen-options .graph-preview-ctn {
+    min-height: 245px;
+}
+.screen-options .graph-preview-ctn .title {
+    margin-bottom: 11px;
+}
+.screen-options .refresh-preview {
+    cursor: pointer;
+    margin-left: 10px;
+    opacity: 0.4;
+    -webkit-transition: opacity 0.2s;
+       -moz-transition: opacity 0.2s;
+            transition: opacity 0.2s;
+}
+.screen-options .refresh-preview:hover {
+    opacity: 0.8;
+}
+
+.screen-options .refresh-preview.clicked {
+    opacity: 0.1;
+    cursor: default;
+}
+
+    /**
+     * Advanced Options
+     */
+    .screen-options .advanced-options-ctn {
+        visibility: hidden;
+        height: 0;
+        overflow: hidden;
+        overflow-x: auto;
+        -webkit-transition: height 0.8s;
+           -moz-transition: height 0.8s;
+                transition: height 0.8s;
+    }
+    .screen-options .adv-opts-sub-ctn {
+        min-width: 300px;
+    }
+    .screen-options .radiolist-view,
+    .screen-options .gr-input-toggle-switch {
+        position: relative;
+    }
+    .screen-options.advanced-options-show .advanced-options-ctn {
+        visibility: visible;
+        padding: 5px 0 0 10px;
+        border-left: 4px solid #eee;
+    }
+    .screen-options .advanced-options-ctn .sub-ctn,
+    .screen-options .advanced-options-ctn .dataUnit-input-ctn,
+    .screen-options .advanced-options-ctn .categories-input-ctn,
+    .screen-options .advanced-options-ctn .yAxis-title {
+        margin-top: 11px;
+    }
+    .screen-options .advanced-options-ctn .subtitle {
+        padding-right: 11px;
+        width: 5em;
+        text-align: right;
+    }
+    .screen-options .advanced-options-ctn .xAxis-type {
+        width: 100%;
+    }
+    .screen-options .advanced-options-ctn .dataUnit-input-ctn,
+    .screen-options .advanced-options-ctn .preview-input-ctn,
+    .screen-options .advanced-options-ctn .categories-input-ctn,
+    .screen-options .advanced-options-ctn .stacking-type-ctn,
+    .screen-options .advanced-options-ctn .use-data-as-ctn {
+        padding-left: 4.3em;
+    }
+    /* End Advanced Options */
+/* End SCREEN OPTIONS */
+
+
+/**
+ * SCREEN GRAPH
+ */
+.screen-graph {
+    min-height: 150px;
+    height: 100%;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+            flex-direction: column;
+}
+.screen-graph .header {
+    -webkit-align-items: stretch;
+            align-items: stretch;
+    height: 44px;
+    min-height: 44px;
+}
+.screen-graph .header .left {
+    width: 100%;
+}
+.screen-graph.dragcompare-enable .header .left {
+    width: calc(100% - 45px);
+
+}
+.screen-graph .header .right {
+    width: 45px;
+    text-align: right;
+    display: none;
+}
+.screen-graph.dragcompare-enable .header .right {
+    display: block;
+}
+
+.screen-graph .compare-btn {
+    font-size: 1.8em;
+    opacity: 0.4;
+    cursor: move;
+}
+.screen-graph .compare-btn:hover {
+    opacity: 0.8;
+}
+.screen-graph .last-refresh-info {
+    position: absolute;
+    z-index: 10;
+    bottom: 0;
+    right: 10px;
+    color: #bbb;
+    font-size: 12px;
+}
+/* End SCREEN GRAPH */

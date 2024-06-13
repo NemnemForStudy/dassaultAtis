@@ -1,0 +1,1229 @@
+<?xml version="1.0"?>
+<!-- ENOVIA DICTIONARY  -->
+<!-- COPYRIGHT DASSAULT SYSTEMES 2008, All rights reserved -->
+
+<Package xmlns="PLMDictionaryUnified" ModelerType="Top" CustomerExposition="Programmer" Name="PLMStructureDesign" Uuid="F5834292-6A98-4bd0-9734-EFA852316973" UseNames="PRODUCTCFG">
+  <CAAComment>
+    <ShortRole>Structure Design Package</ShortRole>
+    <Role>This package describes Structure Design data.</Role>
+  </CAAComment>
+
+  <Comment>Created 2008-10-15 by GHR</Comment>
+  <Comment>Created 2009-01-29 by AWG:Export</Comment>
+  <Comment>Created 2009-06-12 by AWG:R208</Comment>
+  <Comment>Created 2011-02-23 by USV:R212</Comment>
+  <Comment>Created 2011-09-28 by CLT:R213 - Contour</Comment>
+  <Comment>2012-03-04 CLT - Unicorn + Exalead</Comment>
+  <Comment>2016-06-21 S95 - New attributes for Structure_Section, Editable V_StrThickness for StrPlate</Comment>
+  <Comment>2018-02-07 ssn13 - New extensions for Structure_Member(StrColumn, StrBeam)</Comment>
+  <Comment>2021-03-09 V58 - New attributes for Structure_Stiffener, Structure_StiffenerOnFreeEdge, Structure_Member, StrStiffener, StrStiffenerOnFreeEdge and StrMember </Comment>
+  <Comment>2021-04-19 W52 - New PLM Connection with new roles </Comment>
+  <Comment>2021-08-03 W52 - StrConnection procedure </Comment>
+  <Comment>2021-08-20 S95 - New extension StrOperation </Comment>
+  <Comment>2022-03-30 JRU3 - New attributes for Structure_Stiffener, Structure_StiffenerOnFreeEdge, Structure_Member, StrStiffener, StrStiffenerOnFreeEdge, StrPlate and StrMember </Comment>
+
+  <Class Name="Structure_System"
+    Uuid="92b8394d-e195-4645-8a91-32caeca7a238"
+    Abstract="No"
+    CustomerExposition="Programmer"
+    SuperName="VPMReference"
+    Abbreviation="ssy"
+    Discipline="Yes"
+    Specializable="Yes">
+    <Property Name="KweNew_InstanciationMethod" Value="CATEStrStructureSystemDelegateInstanciation"/>
+    <Property Name="Newable" Value="All"/>
+    <Property Name="IconName" Value="I_StrSystem_PLMNew"/>
+    <Property Name="KweDisciplineAttributeValue" Value="Structure_System"/>
+    <Property Name="3DPartAvailability" Value="3DPartOnly"/>
+  </Class>
+
+  <Class Name="Structure_Design_Unit"
+    Uuid="92b8394d-e195-4645-8a91-32caeca7a239"
+    Abstract="No"
+    CustomerExposition="Programmer"
+    SuperName="VPMReference"
+    Abbreviation="sdu"
+    Discipline="Yes"
+    Specializable="Yes">
+    <Property Name="KweNew_InstanciationMethod" Value="CATEStrDelegateInstanciation"/>
+    <Property Name="Newable" Value="All"/>
+    <Property Name="IconName" Value="I_StrDUnit_PLMNew"/>
+    <Property Name="KweDisciplineAttributeValue" Value="Structure_Design_Unit"/>
+    <Property Name="3DPartAvailability" Value="ReferenceOnly"/>
+  </Class>
+
+  <Class Name="Structure_Panel"
+    Uuid="6a3a619c-a6d2-4d88-8daf-dc64631ca11c"
+    Abstract="No"
+    CustomerExposition="Programmer"
+    SuperName="VPMReference"
+    Abbreviation="spn"
+    Discipline="Yes"
+    Specializable="No"
+    CustomerExtensible="Yes">
+    <Property Name="IconName" Value="I_SddProductPanel"/>
+    <Property Name="3DPartAvailability" Value="UserChoice3DPartDefault"/>
+    <Property Name="KweDisciplineAttributeValue" Value="Structure_Panel"/>
+    <Simple Name="V_StrCategory" Type="String" Faceted="Yes" Uuid="58b16c2b-4502-48ee-99c1-ef181b18e5f8" MaxLength="100" Protection="External" CAAExposition="L0" MultiValuated="No">
+      <Property Name="SIXW" Value="ds6w:kind"/>
+      <CAAComment>
+        <ShortRole>Structure Category</ShortRole>
+        <Role>The category of the structure panel</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrThickness" Type="Double" Faceted="Yes" Uuid="7eca9698-1308-40c7-950c-de033ddfe927" Magnitude="LENGTH" Protection="External" CAAExposition="L0" MultiValuated="No">
+      <Property Name="SIXW" Value="ds6w:thickness"/>
+      <CAAComment>
+        <ShortRole>Structure Thickness</ShortRole>
+        <Role>The thickness of the structure panel</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrMaterial" Type="String" Faceted="Yes" Uuid="72445b75-a46c-4b28-9732-3c088125528d" MaxLength="100" Protection="External" CAAExposition="L0" MultiValuated="No">
+      <Property Name="SIXW" Value="ds6w:constituent"/>
+      <CAAComment>
+        <ShortRole>Structure Material</ShortRole>
+        <Role>The material of the structure panel</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrSync_ID" Type="String" Uuid="5a2a981d-4016-438e-b5ba-10e78e30f24b" MaxLength="256" Protection="External" CAAExposition="L0" MultiValuated="No">
+      <CAAComment>
+        <ShortRole>Synchronization ID</ShortRole>
+        <Role>The synchronization ID of the structure panel</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrPositionNumber" Type="String" Uuid="05754734-E892-4DE5-955F-A033BAC715BB" MaxLength="100" Protection="Free" CAAExposition="L0" MultiValuated="No">
+      <CAAComment>
+        <ShortRole>Position Number</ShortRole>
+        <Role>The position number of the structure panel</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrWidth" Type="Double"  Magnitude = "LENGTH" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="3658CF56-A70D-41FF-AC69-41760696231B">
+      <CAAComment>
+        <ShortRole>Structure panel width</ShortRole>
+        <Role>The width of the structure panel</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrLength" Type="Double"  Magnitude = "LENGTH" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="12D774DD-D537-49C9-B666-FA1D9D1926D3">
+      <CAAComment>
+        <ShortRole>Structure panel length</ShortRole>
+        <Role>The length of the structure panel</Role>
+      </CAAComment>
+    </Simple>	
+    <Simple Name="V_StrPerimeter" Type="Double"  Magnitude = "LENGTH" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="921229F5-9686-423D-A825-029D36DA992B">
+      <CAAComment>
+        <ShortRole>Structure panel perimeter</ShortRole>
+        <Role>The perimeter of the structure panel</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrGrossArea" Type="Double"  Magnitude = "AREA" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="6478C37A-6EEC-4450-814C-7279A5A14185">
+      <CAAComment>
+        <ShortRole>Structure panel gross area</ShortRole>
+        <Role>The gross area of the structure panel</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrNetArea" Type="Double"  Magnitude = "AREA" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="73B2E33D-67EF-49A1-88B0-4D284A4A4F1E">
+      <CAAComment>
+        <ShortRole>Structure panel net area</ShortRole>
+        <Role>The net area of the structure panel</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrGrossVolume" Type="Double"  Magnitude = "VOLUME" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="22BA70AF-E23A-49AD-8000-12FE0CA94468">
+      <CAAComment>
+        <ShortRole>Structure panel gross volume</ShortRole>
+        <Role>The gross volume of the structure panel</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrNetVolume" Type="Double"  Magnitude = "VOLUME" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="443E2F5D-731C-4C64-88F4-D2978AB95DB7">
+      <CAAComment>
+        <ShortRole>Structure panel net volume</ShortRole>
+        <Role>The net volume of the structure panel</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrGrossWeight" Type="Double"  Magnitude = "MASS" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="185AA867-6FB8-4D13-907A-53FD51486B47">
+      <CAAComment>
+        <ShortRole>Structure panel gross weight</ShortRole>
+        <Role>The gross weight of the structure panel</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrNetWeight" Type="Double"  Magnitude = "MASS" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="633F2EA7-37C5-4CF0-81B6-2942814D732D">
+      <CAAComment>
+        <ShortRole>Structure panel net weight</ShortRole>
+        <Role>The net weight of the structure panel</Role>
+      </CAAComment>
+    </Simple>	
+  </Class>
+
+  <Class Name="Structure_Plate"
+    Uuid="92b8394d-e195-4645-8a91-32caeca7a23a"
+    Abstract="No"
+    CustomerExposition="Programmer"
+    SuperName="VPMReference"
+    Abbreviation="ssp"
+    Discipline="Yes"
+    Specializable="No"
+    CustomerExtensible="Yes">
+    <Property Name="IconName" Value="I_SddPlate"/>
+    <Property Name="KweDisciplineAttributeValue" Value="Structure_Plate"/>
+    <Property Name="MergedExtensionType" Value="StrPlate"/>
+    <Property Name="3DPartAvailability" Value="UserChoice3DPartDefault"/>
+    <Simple Name="V_StrCategory" Type="String" Faceted="Yes" Uuid="1C263857-59B7-4a0a-AFA9-D8EC28F71684" MaxLength="100" Protection="External" CAAExposition="L0" MultiValuated="No">
+      <Property Name="SIXW" Value="ds6w:kind"/>
+      <CAAComment>
+        <ShortRole>Structure Category</ShortRole>
+        <Role>The category of the structure plate</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrThickness" Type="Double" Faceted="Yes" Uuid="7BC54445-D9FA-4612-B067-00DE5B01DA62" Magnitude="LENGTH" Protection="External" CAAExposition="L0" MultiValuated="No">
+      <Property Name="SIXW" Value="ds6w:thickness"/>
+      <CAAComment>
+        <ShortRole>Structure Thickness</ShortRole>
+        <Role>The thickness of the structure plate</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrMaterial" Type="String" Faceted="Yes" Uuid="2C00DE77-D3B3-4da3-A233-E1ADA8C0CFA0" MaxLength="100" Protection="External" CAAExposition="L0" MultiValuated="No">
+      <Property Name="SIXW" Value="ds6w:constituent"/>
+      <CAAComment>
+        <ShortRole>Structure Material</ShortRole>
+        <Role>The material of the structure plate</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrSync_ID" Type="String" Uuid="6CF95E9C-DAD5-46c7-AC1D-1F9A5F9969A3" MaxLength="256" Protection="External" CAAExposition="L0" MultiValuated="No">
+      <CAAComment>
+        <ShortRole>Synchronization ID</ShortRole>
+        <Role>The synchronization ID of the structure plate</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrPositionNumber" Type="String" Uuid="A355689B-433A-4F41-8801-02F3CB5E9D2E" MaxLength="100" Protection="Free" CAAExposition="L0" MultiValuated="No">
+      <CAAComment>
+        <ShortRole>Position Number</ShortRole>
+        <Role>The position number of the structure plate</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrWidth" Type="Double"  Magnitude = "LENGTH" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="9EC675B1-AFF4-49BC-AD3D-37724ACF68C2">
+      <CAAComment>
+        <ShortRole>Structure plate width</ShortRole>
+        <Role>The width of the structure plate</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrLength" Type="Double"  Magnitude = "LENGTH" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="171F6780-8790-483B-828D-2FEA65AD78A9">
+      <CAAComment>
+        <ShortRole>Structure plate length</ShortRole>
+        <Role>The length of the structure plate</Role>
+      </CAAComment>
+    </Simple>	
+    <Simple Name="V_StrPerimeter" Type="Double"  Magnitude = "LENGTH" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="7943D329-CD51-4304-BE7D-8F0A2A46F415">
+      <CAAComment>
+        <ShortRole>Structure plate perimeter</ShortRole>
+        <Role>The perimeter of the structure plate</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrGrossArea" Type="Double"  Magnitude = "AREA" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="EAB8675F-3237-4025-9A00-64CE78CDD3E9">
+      <CAAComment>
+        <ShortRole>Structure plate gross area</ShortRole>
+        <Role>The gross area of the structure plate</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrNetArea" Type="Double"  Magnitude = "AREA" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="CE72A71C-DC26-441D-B531-658A87359D83">
+      <CAAComment>
+        <ShortRole>Structure plate net area</ShortRole>
+        <Role>The net area of the structure plate</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrGrossVolume" Type="Double"  Magnitude = "VOLUME" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="A0E4952C-AC7D-4190-AB66-7A01BF0B4AAC">
+      <CAAComment>
+        <ShortRole>Structure plate gross volume</ShortRole>
+        <Role>The gross volume of the structure plate</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrNetVolume" Type="Double"  Magnitude = "VOLUME" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="135E5C46-C626-487B-B618-9415271304FD">
+      <CAAComment>
+        <ShortRole>Structure plate net volume</ShortRole>
+        <Role>The net volume of the structure plate</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrGrossWeight" Type="Double"  Magnitude = "MASS" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="51C255EC-2CE5-4EB7-9DAE-13C29756750D">
+      <CAAComment>
+        <ShortRole>Structure plate gross weight</ShortRole>
+        <Role>The gross weight of the structure plate</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrNetWeight" Type="Double"  Magnitude = "MASS" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="5FC3041A-A59E-4BA2-84A8-CFE7B643B3DD">
+      <CAAComment>
+        <ShortRole>Structure plate net weight</ShortRole>
+        <Role>The net weight of the structure plate</Role>
+      </CAAComment>
+    </Simple>
+  </Class>
+
+  <Class Name="Structure_Stiffener"
+    Uuid="92b8394d-e195-4645-8a91-32caeca7a23b"
+    Abstract="No"
+    CustomerExposition="Programmer"
+    SuperName="VPMReference"
+    Abbreviation="sst"
+    Discipline="Yes"
+    Specializable="No"
+    CustomerExtensible="Yes">
+    <Property Name="IconName" Value="I_SddSuperStiffener"/>
+    <Property Name="KweDisciplineAttributeValue" Value="Structure_Stiffener"/>
+    <Property Name="MergedExtensionType" Value="StrStiffener"/>
+    <Property Name="3DPartAvailability" Value="UserChoice3DPartDefault"/>
+    <Simple Name="V_StrCategory" Type="String" Faceted="Yes" Uuid="505ADDE2-6290-4cbc-9B4D-13364671AA90" MaxLength="100" Protection="External" CAAExposition="L0" MultiValuated="No">
+      <Property Name="SIXW" Value="ds6w:kind"/>
+      <CAAComment>
+        <ShortRole>Structure Category</ShortRole>
+        <Role>The category of the structure stiffener</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrSection" Type="String" Faceted="Yes" Uuid="8995486C-906E-498b-93B9-BEFD0453E007" MaxLength="100" Protection="External" CAAExposition="L0" MultiValuated="No">
+      <Property Name="SIXW" Value="ds6w:constituent"/>
+      <CAAComment>
+        <ShortRole>Structure Section</ShortRole>
+        <Role>The section of the structure stiffener</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrSection_Standard" Type="String" Faceted="Yes" Uuid="30652C9B-6087-4419-8017-588C14740C3B" MaxLength="100" Protection="External" CAAExposition="L0" MultiValuated="No">
+      <CAAComment>
+        <ShortRole>Structure Section Standard</ShortRole>
+        <Role>The section standard of the structure stiffener</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrSection_Shape" Type="String" Faceted="Yes" Uuid="F91AD6FB-D21C-41D2-852C-CAB9B19D77EE" MaxLength="100" Protection="External" CAAExposition="L0" MultiValuated="No">
+      <CAAComment>
+        <ShortRole>Structure Section Shape</ShortRole>
+        <Role>The section shape of the structure stiffener</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrSection_Size" Type="String" Faceted="Yes" Uuid="88D4CF2D-A544-483D-B437-4E5FE6C7BA05" MaxLength="100" Protection="External" CAAExposition="L0" MultiValuated="No">
+      <CAAComment>
+        <ShortRole>Structure Section Size</ShortRole>
+        <Role>The section size of the structure stiffener</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrMaterial" Type="String" Faceted="Yes" Uuid="AE1191BD-DEAE-47c7-93FE-FBF472CEF614" MaxLength="100" Protection="External" CAAExposition="L0" MultiValuated="No">
+      <Property Name="SIXW" Value="ds6w:constituent"/>
+      <CAAComment>
+        <ShortRole>Structure Material</ShortRole>
+        <Role>The material of the structure stiffener</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrSync_ID" Type="String" Uuid="D9F4177F-BED1-44df-AD7C-829CA5AE6465" MaxLength="256" Protection="External" CAAExposition="L0" MultiValuated="No">
+      <CAAComment>
+        <ShortRole>Synchronization ID</ShortRole>
+        <Role>The synchronization ID of the structure stiffener</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrPositionNumber" Type="String" Uuid="3AF186D3-BFA0-4D08-A886-BC220E4CE18B" MaxLength="100" Protection="Free" CAAExposition="L0" MultiValuated="No">
+      <CAAComment>
+        <ShortRole>Position Number</ShortRole>
+        <Role>The position number of the structure stiffener</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrLength" Type="Double"  Magnitude = "LENGTH" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="FA51B1EF-9157-4C7F-B854-53F1E7C0ECEB">
+      <CAAComment>
+        <ShortRole>Structure stiffener length</ShortRole>
+        <Role>The length of the structure stiffener</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrCrossSectionArea" Type="Double"  Magnitude = "AREA" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="BD6321C8-B97E-48B3-8A1B-1E03AB0E8A97">
+      <CAAComment>
+        <ShortRole>Structure stiffener cross section area</ShortRole>
+        <Role>The cross section area of the structure stiffener</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrOuterSurfaceArea" Type="Double"  Magnitude = "AREA" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="04E35415-E65D-42FF-9F7F-D131DE74B9D8">
+      <CAAComment>
+        <ShortRole>Structure stiffener outer surface area</ShortRole>
+        <Role>The outer surface area of the structure stiffener</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrGrossSurfaceArea" Type="Double"  Magnitude = "AREA" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="9CF41359-E3D3-4573-B6D5-74467348961A">
+      <CAAComment>
+        <ShortRole>Structure stiffener gross surface area</ShortRole>
+        <Role>The gross surface area of the structure stiffener</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrNetSurfaceArea" Type="Double"  Magnitude = "AREA" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="5DAA2D51-3D75-48D6-8CFE-6FDDA75071C3">
+      <CAAComment>
+        <ShortRole>Structure stiffener net surface area</ShortRole>
+        <Role>The net surface area of the structure stiffener</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrGrossVolume" Type="Double"  Magnitude = "VOLUME" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="3EBC5749-A778-4F77-A097-76099BBB2A33">
+      <CAAComment>
+        <ShortRole>Structure stiffener gross volume</ShortRole>
+        <Role>The gross volume of the structure stiffener</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrNetVolume" Type="Double"  Magnitude = "VOLUME" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="E237CF9E-CDA0-4AAE-83C0-6DF95EF34F38">
+      <CAAComment>
+        <ShortRole>Structure stiffener net volume</ShortRole>
+        <Role>The net volume of the structure stiffener</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrGrossWeight" Type="Double"  Magnitude = "MASS" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="31B6DD99-661C-4F20-A44B-3131916A3A72">
+      <CAAComment>
+        <ShortRole>Structure stiffener gross weight</ShortRole>
+        <Role>The gross weight of the structure stiffener</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrNetWeight" Type="Double"  Magnitude = "MASS" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="76DEA523-52E9-4128-BB5D-522FA03DBBF6">
+      <CAAComment>
+        <ShortRole>Structure stiffener net weight</ShortRole>
+        <Role>The net weight of the structure stiffener</Role>
+      </CAAComment>
+    </Simple>	
+  </Class>
+
+  <Class Name="Structure_StiffenerOnFreeEdge"
+    Uuid="92b8394d-e195-4645-8a91-32caeca7a23c"
+    Abstract="No"
+    CustomerExposition="Programmer"
+    SuperName="VPMReference"
+    Abbreviation="sfe"
+    Discipline="Yes"
+    Specializable="No"
+    CustomerExtensible="Yes">
+    <Property Name="IconName" Value="I_SddSuperStiffenerOnFreeEdge"/>
+    <Property Name="KweDisciplineAttributeValue" Value="Structure_StiffenerOnFreeEdge"/>
+    <Property Name="MergedExtensionType" Value="StrStiffenerOnFreeEdge"/>
+    <Property Name="3DPartAvailability" Value="UserChoice3DPartDefault"/>
+    <CAAComment>
+      <ShortRole>PLM Structure Stiffener on Free Edge Object</ShortRole>
+      <Role>PLM Structure Stiffener on Free Edge Object</Role>
+    </CAAComment>
+    <Simple Name="V_StrCategory" Type="String" Faceted="Yes" Uuid="5EE822BC-2C9B-40cb-A49E-BC457BD1FD00" MaxLength="100" Protection="External" CAAExposition="L0" MultiValuated="No">
+      <Property Name="SIXW" Value="ds6w:kind"/>
+      <CAAComment>
+        <ShortRole>Structure Category</ShortRole>
+        <Role>The category of the structure stiffener on free edge</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrSection" Type="String" Faceted="Yes" Uuid="82306DD7-ACF9-48b4-BD52-33A314646086" MaxLength="100" Protection="External" CAAExposition="L0" MultiValuated="No">
+      <Property Name="SIXW" Value="ds6w:constituent"/>
+      <CAAComment>
+        <ShortRole>Structure Section</ShortRole>
+        <Role>The section of the structure stiffener on free edge</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrSection_Standard" Type="String" Faceted="Yes" Uuid="B1628481-F6DB-4AF9-B255-F3050343A60B" MaxLength="100" Protection="External" CAAExposition="L0" MultiValuated="No">
+      <CAAComment>
+        <ShortRole>Structure Section Standard</ShortRole>
+        <Role>The section standard of the structure stiffener on free edge</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrSection_Shape" Type="String" Faceted="Yes" Uuid="847940DA-DBC8-4718-80CE-1A1A88B55B0A" MaxLength="100" Protection="External" CAAExposition="L0" MultiValuated="No">
+      <CAAComment>
+        <ShortRole>Structure Section Shape</ShortRole>
+        <Role>The section shape of the structure stiffener on free edge</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrSection_Size" Type="String" Faceted="Yes" Uuid="B73CAFFE-6C5E-4B8D-BA89-13CD832A11CC" MaxLength="100" Protection="External" CAAExposition="L0" MultiValuated="No">
+      <CAAComment>
+        <ShortRole>Structure Section Size</ShortRole>
+        <Role>The section size of the structure stiffener on free edge</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrMaterial" Type="String" Faceted="Yes" Uuid="F5E32588-2A1F-4f8e-86E0-FEF0AC1C000E" MaxLength="100" Protection="External" CAAExposition="L0" MultiValuated="No">
+      <Property Name="SIXW" Value="ds6w:constituent"/>
+      <CAAComment>
+        <ShortRole>Structure Material</ShortRole>
+        <Role>The material of the structure stiffener on free edge</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrSync_ID" Type="String" Uuid="CFC1502F-F11B-41c3-B738-6CBE4B5906DD" MaxLength="256" Protection="External" CAAExposition="L0" MultiValuated="No">
+      <CAAComment>
+        <ShortRole>Synchronization ID</ShortRole>
+        <Role>The synchronization ID of the structure stiffener on free edge</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrPositionNumber" Type="String" Uuid="DD9F1F41-67D5-4544-8D89-B6359FD04E40" MaxLength="100" Protection="Free" CAAExposition="L0" MultiValuated="No">
+      <CAAComment>
+        <ShortRole>Position Number</ShortRole>
+        <Role>The position number of the structure stiffener on free edge</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrLength" Type="Double"  Magnitude = "LENGTH" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="4D9949E6-5996-4EA1-8389-965932258BEA">
+      <CAAComment>
+        <ShortRole>Structure stiffener on free edge length</ShortRole>
+        <Role>The length of the structure profile</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrCrossSectionArea" Type="Double"  Magnitude = "AREA" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="9D058587-9D6F-4D85-9599-C854C1AD210F">
+      <CAAComment>
+        <ShortRole>Structure stiffener on free edge cross section area</ShortRole>
+        <Role>The cross section area of the structure stiffener on free edge</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrOuterSurfaceArea" Type="Double"  Magnitude = "AREA" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="C535C622-775F-4D15-8CDE-70A4FBE613EA">
+      <CAAComment>
+        <ShortRole>Structure stiffener on free edge outer surface area</ShortRole>
+        <Role>The outer surface area of the structure stiffener on free edge</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrGrossSurfaceArea" Type="Double"  Magnitude = "AREA" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="CF6E375C-5596-4BC2-88F3-EDF7A41D4611">
+      <CAAComment>
+        <ShortRole>Structure stiffener on free edge gross surface area</ShortRole>
+        <Role>The gross surface area of the structure stiffener on free edge</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrNetSurfaceArea" Type="Double"  Magnitude = "AREA" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="4E47569A-37D5-47CD-850B-DB8D8BD329C2">
+      <CAAComment>
+        <ShortRole>Structure stiffener on free edge net surface area</ShortRole>
+        <Role>The net surface area of the structure stiffener on free edge</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrGrossVolume" Type="Double"  Magnitude = "VOLUME" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="F672D755-C061-458E-B8EA-A6E4E637692B">
+      <CAAComment>
+        <ShortRole>Structure stiffener on free edge gross volume</ShortRole>
+        <Role>The gross volume of the structure stiffener on free edge</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrNetVolume" Type="Double"  Magnitude = "VOLUME" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="D9CE9C18-21F1-4749-9712-E24925A675ED">
+      <CAAComment>
+        <ShortRole>Structure stiffener on free edge net volume</ShortRole>
+        <Role>The net volume of the structure stiffener on free edge</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrGrossWeight" Type="Double"  Magnitude = "MASS" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="27BDB81B-5533-4036-9597-CB88B19B53FC">
+      <CAAComment>
+        <ShortRole>Structure stiffener on free edge gross weight</ShortRole>
+        <Role>The gross weight of the structure stiffener on free edge</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrNetWeight" Type="Double"  Magnitude = "MASS" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="F3CFBD37-34C3-430B-AA69-0F8B15EBBE22">
+      <CAAComment>
+        <ShortRole>Structure stiffener on free edge net weight</ShortRole>
+        <Role>The net weight of the structure stiffener on free edge</Role>
+      </CAAComment>
+    </Simple>		
+  </Class>
+
+  <Class Name="Structure_Member"
+    Uuid="92b8394d-e195-4645-8a91-32caeca7a23d"
+    Abstract="No"
+    CustomerExposition="Programmer"
+    SuperName="VPMReference"
+    Abbreviation="ssm"
+    Discipline="Yes"
+    Specializable="No"
+    CustomerExtensible="Yes">
+    <Property Name="IconName" Value="I_SddSuperBeam"/>
+    <Property Name="KweDisciplineAttributeValue" Value="Structure_Member"/>
+    <Property Name="MergedExtensionType" Value="StrMember"/>
+    <Property Name="3DPartAvailability" Value="UserChoice3DPartDefault"/>
+    <CAAComment>
+      <ShortRole>PLM Structure Member Object</ShortRole>
+      <Role>PLM Structure Member Object</Role>
+    </CAAComment>
+    <Simple Name="V_StrCategory" Type="String" Faceted="Yes" Uuid="7DBF9817-07FE-4bda-B1F1-3A9F892BD78A" MaxLength="100" Protection="External" CAAExposition="L0" MultiValuated="No">
+      <Property Name="SIXW" Value="ds6w:kind"/>
+      <CAAComment>
+        <ShortRole>Structure Category</ShortRole>
+        <Role>The category of the structure member</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrSection" Type="String" Faceted="Yes" Uuid="BF894590-76F3-4328-AEE8-5B9E20E8B2D5" MaxLength="100" Protection="External" CAAExposition="L0" MultiValuated="No">
+      <Property Name="SIXW" Value="ds6w:constituent"/>
+      <CAAComment>
+        <ShortRole>Structure Section</ShortRole>
+        <Role>The section of the structure member</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrSection_Standard" Type="String" Faceted="Yes" Uuid="C18D7357-987F-4E0B-A215-FCFC7447A746" MaxLength="100" Protection="External" CAAExposition="L0" MultiValuated="No">
+      <CAAComment>
+        <ShortRole>Structure Section Standard</ShortRole>
+        <Role>The section standard of the structure member</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrSection_Shape" Type="String" Faceted="Yes" Uuid="6AFA19F5-408B-4A55-962F-D7A113F842BE" MaxLength="100" Protection="External" CAAExposition="L0" MultiValuated="No">
+      <CAAComment>
+        <ShortRole>Structure Section Shape</ShortRole>
+        <Role>The section shape of the structure member</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrSection_Size" Type="String" Faceted="Yes" Uuid="6992A8DA-B0B7-42B2-932D-136B10638142" MaxLength="100" Protection="External" CAAExposition="L0" MultiValuated="No">
+      <CAAComment>
+        <ShortRole>Structure Section Size</ShortRole>
+        <Role>The section size of the structure member</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrMaterial" Type="String" Faceted="Yes" Uuid="8FC3B44B-3EDF-4925-B84F-F083A5BBBB21" MaxLength="100" Protection="External" CAAExposition="L0" MultiValuated="No">
+      <Property Name="SIXW" Value="ds6w:constituent"/>
+      <CAAComment>
+        <ShortRole>Structure Material</ShortRole>
+        <Role>The material of the structure member</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrSync_ID" Type="String" Uuid="15811477-C0D9-427c-90F3-B1EFBED97472" MaxLength="256" Protection="External" CAAExposition="L0" MultiValuated="No">
+      <CAAComment>
+        <ShortRole>Synchronization ID</ShortRole>
+        <Role>The synchronization ID of the structure member</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrPositionNumber" Type="String" Uuid="B515211E-B396-4DD5-BDEC-D06466650FCC" MaxLength="100" Protection="Free" CAAExposition="L0" MultiValuated="No">
+      <CAAComment>
+        <ShortRole>Position Number</ShortRole>
+        <Role>The position number of the structure member</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrLength" Type="Double"  Magnitude = "LENGTH" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="DA8A5EFD-FF69-479E-9735-040B45123CE0">
+      <CAAComment>
+        <ShortRole>Structure member length</ShortRole>
+        <Role>The length of the structure member</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrCrossSectionArea" Type="Double"  Magnitude = "AREA" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="701F79E0-E8C0-464B-8F7F-F372FADFBF90">
+      <CAAComment>
+        <ShortRole>Structure member cross section area</ShortRole>
+        <Role>The cross section area of the structure member</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrOuterSurfaceArea" Type="Double"  Magnitude = "AREA" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="FE6C0CEA-E9F4-496F-89E2-109D385AB683">
+      <CAAComment>
+        <ShortRole>Structure member outer surface area</ShortRole>
+        <Role>The outer surface area of the structure member</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrGrossSurfaceArea" Type="Double"  Magnitude = "AREA" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="4CF04089-AAEA-4FBE-85D1-F88D51A4C527">
+      <CAAComment>
+        <ShortRole>Structure member gross surface area</ShortRole>
+        <Role>The gross surface area of the structure member</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrNetSurfaceArea" Type="Double"  Magnitude = "AREA" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="498993A2-3930-4042-81B4-EBA2637C9219">
+      <CAAComment>
+        <ShortRole>Structure member net surface area</ShortRole>
+        <Role>The net surface area of the structure member</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrGrossVolume" Type="Double"  Magnitude = "VOLUME" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="3F1AB42C-05A6-40F4-A1EA-10C1D9A37132">
+      <CAAComment>
+        <ShortRole>Structure member gross volume</ShortRole>
+        <Role>The gross volume of the structure member</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrNetVolume" Type="Double"  Magnitude = "VOLUME" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="C8016C61-B3D4-4C25-A448-0E87B72858B1">
+      <CAAComment>
+        <ShortRole>Structure member net volume</ShortRole>
+        <Role>The net volume of the structure member</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrGrossWeight" Type="Double"  Magnitude = "MASS" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="12CDAD5C-826C-4E90-8EAA-A82E229704B0">
+      <CAAComment>
+        <ShortRole>Structure member gross weight</ShortRole>
+        <Role>The gross weight of the structure member</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrNetWeight" Type="Double"  Magnitude = "MASS" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="26AB8C53-7F56-45F8-A2CB-01D663BC8C97">
+      <CAAComment>
+        <ShortRole>Structure member net weight</ShortRole>
+        <Role>The net weight of the structure member</Role>
+      </CAAComment>
+    </Simple>
+  </Class>
+
+  <Class Name="Structure_Section"
+    Uuid="92b8394d-e195-4645-8a91-32caeca7a23e"
+    Abstract="No"
+    CustomerExposition="Programmer"
+    SuperName="VPMReference"
+    Abbreviation="sse"
+    Discipline="Yes"
+    Specializable="Yes">
+    <Property Name="KweNew_InstanciationMethod" Value="CATEStrDelegateInstanciation"/>
+    <Property Name="Newable" Value="New"/>
+    <Property Name="IconName" Value="I_StrSection_PLMNew"/>
+    <Property Name="KweDisciplineAttributeValue" Value="Structure_Section"/>
+    <Property Name="3DPartAvailability" Value="3DPartOnly"/>
+    <Simple Name="V_StrStandard" Type="String" Faceted="Yes" Uuid="398DF2B7-77C6-4720-A46C-D8DA39ABBA85" MaxLength="255" Protection="Free" CAAExposition="L0" MultiValuated="No">
+      <CAAComment>
+        <ShortRole>Structure Section Standard</ShortRole>
+        <Role>The standard of Structure Section</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrShape" Type="String" Faceted="Yes" Uuid="5859849F-8117-4919-B908-2781721CFA75" MaxLength="255" Protection="Free" CAAExposition="L0" MultiValuated="No">
+      <CAAComment>
+        <ShortRole>Structure Section Shape</ShortRole>
+        <Role>The shape of Structure Section</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrSize" Type="String" Faceted="Yes" Uuid="8CEAD33E-45A0-4A52-AE6B-6E2231BC6220" MaxLength="255" Protection="Free" CAAExposition="L0" MultiValuated="No">
+      <CAAComment>
+        <ShortRole>Structure Section Size</ShortRole>
+        <Role>The size of Structure Section</Role>
+      </CAAComment>
+    </Simple>
+  </Class>
+
+  <Class Name="Structure_Opening"
+    Uuid="92b8394d-e195-4645-8a91-32caeca7a23f"
+    Abstract="No"
+    CustomerExposition="Programmer"
+    SuperName="VPMReference"
+    Abbreviation="sso"
+    Discipline="Yes"
+    Specializable="Yes">
+    <Property Name="KweNew_InstanciationMethod" Value="CATEStrDelegateInstanciation"/>
+    <Property Name="Newable" Value="New"/>
+    <Property Name="IconName" Value="I_StrOpening_PLMNew"/>
+    <Property Name="KweDisciplineAttributeValue" Value="Structure_Opening"/>
+    <Property Name="3DPartAvailability" Value="3DPartOnly"/>
+	<Simple Name="V_StrWidth" Type="Double"  Magnitude = "LENGTH" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="D631AEC4-1BF3-4908-A3DA-E392D99DED12">
+      <CAAComment>
+        <ShortRole>Structure opening width</ShortRole>
+        <Role>The width of the structure opening</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrHeight" Type="Double"  Magnitude = "LENGTH" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="35BF91B1-09C0-4CF2-95F2-5F87D1886986">
+      <CAAComment>
+        <ShortRole>Structure opening height</ShortRole>
+        <Role>The height of the structure opening</Role>
+      </CAAComment>
+    </Simple>	
+    <Simple Name="V_StrDepth" Type="Double"  Magnitude = "LENGTH" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="B1DD2A01-4723-448D-991B-7B417D34A1B2">
+      <CAAComment>
+        <ShortRole>Structure opening depth</ShortRole>
+        <Role>The depth of the structure opening</Role>
+      </CAAComment>
+    </Simple>	
+	<Simple Name="V_StrArea" Type="Double"  Magnitude = "AREA" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="ECB126A0-BA2A-4342-9725-9C64632BD792">
+      <CAAComment>
+        <ShortRole>Structure opening area</ShortRole>
+        <Role>The area of the structure opening</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrVolume" Type="Double"  Magnitude = "VOLUME" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="AB73E9C4-3791-4E70-A8C7-AFDEA09F891E">
+      <CAAComment>
+        <ShortRole>Structure opening volume</ShortRole>
+        <Role>The volume of the structure opening</Role>
+      </CAAComment>
+    </Simple>	
+  </Class>
+
+  <Class Name="Structure_Endcut"
+    Uuid="92b8394d-e195-4645-8a91-32caeca7a240"
+    Abstract="No"
+    CustomerExposition="Programmer"
+    SuperName="VPMReference"
+    Abbreviation="ssc"
+    Discipline="Yes"
+    Specializable="Yes">
+    <Property Name="KweNew_InstanciationMethod" Value="CATEStrDelegateInstanciation"/>
+    <Property Name="Newable" Value="New"/>
+    <Property Name="IconName" Value="I_SddEndcutS"/>
+    <Property Name="KweDisciplineAttributeValue" Value="Structure_Endcut"/>
+    <Property Name="3DPartAvailability" Value="3DPartOnly"/>
+  </Class>
+
+  <Class Name="Structure_Slot"
+    Uuid="92b8394d-e195-4645-8a91-32caeca7a241"
+    Abstract="No"
+    CustomerExposition="Programmer"
+    SuperName="VPMReference"
+    Abbreviation="ssl"
+    Discipline="Yes"
+    Specializable="Yes">
+    <Property Name="KweNew_InstanciationMethod" Value="CATEStrDelegateInstanciation"/>
+    <Property Name="Newable" Value="New"/>
+    <Property Name="IconName" Value="I_StrSlot_PLMNew"/>
+    <Property Name="KweDisciplineAttributeValue" Value="Structure_Slot"/>
+    <Property Name="3DPartAvailability" Value="3DPartOnly"/>
+  </Class>
+
+  <Class Name="Structure_Contour"
+    Uuid="92b8394d-e195-4645-8a91-32caeca7a242"
+    Abstract="No"
+    CustomerExposition="Programmer"
+    SuperName="VPMReference"
+    Abbreviation="scr"
+    Discipline="Yes"
+    Specializable="Yes">
+    <Property Name="KweNew_InstanciationMethod" Value="CATEStrDelegateInstanciation"/>
+    <Property Name="Newable" Value="New"/>
+    <Property Name="IconName" Value="I_StrContour_PLMNew"/>
+    <Property Name="KweDisciplineAttributeValue" Value="Structure_Contour"/>
+    <Property Name="3DPartAvailability" Value="3DPartOnly"/>
+  </Class>
+
+  <Class Name="StrConnection"
+    Uuid="37ebcb6f-7536-4acf-b57a-e996938d7da0"
+    CustomerExposition="Programmer"
+    SuperName="PLMConnection">
+    <Simple
+      Name="V_ConnectionUsage"
+      Uuid="97e96700-90bd-4b28-a5fe-1b861b618bca"
+      Type="String"
+      MultiValuated="No"
+      Protection="Free"
+      CAAExposition="L0">
+    </Simple>
+    <Path
+      Name="Source"
+      Uuid="eef4abd8-0651-4271-8482-9c6f598c5363"
+      Type="SemanticRelation"
+      RoleName="STR_SourceObject"
+      Semantics="Reference"
+      MultiValuated="Yes"
+    />
+    <Path
+      Name="Target"
+      Uuid="f7c70760-f436-42bd-be06-9b237e2a66b2"
+      Type="SemanticRelation"
+      RoleName="STR_TargetObject"
+      Semantics="Reference"
+      MultiValuated="Yes"
+    />
+    <Method ImplementationType="None">
+      <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+    </Method>
+  </Class>
+
+  <Function Name="StrConnection_addAllStrConnection">
+    <Implementation Name="StrConnection_addAllStrConnection" FileLocation="StrConnection_addAllStrConnection.plmql" Language="PLMQL"/>
+    <Signature href="StrProductSignature"/>
+  </Function>
+
+  <Signature id="StrProductSignature">
+    <Parameter Name="InputIds" Lower="0" Upper="-1" Direction="in" MultiValuated="Yes" DataType="PLMId"/>
+    <Parameter Name="OutputIds" Lower="0" Upper="-1" Direction="out" MultiValuated="No" DataType="PLMRouteSet"/>
+  </Signature>
+  
+  <Extension Name="StrPlate" Uuid="92b8394d-e195-4645-8a91-32caeca7a237" CustomerExposition="Programmer" CAAExposition="L0" Abstract="No" ScopeNames="VPMReference">
+    <CAAComment>
+      <ShortRole>PLM Structure Plate Object</ShortRole>
+      <Role>PLM Structure Plate Object</Role>
+    </CAAComment>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATESddExtDelegateInstanciation"/>
+    <Simple Name="V_StrCategory" Type="String" Uuid="f47c37c1-8481-4ec8-afa5-c7bdd09132f5" MaxLength="100" Protection="External" CAAExposition="L0" MultiValuated="No" Faceted="Yes">
+      <Property Name="SIXW" Value="ds6w:kind"/>
+      <CAAComment>
+        <ShortRole>Structure Category</ShortRole>
+        <Role>The category of the structure plate</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrThickness" Type="Double" Uuid="6e724ba4-75c1-4ddf-980f-191994ba2c8f" Magnitude="LENGTH" Protection="Free" CAAExposition="L0" MultiValuated="No" Faceted="Yes">
+      <Property Name="SIXW" Value="ds6w:thickness"/>
+      <CAAComment>
+        <ShortRole>Structure Thickness</ShortRole>
+        <Role>The thickness of the structure plate</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrMaterial" Type="String" Uuid="25a78c35-774c-43ba-bfab-ddf5f32a5cc4" MaxLength="100" Protection="External" CAAExposition="L0" MultiValuated="No" Faceted="Yes">
+      <Property Name="SIXW" Value="ds6w:constituent"/>
+      <CAAComment>
+        <ShortRole>Structure Material</ShortRole>
+        <Role>The material of the structure plate</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrSync_ID" Type="String" Uuid="9870190a-35df-4aff-b6e5-fba6336af9ab" MaxLength="256" Protection="External" CAAExposition="L0" MultiValuated="No">
+      <CAAComment>
+        <ShortRole>Synchronization ID</ShortRole>
+        <Role>The synchronization ID of the structure plate</Role>
+      </CAAComment>
+    </Simple>
+	<Simple Name="V_StrWidth" Type="Double"  Magnitude = "LENGTH" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="19990A01-2608-4341-A472-74D415024A43">
+      <CAAComment>
+        <ShortRole>Structure plate width</ShortRole>
+        <Role>The width of the structure plate</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrLength" Type="Double"  Magnitude = "LENGTH" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="DD4668A2-87F5-4586-9132-20EE27799804">
+      <CAAComment>
+        <ShortRole>Structure plate length</ShortRole>
+        <Role>The length of the structure plate</Role>
+      </CAAComment>
+    </Simple>	
+    <Simple Name="V_StrPerimeter" Type="Double"  Magnitude = "LENGTH" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="A473DCAA-B085-4A92-BEF0-AECA3390DDE4">
+      <CAAComment>
+        <ShortRole>Structure plate perimeter</ShortRole>
+        <Role>The perimeter of the structure plate</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrGrossArea" Type="Double"  Magnitude = "AREA" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="89E4D0DD-B714-4C85-AA7D-F3E6DE3CCDE1">
+      <CAAComment>
+        <ShortRole>Structure plate gross area</ShortRole>
+        <Role>The gross area of the structure plate</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrNetArea" Type="Double"  Magnitude = "AREA" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="C07F3DA5-8B52-4282-8F78-1BE8926009DD">
+      <CAAComment>
+        <ShortRole>Structure plate net area</ShortRole>
+        <Role>The net area of the structure plate</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrGrossVolume" Type="Double"  Magnitude = "VOLUME" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="17EB12CE-2AB8-4848-B563-FE594A916FCA">
+      <CAAComment>
+        <ShortRole>Structure plate gross volume</ShortRole>
+        <Role>The gross volume of the structure plate</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrNetVolume" Type="Double"  Magnitude = "VOLUME" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="F875913B-DE5C-472C-85CA-BBAAE94AD2D1">
+      <CAAComment>
+        <ShortRole>Structure plate net volume</ShortRole>
+        <Role>The net volume of the structure plate</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrGrossWeight" Type="Double"  Magnitude = "MASS" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="93CBF141-2493-457B-A240-ABEB7CF60FF1">
+      <CAAComment>
+        <ShortRole>Structure plate gross weight</ShortRole>
+        <Role>The gross weight of the structure plate</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrNetWeight" Type="Double"  Magnitude = "MASS" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="59A28DA8-F325-47A6-97A7-28FD38EB0E50">
+      <CAAComment>
+        <ShortRole>Structure plate net weight</ShortRole>
+        <Role>The net weight of the structure plate</Role>
+      </CAAComment>
+    </Simple>
+  </Extension>
+
+  <Extension Name="StrStiffener" Uuid="947f6645-0f41-4dc2-abee-016247b98ce6" CustomerExposition="Programmer" CAAExposition="L0" Abstract="No" ScopeNames="VPMReference">
+    <CAAComment>
+      <ShortRole>PLM Structure Stiffener Object</ShortRole>
+      <Role>PLM Structure Stiffener Object</Role>
+    </CAAComment>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATESddExtDelegateInstanciation"/>
+    <Simple Name="V_StrCategory" Type="String" Uuid="2569188b-584c-4ecf-82a2-522ab2e2782b" MaxLength="100" Protection="External" CAAExposition="L0" MultiValuated="No" Faceted="Yes">
+      <Property Name="SIXW" Value="ds6w:kind"/>
+      <CAAComment>
+        <ShortRole>Structure Category</ShortRole>
+        <Role>The category of the structure stiffener</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrSection" Type="String" Uuid="c814b56d-288c-4907-b2c6-a4a6e481fa26" MaxLength="100" Protection="External" CAAExposition="L0" MultiValuated="No" Faceted="Yes">
+      <Property Name="SIXW" Value="ds6w:constituent"/>
+      <CAAComment>
+        <ShortRole>Structure Section</ShortRole>
+        <Role>The section of the structure stiffener</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrSection_Standard" Type="String" Faceted="Yes" Uuid="BC1CF898-755A-482F-8462-E4456288A4F3" MaxLength="100" Protection="External" CAAExposition="L0" MultiValuated="No">
+      <CAAComment>
+        <ShortRole>Structure Section Standard</ShortRole>
+        <Role>The section standard of the structure stiffener</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrSection_Shape" Type="String" Faceted="Yes" Uuid="B5EC4C9C-4FF4-49D8-87CB-9EA8B3DF0CBA" MaxLength="100" Protection="External" CAAExposition="L0" MultiValuated="No">
+      <CAAComment>
+        <ShortRole>Structure Section Shape</ShortRole>
+        <Role>The section shape of the structure stiffener</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrSection_Size" Type="String" Faceted="Yes" Uuid="EB7B9129-8B13-4F50-8434-4BDEF1012404" MaxLength="100" Protection="External" CAAExposition="L0" MultiValuated="No">
+      <CAAComment>
+        <ShortRole>Structure Section Size</ShortRole>
+        <Role>The section size of the structure stiffener</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrMaterial" Type="String" Uuid="3271d2f7-197b-4967-97f0-d7d6fc56ff86" MaxLength="100" Protection="External" CAAExposition="L0" MultiValuated="No" Faceted="Yes">
+      <Property Name="SIXW" Value="ds6w:constituent"/>
+      <CAAComment>
+        <ShortRole>Structure Material</ShortRole>
+        <Role>The material of the structure stiffener</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrSync_ID" Type="String" Uuid="d6132d76-3830-4134-830a-fec9ec460d9c" MaxLength="256" Protection="External" CAAExposition="L0" MultiValuated="No">
+      <CAAComment>
+        <ShortRole>Synchronization ID</ShortRole>
+        <Role>The synchronization ID of the structure stiffener</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrLength" Type="Double"  Magnitude = "LENGTH" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="563E2AD7-E66E-44AB-8E2C-F400FB57FA05">
+      <CAAComment>
+        <ShortRole>Structure stiffener length</ShortRole>
+        <Role>The length of the structure stiffener</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrCrossSectionArea" Type="Double"  Magnitude = "AREA" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="FAD56522-DA0A-43FE-8BF6-FC08D3B17C86">
+      <CAAComment>
+        <ShortRole>Structure stiffener cross section area</ShortRole>
+        <Role>The cross section area of the structure stiffener</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrOuterSurfaceArea" Type="Double"  Magnitude = "AREA" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="D4B44696-FC31-403E-AE8B-AA641808246D">
+      <CAAComment>
+        <ShortRole>Structure stiffener outer surface area</ShortRole>
+        <Role>The outer surface area of the structure stiffener</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrGrossSurfaceArea" Type="Double"  Magnitude = "AREA" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="7AB562BF-0DDD-4656-8A78-55D52ED1C80F">
+      <CAAComment>
+        <ShortRole>Structure stiffener gross surface area</ShortRole>
+        <Role>The gross surface area of the structure stiffener</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrNetSurfaceArea" Type="Double"  Magnitude = "AREA" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="EAF17494-5544-49AE-A5E0-C6DB2993BF68">
+      <CAAComment>
+        <ShortRole>Structure stiffener net surface area</ShortRole>
+        <Role>The net surface area of the structure stiffener</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrGrossVolume" Type="Double"  Magnitude = "VOLUME" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="44D4E6A8-4D50-4BCF-9275-F75BAE57638B">
+      <CAAComment>
+        <ShortRole>Structure stiffener gross volume</ShortRole>
+        <Role>The gross volume of the structure stiffener</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrNetVolume" Type="Double"  Magnitude = "VOLUME" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="ADBB7041-F6C7-4E1E-B6E4-5FA9EC59F112">
+      <CAAComment>
+        <ShortRole>Structure stiffener net volume</ShortRole>
+        <Role>The net volume of the structure stiffener</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrGrossWeight" Type="Double"  Magnitude = "MASS" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="AD54AB95-AC6F-4B3C-9692-EDA6D1CFEC55">
+      <CAAComment>
+        <ShortRole>Structure stiffener gross weight</ShortRole>
+        <Role>The gross weight of the structure stiffener</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrNetWeight" Type="Double"  Magnitude = "MASS" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="07B7B42D-2996-4510-AA1C-450F4AF5793C">
+      <CAAComment>
+        <ShortRole>Structure stiffener net weight</ShortRole>
+        <Role>The net weight of the structure stiffener</Role>
+      </CAAComment>
+    </Simple>	
+  </Extension>
+
+  <Extension Name="StrMember" Uuid="c5d12d8a-b3bf-4ad6-a94b-a4709568803b" CustomerExposition="Programmer" CAAExposition="L0" Abstract="No" ScopeNames="VPMReference">
+    <CAAComment>
+      <ShortRole>PLM Structure Member Object</ShortRole>
+      <Role>PLM Structure Member Object</Role>
+    </CAAComment>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATESddExtDelegateInstanciation"/>
+    <Simple Name="V_StrCategory" Type="String" Uuid="ff2298c1-1c99-43fb-a2bf-cadbcc62e9af" MaxLength="100" Protection="External" CAAExposition="L0" MultiValuated="No" Faceted="Yes">
+      <Property Name="SIXW" Value="ds6w:kind"/>
+      <CAAComment>
+        <ShortRole>Structure Category</ShortRole>
+        <Role>The category of the structure member</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrSection" Type="String" Uuid="7c74944f-4d34-4adb-9a18-14507e18a41e" MaxLength="100" Protection="External" CAAExposition="L0" MultiValuated="No" Faceted="Yes">
+      <Property Name="SIXW" Value="ds6w:constituent"/>
+      <CAAComment>
+        <ShortRole>Structure Section</ShortRole>
+        <Role>The section of the structure member</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrSection_Standard" Type="String" Faceted="Yes" Uuid="4C5667E4-FB6F-43AF-A9F6-A09D32ACF448" MaxLength="100" Protection="External" CAAExposition="L0" MultiValuated="No">
+      <CAAComment>
+        <ShortRole>Structure Section Standard</ShortRole>
+        <Role>The section standard of the structure member</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrSection_Shape" Type="String" Faceted="Yes" Uuid="4144BA3C-934D-4511-9C31-A71B91F26D6D" MaxLength="100" Protection="External" CAAExposition="L0" MultiValuated="No">
+      <CAAComment>
+        <ShortRole>Structure Section Shape</ShortRole>
+        <Role>The section shape of the structure member</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrSection_Size" Type="String" Faceted="Yes" Uuid="23E64812-5D0B-4D6E-932E-F0D1EC412435" MaxLength="100" Protection="External" CAAExposition="L0" MultiValuated="No">
+      <CAAComment>
+        <ShortRole>Structure Section Size</ShortRole>
+        <Role>The section size of the structure member</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrMaterial" Type="String" Uuid="cbd51084-ebe5-4099-a94d-5cb1404398a9" MaxLength="100" Protection="External" CAAExposition="L0" MultiValuated="No" Faceted="Yes">
+      <Property Name="SIXW" Value="ds6w:constituent"/>
+      <CAAComment>
+        <ShortRole>Structure Material</ShortRole>
+        <Role>The material of the structure member</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrSync_ID" Type="String" Uuid="cf69c46f-0367-4c78-a188-5556fc0e5924" MaxLength="256" Protection="External" CAAExposition="L0" MultiValuated="No">
+      <CAAComment>
+        <ShortRole>Synchronization ID</ShortRole>
+        <Role>The synchronization ID of the structure member</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrLength" Type="Double"  Magnitude = "LENGTH" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="CE968779-DD93-41C5-B043-439711C9831B">
+      <CAAComment>
+        <ShortRole>Structure member length</ShortRole>
+        <Role>The length of the structure member</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrCrossSectionArea" Type="Double"  Magnitude = "AREA" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="8CC3552A-E6A3-448D-8100-20AB6F3F8E88">
+      <CAAComment>
+        <ShortRole>Structure member cross section area</ShortRole>
+        <Role>The cross section area of the structure member</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrOuterSurfaceArea" Type="Double"  Magnitude = "AREA" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="CF063605-91C9-4015-9A7E-9BDE10A63662">
+      <CAAComment>
+        <ShortRole>Structure member outer surface area</ShortRole>
+        <Role>The outer surface area of the structure member</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrGrossSurfaceArea" Type="Double"  Magnitude = "AREA" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="8C264346-00E4-42FA-A507-3C81AEC70515">
+      <CAAComment>
+        <ShortRole>Structure member gross surface area</ShortRole>
+        <Role>The gross surface area of the structure member</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrNetSurfaceArea" Type="Double"  Magnitude = "AREA" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="46F08AAA-B9F3-4290-A723-2452E7C583CF">
+      <CAAComment>
+        <ShortRole>Structure member net surface area</ShortRole>
+        <Role>The net surface area of the structure member</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrGrossVolume" Type="Double"  Magnitude = "VOLUME" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="A4E065F0-FB03-4487-AA21-A955C37121DA">
+      <CAAComment>
+        <ShortRole>Structure member gross volume</ShortRole>
+        <Role>The gross volume of the structure member</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrNetVolume" Type="Double"  Magnitude = "VOLUME" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="DF808DBE-248D-4CE8-82AD-77E5156EB211">
+      <CAAComment>
+        <ShortRole>Structure member net volume</ShortRole>
+        <Role>The net volume of the structure member</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrGrossWeight" Type="Double"  Magnitude = "MASS" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="6EE7A293-D0EE-4365-8C00-694093349D14">
+      <CAAComment>
+        <ShortRole>Structure member gross weight</ShortRole>
+        <Role>The gross weight of the structure member</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrNetWeight" Type="Double"  Magnitude = "MASS" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="E30373D9-66FA-41EA-9A71-E688DCF24B44">
+      <CAAComment>
+        <ShortRole>Structure member net weight</ShortRole>
+        <Role>The net weight of the structure member</Role>
+      </CAAComment>
+    </Simple>		
+  </Extension>
+
+  <Extension Name="StrColumn" Uuid="94b01aec-5a95-4556-9753-434ee290527b" CustomerExposition="Programmer" CAAExposition="L0" Abstract="No" ScopeNames="VPMReference">
+    <CAAComment>
+      <ShortRole>PLM Structure Column Object</ShortRole>
+      <Role>PLM Structure Column Object</Role>
+    </CAAComment>
+  </Extension>
+
+  <Extension Name="StrBeam" Uuid="a5bdec43-7ea5-4551-ab6b-451bb04940b0" CustomerExposition="Programmer" CAAExposition="L0" Abstract="No" ScopeNames="VPMReference">
+    <CAAComment>
+      <ShortRole>PLM Structure Beam Object</ShortRole>
+      <Role>PLM Structure Beam Object</Role>
+    </CAAComment>
+  </Extension>
+
+  <Extension Name="StrStiffenerOnFreeEdge" Uuid="eb228776-bff9-4f04-a104-4641f959bd0e" CustomerExposition="Programmer" CAAExposition="L0" Abstract="No" ScopeNames="VPMReference">
+    <CAAComment>
+      <ShortRole>PLM Structure Stiffener on Free Edge Object</ShortRole>
+      <Role>PLM Structure Stiffener on Free Edge Object</Role>
+    </CAAComment>
+    <Property Name = "KweNew_InstanciationMethod" Value = "CATESddExtDelegateInstanciation"/>
+    <Simple Name="V_StrCategory" Type="String" Uuid="7c9dee8b-77f5-4ae8-a1d8-ff29ede2df15" MaxLength="100" Protection="External" CAAExposition="L0" MultiValuated="No" Faceted="Yes">
+      <Property Name="SIXW" Value="ds6w:kind"/>
+      <CAAComment>
+        <ShortRole>Structure Category</ShortRole>
+        <Role>The category of the structure stiffener on free edge</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrSection" Type="String" Uuid="7789a80e-5366-458a-9e0b-32fd0ab9b437" MaxLength="100" Protection="External" CAAExposition="L0" MultiValuated="No" Faceted="Yes">
+      <Property Name="SIXW" Value="ds6w:constituent"/>
+      <CAAComment>
+        <ShortRole>Structure Section</ShortRole>
+        <Role>The section of the structure stiffener on free edge</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrSection_Standard" Type="String" Faceted="Yes" Uuid="1708BF55-4605-4192-8206-4D1261CA753A" MaxLength="100" Protection="External" CAAExposition="L0" MultiValuated="No">
+      <CAAComment>
+        <ShortRole>Structure Section Standard</ShortRole>
+        <Role>The section standard of the structure stiffener on free edge</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrSection_Shape" Type="String" Faceted="Yes" Uuid="D62CBC5A-2C91-4FD6-B114-DD6868EB8C19" MaxLength="100" Protection="External" CAAExposition="L0" MultiValuated="No">
+      <CAAComment>
+        <ShortRole>Structure Section Shape</ShortRole>
+        <Role>The section shape of the structure stiffener on free edge</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrSection_Size" Type="String" Faceted="Yes" Uuid="6AB39D9D-7EAA-4AE6-8B9E-FE7692707EA7" MaxLength="100" Protection="External" CAAExposition="L0" MultiValuated="No">
+      <CAAComment>
+        <ShortRole>Structure Section Size</ShortRole>
+        <Role>The section size of the structure stiffener on free edge</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrMaterial" Type="String" Uuid="83b25749-4a5d-471f-8161-17b10c901b30" MaxLength="100" Protection="External" CAAExposition="L0" MultiValuated="No" Faceted="Yes">
+      <Property Name="SIXW" Value="ds6w:constituent"/>
+      <CAAComment>
+        <ShortRole>Structure Material</ShortRole>
+        <Role>The material of the structure stiffener on free edge</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrSync_ID" Type="String" Uuid="7459c192-a719-4235-98ad-e43330867ebf" MaxLength="256" Protection="External" CAAExposition="L0" MultiValuated="No">
+      <CAAComment>
+        <ShortRole>Synchronization ID</ShortRole>
+        <Role>The synchronization ID of the structure stiffener on free edge</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrLength" Type="Double"  Magnitude = "LENGTH" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="59E5AE33-2FF4-4807-B3F0-6BAEC9946D9F">
+      <CAAComment>
+        <ShortRole>Structure stiffener on free edge length</ShortRole>
+        <Role>The length of the structure stiffener on free edge</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrCrossSectionArea" Type="Double"  Magnitude = "AREA" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="E3DFBBF5-8595-4840-BD9A-6E5E9E61431B">
+      <CAAComment>
+        <ShortRole>Structure stiffener on free edge cross section area</ShortRole>
+        <Role>The cross section area of the structure stiffener on free edge</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrOuterSurfaceArea" Type="Double"  Magnitude = "AREA" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="3375CC52-D23A-4844-9F15-878C0C351E9D">
+      <CAAComment>
+        <ShortRole>Structure stiffener on free edge outer surface area</ShortRole>
+        <Role>The outer surface area of the structure stiffener on free edge</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrGrossSurfaceArea" Type="Double"  Magnitude = "AREA" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="904BDC98-2447-4A76-925A-B6A4CDEBC22D">
+      <CAAComment>
+        <ShortRole>Structure stiffener on free edge gross surface area</ShortRole>
+        <Role>The gross surface area of the structure stiffener on free edge</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrNetSurfaceArea" Type="Double"  Magnitude = "AREA" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="013459BD-4C89-4005-9DCE-9FD0CBDD2EAA">
+      <CAAComment>
+        <ShortRole>Structure stiffener on free edge net surface area</ShortRole>
+        <Role>The net surface area of the structure stiffener on free edge</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrGrossVolume" Type="Double"  Magnitude = "VOLUME" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="C5ADCEA8-5B1F-4E05-8EFF-909B551A7FB3">
+      <CAAComment>
+        <ShortRole>Structure stiffener on free edge gross volume</ShortRole>
+        <Role>The gross volume of the structure stiffener on free edge</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrNetVolume" Type="Double"  Magnitude = "VOLUME" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="4EC90593-BD24-4D10-8ABE-3C582B04CB82">
+      <CAAComment>
+        <ShortRole>Structure stiffener on free edge net volume</ShortRole>
+        <Role>The net volume of the structure stiffener on free edge</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrGrossWeight" Type="Double"  Magnitude = "MASS" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="687D4EC4-387B-4C27-93AE-7EFFCB99E25A">
+      <CAAComment>
+        <ShortRole>Structure stiffener on free edge gross weight</ShortRole>
+        <Role>The gross weight of the structure stiffener on free edge</Role>
+      </CAAComment>
+    </Simple>
+    <Simple Name="V_StrNetWeight" Type="Double"  Magnitude = "MASS" Protection="Free" CAAExposition="L0" MultiValuated="No" Uuid="4AEA8E19-361A-484B-A120-1FE915A044D7">
+      <CAAComment>
+        <ShortRole>Structure stiffener on free edge net weight</ShortRole>
+        <Role>The net weight of the structure stiffener on free edge</Role>
+      </CAAComment>
+    </Simple>		
+  </Extension>
+
+  <Extension Name="StrOperation" Uuid="5386E020-D759-46CE-9421-E9115F8AFDB8" CustomerExposition="Programmer" CAAExposition="L0" Abstract="No" ScopeNames="VPMReference">
+    <CAAComment>
+      <ShortRole>PLM Structure Operation Object</ShortRole>
+      <Role>PLM Structure Operation Object</Role>
+    </CAAComment>
+    <Simple Name="V_StrOperationCategory" Type="String" Uuid="130E07E5-4F2A-4C1C-8468-D7A69FE46A7E" MaxLength="256" Protection="External" CAAExposition="L0" MultiValuated="No" Faceted="Yes">
+      <CAAComment>
+        <ShortRole>Structure Operation Category</ShortRole>
+        <Role>The category of the structure operation</Role>
+      </CAAComment>
+    </Simple>
+  </Extension>
+  
+</Package>

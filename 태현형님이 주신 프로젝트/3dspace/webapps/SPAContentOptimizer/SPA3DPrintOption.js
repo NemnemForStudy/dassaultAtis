@@ -1,0 +1,2 @@
+/*!  Copyright 2015 Dassault Systemes. All rights reserved. */
+define("DS/SPAContentOptimizer/SPA3DPrintOption",["DS/CSICommandBinder/CSICommandBinder"],function(n){"use strict";var e=function(){this._sag3D=.02};return e.prototype.SetSag3D=function(n){this._sag3D=n},n.declareType({type:"spa3DPrintOption",serialize:function(n,e){return n.writeDouble("sag3D",e._sag3D),!0},unserialize:function(n){var t=new e;return t._sag3D=n.readDouble("sag3D"),t}}),e});

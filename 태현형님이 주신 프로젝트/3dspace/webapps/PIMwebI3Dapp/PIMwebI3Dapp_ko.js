@@ -1,0 +1,1 @@
+define("DS/PIMwebI3Dapp/PIMwebI3Dapp_ko",{});define("DS/PIMwebI3Dapp/assets/nls/PIMwebI3Dapp",{isr:"간섭 시뮬레이션 열기",itf:"간섭 지표 열기",customApp:"앱 사용자 정의",prefs:"기본 설정",backToIssue:"이슈로 돌아가기"});

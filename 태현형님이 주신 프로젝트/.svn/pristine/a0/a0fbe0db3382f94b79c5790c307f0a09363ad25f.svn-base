@@ -1,0 +1,524 @@
+{
+	"relations": [
+		{
+			"name": "variantValues_to",
+			"queries": [
+				{
+					"definition": [
+						{
+							"navigationType": "relation",
+							"qualityFilter": {
+								"rel_type": "Variant Values"
+							},
+							"direction": "to"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "variantValues_from",
+			"queries": [
+				{
+					"definition": [
+						{
+							"navigationType": "relation",
+							"qualityFilter": {
+								"rel_type": "Variant Values"
+							},
+							"direction": "from"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "groupedVariabilityCriteria_to",
+			"queries": [
+				{
+					"definition": [
+						{
+							"navigationType": "relation",
+							"qualityFilter": {
+								"rel_type": "Grouped Variability Criteria"
+							},
+							"direction": "to"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "groupedVariabilityCriteria_from",
+			"queries": [
+				{
+					"definition": [
+						{
+							"navigationType": "relation",
+							"qualityFilter": {
+								"rel_type": "Grouped Variability Criteria"
+							},
+							"direction": "from"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "configurationFeatures_to",
+			"queries": [
+				{
+					"definition": [
+						{
+							"navigationType": "relation",
+							"qualityFilter": {
+								"rel_type": "Configuration Features"
+							},
+							"direction": "to"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "configurationFeatures_from",
+			"queries": [
+				{
+					"definition": [
+						{
+							"navigationType": "relation",
+							"qualityFilter": {
+								"rel_type": "Configuration Features"
+							},
+							"direction": "from"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "engineeringDefinition_from",
+			"queries": [
+				{
+					"definition": [
+						{
+							"navigationType": "relation",
+							"qualityFilter": {
+								"rel_type": "VPLMrel/PLMConnection/V_Owner"
+							},
+							"direction": "to"
+						},
+						{
+							"navigationType": "SR",
+							"qualityFilter": {
+								"role": "333",
+								"semantics": "1"
+							},
+							"direction": "to"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "engineeringDefinition_to",
+			"queries": [
+				{
+					"definition": [
+						{
+							"navigationType": "SR",
+							"qualityFilter": {
+								"role": "333",
+								"semantics": "1"
+							},
+							"direction": "from"
+						},
+						{
+							"navigationType": "relation",
+							"qualityFilter": {
+								"rel_type": "VPLMrel/PLMConnection/V_Owner"
+							},
+							"direction": "from"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "products_from",
+			"queries": [
+				{
+					"definition": [
+						{
+							"navigationType": "relation",
+							"qualityFilter": {
+								"rel_type": "Products"
+							},
+							"direction": "from"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "products_to",
+			"queries": [
+				{
+					"definition": [
+						{
+							"navigationType": "relation",
+							"qualityFilter": {
+								"rel_type": "Products"
+							},
+							"direction": "to"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "expressioncriteria_from",
+			"queries": [
+				{
+					"definition": [
+						{
+							"navigationType": "path",
+							"qualityFilter": {
+								"path_type": "Expression Criteria"
+							},
+							"direction": "from"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "expressioncriteria_to",
+			"queries": [
+				{
+					"definition": [
+						{
+							"navigationType": "path",
+							"qualityFilter": {
+								"path_type": "Expression Criteria"
+							},
+							"direction": "to",
+							"mode":"first"
+						}
+					],
+                     "keepTypes": [
+                                "Configuration Option",
+                                "Variant Value",
+                                "Variability Option"
+                              ]
+				}
+			]
+		},
+		{
+			"name": "productconfiguration_from",
+			"queries": [
+				{
+					"definition": [
+						{
+							"navigationType": "relation",
+							"qualityFilter": {
+								"rel_type": "Product Configuration"
+							},
+							"direction": "from"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "productconfiguration_to",
+			"queries": [
+				{
+					"definition": [
+						{
+							"navigationType": "relation",
+							"qualityFilter": {
+								"rel_type": "Product Configuration"
+							},
+							"direction": "to"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "associatedmanufacturingplans_from",
+			"queries": [
+				{
+					"definition": [
+						{
+							"navigationType": "relation",
+							"qualityFilter": {
+								"rel_type": "Associated Manufacturing Plans"
+							},
+							"direction": "from"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "associatedmanufacturingplans_to",
+			"queries": [
+				{
+					"definition": [
+						{
+							"navigationType": "relation",
+							"qualityFilter": {
+								"rel_type": "Associated Manufacturing Plans"
+							},
+							"direction": "to"
+						}
+					]
+				}
+			]
+		},
+		{
+            "name": "selectedcriteria_from",
+            "queries": [
+                {
+                    "definition": [
+                        {
+                            "navigationType": "relation",
+                            "qualityFilter": {
+                                "rel_type": "CONFIGURATION STRUCTURES"
+                            },
+                            "direction": "from",
+                            "mode": "stop_at_rel"
+                        },
+                        {
+                            "navigationType": "relation",
+                            "navigate_rel_rel": "true",
+                            "qualityFilter": {
+                                "rel_type": "Selected Options",
+                                "rel_attributes": [
+                                    {
+                                        "configuration_selection_status": "Chosen"
+                                    },
+                                    {
+                                        "configuration_selection_status": "Required"
+                                    },
+                                    {
+                                        "configuration_selection_status": "Default"
+                                    }
+                                ]
+                            },
+                            "direction": "from"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "selectedcriteria_to",
+            "queries": [
+                {
+                    "definition": [
+                        {
+                            "navigationType": "relation",
+                            "navigate_rel_rel": "true",
+                            "qualityFilter": {
+                                "rel_type": "Selected Options",
+                                "rel_attributes": [
+                                    {
+                                        "configuration_selection_status": "Chosen"
+                                    },
+                                    {
+                                        "configuration_selection_status": "Required"
+                                    },
+                                    {
+                                        "configuration_selection_status": "Default"
+                                    }
+                                ]
+                            },
+                            "direction": "to"
+                        },
+                        {
+                            "navigationType": "relation",
+                            "qualityFilter": {
+                                "rel_type": "CONFIGURATION STRUCTURES"
+                            },
+                            "direction": "to"
+                        }
+                    ],
+                    "keepTypes": [
+                        "Configuration Option",
+                        "Variant Value",
+                        "Variability Option"
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "rejectedcriteria_from",
+            "queries": [
+                {
+                    "definition": [
+                        {
+                            "navigationType": "relation",
+                            "qualityFilter": {
+                                "rel_type": "CONFIGURATION STRUCTURES"
+                            },
+                            "direction": "from",
+                            "mode": "stop_at_rel"
+                        },
+                        {
+                            "navigationType": "relation",
+                            "navigate_rel_rel": "true",
+                            "qualityFilter": {
+                                "rel_type": "Selected Options",
+                                "rel_attributes": [
+                                    {
+                                        "configuration_selection_status": "Dismissed"
+                                    },
+                                    {
+                                        "configuration_selection_status": "Incompatible"
+                                    }
+                                ]
+                            },
+                            "direction": "from"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "rejectedcriteria_to",
+            "queries": [
+                {
+                    "definition": [
+                        {
+                            "navigationType": "relation",
+                            "navigate_rel_rel": "true",
+                            "qualityFilter": {
+                                "rel_type": "Selected Options",
+                                "rel_attributes": [
+                                    {
+                                        "configuration_selection_status": "Dismissed"
+                                    },
+                                    {
+                                        "configuration_selection_status": "Incompatible"
+                                    }
+                                ]
+                            },
+                            "direction": "to"
+                        },
+                        {
+                            "navigationType": "relation",
+                            "qualityFilter": {
+                                "rel_type": "CONFIGURATION STRUCTURES"
+                            },
+                            "direction": "to"
+                        }
+                    ],
+                    "keepTypes": [
+                        "Configuration Option",
+                        "Variant Value",
+                        "Variability Option"
+                    ]
+                }
+            ]
+        },
+		{
+            "name": "productunit_to",
+            "queries": [
+                {
+                    "definition": [
+                        {
+                            "navigationType": "relation",
+                            "qualityFilter": {
+                                "rel_type": "Product Build"
+                            },
+                            "direction": "to"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "productunit_from",
+            "queries": [
+                {
+                    "definition": [
+                        {
+                            "navigationType": "relation",
+                            "qualityFilter": {
+                                "rel_type": "Product Build"
+                            },
+                            "direction": "from"
+                        }
+                    ]
+                }
+            ]
+        },
+		{
+            "name": "manufacturingplanunit_to",
+            "queries": [
+                {
+                    "definition": [
+                        {
+                            "navigationType": "relation",
+                            "qualityFilter": {
+                                "rel_type": "Planned Builds"
+                            },
+                            "direction": "to"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "manufacturingplanunit_from",
+            "queries": [
+                {
+                    "definition": [
+                        {
+                            "navigationType": "relation",
+                            "qualityFilter": {
+                                "rel_type": "Planned Builds"
+                            },
+                            "direction": "from"
+                        }
+                    ]
+                }
+            ]
+        },
+		{
+            "name": "productconfigurationunit_to",
+            "queries": [
+                {
+                    "definition": [
+                        {
+                            "navigationType": "relation",
+                            "qualityFilter": {
+                                "rel_type": "Product Configuration Build"
+                            },
+                            "direction": "to"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "productconfigurationunit_from",
+            "queries": [
+                {
+                    "definition": [
+                        {
+                            "navigationType": "relation",
+                            "qualityFilter": {
+                                "rel_type": "Product Configuration Build"
+                            },
+                            "direction": "from"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

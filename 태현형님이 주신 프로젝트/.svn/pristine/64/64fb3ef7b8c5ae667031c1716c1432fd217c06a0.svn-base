@@ -1,0 +1,22 @@
+################################################################################################
+# Create By choimingi 2023. 08. 17
+# Admin Type : command
+# Name : decDocumentInterfaceLogViewFlagChange
+################################################################################################
+
+#del command 'decDocumentInterfaceLogViewFlagChange';
+add command 'decDocumentInterfaceLogViewFlagChange'
+	description 'Document Interface DB IF_FLAG Column Update'
+	label 'emxFramework.Command.decDocumentInterfaceLogViewFlagChange'
+	href '${COMMON_DIR}/decDocumentInterfaceLogViewFlagChangeProcess.jsp'
+	alt 'emxFramework.Command.decDocumentInterfaceLogViewFlagChange'
+	setting 'Confirm Message' 'emxFramework.decDocumentInterfaceLogViewFlagChange.confirmMessage'
+	setting 'Image' '${COMMON_DIR}/images/iconActionRefresh.png'
+    setting 'Registered Suite' 'Framework'
+    setting 'Row Select' 'multi'
+    setting 'Submit' 'true'
+    setting 'Target Location' 'listHidden'
+;
+add property 'command_decDocumentInterfaceLogViewFlagChange' on prog eServiceSchemaVariableMapping.tcl to command 'decDocumentInterfaceLogViewFlagChange';
+
+#mod menu decDILogViewToolbar add command decDocumentInterfaceLogViewFlagChange;

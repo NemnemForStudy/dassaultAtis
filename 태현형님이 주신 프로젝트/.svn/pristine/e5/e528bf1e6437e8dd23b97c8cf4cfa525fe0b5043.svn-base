@@ -1,0 +1,1 @@
+define("DS/RTCollaborateAPI/RTCollaborateAPI_cs",{});define("DS/RTCollaborateAPI/assets/nls/feed",{Contact:"Kontakt"});

@@ -1,0 +1,1 @@
+define("DS/PCOverview/PCOverview_zh",{});define("DS/PCOverview/assets/nls/PCOverviewPresenter",{ERROR_NOT_INDEXED:"所选产品配置未编制索引",ERROR_DIFFERENT_MV:"所选产品配置属于不同的模型版本",ERROR_VARIABILIY_LOAD:"获取可变性信息时出错。",ERROR_DATA_LOAD:"获取产品配置详细信息时出错"});

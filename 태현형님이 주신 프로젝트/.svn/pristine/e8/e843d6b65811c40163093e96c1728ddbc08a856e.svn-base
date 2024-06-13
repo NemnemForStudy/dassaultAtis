@@ -1,0 +1,45 @@
+### 230428 created by cmg
+
+
+copy command PMCImportProject decCodeMasterImport2AddCommand;
+mod command decCodeMasterImport2AddCommand href '${COMMON_DIR}/decCodeMasterImport.jsp';  
+mod command decCodeMasterImport2AddCommand add setting 'Target Location' 'popup';  
+  
+  
+  
+#add command decCodeMasterImport2AddCommand2
+#  label 'emxProgramCentral.Common.Project.Import'
+#  href '${COMMON_DIR}/decCodeMasterImport.jsp'
+#  setting 'Image' '${COMMON_DIR}/images/I_ImportFromFile_32.png'
+#  setting 'Licensed Product' 'ENO_PRF_TP'
+#  setting 'Popup Modal' 'true'
+#  setting 'Registered Suite' 'ProgramCentral'
+#  setting 'Slidein Width' '500'
+#  setting 'Target Location' 'popup'
+#  property 'application' value 'ProgramManagementBase'
+#  property 'installed date' value '06-01-2023'
+#  property 'installer' value 'ENOVIAEngineering'
+#  property 'original name' value 'PMCImportProject'
+#  property 'version' value 'R423.HF7';
+  
+
+# Modified by hslee on 2023.07.26
+mod command decCodeMasterImport2AddCommand
+	label 'Add by excel'
+	href '${COMMON_DIR}/decTaskCompareExcelDialogFS.jsp?type=CodeMasterAdd'
+	add setting 'Access Expression' 'context.user.isassigned[decSystemAdmin]==true && type != "Project Space"'
+;
+
+# Modified by hslee on 2023.09.07
+mod command decCodeMasterImport2AddCommand
+	remove setting 'Licensed Product'
+;
+
+# Modified by choimingi on 2023.09.09
+mod command decCodeMasterCommand
+	add setting 'hasAccess' 'PIM' 
+	add setting 'Access Program' 'decAccess'
+	add setting 'Access Function' 'hasAccess'
+;
+
+

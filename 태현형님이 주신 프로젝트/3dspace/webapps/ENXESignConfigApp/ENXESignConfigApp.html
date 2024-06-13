@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- Copyright 2014 , Dassault Systemes. All rights reserved.  -->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:widget="http://www.netvibes.com/ns/">
+<head>
+
+<!-- Widget Meta Data -->
+<meta name="author" content="Dassault Systemes" />
+<meta name="brand" content="ENOVIA" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="autoRefresh" content="0" />
+<meta name="description" content="ENOVIA ESign Config Management" />
+
+<!-- Widget Title -->
+<title>ESign Config Management</title>
+
+<!-- Widget Preferences -->
+<widget:preferences>
+<preference name="collab-storage" type="list" label="storage_label" defaultValue="">
+        <option value="" label="loading_label" />
+    </preference> 
+<preference name="collabspace" type="list" label="collabspace" defaultValue="">
+        <option value="" label="loading_label" />
+    </preference> 
+    <widget:preference type="hidden" name="eSignName"   defaultValue="" ></widget:preference>
+    <widget:preference type="hidden" name="eSignId"     defaultValue="" ></widget:preference>
+	<widget:preference type="hidden" name="x3dPlatformId"  label="x3dPlatformId"        defaultValue="OnPremise" ></widget:preference>
+</widget:preferences>
+
+<!-- Widget Events -->
+<script>
+
+    widget.addEvents({
+        onLoad : function(event) {
+          	  require(['UWA/Core','DS/ENXESignConfigApp/View/Widget/ESignConfigWidgetInit'], function (UWA, ESignConfigWidgetInit) {
+                  'use strict';
+                  new ESignConfigWidgetInit().onLoad();
+              });
+        },
+
+        onRefresh : function() {
+        	require(['UWA/Core','DS/ENXESignConfigApp/View/Widget/ESignConfigWidgetInit'], function (UWA, ESignConfigWidgetInit) {
+                'use strict';
+                new ESignConfigWidgetInit().onRefresh();
+            });
+        }
+    });
+</script>
+
+</head>
+<body>
+  <!-- Default Loading -->
+  <div class="spinner spinner-lg spinning fade in" style="transform: translate3d(0px, 0px, 0px); display: inline-block; margin-top: 20%; margin-left: 45%;">
+    <span class="spinner-bar"></span>
+    <span class="spinner-bar spinner-bar1"></span>
+    <span class="spinner-bar spinner-bar2"></span>
+    <span class="spinner-bar spinner-bar3"></span>
+  </div>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!-- ENOVIA DICTIONARY  -->
+<!-- COPYRIGHT DASSAULT SYSTEMES 2008, All rights reserved -->
+
+<Package Name="SIMObjSimulationModelRepCnx"  Uuid="8ae2e613-8687-4fa1-a34e-39123d16a07a"  xmlns="PLMDictionaryUnified"
+         ModelerType="Top"  BelongsToModeler="SIMObjSimulation"  UseNames="SIMObjSimulation"
+         CustomerExposition="Programmer" >
+
+    <Class Name="SIMObjectSimulationModelRepCnx"  Uuid="fa3bd482-cbcd-466a-886e-46aaff934f5b"
+           SuperName="SIMObjSimulationConnection"  Abstract="No"
+           CustomerExposition="Programmer" Specializable="No" CustomerExtensible="No" >
+
+      <Property Name="Searchable" Value="No"/>
+      <Property Name="Configurable" Value="No" />
+      <Property Name="Filtrable" Value="No" />
+
+      <Comment>For connecting a Simulation Rep to a referenced/required Model (Product) Rep.
+               This is an alternative to a link created within the Scenario Rep.
+               This Connection specifically supports Power'By use cases.
+      </Comment>
+
+      <Method ImplementationType="None">
+        <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+      </Method>
+
+      <Path Name="TargetModel"  Uuid="48B17880-10B4-4E83-8542-280F78F4AA2D"  Type="SemanticRelation" 
+            RoleName="SIM_UsesModel" Semantics="Reference3"
+            MultiValuated="Yes" 
+            AdaptativeToMinor="No"  SynchroSensitivity="PathAndLast"  RerouteOnEffectivityChange="No"  Orientation="In" >
+            <Comment>Points to the required model Rep(s).</Comment>
+        </Path>
+
+      <Path Name="SourceScenario"  Uuid="78FF0A6E-51F7-44F2-B096-EC0C700B12EC"  Type="SemanticRelation"
+            RoleName="SIM_SrcScenario"  Semantics="Reference5"
+            MultiValuated="No"
+            AdaptativeToMinor="No"  SynchroSensitivity="Last"  RerouteOnEffectivityChange="No"  Orientation="Out" >
+            <Comment>Points to the dependent simulation/scenario Rep.</Comment>
+        </Path>
+
+    </Class>
+
+</Package>

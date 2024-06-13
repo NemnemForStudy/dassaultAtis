@@ -1,0 +1,9 @@
+m|DELWebUIComponents\DELWebModelEvents.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.1.22309|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\DELWebModelEvents\DELWebModelEvents.js|1667619909|377
+s|DELWebUIComponents\DELWebModelEvents.mweb\src\DELWebModelEvents.js|1665570526|1248
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

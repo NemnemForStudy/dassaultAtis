@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <!--<meta name="resource-fetch-mode" content="DIRECT" />-->
+        <!--<meta name="resource-fetch-mode" content="PROXY" />-->
+        <meta name="autoRefresh" content="0" />
+        <title>3DEXPERIENCE Drive</title>
+        <script type="text/javascript" src="../AmdLoader/AmdLoader.js"></script>
+        <script type="text/javascript" src="../WebappsUtils/WebappsUtils.js"></script>
+        <widget:preferences>
+            <preference name="firstlyLoading" type="hidden" defaultValue="true"></preference>
+        </widget:preferences>
+<script type="text/javascript">
+/* global widget, require */
+
+define('DS/W3DDrive/widget', ['DS/W3DDrive/initWidget'], function (initWidget) {
+    'use strict';
+
+    // By default, only one platform is displayed (only applicable if we can get the current platform id)
+    widget.showAllPlatforms = false;
+    // By default, external drives are displayed
+    widget.showExternalDrives = true;
+
+    // Make app instantiate the 3DDrive app using a json conf file: https://bit.ly/3rnB2i9
+    // json_data are pushed to widget.data
+    if (widget && widget.data) {
+        if (widget.data.hasOwnProperty('platformId')) { // platformId is needed if showAllPlatform=false
+            widget.setValue('x3dPlatformId', widget.getValue('platformId'));
+        }
+        if (widget.data.hasOwnProperty('showAllPlatforms')) {
+            widget.showAllPlatforms = widget.getValue('showAllPlatforms');
+        }
+        if (widget.data.hasOwnProperty('showExternalDrives')) {
+            widget.showExternalDrives = widget.getValue('showExternalDrives');
+        }
+    }
+
+    return initWidget(widget);
+});
+
+(function () {
+    'use strict';
+
+    widget.addEvents({
+        onLoad: function () {
+            require([
+                'DS/W3DDrive/Utils/Preferences',
+                'DS/W3DDrive/w3DDriveApp'
+            ], function (
+                Preferences
+            ) {
+                Preferences.runHistory('DSROOT/content');
+            });
+        },
+
+        onEdit: function () {
+            require([
+                'DS/W3DContentApp/BusEvent'
+            ], function (
+                W3DDriveBusEvent
+            ) {
+                W3DDriveBusEvent.dispatchEvent('preferences:onEdit');
+            });
+        },
+
+        onRefresh: function () {
+            require([
+                'DS/W3DContentApp/BusEvent'
+            ], function (
+                W3DDriveBusEvent
+            ) {
+                W3DDriveBusEvent.dispatchEvent('onRefresh');
+            });
+        },
+
+        onSearch: function (query) {
+            require([
+                'DS/W3DContentApp/SearchProxy'
+            ], function (
+                W3DDriveSearchProxy
+            ) {
+                W3DDriveSearchProxy.setQuery(query);
+            });
+        },
+
+        onResetSearch: function () {
+            require([
+                'DS/W3DContentApp/SearchProxy'
+            ], function (
+                W3DDriveSearchProxy
+            ) {
+                W3DDriveSearchProxy.resetQuery();
+            });
+        },
+
+        onPlatformChange : function () {}
+    });
+}());
+</script>
+    </head>
+    <body>
+    </body>
+</html>

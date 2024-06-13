@@ -1,0 +1,1394 @@
+{
+    "version": "0.1",
+    "commands": [{
+            "id": "RootPanel",
+            "afr": {
+                "behavior": "CATAfrHeaderCheck",
+                "AMD": "DS/ENXNav/commands/view/_xNavRootInfoPanel"
+            },
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "checked": {
+                "icon": {
+                    "iconName": "expand-left",
+                    "fontIconFamily": 1
+                }
+            },
+            "unchecked": {
+                "icon": {
+                    "iconName": "expand-right",
+                    "fontIconFamily": 1
+                }
+            },
+            "category": "right",
+            "position": "near"
+        }, {
+            "id": "Home",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/PADServices/commands/HomeCmd"
+            },
+            "HelpResourceFile": "PADServices/PADServicesHelpForCommands",
+            "icon": {
+                "iconName": "home",
+                "fontIconFamily": 1
+            },
+            "category": "home",
+            "position": "near"
+        },
+        {
+            "id": "EditMode",
+            "afr": {
+                "behavior": "CATAfrHeaderCheck",
+                "AMD": "DS/ENOPAD_v2/commands/EditMode"
+            },
+            "type": "RadioItem",
+            "HelpResourceFile": "ENOPAD_v2/ENOPAD_v2HelpForCommands",
+            "checked": {
+                "idNLS": "EditModeLocked",
+                "icon": {
+                    "iconName": "pencil-locked",
+                    "fontIconFamily": 1
+                }
+            },
+            "unchecked": {
+                "idNLS": "EditModeActivated",
+                "icon": {
+                    "iconName": "pencil active",
+                    "fontIconFamily": 1
+                }
+            },
+            "category": "session",
+            "position": "far"
+        },
+        {
+            "id": "ActionBar_ActiveBookmarkCmd",
+            "afr": {
+                "behavior": "CATAfrHeaderCheck",
+                "AMD": "DS/FolderActive/commands/ActionBar_ActiveBookmarkCmd"
+            },
+            "type": "RadioItem",
+            "HelpResourceFile": "FolderActive/ActiveBookmarkCmd",
+            "checked": {
+                "icon": {
+                    "iconName": "bookmark-pin active",
+                    "fontIconFamily": 1
+                }
+            },
+            "unchecked": {
+                "icon": {
+                    "iconName": "bookmark-pin",
+                    "fontIconFamily": 1
+                }
+            },
+            "category": "session"
+        },
+        {
+            "id": "SwitchAuthoringIndex",
+            "afr": {
+                "behavior": "CATAfrHeaderCheck",
+                "AMD": "DS/PADUtils/commands/SwitchAuthoringIndex"
+            },
+            "type": "RadioItem",
+            "HelpResourceFile": "PADUtils/PADUtilsHelpForCommands",
+            "checked": {
+                "idNLS": "authoringMode",
+                "icon": {
+                    "iconName": "database active",
+                    "fontIconFamily": 1
+                }
+            },
+            "unchecked": {
+                "idNLS": "navigationMode",
+                "icon": {
+                    "iconName": "database",
+                    "fontIconFamily": 1
+                }
+            },
+            "category": "session"
+        },
+        {
+            "id": "ReframeAll",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENXNav/commands/xNavActionBarCmds"
+            },
+            "isEnabled": false,
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": {
+                "iconName": "zoom-fit",
+                "fontIconFamily": 1
+            },
+            "category": "graphSection",
+            "position": "far"
+        }, {
+            "id": "ReframeOn",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENXNav/commands/xNavActionBarCmds"
+            },
+            "isEnabled": false,
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": {
+                "iconName": "picture-fit-to-frame",
+                "fontIconFamily": 1
+            },
+            "category": "graphSection",
+            "position": "far"
+        }, {
+            "id": "ToggleOverview",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENXNav/commands/xNavActionBarCmds"
+            },
+            "isEnabled": false,
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": {
+                "iconName": "view-embedded",
+                "fontIconFamily": 1
+            },
+            "category": "graphSection",
+            "position": "far"
+        }, {
+            "id": "SwapThumbState",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENXNav/commands/xNavActionBarCmds"
+            },
+            "isEnabled": false,
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": {
+                "iconName": "chart-thumbnail-graph-move",
+                "fontIconFamily": 1
+            },
+            "category": "graphSection",
+            "position": "far"
+        }, {
+            "id": "graphLayoutsMenu",
+            "typeRepresentation": "functionToolbarMenuRadio",
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "cmds": ["LayoutDown", "LayoutRight", "LayoutUp", "LayoutLeft"],
+            "category": "graphSection",
+            "position": "far"
+        }, {
+            "id": "LayoutDown",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENXNav/commands/xNavActionBarCmds"
+            },
+            "type": "RadioItem",
+            "isEnabled": false,
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": {
+                "iconName": "graph-egraph-down",
+                "fontIconFamily": 1
+            },
+            "state": "selected"
+        }, {
+            "id": "LayoutRight",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENXNav/commands/xNavActionBarCmds"
+            },
+            "type": "RadioItem",
+            "isEnabled": false,
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": {
+                "iconName": "graph-egraph-down wux-ui-3ds-rotate-270",
+                "fontIconFamily": 1
+            }
+        }, {
+            "id": "LayoutUp",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENXNav/commands/xNavActionBarCmds"
+            },
+            "type": "RadioItem",
+            "isEnabled": false,
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": {
+                "iconName": "graph-egraph-down wux-ui-3ds-rotate-180",
+                "fontIconFamily": 1
+            }
+        }, {
+            "id": "LayoutLeft",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENXNav/commands/xNavActionBarCmds"
+            },
+            "type": "RadioItem",
+            "isEnabled": false,
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": {
+                "iconName": "graph-egraph-down wux-ui-3ds-rotate-90",
+                "fontIconFamily": 1
+            }
+        }, {
+            "id": "selectMenu",
+            "typeRepresentation": "functionMenuIconCount",
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": {
+                "iconName": "select-on",
+                "fontIconFamily": 1
+            },
+            "cmds": ["SelectAll", "SelectInversion", "SelectChildren", "SelectParent", "SelectSiblings", "SelectLeaves"],
+            "category": "staticCmdsSection",
+            "position": "far"
+        },
+        {
+            "id": "SelectAll",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENXNav/commands/xNavActionBarCmds"
+            },
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": {
+                "iconName": "flow-cascade",
+                "fontIconFamily": 1
+            }
+        },
+        {
+            "id": "SelectInversion",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENXNav/commands/xNavActionBarCmds"
+            },
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": {
+                "iconName": "flow-cascade-wrong-2",
+                "fontIconFamily": 1
+            }
+        },
+        {
+            "id": "SelectChildren",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENXNav/commands/xNavActionBarCmds"
+            },
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": {
+                "iconName": "flow-children",
+                "fontIconFamily": 1
+            }
+        },
+        {
+            "id": "SelectParent",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENXNav/commands/xNavActionBarCmds"
+            },
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": {
+                "iconName": "flow-cascade-ok-1",
+                "fontIconFamily": 1
+            }
+        },
+        {
+            "id": "SelectSiblings",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENXNav/commands/xNavActionBarCmds"
+            },
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": {
+                "iconName": "flow-cascade-wrong-1",
+                "fontIconFamily": 1
+            }
+        },
+        {
+            "id": "SelectLeaves",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENXNav/commands/xNavActionBarCmds"
+            },
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": {
+                "iconName": "flow-cascade-ok-2",
+                "fontIconFamily": 1
+            }
+        }, {
+            "id": "ctxCmds",
+            "typeRepresentation": "functionMenuIconSimple",
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": {
+                "iconName": "chevron-down",
+                "fontIconFamily": 1
+            },
+            "menuDefinition": {
+                "module": "DS/ENXNav/utils/CtxMenuUtilsV2",
+                "func": "buildMenu"
+            },
+            "category": "custoToolbarSection",
+            "position": "far"
+        },
+        {
+            "id": "newMenu",
+            "typeRepresentation": "functionToolbarMenu",
+            "cmds": ["ActionBar_NewProductCmd", "ActionBar_NewPartCmd", "ActionBar_NewDrawingCmd"],
+            "category": "staticCmdsSection",
+            "position": "far"
+        },
+        {
+            "id": "ActionBar_NewProductCmd",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENOCollabSharingCmds/commands/NewCmd/ActionBar_NewProductCmd",
+                "args": [{
+                    "ID": "Mode",
+                    "Value": "ForceNew"
+                }]
+            },
+            "HelpResourceFile": "ENOCollabSharingCmds/CollaborationCmd",
+            "icon": {
+                "iconName": "3dproduct-add",
+                "fontIconFamily": 1
+            },
+            "state": "selected"
+        },
+        {
+            "id": "ActionBar_InsertNewProductCmd",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENOCollabSharingCmds/commands/NewCmd/ActionBar_InsertNewProductCmd"
+            },
+            "HelpResourceFile": "ENOCollabSharingCmds/CollaborationCmd",
+            "icon": {
+                "iconName": "3dproduct-add",
+                "fontIconFamily": 1
+            },
+            "state": "selected",
+            "deactivated": false
+        },
+        {
+            "id": "ActionBar_NewPartCmd",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENOCollabSharingCmds/commands/NewCmd/ActionBar_NewPartCmd",
+                "args": [{
+                    "ID": "Mode",
+                    "Value": "ForceNew"
+                }]
+            },
+            "HelpResourceFile": "ENOCollabSharingCmds/CollaborationCmd",
+            "icon": {
+                "iconName": "3dpart-add",
+                "fontIconFamily": 1
+            }
+        },
+        {
+            "id": "ActionBar_InsertNewPartCmd",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENOCollabSharingCmds/commands/NewCmd/ActionBar_InsertNewPartCmd"
+            },
+            "HelpResourceFile": "ENOCollabSharingCmds/CollaborationCmd",
+            "icon": {
+                "iconName": "3dpart-add",
+                "fontIconFamily": 1
+            },
+            "deactivated": false
+        },
+        {
+            "id": "ActionBar_NewDrawingCmd",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENOCollabSharingCmds/commands/NewCmd/ActionBar_NewDrawingCmd",
+                "args": [{
+                    "ID": "Mode",
+                    "Value": "ForceNew"
+                }]
+            },
+            "HelpResourceFile": "ENOCollabSharingCmds/CollaborationCmd",
+            "icon": {
+                "iconName": "drawing-add",
+                "fontIconFamily": 1
+            }
+        },
+        {
+            "id": "ActionBar_InsertNewDrawingCmd",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENOCollabSharingCmds/commands/NewCmd/ActionBar_InsertNewDrawingCmd"
+            },
+            "HelpResourceFile": "ENOCollabSharingCmds/CollaborationCmd",
+            "icon": {
+                "iconName": "drawing-add",
+                "fontIconFamily": 1
+            },
+            "deactivated": false
+        },
+        {
+            "id": "UPSAuthInsertExistingProductOrPart",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/UPSCommands/commands/UPSAuthCmdInsertExistingProductOrPart"
+            },
+            "HelpResourceFile": "UPSCommands/UPSCommandsHelpForCommands",
+            "icon": {
+                "iconName": "3dproduct-insert",
+                "fontIconFamily": 1
+            }
+        },
+        {
+            "id": "UPSAuthReplaceByExisting",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/UPSCommands/commands/UPSAuthCmdReplaceByExisting"
+            },
+            "HelpResourceFile": "UPSCommands/UPSCommandsHelpForCommands",
+            "icon": {
+                "iconName": "replace-by-existing",
+                "fontIconFamily": 1
+            }
+        },
+        {
+            "id": "UPSReplaceByLatestRevision",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/UPSCommands/commands/UPSAuthCmdReplaceByLatestRevision"
+            },
+            "HelpResourceFile": "UPSCommands/UPSCommandsHelpForCommands",
+            "icon": {
+                "iconName": "replace-by-latest-version",
+                "fontIconFamily": 1
+            }
+        },
+        {
+            "id": "UPSAuthReplaceByRevision",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/UPSCommands/commands/UPSAuthCmdReplaceByRevision"
+            },
+            "HelpResourceFile": "UPSCommands/UPSCommandsHelpForCommands",
+            "icon": {
+                "iconName": "replace-by-revision",
+                "fontIconFamily": 1
+            }
+        },
+        {
+            "id": "UPSAuthRevisionUpdate",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/UPSCommands/commands/UPSAuthCmdRevisionUpdate"
+            },
+            "HelpResourceFile": "UPSCommands/UPSCommandsHelpForCommands",
+            "icon": {
+                "iconName": "flow-line-update",
+                "fontIconFamily": 1
+            }
+        },
+        {
+            "id": "UPSAuthUnparent",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/UPSCommands/commands/UPSAuthCmdUnparent"
+            },
+            "HelpResourceFile": "UPSCommands/UPSCommandsHelpForCommands",
+            "icon": {
+                "iconName": "tree-delete",
+                "fontIconFamily": 1
+            }
+        },
+        {
+            "id": "UPSAuthReorderProduct",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/UPSCommands/commands/UPSAuthCmdReorder"
+            },
+            "HelpResourceFile": "UPSCommands/UPSCommandsHelpForCommands",
+            "icon": {
+                "iconName": "tree-reorder",
+                "fontIconFamily": 1
+            }
+        },
+        {
+            "id": "ActionBar_Attributes",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENOCollabSharingCmds/commands/EditPropCmd/ActionBar_EditPropCmd"
+            },
+            "HelpResourceFile": "ENOCollabSharingCmds/CollaborationCmd",
+            "icon": {
+                "iconName": "info-open-in-a-new-window",
+                "fontIconFamily": 1
+            }
+        },
+        {
+           "id": "Download",
+           "afr": {
+               "behavior": "CATCommandHeader",
+               "AMD": "DS/ENXNav/commands/Download"
+           },
+           "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+           "icon": {
+               "iconName": "download",
+               "fontIconFamily": 1
+           }
+       },{
+            "id": "SetThePartNumber",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/EngineeringItemCmd/SetPartNumberCmd/SetPartCmd"
+            },
+            "HelpResourceFile": "EngineeringItemCmd/EngineeringHelpForCommands",
+            "icon": {
+                "iconName": "barcode",
+                "fontIconFamily": 1
+            }
+        },
+        {
+            "id": "Copy",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENOPAD_v2/commands/_PADActionBarCmds"
+            },
+            "HelpResourceFile": "ENOPAD_v2/ENOPAD_v2HelpForCommands",
+            "icon": {
+                "iconName": "copy",
+                "fontIconFamily": 1
+            }
+        },
+        {
+            "id": "Cut",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENOPAD_v2/commands/_PADActionBarCmds"
+            },
+            "HelpResourceFile": "ENOPAD_v2/ENOPAD_v2HelpForCommands",
+            "icon": {
+                "iconName": "cut",
+                "fontIconFamily": 1
+            }
+        },
+        {
+            "id": "Paste",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENOPAD_v2/commands/_PADActionBarCmds"
+            },
+            "HelpResourceFile": "ENOPAD_v2/ENOPAD_v2HelpForCommands",
+            "icon": {
+                "iconName": "paste",
+                "fontIconFamily": 1
+            }
+        },
+        {
+            "id": "displayView",
+            "typeRepresentation": "functionToolbarMenuRadio",
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "cmds": ["treeview", "graphview", "tileview", "thumbnailview"],
+            "category": "globalCmdsSection",
+            "position": "far"
+        },
+        {
+            "id": "treeview",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENXNav/commands/xNavActionBarCmds"
+            },
+            "type": "RadioItem",
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": {
+                "iconName": "tree-table",
+                "fontIconFamily": 1
+            },
+            "state": "selected"
+        },
+        {
+            "id": "graphview",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENXNav/commands/xNavActionBarCmds"
+            },
+            "type": "RadioItem",
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": {
+                "iconName": "flow-tree",
+                "fontIconFamily": 1
+            }
+        },
+        {
+            "id": "tileview",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENXNav/commands/xNavActionBarCmds"
+            },
+            "type": "RadioItem",
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": {
+                "iconName": "view-small-tile",
+                "fontIconFamily": 1
+            }
+        },
+        {
+            "id": "thumbnailview",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENXNav/commands/xNavActionBarCmds"
+            },
+            "type": "RadioItem",
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": {
+                "iconName": "view-small-thb",
+                "fontIconFamily": 1
+            }
+        },
+        {
+            "id": "ExpandAll",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENXNav/commands/xNavActionBarCmds"
+            },
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": {
+                "iconName": "flow-tree-expand-down",
+                "fontIconFamily": 1
+            }
+        },
+        {
+            "id": "ExpandN",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENXNav/commands/xNavActionBarCmds"
+            },
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": {
+                "iconName": "flow-tree-expand-down-cog",
+                "fontIconFamily": 1
+            }
+        },
+        {
+            "id": "CollapseAll",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENXNav/commands/xNavActionBarCmds"
+            },
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": {
+                "iconName": "flow-tree-expand-up",
+                "fontIconFamily": 1
+            }
+        },
+        {
+            "id": "CleanAll",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENXNav/commands/xNavActionBarCmds"
+            },
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": {
+                "iconName": "wrong",
+                "fontIconFamily": 1
+            },
+            "category": "globalCmdsSection",
+            "position": "far"
+        },
+        {
+            "id": "RightSidePanel",
+            "afr": {
+                "behavior": "CATAfrHeaderCheck",
+                "AMD": "DS/ENXNav/commands/view/xNavRightSidePanel"
+            },
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "checked": {
+                "icon": {
+                    "iconName": "info active",
+                    "fontIconFamily": 1
+                }
+            },
+            "unchecked": {
+                "icon": {
+                    "iconName": "info",
+                    "fontIconFamily": 1
+                }
+            },
+            "category": "globalCmdsSection",
+            "position": "far"
+
+        },
+        {
+            "id": "staticCmdCtx",
+            "typeRepresentation": "functionMenuIconSimple",
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": {
+                "iconName": "menu-dot",
+                "fontIconFamily": 1
+            },
+            "menuDefinition": "staticCmdCtx",
+            "category": "globalCmdsSection",
+            "position": "far"
+        },
+        {
+            "id": "RelationIPExplorer",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENXNav/commands/xNavActionBarCmds"
+            },
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": {
+                "iconName": "object-related",
+                "fontIconFamily": 1
+            },
+            "category": "staticCmdsSection"
+        },
+        {
+            "id": "DefineFilter",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENXNav/commands/tools/xNavFilterCmds",
+                "args": [{
+                    "ID": "AuthorizeConfFilter",
+                    "Value": "true"
+                }]
+            },
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": {
+                "iconName": "filter",
+                "fontIconFamily": 1
+            }
+        },
+        {
+            "id": "Print",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENXNav/commands/tools/ExportAs",
+                "args": [{
+                        "ID": "ExportAs",
+                        "Value": "html"
+                    },
+                    {
+                        "ID": "TargetDiv",
+                        "Value": "pse-root"
+                    }
+                ]
+            },
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": {
+                "iconName": "print",
+                "fontIconFamily": 1
+            }
+        },
+        {
+            "id": "ExportCSV",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENXNav/commands/tools/ExportAs",
+                "args": [{
+                        "ID": "ExportAs",
+                        "Value": "csv"
+                    },
+                    {
+                        "ID": "TargetDiv",
+                        "Value": "pse-root"
+                    }
+                ]
+            },
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": {
+                "iconName": "export-to-csv",
+                "fontIconFamily": 1
+            }
+        },
+        {
+            "id": "ExportV5",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENOExportV5WebCommands/commands/ExportV5PSECmd"
+            },
+            "HelpResourceFile": "ENOExportV5WebCommands/ENOV5HelpForCommand",
+            "icon": {
+                "iconName": "export-to-v5",
+                "fontIconFamily": 1
+            }
+        },
+        {
+            "id": "GenerateDFCmd",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENODOManagementCmds/commands/PSEDOGenerationCommand"
+            },
+            "HelpResourceFile": "ENODOManagementCmds/ENODerivedFormatHelp",
+            "icon": {
+                "iconName": "derived-output",
+                "fontIconFamily": 1
+            }
+        },
+        {
+            "id": "ColumnVisibility",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENXNav/commands/xNavActionBarCmds"
+            },
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": {
+                "iconName": "attributes-cog",
+                "fontIconFamily": 1
+            }
+        },
+        {
+            "id": "CustomizeToolbar",
+            "deactivated": true,
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENXNav/commands/CustomizeToolbar",
+                "args": [{
+                    "ID": "TargetDiv",
+                    "Value": "pse-root"
+                }]
+            },
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": {
+                "iconName": "cog",
+                "fontIconFamily": 1
+            }
+        },
+        {
+            "id": "MaturityHdr",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/LifecycleCmd/MaturityCmd"
+            },
+            "HelpResourceFile": "LifecycleWidget/LifecycleCmd",
+            "icon": {
+                "iconName": "collaborative-lifecycle-management",
+                "fontIconFamily": 1
+            }
+        },
+        {
+            "id": "RevisionHdr",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/LifecycleCmd/ReviseCmd"
+            },
+            "HelpResourceFile": "LifecycleWidget/LifecycleCmd",
+            "icon": {
+                "iconName": "flow-line-add",
+                "fontIconFamily": 1
+            }
+        },
+        {
+            "id": "NewBranchHdr",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/LifecycleCmd/NewBranchCmd"
+            },
+            "HelpResourceFile": "LifecycleWidget/LifecycleCmd",
+            "icon": {
+                "iconName": "flow-branch-add",
+                "fontIconFamily": 1
+            }
+        },
+        {
+            "id": "ReviseFromHdr",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/LifecycleCmd/ReviseFromCmd"
+            },
+            "HelpResourceFile": "LifecycleWidget/LifecycleCmd",
+            "icon": {
+                "iconName": "flow-branch-add wux-ui-3ds-flip-vertical",
+                "fontIconFamily": 1
+            }
+        },
+        {
+            "id": "DeleteHdr",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/LifecycleCmd/DeleteCmd"
+            },
+            "HelpResourceFile": "LifecycleWidget/LifecycleCmd",
+            "icon": {
+                "iconName": "close",
+                "fontIconFamily": 1
+            }
+        },
+        {
+            "id": "DuplicateHdr",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/LifecycleCmd/DuplicateCmd"
+            },
+            "HelpResourceFile": "LifecycleWidget/LifecycleCmd",
+            "icon": {
+                "iconName": "duplicate",
+                "fontIconFamily": 1
+            }
+        },
+        {
+            "id": "CompareHdr",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/CompareCmd/CompareCmd"
+            },
+            "HelpResourceFile": "LifecycleWidget/LifecycleCmd",
+            "icon": {
+                "iconName": "part-compare",
+                "fontIconFamily": 1
+            }
+        },
+        {
+            "id": "HistoryHdr",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/LifecycleCmd/HistoryCmd"
+            },
+            "HelpResourceFile": "LifecycleWidget/LifecycleCmd",
+            "icon": {
+                "iconName": "flow-branch-list",
+                "fontIconFamily": 1
+            }
+        },
+        {
+            "id": "ActionBar_AccessRightCmd",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENOCollabSharingCmds/commands/AccessRightCmd/ActionBar_AccessRightCmd"
+            },
+            "HelpResourceFile": "ENOCollabSharingCmds/CollaborationCmd",
+            "icon": {
+                "iconName": "topbar-share",
+                "fontIconFamily": 1
+            }
+        },
+        {
+            "id": "ActionBar_ChangeOwner",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENOCollabSharingCmds/commands/TransferOwnershipCmd/ActionBar_ChangeOwnerCmd"
+            },
+            "HelpResourceFile": "ENOCollabSharingCmds/CollaborationCmd",
+            "icon": {
+                "iconName": "move-to",
+                "fontIconFamily": 1
+            }
+        },
+        {
+            "id": "ActionBar_TransferOwnership",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENOCollabSharingCmds/commands/TransferOwnershipCmd/ActionBar_TransferOwnershipCmd"
+            },
+            "HelpResourceFile": "ENOCollabSharingCmds/CollaborationCmd",
+            "icon": {
+                "iconName": "user-change",
+                "fontIconFamily": 1
+            }
+        },
+        {
+            "id": "ActionBar_ReserveCmd",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENOCollabSharingCmds/commands/ReserveCmd/ActionBar_ReserveCmd"
+            },
+            "HelpResourceFile": "ENOCollabSharingCmds/CollaborationCmd",
+            "icon": {
+                "iconName": "lock",
+                "fontIconFamily": 1
+            }
+        },
+        {
+            "id": "ActionBar_UnreserveCmd",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENOCollabSharingCmds/commands/UnreserveCmd/ActionBar_UnreserveCmd"
+            },
+            "HelpResourceFile": "ENOCollabSharingCmds/CollaborationCmd",
+            "icon": {
+                "iconName": "lock-open",
+                "fontIconFamily": 1
+            }
+        },
+        {
+            "id": "EditConfigurationContext",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/CfgConfigurationCommands/commands/CfgEditConfigurationContextCmd"
+            },
+            "HelpResourceFile": "CfgConfigurationCommands/ENOCfgEditContextHelpForCommands",
+            "icon": {
+                "iconName": "3dproduct-pencil",
+                "fontIconFamily": 1
+            }
+        },
+        {
+            "id": "EditVariant",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/CfgEffectivityCommands/commands/CfgVariantEffectivityCmd"
+            },
+            "HelpResourceFile": "ENOPS_app/help",
+            "icon": {
+                "iconName": "pencil",
+                "fontIconFamily": 1
+            }
+        },
+        {
+            "id": "EditEvolution",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/CfgEffectivityCommands/commands/CfgEvolutionCmd"
+            },
+            "HelpResourceFile": "ENOPS_app/help",
+            "icon": {
+                "iconName": "pencil",
+                "fontIconFamily": 1
+            }
+        },
+        {
+            "id": "CopyVariantEffectivity",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/CfgEffectivityCommands/commands/CfgCopyEffectivityCmd"
+            },
+            "HelpResourceFile": "ENOPS_app/help",
+            "icon": {
+                "iconName": "copy",
+                "fontIconFamily": 1
+            }
+        },
+        {
+            "id": "PasteVariantEffectivity",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/CfgEffectivityCommands/commands/CfgPasteEffectivityCmd"
+            },
+            "HelpResourceFile": "ENOPS_app/help",
+            "icon": {
+                "iconName": "paste",
+                "fontIconFamily": 1
+            }
+        },
+        {
+            "id": "CopyEvolutionEffectivity",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/CfgEffectivityCommands/commands/CfgCopyEvolutionEffectivityCmd"
+            },
+            "HelpResourceFile": "ENOPS_app/help",
+            "icon": {
+                "iconName": "copy",
+                "fontIconFamily": 1
+            }
+        },
+        {
+            "id": "PasteEvolutionEffectivity",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/CfgEffectivityCommands/commands/CfgPasteEvolutionEffectivityCmd"
+            },
+            "HelpResourceFile": "ENOPS_app/help",
+            "icon": {
+                "iconName": "paste",
+                "fontIconFamily": 1
+            }
+        },
+        {
+            "id": "SubscribeHdr",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENOSubscriptionMgmt/Commands/Subscribe"
+            },
+            "HelpResourceFile": "ENOSubscriptionMgmt/ENOSubscriptionHelp",
+            "icon": {
+                "iconName": "bell-add",
+                "fontIconFamily": 1
+            }
+        },
+        {
+            "id": "UnSubscribeHdr",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENOSubscriptionMgmt/Commands/UnSubscribe"
+            },
+            "HelpResourceFile": "ENOSubscriptionMgmt/ENOSubscriptionHelp",
+            "icon": {
+                "iconName": "bell-delete",
+                "fontIconFamily": 1
+            }
+        },
+        {
+            "id": "EditSubscribeHdr",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENOSubscriptionMgmt/Commands/EditSubscribe"
+            },
+            "HelpResourceFile": "ENOSubscriptionMgmt/ENOSubscriptionHelp",
+            "icon": {
+                "iconName": "bell-pencil",
+                "fontIconFamily": 1
+            }
+        },
+        {
+            "id": "MySubscriptionsHdr",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENOSubscriptionMgmt/Commands/MySubscriptions"
+            },
+            "HelpResourceFile": "ENOSubscriptionMgmt/ENOSubscriptionHelp",
+            "icon": {
+                "iconName": "bell",
+                "fontIconFamily": 1
+            },
+            "deactivated": true
+        },
+        {
+            "id": "InsertExisting",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/UPSCommands/commands/UPSAuthCmdCutCopyPaste"
+            },
+            "noUXAvailable": true
+        },
+        {
+            "id": "AddRoot",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/PADUtils/commands/PADAddRoot_cmd"
+            },
+            "noUXAvailable": true
+        },
+        {
+            "id": "Uncut",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENOPAD_v2/commands/_PADActionBarCmds"
+            },
+            "noUXAvailable": true
+        }, {
+            "id": "FindInCtxCmd",
+            "deactivated": true,
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENXNav/commands/FindInCtxCmd",
+                "args": [{
+                    "ID": "TargetDiv",
+                    "Value": "pse-root"
+                }]
+            },
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": {
+                "iconName": "search-filter",
+                "fontIconFamily": 1
+            }
+        }, {
+            "id": "FindCmd",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENXNav/commands/FindCmd",
+                "args": [{
+                    "ID": "TargetDiv",
+                    "Value": "pse-root"
+                }]
+            },
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": {
+                "iconName": "find",
+                "fontIconFamily": 1
+            }
+        },
+        {
+            "id": "CloseSelectedCmd",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENXNav/commands/CloseSelectedCmd"
+            },
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": {
+                "iconName": "wrong",
+                "fontIconFamily": 1
+            },
+            "enforceAvailability": true
+        },
+        {
+            "id": "FocusOnCmd",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENXNav/commands/FocusOnCmd"
+            },
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": {
+                "iconName": "zoom-fit",
+                "fontIconFamily": 1
+            }
+        },
+        {
+            "id": "HideIn3DCmd",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENXNav/commands/HideIn3DCmd"
+            },
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": {
+                "iconName": "eye-off",
+                "fontIconFamily": 1
+            },
+            "toggle": "ShowIn3DCmd"
+        },
+        {
+            "id": "ShowIn3DCmd",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENXNav/commands/ShowIn3DCmd"
+            },
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": {
+                "iconName": "eye",
+                "fontIconFamily": 1
+            },
+            "toggle": "HideIn3DCmd"
+        }, {
+            "id": "ExpandThumbsCmd",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENXNav/commands/ExpandThumbsCmd"
+            },
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": {
+                "iconName": "chart-thumbnail-graph-move",
+                "fontIconFamily": 1
+            },
+            "toggle": "CollapseThumbsCmd",
+            "availableInView": "graphview"
+        }, {
+            "id": "CollapseThumbsCmd",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENXNav/commands/CollapseThumbsCmd"
+            },
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": {
+                "iconName": "chart-thumbnail-graph-move",
+                "fontIconFamily": 1
+            },
+            "toggle": "ExpandThumbsCmd",
+            "availableInView": "graphview"
+        }, {
+            "id": "EditInTableCmd",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENOPAD_v2/commands/EditInTableCmd"
+            },
+            "HelpResourceFile": "ENOPAD_v2/ENOPAD_v2HelpForCommands",
+            "icon": {
+                "iconName": "rename",
+                "fontIconFamily": 1
+            },
+            "commandAvailabilityValidation": true
+        }, {
+            "id": "FilterDropObjects",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENXNav/commands/FilterDropObjects"
+            },
+            "noUXAvailable": true
+        }, {
+            "id": "RequestSyncCmd",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENOXCADSynchroStatus/cmd/RequestSyncCmd"
+            },
+            "HelpResourceFile": "ENOXCADSynchroStatus/RequestSyncCmd",
+            "icon": {
+                "iconName": "sync",
+                "fontIconFamily": 1
+            },
+            "deactivated": true
+        }, {
+            "id": "CopyLink",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENXNav/commands/CopyLink"
+            },
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": {
+                "iconName": "link",
+                "fontIconFamily": 1
+            },
+            "enforceAvailability": true
+        },
+        {
+            "id": "FocusOnGroups",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENXNav/commands/FocusOnGroups"
+            },
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": {
+                "iconName": "select-on",
+                "fontIconFamily": 1
+            }
+        }, {
+            "id": "ColorizeGroup",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENXNav/commands/ColorizeGroup"
+            },
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": {
+                "iconName": "palette",
+                "fontIconFamily": 1
+            },
+            "deactivated":true
+        },{
+            "id": "RemoveGroupColor",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENXNav/commands/RemoveGroupColor"
+            },
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": {
+                "iconName": "broom",
+                "fontIconFamily": 1
+            },
+            "deactivated":true
+        },
+        {
+            "id": "ExpandAllGroups",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENXNav/commands/ExpandAllGroups"
+            },
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": {
+                "iconName": "flow-tree-expand-down",
+                "fontIconFamily": 1
+            }
+        }, {
+            "id": "GroupsLayoutCompact",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENXNav/commands/GroupsLayoutCompact"
+            },
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": {
+                "iconName": "tree-view-flattened",
+                "fontIconFamily": 1
+            },
+            "selected": true
+        }, {
+            "id": "GroupsLayoutPath",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENXNav/commands/GroupsLayoutPath"
+            },
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": {
+                "iconName": "tree-view-all",
+                "fontIconFamily": 1
+            },
+            "selected": true
+        },
+        {
+            "id": "RemoveAndResetExpand",
+            "afr": {
+                "behavior": "CATCommandHeader",
+                "AMD": "DS/ENOPAD_v2/commands/_PADActionBarCmds"
+            },
+            "HelpResourceFile": "ENOPAD_v2/ENOPAD_v2HelpForCommands",
+            "icon": {
+                "iconName": "refresh",
+                "fontIconFamily": 1
+            },
+            "selected": false
+        }
+    ]
+}

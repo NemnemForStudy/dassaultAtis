@@ -1,0 +1,1 @@
+define("DS/DeleteActionHandler/DeleteActionHandler_fr",{});define("DS/DeleteActionHandler/assets/nls/DeleteActionHandlerNls",{delete_:"Supprimer"});

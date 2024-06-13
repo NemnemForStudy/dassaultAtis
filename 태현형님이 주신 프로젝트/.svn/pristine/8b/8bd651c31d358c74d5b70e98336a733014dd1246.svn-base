@@ -1,0 +1,145 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:widget="http://www.netvibes.com/ns/">
+<head>
+<link rel="stylesheet" type="text/css" href="../c/UWA/assets/css/standalone.css" />
+<script type="text/javascript" src="../AmdLoader/AmdLoader.js"></script>
+<link href="http://web3dinfra/WUXShowRoom/i_framed_sample.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="../UIKIT/UIKIT.css">
+<script type="text/javascript" src="../c/UWA/js/UWA_Standalone_Alone.js"></script>
+<script>
+	require(['UWA/Drivers/Alone', 'DS/RTCollaborateAPI/RTCollaborateAPI', 'DS/RTShareAPI/RTShareAPI', 'DS/UIKIT/Input/Button', 'DS/MessageBus/MessageBus'], function (UWA, RTCollabAPI, RTShareAPI, Button, justHereToLoadMessageBus) {		
+
+		var coreviewStatus = document.getElementById("coreviewStatus");
+		var coreviewDashboard = document.getElementById("coreviewDashboard");
+		var btnShareWith = new Button({ value: "Start coreview with ..." });
+		btnShareWith.inject(coreviewStatus,'before');		
+		var btnShareStop = new Button({ value: "Stop coreview" });
+		btnShareStop.inject(coreviewStatus,'before');
+		btnShareStop.hide();
+
+		var removeConfettis = function () {
+			var confettis = document.getElementsByClassName('confetti');
+			while (confettis[0])
+				confettis[0].destroy();
+		};
+
+		var coreview;
+		window.top.document.PlatformAPI.subscribe("towidget.im.ds.com", function(data){// fake swym init sketch
+			if (data.action == "initCoreview") {
+				coreviewStatus.innerText = "Coreview initiated.";
+				coreview = new RTCollabAPI(Object.assign(data,{
+					PlatformAPI:window.top.document.PlatformAPI,
+					onCollabStart : function(data) {
+						coreviewStatus.innerText = "Coreview ON. "+data.room_id;
+						coreviewStatus.style.background = "green";
+						btnShareWith.hide();
+						btnShareStop.show();
+						coreviewDashboard.style.border="2px dashed darkred";
+					},
+					onCollabStop : function() {
+						coreviewStatus.innerText = "Coreview OFF";
+						coreviewStatus.style.background = "red";
+						btnShareWith.show();
+						btnShareStop.hide();
+						removeConfettis();
+					},
+					onDataReceived : function(data) {
+						if (!data) return UWA.log("onDataReceived : bad data format");
+						if (data.text)
+							coreviewDashboard.value = data.text;
+						if (data.newdiv)
+						{
+							var style = JSON.parse(data.newdiv);
+							var newdiv = new UWA.createElement('div',{'styles':style, "class":'confetti'});
+							newdiv.inject(document.getElementById('collabAPIdemo'));
+						}
+					}
+				}));
+				window.top.document.coreview=coreview;
+			}
+		});
+		window.top.document.PlatformAPI.subscribe("toswym.im.ds.com", function(data){// fake swym init sketch
+			if (data.action == "acceptCoreview") {
+				coreviewStatus.innerText = "Coreview accepted.";
+				coreview = new RTCollabAPI(Object.assign(data,{
+					PlatformAPI:window.top.document.PlatformAPI,
+					onCollabStart : function(data) {
+						coreviewStatus.innerText = "Coreview ON. "+data.room_id;
+						coreviewStatus.style.background = "green";
+						btnShareWith.hide();
+						btnShareStop.show();
+						coreviewDashboard.style.border="2px dashed darkred";
+					},
+					onCollabStop : function() {
+						coreviewStatus.innerText = "Coreview OFF";
+						coreviewStatus.style.background = "red";
+						btnShareWith.show();
+						btnShareStop.hide();
+						removeConfettis();
+					},
+					onDataReceived : function(data) {
+						if (!data) return UWA.log("onDataReceived : bad data format");
+						if (data.text)
+							coreviewDashboard.value = data.text;
+						if (data.newdiv)
+						{
+							var style = JSON.parse(data.newdiv);
+							var newdiv = new UWA.createElement('div',{'styles':style, "class":'confetti'});
+							newdiv.inject(document.getElementById('collabAPIdemo'));
+						}
+					}
+				}));
+				window.top.document.coreview=coreview;
+			}
+			else console.error("unknown action from toswym"+data.action);
+		});
+
+		coreviewDashboard.onkeyup = function(evt) {
+			if (coreview.isCollabStarted) {
+				/*if (coreview.isMaster) */coreview.sendData({text : coreviewDashboard.value});
+				//else alert('You are editing the dashboard but you are not the master of the coreview !');
+			}
+		};
+		
+		coreviewDashboard.onclick = function(evt) {
+			var style = {
+				'position':'absolute',
+				'top':evt.pageY-32+'px',
+				'left':evt.pageX-32+'px',
+				"width":"64px",
+				"height":"64px",
+				"border-radius":"50%",
+				'background':'rgb('+Math.floor(Math.random()*255)+','+Math.floor(Math.random()*255)+','+Math.floor(Math.random()*255)+')'
+				};
+			var randomdiv = new UWA.createElement('div', {'styles':style, "class":'confetti'});
+			randomdiv.inject(document.getElementById('collabAPIdemo'));
+			coreview.sendData({newdiv : JSON.stringify(style)});
+		};	
+		
+		document.coreviewConfetti = coreview;
+		
+		/*var share = new RTShareAPI({content : {type : "coreview", channel:coreview.channel}});		
+		btnShareWith.addEvent('onClick', share.item.handler);*/
+//		btnShareWith.inject(document.getElementById('coreviewStatus'),'before');
+
+		btnShareWith.addEvent('onClick', function() {
+			//coreview.start();
+			window.top.document.PlatformAPI.publish("towidget.im.ds.com",{action:'initCoreview',login:[{login:'p8d'},{login:'pne1'}]});
+		});		
+		btnShareStop.addEvent('onClick', function() {
+			coreview.destroy();
+		});
+	});
+</script>
+</head>
+<body>
+	<article id="collabAPIdemo"><center><h3>Co-Review API</h3></center>
+		<span id="coreviewStatus" style="background:red">Coreview OFF</span>
+		<br>
+		<textarea id="coreviewDashboard" style="width:100%; height:200px; background:white; color:black;"></textarea>
+	</article>
+</body>
+</html>

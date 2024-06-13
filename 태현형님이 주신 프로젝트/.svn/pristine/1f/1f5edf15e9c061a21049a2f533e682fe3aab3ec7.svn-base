@@ -1,0 +1,1 @@
+define("DS/DMUReviewFacets/DMUReviewFacets_pl",{});define("DS/DMUReviewFacets/assets/nls/DMUReviewFacets",{noHighlight:"Wybrany przegląd nie zawiera żadnych wyróżnień",noCheck:"Wybrany przegląd nie zawiera żadnych sprawdzeń"});

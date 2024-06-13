@@ -1,0 +1,9 @@
+m|VCXWebDigger\VCXWebDiggerKernel.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.0.22256|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\VCXWebDiggerKernel\VCXWebDiggerKernel.js|1663103471|14151
+s|VCXWebDigger\VCXWebDiggerKernel.mweb\src\VCXDiggerKernel.js|1662360809|47690
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

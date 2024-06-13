@@ -1,0 +1,19 @@
+# Added by hslee on 2023.08.31
+# del command decBMTrackingListLink;
+add command decBMTrackingListLink
+	label 'emxProgramCentral.Label.BMTracking'
+	href '${COMMON_DIR}/emxIndentedTable.jsp?table=decBMTrackingSummary&program=decMaterial:getBMTrackingList&header=emxProgramCentral.Label.BMTracking&toolbar=decBMTrackingSummaryToolbar&maxCellsToDraw=2000&scrollPageSize=50&pageSize=300&showPaginationToggle=false&freezePane=UNIT_NM,IDENT_CD&sortColumnName=IDENT_CD,UNIT_NM'
+	setting 'Target Location' 'content'
+	setting 'Registered Suite' 'ProgramCentral'
+	setting 'Access Expression' '(type == "Project Space" && attribute[decProjectType] == ongoing) || (type == "decCWPTask" && to[Project Access Key].from.from[Project Access List].to.attribute[decProjectType] == ongoing)'
+;
+
+# Modified by hslee on 2023.09.13
+mod command decBMTrackingListLink
+	href '${COMMON_DIR}/emxIndentedTable.jsp?table=decBMTrackingSummary&program=decMaterial:getBMTrackingList&header=emxProgramCentral.Label.BMTracking&maxCellsToDraw=2000&scrollPageSize=50&pageSize=300&showPaginationToggle=false&freezePane=UNIT_NM,IDENT_CD&sortColumnName=IDENT_CD,UNIT_NM&slideinFilter=true&filterParam=codeMaster:Discipline,codeMaster:Construction Item Type,codeMaster:Item Group,codeMaster:Group&showHierarchyFrame=false'
+;
+
+# Modified by thok on 2023.11.01
+mod command decBMTrackingListLink
+	add setting 'Access Expression' '(type == "Project Space") || (type == "decCWPTask" && to[Project Access Key].from.from[Project Access List].to.attribute[decProjectType] == ongoing)'
+;

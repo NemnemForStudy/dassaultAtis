@@ -1,0 +1,393 @@
+{
+    "schema": {
+        "type": "object",
+        "properties": {
+            "thumbnail": {
+                "type": "string",
+                "title": "Thumbnail",
+                "x-display": "custom-ds-file-input"
+            },
+            "visibilities": {
+                "type": "object",
+                "title": "Community visibility",
+                "properties": {
+                    "access": {
+                        "type": "string",
+                        "title": "For employees",
+                        "oneOf": [
+                            {
+                                "title": "Public",
+                                "const": "1"
+                            },
+                            {
+                                "title": "Private",
+                                "const": "0"
+                            },
+                            {
+                                "title": "Secret",
+                                "const": "4"
+                            }
+                        ],
+                        "x-display": "radio",
+                        "x-cols": 6
+                    },
+                    "extranet_access": {
+                        "type": "string",
+                        "title": "For external collaborators",
+                        "oneOf": [
+                            {
+                                "title": "Public",
+                                "const": "1"
+                            },
+                            {
+                                "title": "Private",
+                                "const": "0"
+                            },
+                            {
+                                "title": "Secret",
+                                "const": "4"
+                            },
+                            {
+                                "title": "Disabled",
+                                "const": "-1"
+                            }
+                        ],
+                        "x-display": "radio",
+                        "x-cols": 6
+                    }
+                },
+                "if": {
+                    "type": "object",
+                    "required": [
+                        "access"
+                    ],
+                    "properties": {
+                        "access": {
+                            "const": "1"
+                        }
+                    }
+                },
+                "then": {
+                    "properties": {
+                        "blacklist_by_default": {
+                            "type": "boolean",
+                            "title": "Deactivate content display in What’s New",
+                            "description": "If selected, users will not see the community’s contributions in the What’s New. To see them, they can select Follow community in My communities.On selecting this option, the change will only affect non explicit members of the community.",
+                            "x-cols": 6
+                        }
+                    }
+                },
+                "else": {
+                    "properties": {
+                        "blacklist_by_default_off": {
+                            "type": "boolean",
+                            "title": "Deactivate content display in What’s New",
+                            "default": false,
+                            "x-options": {
+                                "disableAll": true
+                            },
+                            "description": "If selected, users will not see the community’s contributions in the What’s New. To see them, they can select Follow community in My communities.On selecting this option, the change will only affect non explicit members of the community.",
+                            "x-cols": 6
+                        }
+                    }
+                }
+            },
+            "features": {
+                "type": "object",
+                "title": "Community features",
+                "properties": {
+                    "question": {
+                        "properties": {
+                            "is_enabled": {
+                                "type": "boolean",
+                                "title": "Questions",
+                                "x-display": "switch"
+                            }
+                        },
+                        "if": {
+                            "type": "object",
+                            "required": [
+                                "is_enabled"
+                            ],
+                            "properties": {
+                                "is_enabled": {
+                                    "const": true
+                                }
+                            }
+                        },
+                        "then": {
+                            "properties": {
+                                "min_acl": {
+                                    "type": "boolean",
+                                    "title": "Allow contributors to create"
+                                },
+                                "template": {
+                                    "type": "string",
+                                    "title": "Form template",
+                                    "x-display": "custom-ds-3dsearch-input",
+                                    "x-props": {
+                                        "serviceName": "3DSwym",
+                                        "servicePath": "api/templates/business-experience-extract",
+                                        "searchPrecondition": "([ds6w:type]:\"swym:Question\")"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "divider_1": {
+                        "x-style": "border-top: 1px solid #E2E4E3",
+                        "x-class": "pt-5"
+                    },
+                    "ideation": {
+                        "properties": {
+                            "is_enabled": {
+                                "type": "boolean",
+                                "title": "Ideas",
+                                "x-display": "switch"
+                            }
+                        },
+                        "if": {
+                            "type": "object",
+                            "required": [
+                                "is_enabled"
+                            ],
+                            "properties": {
+                                "is_enabled": {
+                                    "const": true
+                                }
+                            }
+                        },
+                        "then": {
+                            "properties": {
+                                "min_acl": {
+                                    "type": "boolean",
+                                    "title": "Allow contributors to create"
+                                },
+                                "status_list": {
+                                    "type": "array",
+                                    "title": "Status list: (You can not get less than three status)",
+                                    "x-itemTitle": "title",
+                                    "x-options": {
+                                        "arrayItemCardProps": {
+                                            "outlined": true
+                                        },
+                                        "arrayItemColProps": {
+                                            "cols": 4
+                                        },
+                                        "editMode": "inline"
+                                    },
+                                    "x-class": "pr-10 pb-10",
+                                    "items": {
+                                        "type": "object",
+                                        "required": [
+                                            "title",
+                                            "color"
+                                        ],
+                                        "properties": {
+                                            "title": {
+                                                "type": "string",
+                                                "title": "Title"
+                                            },
+                                            "color": {
+                                                "type": "string",
+                                                "format": "hexcolor",
+                                                "title": "Color"
+                                            }
+                                        }
+                                    },
+                                    "minItems": 3
+                                },
+                                "template": {
+                                    "type": "string",
+                                    "title": "Form template",
+                                    "x-display": "custom-ds-3dsearch-input",
+                                    "x-props": {
+                                        "serviceName": "3DSwym",
+                                        "servicePath": "api/templates/business-experience-extract",
+                                        "searchPrecondition": "([ds6w:type]:\"swym:Idea\")"
+                                    }
+                                }
+                            }
+                        },
+                        "else": {
+                            "properties": {
+                                "status_list": {
+                                    "x-display": "hidden"
+                                }
+                            }
+                        }
+                    },
+                    "divider_2": {
+                        "x-style": "border-top: 1px solid #E2E4E3",
+                        "x-class": "pt-5"
+                    },
+                    "survey": {
+                        "properties": {
+                            "is_enabled": {
+                                "type": "boolean",
+                                "title": "Surveys",
+                                "x-display": "switch"
+                            }
+                        },
+                        "if": {
+                            "type": "object",
+                            "required": [
+                                "is_enabled"
+                            ],
+                            "properties": {
+                                "is_enabled": {
+                                    "const": true
+                                }
+                            }
+                        },
+                        "then": {
+                            "properties": {
+                                "min_acl": {
+                                    "type": "boolean",
+                                    "title": "Allow contributors to create"
+                                },
+                                "template": {
+                                    "type": "string",
+                                    "title": "Form template",
+                                    "x-display": "custom-ds-3dsearch-input",
+                                    "x-props": {
+                                        "serviceName": "3DSwym",
+                                        "servicePath": "api/templates/business-experience-extract",
+                                        "searchPrecondition": "([ds6w:type]:\"swym:Survey\")"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "divider_3": {
+                        "x-style": "border-top: 1px solid #E2E4E3",
+                        "x-class": "pt-5"
+                    },
+                    "wiki": {
+                        "properties": {
+                            "is_enabled": {
+                                "type": "boolean",
+                                "title": "Wiki",
+                                "x-display": "switch"
+                            }
+                        },
+                        "if": {
+                            "type": "object",
+                            "required": [
+                                "is_enabled"
+                            ],
+                            "properties": {
+                                "is_enabled": {
+                                    "const": true
+                                }
+                            }
+                        },
+                        "then": {
+                            "properties": {
+                                "min_acl": {
+                                    "type": "boolean",
+                                    "title": "Allow contributors to create"
+                                },
+                                "template": {
+                                    "type": "string",
+                                    "title": "Form template",
+                                    "x-display": "custom-ds-3dsearch-input",
+                                    "x-props": {
+                                        "serviceName": "3DSwym",
+                                        "servicePath": "api/templates/business-experience-extract",
+                                        "searchPrecondition": "([ds6w:type]:\"swym:WikitreePage\")"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "divider_4": {
+                        "x-style": "border-top: 1px solid #E2E4E3",
+                        "x-class": "pt-5"
+                    }
+                }
+            },
+            "members": {
+                "type": "object",
+                "title": "Members",
+                "properties": {
+                    "contributors": {
+                        "type": "array",
+                        "title": "Contributor",
+                        "items": {
+                            "type": "string"
+                        },
+                        "x-display": "custom-ds-roles-input"
+                    },
+                    "authors": {
+                        "type": "array",
+                        "title": "Author",
+                        "items": {
+                            "type": "string"
+                        },
+                        "x-display": "custom-ds-roles-input"
+                    },
+                    "owners": {
+                        "type": "array",
+                        "title": "Owner",
+                        "items": {
+                            "type": "string"
+                        },
+                        "x-display": "custom-ds-roles-input"
+                    }
+                }
+            }
+        }
+    },
+    "model": {
+        "visibilities": {
+            "access": "1",
+            "extranet_access": "1",
+            "blacklist_by_default": false
+        },
+        "features": {
+            "question": {
+                "is_enabled": false,
+                "min_acl": false
+            },
+            "ideation": {
+                "is_enabled": false,
+                "min_acl": false,
+                "status_list": [
+                    {
+                        "title": "New Idea",
+                        "color": "#92BE8B"
+                    },
+                    {
+                        "title": "Concept",
+                        "color": "#02869B"
+                    },
+                    {
+                        "title": "Project Plan",
+                        "color": "#22CBEA"
+                    }
+                ]
+            },
+            "survey": {
+                "is_enabled": false,
+                "min_acl": false
+            },
+            "wiki": {
+                "is_enabled": false,
+                "min_acl": false
+            }
+        },
+        "members": {
+            "contributors": [],
+            "authors": [],
+            "owners": []
+        }
+    },
+    "options": {
+        "tooltipProps": {
+            "left": true,
+            "openOnHover": true,
+            "openOnClick": false
+        }
+    }
+}

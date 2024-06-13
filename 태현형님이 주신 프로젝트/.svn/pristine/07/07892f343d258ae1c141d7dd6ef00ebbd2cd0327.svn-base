@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:widget="http://www.netvibes.com/ns/">
+    <head>
+        <title>MultiNotes</title>
+
+        <meta name="author" content="Dassault Systèmes" />
+        <meta name="description" content="MultiNotes" />
+        <meta name="apiVersion" content="1.3" />
+        <meta name="debugMode" content="false" />
+        <meta name="strictMode" content="false" />
+
+        <widget:preferences>
+            <widget:preference name="title" type="text" label="Title_html" defaultValue="" />
+            <widget:preference name="x3dTitleShowAppName" type="boolean" label="displayAppName_html" defaultValue="true" />
+            <widget:preference name="noteIds" type="hidden" defaultValue="" />
+            <widget:preference name="route" type="hidden" defaultValue="" />
+            <widget:preference name="selectedNote" type="hidden" defaultValue="" />
+        </widget:preferences>
+
+        <link rel="stylesheet" href="../UIKIT/UIKIT.css" type="text/css" />
+
+        <script type="text/javascript">
+            //<![CDATA[
+
+            /*global
+                require, widget
+            */
+            require([
+                'DS/MultiNotesWdg/MultiNotes'
+            ], function (MultiNotes) {
+                'use strict';
+                new MultiNotes({
+                    widget: widget
+                });
+            });
+
+            //]]>
+        </script>
+      </head>
+      <body></body>
+</html>

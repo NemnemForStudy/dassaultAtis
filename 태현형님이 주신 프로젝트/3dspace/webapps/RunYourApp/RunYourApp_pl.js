@@ -1,0 +1,1 @@
+define("DS/RunYourApp/RunYourApp_pl",{});define("DS/RunYourApp/assets/nls/RunYourApp",{urlLabel:"Adres URL widżetu",insertUrl:"Wprowadź adres URL.",submitURLBtn:"Uruchom"});

@@ -1,0 +1,1 @@
+define("DS/ReviseFromWidget/ReviseFromWidget_ja",{});define("DS/ReviseFromWidget/assets/nls/ReviseFromPrefsDlg",{SettingsTitle:"設定",CopyTitleFromSource:"ソースからタイトルをコピー",WarningNoRevise:"アクセス権で改訂が許可されていない場合は警告を表示します"});

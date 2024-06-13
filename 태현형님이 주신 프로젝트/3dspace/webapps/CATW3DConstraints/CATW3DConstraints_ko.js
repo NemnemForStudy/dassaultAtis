@@ -1,0 +1,1 @@
+define("DS/CATW3DConstraints/CATW3DConstraints_ko",{});define("DS/CATW3DConstraints/assets/nls/CATW3DConstraintsView",{cstCoincidence:"일치",cstContact:"접촉",plane:"평면",sidePanel:"대안 스냅"});

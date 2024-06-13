@@ -1,0 +1,216 @@
+openapi: 3.0.0
+info:
+  title: CATIA System Synthesis HTTP API
+  version: '1'
+servers:
+  - url: ../../syc
+paths:
+  /rest/resource{resourceId}:
+    get:
+      responses:
+        '200':
+          description: ''
+          content:
+            application/ld+json:
+              schema:
+                example:
+                  '@context':
+                    '@base': http://localhost/
+                    dc: http://purl.org/dc/terms/
+                    syc: http://www.3ds.com/vocabularies/syc/
+                    rdfs: http://www.w3.org/2000/01/rdf-schema#
+                    syct: http://www.3ds.com/vocabularies/syc/type/
+                  '@graph':
+                    - '@id': ''
+                      '@type': syct:Root
+                      dc:title: /
+      description: Return the RDF description of a resource.
+      operationId: GET_rest-resourceresourceId
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            enum:
+              - application/ld+json
+              - application/json
+              - text/plain
+              - text/html
+            type: string
+        - name: selector
+          in: query
+          description: selector flags
+          schema:
+            type: string
+    parameters:
+      - name: resourceId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Internal System Cockpit id of the resource
+  /rest/data{resourceId}:
+    get:
+      responses:
+        default:
+          description: ''
+      description: Return the binary content of a resource file entry.
+      operationId: GET_rest-dataresourceId
+      parameters:
+        - name: entry
+          in: query
+          required: true
+          description: name of the file entry
+          schema:
+            type: string
+    put:
+      responses:
+        default:
+          description: ''
+      description: Send a binary content to a resource file entry.
+      operationId: PUT_rest-dataresourceId
+      requestBody:
+        content:
+          text/plain:
+            schema:
+              type: string
+          application/json:
+            schema:
+              type: string
+          application/octet-stream:
+            schema:
+              type: string
+        required: false
+      parameters:
+        - name: entry
+          in: query
+          required: true
+          description: name of the file entry
+          schema:
+            type: string
+    parameters:
+      - name: resourceId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Internal System Cockpit id of the resource
+  /rest/preview{resourceId}:
+    get:
+      responses:
+        default:
+          description: ''
+      description: Return a preview.
+      operationId: GET_rest-previewresourceId
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            enum:
+              - application/json
+              - text/html
+            type: string
+        - name: pvwTypes
+          in: query
+          schema:
+            enum:
+              - 1d-html
+              - 2d-canvas
+              - 2d-svg
+              - 2d-vg
+            type: string
+        - name: o
+          in: query
+          required: true
+          schema:
+            type: string
+    parameters:
+      - name: resourceId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Internal System Cockpit id of the resource
+  /service/core:
+    post:
+      responses:
+        default:
+          description: ''
+      description: Post a service command in JSON.
+      operationId: POST_service-core
+      requestBody:
+        content:
+          application/json:
+            example:
+              name: service-name
+              args:
+                - arg1
+                - arg2
+            schema:
+              type: string
+        required: false
+  /service/action:
+    post:
+      responses:
+        default:
+          description: ''
+      description: Post an action command in JSON.
+      operationId: POST_service-action
+      requestBody:
+        content:
+          application/json:
+            example:
+              subjectId: /V6-098/50688.55679.61952.6526
+              actionId: syc_action://com.dassault_systemes.system_cockpit.connector.enovia.action.Test1Action
+            schema:
+              type: string
+        required: false
+  /service/event:
+    post:
+      responses:
+        default:
+          description: ''
+      description: Post an event in JSON.
+      operationId: POST_service-event
+      requestBody:
+        content:
+          application/json:
+            example:
+              x: 2.1
+              'y': 2.2
+              sourceResource: sourceId
+              targetResource: targetId
+              preview: previewId
+            schema:
+              type: string
+        required: false
+  /service/globalsettings:
+    get:
+      responses:
+        default:
+          description: ''
+      description: Return global settings as a JSON objet
+      operationId: GET_service-globalsettings
+  /icon/type/{shortSycType}:
+    get:
+      responses:
+        default:
+          description: ''
+      description: Return the icon for a given type.
+      operationId: GET_icon-type-shortSycType
+    parameters:
+      - name: shortSycType
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Short System Cockpit type of the fetched icon
+components:
+  schemas: {}
+  responses: {}
+  parameters: {}
+  examples: {}
+  requestBodies: {}
+  headers: {}
+  securitySchemes: {}
+  links: {}
+  callbacks: {}

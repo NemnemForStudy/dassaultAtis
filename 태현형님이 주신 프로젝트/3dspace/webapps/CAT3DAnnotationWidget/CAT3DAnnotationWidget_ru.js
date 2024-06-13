@@ -1,0 +1,1 @@
+define("DS/CAT3DAnnotationWidget/CAT3DAnnotationWidget_ru",{});define("DS/CAT3DAnnotationWidget/assets/nls/CAT3DAnnotationWidget",{customApp:"Настройте свое приложение",prefs:"Параметры",difAnnotSet:"Открыть наборы примечаний"});

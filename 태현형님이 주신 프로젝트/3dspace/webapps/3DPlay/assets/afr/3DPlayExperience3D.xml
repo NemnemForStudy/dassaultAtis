@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+  /*
+  * @Quickreview  NWL 13:11:07 IR-266698V6R2014x
+  * @Quickreview  NWL 13:10:28 remove FS commande For v6r2014x
+  * @quickreview CNI1 15:02:20 Change in modules
+  * @Quickreview  T9N 15:03:09 organize commands to unify UI with native
+  * @Quickreview PVH1 15:08:06 Added Section and Measure command in Tools section
+  * @Quickreview CNI1 15:11:24 Added pick points and annotations and explode in tools action bar for Demo for Ford / Google
+  * @Quickreview NWL  15:11:30 Remove cameraview from actionbar
+  * @Quickreview MMA2 15:12:23 Code Report from R2016x - FD01 (R418rel).
+  * @quickreview CNI1 16:01:14 change in the name of the View action bar
+  * @Quickreview MMA2 16:01:11 Add VisuOrthographicView && VisuPerspectiveView commands for R2016x - FD02.
+  * @quickreview CNI1 16:02:17 Added the VisualizationModes command
+  * @quickreview CNI1 16:03:08 removed GraphicOptimizer and added visualization modes and ambiances
+  * @quickreview CNI1 16:06:03 commented visibility and drawing command from action bar
+  * @quickreview   T9N 16:07:19 Adding tags for responsive behavior of the Action Bar
+  * @quickreview MMA2 16:12:07 Intergrate Enhanced Explode and Volatile Ghosting commands
+  * @quickreview MMA2 16:12:08 Revert Enhanced Explode and Volatile Ghosting integration into environment var
+  * @quickreview MMA2 16:12:09 Remove environment var.
+  * @quickreview MMA2 17:01:06 Migrate Explode to Enhanced Explode
+  * @quickreview MMA2 17:01:06 Remove the Volatile Ghosting Command from the Action Bar.
+  * @quickreview MMA2 17:01:19 [Rollback] Migrate Explode to Enhanced Explode
+  * @quickreview MMA2 17:03:14 Migrate Explode to Enhanced Explode
+  * @quickreview MMA2 17:03:22 [Rollback] Migrate Explode to Enhanced Explode ONCE MORE!
+  * @quickreview MMA2 17:04:13 Add Fly Walk Navigation Scenario
+  * @quickreview PVH1 17:05:12 Removed redundant Annotation command headers
+  * @quickreview MMA2 17:07:14 Migrate Explode to Enhanced Explode
+  * @quickreview PVH1 17:12:12 Removed VisualizationModes command
+  * @quickreview T9N  18:10:15 IR-634904-3DEXPERIENCER2019x Remove of responsive AB behavior.
+  * @quickreview LEC  22:03:03 IR-924055-3DEXPERIENCER2022x 3DPlay Web - Mobile | Filter Lineic Elements - Filter Lineic Elements command is grayed out in mobile action bar
+  * @quickreview SCE11 22:09:03 ExpChooser command is added (need to uncoment while enabeling)
+  */
+  -->
+<Styles xmlns:syp="http://www.3ds.com/xsd/SYP">
+
+  <Template syp:name="3DSHAREAfrWorkshopInterface" Target="CATCmdInterface">
+    <CATCmdInterface  WkbInterface= "CATI3DSHAREAfrWorkshopConfiguration"/>
+  </Template>
+
+  <Template syp:name="3DSHAREAfrWorkshopHeaders" Target="CATCmdHeadersList">
+    <CATCmdHeadersList>
+      <!-- Application -->
+      <CATCommandHeader ID = "Zoom"     ClassName = "DS/ViewerCommands/VisuZoomViewCmd"     HelpResourceFile = "3DPlayCommands/3DPlayHelpForCommands3D" ResourceFile = "3DPlay/3DPlayExperience3D" />
+      <CATCommandHeader ID = "Pan"      ClassName = "DS/ViewerCommands/VisuPanViewCmd"      HelpResourceFile = "3DPlayCommands/3DPlayHelpForCommands3D" ResourceFile = "3DPlay/3DPlayExperience3D" />
+      <CATCommandHeader ID = "Rotate"   ClassName = "DS/ViewerCommands/VisuRotateViewCmd"   HelpResourceFile = "3DPlayCommands/3DPlayHelpForCommands3D" ResourceFile = "3DPlay/3DPlayExperience3D" />
+      <CATCommandHeader ID = "Reframe"  ClassName = "DS/3DPlayCommands/Proxy/VisuReframeViewCmdProxy"  HelpResourceFile = "3DPlayCommands/3DPlayHelpForCommands3D" ResourceFile = "3DPlay/3DPlayExperience3D" />
+      <CATCommandHeader ID = "ViewSelector" ClassName = "DS/3DPlayCommands/CmdViewSelector" HelpResourceFile = "3DPlayCommands/3DPlayHelpForCommands3D" ResourceFile = "3DPlay/3DPlayExperience3D" />
+      <CATCommandHeader ID ="measure2CmdHdr" ClassName="DS/3DPlayCommands/Proxy/CmdMeasureProxy" HelpResourceFile="DMUMeasure/DMUMeasure" ResourceFile="DMUBaseCommands/3DPlayPro" Available="1">
+        <CATAfrCommandHeaderArgs>
+          <CATCommandHeaderArg ID = "3dPlay" Value = "3dPlay" Mode = "In" />
+        </CATAfrCommandHeaderArgs>
+      </CATCommandHeader>
+
+      <CATCommandHeader ID="section2CmdHdr" ClassName="DS/3DPlayCommands/Proxy/CmdSectionProxy" HelpResourceFile="DMUSection/DMUSection" ResourceFile="DMUBaseCommands/3DPlayPro" Available="1">
+        <CATAfrCommandHeaderArgs>
+          <CATCommandHeaderArg ID = "3dPlay" Value = "3dPlay" Mode = "In" />
+        </CATAfrCommandHeaderArgs>
+      </CATCommandHeader>
+      <CATCommandHeader ID="LockUnlockSectionHdr" ClassName="DS/DMUSection/DMULockUnlockSection" HelpResourceFile="DMUSection/DMUSection" ResourceFile="DMUBaseCommands/3DPlayPro" Behavior="CATAfrHeaderCheck" />
+
+      <CATCommandHeader ID = "VisibilityCommands" ClassName = "DS/3DPlayCommands/VisibilityCommands" HelpResourceFile = "3DPlayCommands/3DPlayHelpForCommands3D" ResourceFile = "3DPlay/3DPlayExperience3D" />
+      <CATCommandHeader ID = "AnnotationCommands" ClassName = "DS/3DPlayAnnotation3D/AnnotationCommands" HelpResourceFile = "3DPlayAnnotation3D/3DPlayHelpForCommands3D" ResourceFile = "3DPlay/3DPlayExperience3D" />
+      <CATCommandHeader ID = "AnnotationCommand3DEditShape" ClassName="DS/3DPlayAnnotation3D/AnnotationCommandEditShape" HelpResourceFile = "3DPlayAnnotation3D/3DPlayHelpForCommands3D" ResourceFile="3DPlay/3DPlayExperience3D" />
+      <CATCommandHeader ID = "AnnotationCommand3DText" ClassName="DS/3DPlayAnnotation3D/AnnotationCommandText" HelpResourceFile = "3DPlayAnnotation3D/3DPlayHelpForCommands3D" ResourceFile="3DPlay/3DPlayExperience3D" />
+      <CATCommandHeader ID = "AnnotationTour" ClassName = "DS/3DPlayAnnotation3D/AnnotationTour" HelpResourceFile = "3DPlayCommands/3DPlayHelpForCommands3D" ResourceFile = "3DPlay/3DPlayExperience3D" />
+      <!-- <CATCommandHeader ID = "ExpChooser" ClassName="DS/3DPlayCommands/cmdExperienceChooser" HelpResourceFile = "3DPlayCommands/3DPlayHelpForCommands" ResourceFile="3DPlay/3DPlay"  /> -->
+
+      <CATCommandHeader ID = "VisuPerspectiveView"             ClassName = "DS/3DPlayCommands/Proxy/VisuPerspectiveViewCmdProxy" SharedLibraryName = "ShareUI" HelpResourceFile = "ViewerCommands/ViewerCommandsIDs" ResourceFile = "ViewerCommands/ViewerCommands" />
+      <CATCommandHeader ID = "VisuOrthographicView"            ClassName = "DS/3DPlayCommands/Proxy/VisuOrthographicViewCmdProxy" SharedLibraryName = "ShareUI" HelpResourceFile = "ViewerCommands/ViewerCommandsIDs" ResourceFile = "ViewerCommands/ViewerCommands" />
+      <CATCommandHeader ID = "ViewSelector"                    ClassName = "DS/3DPlayCommands/CmdViewSelector" HelpResourceFile = "3DPlayCommands/3DPlayHelpForCommands3D" ResourceFile = "3DPlay/3DPlayExperience3D" />
+
+      <CATCommandHeader ID = "VisuShading"                     ClassName = "DS/3DPlayCommands/Proxy/VisuShadingCmdProxy" SharedLibraryName = "ShareUI" HelpResourceFile = "ViewerCommands/ViewerCommandsIDs" ResourceFile = "ViewerCommands/ViewerCommands" />
+      <CATCommandHeader ID = "VisuShadingMaterial"             ClassName = "DS/3DPlayCommands/Proxy/VisuShadingMaterialCmdProxy" SharedLibraryName = "ShareUI" HelpResourceFile = "ViewerCommands/ViewerCommandsIDs" ResourceFile = "ViewerCommands/ViewerCommands" />
+
+      <CATCommandHeader ID = "VisuNoShadingEdges"              ClassName = "DS/3DPlayCommands/Proxy/VisuNoShadingEdgesCmdProxy" SharedLibraryName = "ShareUI" HelpResourceFile = "ViewerCommands/ViewerCommandsIDs" ResourceFile = "ViewerCommands/ViewerCommands" />
+      <CATCommandHeader ID = "VisuShadingEdgesNoSmoothEdges"   ClassName = "DS/3DPlayCommands/Proxy/VisuShadingEdgesNoSmoothEdgesCmdProxy" SharedLibraryName = "ShareUI" HelpResourceFile = "ViewerCommands/ViewerCommandsIDs" ResourceFile = "ViewerCommands/ViewerCommands" />
+      <CATCommandHeader ID = "VisuShadingEdgesHiddenEdges"     ClassName = "DS/3DPlayCommands/Proxy/VisuShadingEdgesHiddenEdgesCmdProxy" SharedLibraryName = "ShareUI" HelpResourceFile = "ViewerCommands/ViewerCommandsIDs" ResourceFile = "ViewerCommands/ViewerCommands" />
+      <CATCommandHeader ID = "VisuShadingIllustration"         ClassName = "DS/3DPlayCommands/Proxy/VisuShadingIllustrationCmdProxy" SharedLibraryName = "ShareUI" HelpResourceFile = "ViewerCommands/ViewerCommandsIDs" ResourceFile = "ViewerCommands/ViewerCommands" />
+      <CATCommandHeader ID = "VisuShadingMaterialEdges"        ClassName = "DS/3DPlayCommands/Proxy/VisuShadingMaterialEdgesCmdProxy" SharedLibraryName = "ShareUI" HelpResourceFile = "ViewerCommands/ViewerCommandsIDs" ResourceFile = "ViewerCommands/ViewerCommands" />
+
+      <CATCommandHeader ID = "VisuNoEnv"                       ClassName = "DS/ViewerCommands/VisuNoEnvCmd" SharedLibraryName = "ShareUI" HelpResourceFile = "ViewerCommands/ViewerCommandsIDs" ResourceFile = "ViewerCommands/ViewerCommands" />
+      <CATCommandHeader ID = "VisuV6Env"                       ClassName = "DS/ViewerCommands/VisuV6EnvCmd" SharedLibraryName = "ShareUI" HelpResourceFile = "ViewerCommands/ViewerCommandsIDs" ResourceFile = "ViewerCommands/ViewerCommands" />
+      <CATCommandHeader ID = "VisuCleanSpaceEnv"               ClassName = "DS/ViewerCommands/VisuCleanSpaceEnvCmd" SharedLibraryName = "ShareUI" HelpResourceFile = "ViewerCommands/ViewerCommandsIDs" ResourceFile = "ViewerCommands/ViewerCommands" />
+      <CATCommandHeader ID = "VisuDarkBlueEnv"                 ClassName = "DS/ViewerCommands/VisuDarkBlueEnvCmd" SharedLibraryName = "ShareUI" HelpResourceFile = "ViewerCommands/ViewerCommandsIDs" ResourceFile = "ViewerCommands/ViewerCommands" />
+      <CATCommandHeader ID = "VisuDarkGreyEnv"                 ClassName = "DS/ViewerCommands/VisuDarkGreyEnvCmd" SharedLibraryName = "ShareUI" HelpResourceFile = "ViewerCommands/ViewerCommandsIDs" ResourceFile = "ViewerCommands/ViewerCommands" />
+      <CATCommandHeader ID = "VisuShinyEnv"                    ClassName = "DS/ViewerCommands/VisuShinyEnvCmd" SharedLibraryName = "ShareUI" HelpResourceFile = "ViewerCommands/ViewerCommandsIDs" ResourceFile = "ViewerCommands/ViewerCommands" />
+      <CATCommandHeader ID = "VisuQMCommand"                   ClassName = "DS/ViewerCommands/VisuQMCommand" ResourceFile="ViewerCommands/ViewerCommands"/>
+
+      <!-- Ambiances -->
+      <CATCommandHeader ID = "VisuPureWhiteOCACmd"             ClassName = "DS/ViewerCommands/VisuPureWhiteOCACmd" ResourceFile="ViewerCommands/ViewerCommands"/>
+      <CATCommandHeader ID = "VisuWhiteMirrorOCACmd"           ClassName = "DS/ViewerCommands/VisuWhiteMirrorOCACmd" ResourceFile="ViewerCommands/ViewerCommands"/>
+      <CATCommandHeader ID = "VisuWhiteReviewOCACmd"           ClassName = "DS/ViewerCommands/VisuWhiteReviewOCACmd" ResourceFile="ViewerCommands/ViewerCommands"/>
+      <CATCommandHeader ID = "VisuWhiteExperienceOCACmd"       ClassName = "DS/ViewerCommands/VisuWhiteExperienceOCACmd" ResourceFile="ViewerCommands/ViewerCommands"/>
+      <CATCommandHeader ID = "VisuStudioOCACmd"                ClassName = "DS/ViewerCommands/VisuStudioOCACmd" ResourceFile="ViewerCommands/ViewerCommands"/>
+      <CATCommandHeader ID = "VisuDarkMirrorOCACmd"            ClassName = "DS/ViewerCommands/VisuDarkMirrorOCACmd" ResourceFile="ViewerCommands/ViewerCommands"/>
+      <CATCommandHeader ID = "VisuDarkReviewOCACmd"            ClassName = "DS/ViewerCommands/VisuDarkReviewOCACmd" ResourceFile="ViewerCommands/ViewerCommands"/>
+      <CATCommandHeader ID = "VisuWhiteDesignOCACmd"           ClassName = "DS/ViewerCommands/VisuWhiteDesignOCACmd" ResourceFile="ViewerCommands/ViewerCommands"/>
+      <CATCommandHeader ID = "VisuBlueDesignOCACmd"            ClassName = "DS/ViewerCommands/VisuBlueDesignOCACmd" ResourceFile="ViewerCommands/ViewerCommands"/>
+      <CATCommandHeader ID = "VisuDarkDesignOCACmd"            ClassName = "DS/ViewerCommands/VisuDarkDesignOCACmd" ResourceFile="ViewerCommands/ViewerCommands"/>
+      <CATCommandHeader ID = "VisuIndoorOCACmd"                ClassName = "DS/ViewerCommands/VisuIndoorOCACmd" ResourceFile="ViewerCommands/ViewerCommands"/>
+      <CATCommandHeader ID = "VisuCityOCACmd"                  ClassName = "DS/ViewerCommands/VisuCityOCACmd" ResourceFile="ViewerCommands/ViewerCommands"/>
+      <CATCommandHeader ID = "VisuRoadOCACmd"                  ClassName = "DS/ViewerCommands/VisuRoadOCACmd" ResourceFile="ViewerCommands/ViewerCommands"/>
+      <CATCommandHeader ID = "VisuOutdoorOCACmd"               ClassName = "DS/ViewerCommands/VisuOutdoorOCACmd" ResourceFile="ViewerCommands/ViewerCommands"/>
+      <CATCommandHeader ID = "VisuBasicOCACmd"                 ClassName = "DS/ViewerCommands/VisuBasicOCACmd" ResourceFile="ViewerCommands/ViewerCommands"/>
+
+      <CATCommandHeader ID = "LineicFilter"                    ClassName = "DS/3DPlayCommands/CmdLineicFilter" HelpResourceFile = "3DPlayCommands/3DPlayHelpForCommands3D" ResourceFile = "3DPlay/3DPlayExperience3D" />
+      <CATCommandHeader ID = "EnhancedExplode" ClassName = "DS/3DPlayCommands/CmdEnhancedExplode" HelpResourceFile = "3DPlayCommands/3DPlayHelpForCommands3D" ResourceFile = "3DPlay/3DPlayExperience3D" Available = "1" />
+
+      <CATCommandHeader ID = "VCXVolatileGhostingCmd" ClassName = "DS/VCXWebVolatileGhosting/VCXVolatileGhostingCmd" ResourceFile = "VCXWebVolatileGhosting/VCXWebVolatileGhosting" Available = "1" />
+
+      <CATCommandHeader ID = "VisuViewPanelCommand" ClassName="DS/ViewerCommands/VisuViewPanelCommand" HelpResourceFile="ViewerCommands/ViewerCommandsIDs" ResourceFile="ViewerCommands/ViewerCommands" />
+      <!-- <CATCommandHeader ID = "VisuViewPanelCommand" ClassName="DS/3DPlayCommands/CmdViewModePanel" HelpResourceFile="ViewerCommands/ViewerCommandsIDs" ResourceFile="ViewerCommands/ViewerCommands" /> -->
+
+    </CATCmdHeadersList>
+  </Template>
+
+  <Template syp:name="3DSHAREAfrWorkshopAccess" Target="CATCmdWorkbench">
+    <CATCmdWorkbench Name="3DSHAREWorkbench">
+      <CATCmdContainer Name = "SectionViews" Visibility = "1" RepresentationType="AfrActionBarSection">
+        <CATCmdStarter Name = "Reframe"       Command = "Reframe" />
+        <CATCmdStarter Name = "Pan"           Command = "Pan" />
+        <CATCmdStarter Name = "Rotate"        Command = "Rotate" />
+        <CATCmdStarter Name = "Zoom"          Command = "Zoom" />
+
+        <CATCmdSeparator Name = "VisuMode_Separator"/>
+        <CATCmdStarter Name = "ViewSelector"          Command = "ViewSelector" />
+        <CATCmdStarter Name = "VisuViewPanelCommand" Command = "VisuViewPanelCommand"/>
+      </CATCmdContainer>
+
+      <CATCmdContainer Name = "Tools" Visibility = "1" RepresentationType="AfrActionBarSection">
+
+        <CATCmdStarter Name = "VisibilityCommands"  Command = "VisibilityCommands" />
+        <CATCmdStarter Name = "EnhancedExplode"  Command = "EnhancedExplode" />
+
+        <CATCmdStarter Name = "Measure"  Command = "measure2CmdHdr" />
+        <CATCmdContainer Name = "Section" Visibility = "1" RepresentationType="AfrActionBarDropDown" >
+          <CATCmdStarter Name = "Section"  Command = "section2CmdHdr" />
+          <CATCmdStarter Name="LockUnlockSection" Command="LockUnlockSectionHdr" />
+        </CATCmdContainer>
+        <CATCmdStarter Name = "AnnotationCommands"  Command = "AnnotationCommands"  />
+        <CATCmdStarter Name = "AnnotationCommand3DText"  Command = "AnnotationCommand3DText"  />
+        <CATCmdStarter Name = "AnnotationTour"  Command = "AnnotationTour"  />
+
+        <!-- <CATCmdStarter Name="ExpChooser" Command="ExpChooser" /> -->
+      </CATCmdContainer>
+
+    </CATCmdWorkbench>
+  </Template>
+</Styles>

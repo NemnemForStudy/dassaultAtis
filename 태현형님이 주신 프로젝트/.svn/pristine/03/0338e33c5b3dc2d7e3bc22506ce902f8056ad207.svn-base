@@ -1,0 +1,122 @@
+.edit-link-view {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 15%;
+    position: relative;
+    background: #fff;
+    z-index: 110;
+}
+.edit-link-view.overflow {
+    /* Important rule to toggle overflow on resize: */
+    justify-content: flex-end;
+    padding: 0;
+}
+
+.edit-link-view .btns-ctn {
+    position: absolute;
+    bottom: 2px;
+    display: flex;
+    height: 44px;
+    width: 70%;
+    justify-content: flex-end;
+    align-items: flex-end;
+    flex-direction: row;
+    background-color: rgba(255, 255, 255, .9);
+    z-index: 500;
+}
+.edit-link-view.overflow .btns-ctn {
+    left: 0;
+    width: calc(100% - 20px);
+    border-top: 1px solid #eee;
+}
+.edit-link-view .btns-ctn .btn {
+    margin-left: 10px;
+}
+.edit-link-view.overflow .btns-ctn .cancel-btn {
+    margin-right: 10px;
+}
+.edit-link-view .btns-ctn .delete-btn {
+    position: absolute;
+    left: 0;
+    top: 4px;
+}
+.edit-link-view.add .btns-ctn .delete-btn {
+    display: none;
+}
+
+
+.edit-link-view .inputs-ctn {
+    padding: 10px 10px 0 10px;
+    z-index: 500;
+    position: relative;
+    overflow: auto;
+}
+.edit-link-view .inputs-ctn .ctn {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+.edit-link-view .inputs-ctn .subctn {
+    margin-top: 10px;
+    padding-left: 10px;
+    border-left: 1px solid #ccc;
+    margin-left: 2px;
+}
+.edit-link-view .inputs-ctn .ctn-title {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+.edit-link-view .inputs-ctn .subctn {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: baseline;
+}
+.edit-link-view .inputs-ctn .ctn-subtitle {
+    margin-right: 20px;
+    font-weight: bold;
+}
+.edit-link-view .inputs-ctn .openin-toggles-ctn {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: baseline;
+}
+.edit-link-view .inputs-ctn .openin-toggles-ctn .toggle {
+    margin-right: 30px;
+}
+.edit-link-view.overflow .inputs-ctn {
+    margin-bottom: 50px;
+    padding-right: 18px;
+}
+
+@media screen and (max-width: 240px) {
+    .edit-link-view .btns-ctn {
+        flex-direction: column-reverse;
+        height: 140px;
+        justify-content: center;
+        align-items: center;
+    }
+    .edit-link-view .btns-ctn .btn {
+        height: 38px;
+        margin-top: 5px;
+    }
+    .edit-link-view .btns-ctn .delete-btn {
+        position: relative;
+        top: 0;
+        left: 0;
+    }
+
+    .edit-link-view.overflow .inputs-ctn {
+        margin-bottom: 140px;
+    }
+}
+
+@media screen and (max-width: 240px) and (max-height: 140px) {
+    .edit-link-view .btns-ctn {
+        height: 90px;
+    }
+    .edit-link-view .btns-ctn .delete-btn {
+        display: none;
+    }
+}

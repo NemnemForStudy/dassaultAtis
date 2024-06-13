@@ -1,0 +1,1 @@
+define("DS/CATWebUXSlideShow/CATWebUXSlideShow_cs",{});define("DS/CATWebUXSlideShow/assets/nls/CATWebUXSlideShow",{previousSlide:"Předchozí pohled",nextSlide:"Další pohled",exitSlideShow:"Ukončení režimu prezentace",slideShowCannotBeLaunched:"V režimu prezentace není nic k zobrazení"});

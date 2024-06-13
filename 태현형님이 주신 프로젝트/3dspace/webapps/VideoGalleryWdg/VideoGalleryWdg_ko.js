@@ -1,0 +1,1 @@
+define("DS/VideoGalleryWdg/VideoGalleryWdg_ko",{});define("DS/VideoGalleryWdg/assets/nls/VideoGallery",{NoInternet:"인터넷 연결이 비활성 상태일 수 있음"});

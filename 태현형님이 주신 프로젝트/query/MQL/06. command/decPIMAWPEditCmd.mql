@@ -1,0 +1,15 @@
+# Added by choimingi on 2023.09.09
+# del command decPIMAWPEditCmd;
+add command decPIMAWPEditCmd
+	href 'javascript:editMode()'
+	setting 'Registered Suite' 'Framework'
+	setting 'Image' '${COMMON_DIR}/images/iconActionEdit.png'
+;
+
+mod command decPIMAWPEditCmd
+	add setting 'hasAccess' 'PIM,AWP'  
+	add setting 'Access Program' 'decAccess'
+	add setting 'Access Function' 'hasAccess'
+;
+
+mod menu decTableDetailToolbar add command decPIMAWPEditCmd;

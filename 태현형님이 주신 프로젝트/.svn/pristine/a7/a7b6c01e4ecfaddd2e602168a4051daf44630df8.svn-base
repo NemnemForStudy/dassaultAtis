@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:widget="http://www.netvibes.com/ns/">
+    <head>
+        <!-- Widget Infos -->
+        <title>Mutator</title>
+        <meta name="author" content="Dassault Systèmes" />
+        <meta name="description" content="Mutator" />
+        <meta name="apiVersion" content="1.3" />
+        <meta name="noSearchInWidgetUI" content="true" />
+
+        <script type="text/javascript" src="../UIKIT/UIKIT.js"></script>
+        <link rel="stylesheet" href="../UIKIT/UIKIT.css" type="text/css" />
+
+        <script type="text/javascript" src="../AmdLoader/AmdLoader.js"></script>
+        <!-- UWA Environment -->
+        <link rel="stylesheet" type="text/css" href="../c/UWA/assets/css/standalone.css" />
+        <script type="text/javascript" src="../c/UWA/js/UWA_Standalone_Alone.js"></script>
+<style type="text/css">
+    .alert {
+        height: 49px;
+    }
+</style>
+<script type="text/javascript">
+//<![CDATA[
+/*global require, widget*/
+require(
+    [
+        // UWA
+        'UWA/Core',
+        'UWA/Event',
+
+        'DS/UIKIT/Alert',
+
+        'DS/i3DXCompass/i3DXCompass',
+
+        'ds/data/Widgets',
+
+        'i18n!DS/MutatorWdg/assets/nls/mutator'
+    ],
+    function (UWA, Event, UIKitAlert, Compass, DataWidgets, nls) {
+        'use strict';
+
+    /**
+     * @overview The Mutator widget is used to mutate a some widget to an other one based on the appId used to identify a widget in the Compass
+     * @licence Copyright 2006-2014 Dassault Systèmes company. All rights reserved.
+     * @version 1.0
+     *
+     * Example of a use case:
+     *
+     * On the 14x environment, the Globe widget was a view of the FeedReader widget; thus the widget_id of the Globe
+     * widget was the widget_id of the FeedReader. On the 15x version, a new team took over the Globe widget and developped
+     * it as an independant widget from the FeedReader widget, and the new Globe widget was added dynamically. Therefore,
+     * the problem it raised was that we could not modify in the database the widget_id of the 14x-Globe to the 15x-Globe,
+     * since the 15x-Globe was not yet in the database during the  migration. The solution to identify the widget you eventually
+     * want to have is to use its appID used in the compass.
+     *
+     * The process, therefore, is the following:
+     *       - On the database, we will modify the widget_id of the widgets we want to Mutate to a widget_id the database knows: the widget_id of the Mutator widget
+     *       - During that modification, we will also add in the json_data of the widget_instances a parameter "appID".
+     *       - If needed, we can also modify/add new Preferences/Parameters (see below for "__mapping__")
+     *       - Then, everything should be handled by the Mutator widget. Since the widget_id has been modified, when the Dashboard will call the widget, a Mutator will be instanciated.
+     *       - This Mutator will use the appID to get from the Compass the widget and do the mutate.
+     *
+     * To get the appId of a widget, open the Compass and right-click on the widget you are interested in:
+     *       click on'Inspect  Element', and search for the attribute "data-appid". (Eg. for the globe: data-appid="X3DGLOB_AP")
+     *
+     * Example of a mySql request to update the Globe widgets:
+     *
+     * UPDATE wp_widget_instances SET widget_id="8Ek8KMGAwqKIF7eIIG0K", json_data=REPLACE(json_data, '"views":', '"__mapping__":{"url":"feedUrl", "title":"widgetTitle", "views":"", "appID": ""}, *"appID":"X3DGLOB_AP","views":') WHERE json_data LIKE '%"views":[{"value":"Globe","label":"Globe"}]%' AND widget_id='7zuA6ql0gCpk2CvOZ00e';
+     *
+     *          *** widget_id="8Ek8KMGAwqKIF7eIIG0K"    -----  widget_id of the Mutator widget (MANDATORY)
+     *
+     *          *** "appID":"X3DGLOB_AP"                ------ the appID of the new widget is added as new parameter (MANDATORY)
+     *
+     *          ***  "__mapping__": {                    (OPTIONNAL)
+     *                   "url":"feedUrl",
+     *                   "title":"widgetTitle",
+     *                   "views":"",
+     *                   "appID": ""
+     *               }
+     *               Mutating a widget, Preferences from one widget to the other can change. In the '__mapping__' json object, you can specify
+     *                       - If a parameter needs to be renamed (eg. in 14x "url":"www.techcrunch.fr" needs to be replaced by "feedUrl":"www.techcrunch.fr" )
+     *                                       -> Add "oldName":"newName"  as parameter in __maaping__  (eg. "url":"feedUrl")
+     *
+     *                       - If a parameter becomes obsolete and needs to be deleted from the Preferences (eg. "appID" has been added for the migration and isnt needed anymore)
+     *                                       -> Add "nameToBeDeleted":""  as parameter in __mapping__  (eg. "appID":"")
+     *
+     */
+
+        function handleError(message) {
+            widget.body.empty();
+
+            new UIKitAlert({
+                closable: true,
+                visible: true,
+                messages: [{
+                    className: 'warning',
+                    message: message
+                }]
+            }).inject(widget.body);
+
+        }
+
+        function findWidget(id) { return (parent.UWA.Widgets.instances.detect(function (e) {return e.id === id; }) || widget)}
+
+        function getPreferences(data) {
+            var map, dataMapping = {};
+            dataMapping = data.__mapping__;
+
+            for (map in dataMapping) {
+                if(dataMapping[map] !== '') {
+                    data[dataMapping[map]] = widget.getValue(map);
+                }
+                delete data[map];
+            }
+            delete data['__mapping__'];
+
+            return data;
+        }
+
+        function onLoad() {
+
+            var appId = widget.getValue('appID');
+
+            if (UWA.is(appId)) {
+
+
+                // Compass.getAppInfo will get from the Compass the widget that is eventually expected as a result.
+                // The 'get' is based on the 'appId'
+                Compass.getAppInfo({
+                    appId: appId,
+
+                    onComplete: function (app) {
+
+                        if (!UWA.is(app)) {
+                            handleError(nls.errorUrl);
+                            return;
+                        }
+
+                        var appConfig = {
+                            url: app.launchInfos,
+                            dataUrl: app.config,
+                            data: { x3dPlatformId: app.platformId },
+                            appId: app.id,
+                            name: app.title,
+                            isolationLevel: app.trusted ? 1 : 2,
+                            token: app.checksum,
+                            preview: true,
+                            success: function() {
+                                try {
+                                    // Due to the inherent process of the Mutation, we want to call mutate on the outer (inlined) widget, not on the embedded one.
+                                    // The findWidget is used to get the parent.id
+                                    findWidget(widget.id).mutate(app.launchInfos, getPreferences(widget.data));
+                                } catch (e) {
+                                    widget.setBody(UWA.i18n(e.message));
+                                }
+                            },
+                            failure: function() {}
+                        };
+
+                        // DataWidgets.createAppInstance is used to create the new widget in the database (if it does not yet exist), with the proper Isolation Level (trusted widget)
+                        DataWidgets.createAppInstance(appConfig);
+                    }
+                });
+            } else {
+                handleError(nls.errorApi);
+            }
+        }
+
+        widget.addEvent('onLoad', onLoad);
+    }
+);
+
+//]]>
+</script>
+    </head>
+    <body></body>
+</html>

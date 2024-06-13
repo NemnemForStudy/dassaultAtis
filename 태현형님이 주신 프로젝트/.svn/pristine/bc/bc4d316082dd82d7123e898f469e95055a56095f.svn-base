@@ -1,0 +1,1 @@
+define("DS/MutatorWdg/MutatorWdg_pl",{});define("DS/MutatorWdg/assets/nls/mutator",{errorUrl:"Przepraszamy, nie można załadować widżetu",errorApi:"Nie podano identyfikatora API widżetu"});

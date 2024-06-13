@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!-- COPYRIGHT DASSAULT SYSTEMES 2021, All rights reserved -->
+
+<Package
+    Name = "GEOGeoscienceDataset"
+    Uuid = "32A15673-2D19-4CDF-B282-2C0BF9D8DBC1"
+    CustomerExposition = "Programmer"
+    UseNames="AECCommonSpatialStructureElement;GeoscienceElement"
+    xmlns = "PLMDictionaryUnified"
+    ModelerType = "Top"
+    Architecture = "All">
+
+  <Extension Name = "GEOGeoscienceDatasetReferrer"
+      CustomerExposition = "Programmer"
+      Uuid = "E7FB423F-8E00-4799-9A75-0530FA6ED821"
+      ScopeNames = "AecSite;GeologyModel">
+
+    <Simple Name = "GDSName"
+        Uuid="bfd70a9f-49d9-4221-b10b-4d05dcf50028"
+        MaxLength = "255"
+        Protection = "Free"
+        Type = "String"
+        UIAccess ="ReadOnly"/>
+
+    <Simple Name = "GDSRevision"
+        Uuid="21662a18-f629-402b-b0c3-51763b3c1788"
+        MaxLength = "255"
+        Protection = "Free"
+        Type = "String"
+        UIAccess ="ReadOnly"/>
+
+    <Simple Name = "GDSIterationID"
+        Uuid="94b6e172-e15e-43a5-828d-6b6c60a14db1"
+        MaxLength = "255"
+        Protection = "Internal"
+        Type = "String"
+        UIAccess ="ReadOnly"/>
+
+  </Extension>
+</Package>

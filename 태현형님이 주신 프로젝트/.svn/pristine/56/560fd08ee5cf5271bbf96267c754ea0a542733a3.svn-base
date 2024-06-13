@@ -1,0 +1,1 @@
+define("DS/LifecycleControls/LifecycleControls_zh-TW",{});define("DS/LifecycleControls/assets/nls/CommandDialog",{okButton:"確定",cancelButton:"取消"});define("DS/LifecycleControls/assets/nls/CustomizeColumns",{CustomizeColumns:"自訂欄",newTarget:"新目標"});define("DS/LifecycleControls/assets/nls/RelatedObjectsDialog",{selectRelatedObjs:"選擇選用的相關物件"});

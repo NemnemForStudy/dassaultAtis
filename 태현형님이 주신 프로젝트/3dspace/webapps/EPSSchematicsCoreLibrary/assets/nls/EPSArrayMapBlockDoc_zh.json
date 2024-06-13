@@ -1,0 +1,20 @@
+{
+  "version": "1.0.0",
+  "summary": "在调用数组中的每个元素上创建一个使用通过调用所提供图形获得的结果填充的新数组。",
+  "description": "此块能够将任何 <doc-idp-name translate=no>Input</doc-idp-name> 数组类型映射到任何输出数组类型。<br>需要编辑内部图形以提供映射流程。",
+  "dataPorts": {
+    "Input": "要映射的输入数组。<br>此数据端口将处理所有数组类型。",
+    "SharedData": "在每个内部图形实例中共享的数据。<br>此数据端口将处理所有类型。<br>如果需要共享具有不同类型的多个数据，则建议创建用户类型。",
+    "Success": "成功输出数组。<br>此数据端口将处理所有数组类型。<br>该数组的大小将始终等于 <doc-idp-name translate=no>Input</doc-idp-name> 数组大小。",
+    "State": "<doc-valuetype translate=no>ArrayMapState</doc-valuetype> 的数组，在 <doc-odp-name translate=no>Success</doc-odp-name> 输出数组的每个索引处提供 <doc-valuetype translate=no>EExecutionState</doc-valuetype>。<br>该数组的大小将始终等于 <doc-idp-name translate=no>Input</doc-idp-name> 数组大小。",
+    "Progress": "<doc-valuetype translate=no>ArrayMapProgress</doc-valuetype> 的数组，在 <doc-odp-name translate=no>Input</doc-odp-name> 输入数组的每个索引处提供 <doc-valuetype translate=no>EExecutionState</doc-valuetype>。<br>可以在一个进程中使用多个数据填充该数组，因为它取决于块后面的分发流程。<br>但是，该数组的大小不会超过 <doc-idp-name translate=no>Input</doc-idp-name> 数组大小。",
+    "Error": "<doc-valuetype translate=no>ArrayMapError</doc-valuetype> 的数组，为 <doc-odp-name translate=no>Input</doc-odp-name> 输入数组的索引提供错误对象。<br>该数组的大小不会超过 <doc-idp-name translate=no>Input</doc-idp-name> 数组大小。"
+  },
+  "controlPorts": {
+    "In": "触发块执行。",
+    "Success": "在成功完成流程时激活。",
+    "Progress": "每次发生进度时激活。",
+    "Error": "发生错误时激活。"
+  },
+  "example": null
+}

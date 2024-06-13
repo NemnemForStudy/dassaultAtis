@@ -1,0 +1,1 @@
+define("DS/CAT3DAnnotationScenario/CAT3DAnnotationScenario_ko",{});define("DS/CAT3DAnnotationScenario/assets/nls/CAT3DAnnotationScenario",{A3EScenario_Title:"3D Tolerancing & Annotations",A3EScenario_Description:"주석 표시 및 찾아보기"});

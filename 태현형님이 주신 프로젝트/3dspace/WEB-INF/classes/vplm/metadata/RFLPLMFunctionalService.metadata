@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<!-- ENOVIA DICTIONARY FOR Service                 -->
+<!-- COPYRIGHT DASSAULT SYSTEMES 2017, All rights reserved -->
+<Package xmlns="PLMDictionaryUnified" 
+         ModelerType="Top" 
+         Name="RFLPLMFunctionalService" 
+         Uuid="E94F4465-AC2C-4ECF-B357-D0C7818BB102" 
+         UseNames="RFLPLMFunctional"
+         CustomerExposition="Programmer">
+
+  <!-- ******************************************* -->
+  <!-- *  FunctionalServiceReference (PLMCoreReference)     * -->
+  <!-- ******************************************* -->
+  <Class Name="RFLPLMFunctionalServiceReference" 
+         Uuid="DD234233-9AF8-4306-B103-AB8F2FEF5631" 
+         Abstract="No" 
+         SuperName="RFLPLMFunctionalReference"
+		 Abbreviation="fsrv"
+         CreateInstName="RFLPLMFunctionalServiceInstance"
+		 Discipline="Yes"
+		 Specializable="Yes"
+		 CustomerExtensible="Yes"
+		 PublicResourceURI="/resources/v1/modeler/dsfct/dsfct:FctItem/{pid}"
+         CustomerExposition="Programmer">  
+  
+    <CAAComment>
+      <ShortRole>Functional Service Object</ShortRole>
+      <Role>Functional Service Object</Role>
+    </CAAComment>
+
+    <!-- PLM New UI/KWE Scripts New -->
+    <Property Name="KweNew_InstanciationMethod" Value="CATEFctDelegateInstanciation"/>
+	<Property Name="KweNew_ReturnedType" Value="RFLPLMFunctionalServiceInstance"/>
+
+    <Property Name="AggregatableTypes" Value="RFLPLMFunctionalServiceReference;RFLPLMFunctionalRepReference;RFLPLMFlowReference;RFLPLMFunctionalConnection;PARParameter"/>
+    <Property Name="InstantiationOwnerTypes" Value="RFLPLMFunctionalServiceReference"/>
+	
+	<Property Name="Newable" Value="All_CAA"/>
+    <Property Name="IconName" Value="I_FLE_SERVICE"/>	
+    <Property Name="Configurable" Value="Yes"/>
+    <Property Name="ChangeManagementSupport" Value="Yes"/>
+    <Property Name="ChangeManagementReferential" Value="Yes"/>
+    <Property Name="ChangeManagementContext" Value="Yes"/>
+    <Property Name="Searchable" Value="Yes"/>
+	<Property Name="ShareBetweenProjectsAvailability" Value="Yes"/> <!-- Collaborative Space Applicability -->
+
+    <!-- Export -->
+    <Method ImplementationType="AsFather">
+      <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+    </Method>
+
+  </Class>
+
+  <!-- *************************************************** -->
+  <!-- * RFLPLMFunctionalServiceInstance (PLMCoreInstance)       * -->
+  <!-- *************************************************** -->
+  <RelationClass Name="RFLPLMFunctionalServiceInstance" 
+         Uuid="65C490CD-83F2-4E35-8AD6-05ECE9E057C5" 
+         Abstract="No" 
+         SuperName="RFLPLMFunctionalInstance"
+ 		 Discipline="Yes"
+		 Specializable="Yes"
+		 CustomerExtensible="Yes"
+		 PublicResourceURI="/resources/v1/modeler/dsfct/dsfct:FctItem/{pid}/dsfct:FctInstance/{pid}"
+         CustomerExposition="Programmer">
+
+    <CAAComment>
+      <ShortRole>Functional Service Instance Object</ShortRole>
+      <Role>Functional Service Instance Object</Role>
+    </CAAComment>
+
+    <!-- PLM New UI/KWE Scripts New -->
+    <Property Name="KweNew_InstanciationMethod" Value="CATEFctDelegateInstanciation"/>
+	<Property Name="KweNew_ReturnedType" Value="RFLPLMFunctionalServiceInstance"/>
+	
+    <!-- Configuration -->
+    <Property Name="Filtrable" Value="Yes"/>
+	<Property Name="Searchable" Value="No"/>
+    <Property Name="IconName" Value="I_FLE_SERVICE"/>
+
+  </RelationClass>
+</Package>

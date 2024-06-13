@@ -1,0 +1,1 @@
+define("DS/CATWebUXCVS/CATWebUXCVS_ko",{});define("DS/CATWebUXCVS/assets/nls/CATWebUXCVS",{valStateChange:{dlgTitle:"검증",closeBtn:"닫기",inProgress:"진행 중",passed:"합격됨",failed:"실패"}});

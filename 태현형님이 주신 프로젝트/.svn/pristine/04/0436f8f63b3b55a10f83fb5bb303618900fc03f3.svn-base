@@ -1,0 +1,43 @@
+rem defined by user env
+set BatchProjectPath=D:\DAE_WorkSpace\daewooenc.cbat2
+set DeployZipPath=\\10.10.10.100\daewooenc\07.1 Deploy History
+rem set DeployZipPath=C:\temp
+
+
+rem ----- DO NOT EDIT BELOW -----
+
+set InputDirPath=%BatchProjectPath%\src\main\java\batch
+set OutputDirPath=%BatchProjectPath%\target\classes
+
+set ZipTargetPath=com\dwenc\daemon\batch\ep
+set BuildInfoPropertiesFilePath=%ZipTargetPath%\epc\epc01\resources\buildInfo.properties
+
+set BuildDate=%date% %time%
+
+rem input Build date into source code
+echo BuildDate=%BuildDate% > "%InputDirPath%\%BuildInfoPropertiesFilePath%"
+
+rem input Build date into class file
+echo BuildDate=%BuildDate% > "%OutputDirPath%\%BuildInfoPropertiesFilePath%"
+
+rem zip to deploy
+for /F "skip=1 delims=" %%F in ('
+    wmic PATH Win32_LocalTime GET Day^,Month^,Year /FORMAT:TABLE
+') do (
+    for /F "tokens=1-3" %%L in ("%%F") do (
+        set CurrDay=0%%L
+        set CurrMonth=0%%M
+        set CurrYear=%%N
+    )
+)
+set CurrDay=%CurrDay:~-2%
+set CurrMonth=%CurrMonth:~-2%
+
+set DeployZipName=ep_%CurrYear%%CurrMonth%%CurrDay%_001.zip
+
+echo zipTargetPath : "%OutputDirPath%\%ZipTargetPath%\"
+echo zipPath : "%DeployZipPath%\%DeployZipName%"
+
+bandizip.exe c "%DeployZipPath%\%DeployZipName%" "%OutputDirPath%\%ZipTargetPath%" 
+
+rem pause

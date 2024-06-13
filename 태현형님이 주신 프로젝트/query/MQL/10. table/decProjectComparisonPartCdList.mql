@@ -1,0 +1,34 @@
+################################################################################################
+# Create By thok : 2023. 09. 06
+# Admin Type : table
+# Name : decProjectComparisonPartCdList
+################################################################################################
+#del table decProjectComparisonPartCdList system;
+add table 'decProjectComparisonPartCdList' system
+	column
+		name 'Part'
+		label 'Part'
+		alt ''
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Column Type' 'program'
+        setting 'function' 'getDBDataList'
+        setting 'program' 'emxProjectSpace'
+		setting 'columnName' 'PART_CD'
+		setting 'Width' '50'
+	column
+		name 'PartDescription'
+		label 'Part Description'
+		alt ''
+		setting 'Registered Suite' 'ProgramCentral'
+		setting 'Column Type' 'program'
+        setting 'function' 'getDBDataList'
+        setting 'program' 'emxProjectSpace'
+		setting 'columnName' 'PART_SHORTDESC'
+	column
+		name 'DynamicColumn'
+		setting 'Column Type' 'Dynamic' 
+		setting 'Dynamic Column Function' 'getDynamicMaterialComparisonColumn' 
+		setting 'Dynamic Column Program' 'emxProjectSpace'
+;
+add property 'table_decProjectComparisonPartCdList' on program 'eServiceSchemaVariableMapping.tcl' to table 'decProjectComparisonPartCdList' system
+;

@@ -1,0 +1,1 @@
+define("DS/RTwebrtcAPI/RTwebrtcAPI_pt-BR",{});define("DS/RTwebrtcAPI/assets/nls/feed",{Call:"Chamada",notCompatible:"Este recurso não é compatível com seu navegador ou dispositivo atual"});

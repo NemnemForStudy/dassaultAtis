@@ -1,0 +1,1 @@
+define("DS/DMUComment/DMUComment_ko",{});define("DS/DMUComment/assets/nls/DMUComment",{highlightCommentPrefix:"CommentHighlight",positionedCommentPrefix:"CommentPositioned",commentPrefix:"코멘트",commentCreationLabel:"새 코멘트를 연결할 점, 마커 또는 일부 텍스트를 선택합니다."});

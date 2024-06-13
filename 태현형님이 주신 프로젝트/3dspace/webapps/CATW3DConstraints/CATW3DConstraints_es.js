@@ -1,0 +1,1 @@
+define("DS/CATW3DConstraints/CATW3DConstraints_es",{});define("DS/CATW3DConstraints/assets/nls/CATW3DConstraintsView",{cstCoincidence:"Coincidencia",cstContact:"Contacto",plane:"Plano",sidePanel:"Alternativas de enganche"});

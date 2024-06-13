@@ -1,0 +1,50 @@
+{
+    "dslog:LogItem":{
+        "isPublic" : true,
+        "kindOf":"root",
+        "beType":"type_RFLVPMLogicalReference",
+        "rootLinks":[],
+        "contentLinks":["dslog:LogInstance"],
+        "extensionLinks":[
+            "dslog:LogItemEnterpriseAttributes",
+            "dscfg:Configured",
+            "dslc:changeControl"
+        ],
+        "search":true,
+        "customizationSupport":true,
+        "cestamp":true,
+        "patchCSRF":true,
+        "attributeMappingClass":"com.dassault_systemes.enovia.xapps.dseno.V%1.dictionaries.ENOXReferenceAttributeDictionary",
+        "optionCheck":{
+            "modify":true,
+            "produce":true,
+            "navigate":false
+        }
+    },
+    "dslog:LogInstance":{
+        "isPublic" : true,
+        "kindOf":"content",
+        "beType":"relationship_RFLVPMLogicalInstance",
+        "extensionLinks": [
+            "dscfg:Filterable"
+        ],
+        "rootLinks":["dslog:LogItem"],
+        "customizationSupport":true,
+        "cestamp":true,
+        "patchCSRF":true,
+        "attributeMappingClass":"com.dassault_systemes.catia.xapps.dslog.V%1.dictionaries.dslogInstanceAttributeDictionary",
+        "optionCheck":{
+            "modify":true,
+            "produce":true,
+            "navigate":false
+        }
+    },
+    "dslog:LogItemEnterpriseAttributes": {
+        "isPublic" : true,
+        "kindOf":"extension",
+        "rootLinks":["dslog:LogItem"],    
+        "beType": "XP_RFLVPMLogicalReference_Ext",
+        "customerAttribute":true
+    }
+}
+

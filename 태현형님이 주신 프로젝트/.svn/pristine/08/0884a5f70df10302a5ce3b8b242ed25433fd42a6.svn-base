@@ -1,0 +1,102 @@
+.sch-breadcrumb-toolbar {
+  position: absolute;
+  pointer-events: none;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  text-align: center;
+  font-size: 16px;
+  user-select: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: visibility 0s, opacity 0.5s ease-out; }
+  .sch-breadcrumb-toolbar.visible {
+    visibility: visible;
+    opacity: 1; }
+  .sch-breadcrumb-toolbar > .sch-breadcrumb-list {
+    list-style: none;
+    display: inline-block;
+    pointer-events: initial;
+    margin: 0px;
+    padding: 3px;
+    border-radius: 5px;
+    background: #f1f1f1;
+    margin-top: 2px;
+    box-shadow: rgba(0, 0, 0, 0.1) -3px 2px 5px, inset rgba(255, 255, 255, 0.09) 1px 0; }
+    .sch-breadcrumb-toolbar > .sch-breadcrumb-list > li {
+      float: left;
+      cursor: pointer;
+      font-family: "eps3dsFont", Arial, sans-serif;
+      font-weight: normal;
+      color: #FFF;
+      display: block;
+      background: #3498db;
+      text-decoration: none;
+      position: relative;
+      height: 26px;
+      line-height: 28px;
+      padding: 0 10px 0 5px;
+      text-align: center;
+      margin-right: 30px; }
+      .sch-breadcrumb-toolbar > .sch-breadcrumb-list > li > * {
+        pointer-events: none; }
+      .sch-breadcrumb-toolbar > .sch-breadcrumb-list > li.sch-breadcrumb-root {
+        width: auto;
+        padding-left: 15px;
+        border-radius: 4px 0 0 4px; }
+        .sch-breadcrumb-toolbar > .sch-breadcrumb-list > li.sch-breadcrumb-root:before {
+          border: none; }
+      .sch-breadcrumb-toolbar > .sch-breadcrumb-list > li.sch-breadcrumb-expander {
+        width: 15px;
+        line-height: 35px;
+        display: none; }
+        .sch-breadcrumb-toolbar > .sch-breadcrumb-list > li.sch-breadcrumb-expander.visible {
+          display: block; }
+      .sch-breadcrumb-toolbar > .sch-breadcrumb-list > li:last-child {
+        background-color: #d1d4d4;
+        color: #3d3d3d;
+        cursor: default;
+        margin-right: 0px;
+        padding-right: 15px;
+        border-radius: 0 4px 4px 0; }
+        .sch-breadcrumb-toolbar > .sch-breadcrumb-list > li:last-child:before {
+          border-color: #d1d4d4;
+          border-left-color: transparent; }
+        .sch-breadcrumb-toolbar > .sch-breadcrumb-list > li:last-child:after {
+          border: none; }
+      .sch-breadcrumb-toolbar > .sch-breadcrumb-list > li:before, .sch-breadcrumb-toolbar > .sch-breadcrumb-list > li:after {
+        content: "";
+        position: absolute;
+        top: 0;
+        border: 0 solid #3498db;
+        border-width: 13px 10px;
+        width: 0;
+        height: 0; }
+      .sch-breadcrumb-toolbar > .sch-breadcrumb-list > li:before {
+        left: -20px;
+        border-left-color: transparent; }
+      .sch-breadcrumb-toolbar > .sch-breadcrumb-list > li:after {
+        left: 100%;
+        border-color: transparent;
+        border-left-color: #3498db; }
+      .sch-breadcrumb-toolbar > .sch-breadcrumb-list > li:not(:last-child):hover {
+        background-color: #1abc9c; }
+        .sch-breadcrumb-toolbar > .sch-breadcrumb-list > li:not(:last-child):hover:before {
+          border-color: #1abc9c;
+          border-left-color: transparent; }
+        .sch-breadcrumb-toolbar > .sch-breadcrumb-list > li:not(:last-child):hover:after {
+          border-left-color: #1abc9c; }
+      .sch-breadcrumb-toolbar > .sch-breadcrumb-list > li:not(:last-child):active {
+        background-color: #16a085; }
+        .sch-breadcrumb-toolbar > .sch-breadcrumb-list > li:not(:last-child):active:before {
+          border-color: #16a085;
+          border-left-color: transparent; }
+        .sch-breadcrumb-toolbar > .sch-breadcrumb-list > li:not(:last-child):active:after {
+          border-left-color: #16a085; }
+
+.sch-immersive-frame.sch-activetab-edit .sch-breadcrumb-toolbar, .sch-immersive-frame.sch-activetab-play .sch-breadcrumb-toolbar, .sch-immersive-frame.sch-activetab-debug .sch-breadcrumb-toolbar {
+  margin-top: 30px; }

@@ -1,0 +1,10 @@
+m|XCADParserWeb\XCADSTPADocument.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.0.22164|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\XCADSTPADocument\XCADSTPADocument.js|1655141256|173
+s|XCADParserWeb\XCADSTPADocument.mweb\src\STPAInputDocument.js|1652712944|275
+u|XCADParserWeb\XCADSTPADocument.mweb\src\XCADSTPADocument.js|1491915992|12
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!-- COPYRIGHT DASSAULT SYSTEMES 2006, All rights reserved -->
+
+<Package xmlns="PLMDictionaryUnified"
+         ModelerType="Top"
+         BelongsToModeler="DELRmiResourceModel"
+         Name="DELLinkOnPlant"
+         Uuid="16516493-221D-48F8-BF04-06B570072D46"
+         UseNames="PLMCORE"
+         CustomerExposition="Programmer"
+>
+
+  <Class Name="DELMfgLinkOnPlantCnx"
+      Uuid="79B79B00-3ABE-4CD2-BD50-24F20D74A4C7"
+      SuperName="PLMConnection"
+      CustomerExposition="Programmer"
+      CustomerExtensible="Yes"
+      Specializable="No"
+      Abstract="No"
+      >
+
+    <Property Name="Searchable" Value="No"/>
+    <Property Name="Newable" Value="No"/>
+    <Property Name="OwnerTypes" Value="VPMReference"/>
+
+
+    <!-- ********************************************************* -->
+    <!-- * SubRelationship declaration -->
+    <!-- ********************************************************* -->
+
+    <Path Name="DELMfgResp_Target_SR"
+          Uuid="5D1743E4-7A5F-41F8-AE3D-CE046666BD0A"
+          TargetName="V_SRs"
+          MultiValuated="No"
+          Type="SemanticRelation"
+          RoleName="DELMfgResp_Target"
+          SynchroSensitivity="Last"
+          RerouteOnEffectivityChange="No"
+          Orientation="In"
+          Semantics="Reference4"/>
+
+    <Path Name="DELMfgResp_Source_SR"
+          Uuid="899261B8-E142-46DB-9592-7A354E7E6C6C"
+          TargetName="V_SRs"
+          MultiValuated="No"
+          Type="SemanticRelation"
+          RoleName="DELMfgResp_Source"
+          SynchroSensitivity="Last"
+          RerouteOnEffectivityChange="No"
+          Orientation="Out"
+          Semantics="Reference7"/>
+
+    <Method ImplementationType="None">
+      <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+    </Method>
+
+  </Class>
+</Package>

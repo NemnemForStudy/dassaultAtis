@@ -1,0 +1,372 @@
+<?xml version="1.0" ?>
+<!-- ENOVIA DICTIONARY  -->
+<!-- COPYRIGHT DASSAULT SYSTEMES 2019, All rights reserved -->
+
+<Package xmlns="PLMDictionaryUnified" ModelerType="Top" CustomerExposition="Programmer"
+         Name="PLMSystems3DArchitecture" Uuid="940b619b-806c-4be4-97c9-a71b6ab42ae1"
+         UseNames="LPABSTRACT;PRODUCTCFG"
+         UseProcedures="PLMSystems3DArchitecture">
+         
+        <!--Preqreqs: ERCoreModeler;LPABSTRACT;LPABSTRACT3DREP;PHYSICALABSTRACT;PLMABSTRACT;PLMCORE;PRODUCTCFG-->
+  
+  <Property Name="IconName" Value="I_PLMSystems3DArchitecture"/>
+  
+  <CAAComment>
+    <ShortRole>Systems 3D Architecture Package</ShortRole>
+    <Role>This package describes Systems 3D Architecture data on top of physical modeler.</Role>
+  </CAAComment>
+
+  <Comment>[V6R021x] 12/2/2019 Initial creation</Comment>
+  <Comment>[V6R021x] 2/5/2020 Extension Sys3D_PortAssociation moved to new metadata PLMSystems3DArchitectureExt</Comment>
+  <Comment>[V6R021x] 2/13/2020 Add new classes Sys3D_Route, Sys3D_Route_Inst and Sys3D_RouteConnection</Comment>
+  <Comment>[V6R021x] 2/17/2020 Fix Sys3D_Route abbreviation</Comment>
+  <Comment>[V6R021x] 2/19/2020 Remove unwanted TargetName on SR</Comment>
+  <Comment>[V6R021x] 2/21/2020 Length 32 changed to 100 for ClassID and ClassDiscipline attributes</Comment>
+  <Comment>[V6R021x] 3/11/2020 Fix missing CreateInstName in Sys3D_Route</Comment>
+  <Comment>[V6R021x] 10/6/2020 Split metadata to solve MOVE Instance issue</Comment>
+  <Comment>[V6R021x] 10/6/2020 Fix Connection export declarations</Comment>
+
+  <Class Name="Sys3D_AbstractVolume"
+         Uuid="bb4bb441-a517-4d4e-9322-e081de732c0e"
+         Abbreviation="s3dvol"
+         Abstract="Yes"
+         CustomerExposition="Programmer"
+         SuperName="VPMReference"
+         Discipline="Yes" >
+         
+    <Property Name="IconName"                Value="I_Sys3D_AbstractVolume"/>
+    <Property Name="Searchable"              Value="Yes"/>
+    <Property Name="Configurable"            Value="Yes"/>
+    <Property Name="ChangeManagementSupport" Value="Yes"/>
+    <!-- UserChoiceReferenceDefault, UserChoice3DPartDefault, ReferenceOnly, 3DPartOnly -->
+    <Property Name="3DPartAvailability"      Value="UserChoice3DPartDefault" />
+    <Property Name="OccurrenceType"          Value="Sys3D_AbstractVolumeOccurrence"/>
+
+  </Class>
+  
+  <Class Name="Sys3D_IntegrationVolume"
+       Uuid="8d992e17-3722-4355-9f81-dc848409097f"
+       Abbreviation="s3dintvol"
+       Abstract="Yes"
+       CustomerExposition="Programmer"
+       SuperName="Sys3D_AbstractVolume"
+       Discipline="Yes" >
+    
+    <Property Name="IconName"                Value="I_Sys3D_IntegrationVolume"/>    
+    <Property Name="OccurrenceType"          Value="Sys3D_IntegrationVolumeOccurrence"/>
+
+    <Simple Name="V_MaxSignalNumber"
+        Uuid="2216359f-4b8b-42c7-ac98-597b165b0a4e"
+        Type="Integer" Protection="Free"
+        MultiValuated="No" DefaultValue="-1">
+    </Simple>
+
+  </Class>
+  
+  <Class Name="Sys3D_DerivationVolume"
+         Uuid="094964d0-f54a-41ce-a978-5fa34c5c66e5"
+         Abbreviation="s3ddrvvol"
+         CustomerExposition="Programmer"
+         SuperName="Sys3D_IntegrationVolume"
+         Discipline="Yes"
+         CreateInstName="Sys3D_DerivationVolumeInst">
+
+    <Property Name="KweNew_InstanciationMethod" Value="CATESys3DDelegateInstanciationVolume"/>
+    <Property Name="KweNew_ReturnedType"        Value="Sys3D_DerivationVolumeInst"/>
+    <Property Name="Newable"                    Value="All"/>
+    <Property Name="IconName"                   Value="I_Sys3D_DerivationVolume"/>
+    <Property Name="3DIconName"                 Value="V_Sys3D_DerivationVolume.cgr"/>
+    <Property Name="OccurrenceType"             Value="Sys3D_DerivationVolumeOccurrence"/>
+
+  </Class>
+  
+  <Class Name="Sys3D_InterfaceVolume"
+         Uuid="1381ff48-f1ab-4bb0-934d-1e293be5818b"
+         Abbreviation="s3ditfvol"
+         CustomerExposition="Programmer"
+         SuperName="Sys3D_IntegrationVolume"
+         Discipline="Yes"
+         CreateInstName="Sys3D_InterfaceVolumeInst">
+
+    <Property Name="KweNew_InstanciationMethod" Value="CATESys3DDelegateInstanciationVolume"/>
+    <Property Name="KweNew_ReturnedType"        Value="Sys3D_InterfaceVolumeInst"/>
+    <Property Name="Newable"                    Value="All"/>
+    <Property Name="IconName"                   Value="I_Sys3D_InterfaceVolume"/>
+    <Property Name="3DIconName"                 Value="V_Sys3D_InterfaceVolume.cgr"/>
+    <Property Name="OccurrenceType"             Value="Sys3D_InterfaceVolumeOccurrence"/>
+
+  </Class>
+ 
+  <Class Name="Sys3D_ComponentVolume"
+       Uuid="e5950441-c99e-418f-94d6-05a503dc9762"
+       Abbreviation="s3dcmpvol"
+       CustomerExposition="Programmer"
+       SuperName="Sys3D_AbstractVolume"
+       Discipline="Yes"
+       CreateInstName="Sys3D_ComponentVolumeInst">
+
+    <Property Name="KweNew_InstanciationMethod" Value="CATESys3DDelegateInstanciationVolume"/>
+    <Property Name="KweNew_ReturnedType"        Value="Sys3D_ComponentVolumeInst"/>
+    <Property Name="Newable"                    Value="All"/>
+    <Property Name="IconName"                   Value="I_Sys3D_ComponentVolume"/>
+    <Property Name="3DIconName"                 Value="V_Sys3D_ComponentVolume.cgr"/>
+    <Property Name="OccurrenceType"             Value="Sys3D_ComponentVolumeOccurrence"/>
+
+  </Class>
+
+  <Class Name="Sys3D_PathwayConnectionPoint"
+      Uuid="0d90c4e5-ce43-4c1a-9b92-5da86a205d17"
+      Abstract="No"
+      SuperName="VPMPort"
+      Discipline="Yes"
+      CustomerExposition="Programmer"
+      Specializable="No"
+      CustomerExtensible="No"
+      OwnerTypes="Sys3D_AbstractVolume" >
+
+    <Simple Name="V_ClassID"
+        Uuid="af133a97-fe08-4d21-9014-8e9044509875"
+        Type="String" MaxLength="100" Protection="External"
+        MultiValuated="No" DefaultValue="">
+        <Property Name="Controller" Value="CATSys3DPathwayConnectionPointController"/>
+    </Simple>
+    <Simple Name="V_ClassDiscipline"
+        Uuid="ae03ecf9-d1ca-4d15-9e89-e999e7fb5aea"
+        Type="String" MaxLength="100" Protection="External"
+        MultiValuated="No" DefaultValue="">
+        <Property Name="Controller" Value="CATSys3DPathwayConnectionPointController"/>
+    </Simple>
+    
+  </Class>
+   
+  <Class Name="Sys3D_ComponentAllocationConnection"
+       Uuid="1aa79234-685b-403a-8429-f8a917cc1718"
+       Abstract="No"
+       SuperName="LPAbstractConnection"
+       CustomerExposition="Programmer"
+       Specializable="No"
+       CustomerExtensible="No"
+       OwnerTypes="VPMReference" 
+       AggregatesComponents="Yes" >
+
+    <!-- SR1 pointing the Volume -->
+    <Path Name="Sys3D_toComponentVolume"
+        Uuid="bdafdada-7d7c-4ed1-b6b1-be526b4b1bf4"
+        MultiValuated="No" RoleName="Sys3DComponentVolume" Type="SemanticRelation"
+        AdaptativeToMinor="No" SynchroSensitivity="PathAndLast" RerouteOnEffectivityChange="No" Orientation="Neutral" Semantics="Reference3" />
+
+    <!-- SR2 pointing the Logical Components -->
+    <Path Name="Sys3D_toLogicalComponent"
+        Uuid="9bd5a6da-c98b-4d70-a910-1b7563ba7478"
+        MultiValuated="Yes" RoleName="Sys3DLogicalComponent" Type="SemanticRelation"
+        AdaptativeToMinor="No" SynchroSensitivity="PathAndLast" RerouteOnEffectivityChange="No" Orientation="Neutral" Semantics="Reference3" />
+
+    <!--                                                 -->
+    <!-- B-PLAN if we can not use an Extension on our SR -->
+    <!-- SR3 and SR4 should not be used.                 -->
+    <!-- Carried by Sys3D_PortAllocationConnection       -->
+    <!--                                                 -->
+
+    <!-- SR3 pointing the Volume's Port -->
+    <Path Name="Sys3D_toComponentPort"
+        Uuid="d1f67df6-bdf3-4564-976e-4a17ffd43a3d"
+        MultiValuated="Yes" RoleName="Sys3DComponentPort" Type="SemanticRelation"
+        AdaptativeToMinor="No" SynchroSensitivity="PathAndLast" RerouteOnEffectivityChange="No" Orientation="Neutral" Semantics="Reference3" />
+       
+    <!-- SR4 pointing the Logical Components' Ports -->
+    <Path Name="Sys3D_toLogicalPort"
+        Uuid="a2d13f97-01ac-44af-ab41-ce5188a7c832"
+        MultiValuated="Yes" RoleName="Sys3DLogicalPort" Type="SemanticRelation"
+        AdaptativeToMinor="No" SynchroSensitivity="PathAndLast" RerouteOnEffectivityChange="No" Orientation="Neutral" Semantics="Reference3" />
+
+    <!-- SR5" pointing the Port Allocation Connection -->
+    <Path Name="Sys3D_toAllocationConnection"
+        Uuid="d6e2a91b-2676-4b27-ac1e-0693623a053e"
+        MultiValuated="Yes" RoleName="Sys3DAllocationConnection" Type="SemanticRelation"
+        AdaptativeToMinor="No" SynchroSensitivity="None" RerouteOnEffectivityChange="No" Orientation="Neutral" Semantics="Reference" />
+
+    <Method ImplementationType="Self">
+      <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+      <ProcedureForUsage>
+        <UsedProcedure href="PLMSystems3DArchitecture.proc#Sys3DComponentAllocationConnection_Export"/>
+        <Usage href="ExportScope.meth#Review"/>
+      </ProcedureForUsage>
+      <ProcedureForUsage>
+        <UsedProcedure href="PLMSystems3DArchitecture.proc#Sys3DComponentAllocationConnection_Export"/>
+        <Usage href="ExportScope.meth#Design"/>
+      </ProcedureForUsage>
+      <ProcedureForUsage>
+        <UsedProcedure href="PLMSystems3DArchitecture.proc#Sys3DComponentAllocationConnection_Export"/>
+        <Usage href="ExportScope.meth#Channel"/>
+      </ProcedureForUsage>
+    </Method>
+    
+  </Class>
+ 
+ <!--                                                 -->
+ <!-- B-PLAN if we can not use an Extension on our SR -->
+ <!--                                                 -->
+ <!-- Tied to the connection "Sys3D_ComponentAllocationConnection", this connection links a Volume's Port to 1 to many Logical Components' Ports -->
+  <Class Name="Sys3D_PortAllocationConnection"
+       Uuid="be3e77a1-0711-4c1b-a3ec-481bed23c949"
+       Abstract="No"
+       SuperName="LPAbstractConnection"
+       CustomerExposition="Programmer"
+       Specializable="No"
+       CustomerExtensible="No"
+       OwnerTypes="VPMReference" 
+       AggregatesComponents="Yes" >
+
+    <!-- SR3' pointing the Volume's Port -->
+    <Path Name="Sys3D_toComponentPort2"
+        Uuid="8cf5ea30-809c-4d13-89b9-2342e85730eb"
+        MultiValuated="No" RoleName="Sys3DComponentPort" Type="SemanticRelation"
+        AdaptativeToMinor="No" SynchroSensitivity="PathAndLast" RerouteOnEffectivityChange="No" Orientation="Neutral" Semantics="Reference3" />
+
+    <!-- SR4' pointing the Logical Components' Ports -->
+    <Path Name="Sys3D_toLogicalPort2"
+        Uuid="9a0688ae-840e-462e-8b89-77f1c56f0d6c"
+        MultiValuated="Yes" RoleName="Sys3DLogicalPort" Type="SemanticRelation"
+        AdaptativeToMinor="No" SynchroSensitivity="PathAndLast" RerouteOnEffectivityChange="No" Orientation="Neutral" Semantics="Reference3" />
+
+    <!-- SR5' pointing the Component Allocation Connection -->
+    <Path Name="Sys3D_toAllocationConnection2"
+        Uuid="2a0f1e68-585c-4182-b566-e259bcae4ccf"
+        MultiValuated="No" RoleName="Sys3DAllocationConnection" Type="SemanticRelation"
+        AdaptativeToMinor="No" SynchroSensitivity="None" RerouteOnEffectivityChange="No" Orientation="Neutral" Semantics="Reference" />
+
+    <Method ImplementationType="Self">
+      <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+      <ProcedureForUsage>
+        <UsedProcedure href="PLMSystems3DArchitecture.proc#Sys3DPortAllocationConnection_Export"/>
+        <Usage href="ExportScope.meth#Review"/>
+      </ProcedureForUsage>
+      <ProcedureForUsage>
+        <UsedProcedure href="PLMSystems3DArchitecture.proc#Sys3DPortAllocationConnection_Export"/>
+        <Usage href="ExportScope.meth#Design"/>
+      </ProcedureForUsage>
+      <ProcedureForUsage>
+        <UsedProcedure href="PLMSystems3DArchitecture.proc#Sys3DPortAllocationConnection_Export"/>
+        <Usage href="ExportScope.meth#Channel"/>
+      </ProcedureForUsage>
+    </Method>
+    
+  </Class>
+
+  <Class Name="Sys3D_PathwayGeometry"
+       Uuid="fdde95fb-5b03-451f-a8d8-a05bc043ef9f"
+       Abbreviation="s3dpat"
+       CustomerExposition="Programmer"
+       SuperName="VPMReference"
+       Discipline="Yes"
+       Specializable="Yes"
+       CustomerExtensible="Yes"
+       CreateInstName="Sys3D_PathwayGeometryInst">
+
+    <Property Name="KweNew_InstanciationMethod" Value="CATESys3DDelegateInstanciationPathway"/>
+    <Property Name="KweNew_ReturnedType"        Value="Sys3D_PathwayGeometryInst"/>
+    <Property Name="Newable"                    Value="All"/>
+    <Property Name="IconName"                   Value="I_Sys3D_PathwayGeometry"/>
+    <Property Name="3DIconName"                 Value="V_Sys3D_PathwayGeometry.cgr"/>
+    <Property Name="OccurrenceType"             Value="Sys3D_PathwayGeometryOccurrence"/>
+    <Property Name="3DPartAvailability"         Value="UserChoice3DPartDefault" />
+
+    <Simple Name="V_ClassID"
+            Uuid="33f89d48-42b6-499e-b086-5d5a8acb9537"
+            Type="String" MaxLength="100" Protection="External"
+            MultiValuated="No" DefaultValue="">
+            <Property Name="Controller" Value="CATSys3DPathwayGeometryController"/>
+    </Simple>
+    <Simple Name="V_ClassDiscipline"
+            Uuid="f2c803a2-1c64-4930-aaed-4cafb232b305"
+            Type="String" MaxLength="100" Protection="External"
+            MultiValuated="No" DefaultValue="">
+            <Property Name="Controller" Value="CATSys3DPathwayGeometryController"/>
+    </Simple>
+    
+  </Class>
+
+  <Class Name="Sys3D_Route"
+         Uuid="304f34cc-3980-4118-8fb8-17a6539d1631"
+         Discipline="Yes"
+         CustomerExposition="Programmer"
+         Abbreviation="s3drou"
+         CustomerExtensible="Yes"
+         Specializable="Yes"
+         SuperName="VPMReference"
+         Abstract="No"
+         CreateInstName="Sys3D_RouteInst" >
+    
+    <Property Name="IconName"                   Value="I_Sys3D_Route"/>
+    <Property Name="KweNew_InstanciationMethod" Value="CATESys3DDelegateInstanciationRoute"/>
+    <Property Name="KweNew_ReturnedType"        Value="Sys3D_RouteInst"/>
+    <Property Name="Newable"                    Value="All"/>
+    <Property Name="3DIconName"                 Value="V_Sys3D_Route.cgr"/>
+    <Property Name="OccurrenceType"             Value="Sys3D_RouteOccurrence"/>
+    <Property Name="3DPartAvailability"         Value="ReferenceOnly"/>
+
+    <Simple Name="V_Sys3D_SegmentIdent"              Uuid="8e344add-1900-4212-a50e-e0bc1248c5fb" Type="String"  MaxLength="100"             MultiValuated="Yes"   Protection="External" DefaultValue="" />
+    <Simple Name="V_Sys3D_Length"                    Uuid="e85c5fe4-1059-4047-8d0c-265945555185" Type="Double"  Magnitude="LENGTH"          MultiValuated="No"    Protection="External" DefaultValue="0.0" />
+    <Simple Name="V_Sys3D_Itinerary_Snap"            Uuid="6ca05541-413c-4487-94d9-3e9ff9812079" Type="String"  MaxLength="100"             MultiValuated="Yes"   Protection="External" DefaultValue="" />
+    <Simple Name="V_Sys3D_ItineraryLength_Snap"      Uuid="dcf25f15-211e-4dd2-a3a5-6dced25eb5c4" Type="Double"  Magnitude="LENGTH"          MultiValuated="Yes"   Protection="External" DefaultValue="0.0" />
+    <Simple Name="V_Sys3D_Status"                    Uuid="36e4081c-9c7a-44dc-85d1-1ad983fd1272" Type="String"  DefaultValue="Empty"    Protection="External" >
+      <Range>
+        <Equal>Empty</Equal>
+        <Equal>Partial</Equal>
+        <Equal>Full</Equal>
+      </Range>
+    </Simple>    
+    <Simple Name="V_Sys3D_Validation"                Uuid="3b98d5ac-6faa-453d-aa5c-895c3cae44d9" Type="String"  DefaultValue="NotValidated" Protection="External" >
+      <Range>
+        <Equal>NotValidated</Equal>
+        <Equal>Validated</Equal>
+        <Equal>InRevision</Equal>
+      </Range>
+    </Simple>
+  
+  </Class>
+
+  <Class Name="Sys3D_RouteConnection"
+         Uuid="36c79337-246c-4880-a964-ab98e22da517"
+         Abstract="No"
+         SuperName="LPAbstractConnection"
+         CustomerExposition="Programmer"
+         Specializable="No"
+         CustomerExtensible="No"
+         OwnerTypes="Sys3D_Route" >
+
+    <Path Name="Sys3D_Signal" Uuid="92a12596-89c4-4758-abb3-6f6379bf28bb"
+        MultiValuated="No" RoleName="Sys3DSignal"
+        Type="SemanticRelation" AdaptativeToMinor="No" SynchroSensitivity="PathAndLast" RerouteOnEffectivityChange="No" Orientation="In" Semantics="Reference3" />
+    
+    <Path Name="Sys3D_SignalExtremity" Uuid="432199f9-1850-4b45-8853-d9ff096afafd"
+        MultiValuated="Yes" RoleName="Sys3DSignalExtremity"
+        Type="SemanticRelation" AdaptativeToMinor="No" SynchroSensitivity="PathAndLast" RerouteOnEffectivityChange="No" Orientation="In" Semantics="Reference3" />
+
+    <Path Name="Sys3D_Volume" Uuid="4567e899-8a6e-4329-a73f-5117b32bdd30"
+        MultiValuated="Yes" RoleName="Sys3DIntegrationVolume"
+        Type="SemanticRelation" AdaptativeToMinor="No" SynchroSensitivity="PathAndLast" RerouteOnEffectivityChange="No" Orientation="In" Semantics="Reference3" />
+
+    <Path Name="Sys3D_PathwaySegment" Uuid="500567ed-17c7-4161-9bfe-685b26a539fb"
+        MultiValuated="Yes" RoleName="Sys3DPathwaySegment"
+        Type="SemanticRelation" AdaptativeToMinor="No" SynchroSensitivity="PathAndLast" RerouteOnEffectivityChange="No" Orientation="In" Semantics="Reference3" />
+
+    <Method ImplementationType="Self">
+      <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+      <ProcedureForUsage>
+        <UsedProcedure href="PLMSystems3DArchitecture.proc#Sys3DRouteConnection_Export"/>
+        <Usage href="ExportScope.meth#Review"/>
+      </ProcedureForUsage>
+      <ProcedureForUsage>
+        <UsedProcedure href="PLMSystems3DArchitecture.proc#Sys3DRouteConnection_Export"/>
+        <Usage href="ExportScope.meth#Design"/>
+      </ProcedureForUsage>
+      <ProcedureForUsage>
+        <UsedProcedure href="PLMSystems3DArchitecture.proc#Sys3DRouteConnection_Export"/>
+        <Usage href="ExportScope.meth#Channel"/>
+      </ProcedureForUsage>
+    </Method>
+    
+  </Class>
+  
+</Package>

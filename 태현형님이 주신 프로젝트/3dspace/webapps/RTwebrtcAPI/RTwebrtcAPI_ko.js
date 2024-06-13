@@ -1,0 +1,1 @@
+define("DS/RTwebrtcAPI/RTwebrtcAPI_ko",{});define("DS/RTwebrtcAPI/assets/nls/feed",{Call:"호출",notCompatible:"이 기능은 현재 브라우저 또는 장치가 지원하지 않습니다."});

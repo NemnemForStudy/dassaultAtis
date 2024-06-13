@@ -1,0 +1,16 @@
+m|DELWebViewerController\DELWebViewerBuildUpController.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.3.23065|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\DELWebViewerBuildUpController\DELWebViewerBuildUpController.js|1678138806|9513
+s|DELWebViewerController\DELWebViewerBuildUpController.mweb\src\BuildUpCommandsBehavior.js|1676977972|7196
+t|win_b64\webapps\DELWebViewerBuildUpController\assets\json\BuildUpPreferenceSchema.json|1647691814|136
+s|DELWebViewerController\DELWebViewerBuildUpController.mweb\src\assets\json\BuildUpPreferenceSchema.json|1598361899|136
+t|win_b64\webapps\DELWebViewerBuildUpController\assets\json\GlobalBuildupSettings.json|1667619910|3145
+s|DELWebViewerController\DELWebViewerBuildUpController.mweb\src\assets\json\GlobalBuildupSettings.json|1665998651|3145
+u|DELWebViewerController\DELWebViewerBuildUpController.mweb\src\BuildUpController.js|1674559734|23945
+u|DELWebViewerController\DELWebViewerBuildUpController.mweb\src\BuildUpHelper.js|1674218534|14429
+u|DELWebViewerController\DELWebViewerBuildUpController.mweb\src\BuildUpSettings.js|1677740143|3853
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

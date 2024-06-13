@@ -1,0 +1,1 @@
+define("DS/ENOXEngineerCommonUtils/ENOXEngineerCommonUtils_zh-TW",{});define("DS/ENOXEngineerCommonUtils/assets/nls/XENCommonNls",{loading:"正在載入...","eng.ui.button.ok":"確定","eng.ui.button.cancel":"取消","app.failure":"應用程式遇到非預期的錯誤。請聯絡您的管理員以取得支援。"});

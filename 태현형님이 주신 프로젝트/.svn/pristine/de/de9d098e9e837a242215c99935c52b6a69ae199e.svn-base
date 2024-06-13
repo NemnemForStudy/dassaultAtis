@@ -1,0 +1,1 @@
+define("DS/ENOXEngineerCommonUtils/ENOXEngineerCommonUtils_cs",{});define("DS/ENOXEngineerCommonUtils/assets/nls/XENCommonNls",{loading:"Probíhá načítání ...","eng.ui.button.ok":"OK","eng.ui.button.cancel":"Zrušit","app.failure":"V aplikaci došlo k neočekávané chybě. Obraťte se na správce."});

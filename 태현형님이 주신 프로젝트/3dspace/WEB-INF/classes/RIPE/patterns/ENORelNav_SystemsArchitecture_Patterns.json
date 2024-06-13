@@ -1,0 +1,31 @@
+{
+	"relations": 
+    [
+        {
+            "name": "ProposedSolution_from",
+            "queries" :  [{ "definition":[{"navigationType" : "relation","qualityFilter" : {"rel_type" : "ProposedSolution"}, "direction" : "from"}]}]
+        },
+        {
+            "name": "ProposedSolution_to",
+            "queries" :  [{ "definition":[{"navigationType" : "relation","qualityFilter" : {"rel_type" : "ProposedSolution"}, "direction" : "to"}]}]
+        },
+        {
+            "name" : "SpaceAssignment_from",
+            "queries" :  [
+                { "definition":[{"navigationType" : "SR","qualityFilter" : {"role" : "472", "semantics" : "4"}, "direction" : "from"},
+                                {"navigationType" : "SR","qualityFilter" : {"role" : "471", "semantics" : "4"}, "direction" : "to"}]
+                }
+            ]
+        },
+        {
+            "name" : "SpaceAssignment_to",
+            "queries" :  [
+                { "definition":[{"navigationType" : "SR","qualityFilter" : {"role" : "471", "semantics" : "4"}, "direction" : "from"},
+                                {"navigationType" : "SR","qualityFilter" : {"role" : "472", "semantics" : "4"}, "direction" : "to"}],
+                                "removeTypes": ["RFLVPMLogicalInstance"]
+                }
+            ]
+        }
+	]
+}
+

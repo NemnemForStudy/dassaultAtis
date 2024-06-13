@@ -1,0 +1,208 @@
+FromProcessReferenceCouldNotBeRetrieved=La référence du processus source n'a pas pu être récupérée
+ToProcessReferenceCouldNotBeRetrieved=La référence du processus cible n'a pas pu être récupérée
+AlternateRelationCouldNotBeCreated=La relation alternative n'a pas pu être créée
+ProcessReferenceCouldNotBeRetrieved=La référence du processus n'a pas pu être récupérée
+ResourceReferenceCouldNotBeRetrieved=La référence de ressource n'a pas pu être récupérée
+FirstReferenceCouldNotBeRetrieved=La première référence n'a pas pu être récupérée
+SecondReferenceCouldNotBeRetrieved=La deuxième référence n'a pas pu être récupérée
+LinkAlreadyExists=Le lien existe déjà.
+GenericServerError=Erreur de serveur générique
+BlockingInstances=La référence est toujours instanciée en dehors de la portée de la suppression. Vous devrez peut-être enlever les instances existantes avant de supprimer la référence.
+ReorderInstancesFailed=L'ordre des instances n'a pas pu être stocké dans la base de données
+XMLDocumentRetrievalError=Erreur lors de la recherche d'un document contenant un ou plusieurs fichiers XML.
+
+# CIM (reroute) failure errMsgs
+ImplLinkUnderMultipleScopes=L'élément Mfg.Item existe dans plusieurs portées. Vérifiez et remplacez tous les parents qui sont hors de la portée à partir de leur première portée.
+RootMfgItemIsNotValid=La référence de fabrication fournie n'est pas valide
+RootProductIsNotValid=La référence de produit fournie n'est pas valide
+ParentMfgIsReadOnly=Impossible de mettre à jour la MBOM, car l'élément Mfg.Item {0} parent est en lecture seule
+RootMfgIsReadOnly=Impossible de mettre à jour la MBOM, car l'état actuel de l'élément Mfg.Item racine {0} ne permet pas la modification de la structure de la MBOM.
+MfgIsReadOnly=Impossible de mettre à jour la MBOM, car l'élément Mfg.Item {0} est à l'état lecture seule
+MBOMUpdateFail_CandPrdMultipleScopes=Impossible de traiter le produit '{0}', car le produit candidat de l'élément Mfg.Item '{1}' '{2}' a plusieurs portées Mfg.Item  [{3}]
+MBOMUpdateWarn_CandPrdMultiScopesButOneSel=Le produit candidat de l'élément Mfg.Item '{0}' '{1}' a plusieurs portées Mfg.Item [{2}], en tenant compte du premier '{3}' créé parmi eux pour la redirection !
+MBOMUpdateFail_MultipleCandProducts=Des produits à multiples candidats '{0}' sont présents pour l'élément Mfg.Item '{1}'. La gestion de l'impact des modifications est une commande recommandée pour cet élément Mfg.Item.
+MBOMUpdateWarn_MultipleCandPrdsButOneSel=Plusieurs produits candidats '{0}' trouvés pour Mfg.Item '{1}', en tenant compte du dernier '{2}' parmi eux pour la redirection !
+MBOMUpdateFail_InvalidMbomUpdateAction1=Action de mise à jour de la MBOM '{0}' non valide envoyée
+MBOMUpdateFail_InvalidMbomUpdateAction2=Action de mise à jour '{0}' de la MBOM non valide envoyée pour '{1}'
+CandPrdMultipleScopes=Le produit candidat '{0}' a plusieurs portées MfgItem
+MultipleCandPrd=Des produits à multiples candidats '{0}' sont présents pour l'élément MfgItem '{1}'. La gestion de l'impact des modifications est une commande recommandée pour cet élément MfgItem.
+InvalidMbomUpdateAction=Action de mise à jour de la MBOM non valide envoyée pour {0}
+BranchCreationFailed=Echec de création de la nouvelle branche
+UpdateMfgItemErr_RerouteSLFail_ItemROState=Impossible de rediriger le lien de domaine, car l'élément Mfg.Item '{0}' est en lecture seule
+MBOMUpdateFail_CandPrdMultipleScopes=Impossible de traiter le produit '{0}', car le produit candidat de l'élément MfgItem '{1}' '{2}' a plusieurs domaines MfgItem
+MBOMUpdateFail_InvalidMbomUpdateAction1=Action de mise à jour de la MBOM '{0}' non valide envoyée
+MBOMUpdateFail_InvalidMbomUpdateAction2=Action de mise à jour de la MBOM '{0}' non valide envoyée pour '{1}'
+MBOMUpdateFail_RerouteILWithEff=L'option Redirection uniquement n'est pas disponible avec Travail en évolution ou AM avec applicabilité. L'évolution d'instance est l'action recommandée.
+MBOMUpdateFail_EvolveInstWithoutEff=L'évolution d'instance peut uniquement être effectuée avec Travail en évolution ou AM avec applicabilité. Définissez Travail en évolution ou AM avec applicabilité, puis réessayez.
+
+# Replace Command properties
+ReplaceMfgItemScopedWithDifferentProduct=L'opération de remplacement est ignorée, car la portée de {0} est limitée à d'autres produits
+ReplaceMfgItemParentIsReadOnly=L'opération de remplacement est ignorée, car l'état de maturité de {0} n'est pas lecture/écriture
+ReplaceByLatestNoLatestRevision=L'opération de remplacement est ignorée, car l'état de maturité de {0} est lecture/écriture
+ReplaceSelectedItemIsNotMfgItem=L'opération de remplacement est ignorée, car {0} n'est pas l'élément Mfg.Item
+ReplaceOperationSuccess=Remplacement de {0} par {1} réussie.
+ReplaceOperationFailed=Echec du remplacement de {0} par {1}.
+ReplaceOperationFailedWithNoTarget=Echec du remplacement de {0}.
+ReplaceInstanceDoesNotExist=Echec du remplacement. L'instance sélectionnée n'existe pas.
+ReplaceBySelectedRefDoesNotExist=Echec du remplacement {0}. La référence n'existe pas.
+ReplaceMfgProcessParentIsReadOnly=L'opération de remplacement est ignorée, car le parent de {0} est défini à l'état de maturité lecture/écriture
+ReplaceOperationWarning=Le remplacement des éléments sélectionnés '{0}' supprime les liens d'implémentation de leurs enfants. Les liens d'implémentation des enfants doivent être traités manuellement à l'aide du CIM.
+ReplaceAggregationNotAllowed=L'opération de remplacement est ignorée. L'agrégation/le remplacement n'est pas autorisé entre '{0}' et '{1}'.
+# MBOM update initial validation check errorMsgs
+MBOMUpdateFailure_NoUpdateMode=La mise à jour de la MBOM ne peut pas être effectuée, car le mode de mise à jour de la MBOM n'est pas spécifié
+MBOMUpdateFailure_InvalidUpdateMode=La mise à jour de la MBOM ne peut pas être effectuée, car le mode de mise à jour spécifié est incorrect. Il peut s'agir de 'mbomPull', 'ebomPush' ou 'flowdown'
+MBOMUpdateFailure_NoRootMfgItem=La mise à jour de la MBOM ne peut pas être effectuée, car aucun élément Mfg.Item n'est spécifié
+MBOMUpdateFailure_InvalidRootMfgItem=Impossible de récupérer l'élément racine Mfg.Item. Indiquez une valeur valide pour 'rootMfgItemID' !
+MBOMUpdateFailure_RootMfgItemIsNotMFG=La valeur spécifiée pour 'rootMfgItemID' devrait être de type MFG, mais elle est de type '{0}'.
+MBOMUpdateFail_RootCnfgdWithEvolNUpdateWithoutEff=La mise à jour de la MBOM ne peut pas être effectuée, car l'élément racine Mfg.Item est configuré avec l'évolution mais la mise à jour n'est pas effectuée dans le cadre de l'effectivité !
+MBOMUpdateFail_RootChgCntrldNUpdateWithoutMCA=La mise à jour de la MBOM ne peut pas être effectuée, car l'élément racine Mfg.Item est contrôlé par l'action de modification '{0}', mais la mise à jour est effectuée sans Travailler sous une AM.
+MBOMUpdateFail_RootCntrldByCA_ButDiffInputCA=La mise à jour de la MBOM ne peut pas être effectuée, car l'élément racine Mfg.Item est contrôlé par l'action de modification '{0}', différente de la valeur Travailler sous une AM donnée !
+MBOMUpdateFailure_NewRevOfRootFailed=La mise à jour de la MBOM ne peut pas être effectuée, car une nouvelle révision de l'élément Mfg.Item ne peut pas être créée
+MBOMUpdateFailure_NoRootProduct=La mise à jour de la MBOM ne peut être effectuée, car aucun produit racine n'est spécifié et l'élément Mfg.Item n'est associé à aucun produit
+MBOMUpdateFailure_InvalidRootProduct=Impossible de récupérer le produit racine. Indiquez une valeur valide pour 'rootProductID'.
+MBOMUpdateFailure_RootProductIsNotPRD=La valeur spécifiée pour 'rootProductID' devrait être de type Produit, mais elle est de type '{0}'.
+MBOMUpdateFailure_PushModeNoEngCA=La mise à jour de la MBOM ne peut pas être effectuée, car aucune AM d'ing. n'est spécifiée. Spécifiez une valeur valide pour 'engChangeActionID'.
+MBOMUpdateFail_FlowdownSupportVarMissing=Définissez la variable 'MBOMUpdate_FlowdownSupport=1' pour activer les modes 'flowdown ' et\\ou 'update reporting'
+MBOMUpdateFail_ReviseBehvrChkInvalidOption=Valeur non valide spécifiée pour 'reviseBehaviorChecks'. Spécifiez une des valeurs valides parmi '{0}'.
+MBOMUpdateFailure_CommitFailed=Echec de la validation de la mise à jour de la MBOM.
+
+# MBOM update further validation check errorMsgs
+PullModeMBOMUpdateFail_RootsNotScoped=La mise à jour de la MBOM ne peut pas être effectuée, car il n'existe pas de domaine d'application entre le produit et l'élément Mfg.Item
+PushModeMBOMUpdateFail_CAFactoryNull=Impossible d'obtenir 'ChangeActionFactory'. Contactez l'administrateur.
+PushModeMBOMUpdateFail_InvalidEngCA=Impossible de récupérer l'AM d'ing. à partir de l'EngCA-PID '{0}' donné. Spécifiez une valeur valide pour 'engChangeActionID'.
+PushModeMBOMUpdateFail_InvalidEngCAState=La mise à jour de la MBOM ne peut pas être effectuée, car l'AM d'ing. indiqué n'est pas à l'état 'Terminé'
+PushModeMBOMUpdateFail_RootMfgNotScoped=La mise à jour de la MBOM ne peut pas être effectuée, car l'élément Mfg.Item n'est associé à aucun produit
+PushModeMBOMUpdateFail_RootMfgManyScope=La mise à jour de la MBOM ne peut pas être effectuée, car l'élément Mfg.Item a plusieurs produits associés
+
+FlowdownMBOMUpdateFail_NoMfgCA=La mise à jour de la MBOM ne peut pas être effectuée, car aucune AM de fab. n'est spécifiée. Veuillez spécifier une valeur valide pour la valeur 'DS-Change-Authoring-Context' de l'en-tête de requête HTTP.
+FlowdownMBOMUpdateFail_InvalidMfgCA=Impossible de récupérer l'AM de fab. à partir du MfgCA-PID '{0}' donné. Spécifiez une valeur valide pour la valeur 'DS-Change-Authoring-Context' de l'en-tête de requête HTTP.
+FlowdownMBOMUpdateWarn_NoProposedChanges=L'AM de fab. spécifiée n'a pas de modifications de transfert. Essayez avec une AM de fab. ayant des modifications de transfert d'une ou plusieurs AM d'ing.
+
+# MfgCA validation check errorMsgs
+MfgCAError_InvalidMfgCAFormat=L'AM de fab. '{0}' spécifiée n'est pas au bon format. Spécifiez une valeur au format 'pid:<MfgCA-PID>'
+MfgCAError_InvalidMfgCA=Impossible de récupérer l'AM de fab. à partir du MfgCA-PID '{0}' donné. Spécifiez une valeur valide pour MfgCA-PID.
+MfgCAError_WorkUnderNotAllowed=Travailler sous n'est pas autorisé pour l'AM de fab. donnée : '{0}'
+MfgCAError_ApplicabilityFetchFailed=Impossible de récupérer l'expression d'applicabilité de l'AM de fab. donnée : '{0}'
+MfgCAError_NoApplicability=L'AM de fab. donnée n'a pas d'applicabilité associée. Spécifiez une AM de fab. disposant d'une applicabilité.
+MfgCAError_InvalidApplicabilityExpn=L'AM de fab. donnée a une expression d'applicabilité non valide : '{0}'
+
+# MBOM update failure errMsgs
+MBOMUpdateFail_InvalidMbomUpdateAction1=Action de mise à jour de la MBOM '{0}' non valide envoyée
+MBOMUpdateFail_RootMfgIsReadOnly=Impossible de mettre à jour la MBOM, car l'état actuel de l'élément Mfg.Item racine '{0}' ne permet pas la modification de la structure de la MBOM
+MBOMUpdateFail_ParentMfgIsReadOnly=La mise à jour de la MBOM ne peut pas être effectuée, car l'élément '{0}' parent est en lecture seule
+MBOMUpdateFail_ParentCnfgdWithEvolNUpdateWithoutEff=Impossible de traiter le produit '{0}', car le parent de l'élément Mfg.Item '{1}' '{2}' est configuré avec l'évolution mais la mise à jour n'est pas effectuée sous l'effectivité
+MBOMUpdateFail_CandPrdMultipleScopes=Impossible de traiter le produit '{0}', car le produit candidat de l'élément MfgItem '{1}' '{2}' a plusieurs portées MfgItem
+MBOMUpdateFail_ManyResultingPrdFound=L'élément Mfg.Item '{0}' a plusieurs produits résultant associés
+MBOMUpdateFail_MfgPartSLCreationNotSupported=La création de liens de domaine pour les éléments Mfg.Parts n'est pas prise en charge
+MBOMUpdateFail_CC_CAPID_UnknownValue=Valeur inconnue '{0}' rencontrée pour contrôler le PID de l'AM de l'élément Mfg.Item '{1}'
+MBOMUpdateFail_GetChangeControlInfoFailed=Impossible de récupérer les informations de contrôle des modifications des éléments à mettre à jour
+# Note: Below ReviseErr* msgKeys can't be changed since they are enum names in ReviseAllowedStatus. So they have to be always in sync, if changed at one place then have to be changed at both places!!
+ReviseErr_ItemCntrldByCA_ButNoInputCA=La révision a échoué, car l'élément Mfg.Item '{0}' est contrôlé par l'AM '{1}', mais la mise à jour est effectuée sans Travailler sous une AM
+ReviseErr_ItemCntrldByCA_ButDiffInputCA=La révision a échoué, car l'élément Mfg.Item '{0}' est contrôlé par une AM '{1}' différente de la valeur Travailler sous une AM donnée
+ReviseErr_ItemCntrldByInputCA_ButIsInROState=La révision a échoué car l'utilisateur n'a pas d'accès en révision à l'élément Mfg.Item '{0}'
+MBOMUpdtWarn_ItemCfgdWithEvolReviseIgnored=L'élément Mfg.Item '{0}' est configuré avec l'évolution, par conséquent la révision de l'élément est ignorée.
+# Note: Below UpdateErr* msgKeys can't be changed since they are enum names in UpdateAllowedStatus. So they have to be always in sync, if changed at one place then have to be changed at both places!!
+UpdateErr_ItemCntrldByCA_ButNoInputCA=La mise à jour a échoué car {0} '{1}' est contrôlé par l'AM '{2}', mais la mise à jour est effectuée sans Travailler sous une AM
+UpdateErr_ItemCntrldByCA_ButDiffInputCA=La mise à jour a échoué car {0} '{1}' est contrôlé par une AM '{2}' différente de la valeur Travailler sous une AM donnée
+UpdateErr_ItemCntrldByInputCA_ButIsInROState=La mise à jour a échoué car l'utilisateur n'a pas d'accès en modification à {0} '{1}'
+UpdateErr_ItemNotCntrldByCA_AndIsInROState=La mise à jour a échoué car l'utilisateur n'a pas d'accès en modification à {0} '{1}'
+
+MBOMUpdateFail_DuringExpand=Exception constatée lors de l'expansion de {0} '{1}'
+MBOMUpdateFail_ExpandCacheCreation=Exception constatée lors de la création du cache d'expansion pour {0} '{1}'
+PushModeMBOMUpdate_GetRealizedObjsFailed=Exception dans l'obtention d'objets réalisés à partir d'une AM donnée
+PullModeMBOMUpdateFail_UpdateMapPrepartn=Exception rencontrée lors de la recherche de changements delta et de la préparation de mbomUpdateMap
+PushModeMBOMUpdate_MultipleCandPathsFound=Plusieurs chemins d'occurrence de produits candidats trouvés pour un produit candidat '{0}' donné 
+
+# Fasten update failure errMsgs
+FastenUpdateFail_NotPushModeUpdate=La mise à jour de fixation ne peut pas être effectuée puisque la mise à jour n'est pas effectuée en mode flowdown ou ebomPush
+FastenUpdateFail_NewCaseInvalidOption=Valeur non valide spécifiée pour 'fastenUpdateForNewFastener'. Spécifiez une des valeurs valides parmi '{0}'.
+FastenCreateFail_NoImpactedMfgPartFound=Impossible de traiter la nouvelle fixation '{0}', car l'élément Mfg.Part(s) affecté n'est pas disponible pour la fixation {1}
+FastenUpdateFail_CommitFailed=La mise à jour de la fixation n'a pas été validée.
+FastenNewOptn1Fail_ParentCnfgdWithEvolNUpdateWithoutEff=Impossible d'instancier la fixation '{0}' pour la fixation '{1}', car le parent '{2}' est configuré avec l'évolution mais la mise à jour n'est pas effectuée sous l'effectivité
+NewFastenerWarnMsg_ChoosenOneAmongMany={0} fixations trouvées associant les mêmes pièces '{1}' que la fixation donnée '{2}'. Parmi lesquelles, '{3}' implémentant la fixation '{4}' est choisie et les fixations restantes '{5}' sont ignorées
+NewFastenerWarn_Ignored_NoStackingPartsFoundForMCXConn=Avertissement de nouvelle fixation : ignorer la nouvelle instance de fixation, car aucune pièce d'empilement n'est trouvée pour la connexion MCX {0}
+NewFastenerWarn_Ignored_MCXIntersectedListEmpty=Avertissement de nouvelle fixation : ignorer la nouvelle instance de fixation, car intersectedMCXList est vide
+NewFastenerErr_FastenerInstanceNotFound=Erreur de nouvelle fixation : l'instance n'est pas disponible dans la base de données pour cette nouvelle instancePID de fixation {0}
+NewFastenerErr_FailToGetSiblingFasteners=Erreur de nouvelle fixation : échec de l'extraction de fixations sœurs depuis faisceau-fixation {0} de la nouvelle instance de fixation {1}
+NewFastenerWarn_Ignored_InvalidPartIDForBundleConn=Avertissement de nouvelle instance : ignorer la connexion {0}, car une instancePID de pièce de jonction non valide {1} a été trouvée pour la nouvelle instance de fixation {2}
+NewFastenerErr_FailToGetJoiningPartsFrmBundle=Erreur de nouvelle fixation : échec d'extraction assemblage-pièces depuis faisceau-fixation {0} de la nouvelle instance de fixation {1}
+
+# MBOM update report errMsgs
+UpdateMfgItemErr_BIStatusFail=Echec de la récupération du statut BI
+UpdateMfgItemErr_UpdateFailed=Echec de la mise à jour
+UpdateMfgItemErr_DeleteInstFailed=Echec de la suppression de l'instance
+UpdateMfgItemErr_RerouteSLFailed=Echec de la redirection du lien de portée
+UpdateMfgItemErr_NoCandOccRefPaths=Aucun chemin occRef candidat trouvé !
+UpdateMfgItemErr_RerouteILFailed=Echec de la redirection du lien d'implémentation
+UpdateMfgItemErr_ReviseMfgPartsFailed=Echec de la révision d'une ou plusieurs pièces Mfg
+UpdateMfgItemErr_ReplaceFail_ParentROState=Echec du remplacement de '{0}' car le '{1}' parent est en lecture seule
+UpdateMfgItemErr_DeleteFail_ParentROState=Echec de la suppression de '{0}' car le '{1}' parent est en lecture seule
+UpdateMfgItemErr_EvolveFail_ParentROState=Echec de l'évolution de '{0}' car le '{1}' parent est en lecture seule
+
+ObjectProcessedInPreviousRunMsg=Ignorer cet objet car il a déjà été mis à jour lors d'une exécution précédente
+ObjectProcessedByUserMsg=Ignorer cet objet car il a déjà été traité par l'utilisateur
+ObjectUnderScopedSubAsslyORImplingMfgNotFound=Ignoré car l'implémentation de l'élément Mfg.Item est présente sous un sous-assemblage de portée OU aucune implémentation de l'élément Mfg.Item de ce produit n'a été trouvée
+noAttrValueFound=Valeur d'attribut introuvable
+
+# CreateMfgItems resultReport errMsgs
+createMfgItemErrorMsgRootMfgItemIsNotValid=La référence de fabrication fournie n'est pas valide
+createMfgItemErrorMsgRootProductIsNotValid=La référence de produit fournie n'est pas valide
+createMfgItemErrorMsgBLReplyIsIgnore=Ignoré car demandé par BL
+createMfgItemErrorMsgBLDidntProvideAnyInfo=Ignoré, car BL n'a pas fourni les informations requises
+createMfgItemErrorMsgProductHasMultipleScopes=Ignoré, car le produit a plusieurs portées
+createMfgItemWarn_PrdHasManyScopesButOneSel=Le produit a plusieurs portées Mfg.Item [{0}] ; parmi elles,  '{1}' est considérée comme la première créée.
+createMfgItemErrorMsgScopeNotFound=Ignoré, car la portée n'a pas été trouvée
+createMfgItemErrorMsgException=Ignoré en raison d'une exception.  
+createMfgItemErrorMsgExceptionWhileCreatingInst=Echec de la création de l'instance sans exception 
+createMfgItemErrorMsgExceptionWhileCreatingInstAndLink=Exception lors de la création de l'instance et des liens
+createMfgItemErrorMsgExternalJavaIgnoreAsBLNotAvilable=Ignoré car le langage EKL a été requis par l'ouverture Java externe mais il n'est pas disponible
+createMfgItemErrorMsg_ParentWorkUnderStatus_isNotValid_As_NoInputCA_ButAggMfgIsControlledByCA=Ignoré car l'élément MfgItem d'agrégation est contrôlé par l'action de modification mais aucune action de modification n'a été fournie en entrée
+createMfgItemErrorMsg_ParentWorkUnderStatus_isNotValid_As_InputCA_AggMfgCA_AreDifferernt=Ignoré car l'élément MfgItem d'agrégation est contrôlée par une action de modification différente de celle fournie en entrée
+
+
+# License error
+licenceError=Aucune des licences dans {0} n'est attribuée à l'utilisateur : {1}. Veuillez contacter votre administrateur système.
+
+noAttrValueFound=Valeur d'attribut introuvable
+
+# BL error
+BLError=Echec de l'action suite à une vérification BL : {0}.
+NoBLMessage=Aucun message BL trouvé
+
+RPLinkCreationFailed=Le nouveau lien Produit résultant ne peut pas être créé
+ScopeLinkDeletionFailed=Impossible de supprimer le lien Portée
+RPLinkDeletionFailed=Impossible de supprimer le lien Produit résultant
+
+# Create Ref error
+InvalidDimensionType=Type de dimension non valide envoyé - {0}
+
+# Scope Link creation
+createScopeLinkError=Le nouveau lien de domaine ne peut pas être créé
+createScopeLinkErrorIncompatibleExistingIL=Le lien Portée ne peut pas être créé en raison d'un lien d'implémentation existant incompatible. Veuillez d'abord supprimer le lien d'implémentation de l'instance de référence {0}.
+createScopeLinkErrorNotAuthorizedByBL=Le lien de domaine ne peut pas être créé en raison de l'échec de l'autorisation de BL
+createScopeLinkErrorBLFailure=Le lien de domaine ne peut pas être créé en raison d'un échec interne de BL
+createScopeLinkErrorPatternNOTAuthorized=Le lien de domaine ne peut pas être créé en raison d'un modèle de données non autorisé
+
+# Partial Scope Link creation
+SLAlreadyExistingSolved=Le lien Portée partielle existe déjà et ne peut pas être créé 
+SLAlreadyExistingBroken=Le lien Portée partielle existe déjà, mais il est endommagé et ne peut donc pas être créé
+invalidArg=les entrées ne sont pas évaluées correctement.
+createPartialScopeLinkErrorBLFailure=Le lien Portée partielle ne peut pas être créé en raison d'un échec interne de BL
+createPartialScopeLinkErrorNotAuthorizedByBL=Le lien Portée partielle ne peut pas être créé en raison de l'échec de l'autorisation de BL
+createPartialScopeLinkErrorIncompatibleExistingIL=Le lien Portée partielle ne peut pas être créé en raison d'un lien d'implémentation existant incompatible. Veuillez d'abord supprimer le lien d'implémentation de l'instance de référence {0}.
+createPartialScopeLinkError=Le nouveau lien Portée partielle ne peut pas être créé
+
+managePartialScopeFail_InvalidOption=Valeur non valide spécifiée pour l'action de portée partielle. Spécifiez une des valeurs valides parmi '{0}'.
+
+# MFN AltSubBL Related Messages
+AltSubBLErr_NoBLExistis=Le script EKL AltSubBL n'existe pas
+AltSubBLErr_ExecutionFailed=Impossible d'exécuter AltSubBL
+AltSubBLErr_FailedToReadOutput=Impossible de lire la sortie de AltSub-BLResult
+AltSubBLErr_InvalidOPListSize=Disparité de taille des listes de sortie BL ! Les tailles sont OutputListOfEngItemReference-{0}, OutputListOfContextsInstance-{1}, OutputListOfContextsReference-{2}, OutputListOfStatus-{3}, OutputListOfRelationType-{4}.
+AltSubBLErr_EngItemRefPIDEmpty=Aucune valeur spécifiée pour 'AltSub-EngItemRef'
+AltSubBLErr_StatusInvalidOption=Valeur non valide '{0}' spécifiée pour 'AltSub-Status'
+AltSubBLErr_RelTypeInvalidOption=Valeur non valide '{0}' spécifiée pour 'AltSub-RelationType'
+AltSubBLErr_InvalidRefInstContext=La valeur ReferenceContext et/ou InstanceContext n'est pas celle attendue
+AltSubBLSuggn_ForContextOfRefSubstitue=(ReferenceContext doit avoir une valeur valide et InstanceContext doit être vide)
+AltSubBLSuggn_ForContextOfInstSubstitue=(ReferenceContext doit être vide et InstanceContext doit avoir une valeur valide)
+AltSubBLSuggn_ForContextOfAlternate=(ReferenceContext et InstanceContext doivent être vides)

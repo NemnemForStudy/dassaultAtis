@@ -1,0 +1,43 @@
+#Prog XCAD_ExportNonPSRep (iPLMIDSet : #In PLMIDSet, oPLMIDSet : #Out PLMIDSet) : VoidType
+{
+  /* Variables */
+  let PLMIDSet_NonPSReps (PLMIDSet)
+  let PLMIDSet_PointedRefsAndDependencies (PLMIDSet)
+  let PLMIDSet_PointedRepsAndDependencies (PLMIDSet)
+  let PLMIDSet_NonPSReps_Ptd (PLMIDSet)
+  let ProductComponents_R (PLMIDSet)
+
+  let PLMIDSet_RefFromRep (PLMIDSet)
+
+  let PLMIDSet_CompleteInput (PLMIDSet)
+
+  let PLMIDSet_CompletedProduct (PLMIDSet)
+
+  /* filter input */
+  PLMIDSet_NonPSReps = Restrict (iPLMIDSet, "XCADModeler/XCADNonPSBaseRepReference")
+  
+  /* retrieve dependencies from NonPS */
+  PLMIDSet_PointedRepsAndDependencies = Ids (ExecutePLMFunction ("XCADModeler", "XCAD_GetDependenciesRepToRep",PLMIDSet_NonPSReps))
+  
+  /* filter input */
+  PLMIDSet_NonPSReps_Ptd = Restrict (PLMIDSet_PointedRepsAndDependencies, "XCADModeler/XCADNonPSBaseRepReference") + PLMIDSet_NonPSReps
+
+  /* retrieve dependencies from NonPS */
+  PLMIDSet_PointedRefsAndDependencies = Ids (ExecutePLMFunction ("XCADModeler", "XCAD_GetDependenciesRepToRef",PLMIDSet_NonPSReps_Ptd))
+  
+  ProductComponents_R = Ids (ExecutePLMFunction("PRODUCTCFG", "ProductCfg_AddChildrenProduct", Restrict(PLMIDSet_PointedRefsAndDependencies, "PRODUCTCFG/VPMReference"))) 
+
+
+  /* get ref and rep inst from rep */
+  PLMIDSet_RefFromRep = Ids (ExecutePLMFunction ("XCADModeler", "XCAD_AddRepInstAndRefFather", Restrict(PLMIDSet_PointedRepsAndDependencies, "PLMCORE/PLMCoreRepReference")))
+
+
+  /* call product completion on retrieved ref/repref */
+  PLMIDSet_CompleteInput = iPLMIDSet + PLMIDSet_PointedRefsAndDependencies + ProductComponents_R + PLMIDSet_PointedRepsAndDependencies + PLMIDSet_RefFromRep
+  PLMIDSet_CompletedProduct = ExecutePLMProcedure("VPMEditor_GetAllRepresentations", PLMIDSet_CompleteInput)
+
+
+  /* build output */
+  oPLMIDSet = iPLMIDSet + PLMIDSet_CompletedProduct + PLMIDSet_CompleteInput
+
+}

@@ -1,0 +1,1 @@
+define("DS/RunYourApp/RunYourApp_zh-TW",{});define("DS/RunYourApp/assets/nls/RunYourApp",{urlLabel:"Widget URL",insertUrl:"請插入 URL。",submitURLBtn:"執行"});

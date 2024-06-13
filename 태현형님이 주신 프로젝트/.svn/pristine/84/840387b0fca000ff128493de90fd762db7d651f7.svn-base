@@ -1,0 +1,29 @@
+################################################################################################
+# Create By thok : 2023. 06. 28
+# Admin Type : type
+# Name : decRequest
+################################################################################################
+#delete type decRequest
+add type decRequest
+	attribute Title
+	attribute decType
+	attribute Originator
+;
+
+add property type_decRequest on program eServiceSchemaVariableMapping.tcl to type 'decRequest'
+;
+
+# Modified by hslee on 2023.06.29
+mod type decRequest
+	add attribute decContentData
+;
+
+# Modified by thok on 2023.07.04
+mod type decRequest
+	add attribute decRequestStatus
+;
+
+# Modified by thok on 2023.08.03
+mod type decRequest
+	remove attribute decRequestStatus
+;

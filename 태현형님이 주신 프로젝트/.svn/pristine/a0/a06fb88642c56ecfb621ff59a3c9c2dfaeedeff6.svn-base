@@ -1,0 +1,54 @@
+start trans;
+############################## DO NOT EDIT ABOVE
+
+# Modified by thok on 2023.10.23
+
+add command 'decCodeDetailRemoveExistingCmd' 
+	description 'Remove decCodeDetail' 
+	alt 'emxProgramCentral.Command.RemoveExisting' 
+	label 'emxProgramCentral.Command.RemoveExisting' 
+	href '${COMMON_DIR}/decCodeMasterUtil.jsp?action=Remove&submitAction=refreshCaller'
+	setting 'Target Location' hiddenFrame
+	setting 'Registered Suite' 'ProgramCentral' 
+	setting 'Image' '${COMMON_DIR}/images/iconActionCut.png'
+	setting 'Row Select' 'Multiple'
+	setting 'Submit' 'true'
+	setting 'hasAccess' 'PIM'
+	setting 'Access Function' 'hasAccess'
+	setting 'Access Program' 'decAccess'
+	setting 'Confirm Message' 'emxProgramCentral.Alert.RemoveExistingConfirm'
+;
+add property command_decCodeDetailRemoveExistingCmd on program eServiceSchemaVariableMapping.tcl to command 'decCodeDetailRemoveExistingCmd'
+;
+# Modified by jhlee on 2023.10.20
+mod command decMaterialStatusCommand1
+	href '${COMMON_DIR}/emxIndentedTable.jsp?table=decMaterialStatus&program=emxProjectSpace:getMaterialStatusList&toolbar=decProjectMaterialStatusLinkToolBar&header=ProgramCentral.Label.Procurement_Schedule_-_Material_Status&parallelLoading=true&maxCellsToDraw=2000&scrollPageSize=50&pageSize=300&showPaginationToggle=false&decExport=true&exportMode=MaterialStatus&slideinFilter=true&Discipline=PP&filterParam=codeMaster:Sub-Con,codeMaster:Item Group,codeMaster:Group,Fab Category:true,Material Delay:true,Status_Updated:true,CWP_Plan:true,Material_Status:true'
+;
+
+# Modified by jhlee on 2023.10.20
+mod command decMaterialStatusCommand2
+	href '${COMMON_DIR}/emxIndentedTable.jsp?table=decMaterialStatus&program=emxProjectSpace:getMaterialStatusList&toolbar=decProjectMaterialStatusLinkToolBar&header=ProgramCentral.Label.Procurement_Schedule_-_Material_Status&parallelLoading=true&maxCellsToDraw=2000&scrollPageSize=50&pageSize=300&showPaginationToggle=false&decExport=true&exportMode=MaterialStatus&slideinFilter=true&Discipline=ME&filterParam=codeMaster:Sub-Con,codeMaster:Item Group,codeMaster:Group,Fab Category:true,Material Delay:true,Status_Updated:true,CWP_Plan:true,Material_Status:true'
+;
+
+# Modified by jhlee on 2023.10.20
+mod command decMaterialStatusCommand3
+	href '${COMMON_DIR}/emxIndentedTable.jsp?table=decMaterialStatus&program=emxProjectSpace:getMaterialStatusList&toolbar=decProjectMaterialStatusLinkToolBar&header=ProgramCentral.Label.Procurement_Schedule_-_Material_Status&parallelLoading=true&maxCellsToDraw=2000&scrollPageSize=50&pageSize=300&showPaginationToggle=false&decExport=true&exportMode=MaterialStatus&slideinFilter=true&Discipline=EL&filterParam=codeMaster:Sub-Con,codeMaster:Item Group,codeMaster:Group,Fab Category:true,Material Delay:true,Status_Updated:true,CWP_Plan:true,Material_Status:true'
+;
+
+# Modified by jhlee on 2023.10.20
+mod command decMaterialStatusCommand4
+	href '${COMMON_DIR}/emxIndentedTable.jsp?table=decMaterialStatus&program=emxProjectSpace:getMaterialStatusList&toolbar=decProjectMaterialStatusLinkToolBar&header=ProgramCentral.Label.Procurement_Schedule_-_Material_Status&parallelLoading=true&maxCellsToDraw=2000&scrollPageSize=50&pageSize=300&showPaginationToggle=false&decExport=true&exportMode=MaterialStatus&slideinFilter=true&Discipline=IC&filterParam=codeMaster:Sub-Con,codeMaster:Item Group,codeMaster:Group,Fab Category:true,Material Delay:true,Status_Updated:true,CWP_Plan:true,Material_Status:true'
+;
+
+# Modified by jhlee on 2023.10.19
+mod command decMaterialStatusCommand5
+	href '${COMMON_DIR}/emxIndentedTable.jsp?table=decMaterialStatus&program=emxProjectSpace:getMaterialStatusList&toolbar=decProjectMaterialStatusLinkToolBar&header=ProgramCentral.Label.Procurement_Schedule_-_Material_Status&parallelLoading=true&maxCellsToDraw=2000&scrollPageSize=50&pageSize=300&showPaginationToggle=false&decExport=true&exportMode=MaterialStatus&slideinFilter=true&Discipline=Others&filterParam=codeMaster:Discipline.Discipline>Discipline.Group,codeMaster:Sub-Con,codeMaster:Item Group,Fab Category:true,Material Delay:true,Status_Updated:true,CWP_Plan:true'
+;
+
+#jhlee Add 2023-10-17
+mod command 'decConstructionKPIList'
+	href '${COMMON_DIR}/emxIndentedTable.jsp?program=emxProjectSpace:getConstructionKPIList&table=decConstructionKPITable&header=ProgramCentral.Command.decConstructionKPIList&toolbar=decConstructionKPIListToolBar&HelpMarker=emxhelpprogramlist&Export=true&StringResourceFileId=emxProgramCentralStringResource&selection=multiple&submitAction=refreshCaller&slideinFilter=true&filterParam=Unit:true,KPI:true,codeMaster:Discipline.Discipline>Discipline.BOQ Key Item&showHierarchyFrame=false&showOtherFrame=false&pageSize=300'
+;
+
+############################## DO NOT EDIT BELOW
+commit trans;

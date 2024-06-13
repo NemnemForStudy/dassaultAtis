@@ -1,0 +1,33 @@
+<div class="dialer">
+  <div class="dialer-input">
+    <div class="dialer-selected"
+      v-on:click="displayOptions">
+      {{ selected.flag }}
+      <span class="fonticon fonticon-expand-down" v-if="showOptions"/>
+      <span class="fonticon fonticon-expand-right" v-if="!showOptions"/>
+      <span class="country-code">{{ selected.countryCode }}</span>
+      <span class="calling-code">{{ selected.callingCode }}</span>
+    </div>
+    <textarea
+      class="dialer-textarea"
+      v-model="input"
+      placeholder="phoneNumber"
+      rows=1
+      wrap="off"
+      v-on:keypress="checkKeyboardInput"/>
+    <div
+      class="dialer-btn-delete"
+      v-on:click="deleteLastInput">
+      <span class="fonticon fonticon-chevron-left"/>
+      <span class="fonticon fonticon-clear"/>
+    </div>
+  </div>
+  <CountrySelector
+    v-bind:showOptions="showOptions"
+    v-on:select="select"/>
+  <VirtualKeyboard
+    v-bind:buttonsValues="keyboardValues"
+    v-bind:submitValue="callIcon"
+    v-on:updateInput="updateInput"
+    v-on:submit="submit"/>
+</div>

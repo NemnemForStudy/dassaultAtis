@@ -1,0 +1,1 @@
+define("DS/3DPlayExperienceModule/3DPlayExperienceModule_zh",{});define("DS/3DPlayExperienceModule/assets/nls/3DPlayExperienceModule",{auto:"自动",automaticQualityAdaptation:"允许自动调整质量",base:"高质量",displayCandidateQueue:"显示加载框",DROP_MSG_LP:"将您的内容拖放到此处",high:"高质量插图",index:"低质量（视可用性而定）",Label:"3DSpace 几何图形的首选质量",UDL_NoThumbnail:"无缩略图"});

@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<!-- COPYRIGHT DASSAULT SYSTEMES 2022, All rights reserved -->
+
+<Package xmlns="PLMDictionaryUnified" BelongsToModeler="DMUMarkup" ModelerType="Top" Name="DMUMarkup" Uuid="02778cb4-cbf8-47b2-b599-31f2e4f945ad" CustomerExposition="Programmer" UseNames="PLMCORE">
+  <CAAComment>
+    <ShortRole>Markup Modeler Package</ShortRole>
+    <Role>This package describes the Markup modeler</Role>
+  </CAAComment>
+
+  <Class Name="DMUMarkupRepReference" Uuid="04f54855-3e5f-410c-b274-f2b8f25e1811" Abstract="No" SuperName="PLMCoreRepReference" CustomerExposition="Programmer" Abbreviation="mku">
+
+    <CAAComment>
+      <ShortRole>Markup Representation Reference Object</ShortRole>
+      <Role>Markup Representation Reference Object contains markup datas</Role>
+    </CAAComment>
+
+    <Property Name="IconName" Value="DMUMarkupIcon"/>
+    <Property Name="Searchable" Value="Yes"/>
+    <!-- Behavior patterns: default values -->
+    <Property Name="LockUnlockAvailability" Value="Yes"/>
+    <Property Name="TransferOwnershipAvailability" Value="Yes"/>
+    <Property Name="ChangeMaturityAvailability" Value="Yes"/>
+    <Property Name="DuplicateAvailability" Value="Yes"/>
+    <Property Name="DeleteAvailability" Value="Yes"/>
+    <Property Name="EditPropertiesAvailability" Value="Yes"/>
+    <Property Name="NewMajorRevisionAvailability" Value="Yes"/>
+    <Property Name="NewMinorRevisionAvailability" Value="No"/>
+    <Property Name="EvolutionAvailability" Value="No"/>
+
+    <Method ImplementationType="None">
+      <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+    </Method>
+  </Class>
+
+  <Class Name="DMUMarkupContext" Uuid="02add62c-261c-4280-8e08-bcb71534a5df" Abstract="No" SuperName="PLMConnection" CustomerExposition="Programmer" OwnerTypes="DMUMarkupRepReference">
+
+    <CAAComment>
+      <ShortRole>Context Object</ShortRole>
+      <Role>Context Object exposes the context of the Markup</Role>
+    </CAAComment>
+
+    <Property Name="TransferOwnershipAvailability" Value="No"/>
+    <Property Name="LockUnlockAvailability" Value="No"/>
+    <Property Name="DuplicateAvailability" Value="No"/>
+    <Property Name="DeleteAvailability" Value="No"/>
+    <Property Name="EditPropertiesAvailability" Value="No"/>
+
+    <Method ImplementationType="None">
+      <RealizeMethodType href="ExportScope.meth#ExportScope"/>
+    </Method>
+    <Path Name="DMUMarkup_Context_Reference" Uuid="041c2c87-40ec-46cd-aeae-7362740e5ed2" MultiValuated="Yes" RoleName="DMUMarkup_Context" Semantics="Reference" Type="SemanticRelation" AdaptativeToMinor="No" SynchroSensitivity="None" RerouteOnEffectivityChange="No"/>
+  </Class>
+</Package>

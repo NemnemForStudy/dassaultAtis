@@ -1,0 +1,1 @@
+define("DS/SPYExtUI/SPYExtUI_zh-TW",{});define("DS/SPYExtUI/assets/nls/CATSimNavDataFrameViewXYChartUI",{rootName:"目前步驟",loadCaseName:"目前負載"});

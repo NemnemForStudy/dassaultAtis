@@ -1,0 +1,1 @@
+%ENOVIA_SERVER_PATH%\mql -c "set cont user admin_platform pass Qwer1234;exec prog decInterfaceWorkPackage -method interfaceWorkPackage"

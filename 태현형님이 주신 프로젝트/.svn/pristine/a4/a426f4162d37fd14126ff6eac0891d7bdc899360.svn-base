@@ -1,0 +1,1 @@
+define("DS/3DPlayAnnotationUtils/3DPlayAnnotationUtils_fr",{});define("DS/3DPlayAnnotationUtils/assets/nls/3DPlayAnnotation",{PlaceHolder:"Nouveau texte",ClickToLaunchText:"Cliquer dans la vue pour créer une zone de texte",cancelText:"Annuler",validateText:"Valider",nextText:"Suivant"});

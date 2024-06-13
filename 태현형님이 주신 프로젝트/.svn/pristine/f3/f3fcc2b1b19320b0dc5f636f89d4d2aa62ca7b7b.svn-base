@@ -1,0 +1,73 @@
+{
+	"properties": {
+		"instances": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"required": [
+					"identifier"
+				],
+				"properties": {
+					"referencedObject": {
+						"type": "object",
+						"required": [
+							"identifier"
+						],
+						"properties": {
+							"identifier": {
+								"type": "string",
+								"example": "physicalIdChildRef",
+								"description": "The Reference Physical ID of the dsmfg:MfgItem child."
+							},
+							"source": {
+								"description": "source",
+								"type": "string",
+								"example": "https://server_name.dsone.3ds.com:443/3DSpace"
+							},
+							"relativePath": {
+								"description": "relativePath",
+								"type": "string",
+								"example": "/resources/v1/modeler/dsmfg/dsmfg:MfgItem/physicalIdChildRef"
+							}
+						}
+					},
+					"attributes": {
+						"properties": {
+							"name": {
+								"type": "string",
+								"example": "My name"
+							},
+							"description": {
+								"type": "string",
+								"example": "My description"
+							},
+							"customerAttributes": {
+								"type": "object",
+								"properties": {
+									"DBcustomExtension": {
+										"properties": {
+											"MyDBAttr2": {
+												"description": "Attribute DB Value",
+												"type": "string",
+												"example": "Attribute DB Value"
+											}
+										}
+									},
+									"DBcustomAttributesGroup": {
+										"properties": {
+											"MyDBAttr3": {
+												"description": "Attribute DB Value",
+												"type": "string",
+												"example": "Attribute DB Value"
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

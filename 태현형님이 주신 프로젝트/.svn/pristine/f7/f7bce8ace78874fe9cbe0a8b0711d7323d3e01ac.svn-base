@@ -1,0 +1,111 @@
+#
+#   ExpressionStringResource.properties -- Properties file.
+#
+#   Copyright (c) 1992-2015 Dassault Systemes.
+#   All Rights Reserved.
+#   This program contains proprietary and trade secret information of MatrixOne,
+#   Inc.  Copyright notice is precautionary only
+#   and does  not evidence any actual or intended publication of such program
+
+#   static const char RCSID[]="$Id: ExpressionStringResource.properties.rca  $"
+#
+
+# --- General
+
+General.Model=Modell
+General.ModelVersion=Modellversion
+
+# Criteria
+Criteria.Date=Datum
+Criteria.Products=Produkte
+Criteria.ManufacturingPlans=Fertigungspläne
+Criteria.Unit=Einheit
+Criteria.Milestone=Meilenstein
+Criteria.FeatureOption=Varianten und Optionen
+
+
+# --- Success
+
+# Effectivity
+Effectivity.Success.SetEvolutionOperationSuccess=Aktion zum Festlegen der Gültigkeit der Entwicklung erfolgreich ausgeführt.
+
+
+# --- Errors
+
+Error.InternalServerError=interner Fehler
+
+# General
+General.Error.InvalidCategoryTypeSetting=Ungültiger Kategorientyp. Bitte überprüfen Sie die gültigen Einstellungen für Kategorientypen.
+General.Range.Error.SequenceValues=Die Option 'Als Bereich einfügen' erfordert einen oder zwei Folgewerte. Die Anzahl der gefundenen Folgewerte beträgt: 
+General.Range.Error.DatesValues=Die Option 'Als Bereich einfügen' erfordert einen oder zwei Datumswerte. Die Anzahl der gefundenen Datumswerte beträgt: 
+General.Error.UnsupportedDateWithRelational=Datum wird mit demGültigkeitstyp 'Relational' nicht unterstützt. Entfernen Sie einen der Gültigkeitstypen von der Verwaltungseigenschaft für diese Beziehung oder diesen Typ.
+General.Error.UnsupportedGlobalWithMultipleContexts=Ein globaler Konfigurationskontext kann nicht mit anderen Konfigurationskontexten im gleichen Ausdruck kombiniert werden. Entfernen Sie entweder den globalen Konfigurationskontext oder alle anderen Konfigurationskontexte.
+
+
+# Criteria
+Criteria.Error.UnsupportedCriteriaType=Nicht unterstützter Kriterientyp. Bitte geben Sie einen unterstützten Kriterientyp an.
+Criteria.Error.TypeNotAModel=ist kein Typ des Modells
+Criteria.Error.TypeNotAModelVersion=ist kein Typ der Modellversion
+
+# Effectivity
+Effectivity.Error.MismatchEffectivityTypesAndExpression_bus=Der Gültigkeitsausdruck enthält einige Gültigkeitstypen, die nicht für dieses Objekt übernommen wurden.
+Effectivity.Error.NoEffectivityTypeFound=Kein Gültigkeitstyp gefunden. Verwenden Sie einen im Schema definierten, zulässigen Gültigkeitstyp.
+Effectivity.Error.EffectivityUsageCannotDelete=Das Objekt wird in einem Gültigkeitsausdruck verwendet und kann nicht gelöscht werden. Entfernen Sie das Objekt aus allen Gültigkeitsausdrücken, um das Löschen zu ermöglichen.
+Effectivity.FalseExpression.Display=Ungültig
+Effectivity.TrueExpression.Display=Gültig
+Effectivity.Error.OnlyEvolutionEffectivity=Diese Instanz hat nur Gültigkeit in der Entwicklungsdomäne.
+Effectivity.Error.EffectivityUsageCannotRemoveObject=<object_type> <object_name> wird in einem konfigurierten Ausdruck (Filter, Gültigkeit, ...) verwendet und kann nicht entfernt werden. Entfernen Sie die Kriterien aus allen konfigurierten Ausdrücken, um das Entfernen zu ermöglichen.
+Effectivity.Error.EffectivityUsageCannotModifyObject=<object_type> <object_name> wird in einem konfigurierten Ausdruck (Filter, Gültigkeit, ...) verwendet und kann nicht geändert werden. Entfernen Sie die Kriterien aus allen konfigurierten Ausdrücken, um die Änderung zu ermöglichen.
+Effectivity.Error.ChangeApplicabilityAndEffectivitieDoNotIntersect=Gültigkeit kann nicht bearbeitet werden, da der Ausdruck sich nicht mit der Anwendbarkeit überschneidet. Verwenden Sie eine weiterentwickelte Instanz, um die Variantengültigkeit zu ändern.
+Effectivity.Error.ChangeApplicabilityAndEffectivitieAreEqual=Gültigkeitsausdruck entspricht Anwendbarkeit: Vorgang kann nicht ausgeführt werden.
+Effectivity.Error.Unset.NoEffectivity=Diese Instanz besitzt keine Gültigkeit, Zurücksetzen hat keine Wirkung
+
+# Expression
+Expression.Error.MissingAttachedModels=Nicht alle erforderlichen Modelle sind an die übergeordnete Referenz angehängt.  
+Effectivity.Error.ParentNotAttachedAllModelsFromAC=Der übergeordneten Referenz sind nicht alle Modelle aus dem Erstellungskontext zugeordnet.
+Effectivity.Error.ParentNotEnabledAllCriteriaFromAC=Bei der übergeordneten Referenz sind nicht alle Kriterien aus dem Erstellungskontext aktiviert.
+Expression.Error.InvalidExpression=Ungültiger eigentlicher Ausdruck
+Expression.Error.ParentPartIsNotConfigured=Das übergeordnete Teil der angegebenen Beziehung verfügt über keinen Konfigurationskontext.
+
+# Reference
+Expression.Error.AttachContextDeniedSinceReferenceIsRevised=Das Zuordnen von Konfigurationskontext wird für überarbeitete Objekte nicht unterstützt. Das Zuordnen von <modelType> ist fehlgeschlagen.
+Expression.Error.CriteriaNotEnabled=Die eingegebene XML enthält <critType>, aber das Kriterium ist in der Referenz '<name>' nicht aktiviert
+Expression.Error.CriteriaNotDisabled=Das Deaktivieren der Kriterien für Objekte ist fehlgeschlagen, da für mindestens ein Exemplar eine <critType>-Gültigkeit definiert ist
+Expression.Error.LastCriteriaCannotBeDisabled=Die Kriterien konnten für die Objekte nicht deaktiviert werden, da dann keine Kriterien mehr aktiviert wären, aber noch mindestens ein Modell angefügt ist
+Expression.Error.EvolCriteriaCannotBeDisabled.FrozenInstance=Das Entwicklungskriterium kann nicht deaktiviert werden, da eine Instanz mit Effektivität eingefroren ist
+Expression.Error.EvolCriteriaCannotBeDisabled.FrozenConfiguredInstance=Das Entwicklungskriterium kann nicht deaktiviert werden, da eine Instanz ohne Entwicklung eingefroren ist
+Expression.Error.EvolCriteriaCannotBeEnabled.FrozenInstance=Das Entwicklungskriterium kann nicht aktiviert werden, da eine Instanz ohne Effektivität eingefroren ist
+Expression.Error.EvolCriteriaCannotBeEnabled.FrozenConfiguredInstance=Das Entwicklungskriterium kann nicht aktiviert werden, da eine Instanz ohne Entwicklung eingefroren ist
+Expression.Error.DetachNotPossible.ConfigurationUsage=Modell kann nicht abgetrennt werden, da es von einer Konfiguration verwendet wird
+Expression.Error.DetachNotPossible.EffectivityUsage=Modell kann nicht abgetrennt werden, weil es von einem Gültigkeitsausdruck verwendet wird
+Expression.Error.DetachNotPossible.ConfigurationRevision=Modell kann nicht abgetrennt werden, weil die Referenz über Konfigurationsrevisionen verfügt
+Expression.Error.DetachNotPossible.FrozenInstancesDefinedWithModel=Modell <name> kann nicht getrennt werden, da es eingefrorene Entwicklungskriterien enthält und dadurch mindestens eine Instanz in der Struktur eingefroren ist
+Expression.Error.AttachNotPossible.InstanceBecomesValidForFrozenCriteria=Modell <name> kann nicht angehängt werden, da es eingefrorene Entwicklungskriterien enthält und durch Anhängen mindestens eine Instanz in der Struktur die Kriterien für Einfrieren erfüllen würde.
+
+# Immutability
+Expression.Error.FrozenCriteriaInEffs=Sie können die Instanzen physisch nicht ändern, da deren Gültigkeiten mindestens ein eingefrorenes Kriterium enthalten. Verwenden Sie eine 'Arbeiten unter'-Änderungsaktion.
+Expression.Error.FrozenCfgRevImpacted=Vorgang kann nicht durchgeführt werden: Er wirkt sich auf mindestens eine eingefrorene Konfigurationsrevision aus
+Expression.Error.FrozenRangeOfEffImpactedBySetExpression=Einstellen der Ausdrücke nicht möglich, da dadurch mindestens ein eingefrorenes Entwicklungskriterium zu den Gültigkeiten hinzugefügt oder davon entfernt werden würde
+Expression.Error.ExpressionContainsFrozen=Dieser Ausdruck kann nicht verwendet werden, da er mindestens ein eingefrorenes Entwicklungskriterium enthält
+Expression.Error.FailedToRetrieveFrozenFilterOfModels=Dieser Vorgang kann nicht ausgeführt werden. Einige Modelle, die für die Überprüfung der Vorgangsgültigkeit verwendet werden, existieren anscheinend nicht.
+Expression.Error.FailedToDetermineWhetherToDoImmutabilityChecks=Es ist unmöglich zu ermitteln, ob die Unveränderlichkeitsregeln beachtet werden sollen, da einige Objekte nicht im selben Teamarbeitsbereich sind 
+Expression.Error.DeniedModelFilters=Die Ausführung dieses Vorgangs ist nicht möglich. Auf mindestens ein angehängtes Modell kann nicht zugegriffen werden, da es zu einem eingeschränkten Teamarbeitsbereich gehört
+
+# Granular reject
+Expression.Error.CANotRejectableForEffectivities=Änderungsaktion <name> kann für mindestens eine dieser Instanzen nicht abgelehnt werden
+
+# Configured Operations
+Expression.Error.SplitUnderCACannotBeDoneOnVarOnlyStructure=Der Teilungsvorgang unter 'Änderungsaktion' kann auf Grundlage einer rein variantenbasierten Struktur nicht ausgeführt werden;
+CfgOperation.Error.EffectivityCannotBeExtended=Die Erweiterungsoperation gilt nur für Gültigkeiten mit Entwicklungsausdruck.
+CfgOperation.Error.Extend.InstanceWithoutEffectivity=Die Erweiterungsoperation kann nicht für Exemplare ohne Gültigkeiten ausgeführt werden
+CfgOperation.Error.Extend.ExpressionTrue=Die Erweiterungsoperation kann nicht für Exemplare ausgeführt werden, die immer gültig sind
+CfgOperation.Error.Extend.VariantOnlyEffectivity=Die Erweiterungsoperation kann nicht für Exemplare ausgeführt werden, die nur über ein variables Teil in ihren Gültigkeiten verfügen, da sie immer gültig sind
+CfgOperation.Error.Extend.UselessExtension=Die Exemplare können nicht um einen Gültigkeitsbereich erweitert werden, der vollständig in ihrem bestehenden Gültigkeitsbereich enthalten ist
+CfgOperation.Error.Reparent.CriterionNotEnabledOnParentRefOfDuplicate=Das Kriterium <critType> ist auf der neuen übergeordneten Referenz <name> nicht aktiviert, dieses Kriterium wird aber für die Effektivität verwendet.
+
+# Work Under
+Change.Error.ParentPartIsNotCompliantWithChange=Die Änderung, die als 'Arbeiten unter' verwendet wurde, verwendet Modelle, die nicht im Konfigurationskontext des übergeordneten Teils verfügbar sind.
+Change.Error.ChangeApplicabilityIsEmptyAtFinalize=Der Anwendbarkeitsausdruck ist leer. Es sind aber zu aktualisierende betroffene Elemente vorhanden.
+Change.Error.ApplicabilityRead=Fehler beim Lesen der Anwendbarkeit
+Change.Error.Applicability.Finalization.Models=Die Änderungsaktion kann nicht abgeschlossen werden, da nicht alle Modelle den Referenzen beigefügt sind
+AuthContext.Error.ModelVersionIsAttached='Es ist nicht möglich, einen Authoring-Kontext für eine Struktur zu verwenden, der eine Modellversion zugeordnet ist'

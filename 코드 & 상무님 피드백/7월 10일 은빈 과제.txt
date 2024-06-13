@@ -1,0 +1,98 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page import="matrix.db.*" %>
+<%@ page import="com.matrixone.servlet.Framework"%>
+<%@ page import="matrix.util.*" %>
+<%@ page import="com.matrixone.apps.domain.*" %>
+<%@ page import="com.matrixone.apps.domain.util.MapList" %>
+<%@ page import="com.matrixone.apps.domain.util.FrameworkUtil" %>
+<%@ page import="java.util.*" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+<%
+Context context = Framework.getContext(session);
+
+String title = request.getParameter("title");
+String cg = request.getParameter("cg");
+
+if(title == null || cg == null){
+   title = "attribute[Title]";
+   cg = "attribute[atisDocumentCategory]";
+}
+
+StringList slSelect = new StringList();
+slSelect.add("name");
+slSelect.add("attribute[Title]");
+slSelect.add("attribute[atisDocumentCategory]");
+slSelect.add("current");
+slSelect.add("description");
+slSelect.add("revision");
+slSelect.add("originated");
+slSelect.add("owner");
+slSelect.add("lattice");
+
+MapList resultMapList = DomainObject.findObjects(context,
+        "atisDocument",            
+        "*",                              
+        "attribute[Title]=='"+title+"'||attribute[atisDocumentCategory]=='"+cg+"'",                                
+        slSelect                         
+);
+
+StringList attrRanges = FrameworkUtil.getRanges(context, "atisDocumentCategory");
+
+%>
+<form action="SelectTest.jsp">
+   <div style="margin-left:550px;margin-top:50px;">
+      <label><b>Ttile : </b></label>
+      <input type="text" id="title" name="title">
+      <label><b>atisDocumentCategory : </b></label>
+      <select name="cg">
+         <option value=""></option>
+      <%
+         for(int i=0; i<attrRanges.size(); i++){
+      %>
+         <option value="<%=attrRanges.get(i) %>"><%=attrRanges.get(i) %></option>
+      <%
+         }
+      %>
+      </select>
+      <button type="submit">Search</button>
+   </div>
+   <table border="1px solid black" style="margin-left:auto; margin-right:auto;margin-top:50px;">
+      <tr>
+         <th>Name</th>
+         <th>Title</th>
+         <th>AtisDocumentCategory</th>
+         <th>Current</th>
+         <th>Description</th>
+         <th>Revision</th>
+         <th>Originated</th>
+         <th>Owner</th>
+         <th>Lattice</th>
+      </tr>
+      <%
+         Iterator<Map> iter = resultMapList.iterator();
+         while(iter.hasNext()){
+            Map map = iter.next();
+      %>
+      <tr>
+         <td><%=map.get("name") %></td>
+         <td><%=map.get("attribute[Title]") %></td>
+         <td><%=map.get("attribute[atisDocumentCategory]") %></td>
+         <td><%=map.get("current") %></td>
+         <td><%=map.get("description") %></td>
+         <td><%=map.get("revision") %></td>
+         <td><%=map.get("originated") %></td>
+         <td><%=map.get("owner") %></td>
+         <td><%=map.get("lattice") %></td>
+      </tr>
+      <%} %>
+   </table>
+</form>
+</body>
+</html>

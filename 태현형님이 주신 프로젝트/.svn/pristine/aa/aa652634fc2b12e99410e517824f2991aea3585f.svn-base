@@ -1,0 +1,1 @@
+define("DS/CATW3DMoveManager/CATW3DMoveManager_zh-TW",{});define("DS/CATW3DMoveManager/assets/nls/CATW3DMoveReferent",{title:"移動",allowDirectManipulation:"允許直接操作",moveSection:"拖曳 3D 幾何時，移動",first:"第一個組合件層級",leaf:"葉零件"});

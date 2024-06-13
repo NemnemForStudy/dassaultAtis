@@ -1,0 +1,1 @@
+define("DS/WAfrExecutionContext/WAfrExecutionContext_cs",{});define("DS/WAfrExecutionContext/assets/nls/Transition",{"WAfrTransitionLaunched.title":"Spuštění programu PDMWorks Client "});

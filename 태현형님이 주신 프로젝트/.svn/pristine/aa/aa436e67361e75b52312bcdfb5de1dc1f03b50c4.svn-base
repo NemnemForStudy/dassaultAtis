@@ -1,0 +1,1 @@
+define("DS/3DPlayWidgetModel/3DPlayWidgetModel_ko",{});define("DS/3DPlayWidgetModel/assets/nls/prefs",{Label:"3DSpace 지오메트리의 기본 품질",auto:"자동",base:"고품질",index:"저품질",displayCandidateQueue:"로드 상자 표시"});

@@ -1,0 +1,1 @@
+define("DS/DMUComment/DMUComment_pl",{});define("DS/DMUComment/assets/nls/DMUComment",{highlightCommentPrefix:"CommentHighlight",positionedCommentPrefix:"CommentPositioned",commentPrefix:"Skomentuj",commentCreationLabel:"Wybierz punkt, znacznik lub tekst, aby połączyć nowy komentarz"});

@@ -1,0 +1,10 @@
+m|DELPPWModules\DELPPWEnoDocuments.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.1.22319|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\DELPPWEnoDocuments\DELPPWEnoDocuments.js|1668549576|3834
+s|DELPPWModules\DELPPWEnoDocuments.mweb\src\AttachmentsFacet.js|1667916566|4254
+u|DELPPWModules\DELPPWEnoDocuments.mweb\src\SpecificationsFacet.js|1667984388|4763
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

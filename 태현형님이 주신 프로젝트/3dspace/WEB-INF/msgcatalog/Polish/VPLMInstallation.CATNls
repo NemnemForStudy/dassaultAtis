@@ -1,0 +1,150 @@
+<meta charset="UTF-8"/>
+//---------------------------------------------------------------------------
+// Check_TeamDemoUsers
+//---------------------------------------------------------------------------
+Check_TeamDemoUsers.Title="Konteksty zabezpieczeń wdrożenia jednym kliknięciem";
+Check_TeamDemoUsers.CheckButton="Konfiguracja kontekstów zabezpieczeń dotyczących wdrażania jednym kliknięciem (tylko do celów demonstracyjnych)";
+Check_TeamDemoUsers.Resume.true="Konfiguracja kontekstów zabezpieczeń usługi wdrażania jednym kliknięciem: Tak";
+Check_TeamDemoUsers.Resume.false="Konfiguracja kontekstów zabezpieczeń usługi wdrażania jednym kliknięciem: Nie";
+
+Text_DataTBS_wrap.Title="Szczegóły przechowalni";
+Text_DataTBS_wrap.Label1="Określ obszary tabeli Dane i Indeks dla przechowalni produkcyjnych.";
+Text_DataTBS_wrap.Label2="Aby użyć domyślnego obszaru przechowywania bazy danych, pozostaw puste pola.";
+
+//---------------------------------------------------------------------------
+// Text_DataTBS_wrap
+//---------------------------------------------------------------------------
+Text_DataTBS_wrap.Label3="Przestrzeń tabeli danych dla przechowalni produkcyjnej eService";
+Text_DataTBS_wrap.Resume="Przestrzeń tabeli danych dla przechowalni produkcyjnej eService: /p1";
+
+//---------------------------------------------------------------------------
+// Text_IndexTBS_wrap
+//---------------------------------------------------------------------------
+Text_IndexTBS_wrap.Label1="Przestrzeń tabeli indeksu dla przechowalni produkcyjnej eService";
+Text_IndexTBS_wrap.Resume="Przestrzeń tabeli indeksu dla przechowalni produkcyjnej eService: /p1";
+
+//---------------------------------------------------------------------------
+// VplmDataTBS
+//---------------------------------------------------------------------------
+VplmDataTBS.Label1="Przestrzeń tabeli danych dla przechowalni vplm";
+VplmDataTBS.Resume="Przestrzeń tabeli danych dla przechowalni vplm: /p1";
+
+//---------------------------------------------------------------------------
+// VplmIndexTBS
+//---------------------------------------------------------------------------
+VplmIndexTBS.Label1="Przestrzeń tabeli indeksu dla przechowalni vplm";
+VplmIndexTBS.Resume="Przestrzeń tabeli indeksu dla przechowalni vplm: /p1";
+
+//---------------------------------------------------------------------------
+// VPLMCentralAdminUser
+//---------------------------------------------------------------------------
+VPLMCentralAdminUser.Title="Definicja administratora";
+VPLMCentralAdminUser.Label1="Nazwa administratora";
+VPLMCentralAdminUser.Resume="Nazwa administratora: /p1";
+//VPLMCentralAdminUser.Label2 = "Click Next to continue.";
+
+//---------------------------------------------------------------------------
+// VPLMCentralAdminPwd
+//---------------------------------------------------------------------------
+VPLMCentralAdminPwd.Title="Hasło administratora";
+VPLMCentralAdminPwd.Label1="Hasło administratora";
+//VPLMCentralAdminPwd.Label2 = "Click Next to continue.";
+
+//---------------------------------------------------------------------------
+// VPLMRepositoryName
+//---------------------------------------------------------------------------
+VPLMRepositoryName.Title="Domyślna nazwa repozytorium VPM";
+VPLMRepositoryName.Label1="Wprowadź nazwę repozytorium VPM (do wymiany danych)";
+VPLMRepositoryName.Resume="Nazwa repozytorium VPM (do wymiany danych): /p1";
+//VPLMRepositoryName.Label2 = "Click Next to continue.";
+
+//---------------------------------------------------------------------------
+// VPLMCentralStorePath
+//---------------------------------------------------------------------------
+VPLMCentralStorePath.Title="Ścieżka magazynu VPM";
+VPLMCentralStorePath.Label1="Wprowadź ścieżkę magazynu VPM do przechowywania plików";
+VPLMCentralStorePath.Resume="Ścieżka magazynu VPM: /p1";
+//VPLMCentralStorePath.Label2 = "Click Next to continue.";
+
+//---------------------------------------------------------------------------
+// Database insert of schema
+//---------------------------------------------------------------------------
+ExecuteFamiliesScript.Title="Aktualizuj bazę danych podczas instalacji";
+ExecuteFamiliesScript.Label1="Usuń zaznaczenie, aby zainstalować tylko w obszarze przemieszczania bez aktualizowania bazy danych";
+
+
+//---------------------------------------------------------------------------
+// Hot Fix installer - VPMADM password check
+//---------------------------------------------------------------------------
+ConnectionVPMADMFailed.Title="Błąd połączenia z bazą danych dla administratora";
+ConnectionVPMADMFailed.Text="Zgłoszono następujący błąd:\n/p1";
+
+
+//---------------------------------------------------------------------------
+// mxmrun "INST_VPLMRepoName.mql" generation
+//---------------------------------------------------------------------------
+RepoNameMQLgenerationFailed.Title="Błąd generowania inst_VPLMRepoName.mql";
+RepoNameMQLgenerationFailed.Text="narzędzie „mxmrun” nie może wygenerować pliku INST_VPLMRepoName.mql.\nSprawdź poziom i tryb bitowy JDK określony podczas konfiguracji serwera ENOVIA Live Collaboration Server.";
+
+
+//---------------------------------------------------------------------------
+// VPLMPosMigrateCompany Post Install Step Warning
+//---------------------------------------------------------------------------
+cmdToExecuteVPLMDataMigration.Title="Obowiązkowy etap migracji bazy danych ";
+cmdToExecuteVPLMDataMigration.Text="Trwa migracja istniejącej instalacji.\nNastępujące polecenie MQL musi być wykonane ręcznie po zainstalowaniu wszystkich aplikacji (może to potrwać kilka minut).\nUruchom okno polecenia MQL z instalacji <server> i wpisz:\nMQL>set context person creator;\nMQL>exec prog VPLMDataMigration;";
+
+//---------------------------------------------------------------------------
+// Execute Data Migration
+//---------------------------------------------------------------------------
+Check_ExecuteDataMigration.Title="Migracja danych wystąpień bazy danych";
+Check_ExecuteDataMigration.Label1="Zaznacz pole wyboru, aby dokonać migracji istniejących danych (jest to krok obowiązkowy).";
+Check_ExecuteDataMigration.Label2="Ten krok może zająć trochę czasu i zależy od rozmiaru bazy danych.";
+Check_ExecuteDataMigration.Label3="Po zainstalowaniu wszystkich aplikacji zaleca się uruchomienie go jako czynności po instalacji.";
+Check_ExecuteDataMigration.Resume.true="Wybrano migrację danych: Tak";
+Check_ExecuteDataMigration.Resume.false="Wybrano migrację danych: Nie";
+Check_ExecuteDataMigration.CheckButton="Migracja istniejących danych";
+
+//---------------------------------------------------------------------------
+// Check_VPMDemoUsers
+//---------------------------------------------------------------------------
+Check_VPMDemoUsers.Title="Dane demonstracyjne dotyczące osób i organizacji";
+Check_VPMDemoUsers.Resume.true="Skonfiguruj wstępnie zdefiniowane dane demonstracyjne P&0: Tak";
+Check_VPMDemoUsers.Resume.false="Skonfiguruj wstępnie zdefiniowane dane demonstracyjne P&0: Nie";
+Check_VPMDemoUsers.CheckButton="Konfiguracja danych demonstracyjnych osób i organizacji (tylko do celów testowych)";
+
+//---------------------------------------------------------------------------
+// Install VPM Customization Sample
+//---------------------------------------------------------------------------
+Check_InstallVPMCustoSample.Title="Instalacja próbki dostosowania";
+Check_InstallVPMCustoSample.Label1="Zaznacz pole wyboru, aby zainstalować próbkę dostosowania VPM";
+Check_InstallVPMCustoSample.Label2="(próbka powinna być wykorzystywana wyłącznie do celów testowych, a nie do produkcji";
+Check_InstallVPMCustoSample.Label3="Do produkcji wymagane jest pełne dostosowanie).";
+Check_InstallVPMCustoSample.Resume.true="Wybrano próbkę dostosowania VPM: Tak";
+Check_InstallVPMCustoSample.Resume.false="Wybrano próbkę dostosowania VPM: Nie";
+Check_InstallVPMCustoSample.CheckButton="Zainstaluj próbkę dostosowania VPM";
+
+//---------------------------------------------------------------------------
+// Dynamic relationship checker
+//---------------------------------------------------------------------------
+relationshipNotDynamic.Title="Obowiązkowy etap migracji bazy danych ";
+relationshipNotDynamic.Text="Wykryto zasady niestandardowe. Należy je zmodyfikować w celu zapewnienia zgodności z funkcją podrzędną/główną\nPatrz opis poleceń przejścia w przewodniku Instalowanie serwera w\ndokumentacji ENOVIA Live Collaboration\nSerwer nie powinien być uruchamiany do czasu zastosowania tej procedury.";
+
+//---------------------------------------------------------------------------
+// Mapping Removal - Installation not authorized.
+//---------------------------------------------------------------------------
+MappingRemovalCannotInstall.Title="Migracja z tego poziomu nie jest autoryzowana";
+MappingRemovalCannotInstall.Text="Poprzednia instalacja wykryta w bazie danych jest zbyt stara.\nZainstaluj najpierw platformę współpracy wielodyscyplinarnej ENOVIA 2014x, a następnie zainstaluj ten nośnik";
+
+//---------------------------------------------------------------------------
+// 16x FD01 migration of SR LastPIDAndRole
+//---------------------------------------------------------------------------
+cmdToExecuteVPLMDataMigrationHF.Title="Obowiązkowy krok po instalacji Hot Fix";
+cmdToExecuteVPLMDataMigrationHF.Text="Po zainstalowaniu tej poprawki konieczne jest wykonanie czynności ręcznie.\nPo zainstalowaniu wszystkich aplikacji należy wykonać następujące polecenie MQL (może to potrwać kilka minut).\nUruchom okno polecenia MQL z instalacji <server> i wpisz:\nMQL>set context person creator;\nMQL>exec prog VPLMDataMigration;";
+
+//---------------------------------------------------------------------------
+// error handling while executing installVPMMultiDisciplineV6R201xx.tcl
+//---------------------------------------------------------------------------
+execDBScript_failed.Title="Błąd instalacji bazy danych";
+execDBScript_failed.Text="Następujący skrypt instalacji bazy danych nie powiódł się:/P1\nZgłoszono następujący błąd:/P2";
+
+

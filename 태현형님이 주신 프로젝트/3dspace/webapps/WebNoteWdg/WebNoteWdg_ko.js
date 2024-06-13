@@ -1,0 +1,1 @@
+define("DS/WebNoteWdg/WebNoteWdg_ko",{});define("DS/WebNoteWdg/assets/nls/webNote",{Title_html:"제목",typeText:"여기에 텍스트 입력",Font_html:"글꼴",FontSize_html:"글꼴 크기",Small_html:"작게",Medium_html:"중간",Big_html:"크게"});

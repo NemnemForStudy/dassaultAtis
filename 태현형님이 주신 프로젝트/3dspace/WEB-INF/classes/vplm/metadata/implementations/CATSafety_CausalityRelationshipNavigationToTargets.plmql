@@ -1,0 +1,88 @@
+NAVIGATE   
+	T0.PLMID, T1.PLMID, T2.PLMID, T3.PLMID, T4.physicalid, T5.physicalid, T6.physicalid
+
+FROM 
+	CATSafetyFailureModesEffectsAnalysis/FailureModesEffectsAnalysisCausalityRelationship T0,
+	CATSafety/FailureMode T1,
+	PLMCORE/PLMCoreReference T2,
+	PLMCORE/PLMCoreInstance T3,
+	Class/Requirement T4,
+	Class/Change T5,
+	Class/Task T6
+	
+
+FROM_ROOTS[?1?]
+ON 
+(		
+	(
+	RELATION
+		(
+		FROM=CATSafetyFailureModesEffectsAnalysis/FailureModesEffectsAnalysisCausalityRelationship 
+		TO=CATSafety/FailureMode
+		THROUGH=POINTSTO
+		)
+		WITH QUALITY_FILTER	( ROLE=FailureModesEffectsAnalysisEffectsWithoutBarrier )
+	) OR (
+	RELATION
+		(
+		FROM=CATSafetyFailureModesEffectsAnalysis/FailureModesEffectsAnalysisCausalityRelationship 
+		TO=PLMCORE/PLMCoreReference, PLMCORE/PLMCoreInstance, CATSafety/FailureMode
+		THROUGH=POINTSTO
+		)
+		WITH QUALITY_FILTER	( ROLE=FailureModesEffectsAnalysissEffectsWithoutBarrierOccurrence )
+	)
+	OR (
+	RELATION
+		(
+		FROM=CATSafetyFailureModesEffectsAnalysis/FailureModesEffectsAnalysisCausalityRelationship 
+		TO=CATSafety/FailureMode
+		THROUGH=POINTSTO
+		)
+		WITH QUALITY_FILTER	( ROLE=FailureModesEffectsAnalysisEffectsWithBarrier )
+	) OR (
+	RELATION
+		(
+		FROM=CATSafetyFailureModesEffectsAnalysis/FailureModesEffectsAnalysisCausalityRelationship 
+		TO=PLMCORE/PLMCoreReference, PLMCORE/PLMCoreInstance, CATSafety/FailureMode
+		THROUGH=POINTSTO
+		)
+		WITH QUALITY_FILTER	( ROLE=FailureModesEffectsAnalysissEffectsWithBarrierOccurrence )
+	)
+	OR (
+	RELATION
+		(
+		FROM=CATSafetyFailureModesEffectsAnalysis/FailureModesEffectsAnalysisCausalityRelationship 
+		TO=PLMCORE/PLMCoreReference, PLMCORE/PLMCoreInstance, CATSafety/FailureMode
+		THROUGH=POINTSTO
+		)
+		WITH QUALITY_FILTER	( ROLE=FailureModesEffectsAnalysisCauseOccurrence )
+	)
+	OR (
+	RELATION
+		(
+		FROM=CATSafetyFailureModesEffectsAnalysis/FailureModesEffectsAnalysisCausalityRelationship 
+		TO=PLMCORE/PLMCoreReference, PLMCORE/PLMCoreInstance, CATSafety/FailureMode
+		THROUGH=POINTSTO
+		)
+		WITH QUALITY_FILTER	( ROLE=FailureModesEffectsAnalysisCauseFailureMode )
+	)
+	OR (
+	RELATION
+		(
+		FROM=CATSafetyFailureModesEffectsAnalysis/FailureModesEffectsAnalysisCausalityRelationship 
+		TO=Class/Requirement, Class/Change, Class/Task
+		THROUGH=POINTSTO
+		)
+		WITH QUALITY_FILTER	( ROLE=FailureModesEffectsAnalysisPrevention )
+	)
+	OR (
+	RELATION
+		(
+		FROM=CATSafetyFailureModesEffectsAnalysis/FailureModesEffectsAnalysisCausalityRelationship 
+		TO=Class/Requirement
+		THROUGH=POINTSTO
+		)
+		WITH QUALITY_FILTER	( ROLE=FailureModesEffectsAnalysisDetection )
+	)
+)
+; 

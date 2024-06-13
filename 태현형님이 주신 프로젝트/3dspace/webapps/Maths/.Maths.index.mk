@@ -1,0 +1,11 @@
+m|WebFoundation\Maths.mweb
+b|j|c,m
+b|c|c,m
+v|6.425.0.22078|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\Maths\Maths.js|1647692013|995
+s|WebFoundation\Maths.mweb\src\Maths.js|1427881377|0
+u|WebFoundation\Maths.mweb\src\Vector.js|1467294722|477
+u|WebFoundation\Maths.mweb\src\Vector3.js|1467294729|1513
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

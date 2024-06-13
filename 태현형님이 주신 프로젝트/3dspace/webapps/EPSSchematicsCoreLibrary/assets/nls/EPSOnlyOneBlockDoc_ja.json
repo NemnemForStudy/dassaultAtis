@@ -1,0 +1,16 @@
+{
+  "version": "1.0.0",
+  "summary": "入力コントロール ポートのいずれかが活動化されると、直ちに出力コントロール ポートを活動化します。この活動化は 1 回だけ行われます。その後、他の入力コントロール ポートが活動化されても、何も起こりません。活動化された入力コントロール ポートに応じて、対応する入力データ値が返されます。",
+  "description": "このブロックは動的であるため、入力データ数はブロック構成ダイアログを使用して変更できます。<br>入力コントロール ポートの数は、入力データ ポートの数で同期されます。<br>データ ポートは、すべての値タイプを処理します。<br><br><doc-icp-name translate=no>In1</doc-icp-name> が活動化された場合、<doc-odp-name translate=no>SelectedValue</doc-odp-name> 出力データ値は <doc-idp-name translate=no>Value1</doc-idp-name> に設定されます。<br><doc-icp-name translate=no>In2</doc-icp-name> が活動化された場合、<doc-odp-name translate=no>SelectedValue</doc-odp-name> 出力データ値は <doc-idp-name translate=no>Value2</doc-idp-name> に設定されます。<br>以後、同様になります。<br>一般的に、<doc-icp-name translate=no>InK</doc-icp-name> が活動化された場合、<doc-odp-name translate=no>SelectedValue</doc-odp-name> 出力データ値は <doc-idp-name translate=no>ValueK</doc-idp-name> に設定されます。",
+  "dataPorts": {
+    "Value1": "最初の入力データ値。",
+    "Value2": "2 番目の入力データ値。",
+    "SelectedValue": "選択したデータ値。"
+  },
+  "controlPorts": {
+    "In1": "ブロック実行をトリガーします。",
+    "In2": "ブロック実行をトリガーします。",
+    "Out": "プロセスが完了すると活動化されます。"
+  },
+  "example": null
+}

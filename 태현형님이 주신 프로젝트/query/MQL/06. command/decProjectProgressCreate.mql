@@ -1,0 +1,17 @@
+################################################################################################
+# Created By thok : 2023. 06. 02
+# Admin Type : command
+# Name : decProjectProgressCreate
+################################################################################################
+#delete command decProjectProgressCreate;
+add command decProjectProgressCreate 
+	alt 'emxProgramCentral.Label.ProgressCreate' 
+	label 'emxProgramCentral.Label.ProgressCreate' 
+	href '${COMMON_DIR}/decProjectProgressCreateDialogFS.jsp'
+	setting 'Image' '${COMMON_DIR}/images/iconActionCreate.png'
+	setting 'Target Location' slidein
+	setting 'Popup Modal' true
+	setting 'Registered Suite' ProgramCentral
+;
+add property command_decProjectProgressCreate on program eServiceSchemaVariableMapping.tcl to command 'decProjectProgressCreate'
+;

@@ -1,0 +1,29 @@
+NAVIGATE   
+	T0.PLMID, T1.PLMID, T2.PLMID
+
+FROM 
+	CATSafetyFailureModesEffectsAnalysis/FailureModesEffectsAnalysis T0,
+	CATSafetyFailureModesEffectsAnalysis/FailureModesEffectsAnalysisAnalyzes T1,
+	PLMCORE/PLMCoreReference T2
+
+FROM_ROOTS[?1?]
+ON 
+(		
+	(
+	RELATION
+		(
+		FROM=CATSafetyFailureModesEffectsAnalysis/FailureModesEffectsAnalysis 
+		TO=CATSafetyFailureModesEffectsAnalysis/FailureModesEffectsAnalysisAnalyzes 
+		THROUGH=POINTEDBY
+		)
+		WITH QUALITY_FILTER	( CATEGORY=ISOWNEDBY )
+	THEN RELATION
+		(
+		FROM=CATSafetyFailureModesEffectsAnalysis/FailureModesEffectsAnalysisAnalyzes  
+		TO=PLMCORE/PLMCoreReference 
+		THROUGH=POINTSTO
+		)
+		WITH QUALITY_FILTER	( ROLE=FailureModesEffectsAnalysisAnalyzes )
+	)
+)
+; 

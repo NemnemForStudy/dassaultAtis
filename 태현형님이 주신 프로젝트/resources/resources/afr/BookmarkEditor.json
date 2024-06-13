@@ -1,0 +1,527 @@
+{
+	"info" : "For any new command, please put entry in FolderProbesCommandMapping.json too.",
+    "headers": {		
+        "RenameCmd": {
+            "ClassName": "DS/FolderEditor/commands/CtxCommands",
+            "ResourceFile": "FolderEditor/ENOFolder",
+            "icon": "rename"
+        },
+		"BookmarkLocation": {
+            "ClassName": "DS/FolderEditor/commands/CtxCommands",
+            "ResourceFile": "FolderEditor/ENOFolder",
+            "icon": "bookmark"
+        },
+		"openInV5": {
+            "ClassName": "DS/FolderEditor/commands/CtxCommands",
+            "ResourceFile": "FolderEditor/ENOFolder",
+            "icon": "open-eye",
+            "_readOnly": true
+        },		
+		"PreviewFile": {
+            "ClassName": "DS/FolderEditor/commands/CtxCommands",
+            "ResourceFile": "FolderEditor/ENOFolder",
+            "icon": "eye"
+        },
+        "OpenInCADHdr": {
+            "ClassName": "DS/PADUtils/commands/PADOpenInCAD",
+            "ResourceFile": "FolderEditor/ENOFolder",
+            "icon": "open"
+        },
+        "ActionBar_NewFolderCmd": {
+            "ClassName": "DS/ENOCollabSharingCmds/commands/NewCmd/ActionBar_NewFolderCmd",
+            "ResourceFile": "ENOCollabSharingCmds/CollabSharing_Workbench",
+            "HelpResourceFile": "FolderEditor/help",
+            "icon": "bookmark-add",
+            "Name": "New Bookmark"
+        },
+        "RemoveContent": {
+            "ClassName": "DS/FolderEditor/commands/ActionBar_RemoveContentCmd",
+            "ResourceFile": "FolderEditor/ENOFolder",
+            "HelpResourceFile": "FolderEditor/help",
+            "icon": "remove"
+        },
+        "AddFile": {
+            "ClassName": "DS/FolderEditor/commands/ActionBar_AddFileCmd",
+            "ResourceFile": "FolderEditor/ENOFolder",
+            "HelpResourceFile": "FolderEditor/help",
+            "icon": "upload"
+        },
+        "DownloadFile": {
+            "ClassName": "DS/FolderEditor/commands/ActionBar_DownloadFileCmd",
+            "ResourceFile": "FolderEditor/ENOFolder",
+            "HelpResourceFile": "FolderEditor/help",
+            "icon": "download",
+            "_readOnly": true
+        },
+        "EditFile": {
+            "ClassName": "DS/FolderEditor/commands/ActionBar_CheckOutCmd",
+            "ResourceFile": "FolderEditor/ENOFolder",
+            "HelpResourceFile": "FolderEditor/help",
+            "icon": "pencil"
+        },
+        "UpdateFile": {
+            "ClassName": "DS/FolderEditor/commands/ActionBar_CheckInCmd",
+            "ResourceFile": "FolderEditor/ENOFolder",
+            "HelpResourceFile": "FolderEditor/help",
+            "icon": "update"
+        },
+        "UndoEditFile": {
+            "ClassName": "DS/FolderEditor/commands/ActionBar_UndoEditCmd",
+            "ResourceFile": "FolderEditor/ENOFolder",
+            "HelpResourceFile": "FolderEditor/help",
+            "icon": "undo"
+        },
+		"FolderUpload":{
+			"ClassName": "DS/FolderEditor/commands/ActionBar_FolderUploadCmd",
+			"ResourceFile": "FolderEditor/ENOFolder",
+			"HelpResourceFile": "FolderEditor/help",
+			"_isCloud": true,
+			"_noTouch": true,
+			"icon": "folder-upload"
+		},
+		"RemoveShortcut":{
+			"ClassName": "DS/FolderEditor/commands/ActionBar_RemoveShortCutCmd",
+			"ResourceFile": "FolderEditor/ENOFolder",
+			"HelpResourceFile": "FolderEditor/help",
+			"icon": "remove"
+		},
+        "FolderDownload":{
+			"ClassName": "DS/FolderEditor/commands/ActionBar_FolderDownloadCmd",
+			"ResourceFile": "FolderEditor/ENOFolder",
+			"HelpResourceFile": "FolderEditor/help",
+			"_noTouch": true,
+			"icon": "download"
+		},
+        "Cut": {
+            "ClassName": "DS/FolderEditor/commands/ActionBar_CutCmd",
+            "ResourceFile": "FolderEditor/ENOFolder",
+            "HelpResourceFile": "FolderEditor/help",
+            "icon": "cut",
+            "accelerator": "Ctrl+X"
+        },
+        "Copy": {
+            "ClassName": "DS/FolderEditor/commands/ActionBar_CopyCmd",
+            "ResourceFile": "FolderEditor/ENOFolder",
+            "HelpResourceFile": "FolderEditor/help",
+            "icon": "copy",
+            "accelerator": "Ctrl+C"
+        },
+        "Paste": {
+            "ClassName": "DS/FolderEditor/commands/ActionBar_PasteCmd",
+            "ResourceFile": "FolderEditor/ENOFolder",
+            "HelpResourceFile": "FolderEditor/help",
+            "icon": "paste",
+            "accelerator": "Ctrl+V"
+        },
+        "AddExistingContent": {
+            "ClassName": "DS/FolderEditor/commands/ActionBar_AddExistingContentCmd",
+            "ResourceFile": "FolderEditor/ENOFolder",
+            "HelpResourceFile": "FolderEditor/help",
+            "icon": "plus"
+        },
+        "AddToFavorites": {
+            "ClassName": "DS/FolderEditor/commands/ActionBar_AddToFavoritesCmd",
+            "ResourceFile": "FolderEditor/ENOFolder",
+            "Behavior": "CATAfrHeaderCheck",
+            "HelpResourceFile": "FolderEditor/help",
+            "icon": "favorite-on"
+        },
+		"ActiveFolder": {
+			"ClassName": "DS/FolderEditor/commands/ActionBar_ActiveFolderCmd",
+			"ResourceFile": "FolderEditor/ENOFolder",            
+            "HelpResourceFile": "FolderEditor/help",
+			"Behavior": "CATAfrHeaderCheck",
+			"_activeFolder": true,
+			"icon": "bookmark-pin"
+		},
+        "treeview": {
+            "ClassName": "DS/ENXNav/commands/xNavActionBarCmds",
+            "ResourceFile": "ENXNav/ENXNav",
+            "HelpResourceFile": "FolderEditor/help",
+            "icon": "view-list",
+            "_readOnly": true
+        },
+        "tileview": {
+            "ClassName": "DS/ENXNav/commands/xNavActionBarCmds",
+            "ResourceFile": "ENXNav/ENXNav",
+            "HelpResourceFile": "FolderEditor/help",
+            "icon": "view-small-tile",
+            "_readOnly": true
+        },
+        "thumbnailview": {
+            "ClassName": "DS/ENXNav/commands/xNavActionBarCmds",
+            "ResourceFile": "ENXNav/ENXNav",
+            "HelpResourceFile": "FolderEditor/help",
+            "icon": "view-small-thb",
+            "_readOnly": true
+        },
+        "ExpandAll": {
+            "ClassName": "DS/FolderEditor/commands/ActionBar_ExpandAllCmd",
+            "ResourceFile": "FolderEditor/ENOFolder",
+            "HelpResourceFile": "FolderEditor/help",
+            "icon": "flow-tree-expand-down",
+            "_readOnly": true
+        },
+        "ExpandN": {
+            "ClassName": "DS/FolderEditor/commands/ActionBar_ExpandNCmd",
+            "ResourceFile": "FolderEditor/ENOFolder",
+            "HelpResourceFile": "FolderEditor/help",
+            "icon": "flow-tree-expand-down-cog",
+            "_readOnly": true
+        },
+        "CollapseAll": {
+            "ClassName": "DS/FolderEditor/commands/ActionBar_CollapseAllCmd",
+            "ResourceFile": "FolderEditor/ENOFolder",
+            "HelpResourceFile": "FolderEditor/help",
+            "icon": "flow-tree-expand-up",
+            "_readOnly": true
+        },
+        "SelectChildren": {
+            "ClassName": "DS/ENXNav/commands/xNavActionBarCmds",
+            "ResourceFile": "ENXNav/ENXNav",
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": "tree-view-leaf",
+            "_readOnly": true
+        },
+        "SelectAll": {
+            "ClassName": "DS/ENXNav/commands/xNavActionBarCmds",
+            "ResourceFile": "ENXNav/ENXNav",
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": "select-all",
+            "_readOnly": true
+        },
+        "SelectInversion": {
+            "ClassName": "DS/ENXNav/commands/xNavActionBarCmds",
+            "ResourceFile": "ENXNav/ENXNav",
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": "select-inverted",
+            "_readOnly": true
+        },
+        "SelectParent": {
+            "ClassName": "DS/ENXNav/commands/xNavActionBarCmds",
+            "ResourceFile": "ENXNav/ENXNav",
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": "tree-view-root",
+            "_readOnly": true
+        },
+        "SelectSiblings": {
+            "ClassName": "DS/ENXNav/commands/xNavActionBarCmds",
+            "ResourceFile": "ENXNav/ENXNav",
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": "tree-view-flattened-progress-3",
+            "_readOnly": true
+        },
+        "SelectLeaves": {
+            "ClassName": "DS/ENXNav/commands/xNavActionBarCmds",
+            "ResourceFile": "ENXNav/ENXNav",
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": "tree-view-leaf",
+            "_readOnly": true
+        },
+        "ColumnVisibility": {
+            "ClassName": "DS/FolderEditor/commands/FolderActionBarCmds",
+            "ResourceFile": "ENXNav/ENXNav",
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": "attributes-cog",
+            "_readOnly": true
+        },
+        "ExportCSV": {
+            "ClassName": "DS/FolderEditor/commands/FolderActionBarCmds",
+            "ResourceFile": "FolderEditor/ENOFolder",
+            "_noTouch": true,
+            "HelpResourceFile": "FolderEditor/help",
+            "icon": "export-to-csv",
+            "_readOnly": true
+        },
+        "UnifiedExportCommand": {
+            "ClassName": "DS/UnifiedExportCommand/Commands/UnifiedExportCommand",
+            "HelpResourceFile": "UnifiedExportCommand/UnifiedExportCommand",
+            "icon": "export"
+        },
+		"ImportCSVBookmark": {            
+			"ClassName": "DS/FolderEditor/commands/ActionBar_ImportCSVBookmarkCmd",
+			"ResourceFile": "FolderEditor/ENOFolder",
+			"_importCSV": true,	
+			"_noTouch": true,
+            "HelpResourceFile": "FolderEditor/help",
+			"icon": "import"
+		},
+        "Print": {
+            "ClassName": "DS/FolderEditor/commands/FolderActionBarCmds",
+            "ResourceFile": "ENXNav/ENXNav",
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": "print",
+            "_readOnly": true
+        },
+        "RelationIPExplorer": {
+            "ClassName": "DS/FolderEditor/commands/ActionBar_RelationIPExplorer",
+            "ResourceFile": "FolderEditor/ENOFolder",
+            "HelpResourceFile": "ENXNav/ENXNavHelpForCommands",
+            "icon": "object-related",
+            "_readOnly": true
+        },
+        "SubscribeHdr": {
+            "ClassName": "DS/ENOSubscriptionMgmt/Commands/Subscribe",
+            "ResourceFile": "ENOSubscriptionMgmt/ENOSubscriptionMgmt",
+            "HelpResourceFile": "ENOSubscriptionMgmt/ENOSubscriptionHelp",
+            "icon": "bell-add",
+            "_readOnly": true
+        },
+        "UnSubscribeHdr": {
+            "ClassName": "DS/ENOSubscriptionMgmt/Commands/UnSubscribe",
+            "ResourceFile": "ENOSubscriptionMgmt/ENOSubscriptionMgmt",
+            "HelpResourceFile": "ENOSubscriptionMgmt/ENOSubscriptionHelp",
+            "icon": "bell-delete",
+            "_readOnly": true
+        },
+        "EditSubscribeHdr": {
+            "ClassName": "DS/ENOSubscriptionMgmt/Commands/EditSubscribe",
+            "ResourceFile": "ENOSubscriptionMgmt/ENOSubscriptionMgmt",
+            "HelpResourceFile": "ENOSubscriptionMgmt/ENOSubscriptionHelp",
+            "icon": "bell-pencil",
+            "_readOnly": true
+        },
+        "MySubscriptionsHdr": {
+            "ClassName": "DS/ENOSubscriptionMgmt/Commands/MySubscriptions",
+            "ResourceFile": "ENOSubscriptionMgmt/ENOSubscriptionMgmt",
+            "HelpResourceFile": "ENOSubscriptionMgmt/ENOSubscriptionHelp",
+            "icon": "bell",
+            "_readOnly": true
+        },
+        "ActionBar_AccessRightCmd": {
+            "ClassName": "DS/ENOCollabSharingCmds/commands/AccessRightCmd/ActionBar_AccessRightCmd",
+            "ResourceFile": "ENOCollabSharingCmds/CollabSharing_Workbench",
+            "HelpResourceFile": "ENOCollabSharingCmds/CollaborationCmd",
+            "icon": "forward",
+            "_readOnly": true
+        },
+        "ActionBar_Attributes": {
+            "ClassName": "DS/ENOCollabSharingCmds/commands/EditPropCmd/ActionBar_EditPropCmd",
+            "ResourceFile": "ENOCollabSharingCmds/CollabSharing_Workbench",
+            "HelpResourceFile": "FolderEditor/help",
+            "icon": "info-open-in-a-new-window"
+        },
+        "MaturityHdr": {
+            "ClassName": "DS/LifecycleWidget/LifecycleCmd",
+            "ResourceFile": "LifecycleWidget/LifecycleCmd",
+            "HelpResourceFile": "LifecycleWidget/LifecycleCmd",
+            "icon": "collaborative-lifecycle-management"
+        },
+        "RevisionHdr": {
+            "ClassName": "DS/LifecycleCmd/ReviseCmd",
+            "ResourceFile": "LifecycleCmd/ReviseCmd",
+            "HelpResourceFile": "LifecycleWidget/LifecycleCmd",
+            "icon": "flow-line-add"
+        },
+        "NewBranchHdr": {
+            "ClassName": "DS/LifecycleCmd/NewBranchCmd",
+            "ResourceFile": "LifecycleWidget/LifecycleCmd",
+            "HelpResourceFile": "LifecycleWidget/LifecycleCmd",
+            "checkByCommand": true,
+            "icon": "flow-branch-add"
+        },
+        "ReviseFromHdr": {
+            "ClassName": "DS/LifecycleCmd/ReviseFromCmd",
+            "ResourceFile": "LifecycleCmd/ReviseFromCmd",
+            "HelpResourceFile": "LifecycleWidget/LifecycleCmd",
+            "checkByCommand": true,
+            "icon": "flow-branch-add wux-ui-3ds-flip-vertical"
+        },
+        "DeleteHdr": {
+            "ClassName": "DS/LifecycleCmd/DeleteCmd",
+            "ResourceFile": "LifecycleCmd/DeleteCmd",
+            "HelpResourceFile": "LifecycleWidget/LifecycleCmd",
+            "icon": "trash",
+            "accelerator": "Delete"
+        },
+        "DuplicateHdr": {
+            "ClassName": "DS/LifecycleCmd/DuplicateCmd",
+            "ResourceFile": "LifecycleCmd/DuplicateCmd",
+            "HelpResourceFile": "LifecycleWidget/LifecycleCmd",
+            "icon": "duplicate"
+        },
+        "CompareHdr": {
+            "ClassName": "DS/CompareCmd/CompareCmd",
+            "ResourceFile": "CompareCmd/CompareCmd",
+            "HelpResourceFile": "LifecycleWidget/LifecycleCmd",
+            "icon": "part-compare"
+        },
+        "HistoryHdr": {
+            "ClassName": "DS/LifecycleWidget/LifecycleCmd",
+            "ResourceFile": "LifecycleWidget/LifecycleCmd",
+            "HelpResourceFile": "LifecycleWidget/LifecycleCmd",
+            "icon": "flow-branch-list"
+        },
+        "ActionBar_ChangeOwner": {
+            "ClassName": "DS/ENOCollabSharingCmds/commands/TransferOwnershipCmd/ActionBar_ChangeOwnerCmd",
+            "ResourceFile": "ENOCollabSharingCmds/CollabSharing_Workbench",
+            "HelpResourceFile": "ENOCollabSharingCmds/CollaborationCmd",
+            "icon": "move-to"
+        },
+        "ActionBar_TransferOwnership": {
+            "ClassName": "DS/ENOCollabSharingCmds/commands/TransferOwnershipCmd/ActionBar_TransferOwnershipCmd",
+            "ResourceFile": "ENOCollabSharingCmds/CollabSharing_Workbench",
+            "HelpResourceFile": "ENOCollabSharingCmds/CollaborationCmd",
+            "icon": "user-change"
+        },
+        "ActionBar_ReserveCmd": {
+            "ClassName": "DS/ENOCollabSharingCmds/commands/ReserveCmd/ActionBar_ReserveCmd",
+            "ResourceFile": "ENOCollabSharingCmds/CollabSharing_Workbench",
+            "HelpResourceFile": "ENOCollabSharingCmds/CollaborationCmd",
+            "icon": "lock"
+        },
+        "ActionBar_UnreserveCmd": {
+            "ClassName": "DS/ENOCollabSharingCmds/commands/UnreserveCmd/ActionBar_UnreserveCmd",
+            "ResourceFile": "ENOCollabSharingCmds/CollabSharing_Workbench",
+            "HelpResourceFile": "ENOCollabSharingCmds/CollaborationCmd",
+            "icon": "lock-open"
+        },
+        "UPSReplaceByLatestRevision": {
+            "ClassName": "DS/FolderEditor/commands/ActionBar_UPSReplaceByLatestRevision",
+            "ResourceFile": "FolderEditor/ENOFolder",
+            "HelpResourceFile": "FolderEditor/help",
+            "icon": "replace-by-revision"
+        },
+        "UPSAuthReplaceByRevision": {
+            "ClassName": "DS/FolderEditor/commands/ActionBar_UPSAuthReplaceByRevision",
+            "ResourceFile": "FolderEditor/ENOFolder",
+            "HelpResourceFile": "FolderEditor/help",
+            "icon": "replace-by-latest-version"
+        },
+        "ActionBar_ShareBookmarkLink": {
+            "ClassName": "DS/FolderEditor/commands/ActionBar_ShareBookmarkLink",
+            "ResourceFile": "FolderEditor/ENOFolder",
+            "HelpResourceFile": "FolderEditor/help",
+            "icon": "link",
+            "_readOnly": true
+        },
+        "ActionBar_FindInCtxCmd": {
+            "ClassName": "DS/FolderEditor/commands/ActionBar_FindinCtxCmd",
+            "ResourceFile": "FolderEditor/ENOFolder",
+            "HelpResourceFile": "FolderEditor/help",            
+			"Behavior": "CATAfrHeaderCheck",
+            "icon": "find",
+            "_readOnly": true
+        }
+    },
+    "toolbar": {
+        "unstable": [
+            "ActionBar_NewFolderCmd", 
+            "AddExistingContent", 
+            "FolderUpload", 
+            "AddFile",
+            "sep", 
+            {
+                "Name": "expand",
+                "Commands": ["ExpandAll", "ExpandN", "CollapseAll"]
+            }, 
+            "sep", 
+            "UpdateFile", 
+            "EditFile", 
+            "UndoEditFile", 
+            {
+                "Name": "replace",
+                "Commands": ["UPSReplaceByLatestRevision", "UPSAuthReplaceByRevision"]        
+            }, 
+            "sep", 
+            "Copy", 
+            "Cut", 
+            "Paste", 
+            "sep", 
+            "MaturityHdr", 
+            "HistoryHdr", 
+            {
+                "Name": "revise",
+                "Commands": ["RevisionHdr", "NewBranchHdr", "ReviseFromHdr"]
+            }, 
+            "DuplicateHdr", 
+            "CompareHdr", 
+            "sep", 
+            "ActionBar_AccessRightCmd", 
+            "ActionBar_ShareBookmarkLink", 
+            "ActionBar_ChangeOwner", 
+            "ActionBar_TransferOwnership", 
+            "ActionBar_ReserveCmd", 
+            "ActionBar_UnreserveCmd", 
+            "sep",
+            "FolderDownload",			
+            "DownloadFile", 
+            "AddToFavorites", 
+            "ActiveFolder", 
+            "ActionBar_FindInCtxCmd", 
+            "RelationIPExplorer", 
+            "ActionBar_Attributes", 
+            "sep", 
+            "RemoveContent",
+			"RemoveShortcut", 
+            "DeleteHdr"
+        ],
+        "stable": [
+            "Search", 
+            "IndexMode",
+            {
+                "Name": "select",
+                "Commands": ["SelectAll", "SelectChildren", "SelectInversion", "SelectParent", "SelectSiblings", "SelectLeaves"]
+            }, 
+            {
+                "type": "menu",
+                "Commands": [
+                    "Print", 
+                    "ExportCSV", 
+                    "UnifiedExportCommand",
+					"ImportCSVBookmark",
+                    {
+                        "Name": "subscribe",
+                        "Commands": ["SubscribeHdr", "UnSubscribeHdr", "EditSubscribeHdr", "MySubscriptionsHdr"]
+                    }, 
+                    "ColumnVisibility"]
+            }, 
+            {
+                "Name": "display",
+                "type":"layout",
+                "Commands": ["treeview", "tileview", "thumbnailview"]
+            }, 
+            "Information"
+        ]
+    },
+	"ctxMenu": [
+        "openWith",
+		"openInV5",
+		"OpenInCADHdr",
+		"sep",
+		"ActionBar_NewFolderCmd",
+		"sep",
+        "AddExistingContent", 
+        "AddFile",
+		"sep",
+		"RenameCmd",
+		"PreviewFile",
+		"BookmarkLocation",
+		"AddToFavorites",
+		"sep",
+		"ExpandAll",
+		"CollapseAll",
+		"ActionBar_FindInCtxCmd",
+		"sep",
+		"Copy", 
+		"Cut", 
+		"Paste", 
+		"sep",
+		"UpdateFile",
+        "EditFile",  
+		"UndoEditFile", 
+		"sep",
+        "ActiveFolder", 
+		"sep",
+		"FolderDownload",
+        "DownloadFile", 
+		"sep",
+        "ActionBar_AccessRightCmd", 
+        "ActionBar_ShareBookmarkLink", 
+		"sep",
+		"ActionBar_Attributes", 
+		"sep",
+        "RemoveContent", 
+        "DeleteHdr"
+	]	
+}

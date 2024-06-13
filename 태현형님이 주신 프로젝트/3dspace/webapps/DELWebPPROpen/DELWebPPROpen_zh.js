@@ -1,0 +1,1 @@
+define("DS/DELWebPPROpen/DELWebPPROpen_zh",{});define("DS/DELWebPPROpen/assets/nls/DELWebPPROpen",{"Dialog.Process.Title":"打开流程","Form.Process.Expander.Title":"流程","Form.ProcessContext.Title":"根","Form.ProcessContextOccurrence.Title":"匹配项","Form.Mfg.Expander.Title":"制造项目","Form.MfgScopedItem.Title":"范围项目","Form.MfgInstallOccurrence.Title":"安装匹配项","WaitingPage.Title":"正在加载..."});

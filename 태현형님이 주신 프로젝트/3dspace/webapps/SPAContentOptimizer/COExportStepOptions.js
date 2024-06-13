@@ -1,0 +1,2 @@
+/*!  Copyright 2015 Dassault Systemes. All rights reserved. */
+define("DS/SPAContentOptimizer/COExportStepOptions",["DS/CSICommandBinder/CSICommandBinder"],function(e){"use strict";var n=function(){this.StepVersion=0};return e.declareType({type:"COExportStepOptions",serialize:function(e,n){return null!=n&&e.writeUint8("StepVersion",n.StepVersion),!0},unserialize:function(e){var t=new n;return t.StepVersion=e.readUint8("StepVersion"),t}}),n});

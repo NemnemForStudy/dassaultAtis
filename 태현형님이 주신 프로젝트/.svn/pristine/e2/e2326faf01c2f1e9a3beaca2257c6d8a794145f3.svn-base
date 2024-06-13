@@ -1,0 +1,24 @@
+#####################################################################################################
+# Created by jonghunlee
+# Create Date : 2023-05-11
+# Name : decStage
+#####################################################################################################
+#del attribute 'decStage';
+add attribute 'decStage'
+    description ''
+    type        'String'
+    notmultiline
+    nothidden
+    property 'original name'    value 'decStage'
+    property 'version'          value 'R2018X'
+    property 'installed date'   value '2023-05-11'
+;
+add property attribute_decStage on program 'eServiceSchemaVariableMapping.tcl' to attribute 'decStage';
+
+mod attribute 'decStage'
+	add range = 'To be started'
+	add range = 'Plan Start'
+	add range = 'Late Start'
+	add range = 'Close-out'
+	default 'To be started'
+;

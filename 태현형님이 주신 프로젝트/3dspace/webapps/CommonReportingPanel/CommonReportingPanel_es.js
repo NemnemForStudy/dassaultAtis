@@ -1,0 +1,1 @@
+define("DS/CommonReportingPanel/CommonReportingPanel_es",{});define("DS/CommonReportingPanel/assets/nls/CommonCommandDialog",{okButton:"Aceptar",cancelButton:"Cancelar"});define("DS/CommonReportingPanel/assets/nls/CommonReportingPanelNls",{TotalRecords:"Registros totales: ",ReportTitle:"Informe"});

@@ -1,0 +1,15 @@
+m|CAT3DPlayWeb\3DPlaySpecTree.mweb
+b|j|c,m
+b|c|n,m
+v|6.425.0.22078|3.2
+r|G:\R425\BSF\.
+t|win_b64\webapps\3DPlaySpecTree\3DPlaySpecTree.js|1647692388|9475
+s|CAT3DPlayWeb\3DPlaySpecTree.mweb\src\0_Copyright.js|1502287641|43
+t|win_b64\webapps\3DPlaySpecTree\assets\icons\32\I_3DPlaySpecTree.png|1647692385|6917
+s|CAT3DPlayWeb\3DPlaySpecTree.mweb\src\assets\icons\32\I_3DPlaySpecTree.png|1549891137|6917
+u|CAT3DPlayWeb\3DPlaySpecTree.mweb\src\3DPlaySpecTree.js|1502287612|110
+u|CAT3DPlayWeb\3DPlaySpecTree.mweb\src\3DPlaySpecTreePanel.js|1549285914|10631
+u|CAT3DPlayWeb\3DPlaySpecTree.mweb\src\3DPlaySpecTreeSOManager.js|1515919061|2329
+u|CAT3DPlayWeb\3DPlaySpecTree.mweb\src\3DPlaySpecTreeUtils.js|1572586483|14307
+u|win_b64\code\toolcmds\mkwebconcat.bat|1647654585|287
+u|win_b64\code\toolcmds\terser.bat|1647654585|240

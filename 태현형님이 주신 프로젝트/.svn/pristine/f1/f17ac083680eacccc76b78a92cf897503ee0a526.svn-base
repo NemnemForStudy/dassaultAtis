@@ -1,0 +1,1 @@
+define("DS/DMUFormatEdition/DMUFormatEdition_zh-TW",{});define("DS/DMUFormatEdition/assets/nls/DMUFormatEdition",{formatEditionModeStarted:"編輯格式",slideEditionModeStarted:"編輯投影片",currentFormatUpdatedMessage:"更新的視角",NoFormat:"無格式",FormatChooserPanelTitle:"格式",normalFormatTitle:"格式",generateFormat:"產生格式"});

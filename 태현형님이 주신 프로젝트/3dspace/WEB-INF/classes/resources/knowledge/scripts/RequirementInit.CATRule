@@ -1,0 +1,275 @@
+/* Rule RequirementInit (ThisObject: Requirement, Parameters: RuleContext)       */
+/* NOT CONTRACTUAL and PROPERTY OF TE (TEAM ENVIRONMENT) DEFINITION, ANY CHANGE MAY HAPPEN WITHOUT NOTICE         */
+/* Parameters contains many information such as name, user, security ... depending on Operation                   */
+/* Notice this BL operates for Several OpeningID and Many OperationId (New, Cloning, ImportAsNew, ...)            */
+/* PLMIdentificationInitialization,PLMTemplateCloning,PLMImportExportAttributesValuation,ComponentsFamilyNaming   */
+/* Notice this BL sometimes operates only for updating an existing object,mentioned IsCreatingNewObject==false    */
+
+Let IsCreatingNewObject (Boolean)
+Let UserPrefix(String)
+Let Inc(Integer)
+
+Let CopyFromObject(Requirement)
+
+Let ProjectUsage (STRING)
+Let TitleWas(STRING)
+Let ItemName (String)
+Let IsRootFamilyItem (Boolean)
+
+Let ModelingType(Type)
+Let ModelingTypeName(String)
+Let AbbreviatedBaseTypeName(String)
+Let Separator(String) 
+
+Let TypeTitle(STRING)
+Let TypePackage(STRING)
+Let NamingTypePrefix(STRING)
+Let SiteAffix(STRING)
+Let NamingTypeSuffix(STRING)
+
+Let Title(STRING)
+Let ID(STRING)
+Let Description(STRING)
+Let DescriptionSize(INTEGER)
+Let IDNumber(STRING)
+Let IDVNumber(STRING)
+Let IDType(STRING)
+Let NumberAlignment(INTEGER)
+
+Let NameSize(INTEGER) 
+
+         /* variable set-up */ 
+
+/* in case of Cloning of this rule  following constant must be defined */ 
+NumberAlignment=8
+AbbreviatedBaseTypeName="Requirement" 
+Separator="-"
+SiteAffix=""
+
+/*standard case of this BL is creation of new object*/
+IsCreatingNewObject=true
+
+
+Description = ""
+UserPrefix = ""
+NameSize = 0
+Inc = 0
+ProjectUsage = ""
+
+CopyFromObject=NULL
+
+         /* checking Rule calling context  */ 
+
+if (ThisObject->IsSupporting("Requirement") == false) {
+    Trace (1, "RequirementInit: ERROR, Called on an Invalid Object type"  )    
+    Parameters.Message="wrong usage of rule RequirementInit"
+    Parameters.Severity=3 
+	Report("Error",Parameters.Message, Parameters.Message)     
+} else {
+    if (Parameters->HasAttribute("OperationId") == true) {
+      Trace (1, "RequirementInit, Operation: ", Parameters->GetAttributeString("OperationId")   )
+    }      
+    if (Parameters->HasAttribute("OperationDetail") == true) {
+      Trace (1, "RequirementInit, OperationDetails: ", Parameters->GetAttributeString("OperationDetail")   )
+    }  
+
+    Parameters.Severity=0 
+}
+
+
+/* TBD: testing operation applicable to this rule */
+     
+          /* getting information from RuleContext parameters  */ 
+
+if ( Parameters->HasAttribute("FirstImport") == true ) {  /* BriefcaseImport or FBDIImport */
+  /*synchronization operation only (update) for ThisObject, =>no creation*/
+  IsCreatingNewObject= Parameters.GetAttributeBoolean("FirstImport")
+} 
+
+if ( Parameters->HasAttribute("Project") == true ) {
+   ProjectUsage=Parameters->GetAttributeString("Project")
+}
+
+if ( Parameters->HasAttribute("IdCloningString") == true ) { /* Cloning/SaveAsNew */
+    UserPrefix = Parameters->GetAttributeString("IdCloningString")
+    if (UserPrefix == NULL) UserPrefix = ""
+}
+
+if ( UserPrefix == "" and Parameters->HasAttribute("IdString") == true ) {
+    UserPrefix = Parameters->GetAttributeString("IdString")
+    if (UserPrefix == NULL) UserPrefix = ""
+}
+
+if (IsCreatingNewObject == false) {
+  /*prefix are considered only at creation time*/ 
+  UserPrefix=""
+}
+
+if ( Parameters->HasAttribute("CopyFrom") == true ) {  /* Cloning/SaveAsNew */
+     set CopyFromObject=Parameters->GetAttributeObject("CopyFrom") 
+}
+
+/*specific VPMReference code for components family*/
+if ( Parameters->HasAttribute("GenericModel") == true ) {  /* ComponentsFamilyNaming */
+     set CopyFromObject=Parameters->GetAttributeObject("GenericModel")    
+}                                                            
+
+IsRootFamilyItem = false
+if ( Parameters->HasAttribute("IsRoot") == true ) {  /* ComponentsFamilyNaming */
+  IsRootFamilyItem = Parameters.GetAttributeBoolean("IsRoot")
+  UserPrefix=""   /*user prefix must not be preprended to any items*/
+} 
+
+if ( Parameters->HasAttribute("IncSessionId") == true ) {
+  Inc=Parameters->GetAttributeInteger("IncSessionId")
+}
+
+           /* Getting Information from current object*/ 
+
+/* PrimaryType is the custom type of a DS Modeling type */
+ModelingType = ThisObject.ModelerType
+if (ModelingType<>NULL){
+   ModelingTypeName=ModelingType.Name 
+}
+
+if (ModelingTypeName == "" and CopyFromObject <> NULL){
+    ModelingType=CopyFromObject.ModelerType
+    if (ModelingType<>NULL) {
+	   ModelingTypeName=ModelingType.Name 
+	}   
+}
+
+/*former name defined?*/
+TitleWas=""
+if  (ThisObject->HasAttribute("Title") == true and IsRootFamilyItem == false) { /*TEMPLATE CLONING and ComponentsFamilyNaming sub-ref */ 
+      TitleWas=ThisObject->GetAttributeString("Title")
+}
+
+if ( (TitleWas == "") and (CopyFromObject <> NULL)) {
+   if (CopyFromObject->HasAttribute("Title") == true){
+	   TitleWas=CopyFromObject->GetAttributeString("Title")
+   }
+}
+
+/* tree naming - default value: tree naming from -> tree naming to */
+ItemName=""
+if ( IsRootFamilyItem == true and Parameters->HasAttribute("ItemName") == true ) {  /* ComponentsFamilyNaming Root only*/
+  ItemName = Parameters.GetAttributeString("ItemName")
+  TitleWas=ItemName   /*by pass already set Title already defaulty set, but wrongly by KW ComponentsFamily*/
+}
+
+if ( Parameters->HasAttribute("iFileId") == true ) {  /* DataExchangeImport */
+  ItemName = Parameters.GetAttributeString("iFileId")
+}
+
+if ( Parameters->HasAttribute("FileName") == true ) {  /* FBDImport */
+  ItemName = Parameters.GetAttributeString("FileName")
+}
+
+if (TitleWas=="") { TitleWas=ItemName }
+
+if ( (TitleWas == "") and (CopyFromObject <> NULL)) { /* new 207 (import default name = VPM External id) */
+   if (CopyFromObject->HasAttribute("name") == true){
+	   TitleWas=CopyFromObject->GetAttributeString("name")
+   }
+}
+
+/*new V6R2014x services for typing V2: requires Apps to deliver the property Abbreviation in the metadata*/ 
+AbbreviatedBaseTypeName=ModelingTypeName
+/* RetrieveNamingParameters(ModelingTypeName,NamingTypePrefix,SiteAffix,NamingTypeSuffix) */
+RetrieveNamingParametersWithSeparator(ModelingTypeName,NamingTypePrefix,SiteAffix,NamingTypeSuffix,Separator,AbbreviatedBaseTypeName)
+
+/*Naming Prefix is Manadatory */
+if ( (NamingTypePrefix == "") or (NamingTypePrefix == NULL) ){
+      Trace (1, "RequirementInit, Error No prefix for Type ", ModelingTypeName  )
+	  NamingTypePrefix="$$$"
+}
+if ((AbbreviatedBaseTypeName == "") or (AbbreviatedBaseTypeName == NULL)) {
+	AbbreviatedBaseTypeName=ModelingTypeName
+}
+
+/* Management of Common Abbreviation requires the ModelingTypeName to be rerouted*/
+if (ModelingTypeName <> AbbreviatedBaseTypeName) { 
+    Trace (1, "RequirementInit, BaseType Abreviation Used for Type ", ModelingTypeName, " requires numbering reroute to type ", AbbreviatedBaseTypeName)
+	/*Change of Alignement for subtype to avoid any data naming conflict with earlier naming principle*/
+	NumberAlignment=NumberAlignment+1 
+   /* AbbreviatedBaseTypeName=ModelingTypeName */
+}
+
+/* Retrieve default NLS prefix for the title */ 
+/*find the default title for the type (RACE V2 will use the NLS of the type (somehow different from RACE V1) which is good mitigation as long as it is only default title*/
+TypeTitle=ModelingType.UserName
+
+if ( (TypeTitle == "") or (TypeTitle == NULL) ) {
+   TypeTitle="$$$"
+}
+
+/* Apply business logic  for Creation */ 
+
+
+/*requires STCusto KW package */ 
+if (IsCreatingNewObject==true) {
+    /* Numbering on AbbreviatedBaseType*/
+	STAutoNumbers(AbbreviatedBaseTypeName, NumberAlignment, IDNumber, IDVNumber)
+    Trace (1, "RequirementInit, Allocated Numbers for type ", AbbreviatedBaseTypeName, " are ID=", IDNumber,", VN=", IDVNumber )
+}
+
+/* object naming setup*/
+Title=""
+
+if ((TitleWas =="") or (TitleWas==NULL)) {
+   /*Title=UserPrefix+TypeTitle+ToString(Inc)*/
+   Title=UserPrefix+TypeTitle+IDVNumber
+}
+else { 
+   /*case cloning, import, partfamily, ....*/
+   Title=UserPrefix+TitleWas
+   /*may be an error for partfamily where itemname is already set in target object... */
+}
+
+if ( ThisObject->HasAttribute("Title") == true ) {
+   NameSize=Title.Length()
+   if (NameSize>100) {
+      Title=Title.Extract(0,96)+ "..."
+   }
+
+   ThisObject->SetAttributeString("Title",Title)
+}
+
+/*set description but do not cover unseting description */
+/*
+if ( Description <> "" and ThisObject->HasAttribute("V_description") == true) {
+   DescriptionSize=Description.Length()
+   if (DescriptionSize>256) {
+	Description=Description.Extract(0,252)+ "..."
+   }
+
+   ThisObject->SetAttributeString("V_description",Description)
+}
+*/
+
+/*identification setup*/
+if (IsCreatingNewObject == true) {
+	/* define P/S depending on project:  kind of standard or not */ 
+	IDType=""
+	if ( STStandardProject(ProjectUsage) == true ) {
+		IDType="s"+NamingTypePrefix
+	}
+	else {
+		IDType=NamingTypePrefix
+	}
+
+	ID=IDType
+	if (SiteAffix<>"") ID=ID+Separator+SiteAffix+Separator
+	
+	ID=ID+IDNumber
+
+	if (NamingTypeSuffix<>"") ID=ID+Separator+NamingTypeSuffix
+    
+    /* blocking evolution??? if (Parameters->GetAttributeString("OperationDetail")  == "NewEvolution") {ID="" } */
+
+	if ( ThisObject->HasAttribute("name") == true ) {
+	    ThisObject->SetAttributeString("name",ID)
+	}
+}
+

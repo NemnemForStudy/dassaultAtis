@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:widget="http://www.netvibes.com/ns/">
+<head>
+
+<!-- Application Metas -->
+<title>Media Reader - 3DEXPERIENCE platform Getting Started</title>
+<meta name="version" content="1.0" />
+<meta name="noSearchInWidgetUI" content="true" />
+
+<link rel="stylesheet" href="../UIKIT/UIKIT.css" type="text/css" />
+
+<style>
+    .getting-started-body {
+        padding-right: 8px;
+        display: none;
+    }
+
+    h1 {
+        color: #5b5d5e;
+        font-size: 25px;
+        margin: 10px 0;
+    }
+
+    h2 {
+        color: #5b5d5e;
+        border-bottom: 1px solid #5b5d5e;
+        padding-bottom: 5px;
+        font-size: 25px;
+    }
+
+    h3 {
+        font-size: 15px;
+    }
+
+    .getting-started-text {
+        font-size: 13px;
+        color: #34617c;
+        text-align: justify;
+        margin-bottom: 20px;
+    }
+
+    .getting-started-text a:link,
+    .getting-started-text a:visited {
+        color: #0070c0;
+    }
+
+    .getting-started-text.quadrant-description {
+        margin-bottom: 0;
+    }
+
+    .getting-started-quadrant {
+        font-size: 13px;
+        color: #34617c;
+    }
+
+
+    .getting-started-quadrant:before {
+        content: '- ';
+    }
+
+    .getting-started-img {
+        padding-bottom: 27.5%;
+        background-size: cover;
+        background-repeat: no-repeat;
+        margin: 0 15% 20px 15%;
+    }
+
+    .widget-symbol {
+        display: inline-block;
+        margin-bottom: -48px;
+        width: 61px;
+        height: 62px;
+        background-repeat: no-repeat;
+        -webkit-transform: scale(0.5, 0.5);
+        transform: scale(0.5, 0.5);
+        -webkit-transform-origin: 50% 0;
+        transform-origin: 50% 0;
+    }
+</style>
+
+<script type="text/javascript">
+
+/* global require, widget */
+
+require(
+[
+    // UWA
+    'UWA/Core',
+
+    // UIKIT
+    'DS/UIKIT/Scroller',
+
+    // WP
+    'DS/WebappsUtils/WebappsUtils',
+
+    // NLS
+    'i18n!WelcomeWdg/assets/nls/welcome'
+],
+function (
+    // UWA
+    UWA,
+
+    // UIKIT
+    UIKITScroller,
+
+    // WP
+    WebappsUtils,
+
+    // NLS
+    i18n
+) {
+    'use strict';
+
+    var JAVA_URL = 'http://www.3ds.com/java8';
+
+    function getElement (selector) {
+        return widget.body.getElement(selector);
+    }
+
+    function getElements (selector) {
+        return widget.body.getElements(selector);
+    }
+
+    function bold3DExp (str) {
+        str = str || '';
+        return str.replace('3DEXPERIENCE', '<b>3D</b>EXPERIENCE');
+    }
+
+    function onLoad () {
+        var imagePath = WebappsUtils.getWebappsAssetUrl('WelcomeWdg', 'images/3DS-compass-small-640x252.jpg'),
+            symbolPath = WebappsUtils.getWebappsAssetUrl('WelcomeWdg', 'images/WidgetSymbol.png');
+
+        getElement('.getting-started-img').setStyle(
+            'background-image', 'url(\'{0}\')'.format(imagePath)
+        );
+
+        getElement('.getting-started-title').setContent(bold3DExp(i18n.welcomeTitle));
+
+        getElements('.getting-started-section-title').forEach(function (elmt, idx) {
+            elmt.setText(i18n['gettingStartedTitle_' + idx]);
+        });
+
+        getElement('.getting-started-text-0').setContent(
+            i18n.gettingStartedText_0 + '<i style="font-style:italic">' +
+            i18n.gettingStartedText_0_1 + '</i>' + i18n.gettingStartedText_0_2
+        );
+
+        getElements('.getting-started-text-1').forEach(function (elmt, idx) {
+            var text = bold3DExp(i18n['gettingStartedText_1_' + idx]);
+
+            if (idx === 2) {
+                text = text.format('<a href="{0}" target="_blank">{0}</a>'.format(JAVA_URL));
+            }
+            elmt.setContent(text);
+        });
+
+        getElements('.getting-started-quadrant').forEach(function (elmt, idx) {
+            elmt.setText(i18n['gettingStartedText_1_1_' + idx]);
+        });
+
+        getElements('.getting-started-section-subtitle').forEach(function (elmt, idx) {
+            elmt.setText(i18n['gettingStartedSubtitle_2_' + idx]);
+        });
+
+        getElements('.getting-started-text-2').forEach(function (elmt, idx) {
+            var text = i18n['gettingStartedText_2_' + idx];
+
+            if (idx === 2) {
+                text = text.format('<span class="widget-symbol" style="background-image: url(\'{0}\');"></span>'.format(symbolPath));
+            }
+            elmt.setContent(text);
+        });
+
+        new UIKITScroller({
+           element: getElement('.getting-started-body')
+                        .setStyle('height', widget.body.getDimensions().height)
+        }).inject(widget.body);
+
+        getElement('.getting-started-body').show();
+    }
+
+    function onResize () {
+        var el = getElement('.getting-started-body');
+        el && el.setStyle('height', widget.body.getDimensions().height);
+    }
+
+    widget.addEvents({
+        onLoad: onLoad,
+        onRefresh: onLoad,
+        onResize: onResize
+    });
+});
+
+</script>
+
+</head>
+
+<body>
+    <div class="getting-started-body">
+        <h1 class="getting-started-title"><!-- Title --></h1>
+
+        <h2 class="getting-started-section-title"><!-- Section Title --></h2>
+
+        <p class="getting-started-text getting-started-text-0"><!-- Section Text --></p>
+
+        <h2 class="getting-started-section-title"><!-- Section Title --></h2>
+
+        <p class="getting-started-text getting-started-text-1"><!-- Section Text --></p>
+
+        <p class="getting-started-text getting-started-text-1 quadrant-description"><!-- Section Text --></p>
+        <ul>
+            <li class="getting-started-quadrant"><!-- List Element --></li>
+            <li class="getting-started-quadrant"><!-- List Element --></li>
+            <li class="getting-started-quadrant"><!-- List Element --></li>
+            <li class="getting-started-quadrant"><!-- List Element --></li>
+        </ul>
+
+        <div class="getting-started-img"><!-- Image --></div>
+
+        <p class="getting-started-text getting-started-text-1"><!-- Section Text --></p>
+
+        <h2 class="getting-started-section-title"><!-- Section Title --></h2>
+
+        <h3 class="getting-started-section-subtitle"><!-- Section Title --></h3>
+
+        <p class="getting-started-text getting-started-text-2"><!-- Section Text --></p>
+
+        <h3 class="getting-started-section-subtitle"><!-- Section Title --></h3>
+
+        <p class="getting-started-text getting-started-text-2"><!-- Section Text --></p>
+
+        <h3 class="getting-started-section-subtitle"><!-- Section Title --></h3>
+
+        <p class="getting-started-text getting-started-text-2"><!-- Section Text --></p>
+
+        <h3 class="getting-started-section-subtitle"><!-- Section Title --></h3>
+
+        <p class="getting-started-text getting-started-text-2"><!-- Section Text --></p>
+    </div>
+</body>
+</html>

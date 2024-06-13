@@ -1,0 +1,30 @@
+<div
+  id="im-call-panel-users"
+>
+  <!-- Minimize panel users -->
+  <div class="im-call-panel-users-margin-top"/>
+  <div
+    class="fonticon fonticon-window"
+    @click="minimize"
+    v-tooltip.body.left="$store.getters.nls('minimize')"
+  />
+
+  <!-- Users with video -->
+  <im-call-user-video-list
+    :users="videoUserList"    
+    :videoDisplayNumber="5"
+  />
+
+  <!-- Users audio only -->
+  <im-call-user-circle-list
+    :users="audioUserList"
+    :myLogin="myLogin"
+    :showSelfView="showSelfView"
+  />
+  
+  <!-- Selfview -->
+  <im-call-self
+    :showSelfView="showSelfView"
+  />
+
+</div>

@@ -1,0 +1,151 @@
+<?xml version="1.0"?>
+<!-- COPYRIGHT DASSAULT SYSTEMES 2012, All rights reserved -->
+<!-- Metadata for ODT. It is a specialization of PRODUCT package -->
+<!-- Do not modify this metadata. You must update it when the following mql is updated :
+The corresponding MQL is VPMDictionaryODT\CNext.internal\reffiles\DBMS\ddl\DICTestCustoProduct2.mql 
+ -->
+<Package
+     xmlns="PLMDictionaryUnified"
+     ModelerType="Top"
+     CustomerExposition="Programmer"
+     Name="PLMInsulation"
+     Uuid="994F94CB-D114-4EB0-B582-97DEA7965527"
+     UseNames="PLMEnsPhysical"
+     BelongsToModeler="PLMInsulation">
+  <CAAComment>
+    <ShortRole>Insulation Design Package</ShortRole>
+    <Role>This package describes Insulation Design data.</Role>
+  </CAAComment>
+
+  <Comment>Initial Creation: 2015-12-23 </Comment>
+  
+  <Class Name="InsInsulation"
+      Uuid="BB11347F-9395-4A5B-8E6E-F9AC02E9B13F"
+      Abbreviation="genIns"
+      Abstract="Yes"
+      CustomerExposition="Programmer"
+      SuperName="Insulation"
+      Discipline="Yes">
+    <Property Name="IconName"                     Value="I_PLM_GenericInsulation"/>
+    <Property Name="3DIconName"                   Value="I_PLMInsInsulation.cgr"/>
+    <Simple Name="V_InsFeature" Uuid="A9E3C9D3-1AF7-4806-AB7E-EC79CC1EA866" Type="Boolean" Protection="Internal" MultiValuated="No"/>
+  </Class>
+
+  <Class Name="InsSurfaceInsulation"
+      Uuid="C25B43AE-5139-40E4-8F2C-18EFFF9807A8"
+      Abbreviation="surfIns"
+      CustomerExposition="Programmer"
+      SuperName="InsInsulation"
+      Discipline="Yes"
+      CustomerExtensible="Yes"
+      CreateInstName="InsSurfaceInsulation_Inst"
+      Specializable="Yes">
+    <Property Name="TypeForDisciplineValuation"   Value="InsSurfaceInsulation"/>
+    <Property Name="KweDisciplineAttributeValue"  Value="InsSurfaceInsulation"/>
+    <Property Name="Newable"                      Value="All"/>
+    <Property Name="KweNew_InstanciationMethod"   Value="CATEInsInsulationDelegateInstanciation"/>
+    <Property Name="IconName"                     Value="I_PLM_SurfaceInsulation"/>
+    <Property Name="3DIconName"                   Value="I_PLMInsSurfaceInsulation.cgr"/>
+    <Simple Name="V_SurfaceArea"  Uuid="23F9B9BD-46FD-40D1-9821-F6F5D18B8E71" Type="Double" Magnitude="AREA"            Protection="External" CAAExposition="L0" MultiValuated="No"/>
+    <Simple Name="V_AreaMass"     Uuid="B828CD06-DA9A-4A09-91C8-D0CAA4E41CC2" Type="Double" Magnitude="SURFACICMASS"    Protection="Free" CAAExposition="L0" MultiValuated="No"/>
+  </Class>
+
+  <Class Name="InsProfileInsulation"
+      Uuid="E5ABDD57-03FD-43F8-A6E3-74B3E2F7F40E"
+      Abbreviation="profIns"
+      CustomerExposition="Programmer"
+      SuperName="InsInsulation"
+      Discipline="Yes"
+      CustomerExtensible="Yes"
+      CreateInstName="InsProfileInsulation_Inst"
+      Specializable="Yes">
+    <Property Name="TypeForDisciplineValuation"   Value="InsProfileInsulation"/>
+    <Property Name="KweDisciplineAttributeValue"  Value="InsProfileInsulation"/>
+    <Property Name="Newable"                      Value="All"/>
+    <Property Name="KweNew_InstanciationMethod"   Value="CATEInsInsulationDelegateInstanciation"/>
+    <Property Name="IconName"                     Value="I_PLM_ProfileInsulation"/>
+    <Property Name="3DIconName"                   Value="I_PLMInsProfileInsulation.cgr"/>
+  </Class>
+
+  <Class Name="InsSpiralInsulation"
+      Uuid="AEAD3788-0643-49C7-9F22-B9F0691D541F"
+      Abbreviation="spiralIns"
+      CustomerExposition="Programmer"
+      SuperName="InsInsulation"
+      Discipline="Yes"
+      CustomerExtensible="Yes"
+      CreateInstName="InsSpiralInsulation_Inst"
+      Specializable="Yes">
+    <Property Name="TypeForDisciplineValuation"   Value="InsSpiralInsulation"/>
+    <Property Name="KweDisciplineAttributeValue"  Value="InsSpiralInsulation"/>
+    <Property Name="Newable"                      Value="All"/>
+    <Property Name="KweNew_InstanciationMethod"   Value="CATEInsInsulationDelegateInstanciation"/>
+    <Property Name="IconName"                     Value="I_PLM_SpiralInsulation"/>
+    <Property Name="3DIconName"                   Value="I_PLMInsSpiralInsulation.cgr"/>
+    <Simple Name="V_HeightOfSpiral"  Uuid="AE6CFFCC-CFF2-4A5D-BABE-12FF5B557F77" Type="Double"  Magnitude="LENGTH"          Protection="Free" CAAExposition="L0" MultiValuated="No"/>
+    <Simple Name="V_WidthOfSpiral"   Uuid="607329A9-7422-4E43-987E-3AC238AF87A8" Type="Double"  Magnitude="LENGTH"          Protection="Free" CAAExposition="L0" MultiValuated="No"/>
+    <Simple Name="V_Angle"           Uuid="B5313891-5606-4E69-9CC9-F082B8A7B858" Type="Double"  Magnitude="ANGLE"           Protection="Free" CAAExposition="L0" MultiValuated="No"/>
+    <Simple Name="V_NbLayers"        Uuid="D74FC387-A520-431C-9270-F56EFC8A4A2F" Type="Integer"                             Protection="Free" CAAExposition="L0" MultiValuated="No" DefaultValue="1"/>
+  </Class>
+
+  <Class Name="InsFormedInsulation"
+      Uuid="731D5CBB-140C-4E8D-9686-08260662BA4D"
+      Abbreviation="formedIns"
+      CustomerExposition="Programmer"
+      SuperName="InsInsulation"
+      Discipline="Yes"
+      CustomerExtensible="Yes"
+      CreateInstName="InsFormedInsulation_Inst"
+      Specializable="Yes">
+    <Property Name="TypeForDisciplineValuation"   Value="InsFormedInsulation"/>
+    <Property Name="KweDisciplineAttributeValue"  Value="InsFormedInsulation"/>
+    <Property Name="Newable"                      Value="All"/>
+    <Property Name="KweNew_InstanciationMethod"   Value="CATEInsInsulationDelegateInstanciation"/>
+    <Property Name="IconName"                     Value="I_PLM_FormedInsulation"/>
+    <Property Name="3DIconName"                   Value="I_PLMInsFormedInsulation.cgr"/>
+  </Class>
+
+
+  <RelationClass Name="InsSurfaceInsulation_Inst"
+         Uuid="89F78920-375E-4184-9878-29CF5C80A2DF"
+         CustomerExposition="Programmer"
+         SuperName="Insulation_Inst"
+         Discipline="Yes"
+         CustomerExtensible="Yes">
+    <Property Name="KweNew_InstanciationMethod" Value="CATEInsInsulationDelegateInstanciation"/>
+    <Property Name="KweNew_ReturnedType"        Value="InsSurfaceInsulation_Inst"/>
+  </RelationClass>
+
+
+  <RelationClass Name="InsProfileInsulation_Inst"
+         Uuid="0EEBA2C1-8444-4026-A910-BE1EC4B74D8D"
+         CustomerExposition="Programmer"
+         SuperName="Insulation_Inst"
+         Discipline="Yes"
+         CustomerExtensible="Yes">
+    <Property Name="KweNew_InstanciationMethod" Value="CATEInsInsulationDelegateInstanciation"/>
+    <Property Name="KweNew_ReturnedType"        Value="InsProfileInsulation_Inst"/>
+  </RelationClass>
+
+
+  <RelationClass Name="InsSpiralInsulation_Inst"
+         Uuid="7C1CD2BC-395E-4C6E-A7BB-2FCAE55EA3FF"
+         CustomerExposition="Programmer"
+         SuperName="Insulation_Inst"
+         Discipline="Yes"
+         CustomerExtensible="Yes">
+    <Property Name="KweNew_InstanciationMethod" Value="CATEInsInsulationDelegateInstanciation"/>
+    <Property Name="KweNew_ReturnedType"        Value="InsSpiralInsulation_Inst"/>
+  </RelationClass>
+
+
+  <RelationClass Name="InsFormedInsulation_Inst"
+         Uuid="DB586F80-7DAD-4862-92A6-D11721E8B9CA"
+         CustomerExposition="Programmer"
+         SuperName="Insulation_Inst"
+         Discipline="Yes"
+         CustomerExtensible="Yes">
+    <Property Name="KweNew_InstanciationMethod" Value="CATEInsInsulationDelegateInstanciation"/>
+    <Property Name="KweNew_ReturnedType"        Value="InsFormedInsulation_Inst"/>
+  </RelationClass>
+</Package>

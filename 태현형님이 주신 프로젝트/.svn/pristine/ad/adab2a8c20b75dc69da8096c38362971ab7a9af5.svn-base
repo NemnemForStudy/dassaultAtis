@@ -1,0 +1,11 @@
+{
+  "version": "1.0.0",
+  "summary": "This block helps you synchronise your control and data flow. It will activate the output control port as soon as all input control ports have been activated. For a more complexe scenario (for example executing this block multiple times), please read the detailed description below.",
+  "description": "Each input control port has an internal counter which is incremented when the port has been activated and decremented when the block is exiting through the output control port <doc-ocp-name translate=no>Out</doc-ocp-name>. Every time a input control port is activated, the block is executed, and will exit through the output control port <doc-ocp-name translate=no>Out</doc-ocp-name> only if all the input control port internal counters are stricly greater than 0.",
+  "controlPorts": {
+    "In1": "triggers the block execution and increments the internal counter associated to this port.",
+    "In2": "triggers the block execution and increments the internal counter associated to this port.",
+    "Out": "is activated only when all input control port internal counters are strictly greater than 0. It will decrements all the input control port internal counters."
+  },
+  "example": null
+}

@@ -1,0 +1,50 @@
+################################################################################################
+# Created By thok : 2023. 05. 15
+# Admin Type : command
+# Name : decProjectDetailsPropertiesEdit
+################################################################################################
+#delete command decProjectDetailsPropertiesEdit;
+add command 'decProjectDetailsPropertiesEdit' 
+	description 'Edit Project Details Properties' 
+	alt 'emxProgramCentral.Button.Edit' 
+	label 'emxProgramCentral.Button.Edit' 
+	href '${COMMON_DIR}/decemxProjectDetailsViewFormDialogFS.jsp?mode=edit'
+	setting 'Submit' 'true' 
+	setting 'Target Location' 'decProjectSpaceProperties' 
+	setting 'Access Expression' '(current.access[modify] == true) && (current!=Complete) && (admin_platform==context.user || owner==context.user)'
+	setting 'Registered Suite' 'ProgramCentral' 
+	setting 'Licensed Product' 'ENO_PRF_TP'
+	setting 'Image' '${COMMON_DIR}/images/iconActionEdit.png'
+	user 'Global User' 
+	property application value 'ProgramManagementBase'
+	property installer value 'ENOVIAEngineering' 
+	property 'installed date' value '05-15-2023' 
+	property version value 'R423.HF7' 
+	property 'original name' value 'decProjectDetailsPropertiesEdit'
+;
+add property command_decProjectDetailsPropertiesEdit on program eServiceSchemaVariableMapping.tcl to command 'decProjectDetailsPropertiesEdit'
+;
+
+# Modified by thok on 2023.07.26 
+mod command decProjectDetailsPropertiesEdit
+	add setting 'Access Expression' '(attribute[decProjectStatus]=="In-Progress") && (context.user.isassigned[decSystemAdmin] || owner==context.user)'
+;
+
+# Modified By thok : 2023. 09. 09
+mod command decProjectDetailsPropertiesEdit
+	add setting 'Access Expression' '(attribute[decProjectStatus]=="In-Progress") && (owner==context.user)'
+	add setting 'hasAccess' 'PIM'
+	add setting 'Access Program' 'decAccess' 
+	add setting 'Access Function' 'hasAccess'
+;
+
+# Modified By thok : 2023. 09. 11
+mod command decProjectDetailsPropertiesEdit
+	add setting 'Access Expression' '(attribute[decProjectStatus]=="In-Progress")'
+;
+
+# Modified By thok : 2023. 09. 13 Licensed Product:ENO_PRF_TP
+mod command decProjectDetailsPropertiesEdit
+	remove setting 'Licensed Product'
+	remove user 'Global User'
+;

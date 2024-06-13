@@ -1,0 +1,88 @@
+/*   .container,.container *,.container *:before,.container *:after {
+        -webkit-box-sizing: content-box;
+        -moz-box-sizing: content-box;
+        box-sizing: content-box;
+    }
+
+    .container input,.container button {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }*/
+
+    .container {
+        padding-right: 0px;
+        padding-left: 0px;
+        width: 100%;
+        height: 100%;
+    }
+
+    .alert-container {
+        position: absolute;
+        width: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .alert-container.webpagereader-lower {
+        top: 44px;
+    }
+
+    .webpagereader-notify {
+        height: auto;
+    }
+
+    .container input {
+        height: 37px;
+    }
+
+    .addUrl {
+        margin: 10px 15px;
+    }
+
+    /* For ios we need to force the scroll on the first parent container of the frame.
+       Iframe scrolling attribute is not taking into account. :(
+       https://stackoverflow.com/questions/4599153/iframes-and-the-safari-on-the-ipad-how-can-the-user-scroll-the-content */
+    .ios .iframe-container.scrolling,
+    .ipados .iframe-container.scrolling {
+        overflow: scroll;
+        -webkit-overflow-scrolling: touch;
+    }
+    .iframe-container {
+        height: 100%;
+        width: 100%;
+    }
+
+    .iframe-container .pdf-viewer {
+        height: 100%;
+    }
+
+    .addUrl .urlform span {
+        display: block;
+        overflow: hidden;
+        padding: 0 0.7em 0 0;
+        margin-left: 0em;
+        line-height: 0em;
+    }
+
+    .addUrl .urlform .input-submit {
+        margin-left: 0;
+        height: 2.65em;
+        float: right;
+    }
+
+    /* UI Kit Customizations */
+    .uwa-text {
+        height: 2.65em;
+        margin-bottom: .1em;
+        width: 100%;
+    }
+
+    .reader-container .item-container,
+    .reader-container .item-container .scrollarea {
+        height: auto;
+    }
+
+    .uwa-notify-msg {
+        height: 40px;
+    }

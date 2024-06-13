@@ -1,0 +1,1 @@
+define("DS/DMUPlaySection/DMUPlaySection_ja",{});define("DS/DMUPlaySection/assets/nls/DMUPlaySection",{sectionplane:"セクション平面",sectioncurves:"セクション曲線",notifyComputeContourfailure:"セクションの輪郭を計算できませんでした",viewMenu:"ビュー メニュー",exploreView:"探索ビュー",detailedView:"詳細ビュー",lblIncrement:" 増分:",lblOnlyNum:"数値のみ",sectionPrefix:"セクション"});

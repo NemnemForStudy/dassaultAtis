@@ -1,0 +1,18 @@
+################################################################################################
+# Modified By thok : 2023. 06. 08
+# Admin Type : command
+# Name : decProjectSafetyStaticsDelete
+################################################################################################
+#delete command decProjectSafetyStaticsDelete;
+add command decProjectSafetyStaticsDelete 
+	href '${COMMON_DIR}/decProjectSafetyStaticsDelete.jsp'
+	alt 'emxProgramCentral.Label.deleteSafetyStatics'
+	label 'emxProgramCentral.Label.deleteSafetyStatics'
+	setting 'Image' '${COMMON_DIR}/images/iconActionDelete.png'
+	setting 'Confirm Message' 'emxProgramCentral.ProjectDelete.notice'
+	setting 'Registered Suite' 'ProgramCentral'
+	setting 'Target Location'  'listHidden'
+	setting 'Submit' 'true'
+;
+add property command_decProjectSafetyStaticsDelete on program eServiceSchemaVariableMapping.tcl to command 'decProjectSafetyStaticsDelete'
+;

@@ -1,0 +1,1 @@
+define("DS/CAT3DAnnotationScenario/CAT3DAnnotationScenario_pl",{});define("DS/CAT3DAnnotationScenario/assets/nls/CAT3DAnnotationScenario",{A3EScenario_Title:"Tolerancja i adnotacje trójwymiarowe",A3EScenario_Description:"Wyświetlaj i przeglądaj adnotacje"});

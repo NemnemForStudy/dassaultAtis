@@ -1,0 +1,45 @@
+
+define('DS/StuMiscContent/StuMiscContentDefine', [
+	'DS/StuMiscContent/StuCarController',
+	'DS/StuMiscContent/StuPlaneController',
+	'DS/StuMiscContent/StuThirdPersonNavigation',
+	'DS/StuMiscContent/StuHelicopterController',
+	'DS/StuMiscContent/StuImitator',
+	'DS/StuMiscContent/StuTrafficManager',
+	'DS/StuMiscContent/StuMotion',
+	'DS/StuMiscContent/StuOpenClose',
+	'DS/StuMiscContent/StuHighlightBe',
+	'DS/StuMiscContent/StuFollowMouseBe',
+	'DS/StuMiscContent/StuCapacityLauncher',
+	'DS/StuMiscContent/StuCapacityLauncherNA',
+	'DS/StuMiscContent/StuPLMInfoBalloonBe',
+	'DS/StuMiscContent/StuExplodeBe',
+	'DS/StuMiscContent/StuBoatController',
+	'DS/StuMiscContent/StuLookAtConstraintBe',
+	'DS/StuMiscContent/StuDisplayPositionBe',
+	'DS/StuMiscContent/StuDisplayVolumeBe',
+	'DS/StuMiscContent/StuDisplayAxesBe',
+	'DS/StuMiscContent/StuRotateBe',
+	'DS/StuMiscContent/StuAutofocus',
+	'DS/StuMiscContent/StuLightActor',
+	'DS/StuMiscContent/StuSpotLightActor',
+	'DS/StuMiscContent/StuPointLightActor',
+	'DS/StuMiscContent/StuDirectionalLightActor',
+	'DS/StuMiscContent/StuAreaLightActor',
+	'DS/StuMiscContent/StuCylinderLightActor',
+	'DS/StuMiscContent/StuDiskLightActor',
+	'DS/StuMiscContent/StuRectangleLightActor',
+	'DS/StuMiscContent/StuSphereLightActor',
+	'DS/StuMiscContent/StuStreamBasedActor',
+	'DS/StuMiscContent/StuParticlesManager',
+	'DS/StuMiscContent/StuParticlesEmitterActor',
+	'DS/StuMiscContent/StuParticlesForceActor',
+	'DS/StuMiscContent/StuVisuServices',
+	'DS/StuMiscContent/StuVisuServicesNA',
+	'DS/StuMiscContent/StuExperienceAnimation',
+	'DS/StuMiscContent/StuWebResource'
+], function () {
+	'use strict';
+});
+
+

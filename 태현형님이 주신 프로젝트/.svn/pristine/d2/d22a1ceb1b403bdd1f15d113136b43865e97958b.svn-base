@@ -1,0 +1,1 @@
+define("DS/ENOCockpit/ENOCockpit_ko",{});define("DS/ENOCockpit/assets/nls/ENOCockpit",{appDescription:"쉽고 효율적인 방법으로 3D 모델 탐색",rootFrozen:"전환 후 세션이 고정됩니다.",transitionRefusedStaticMapping:"인스턴스화된 제품 사양은 대상 앱에서 지원되지 않습니다.",transitionRefusedFlexibleAssemblies:"유연 어셈블리는 대상 앱에서 지원되지 않습니다."});
